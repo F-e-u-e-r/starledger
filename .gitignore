@@ -1,0 +1,18 @@
+node_modules/
+dist/
+*.tsbuildinfo
+
+# Local config & secrets
+config.yaml
+.env
+.env.*
+
+# Run telemetry is per-execution and MUST NOT be committed (see P0 spec §Outputs).
+# It is uploaded as a GitHub Actions artifact / job summary instead.
+run-meta.json
+
+# Editor / OS
+.DS_Store
+.claude/
+.idea/
+.vscode/

@@ -1,0 +1,8 @@
+node_modules/
+dist/
+schemas/
+scripts/*.sh
+pnpm-lock.yaml
+stars.json
+dataset-meta.json
+run-meta.json

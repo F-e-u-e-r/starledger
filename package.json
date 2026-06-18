@@ -1,0 +1,35 @@
+{
+  "name": "starledger",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "A personal GitHub stars dashboard and repository discovery pipeline.",
+  "engines": {
+    "node": ">=22"
+  },
+  "packageManager": "pnpm@11.5.3",
+  "scripts": {
+    "build": "pnpm -r build",
+    "typecheck": "pnpm -r typecheck",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "schemas": "pnpm --filter @starred/schema generate:schemas",
+    "lint": "eslint .",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "smoke": "node scripts/smoke-realgit.mjs",
+    "release-gate": "bash scripts/release-gate.sh"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.17.0",
+    "@types/node": "^22.10.2",
+    "eslint": "^9.17.0",
+    "jsdom": "^25.0.1",
+    "prettier": "^3.4.2",
+    "tsup": "^8.3.5",
+    "tsx": "^4.19.2",
+    "typescript": "^5.7.2",
+    "typescript-eslint": "^8.18.1",
+    "vitest": "^2.1.8"
+  }
+}

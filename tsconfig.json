@@ -1,0 +1,9 @@
+{
+  "extends": "./tsconfig.base.json",
+  "files": [],
+  "references": [
+    { "path": "./packages/schema" },
+    { "path": "./packages/github-client" },
+    { "path": "./packages/exporter" }
+  ]
+}
