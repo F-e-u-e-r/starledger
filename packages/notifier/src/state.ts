@@ -169,6 +169,20 @@ export function isNotificationSent(state: NotifierState, notification_key: strin
 }
 
 /**
+ * Has this exact per-repository notification reached ANY terminal outcome — sent
+ * OR permanently failed? This is the per-repo skip guard in the delivery loop: a
+ * deterministically unsendable repository must not be retried forever, so once it
+ * is recorded `permanent_failure` it is skipped just like a `sent` one.
+ */
+export function isNotificationTerminal(state: NotifierState, notification_key: string): boolean {
+  return state.deliveries.some(
+    (d) =>
+      d.notification_key === notification_key &&
+      (d.status === 'sent' || d.status === 'permanent_failure'),
+  );
+}
+
+/**
  * Retention. recent_seen is capped per channel; the delivery log is pruned by
  * age THEN by count; pending is never touched (a failed item must survive any
  * pruning until it terminates — fix #2).

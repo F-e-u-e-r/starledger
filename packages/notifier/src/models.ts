@@ -96,7 +96,12 @@ export type ResolvedRepository = z.infer<typeof ResolvedRepositorySchema>;
  * lives in the durable pending queue until it reaches one of these:
  *   - `sent`              — Telegram accepted a message for a specific repo;
  *   - `skipped_no_repo`   — the item contained no resolvable repository;
- *   - `permanent_failure` — the item is malformed / permanently unresolvable.
+ *   - `permanent_failure` — a specific repository's message is deterministically
+ *                           undeliverable (Telegram rejects it identically on
+ *                           every retry), so it is recorded and not retried.
+ *
+ * A run-level credential/destination fault is NOT a delivery status: it aborts
+ * the run (exit 10) and persists nothing (see `classifyDeliveryFailure`).
  */
 export const DeliveryStatusSchema = z.enum(['sent', 'skipped_no_repo', 'permanent_failure']);
 export type DeliveryStatus = z.infer<typeof DeliveryStatusSchema>;
@@ -105,11 +110,12 @@ export type DeliveryStatus = z.infer<typeof DeliveryStatusSchema>;
  * A terminal record in the delivery log. Its `notification_key` carries a
  * repository node id IFF a specific repository was involved:
  *   - `sent`              → `source:source_item_id:repo_node_id` (per repository);
- *   - `skipped_no_repo`   → `source:source_item_id` (item-level, no repository);
- *   - `permanent_failure` → `source:source_item_id` (item-level).
+ *   - `permanent_failure` → `source:source_item_id:repo_node_id` (per repository);
+ *   - `skipped_no_repo`   → `source:source_item_id` (item-level, no repository).
  *
- * `sent` records are the at-least-once replay guard: a repeated run skips any
- * `notification_key` already present here.
+ * `sent` and `permanent_failure` records are the per-repository terminal guard: a
+ * repeated run skips any `notification_key` already present with one of those
+ * statuses (a `sent` repo is not re-sent; a permanently-failed repo is not retried).
  */
 export const DeliveryRecordSchema = z
   .object({
@@ -128,8 +134,8 @@ export type DeliveryRecord = z.infer<typeof DeliveryRecordSchema>;
  * processable even after it scrolls out of the source's recent window (the
  * failure mode that a bare "seen" set cannot survive). A pending entry leaves
  * the queue ONLY when every notification it implies has reached a terminal
- * delivery (all repos `sent`, or an item-level `skipped_no_repo` /
- * `permanent_failure`).
+ * delivery (every repo `sent` or `permanent_failure`, or an item-level
+ * `skipped_no_repo` when there is no repository at all).
  */
 export const PendingNotificationSchema = z
   .object({

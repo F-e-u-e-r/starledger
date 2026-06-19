@@ -1,4 +1,5 @@
 import { type TelegramCredentials } from './config';
+import { TelegramSendError } from './errors';
 import type { DiscoveryItem, ResolvedRepository } from './models';
 import type { RepositorySummary } from './summary';
 
@@ -98,12 +99,38 @@ export function renderTelegramMessage(
 
 interface TelegramApiResponse {
   ok?: boolean;
+  error_code?: number;
+  description?: string;
+}
+
+/**
+ * Read Telegram's structured error envelope (`{ error_code, description }`) from
+ * a failed response. The description is a credential-free server string (e.g.
+ * "Bad Request: chat not found") used only to classify the failure; the raw body
+ * is never retained. A non-JSON body yields nulls so callers fall back to the
+ * HTTP status alone.
+ */
+async function readTelegramError(
+  response: Response,
+): Promise<{ code: number | null; description: string | null }> {
+  try {
+    const body = (await response.json()) as TelegramApiResponse;
+    return {
+      code: typeof body.error_code === 'number' ? body.error_code : null,
+      description: typeof body.description === 'string' ? body.description : null,
+    };
+  } catch {
+    return { code: null, description: null };
+  }
 }
 
 /**
  * Telegram sender that resolves only after a successful `sendMessage` response.
- * Its errors intentionally omit the URL, token, chat id, and remote body so
- * callers cannot leak credentials through logs or persisted retry errors.
+ * A failure throws a {@link TelegramSendError} carrying the HTTP status and
+ * Telegram's own (credential-free) error code/description so the delivery
+ * taxonomy can classify it. The URL, token, chat id, and raw remote body are
+ * never included, so callers cannot leak credentials through logs or persisted
+ * retry errors.
  */
 export function createTelegramSender(
   credentials: TelegramCredentials,
@@ -125,15 +152,24 @@ export function createTelegramSender(
         },
       );
       if (!response.ok) {
-        throw new Error(`Telegram sendMessage returned HTTP ${response.status}`);
+        const { code, description } = await readTelegramError(response);
+        throw new TelegramSendError(
+          `Telegram sendMessage returned HTTP ${response.status}`,
+          response.status,
+          code,
+          description,
+        );
       }
       let payload: TelegramApiResponse;
       try {
         payload = (await response.json()) as TelegramApiResponse;
       } catch {
-        throw new Error('Telegram sendMessage returned invalid JSON');
+        // A 2xx with an unreadable body is transient, not a malformed message.
+        throw new TelegramSendError('Telegram sendMessage returned invalid JSON', null);
       }
-      if (payload.ok !== true) throw new Error('Telegram sendMessage was not accepted');
+      if (payload.ok !== true) {
+        throw new TelegramSendError('Telegram sendMessage was not accepted', null);
+      }
     },
   };
 }

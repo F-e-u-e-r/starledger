@@ -4,6 +4,7 @@ import {
   readGithubToken,
   readTelegramCredentials,
 } from './config';
+import { classifyDeliveryFailure } from './errors';
 import { itemKey, notificationKey, type DiscoveryItem, type PendingNotification } from './models';
 import {
   createOctokitRepositoryResolver,
@@ -21,7 +22,7 @@ import {
   emptyState,
   hasPending,
   isItemTerminal,
-  isNotificationSent,
+  isNotificationTerminal,
   loadState,
   type NotifierState,
   NotifierStateSchema,
@@ -31,7 +32,7 @@ import {
 import { GitStateStore, type SaveResult, type StateStore } from './state-store';
 import { DeterministicSummaryProvider, type SummaryProvider } from './summary';
 import { createTelegramSender, renderTelegramMessage, type TelegramSender } from './telegram';
-import { redactSecrets } from '@starred/github-client';
+import { ExporterError, redactSecrets, TerminalError } from '@starred/github-client';
 
 export const NOTIFIER_VERSION = '0.1.0';
 
@@ -51,9 +52,16 @@ export interface RunOptions {
 }
 
 export interface NotifierRunError {
-  source: SourceError['source'] | 'resolution' | 'summary' | 'telegram';
+  source: SourceError['source'] | 'resolution' | 'summary' | 'render' | 'telegram';
   target: string;
   message: string;
+}
+
+/** A pending item still failing after the configured attempt threshold. */
+export interface AttentionItem {
+  item_key: string;
+  attempts: number;
+  last_error: string | null;
 }
 
 export interface RunOutcome {
@@ -64,18 +72,31 @@ export interface RunOutcome {
   enqueued: number;
   /** Pending queue size after this run. */
   pendingCount: number;
+  /** Retryable failures this run (sources + deferred deliveries) — each keeps work pending. */
   errors: NotifierRunError[];
+  /**
+   * Per-repository notifications recorded `permanent_failure` THIS run. They are
+   * NOT retried (they leave the queue), but they flip the exit code to 20 once so
+   * a deterministic delivery defect surfaces instead of vanishing into a green run.
+   */
+  permanentFailures: NotifierRunError[];
+  /** Pending items that have failed at least `retry.attention_after_attempts` times. */
+  attention: AttentionItem[];
   save: SaveResult;
 }
 
 /**
- * Exit-code policy (parallels the exporter): a partial source failure or a
- * push that did not land is a deferred outcome (20) — the run is visibly
- * incomplete and will be retried — while a clean run is 0. Terminal failures
- * (config/token/invalid-state) are thrown and carry their own exit code.
+ * Exit-code policy (parallels the exporter):
+ *   - 20 — deferred/degraded: a retryable failure left work pending, a NEW
+ *          permanent failure was recorded this run (one-time signal), or a
+ *          content change did not land. The run is visibly incomplete.
+ *   - 0  — clean: nothing pending failed and any change was pushed.
+ * Run-level fatal failures (config / token / GitHub-or-Telegram credential /
+ * invalid state) are thrown and carry their own exit code (10).
  */
 export function runExitCode(outcome: RunOutcome): number {
   if (outcome.errors.length > 0) return 20;
+  if (outcome.permanentFailures.length > 0) return 20;
   if (outcome.save.changed && !outcome.save.pushed) return 20;
   return 0;
 }
@@ -102,11 +123,15 @@ function buildPendingProcessor(options: RunOptions, env: NodeJS.ProcessEnv): Pen
   };
 }
 
-function recordItemTerminal(
+/**
+ * Record the item-level `skipped_no_repo` terminal (no repository was involved).
+ * Per-repository terminals (`sent`, `permanent_failure`) are written inline in
+ * the delivery loop with their node-id-bearing key.
+ */
+function recordSkippedNoRepo(
   state: NotifierState,
   pending: PendingNotification,
   deliveries: NotifierState['deliveries'],
-  status: 'skipped_no_repo' | 'permanent_failure',
   detail: string,
   now: Date,
 ): void {
@@ -114,7 +139,7 @@ function recordItemTerminal(
   if (isItemTerminal({ ...state, deliveries }, key)) return;
   deliveries.push({
     notification_key: key,
-    status,
+    status: 'skipped_no_repo',
     completed_at: now.toISOString(),
     detail,
   });
@@ -126,33 +151,57 @@ function safeErrorMessage(err: unknown, env: NodeJS.ProcessEnv): string {
     env.STAR_SYNC_TOKEN,
     env.TELEGRAM_BOT_TOKEN,
     env.TELEGRAM_CHAT_ID,
-    env.LLM_API_KEY,
   ]);
 }
 
-function errorSource(err: unknown): 'resolution' | 'summary' | 'telegram' {
+function errorSource(err: unknown): 'resolution' | 'summary' | 'render' | 'telegram' {
   const stage = (err as { notifierStage?: unknown })?.notifierStage;
-  return stage === 'summary' || stage === 'telegram' ? stage : 'resolution';
+  return stage === 'summary' || stage === 'render' || stage === 'telegram' ? stage : 'resolution';
 }
 
-function stagedError(stage: 'resolution' | 'summary' | 'telegram', err: unknown): Error {
+function stagedError(stage: 'resolution' | 'summary' | 'render' | 'telegram', err: unknown): Error {
   const out = err instanceof Error ? err : new Error(String(err));
   Object.defineProperty(out, 'notifierStage', { value: stage, enumerable: false });
   return out;
 }
 
+/**
+ * Convert a fatal-disposition error into the run-level terminal error (exit 10).
+ * An already-typed terminal error (GitHub `AuthError`, missing credentials) is
+ * kept as-is; anything else (e.g. a fatal Telegram status) is wrapped with a
+ * redacted message so no credential leaks into logs or persisted state.
+ */
+function toFatal(err: unknown, env: NodeJS.ProcessEnv): Error {
+  if (err instanceof ExporterError && err.exitCode === 10) return err;
+  return new TerminalError(safeErrorMessage(err, env), 'DELIVERY_FATAL');
+}
+
 export interface PendingProcessResult {
   state: NotifierState;
   errors: NotifierRunError[];
+  permanentFailures: NotifierRunError[];
+  attention: AttentionItem[];
 }
 
 /**
- * Processes the durable pending queue serially. Each item remains pending on
- * any resolution, summary, or Telegram failure; successful per-repository sends
- * are recorded immediately in memory so a later failure retries only the
- * unsent repository keys. The single state push in `run` creates the accepted
- * at-least-once window: a process crash after Telegram accepts a message but
- * before state persistence may send that message once more next run.
+ * Processes the durable pending queue serially. Each referenced repository is
+ * delivered independently and, on failure, classified (see
+ * `classifyDeliveryFailure`):
+ *
+ *   - `sent`    — recorded immediately, so a later failure retries only the
+ *                 not-yet-delivered repositories.
+ *   - retryable — the item stays pending (attempts++, last_error); a transient
+ *                 fault on one repository never blocks its siblings.
+ *   - permanent — recorded `permanent_failure` for that repository and never
+ *                 retried (a byte-identical retry fails identically); surfaced
+ *                 once via the run exit code, then it leaves the queue.
+ *   - fatal     — thrown out as a run-level terminal error (exit 10); nothing is
+ *                 persisted this run, so a bad credential/destination is loud and
+ *                 the last-known-good state is preserved.
+ *
+ * The single state push in `run` creates the accepted at-least-once window: a
+ * process crash after Telegram accepts a message but before state persistence may
+ * send that message once more next run.
  */
 export async function processPendingNotifications(
   state: NotifierState,
@@ -164,33 +213,50 @@ export async function processPendingNotifications(
   const pending: PendingNotification[] = [];
   const deliveries = [...state.deliveries];
   const errors: NotifierRunError[] = [];
+  const permanentFailures: NotifierRunError[] = [];
+  const attention: AttentionItem[] = [];
+  const attentionThreshold = config.retry.attention_after_attempts;
+
+  const keepPending = (entry: PendingNotification, message: string): void => {
+    const attempts = entry.attempts + 1;
+    pending.push({ ...entry, attempts, last_attempt_at: now.toISOString(), last_error: message });
+    if (attempts >= attentionThreshold) {
+      attention.push({ item_key: entry.item_key, attempts, last_error: message });
+    }
+  };
 
   for (const entry of state.pending) {
+    // 1. Resolution is item-level: a fault keeps the whole item pending
+    //    (retryable) or aborts the run (fatal, e.g. a bad GitHub PAT).
+    let resolution;
     try {
-      let resolution;
+      resolution = await resolveDiscoveryItem(entry.item, processor.resolver);
+    } catch (err) {
+      const staged = stagedError('resolution', err);
+      if (classifyDeliveryFailure(staged) === 'fatal') throw toFatal(staged, env);
+      const message = safeErrorMessage(staged, env);
+      errors.push({ source: 'resolution', target: entry.item_key, message });
+      keepPending(entry, message);
+      continue;
+    }
+
+    if (resolution.repositories.length === 0) {
+      const detail =
+        resolution.candidateCount === 0
+          ? 'No valid public GitHub repository candidate found'
+          : 'No public GitHub repository resolved from candidates';
+      recordSkippedNoRepo(state, entry, deliveries, detail, now);
+      continue;
+    }
+
+    // 2. Deliver each referenced repository independently.
+    let unfinished = false;
+    let lastRetryMessage = '';
+    for (const repository of resolution.repositories) {
+      const key = notificationKey(entry.item.source, entry.item.source_item_id, repository.node_id);
+      if (isNotificationTerminal({ ...state, deliveries }, key)) continue;
+
       try {
-        resolution = await resolveDiscoveryItem(entry.item, processor.resolver);
-      } catch (err) {
-        throw stagedError('resolution', err);
-      }
-
-      if (resolution.repositories.length === 0) {
-        const detail =
-          resolution.candidateCount === 0
-            ? 'No valid public GitHub repository candidate found'
-            : 'No public GitHub repository resolved from candidates';
-        recordItemTerminal(state, entry, deliveries, 'skipped_no_repo', detail, now);
-        continue;
-      }
-
-      for (const repository of resolution.repositories) {
-        const key = notificationKey(
-          entry.item.source,
-          entry.item.source_item_id,
-          repository.node_id,
-        );
-        if (isNotificationSent({ ...state, deliveries }, key)) continue;
-
         let summary;
         try {
           summary = await processor.summaryProvider.summarize(repository);
@@ -198,12 +264,17 @@ export async function processPendingNotifications(
           throw stagedError('summary', err);
         }
 
+        let message;
         try {
-          await processor.telegramSender.send(
-            renderTelegramMessage(entry.item, repository, summary, {
-              disableWebPagePreview: config.telegram.disable_web_page_preview,
-            }),
-          );
+          message = renderTelegramMessage(entry.item, repository, summary, {
+            disableWebPagePreview: config.telegram.disable_web_page_preview,
+          });
+        } catch (err) {
+          throw stagedError('render', err);
+        }
+
+        try {
+          await processor.telegramSender.send(message);
         } catch (err) {
           throw stagedError('telegram', err);
         }
@@ -216,20 +287,36 @@ export async function processPendingNotifications(
           completed_at: now.toISOString(),
           detail: null,
         });
+      } catch (err) {
+        const disposition = classifyDeliveryFailure(err);
+        if (disposition === 'fatal') throw toFatal(err, env);
+        const message = safeErrorMessage(err, env);
+        if (disposition === 'permanent') {
+          // Deterministically unsendable for THIS repository: record it terminal
+          // (per repo) so it never retries; surfaced once via the run exit code.
+          deliveries.push({
+            notification_key: key,
+            status: 'permanent_failure',
+            completed_at: now.toISOString(),
+            detail: message,
+          });
+          permanentFailures.push({ source: errorSource(err), target: key, message });
+          continue;
+        }
+        // retryable — a sibling repository may still succeed this run.
+        unfinished = true;
+        lastRetryMessage = message;
+        errors.push({ source: errorSource(err), target: entry.item_key, message });
       }
-    } catch (err) {
-      const message = safeErrorMessage(err, env);
-      errors.push({ source: errorSource(err), target: entry.item_key, message });
-      pending.push({
-        ...entry,
-        attempts: entry.attempts + 1,
-        last_attempt_at: now.toISOString(),
-        last_error: message,
-      });
     }
+
+    // The item leaves the queue once every referenced repository reached a
+    // terminal per-repo record (sent or permanent_failure). One retryable
+    // repository keeps the whole item pending for the next run.
+    if (unfinished) keepPending(entry, lastRetryMessage);
   }
 
-  return { state: { ...state, pending, deliveries }, errors };
+  return { state: { ...state, pending, deliveries }, errors, permanentFailures, attention };
 }
 
 /**
@@ -286,9 +373,9 @@ export async function run(options: RunOptions = {}): Promise<RunOutcome> {
 
   const { state: withPending, enqueued } = enqueueDiscoveries(sources.nextState, sources.items);
 
-  const processed =
+  const processed: PendingProcessResult =
     withPending.pending.length === 0
-      ? { state: withPending, errors: [] }
+      ? { state: withPending, errors: [], permanentFailures: [], attention: [] }
       : await processPendingNotifications(
           withPending,
           buildPendingProcessor(options, env),
@@ -309,6 +396,8 @@ export async function run(options: RunOptions = {}): Promise<RunOutcome> {
     enqueued,
     pendingCount: validated.pending.length,
     errors: [...sources.errors, ...processed.errors],
+    permanentFailures: processed.permanentFailures,
+    attention: processed.attention,
     save,
   };
 }

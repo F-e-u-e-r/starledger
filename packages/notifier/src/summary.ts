@@ -1,8 +1,10 @@
 import type { ResolvedRepository } from './models';
 
 /**
- * P2.3 summary boundary. The deterministic implementation is required; an LLM
- * provider is optional and can never become a required delivery dependency.
+ * P2 summary boundary. The deterministic summary is the ONLY summarizer in P2;
+ * an LLM-backed provider is deferred to P3 and would be added behind this
+ * interface (so delivery never changes). A summary can never become a required
+ * delivery dependency.
  */
 export interface RepositorySummary {
   title: string;
@@ -48,43 +50,4 @@ export class DeterministicSummaryProvider implements SummaryProvider {
   async summarize(repository: ResolvedRepository): Promise<RepositorySummary> {
     return deterministicSummary(repository);
   }
-}
-
-/**
- * Optional LLM adapter wrapper. A timeout, rejection, invalid empty result, or
- * missing adapter falls back to deterministic metadata with no run failure.
- */
-export class FallbackSummaryProvider implements SummaryProvider {
-  constructor(
-    private readonly fallback: SummaryProvider = new DeterministicSummaryProvider(),
-    private readonly llm: SummaryProvider | null = null,
-    private readonly timeoutMs = 4_000,
-  ) {}
-
-  async summarize(repository: ResolvedRepository): Promise<RepositorySummary> {
-    if (!this.llm) return this.fallback.summarize(repository);
-    try {
-      const summary = await withTimeout(this.llm.summarize(repository), this.timeoutMs);
-      if (!summary.title.trim() || !summary.body.trim()) throw new Error('LLM summary was empty');
-      return summary;
-    } catch {
-      return this.fallback.summarize(repository);
-    }
-  }
-}
-
-function withTimeout<T>(promise: Promise<T>, timeoutMs: number): Promise<T> {
-  return new Promise<T>((resolve, reject) => {
-    const timer = setTimeout(() => reject(new Error('LLM summary timed out')), timeoutMs);
-    void promise.then(
-      (value) => {
-        clearTimeout(timer);
-        resolve(value);
-      },
-      (err: unknown) => {
-        clearTimeout(timer);
-        reject(err);
-      },
-    );
-  });
 }

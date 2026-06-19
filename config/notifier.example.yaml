@@ -2,9 +2,8 @@
 #
 # Secrets are NOT configured here — they are read from the environment:
 #   STAR_SYNC_TOKEN     fine-grained PAT, `Contents: read` (read-only)
-#   TELEGRAM_BOT_TOKEN  bot token for delivery (P2.3)
-#   TELEGRAM_CHAT_ID    destination chat id (P2.3)
-#   LLM_API_KEY         OPTIONAL — P2 works fully without it (deterministic summary)
+#   TELEGRAM_BOT_TOKEN  bot token for delivery
+#   TELEGRAM_CHAT_ID    destination chat id
 
 youtube:
   # Channel ids to poll (the `channel_id` in https://www.youtube.com/feeds/videos.xml?channel_id=...).
@@ -36,6 +35,13 @@ retention:
   delivery_max: 2000
 
 summary:
-  # The deterministic summary always works. Set true only to additionally try the
-  # optional LLM adapter (P2.3), which falls back to deterministic on any failure.
+  # RESERVED. LLM summarization is a P3 concern; P2 always uses the deterministic
+  # summary. Setting this true is REJECTED, so the config never promises behavior
+  # that does not exist yet.
   use_llm: false
+
+retry:
+  # A pending item still failing after this many attempts is surfaced as
+  # `attention` telemetry. It STAYS pending and is never auto-discarded — the
+  # threshold only makes a stuck item visible to an operator.
+  attention_after_attempts: 6

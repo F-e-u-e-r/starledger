@@ -39,6 +39,15 @@ jobs:
       - name: build
         run: pnpm build
 
+      # Secret-free notifier smokes — safe on fork PRs. Both import the built
+      # artifact, so they run after build. The state smoke drives real Git
+      # plumbing against a temp bare remote; the replay smoke proves the
+      # at-least-once sent/permanent guard suppresses a duplicate delivery.
+      - name: notifier state-branch + replay smokes (no secrets)
+        run: |
+          node scripts/smoke-notifier-state.mjs
+          node scripts/smoke-notifier-replay.mjs
+
       - name: schema drift (regenerate + verify clean)
         run: |
           pnpm schemas

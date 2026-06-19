@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { redactSecrets } from '@starred/github-client';
+import { TelegramSendError } from '../src/errors';
 import { makeDiscoveryItem, makeResolvedRepository } from './helpers';
 import {
   createTelegramSender,
@@ -82,6 +83,27 @@ describe('createTelegramSender', () => {
     await expect(sender.send({ text: 'hello', disable_web_page_preview: true })).rejects.toThrow(
       'HTTP 403',
     );
+  });
+
+  it('throws a TelegramSendError carrying the HTTP status and description for classification', async () => {
+    const sender = createTelegramSender(
+      { botToken: '123456789:abcdefghijklmnopqrstuvwx', chatId: '-1001234567' },
+      async () =>
+        new Response(
+          JSON.stringify({
+            ok: false,
+            error_code: 400,
+            description: 'Bad Request: chat not found',
+          }),
+          { status: 400 },
+        ),
+    );
+    const error = await sender
+      .send({ text: 'hello', disable_web_page_preview: true })
+      .catch((e: unknown) => e);
+    expect(error).toBeInstanceOf(TelegramSendError);
+    expect((error as TelegramSendError).httpStatus).toBe(400);
+    expect((error as TelegramSendError).description).toBe('Bad Request: chat not found');
   });
 
   it('redacts configured tokens, chat IDs, and authorization headers before logging', () => {

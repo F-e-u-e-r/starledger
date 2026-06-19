@@ -1,4 +1,5 @@
 import {
+  AuthError,
   classifyError,
   createGithubClient,
   DeferredError,
@@ -88,8 +89,20 @@ function isNotFound(err: unknown): boolean {
   return (err as { status?: number }).status === 404;
 }
 
+function isUnauthorized(err: unknown): boolean {
+  return (err as { status?: number }).status === 401;
+}
+
 function resolutionError(ownerRepo: string, err: unknown): Error {
   if (err instanceof Error && 'exitCode' in err) return err;
+  // A 401 is a bad/expired PAT: it will fail identically for every candidate and
+  // every run until the token is fixed, so it is run-level fatal (exit 10), not a
+  // per-item deferral. (A 403 — often a rate limit — keeps the deferred path.)
+  if (isUnauthorized(err)) {
+    return new AuthError(
+      `GitHub authentication failed while resolving ${ownerRepo} — check STAR_SYNC_TOKEN`,
+    );
+  }
   const cls: ErrorClass = classifyError(err);
   const message = err instanceof Error ? err.message : String(err);
   if (cls === 'terminal') {

@@ -1,8 +1,9 @@
 import { mkdtempSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
-import { DeferredError } from '@starred/github-client';
+import { DeferredError, TerminalError } from '@starred/github-client';
 import { describe, expect, it } from 'vitest';
+import { TelegramSendError } from '../src/errors';
 import { run, runExitCode } from '../src/run';
 import { emptyState, loadState, type NotifierState, serializeState } from '../src/state';
 import type { StateStore } from '../src/state-store';
@@ -238,5 +239,67 @@ describe('run — discovery → durable enqueue → persist', () => {
     const persisted = loadState(store.saved!, makeConfig({ youtube: { channels: ['UC_x'] } }));
     expect(persisted.youtube['UC_x']?.initialized).toBe(true);
     expect(persisted.youtube['UC_x']?.recent_seen.map((s) => s.id).sort()).toEqual(['v1', 'v2']);
+  });
+
+  it('aborts as fatal (exit 10) on an invalid Telegram destination and persists nothing', async () => {
+    const before = initializedBytes();
+    const store = new MemoryStateStore(before);
+    await expect(
+      run({
+        clients: { youtube: emptyYoutube, awesomeStars: addsOneRepoClient() },
+        resolver: new FakeRepositoryResolver(() => [makeResolvedRepository()]),
+        telegramSender: new FakeTelegramSender(() => {
+          throw new TelegramSendError(
+            'Telegram sendMessage returned HTTP 403',
+            403,
+            403,
+            'Forbidden: bot was blocked by the user',
+          );
+        }),
+        store,
+        now,
+      }),
+    ).rejects.toBeInstanceOf(TerminalError);
+    expect(store.saveCalls).toHaveLength(0); // validate-before-mutate: no write on a fatal run
+    expect(store.saved).toBe(before); // remote last-known-good preserved
+  });
+
+  it('records a deterministic Telegram rejection as permanent_failure: exit 20 once, then gone', async () => {
+    const store = new MemoryStateStore(initializedBytes());
+    const poisonTelegram = new FakeTelegramSender(() => {
+      throw new TelegramSendError(
+        'Telegram sendMessage returned HTTP 400',
+        400,
+        400,
+        'Bad Request: message is too long',
+      );
+    });
+    const first = await run({
+      clients: { youtube: emptyYoutube, awesomeStars: addsOneRepoClient() },
+      resolver: new FakeRepositoryResolver(() => [makeResolvedRepository()]),
+      telegramSender: poisonTelegram,
+      store,
+      now,
+    });
+    expect(first.permanentFailures).toHaveLength(1);
+    expect(first.pendingCount).toBe(0); // not retried — it left the queue
+    expect(runExitCode(first)).toBe(20); // surfaced exactly once
+
+    const persisted = loadState(store.saved!, makeConfig());
+    expect(persisted.pending).toEqual([]);
+    expect(persisted.deliveries.some((d) => d.status === 'permanent_failure')).toBe(true);
+    expect(persisted.awesome_stars.last_commit_sha).toBe('sha_new'); // cursor still advanced
+
+    // Second run: the cursor already advanced and the item is gone — a clean no-op.
+    const second = await run({
+      clients: { youtube: emptyYoutube, awesomeStars: addsOneRepoClient() },
+      resolver: new FakeRepositoryResolver(() => [makeResolvedRepository()]),
+      telegramSender: poisonTelegram,
+      store,
+      now,
+    });
+    expect(second.permanentFailures).toHaveLength(0);
+    expect(second.enqueued).toBe(0);
+    expect(runExitCode(second)).toBe(0);
   });
 });

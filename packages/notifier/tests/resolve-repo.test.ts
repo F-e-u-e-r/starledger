@@ -1,3 +1,4 @@
+import { AuthError } from '@starred/github-client';
 import { describe, expect, it } from 'vitest';
 import {
   GithubRepositoryResolver,
@@ -119,5 +120,18 @@ describe('GithubRepositoryResolver', () => {
         }),
       ),
     ).rejects.toThrow('acme/second');
+  });
+
+  it('escalates a GitHub 401 to a fatal AuthError (a bad PAT is run-level, not per-item)', async () => {
+    const unauthorized: GithubRepositoryClient = {
+      async getPublicRepository() {
+        throw Object.assign(new Error('Unauthorized'), { status: 401 });
+      },
+    };
+    const resolver = new GithubRepositoryResolver(unauthorized);
+
+    await expect(
+      resolver.resolve(makeDiscoveryItem({ extraction_text: 'https://github.com/acme/widget' })),
+    ).rejects.toBeInstanceOf(AuthError);
   });
 });

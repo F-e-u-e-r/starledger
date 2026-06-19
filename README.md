@@ -2,13 +2,13 @@
 
 A personal GitHub stars dashboard and repository discovery pipeline, built in phases:
 
-| Phase  | What                                                                  | Status                                 |
-| ------ | --------------------------------------------------------------------- | -------------------------------------- |
-| **P0** | Deterministic **exporter**: stars → canonical `stars.json`            | ✅ complete                            |
-| P1     | Static **dashboard** on GitHub Pages (client-side filter/sort/search) | ✅ complete                            |
-| P2     | **Notifier**: YouTube / awesome-stars → one-shot Telegram delivery    | release candidate; Actions run pending |
-| P3     | **AI classification**: categories, tags, summaries, semantic search   | planned                                |
-| P4     | Reusable template / workflow (fork model, no key custody)             | planned                                |
+| Phase  | What                                                                  | Status                                             |
+| ------ | --------------------------------------------------------------------- | -------------------------------------------------- |
+| **P0** | Deterministic **exporter**: stars → canonical `stars.json`            | ✅ complete                                        |
+| P1     | Static **dashboard** on GitHub Pages (client-side filter/sort/search) | ✅ complete                                        |
+| P2     | **Notifier**: YouTube / awesome-stars → one-shot Telegram delivery    | release candidate (P2.5 closure); live run pending |
+| P3     | **AI classification**: categories, tags, summaries, semantic search   | planned                                            |
+| P4     | Reusable template / workflow (fork model, no key custody)             | planned                                            |
 
 Contracts: **[`docs/P0-exporter-spec.md`](docs/P0-exporter-spec.md)** (exporter) · **[`docs/P1-dashboard-spec.md`](docs/P1-dashboard-spec.md)** (dashboard) · **[`docs/P2-notifier-spec.md`](docs/P2-notifier-spec.md)** (notifier).
 
@@ -73,6 +73,16 @@ node packages/notifier/dist/cli.js --config config/notifier.yaml
 Notifier state is validated and committed only when changed on the dedicated
 `starledger-state` branch. A successful Telegram send followed by a process
 crash before that state push can resend once on recovery; this is the accepted
-at-least-once boundary. To manually send the test-chat smoke message, run
-`TELEGRAM_SMOKE=1 pnpm smoke:telegram`. The local test-chat smoke has passed;
-the first hosted `notify.yml` workflow run remains the final live validation.
+at-least-once boundary.
+
+Exit codes mirror the exporter: `0` clean · `20` deferred (a retryable failure
+left work pending, or a new `permanent_failure` surfaced once) · `10` fatal
+(missing/invalid GitHub or Telegram credential, bad destination, or invalid
+config/state) — a fatal run persists nothing. A pending item stuck past
+`retry.attention_after_attempts` is reported as `attention` but never dropped.
+
+To manually send the test-chat smoke message, run `TELEGRAM_SMOKE=1 pnpm
+smoke:telegram`. The local test-chat smoke has passed; a live controlled
+delivery + no-duplicate replay on hosted Actions remains the final validation —
+the step-by-step runbook is the **Live validation** section of
+[`docs/P2-notifier-spec.md`](docs/P2-notifier-spec.md).

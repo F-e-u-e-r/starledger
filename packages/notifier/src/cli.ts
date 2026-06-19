@@ -16,6 +16,11 @@ program
     process.cwd(),
   )
   .action(async (opts: { config?: string; cwd: string }) => {
+    const secrets = (): (string | undefined)[] => [
+      process.env.STAR_SYNC_TOKEN,
+      process.env.TELEGRAM_BOT_TOKEN,
+      process.env.TELEGRAM_CHAT_ID,
+    ];
     try {
       const outcome = await run({ configPath: opts.config, cwd: opts.cwd });
       const save = outcome.save.changed
@@ -25,27 +30,28 @@ program
         : 'state unchanged';
       process.stdout.write(
         `✓ discovered ${outcome.discovered}, enqueued ${outcome.enqueued}, ` +
-          `pending ${outcome.pendingCount} — ${save}\n`,
+          `pending ${outcome.pendingCount}, permanent ${outcome.permanentFailures.length} — ${save}\n`,
       );
       for (const e of outcome.errors) {
         process.stderr.write(
-          `  ! ${e.source} ${e.target}: ${redactSecrets(e.message, [
-            process.env.STAR_SYNC_TOKEN,
-            process.env.TELEGRAM_BOT_TOKEN,
-            process.env.TELEGRAM_CHAT_ID,
-            process.env.LLM_API_KEY,
-          ])}\n`,
+          `  ! ${e.source} ${e.target}: ${redactSecrets(e.message, secrets())}\n`,
+        );
+      }
+      for (const e of outcome.permanentFailures) {
+        process.stderr.write(
+          `  ✗ permanent ${e.source} ${e.target}: ${redactSecrets(e.message, secrets())}\n`,
+        );
+      }
+      for (const a of outcome.attention) {
+        process.stderr.write(
+          `  ⚠ attention ${a.item_key}: ${a.attempts} attempts; ` +
+            `${redactSecrets(a.last_error ?? '', secrets())}\n`,
         );
       }
       process.exit(runExitCode(outcome));
     } catch (err) {
-      const message = redactSecrets(err instanceof Error ? err.message : String(err), [
-        process.env.STAR_SYNC_TOKEN,
-        process.env.TELEGRAM_BOT_TOKEN,
-        process.env.TELEGRAM_CHAT_ID,
-        process.env.LLM_API_KEY,
-      ]);
-      // 10 = fatal (config/token/schema); 20 = deferred (state preserved).
+      const message = redactSecrets(err instanceof Error ? err.message : String(err), secrets());
+      // 10 = fatal (config/token/credential/schema); 20 = deferred (state preserved).
       if (err instanceof ExporterError) {
         process.stderr.write(`${err.code} (exit ${err.exitCode}): ${message}\n`);
         process.exit(err.exitCode);

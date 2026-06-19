@@ -5,8 +5,8 @@ import { z } from 'zod';
 
 /**
  * Versioned notifier configuration. Secrets are NEVER configured here — the
- * GitHub PAT, Telegram bot token/chat id and the optional LLM key are read from
- * the environment (see the env readers below).
+ * GitHub PAT and the Telegram bot token/chat id are read from the environment
+ * (see the env readers below).
  */
 export const NotifierConfigSchema = z
   .object({
@@ -60,14 +60,36 @@ export const NotifierConfigSchema = z
 
     summary: z
       .object({
-        // P2 operates with the deterministic summary; the LLM adapter (P2.3) is
-        // strictly optional and falls back to deterministic on any failure.
+        // RESERVED. LLM summarization is a P3 concern; P2 always uses the
+        // deterministic summary. Setting this true is REJECTED (see the
+        // superRefine below) rather than silently ignored, so the config never
+        // promises behavior that does not exist.
         use_llm: z.boolean().default(false),
       })
       .strict()
       .default({}),
+
+    retry: z
+      .object({
+        // A pending item still failing after this many attempts is surfaced as
+        // `attention` telemetry. It STAYS pending and is never auto-discarded —
+        // the threshold only makes a stuck item visible to an operator.
+        attention_after_attempts: z.number().int().min(1).default(6),
+      })
+      .strict()
+      .default({}),
   })
-  .strict();
+  .strict()
+  .superRefine((config, ctx) => {
+    if (config.summary.use_llm) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        path: ['summary', 'use_llm'],
+        message:
+          'summary.use_llm is reserved for a future milestone; LLM summarization is not available in P2. Remove it or set it to false.',
+      });
+    }
+  });
 
 export type NotifierConfig = z.infer<typeof NotifierConfigSchema>;
 
@@ -118,10 +140,4 @@ export function readTelegramCredentials(env: NodeJS.ProcessEnv = process.env): T
   const chatId = env.TELEGRAM_CHAT_ID?.trim();
   if (!chatId) throw new MissingTelegramCredentialsError('TELEGRAM_CHAT_ID');
   return { botToken, chatId };
-}
-
-/** Optional LLM key. Absent is normal: P2 must work without it (fix #5). */
-export function readLlmApiKey(env: NodeJS.ProcessEnv = process.env): string | null {
-  const key = env.LLM_API_KEY?.trim();
-  return key ? key : null;
 }
