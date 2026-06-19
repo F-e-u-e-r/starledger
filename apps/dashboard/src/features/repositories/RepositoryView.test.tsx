@@ -10,7 +10,9 @@ beforeEach(() => window.history.replaceState(null, '', '/'));
 afterEach(cleanup);
 
 function renderView(repos = sampleRepos()) {
-  return render(<RepositoryView repos={repos} initialNow={NOW} />);
+  return render(
+    <RepositoryView repos={repos} datasetGeneratedAt="2026-06-18T00:00:00Z" initialNow={NOW} />,
+  );
 }
 
 function sampleRepos() {
@@ -41,6 +43,8 @@ const titles = () => screen.getAllByRole('link').map((a) => a.textContent);
 describe('RepositoryView', () => {
   it('renders the result count and repository links (CARD-3)', () => {
     renderView();
+    expect(screen.getByRole('heading', { name: 'StarLedger' })).toBeTruthy();
+    expect(screen.getByText(/Last synced 1 day ago/)).toBeTruthy();
     expect(screen.getByText('2 of 2 repositories')).toBeTruthy();
     const link = screen.getByRole('link', { name: 'acme/ts-tool' });
     expect(link.getAttribute('href')).toBe('https://github.com/acme/ts-tool');
@@ -49,9 +53,14 @@ describe('RepositoryView', () => {
   it('SEARCH: narrows results and reflects the query in the URL (replaceState)', () => {
     renderView();
     fireEvent.change(search(), { target: { value: 'telegram' } });
+    expect(screen.getByText('1 result for "telegram"')).toBeTruthy();
     expect(screen.getByText('1 of 2 repositories')).toBeTruthy();
     expect(titles()).toEqual(['acme/ts-tool']);
     expect(window.location.search).toBe('?q=telegram');
+
+    fireEvent.click(screen.getByRole('button', { name: 'Clear search' }));
+    expect((search() as HTMLInputElement).value).toBe('');
+    expect(window.location.search).toBe('');
   });
 
   it('FACET-1/2: a language facet filters; its chip removes only that filter', () => {
@@ -65,7 +74,9 @@ describe('RepositoryView', () => {
     expect(screen.getByText('2 of 2 repositories')).toBeTruthy();
     expect(window.location.search).toBe('');
     // focus is handed to the results heading, not dropped to <body> (A11Y-4)
-    expect(document.activeElement).toBe(screen.getByRole('heading', { name: 'Results' }));
+    expect(document.activeElement).toBe(
+      screen.getByRole('heading', { name: 'Starred repositories' }),
+    );
   });
 
   it('FACET-3: clear-all returns to the default state', () => {
@@ -113,6 +124,24 @@ describe('RepositoryView', () => {
     expect(search()).toBeTruthy();
     expect(screen.getByRole('combobox', { name: 'Sort' })).toBeTruthy();
     expect(screen.getByRole('button', { name: /sort direction/i })).toBeTruthy();
+  });
+
+  it('keeps long filter sections collapsed until requested', () => {
+    renderView();
+    expect(screen.queryByRole('checkbox', { name: 'automation' })).toBeNull();
+
+    fireEvent.click(screen.getByRole('button', { name: /Topics 2 options/ }));
+    expect(screen.getByRole('checkbox', { name: 'automation' })).toBeTruthy();
+  });
+
+  it('opens the mobile filter drawer without replacing the desktop filter contract', () => {
+    renderView();
+    fireEvent.click(screen.getByRole('button', { name: 'Filters' }));
+    const dialog = screen.getByRole('dialog', { name: 'Filters' });
+    expect(within(dialog).getByRole('button', { name: /Language 2 options/ })).toBeTruthy();
+
+    fireEvent.click(within(dialog).getByRole('button', { name: 'Close filters' }));
+    expect(screen.queryByRole('dialog', { name: 'Filters' })).toBeNull();
   });
 
   const staleRepos = () => [

@@ -1,8 +1,8 @@
-import { useMemo, useRef, useState } from 'react';
+import { useId, useMemo, useRef, useState } from 'react';
 import type { CanonicalRepo } from '@starred/schema';
 import { NoResults } from '../../components/states';
 import { useDashboardState } from '../../state/use-dashboard-state';
-import { FilterChips } from '../filters/FilterChips';
+import { activeFilterCount, FilterChips } from '../filters/FilterChips';
 import { FilterControls } from '../filters/FilterControls';
 import { SORT_FIELDS, type SortField } from '../sorting/sorting';
 import { RepositoryCard } from './RepositoryCard';
@@ -21,6 +21,28 @@ const SORT_LABELS: Record<SortField, string> = {
   name_with_owner: 'Name',
 };
 
+function formatLastSynced(iso: string | undefined, now: Date): string {
+  if (!iso) return 'Last synced unavailable';
+  const d = new Date(iso);
+  if (Number.isNaN(d.getTime())) return 'Last synced unavailable';
+  const diffMs = now.getTime() - d.getTime();
+  if (diffMs < 0) return `Last synced ${d.toISOString().slice(0, 10)}`;
+  const minutes = Math.floor(diffMs / 60000);
+  if (minutes < 1) return 'Last synced just now';
+  if (minutes < 60) return `Last synced ${minutes} min ago`;
+  const hours = Math.floor(minutes / 60);
+  if (hours < 24) return `Last synced ${hours} hr ago`;
+  const days = Math.floor(hours / 24);
+  if (days < 7) return `Last synced ${days} day${days === 1 ? '' : 's'} ago`;
+  return `Last synced ${d.toISOString().slice(0, 10)}`;
+}
+
+function resultContext(count: number, total: number, query: string): string {
+  const q = query.trim();
+  if (!q) return `${count} of ${total} repositories`;
+  return `${count} result${count === 1 ? '' : 's'} for "${q}"`;
+}
+
 /**
  * The full P1.3 dashboard: URL-synced canonical state, every facet control,
  * active-filter chips, a responsive card list and accessible result states.
@@ -31,13 +53,17 @@ const SORT_LABELS: Record<SortField, string> = {
  */
 export function RepositoryView({
   repos,
+  datasetGeneratedAt,
   initialNow,
 }: {
   repos: CanonicalRepo[];
+  datasetGeneratedAt?: string;
   initialNow?: Date;
 }) {
   const { state, update, reset } = useDashboardState();
   const [sessionNow] = useState(() => initialNow ?? new Date());
+  const [filtersOpen, setFiltersOpen] = useState(false);
+  const searchId = useId();
 
   const prepared = useMemo(() => prepareRepositories(repos, sessionNow), [repos, sessionNow]);
   const facets = useMemo(() => deriveFacetOptions(repos), [repos]);
@@ -49,21 +75,52 @@ export function RepositoryView({
   // Stable focus target so chip removal / clear-all never drop focus to <body>.
   const resultsHeadingRef = useRef<HTMLHeadingElement>(null);
   const focusResults = () => resultsHeadingRef.current?.focus();
+  const filterCount = activeFilterCount(state);
+  const trimmedQuery = state.query.trim();
 
   return (
     <main className="dashboard">
       <header className="dashboard-head">
-        <h1>Starred repositories</h1>
+        <div className="brand-row">
+          <div>
+            <h1>StarLedger</h1>
+            <p>Browse and organize your GitHub stars</p>
+          </div>
+          <p className="dataset-status">
+            {repos.length} starred repositories · {formatLastSynced(datasetGeneratedAt, sessionNow)}
+          </p>
+        </div>
         <div className="toolbar">
-          <label className="search">
-            <span className="visually-hidden">Search repositories</span>
+          <div className="search">
+            <label className="visually-hidden" htmlFor={searchId}>
+              Search repositories
+            </label>
             <input
+              id={searchId}
               type="search"
               value={state.query}
               onChange={(e) => update({ query: e.target.value }, 'replace')}
-              placeholder="Search name, description, topic, language"
+              placeholder="Search by repository, description, topic, or language..."
             />
-          </label>
+            {state.query ? (
+              <button
+                type="button"
+                className="search-clear"
+                aria-label="Clear search"
+                onClick={() => update({ query: '' }, 'replace')}
+              >
+                ×
+              </button>
+            ) : null}
+          </div>
+          <button
+            type="button"
+            className="filters-toggle"
+            aria-expanded={filtersOpen}
+            onClick={() => setFiltersOpen(true)}
+          >
+            Filters{filterCount > 0 ? ` ${filterCount}` : ''}
+          </button>
           <label className="sort">
             <span>Sort</span>
             <select
@@ -99,7 +156,7 @@ export function RepositoryView({
             ref={resultsHeadingRef}
             className="results-heading"
           >
-            Results
+            Starred repositories
           </h2>
 
           <FilterChips
@@ -110,7 +167,12 @@ export function RepositoryView({
           />
 
           <p className="result-count" role="status">
-            {results.length} of {repos.length} repositories
+            <span>{resultContext(results.length, repos.length, state.query)}</span>
+            {trimmedQuery ? (
+              <span className="result-total">
+                {results.length} of {repos.length} repositories
+              </span>
+            ) : null}
           </p>
 
           {results.length === 0 ? (
@@ -123,12 +185,30 @@ export function RepositoryView({
           ) : (
             <ul className="card-list">
               {results.map((repo) => (
-                <RepositoryCard key={repo.node_id} repo={repo} />
+                <RepositoryCard key={repo.node_id} repo={repo} now={sessionNow} />
               ))}
             </ul>
           )}
         </section>
       </div>
+
+      {filtersOpen ? (
+        <div className="drawer-backdrop" role="presentation">
+          <div className="filter-drawer" role="dialog" aria-modal="true" aria-label="Filters">
+            <div className="drawer-head">
+              <h2>Filters</h2>
+              <button
+                type="button"
+                onClick={() => setFiltersOpen(false)}
+                aria-label="Close filters"
+              >
+                ×
+              </button>
+            </div>
+            <FilterControls state={state} facets={facets} update={update} />
+          </div>
+        </div>
+      ) : null}
     </main>
   );
 }

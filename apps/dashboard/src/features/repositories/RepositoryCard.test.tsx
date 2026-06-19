@@ -1,5 +1,5 @@
 // @vitest-environment jsdom
-import { cleanup, render, screen } from '@testing-library/react';
+import { cleanup, fireEvent, render, screen } from '@testing-library/react';
 import { afterEach, describe, expect, it } from 'vitest';
 import { type CanonicalRepo } from '@starred/schema';
 import { deriveRepo } from '../../data/derive-fields';
@@ -62,5 +62,22 @@ describe('RepositoryCard', () => {
       topics: ['t'.repeat(60)],
     });
     expect(screen.getByRole('link', { name: longName })).toBeTruthy();
+  });
+
+  it('shows at most four topics until the overflow affordance is expanded', () => {
+    card({ topics: ['one', 'two', 'three', 'four', 'five', 'six'] });
+    expect(screen.getByText('one')).toBeTruthy();
+    expect(screen.getByText('four')).toBeTruthy();
+    expect(screen.queryByText('five')).toBeNull();
+
+    fireEvent.click(screen.getByRole('button', { name: '+2' }));
+    expect(screen.getByText('five')).toBeTruthy();
+    expect(screen.getByText('six')).toBeTruthy();
+  });
+
+  it('moves an abbreviated star count into the card header while preserving the exact count label', () => {
+    card({ stargazer_count: 103747 });
+    const stars = screen.getByLabelText('103747 stars');
+    expect(stars.textContent).toContain('103.7k');
   });
 });

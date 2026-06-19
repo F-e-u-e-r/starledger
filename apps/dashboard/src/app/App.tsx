@@ -44,5 +44,10 @@ export function App({ loader }: AppProps = {}) {
   if (state.status === 'error') return <ErrorState kind={state.kind} message={state.message} />;
   if (state.data.stars.repos.length === 0) return <EmptyState />;
 
-  return <RepositoryView repos={state.data.stars.repos} />;
+  return (
+    <RepositoryView
+      repos={state.data.stars.repos}
+      datasetGeneratedAt={state.data.meta.dataset_generated_at}
+    />
+  );
 }
