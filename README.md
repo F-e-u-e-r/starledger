@@ -2,15 +2,15 @@
 
 A personal GitHub stars dashboard and repository discovery pipeline, built in phases:
 
-| Phase  | What                                                                      | Status      |
-| ------ | ------------------------------------------------------------------------- | ----------- |
-| **P0** | Deterministic **exporter**: stars → canonical `stars.json`                | ✅ complete |
-| P1     | Static **dashboard** on GitHub Pages (client-side filter/sort/search)     | ✅ complete |
-| P2     | **Notifier**: YouTube / awesome-stars → Telegram, with the star-back loop | planned     |
-| P3     | **AI classification**: categories, tags, summaries, semantic search       | planned     |
-| P4     | Reusable template / workflow (fork model, no key custody)                 | planned     |
+| Phase  | What                                                                  | Status                                 |
+| ------ | --------------------------------------------------------------------- | -------------------------------------- |
+| **P0** | Deterministic **exporter**: stars → canonical `stars.json`            | ✅ complete                            |
+| P1     | Static **dashboard** on GitHub Pages (client-side filter/sort/search) | ✅ complete                            |
+| P2     | **Notifier**: YouTube / awesome-stars → one-shot Telegram delivery    | release candidate; Actions run pending |
+| P3     | **AI classification**: categories, tags, summaries, semantic search   | planned                                |
+| P4     | Reusable template / workflow (fork model, no key custody)             | planned                                |
 
-Contracts: **[`docs/P0-exporter-spec.md`](docs/P0-exporter-spec.md)** (exporter) · **[`docs/P1-dashboard-spec.md`](docs/P1-dashboard-spec.md)** (dashboard).
+Contracts: **[`docs/P0-exporter-spec.md`](docs/P0-exporter-spec.md)** (exporter) · **[`docs/P1-dashboard-spec.md`](docs/P1-dashboard-spec.md)** (dashboard) · **[`docs/P2-notifier-spec.md`](docs/P2-notifier-spec.md)** (notifier).
 
 ## Quick start
 
@@ -21,6 +21,7 @@ pnpm test           # vitest
 pnpm build          # tsup + vite → dist (CLI + dashboard)
 pnpm schemas        # regenerate schemas/*.json from the Zod schemas
 pnpm release-gate   # full P0 gate: typecheck·lint·test·build·schemas·real-git smoke
+pnpm p2-gate        # P2 notifier gate: quality checks + state/replay smokes
 
 pnpm --filter @starred/dashboard dev    # run the dashboard locally (reads ./stars.json)
 ```
@@ -51,6 +52,27 @@ Exit codes: `0` published (or unchanged) · `20` deferred — do not publish, re
 packages/schema          @starred/schema         canonical Zod model + JSON Schema generation (shared by exporter + dashboard)
 packages/github-client   @starred/github-client  errors · retry coordinator · GraphQL probe/pagination/hydrate (bisection) · REST enumeration
 packages/exporter        @starred/exporter        config · enumerate (dual-path) · hydrate-merge · degraded gate · serialize · staged git publish · CLI
+packages/notifier        @starred/notifier        YouTube / awesome-stars source polling · durable state branch · pending queue · CLI
 apps/dashboard           @starred/dashboard       Vite + React static site: trusted loading + schema validation (P1)
 schemas/                 generated JSON Schemas
 ```
+
+## Running the notifier
+
+Configure watched channels in `config/notifier.yaml` (starting from
+`config/notifier.example.yaml`), then provide only environment secrets:
+
+```bash
+export STAR_SYNC_TOKEN=github_pat_...   # public GitHub reads
+export TELEGRAM_BOT_TOKEN=123456:...
+export TELEGRAM_CHAT_ID=-100...
+pnpm --filter @starred/notifier build
+node packages/notifier/dist/cli.js --config config/notifier.yaml
+```
+
+Notifier state is validated and committed only when changed on the dedicated
+`starledger-state` branch. A successful Telegram send followed by a process
+crash before that state push can resend once on recovery; this is the accepted
+at-least-once boundary. To manually send the test-chat smoke message, run
+`TELEGRAM_SMOKE=1 pnpm smoke:telegram`. The local test-chat smoke has passed;
+the first hosted `notify.yml` workflow run remains the final live validation.

@@ -19,8 +19,12 @@
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "smoke": "node scripts/smoke-realgit.mjs",
+    "smoke:notifier": "node scripts/smoke-notifier-state.mjs",
+    "smoke:notifier-replay": "node scripts/smoke-notifier-replay.mjs",
+    "smoke:telegram": "node scripts/smoke-telegram-test-chat.mjs",
     "release-gate": "bash scripts/release-gate.sh",
-    "p1-gate": "bash scripts/p1-gate.sh"
+    "p1-gate": "bash scripts/p1-gate.sh",
+    "p2-gate": "bash scripts/p2-gate.sh"
   },
   "devDependencies": {
     "@eslint/js": "^9.17.0",
