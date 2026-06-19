@@ -73,4 +73,5 @@ jobs:
           if [ -z "$STAR_SYNC_TOKEN" ]; then
             echo "STAR_SYNC_TOKEN not set — skipping"; exit 0
           fi
+          pnpm build
           node scripts/smoke-public-pat.mjs
