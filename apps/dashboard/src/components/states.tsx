@@ -13,6 +13,23 @@ export function EmptyState() {
   );
 }
 
+/**
+ * Shown when the dataset is non-empty but nothing matches the current search and
+ * filters (RESULT-2). Distinct from {@link EmptyState}, which means the trusted
+ * source genuinely contains zero repositories.
+ */
+export function NoResults({ onClearFilters }: { onClearFilters: () => void }) {
+  return (
+    <div className="no-results">
+      <h3>No matching repositories</h3>
+      <p>No repositories match the current search and filters.</p>
+      <button type="button" onClick={onClearFilters}>
+        Clear filters
+      </button>
+    </div>
+  );
+}
+
 const ERROR_TITLE: Record<string, string> = {
   integrity: 'Data integrity check failed',
   schema: 'Data failed validation',

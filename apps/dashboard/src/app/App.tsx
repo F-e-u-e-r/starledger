@@ -6,6 +6,7 @@ import {
   type LoadedDataset,
   loadStars,
 } from '../data/load-stars';
+import { RepositoryView } from '../features/repositories/RepositoryView';
 
 type State =
   | { status: 'loading' }
@@ -43,20 +44,5 @@ export function App({ loader }: AppProps = {}) {
   if (state.status === 'error') return <ErrorState kind={state.kind} message={state.message} />;
   if (state.data.stars.repos.length === 0) return <EmptyState />;
 
-  // P1.1 renders a minimal verified list; search/sort/filter/cards arrive in P1.2/P1.3.
-  const repos = state.data.stars.repos;
-  return (
-    <main>
-      <h1>Starred repositories</h1>
-      <p>{repos.length} repositories</p>
-      <ul>
-        {repos.map((repo) => (
-          <li key={repo.node_id}>
-            <a href={repo.url}>{repo.name_with_owner}</a>
-            {repo.primary_language ? <span> · {repo.primary_language}</span> : null}
-          </li>
-        ))}
-      </ul>
-    </main>
-  );
+  return <RepositoryView repos={state.data.stars.repos} />;
 }

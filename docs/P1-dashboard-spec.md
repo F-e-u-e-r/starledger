@@ -1,6 +1,6 @@
 # P1 — Dashboard Specification
 
-> Status: **P1.1 implemented** (Vite + React + TS scaffold, trusted loading, states, Pages base path; typecheck + tests + build green). P1.2–P1.4 scoped below.
+> Status: **P1.1–P1.4 implemented** (trusted loading + states; full search/sort/filter UI with canonical URL state and a11y; GitHub Pages deploy via Actions artifact with dataset staging + integrity verification). `pnpm p1-gate` green.
 > Stack: Vite · React · TypeScript · `@starred/schema` · GitHub Pages. No backend.
 
 A static, client-side dashboard that loads the canonical `stars.json` produced by P0 and lets a user search, sort, and filter their starred repositories. State is reproducible (URL), data semantics are correct, and deployment needs no server.
@@ -14,13 +14,18 @@ A static, client-side dashboard that loads the canonical `stars.json` produced b
 ```
 apps/dashboard/
   src/
-    app/         App + state machine
-    components/  state views (loading/error/empty), later cards/table/facets
-    data/        load-stars.ts (trusted loading), later derive-fields.ts
-    features/    repositories / search / filters / sorting   (P1.2+)
-  index.html  vite.config.ts
+    app/         App + load state machine
+    components/  state views (loading / error / empty / no-results)
+    data/        load-stars (trusted loading) · derive-fields
+    features/    repositories (cards + select pipeline) · search · filters (controls + chips) · sorting
+    state/       canonical DashboardState + URL codec + useDashboardState
+    styles.css
+  index.html  vite.config.ts  (Pages base path derived from GITHUB_REPOSITORY)
 
 packages/schema   ← shared canonical model (single source of truth, reused from P0)
+packages/deploy   ← Pages tooling: dataset integrity, staging into dist, artifact verify, static smoke
+
+.github/workflows ← ci.yml · pages.yml (reusable build + deploy) · sync-stars.yml (exporter → calls deploy)
 ```
 
 The dashboard validates `stars.json` against the **same** `@starred/schema` the exporter writes — no schema drift.
@@ -44,30 +49,29 @@ A single integrity mismatch is most likely a **cross-deployment read race** on P
 
 ## 3. Derived fields (P1, not P0)
 
-Computed at view time from raw fields, e.g.:
+Computed at view time from raw fields (`deriveRepo(repo, now)`):
 
 ```ts
 type DerivedRepo = CanonicalRepo & {
-  lastActivityAt: string | null;
-  monthsSincePush: number | null;
-  isStale: boolean;
-  hasStableRelease: boolean;
-  hasAnyRelease: boolean;
+  monthsSincePush: number | null; // null when pushed_at is unknown/absent
+  isStale: boolean; // false when the push date is unknown
+  stableRelease: 'has' | 'none' | 'unavailable';
+  anyRelease: 'has' | 'none' | 'unavailable';
 };
 ```
 
-The `null` vs unknown distinction from P0 must be preserved in display: a field in `unavailable_fields` shows **"information unavailable"**, NOT "none". E.g. a hydration-failed repo must not render `latest_stable_release: null` as "No releases".
+The release fields are **three-state** precisely to preserve P0's `null`-vs-unknown distinction: a field in `unavailable_fields` becomes `'unavailable'` ("information unavailable"), never `'none'`. A hydration-failed repo must not render `latest_stable_release: null` as "No releases", and an unknown `pushed_at` is **not** counted as stale.
 
 ---
 
 ## 4. Milestones
 
-|          | Content                                                                                                                                                                                                                        | Status  |
-| -------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------- |
-| **P1.1** | Vite/React/TS scaffold · shared schema · load + validate `dataset-meta` + `stars` · loading/error/integrity/empty states · Pages base path                                                                                     | ✅ done |
-| P1.2     | search (name/description/topics/language) · sort (starred_at/stars/pushed/release/name) · filters (language/topics/license/archived/fork/has-release/stale/hydration) — substring search, AND across facets, OR within a facet | ◻       |
-| P1.3     | UX: cards/table · result count · filter chips · clear-all · sort direction · responsive · keyboard a11y · **URL query state**                                                                                                  | ◻       |
-| P1.4     | GitHub Pages deploy via Actions Pages artifact (not a `gh-pages` branch); copy `stars.json`+`dataset-meta.json` into `dist/`                                                                                                   | ◻       |
+|          | Content                                                                                                                                                                                                                                                                                                                                                                                                           | Status  |
+| -------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------- |
+| **P1.1** | Vite/React/TS scaffold · shared schema · load + validate `dataset-meta` + `stars` · loading/error/integrity/empty states · Pages base path                                                                                                                                                                                                                                                                        | ✅ done |
+| P1.2     | **Filter / sort / search logic for every facet** (language, topics, license, archived, fork, has-release, stale, hydration) — substring search, AND across facets, OR within a facet; sort by `starred_at` / stars / pushed / release / name. **UI wiring is intentionally minimal** (search · sort · language · has-release · hide-archived); the remaining facet controls are P1.3, not an accidental omission. | ✅ done |
+| P1.3     | UX: **all facet controls** (language · topics · license · archived · fork · stale · stable/any release · hydration) · responsive cards · result count · active-filter chips · clear-all · sort direction · keyboard a11y · **canonical URL state** (codec + history, back/forward) · memoized prepare→select pipeline                                                                                             | ✅ done |
+| P1.4     | GitHub **Pages deploy via Actions artifact** (not `gh-pages`): `@starred/deploy` stages + integrity-verifies `stars.json`+`dataset-meta.json` into `dist/`; `ci.yml` (no secrets) · `pages.yml` (reusable build+deploy) · `sync-stars.yml` (exporter → commit → calls deploy directly); `p1-gate.sh`                                                                                                              | ✅ done |
 
 **Explicitly excluded from P1:** AI categories, semantic search, Telegram, login, server/API, user editing, charts, heavy animation, IndexedDB.
 
@@ -75,26 +79,86 @@ The `null` vs unknown distinction from P0 must be preserved in display: a field 
 
 ## 5. Acceptance tests
 
-| ID       | Test                                                              | Status |
-| -------- | ----------------------------------------------------------------- | ------ |
-| DATA-1   | valid `stars.json` passes shared schema and renders               | ✅     |
-| DATA-2   | schema-invalid `stars.json` → no records rendered (fail closed)   | ✅     |
-| DATA-3   | `dataset-meta` hash ≠ `stars` bytes → integrity error             | ✅     |
-| DATA-3B  | transient cross-deploy mismatch recovers on a full-snapshot retry | ✅     |
-| DATA-3C  | persistent mismatch → fail closed after one retry                 | ✅     |
-| DATA-4   | unavailable release field shows "unknown", not "no release"       | ◻ P1.3 |
-| EMPTY-1  | zero repositories → normal empty state, not an error              | ✅     |
-| PATH-1   | under `/<repo>/` base, assets + data load (sha-busted)            | ✅     |
-| SEARCH-1 | search matches name/description/topic/language                    | ◻ P1.2 |
-| SORT-1   | each sort field has a fixed rule for null/unknown                 | ◻ P1.2 |
-| FILTER-1 | AND across facets, OR within a facet                              | ◻ P1.2 |
-| URL-1    | search/sort/filters survive reload (URL state)                    | ◻ P1.3 |
-| A11Y-1   | search/filter/sort operable by keyboard                           | ◻ P1.3 |
+| ID       | Test                                                               | Status |
+| -------- | ------------------------------------------------------------------ | ------ |
+| DATA-1   | valid `stars.json` passes shared schema and renders                | ✅     |
+| DATA-2   | schema-invalid `stars.json` → no records rendered (fail closed)    | ✅     |
+| DATA-3   | `dataset-meta` hash ≠ `stars` bytes → integrity error              | ✅     |
+| DATA-3B  | transient cross-deploy mismatch recovers on a full-snapshot retry  | ✅     |
+| DATA-3C  | persistent mismatch → fail closed after one retry                  | ✅     |
+| DATA-4   | unavailable release field shows "unknown", not "no release"        | ✅     |
+| EMPTY-1  | zero repositories → normal empty state, not an error               | ✅     |
+| PATH-1   | under `/<repo>/` base, assets + data load (sha-busted)             | ✅     |
+| SEARCH-1 | search matches name/description/topic/language                     | ✅     |
+| SEARCH-2 | case-insensitive; empty/whitespace query matches all               | ✅     |
+| SORT-1   | asc/desc with deterministic node_id tiebreak                       | ✅     |
+| SORT-2   | null/unknown values sort last regardless of direction              | ✅     |
+| SORT-3   | sort returns a new array; input order and objects are not mutated  | ✅     |
+| FILTER-1 | AND across facets                                                  | ✅     |
+| FILTER-2 | OR within a facet (multi-select)                                   | ✅     |
+| FILTER-3 | clearing filters restores the full dataset                         | ✅     |
+| FILTER-4 | release "none" filter excludes "unavailable" (unknown≠absent)      | ✅     |
+| FILTER-5 | stable=none + any=has match a prerelease-only repo (independent)   | ✅     |
+| FILTER-6 | any-release "unavailable" is distinct from "none" (both ways)      | ✅     |
+| RESULT-1 | combined search + filter + sort yields the correct set & count     | ✅     |
+| PERF-1   | thousands of repos filter/sort without jank                        | ✅     |
+| STATE-1  | defaults normalize to themselves; serialize to an empty string     | ✅     |
+| STATE-2  | array facets deduplicate + sort; equivalent states are identical   | ✅     |
+| URL-1    | full state round-trips; canonical emit order (reload/shared link)  | ✅     |
+| URL-2    | equivalent states serialize byte-identically                       | ✅     |
+| URL-3    | invalid enum/malformed values fail safe to defaults                | ✅     |
+| URL-4    | repeated scalar takes the last valid value                         | ✅     |
+| URL-5    | default state produces no query string                             | ✅     |
+| URL-6    | prerelease-only (stable=none + any=has) round-trips                | ✅     |
+| URL-7    | unknown-but-valid facet values survive (bookmarks don't drop)      | ✅     |
+| HIST-1   | replaceState for typing, pushState for discrete; popstate restores | ✅     |
+| FACET-1  | every supported facet is reachable from the UI                     | ✅     |
+| FACET-2  | removing one chip removes only its filter                          | ✅     |
+| FACET-3  | clear-all returns to the default state                             | ✅     |
+| RESULT-2 | no matches → no-results state, not the empty-dataset state         | ✅     |
+| CARD-1   | confirmed-absent vs unavailable render distinctly                  | ✅     |
+| CARD-2   | archived / fork / hydration states are visible                     | ✅     |
+| CARD-3   | repository links use the canonical URL                             | ✅     |
+| CARD-4   | long names/descriptions/topics do not break layout (CSS wrap)      | ✅     |
+| A11Y-1   | search/filter/sort/chips operable by keyboard, with names          | ✅     |
+| A11Y-4   | focus stays logical after chip removal / clear-all                 | ✅     |
+| PERF-2   | prepared dataset powers many queries without re-deriving           | ✅     |
+| PERF-3   | facet options depend only on the dataset                           | ✅     |
+| TIME-1   | stale uses one mounted clock, stable across unrelated changes      | ✅     |
+| TIME-2   | a newer mount clock re-evaluates staleness                         | ✅     |
 
-Current dashboard suite: load-stars (DATA-1/2/3/3B/3C, EMPTY-1, PATH-1, fetch-fail) + App state machine (loaded/empty/integrity-error) — all green.
+**P1.4 — deployment** (`@starred/deploy`, run under vitest + the P1 gate):
+
+| ID           | Test                                                           | Status        |
+| ------------ | -------------------------------------------------------------- | ------------- |
+| BUILD-DATA-1 | matching stars + meta verify; dist contains both data files    | ✅            |
+| BUILD-DATA-2 | a stars/meta hash mismatch is rejected                         | ✅            |
+| BUILD-DATA-3 | run-meta/secret files are refused in the artifact              | ✅            |
+| PATH-2       | the artifact works under `/<repo>/` (assets are base-prefixed) | ✅            |
+| DEPLOY-1     | dist passes schema/hash/count validation before upload         | ✅            |
+| DEPLOY-2     | base-path asset + data URLs resolve in a static-server smoke   | ✅            |
+| DEPLOY-3/4   | invalid/failed staging never mutates or ships the dataset      | ✅            |
+| DEPLOY-5     | unchanged run deploys only on manual dispatch (no data commit) | ✅ (workflow) |
+| DEPLOY-6     | the live page loads/searches/sorts the real dataset            | ◻ live        |
+
+Suite: load-stars (DATA-1/2/3/3B/3C, EMPTY-1, PATH-1) · App state machine · derive-fields (incl. stale boundary) · search · sorting (SORT-1/2/3) · filters (FILTER-1..6) · select + prepared pipeline (RESULT-1, PERF-1/2/3) · dashboard-state codec (STATE/URL) · useDashboardState (HIST) · FilterControls/Chips · RepositoryCard (CARD/DATA-4) · RepositoryView (FACET/RESULT-2/A11Y) · `@starred/deploy` (BUILD-DATA/PATH-2/DEPLOY) — all green. The pipeline takes an explicit `now`; `RepositoryView` fixes one session clock so derived staleness does not drift across recomputes. DEPLOY-6 is the only check that requires the live Pages site.
 
 ---
 
 ## 6. Exit condition
 
 > P1 is complete when a user can reliably load the canonical stars dataset on GitHub Pages and quickly search, sort, and filter repositories; all state is reproducible, data semantics are correct, and deployment depends on no backend.
+
+Status against the P1 exit checklist:
+
+1. dashboard loads only a schema-valid, hash-valid canonical dataset — ✅ (`load-stars`)
+2. search, sorting and every intended filter are reachable in the UI — ✅ (FACET-1)
+3. unavailable data stays distinct from confirmed absence — ✅ (DATA-4 / CARD-1)
+4. state is canonically URL-encoded and survives reload/back/forward — ✅ (URL/HIST)
+5. the interface is responsive and keyboard accessible — ✅ (A11Y, responsive CSS)
+6. Actions can safely update the dataset and deploy Pages — ✅ (`sync-stars` + `pages`)
+7. a workflow-generated data commit does not rely on a suppressed `push` to deploy — ✅ (`sync-stars` calls `pages.yml` directly)
+8. failed exporter/build/deploy runs cannot corrupt the canonical dataset — ✅ (DEPLOY-3/4)
+9. the live Pages site passes an end-to-end smoke without a backend — ◻ verified on first deploy (DEPLOY-6)
+
+Everything except (9), which requires the live site, is covered by `pnpm p1-gate`.

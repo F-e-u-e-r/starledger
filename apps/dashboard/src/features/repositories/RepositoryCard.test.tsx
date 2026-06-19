@@ -1,0 +1,66 @@
+// @vitest-environment jsdom
+import { cleanup, render, screen } from '@testing-library/react';
+import { afterEach, describe, expect, it } from 'vitest';
+import { type CanonicalRepo } from '@starred/schema';
+import { deriveRepo } from '../../data/derive-fields';
+import { makeRepo } from '../../test-utils';
+import { RepositoryCard } from './RepositoryCard';
+
+const NOW = new Date('2026-06-19T00:00:00Z');
+const card = (over: Partial<CanonicalRepo> = {}) =>
+  render(
+    <ul>
+      <RepositoryCard repo={deriveRepo(makeRepo(over), NOW)} />
+    </ul>,
+  );
+
+afterEach(cleanup);
+
+describe('RepositoryCard', () => {
+  it('CARD-3: links to the canonical repository URL', () => {
+    card({ name_with_owner: 'octocat/Hello', url: 'https://github.com/octocat/Hello' });
+    expect(screen.getByRole('link', { name: 'octocat/Hello' }).getAttribute('href')).toBe(
+      'https://github.com/octocat/Hello',
+    );
+  });
+
+  it('CARD-1 / DATA-4: an unavailable release reads "Information unavailable", not "No release"', () => {
+    card({
+      hydration_status: 'failed',
+      latest_stable_release: null,
+      unavailable_fields: ['latest_stable_release'],
+    });
+    expect(screen.getByText('Information unavailable')).toBeTruthy();
+    expect(screen.queryByText('No stable release')).toBeNull();
+  });
+
+  it('CARD-1: a confirmed-absent release reads "No release"', () => {
+    card({ latest_stable_release: null }); // ok hydration, not unavailable → confirmed absent
+    expect(screen.getByText('No stable release')).toBeTruthy();
+    expect(screen.queryByText('Information unavailable')).toBeNull();
+  });
+
+  it('CARD-2: archived, fork and degraded-hydration states are visible', () => {
+    card({
+      is_archived: true,
+      is_fork: true,
+      hydration_status: 'partial',
+      pushed_at: null,
+      unavailable_fields: ['pushed_at'],
+    });
+    expect(screen.getByText('Archived')).toBeTruthy();
+    expect(screen.getByText('Fork')).toBeTruthy();
+    expect(screen.getByText('Partial data')).toBeTruthy();
+  });
+
+  it('CARD-4: very long name/description/topic still render in full', () => {
+    const longName = 'acme/' + 'x'.repeat(120);
+    card({
+      name_with_owner: longName,
+      url: 'https://github.com/acme/x',
+      description: 'y'.repeat(400),
+      topics: ['t'.repeat(60)],
+    });
+    expect(screen.getByRole('link', { name: longName })).toBeTruthy();
+  });
+});
