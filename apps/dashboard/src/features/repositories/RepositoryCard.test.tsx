@@ -80,4 +80,34 @@ describe('RepositoryCard', () => {
     const stars = screen.getByLabelText('103747 stars');
     expect(stars.textContent).toContain('103.7k');
   });
+
+  it('CARD-5: colocates a prerelease-only "latest" beside the (absent) stable release', () => {
+    card({
+      latest_stable_release: null,
+      latest_any_release: {
+        tag_name: 'v2.0.0-rc1',
+        published_at: '2026-05-01T00:00:00Z',
+        is_prerelease: true,
+      },
+    });
+    expect(screen.getByText('No stable release')).toBeTruthy();
+    expect(screen.getByText(/^latest v2\.0\.0-rc1/)).toBeTruthy();
+  });
+
+  it('CARD-5: does not repeat "latest" when it equals the stable release', () => {
+    card({
+      latest_stable_release: {
+        tag_name: 'v1.4.0',
+        published_at: '2026-04-01T00:00:00Z',
+        url: 'https://github.com/acme/base/releases/tag/v1.4.0',
+      },
+      latest_any_release: {
+        tag_name: 'v1.4.0',
+        published_at: '2026-04-01T00:00:00Z',
+        is_prerelease: false,
+      },
+    });
+    expect(screen.getByText('v1.4.0')).toBeTruthy();
+    expect(screen.queryByText(/^latest/)).toBeNull();
+  });
 });

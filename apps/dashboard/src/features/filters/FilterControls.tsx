@@ -34,6 +34,7 @@ function CheckboxFacet<T extends string>({
   onChange,
   initialLimit,
   hideLegend = false,
+  help,
 }: {
   legend: string;
   options: Option<T>[];
@@ -41,8 +42,10 @@ function CheckboxFacet<T extends string>({
   onChange: (next: T[]) => void;
   initialLimit?: number;
   hideLegend?: boolean;
+  help?: string;
 }) {
   const [showAll, setShowAll] = useState(false);
+  const helpId = useId();
   if (options.length === 0) return null;
   const limited = initialLimit && !showAll ? options.slice(0, initialLimit) : options;
   const selectedOverflow =
@@ -54,8 +57,13 @@ function CheckboxFacet<T extends string>({
   const visible = [...limited, ...selectedOverflow];
   const hiddenCount = options.length - visible.length;
   return (
-    <fieldset className="facet">
+    <fieldset className="facet" aria-describedby={help ? helpId : undefined}>
       <legend className={hideLegend ? 'visually-hidden' : undefined}>{legend}</legend>
+      {help ? (
+        <p id={helpId} className="facet-help">
+          {help}
+        </p>
+      ) : null}
       <div className="facet-options">
         {visible.map((opt) => (
           <label key={opt.value} className="facet-option">
@@ -82,15 +90,23 @@ function TriStateFacet({
   legend,
   value,
   onChange,
+  help,
 }: {
   legend: string;
   value: BooleanFilter;
   onChange: (next: BooleanFilter) => void;
+  help?: string;
 }) {
   const name = useId();
+  const helpId = useId();
   return (
-    <fieldset className="facet">
+    <fieldset className="facet" aria-describedby={help ? helpId : undefined}>
       <legend>{legend}</legend>
+      {help ? (
+        <p id={helpId} className="facet-help">
+          {help}
+        </p>
+      ) : null}
       <div className="facet-options">
         {BOOLEAN_OPTIONS.map((opt) => (
           <label key={String(opt.value)} className="facet-option">
@@ -168,16 +184,19 @@ const opt = (v: string): Option<string> => ({ value: v, label: v });
 function FilterSection({
   title,
   count,
+  selectedCount,
   defaultOpen,
   children,
 }: {
   title: string;
   count: number;
+  selectedCount: number;
   defaultOpen: boolean;
   children: React.ReactNode;
 }) {
   const [open, setOpen] = useState(defaultOpen);
   const bodyId = useId();
+  const active = selectedCount > 0;
   return (
     <section className="filter-section">
       <button
@@ -188,7 +207,13 @@ function FilterSection({
         onClick={() => setOpen((v) => !v)}
       >
         <span>{title}</span>
-        <span className="filter-section-count">{count} options</span>
+        <span
+          className={
+            active ? 'filter-section-count filter-section-count--active' : 'filter-section-count'
+          }
+        >
+          {active ? `${selectedCount} selected` : `${count} options`}
+        </span>
         <span aria-hidden="true" className="filter-section-chevron">
           {open ? '▾' : '▸'}
         </span>
@@ -205,19 +230,35 @@ function FilterSection({
 /**
  * Every supported P1 facet. Semantics: AND across facets, OR within a facet.
  * Facet changes are discrete actions and push a history entry by default.
+ *
+ * The Data status facet is hidden unless the dataset actually contains degraded
+ * repositories (or the filter is already active via a bookmark), so a fully
+ * healthy dataset never surfaces an internal-sounding control with nothing to act on.
  */
 export function FilterControls({
   state,
   facets,
   update,
+  hasDegraded,
 }: {
   state: DashboardState;
   facets: FacetOptions;
   update: (partial: Partial<DashboardState>, mode?: HistoryMode) => void;
+  hasDegraded: boolean;
 }) {
+  const repoTypeSelected =
+    (state.archived !== null ? 1 : 0) +
+    (state.fork !== null ? 1 : 0) +
+    (state.stale !== null ? 1 : 0);
+  const showDataStatus = hasDegraded || state.hydrationStatuses.length > 0;
   return (
     <div className="filters">
-      <FilterSection title="Language" count={facets.languages.length} defaultOpen>
+      <FilterSection
+        title="Language"
+        count={facets.languages.length}
+        selectedCount={state.languages.length}
+        defaultOpen
+      >
         <CheckboxFacet
           legend="Language"
           options={facets.languages.map(opt)}
@@ -227,14 +268,24 @@ export function FilterControls({
           hideLegend
         />
       </FilterSection>
-      <FilterSection title="Topics" count={facets.topics.length} defaultOpen={false}>
+      <FilterSection
+        title="Topics"
+        count={facets.topics.length}
+        selectedCount={state.topics.length}
+        defaultOpen={false}
+      >
         <TopicFacet
           topics={facets.topics}
           selected={state.topics}
           onChange={(topics) => update({ topics })}
         />
       </FilterSection>
-      <FilterSection title="License" count={facets.licenses.length} defaultOpen={false}>
+      <FilterSection
+        title="License"
+        count={facets.licenses.length}
+        selectedCount={state.licenses.length}
+        defaultOpen={false}
+      >
         <CheckboxFacet
           legend="License"
           options={facets.licenses.map(opt)}
@@ -244,21 +295,32 @@ export function FilterControls({
           hideLegend
         />
       </FilterSection>
-      <FilterSection title="Repository type" count={3} defaultOpen>
+      <FilterSection title="Repository type" count={3} selectedCount={repoTypeSelected} defaultOpen>
         <TriStateFacet
           legend="Archived"
           value={state.archived}
           onChange={(archived) => update({ archived })}
         />
         <TriStateFacet legend="Fork" value={state.fork} onChange={(fork) => update({ fork })} />
-        <TriStateFacet legend="Stale" value={state.stale} onChange={(stale) => update({ stale })} />
+        <TriStateFacet
+          legend="Stale"
+          value={state.stale}
+          onChange={(stale) => update({ stale })}
+          help="No pushes in over a year."
+        />
       </FilterSection>
-      <FilterSection title="Release status" count={RELEASE_OPTIONS.length * 2} defaultOpen>
+      <FilterSection
+        title="Release status"
+        count={RELEASE_OPTIONS.length * 2}
+        selectedCount={state.stableRelease.length + state.anyRelease.length}
+        defaultOpen
+      >
         <CheckboxFacet
           legend="Stable release"
           options={RELEASE_OPTIONS}
           selected={state.stableRelease}
           onChange={(stableRelease) => update({ stableRelease })}
+          help="“Unavailable” means release data couldn’t be fetched — not the same as no release."
         />
         <CheckboxFacet
           legend="Any release"
@@ -267,15 +329,23 @@ export function FilterControls({
           onChange={(anyRelease) => update({ anyRelease })}
         />
       </FilterSection>
-      <FilterSection title="Data status" count={HYDRATION_OPTIONS.length} defaultOpen={false}>
-        <CheckboxFacet
-          legend="Data"
-          options={HYDRATION_OPTIONS}
-          selected={state.hydrationStatuses}
-          onChange={(hydrationStatuses) => update({ hydrationStatuses })}
-          hideLegend
-        />
-      </FilterSection>
+      {showDataStatus ? (
+        <FilterSection
+          title="Data status"
+          count={HYDRATION_OPTIONS.length}
+          selectedCount={state.hydrationStatuses.length}
+          defaultOpen={false}
+        >
+          <CheckboxFacet
+            legend="Data"
+            options={HYDRATION_OPTIONS}
+            selected={state.hydrationStatuses}
+            onChange={(hydrationStatuses) => update({ hydrationStatuses })}
+            hideLegend
+            help="How completely each repository’s metadata was fetched."
+          />
+        </FilterSection>
+      ) : null}
     </div>
   );
 }

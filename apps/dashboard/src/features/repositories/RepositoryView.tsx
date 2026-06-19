@@ -1,9 +1,10 @@
-import { useId, useMemo, useRef, useState } from 'react';
+import { useCallback, useId, useMemo, useRef, useState } from 'react';
 import type { CanonicalRepo } from '@starred/schema';
 import { NoResults } from '../../components/states';
 import { useDashboardState } from '../../state/use-dashboard-state';
 import { activeFilterCount, FilterChips } from '../filters/FilterChips';
 import { FilterControls } from '../filters/FilterControls';
+import { FilterDrawer } from '../filters/FilterDrawer';
 import { SORT_FIELDS, type SortField } from '../sorting/sorting';
 import { RepositoryCard } from './RepositoryCard';
 import {
@@ -37,10 +38,19 @@ function formatLastSynced(iso: string | undefined, now: Date): string {
   return `Last synced ${d.toISOString().slice(0, 10)}`;
 }
 
-function resultContext(count: number, total: number, query: string): string {
+/**
+ * A single result line. A query dominates the phrasing (and notes that filters
+ * are also narrowing it); otherwise active filters read as "N of M · filtered",
+ * and the unfiltered dataset reads as the plain total.
+ */
+function resultSummary(count: number, total: number, query: string, filtered: boolean): string {
   const q = query.trim();
-  if (!q) return `${count} of ${total} repositories`;
-  return `${count} result${count === 1 ? '' : 's'} for "${q}"`;
+  if (q) {
+    const base = `${count} result${count === 1 ? '' : 's'} for "${q}"`;
+    return filtered ? `${base} · filtered` : base;
+  }
+  if (filtered) return `${count} of ${total} · filtered`;
+  return `${count} of ${total} repositories`;
 }
 
 /**
@@ -63,10 +73,12 @@ export function RepositoryView({
   const { state, update, reset } = useDashboardState();
   const [sessionNow] = useState(() => initialNow ?? new Date());
   const [filtersOpen, setFiltersOpen] = useState(false);
+  const closeFilters = useCallback(() => setFiltersOpen(false), []);
   const searchId = useId();
 
   const prepared = useMemo(() => prepareRepositories(repos, sessionNow), [repos, sessionNow]);
   const facets = useMemo(() => deriveFacetOptions(repos), [repos]);
+  const hasDegraded = useMemo(() => repos.some((repo) => repo.hydration_status !== 'ok'), [repos]);
   const results = useMemo(
     () => selectFromPrepared(prepared, dashboardToView(state)),
     [prepared, state],
@@ -75,8 +87,9 @@ export function RepositoryView({
   // Stable focus target so chip removal / clear-all never drop focus to <body>.
   const resultsHeadingRef = useRef<HTMLHeadingElement>(null);
   const focusResults = () => resultsHeadingRef.current?.focus();
+  // Drawer close restores focus here, never to <body> (A11Y-5).
+  const filtersToggleRef = useRef<HTMLButtonElement>(null);
   const filterCount = activeFilterCount(state);
-  const trimmedQuery = state.query.trim();
 
   return (
     <main className="dashboard">
@@ -84,7 +97,7 @@ export function RepositoryView({
         <div className="brand-row">
           <div>
             <h1>StarLedger</h1>
-            <p>Browse and organize your GitHub stars</p>
+            <p>Search, sort, and filter your GitHub stars.</p>
           </div>
           <p className="dataset-status">
             {repos.length} starred repositories · {formatLastSynced(datasetGeneratedAt, sessionNow)}
@@ -117,6 +130,7 @@ export function RepositoryView({
             type="button"
             className="filters-toggle"
             aria-expanded={filtersOpen}
+            ref={filtersToggleRef}
             onClick={() => setFiltersOpen(true)}
           >
             Filters{filterCount > 0 ? ` ${filterCount}` : ''}
@@ -146,7 +160,7 @@ export function RepositoryView({
 
       <div className="layout">
         <aside className="sidebar" aria-label="Filters">
-          <FilterControls state={state} facets={facets} update={update} />
+          <FilterControls state={state} facets={facets} update={update} hasDegraded={hasDegraded} />
         </aside>
 
         <section className="results" aria-labelledby="results-heading">
@@ -167,12 +181,7 @@ export function RepositoryView({
           />
 
           <p className="result-count" role="status">
-            <span>{resultContext(results.length, repos.length, state.query)}</span>
-            {trimmedQuery ? (
-              <span className="result-total">
-                {results.length} of {repos.length} repositories
-              </span>
-            ) : null}
+            {resultSummary(results.length, repos.length, state.query, filterCount > 0)}
           </p>
 
           {results.length === 0 ? (
@@ -192,23 +201,9 @@ export function RepositoryView({
         </section>
       </div>
 
-      {filtersOpen ? (
-        <div className="drawer-backdrop" role="presentation">
-          <div className="filter-drawer" role="dialog" aria-modal="true" aria-label="Filters">
-            <div className="drawer-head">
-              <h2>Filters</h2>
-              <button
-                type="button"
-                onClick={() => setFiltersOpen(false)}
-                aria-label="Close filters"
-              >
-                ×
-              </button>
-            </div>
-            <FilterControls state={state} facets={facets} update={update} />
-          </div>
-        </div>
-      ) : null}
+      <FilterDrawer open={filtersOpen} onClose={closeFilters} returnFocusRef={filtersToggleRef}>
+        <FilterControls state={state} facets={facets} update={update} hasDegraded={hasDegraded} />
+      </FilterDrawer>
     </main>
   );
 }

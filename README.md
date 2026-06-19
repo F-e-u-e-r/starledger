@@ -17,7 +17,7 @@ Contracts: **[`docs/P0-exporter-spec.md`](docs/P0-exporter-spec.md)** (exporter)
 ```bash
 pnpm install        # Node >= 22
 pnpm typecheck      # tsc --noEmit across packages
-pnpm test           # vitest (117 tests)
+pnpm test           # vitest
 pnpm build          # tsup + vite → dist (CLI + dashboard)
 pnpm schemas        # regenerate schemas/*.json from the Zod schemas
 pnpm release-gate   # full P0 gate: typecheck·lint·test·build·schemas·real-git smoke
