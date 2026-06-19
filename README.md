@@ -5,7 +5,7 @@ A personal GitHub stars dashboard and repository discovery pipeline, built in ph
 | Phase  | What                                                                      | Status      |
 | ------ | ------------------------------------------------------------------------- | ----------- |
 | **P0** | Deterministic **exporter**: stars → canonical `stars.json`                | ✅ complete |
-| P1     | Static **dashboard** on GitHub Pages (client-side filter/sort/search)     | 🚧 P1.1     |
+| P1     | Static **dashboard** on GitHub Pages (client-side filter/sort/search)     | ✅ complete |
 | P2     | **Notifier**: YouTube / awesome-stars → Telegram, with the star-back loop | planned     |
 | P3     | **AI classification**: categories, tags, summaries, semantic search       | planned     |
 | P4     | Reusable template / workflow (fork model, no key custody)                 | planned     |
@@ -17,7 +17,7 @@ Contracts: **[`docs/P0-exporter-spec.md`](docs/P0-exporter-spec.md)** (exporter)
 ```bash
 pnpm install        # Node >= 22
 pnpm typecheck      # tsc --noEmit across packages
-pnpm test           # vitest (101 tests)
+pnpm test           # vitest (117 tests)
 pnpm build          # tsup + vite → dist (CLI + dashboard)
 pnpm schemas        # regenerate schemas/*.json from the Zod schemas
 pnpm release-gate   # full P0 gate: typecheck·lint·test·build·schemas·real-git smoke

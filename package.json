@@ -18,7 +18,8 @@
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "smoke": "node scripts/smoke-realgit.mjs",
-    "release-gate": "bash scripts/release-gate.sh"
+    "release-gate": "bash scripts/release-gate.sh",
+    "p1-gate": "bash scripts/p1-gate.sh"
   },
   "devDependencies": {
     "@eslint/js": "^9.17.0",

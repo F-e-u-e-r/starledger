@@ -19,10 +19,7 @@ export interface GithubClient {
  * Builds the production GitHub client (REST + GraphQL) with retry and
  * throttling. Tests do not use this — they inject a fake GraphqlClient.
  */
-export function createGithubClient(
-  token: string,
-  userAgent = 'starledger-exporter',
-): GithubClient {
+export function createGithubClient(token: string, userAgent = 'starledger-exporter'): GithubClient {
   const octokit = new ResilientOctokit({
     auth: token,
     userAgent,

@@ -4,6 +4,7 @@
   "references": [
     { "path": "./packages/schema" },
     { "path": "./packages/github-client" },
-    { "path": "./packages/exporter" }
+    { "path": "./packages/exporter" },
+    { "path": "./packages/deploy" }
   ]
 }

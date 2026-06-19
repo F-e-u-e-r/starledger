@@ -15,7 +15,7 @@ describe('App state machine', () => {
       />,
     );
     await waitFor(() => expect(screen.getByText('a/one')).toBeTruthy());
-    expect(screen.getByText('1 repositories')).toBeTruthy();
+    expect(screen.getByText('1 of 1 repositories')).toBeTruthy();
   });
 
   it('EMPTY-1: shows an empty state for zero repos (not an error)', async () => {
