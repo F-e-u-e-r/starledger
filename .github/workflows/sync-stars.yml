@@ -48,14 +48,24 @@ jobs:
         env:
           STAR_SYNC_TOKEN: ${{ secrets.STAR_SYNC_TOKEN }}
         run: |
+          echo "workflow sha: $GITHUB_SHA"
+          echo "checked out sha: $(git rev-parse HEAD)"
+          node --input-type=module -e "const m = await import('./packages/exporter/dist/index.js'); console.log('exporter dist loaded:', m.EXPORTER_VERSION)"
           before=$(git rev-parse HEAD)
+          set +e
           node packages/exporter/dist/cli.js
+          status=$?
+          set -e
           after=$(git rev-parse HEAD)
           echo "sha=$after" >> "$GITHUB_OUTPUT"
           if [ "$before" != "$after" ]; then
             echo "changed=true" >> "$GITHUB_OUTPUT"
           else
             echo "changed=false" >> "$GITHUB_OUTPUT"
+          fi
+          if [ "$status" -ne 0 ]; then
+            echo "::error::exporter exited with status $status on commit $before"
+            exit "$status"
           fi
 
       - name: validate the committed dataset
