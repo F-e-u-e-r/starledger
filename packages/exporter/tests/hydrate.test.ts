@@ -14,6 +14,21 @@ function fakeHydrate(nodesFor: (ids: string[]) => Array<RawRepoNode | null>): Gr
 }
 
 describe('hydrateByNodeIds', () => {
+  it('retries an empty GraphQL hydrate response before processing the batch', async () => {
+    let calls = 0;
+    const gql = (async (_query: string, variables?: Record<string, unknown>) => {
+      calls += 1;
+      if (calls === 1) return undefined;
+      const ids = (variables?.ids as string[] | undefined) ?? [];
+      return { rateLimit: RATE, nodes: ids.map((id) => makeRawNode({ id })) };
+    }) as GraphqlClient;
+
+    const result = await hydrateByNodeIds(gql, ['R_1'], { coordinator: makeTestCoordinator() });
+
+    expect(calls).toBe(2);
+    expect([...result.nodesById.keys()]).toEqual(['R_1']);
+  });
+
   it('HYD-1: merges by node_id regardless of returned order', async () => {
     const byId = new Map<string, RawRepoNode>([
       ['R_1', makeRawNode({ id: 'R_1', nameWithOwner: 'a/1' })],

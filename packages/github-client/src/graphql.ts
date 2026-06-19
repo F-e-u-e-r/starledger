@@ -1,4 +1,4 @@
-import { RetryBudgetExhaustedError } from './errors';
+import { RetryBudgetExhaustedError, RetryableResponseError } from './errors';
 import type { RateLimit, RawRateLimit } from './rate-limit';
 import { toRateLimit } from './rate-limit';
 import { classifyError, RetryCoordinator } from './retry';
@@ -11,6 +11,35 @@ export type GraphqlClient = <T = unknown>(
   query: string,
   variables?: Record<string, unknown>,
 ) => Promise<T>;
+
+function isRecord(value: unknown): value is Record<string, unknown> {
+  return value !== null && typeof value === 'object' && !Array.isArray(value);
+}
+
+function hasRateLimit(value: unknown): value is RawRateLimit {
+  if (!isRecord(value)) return false;
+  return (
+    typeof value.cost === 'number' &&
+    typeof value.remaining === 'number' &&
+    typeof value.resetAt === 'string'
+  );
+}
+
+/**
+ * GitHub has occasionally returned a 2xx GraphQL response with no usable data
+ * envelope. Validate it inside RetryCoordinator so an empty response retries
+ * instead of escaping later as an unhelpful TypeError.
+ */
+function requireResponse<T>(
+  value: unknown,
+  operation: string,
+  predicate: (response: Record<string, unknown>) => boolean,
+): T {
+  if (!isRecord(value) || !predicate(value)) {
+    throw new RetryableResponseError(`GitHub GraphQL ${operation} returned an incomplete response`);
+  }
+  return value as T;
+}
 
 /** Raw GitHub GraphQL repository node, exactly as returned by STARS_PAGE_QUERY. */
 export interface RawRepoNode {
@@ -133,9 +162,19 @@ export async function probeStars(
   gql: GraphqlClient,
   coordinator: RetryCoordinator = new RetryCoordinator(),
 ): Promise<ProbeResult> {
-  const res = (await coordinator.run(() => gql(PROBE_QUERY), {
-    classify: classifyError,
-  })) as ProbeResponse;
+  const res = await coordinator.run(
+    async () =>
+      requireResponse<ProbeResponse>(await gql(PROBE_QUERY), 'probe', (response) => {
+        const viewer = response.viewer;
+        return (
+          hasRateLimit(response.rateLimit) &&
+          isRecord(viewer) &&
+          typeof viewer.login === 'string' &&
+          isRecord(viewer.starredRepositories)
+        );
+      }),
+    { classify: classifyError },
+  );
   const conn = res.viewer.starredRepositories;
   return {
     login: res.viewer.login,
@@ -183,9 +222,22 @@ export async function fetchAllStarsGraphql(
   const edges: RawStarEdge[] = [];
 
   do {
-    const res = (await coordinator.run(() => gql(STARS_PAGE_QUERY, { cursor, pageSize }), {
-      classify: classifyError,
-    })) as StarsPageResponse;
+    const res = await coordinator.run(
+      async () =>
+        requireResponse<StarsPageResponse>(
+          await gql(STARS_PAGE_QUERY, { cursor, pageSize }),
+          'star enumeration',
+          (response) => {
+            const viewer = response.viewer;
+            return (
+              hasRateLimit(response.rateLimit) &&
+              isRecord(viewer) &&
+              isRecord(viewer.starredRepositories)
+            );
+          },
+        ),
+      { classify: classifyError },
+    );
     const conn = res.viewer.starredRepositories;
     isOverLimit = conn.isOverLimit;
     totalCount = conn.totalCount;
@@ -258,9 +310,15 @@ export async function hydrateByNodeIds(
     telemetry.requests += 1;
     let res: NodesResponse;
     try {
-      res = (await coordinator.run(() => gql(NODES_QUERY, { ids: batch }), {
-        classify: classifyError,
-      })) as NodesResponse;
+      res = await coordinator.run(
+        async () =>
+          requireResponse<NodesResponse>(
+            await gql(NODES_QUERY, { ids: batch }),
+            'hydration',
+            (response) => hasRateLimit(response.rateLimit) && Array.isArray(response.nodes),
+          ),
+        { classify: classifyError },
+      );
     } catch (err) {
       if (err instanceof RetryBudgetExhaustedError) {
         if (batch.length > 1) {

@@ -14,6 +14,18 @@ export class ExporterError extends Error {
   }
 }
 
+/**
+ * A successful HTTP response without the GraphQL data envelope is transient
+ * infrastructure failure, not a valid API result. The retry coordinator turns
+ * a persistent instance into its normal deferred exhaustion error.
+ */
+export class RetryableResponseError extends Error {
+  constructor(message: string) {
+    super(message);
+    this.name = new.target.name;
+  }
+}
+
 export class TerminalError extends ExporterError {
   constructor(message: string, code = 'TERMINAL') {
     super(message, 10, code);

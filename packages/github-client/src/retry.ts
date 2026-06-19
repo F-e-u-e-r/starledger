@@ -2,6 +2,7 @@ import {
   ExporterError,
   RateLimitInsufficientError,
   RetryBudgetExhaustedError,
+  RetryableResponseError,
   SecondaryLimitCooldownExceededError,
   TerminalError,
 } from './errors';
@@ -20,6 +21,8 @@ function headersOf(err: unknown): Record<string, string | undefined> {
 
 /** Classify an API error into retry/terminal/deferred buckets (shared by REST + GraphQL). */
 export function classifyError(err: unknown): ErrorClass {
+  if (err instanceof RetryableResponseError) return 'retryable';
+
   const e = err as HttpishError;
   const status = e?.status;
   const message = e?.message ?? '';
