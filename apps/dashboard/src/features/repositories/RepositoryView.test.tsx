@@ -54,7 +54,6 @@ describe('RepositoryView', () => {
     renderView();
     fireEvent.change(search(), { target: { value: 'telegram' } });
     expect(screen.getByText('1 result for "telegram"')).toBeTruthy();
-    expect(screen.getByText('1 of 2 repositories')).toBeTruthy();
     expect(titles()).toEqual(['acme/ts-tool']);
     expect(window.location.search).toBe('?q=telegram');
 
@@ -68,6 +67,9 @@ describe('RepositoryView', () => {
     fireEvent.click(screen.getByRole('checkbox', { name: 'Go' }));
     expect(titles()).toEqual(['acme/go-tool']);
     expect(window.location.search).toBe('?language=Go');
+    // one-line result summary + section shows selected count, not option count
+    expect(screen.getByText('1 of 2 · filtered')).toBeTruthy();
+    expect(screen.getByRole('button', { name: /Language 1 selected/ })).toBeTruthy();
 
     const chip = screen.getByRole('button', { name: /Language: Go — remove filter/ });
     fireEvent.click(chip);
@@ -92,7 +94,7 @@ describe('RepositoryView', () => {
   it('RESULT-2: no matches show the no-results state, not the empty-dataset state', () => {
     renderView();
     fireEvent.change(search(), { target: { value: 'zzz-no-match' } });
-    expect(screen.getByText('0 of 2 repositories')).toBeTruthy();
+    expect(screen.getByText('0 results for "zzz-no-match"')).toBeTruthy();
     expect(screen.getByRole('heading', { name: 'No matching repositories' })).toBeTruthy();
     expect(screen.queryByText('No starred repositories yet.')).toBeNull();
     // the no-results "Clear filters" action restores the dataset
@@ -142,6 +144,31 @@ describe('RepositoryView', () => {
 
     fireEvent.click(within(dialog).getByRole('button', { name: 'Close filters' }));
     expect(screen.queryByRole('dialog', { name: 'Filters' })).toBeNull();
+    // A11Y-5: closing the drawer returns focus to the toggle, not to <body>.
+    expect(document.activeElement).toBe(screen.getByRole('button', { name: 'Filters' }));
+  });
+
+  it('hides the Data status facet until the dataset has degraded repositories', () => {
+    const { rerender } = renderView(); // sample repos all hydrate OK
+    expect(screen.queryByRole('button', { name: /Data status/ })).toBeNull();
+
+    rerender(
+      <RepositoryView
+        repos={[
+          makeRepo({
+            node_id: 'R_partial',
+            name_with_owner: 'a/partial',
+            url: 'https://github.com/a/partial',
+            hydration_status: 'partial',
+            pushed_at: null,
+            unavailable_fields: ['pushed_at'],
+          }),
+        ]}
+        datasetGeneratedAt="2026-06-18T00:00:00Z"
+        initialNow={NOW}
+      />,
+    );
+    expect(screen.getByRole('button', { name: /Data status/ })).toBeTruthy();
   });
 
   const staleRepos = () => [

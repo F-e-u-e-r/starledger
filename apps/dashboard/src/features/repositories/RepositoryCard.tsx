@@ -86,6 +86,14 @@ export function RepositoryCard({ repo, now = new Date() }: { repo: DerivedRepo; 
     : (repo.license_spdx ?? <span className="none">No license</span>);
   const stars = unavailable(repo, 'stargazer_count') ? null : (repo.stargazer_count ?? 0);
   const degraded = repo.hydration_status !== 'ok';
+  // Latest (any) release sits next to the stable release, but only when it adds
+  // information — a prerelease-only repo, or a prerelease newer than the stable
+  // tag — so the common "stable == latest" case is not stated twice (CARD-5).
+  const stableTag = repo.latest_stable_release?.tag_name ?? null;
+  const latestTag = repo.latest_any_release?.tag_name ?? null;
+  const latestDate = fmtDate(repo.latest_any_release?.published_at ?? null);
+  const showLatest =
+    repo.anyRelease === 'has' && (repo.stableRelease !== 'has' || latestTag !== stableTag);
   const visibleTopics = topicsExpanded ? repo.topics : repo.topics.slice(0, TOPIC_LIMIT);
   const hiddenTopicCount = Math.max(0, repo.topics.length - visibleTopics.length);
 
@@ -136,6 +144,12 @@ export function RepositoryCard({ repo, now = new Date() }: { repo: DerivedRepo; 
             kind="stable"
           />
         </li>
+        {showLatest ? (
+          <li className="latest-release">
+            latest {latestTag}
+            {latestDate ? <span className="muted"> · {latestDate}</span> : null}
+          </li>
+        ) : null}
       </ul>
 
       {repo.topics.length > 0 ? (
@@ -164,15 +178,6 @@ export function RepositoryCard({ repo, now = new Date() }: { repo: DerivedRepo; 
         <span>{license}</span>
         <span>
           {starred ? `Starred ${starred}` : <span className="none">Starred date unknown</span>}
-        </span>
-        <span>
-          Latest:{' '}
-          <ReleaseValue
-            availability={repo.anyRelease}
-            tag={repo.latest_any_release?.tag_name ?? null}
-            date={fmtDate(repo.latest_any_release?.published_at ?? null)}
-            kind="latest"
-          />
         </span>
       </div>
     </li>

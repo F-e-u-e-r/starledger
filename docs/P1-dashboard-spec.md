@@ -75,57 +75,67 @@ The release fields are **three-state** precisely to preserve P0's `null`-vs-unkn
 
 **Explicitly excluded from P1:** AI categories, semantic search, Telegram, login, server/API, user editing, charts, heavy animation, IndexedDB.
 
+### P1.5 — UX & accessibility hardening (maintenance)
+
+A non-architectural polish pass over the shipped dashboard — no new data, no new facets:
+
+- **The filter drawer is a real modal dialog** — focus moves in on open and is restored to the toggle on close, Tab/Shift+Tab are trapped inside, Escape and a backdrop click close it, and body scroll is locked while open (**A11Y-5**).
+- **Card scan path** — heavier title, caution styling for the degraded/unavailable badge, and the stable + latest release **colocated** in the highlights row; "latest" appears only when it adds information (a prerelease-only repo, or a prerelease newer than the stable tag) rather than restating the stable tag (**CARD-5**).
+- **Plainer product language** — one result line ("N of M · filtered" / "N results for …" instead of two stacked counts), a per-section "N selected" count in place of the static option count, brief help text for Stale / "Unavailable" / Data status, and the Data status facet hidden until the dataset actually contains degraded repositories (it still appears when a bookmarked URL has it active).
+
 ---
 
 ## 5. Acceptance tests
 
-| ID       | Test                                                               | Status |
-| -------- | ------------------------------------------------------------------ | ------ |
-| DATA-1   | valid `stars.json` passes shared schema and renders                | ✅     |
-| DATA-2   | schema-invalid `stars.json` → no records rendered (fail closed)    | ✅     |
-| DATA-3   | `dataset-meta` hash ≠ `stars` bytes → integrity error              | ✅     |
-| DATA-3B  | transient cross-deploy mismatch recovers on a full-snapshot retry  | ✅     |
-| DATA-3C  | persistent mismatch → fail closed after one retry                  | ✅     |
-| DATA-4   | unavailable release field shows "unknown", not "no release"        | ✅     |
-| EMPTY-1  | zero repositories → normal empty state, not an error               | ✅     |
-| PATH-1   | under `/<repo>/` base, assets + data load (sha-busted)             | ✅     |
-| SEARCH-1 | search matches name/description/topic/language                     | ✅     |
-| SEARCH-2 | case-insensitive; empty/whitespace query matches all               | ✅     |
-| SORT-1   | asc/desc with deterministic node_id tiebreak                       | ✅     |
-| SORT-2   | null/unknown values sort last regardless of direction              | ✅     |
-| SORT-3   | sort returns a new array; input order and objects are not mutated  | ✅     |
-| FILTER-1 | AND across facets                                                  | ✅     |
-| FILTER-2 | OR within a facet (multi-select)                                   | ✅     |
-| FILTER-3 | clearing filters restores the full dataset                         | ✅     |
-| FILTER-4 | release "none" filter excludes "unavailable" (unknown≠absent)      | ✅     |
-| FILTER-5 | stable=none + any=has match a prerelease-only repo (independent)   | ✅     |
-| FILTER-6 | any-release "unavailable" is distinct from "none" (both ways)      | ✅     |
-| RESULT-1 | combined search + filter + sort yields the correct set & count     | ✅     |
-| PERF-1   | thousands of repos filter/sort without jank                        | ✅     |
-| STATE-1  | defaults normalize to themselves; serialize to an empty string     | ✅     |
-| STATE-2  | array facets deduplicate + sort; equivalent states are identical   | ✅     |
-| URL-1    | full state round-trips; canonical emit order (reload/shared link)  | ✅     |
-| URL-2    | equivalent states serialize byte-identically                       | ✅     |
-| URL-3    | invalid enum/malformed values fail safe to defaults                | ✅     |
-| URL-4    | repeated scalar takes the last valid value                         | ✅     |
-| URL-5    | default state produces no query string                             | ✅     |
-| URL-6    | prerelease-only (stable=none + any=has) round-trips                | ✅     |
-| URL-7    | unknown-but-valid facet values survive (bookmarks don't drop)      | ✅     |
-| HIST-1   | replaceState for typing, pushState for discrete; popstate restores | ✅     |
-| FACET-1  | every supported facet is reachable from the UI                     | ✅     |
-| FACET-2  | removing one chip removes only its filter                          | ✅     |
-| FACET-3  | clear-all returns to the default state                             | ✅     |
-| RESULT-2 | no matches → no-results state, not the empty-dataset state         | ✅     |
-| CARD-1   | confirmed-absent vs unavailable render distinctly                  | ✅     |
-| CARD-2   | archived / fork / hydration states are visible                     | ✅     |
-| CARD-3   | repository links use the canonical URL                             | ✅     |
-| CARD-4   | long names/descriptions/topics do not break layout (CSS wrap)      | ✅     |
-| A11Y-1   | search/filter/sort/chips operable by keyboard, with names          | ✅     |
-| A11Y-4   | focus stays logical after chip removal / clear-all                 | ✅     |
-| PERF-2   | prepared dataset powers many queries without re-deriving           | ✅     |
-| PERF-3   | facet options depend only on the dataset                           | ✅     |
-| TIME-1   | stale uses one mounted clock, stable across unrelated changes      | ✅     |
-| TIME-2   | a newer mount clock re-evaluates staleness                         | ✅     |
+| ID       | Test                                                                     | Status |
+| -------- | ------------------------------------------------------------------------ | ------ |
+| DATA-1   | valid `stars.json` passes shared schema and renders                      | ✅     |
+| DATA-2   | schema-invalid `stars.json` → no records rendered (fail closed)          | ✅     |
+| DATA-3   | `dataset-meta` hash ≠ `stars` bytes → integrity error                    | ✅     |
+| DATA-3B  | transient cross-deploy mismatch recovers on a full-snapshot retry        | ✅     |
+| DATA-3C  | persistent mismatch → fail closed after one retry                        | ✅     |
+| DATA-4   | unavailable release field shows "unknown", not "no release"              | ✅     |
+| EMPTY-1  | zero repositories → normal empty state, not an error                     | ✅     |
+| PATH-1   | under `/<repo>/` base, assets + data load (sha-busted)                   | ✅     |
+| SEARCH-1 | search matches name/description/topic/language                           | ✅     |
+| SEARCH-2 | case-insensitive; empty/whitespace query matches all                     | ✅     |
+| SORT-1   | asc/desc with deterministic node_id tiebreak                             | ✅     |
+| SORT-2   | null/unknown values sort last regardless of direction                    | ✅     |
+| SORT-3   | sort returns a new array; input order and objects are not mutated        | ✅     |
+| FILTER-1 | AND across facets                                                        | ✅     |
+| FILTER-2 | OR within a facet (multi-select)                                         | ✅     |
+| FILTER-3 | clearing filters restores the full dataset                               | ✅     |
+| FILTER-4 | release "none" filter excludes "unavailable" (unknown≠absent)            | ✅     |
+| FILTER-5 | stable=none + any=has match a prerelease-only repo (independent)         | ✅     |
+| FILTER-6 | any-release "unavailable" is distinct from "none" (both ways)            | ✅     |
+| RESULT-1 | combined search + filter + sort yields the correct set & count           | ✅     |
+| PERF-1   | thousands of repos filter/sort without jank                              | ✅     |
+| STATE-1  | defaults normalize to themselves; serialize to an empty string           | ✅     |
+| STATE-2  | array facets deduplicate + sort; equivalent states are identical         | ✅     |
+| URL-1    | full state round-trips; canonical emit order (reload/shared link)        | ✅     |
+| URL-2    | equivalent states serialize byte-identically                             | ✅     |
+| URL-3    | invalid enum/malformed values fail safe to defaults                      | ✅     |
+| URL-4    | repeated scalar takes the last valid value                               | ✅     |
+| URL-5    | default state produces no query string                                   | ✅     |
+| URL-6    | prerelease-only (stable=none + any=has) round-trips                      | ✅     |
+| URL-7    | unknown-but-valid facet values survive (bookmarks don't drop)            | ✅     |
+| HIST-1   | replaceState for typing, pushState for discrete; popstate restores       | ✅     |
+| FACET-1  | every supported facet is reachable from the UI                           | ✅     |
+| FACET-2  | removing one chip removes only its filter                                | ✅     |
+| FACET-3  | clear-all returns to the default state                                   | ✅     |
+| RESULT-2 | no matches → no-results state, not the empty-dataset state               | ✅     |
+| CARD-1   | confirmed-absent vs unavailable render distinctly                        | ✅     |
+| CARD-2   | archived / fork / hydration states are visible                           | ✅     |
+| CARD-3   | repository links use the canonical URL                                   | ✅     |
+| CARD-4   | long names/descriptions/topics do not break layout (CSS wrap)            | ✅     |
+| CARD-5   | stable + latest release colocated; latest shown only when distinct       | ✅     |
+| A11Y-1   | search/filter/sort/chips operable by keyboard, with names                | ✅     |
+| A11Y-4   | focus stays logical after chip removal / clear-all                       | ✅     |
+| A11Y-5   | filter drawer traps + restores focus; Escape/backdrop close; scroll lock | ✅     |
+| PERF-2   | prepared dataset powers many queries without re-deriving                 | ✅     |
+| PERF-3   | facet options depend only on the dataset                                 | ✅     |
+| TIME-1   | stale uses one mounted clock, stable across unrelated changes            | ✅     |
+| TIME-2   | a newer mount clock re-evaluates staleness                               | ✅     |
 
 **P1.4 — deployment** (`@starred/deploy`, run under vitest + the P1 gate):
 
