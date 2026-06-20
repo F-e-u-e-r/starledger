@@ -9,6 +9,7 @@ import {
   serializeClassificationManifest,
 } from '@starred/ai-schema';
 import { Command } from 'commander';
+import { verifyAgentPullRequestFromGit } from './agent-gate';
 import { assembleAiArtifacts, verifyAiArtifacts } from './assemble';
 import { loadAiConfig } from './config';
 import { validateCandidate } from './validate-candidate';
@@ -182,5 +183,37 @@ program
       fatal(error);
     }
   });
+
+program
+  .command('verify-agent-pr')
+  .description(
+    'Path-triggered structural gate: inspect any PR, and whenever an AI artifact ' +
+      'changes require an approved same-repository executor branch and a valid artifact pair',
+  )
+  .requiredOption('--base <ref>', 'trusted base reference (e.g. the PR base SHA)')
+  .option('--head <ref>', 'git ref holding the PR head commit, fetched as data', 'HEAD')
+  .requiredOption('--head-ref <branch>', 'PR head branch name (executor identity)')
+  .requiredOption('--head-repo <owner/name>', 'PR head repository full name')
+  .requiredOption('--repo <owner/name>', 'this (base) repository full name')
+  .action(
+    (opts: { base: string; head: string; headRef: string; headRepo: string; repo: string }) => {
+      try {
+        const result = verifyAgentPullRequestFromGit({
+          baseRef: opts.base,
+          headGitRef: opts.head,
+          headBranch: opts.headRef,
+          headRepo: opts.headRepo,
+          repo: opts.repo,
+        });
+        process.stdout.write(
+          result.touched
+            ? 'AI artifact gate passed: approved same-repository executor pair verified.\n'
+            : 'No AI artifacts changed; structural gate not required.\n',
+        );
+      } catch (error) {
+        fatal(error);
+      }
+    },
+  );
 
 void program.parseAsync(process.argv);

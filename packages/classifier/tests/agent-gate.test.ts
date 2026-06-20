@@ -2,6 +2,7 @@ import { existsSync, readFileSync } from 'node:fs';
 import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { describe, expect, it } from 'vitest';
+import { parse as parseYaml } from 'yaml';
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '../../..');
 
@@ -33,5 +34,16 @@ describe('P3 structural agent gate', () => {
   it('GATE-4: no scheduled Routine/Codex classifier workflow exists in P3.0', () => {
     expect(existsSync(resolve(root, '.github/workflows/classify.yml'))).toBe(false);
     expect(readRepoFile('.github/workflows/ai-agent-pr.yml')).not.toContain('schedule:');
+  });
+
+  it('GATE-13: the gate is path-triggered — no job-level branch condition, and it runs verify-agent-pr', () => {
+    const raw = readRepoFile('.github/workflows/ai-agent-pr.yml');
+    // The original bypass was a job-level branch-prefix `if:`. Guard it from returning.
+    expect(raw).not.toContain('startsWith(github.event.pull_request.head.ref');
+    const workflow = parseYaml(raw) as { jobs: Record<string, { if?: unknown } | undefined> };
+    expect(workflow.jobs['verify-agent-artifacts']).toBeDefined();
+    expect(workflow.jobs['verify-agent-artifacts']?.if).toBeUndefined();
+    // The job must invoke the trusted, path-triggered gate command.
+    expect(raw).toContain('verify-agent-pr');
   });
 });
