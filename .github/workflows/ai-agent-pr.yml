@@ -1,7 +1,12 @@
 name: AI agent artifact gate
 
-# This deliberately runs from the trusted default branch. It fetches agent
-# artifacts as data but never checks out or executes agent-controlled source.
+# Path-TRIGGERED structural gate. It runs on EVERY pull request from the trusted
+# default branch, fetches the PR head as data, and — only when an AI artifact is
+# touched — requires an approved, same-repository executor branch and a complete,
+# valid artifact pair. Branch-name conventions identify the executor; they do NOT
+# decide whether validation runs, so renaming a branch cannot skip the gate. The
+# workflow never checks out or executes agent-controlled code, and needs no
+# repository secret to run.
 on:
   pull_request_target:
     types: [opened, reopened, synchronize, ready_for_review]
@@ -15,9 +20,6 @@ concurrency:
 
 jobs:
   verify-agent-artifacts:
-    if: >-
-      startsWith(github.event.pull_request.head.ref, 'claude/') ||
-      startsWith(github.event.pull_request.head.ref, 'codex/')
     runs-on: ubuntu-latest
     steps:
       # Check out the protected base revision. Do not execute code from the PR.
@@ -34,50 +36,28 @@ jobs:
 
       - run: pnpm install --frozen-lockfile
 
-      - name: fetch agent commit as data
+      # The PR number is a GitHub-controlled integer (no injection surface), so it
+      # is interpolated directly; the attacker-controlled branch/repo NAMES below
+      # are passed via env instead.
+      - name: fetch the pull-request head as data
         run: |
           git fetch --no-tags origin \
             "+refs/pull/${{ github.event.pull_request.number }}/head:refs/remotes/origin/ai-agent-pr"
 
-      - name: enforce the agent path allowlist with trusted code
-        run: |
-          node --import tsx packages/classifier/src/cli.ts verify-agent-diff \
-            --base '${{ github.event.pull_request.base.sha }}' \
-            --head origin/ai-agent-pr
-
-      - name: verify public AI artifacts with trusted schemas
+      # Every event-controlled value is passed via env (NOT interpolated into the
+      # script), so an attacker-named head branch cannot inject shell. The trusted
+      # base-branch CLI decides everything from the changed paths: a source-only PR
+      # passes; any AI-artifact change must be an approved same-repo executor pair.
+      - name: structural AI-artifact gate (path-triggered)
         env:
-          BASE_REF: ${{ github.event.pull_request.base.sha }}
-          CANDIDATE_REF: origin/ai-agent-pr
+          BASE_SHA: ${{ github.event.pull_request.base.sha }}
+          HEAD_REF: ${{ github.event.pull_request.head.ref }}
+          HEAD_REPO: ${{ github.event.pull_request.head.repo.full_name }}
+          REPO: ${{ github.repository }}
         run: |
-          base_annotations=false
-          base_meta=false
-          annotations=false
-          meta=false
-          if git cat-file -e "$BASE_REF:ai-annotations.json" 2>/dev/null; then base_annotations=true; fi
-          if git cat-file -e "$BASE_REF:ai-annotations-meta.json" 2>/dev/null; then base_meta=true; fi
-          if git cat-file -e "$CANDIDATE_REF:ai-annotations.json" 2>/dev/null; then annotations=true; fi
-          if git cat-file -e "$CANDIDATE_REF:ai-annotations-meta.json" 2>/dev/null; then meta=true; fi
-          if [ "$base_annotations" != "$base_meta" ]; then
-            echo 'Base AI artifacts are inconsistent; maintenance is required outside the agent gate'
-            exit 1
-          fi
-          if [ "$base_annotations" = true ] && [ "$annotations" = false ]; then
-            echo 'Agent PRs may not delete AI artifacts'
-            exit 1
-          fi
-          if [ "$base_meta" = true ] && [ "$meta" = false ]; then
-            echo 'Agent PRs may not delete AI artifacts'
-            exit 1
-          fi
-          if [ "$annotations" != "$meta" ]; then
-            echo 'AI artifacts must be added, updated, or removed together'
-            exit 1
-          fi
-          if [ "$annotations" = true ]; then
-            git show "$CANDIDATE_REF:ai-annotations.json" > "$RUNNER_TEMP/ai-annotations.json"
-            git show "$CANDIDATE_REF:ai-annotations-meta.json" > "$RUNNER_TEMP/ai-annotations-meta.json"
-            node --import tsx packages/classifier/src/cli.ts verify-artifacts \
-              --annotations "$RUNNER_TEMP/ai-annotations.json" \
-              --meta "$RUNNER_TEMP/ai-annotations-meta.json"
-          fi
+          node --import tsx packages/classifier/src/cli.ts verify-agent-pr \
+            --base "$BASE_SHA" \
+            --head origin/ai-agent-pr \
+            --head-ref "$HEAD_REF" \
+            --head-repo "$HEAD_REPO" \
+            --repo "$REPO"

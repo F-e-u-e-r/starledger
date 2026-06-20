@@ -128,3 +128,34 @@ export function changedPathEntriesBetween(
   }
   return entries;
 }
+
+/** Branch prefixes that identify an approved autonomous executor run. */
+export const APPROVED_EXECUTOR_BRANCH_PREFIXES = ['claude/', 'codex/'] as const;
+
+/** A branch-name convention only — it identifies the executor, it does not authorize it. */
+export function isApprovedExecutorBranch(headBranch: string): boolean {
+  return APPROVED_EXECUTOR_BRANCH_PREFIXES.some((prefix) => headBranch.startsWith(prefix));
+}
+
+/**
+ * True when the diff adds, updates, deletes, or renames either public AI
+ * artifact (renames are detected via the previous path too). This is the
+ * PATH-based trigger: it decides whether the executor-identity rules apply, so a
+ * renamed branch can never make an artifact change skip the gate.
+ */
+export function touchesAiArtifacts(entries: readonly GitDiffEntry[]): boolean {
+  return entries.some(
+    (entry) =>
+      AGENT_EDITABLE_PATHS.has(entry.path) ||
+      (entry.previousPath !== undefined && AGENT_EDITABLE_PATHS.has(entry.previousPath)),
+  );
+}
+
+/**
+ * Reads a single path at a Git ref as text, so trusted CI can inspect agent
+ * artifacts as data without ever checking out or executing agent-controlled
+ * code. Only the fixed AI artifact paths are ever passed here.
+ */
+export function readArtifactAtRef(ref: string, path: string, cwd = process.cwd()): string {
+  return execFileSync('git', ['show', `${ref}:${path}`], { encoding: 'utf8', cwd });
+}

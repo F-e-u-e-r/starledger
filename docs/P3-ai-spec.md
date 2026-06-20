@@ -36,13 +36,22 @@ never pushes `main`, updates a state branch directly, or merges itself. Claude
 Routine is the initial cloud executor. Codex App Automation is a local,
 worktree-based fallback. Enable only one scheduled executor at a time.
 
-`.github/workflows/ai-agent-pr.yml` applies the artifact gate to `claude/` and
-`codex/` pull requests. It uses `pull_request_target`, checks out the protected
-base revision, and fetches the candidate commit as data only. The trusted CLI,
-not agent-controlled PR code, validates changed paths and artifacts. The job has
-read-only contents permission and no secrets. The workflow blocks artifact
-deletion and rename, but it is not a provenance/current-fingerprint gate until
-P3.1 adds trusted source discovery and planner recomputation.
+`.github/workflows/ai-agent-pr.yml` inspects **every** pull request — the
+structural gate is **path-triggered**, not branch-triggered. It uses
+`pull_request_target`, checks out the protected base revision, and fetches the
+candidate commit as data only; the trusted CLI (`verify-agent-pr`), not
+agent-controlled PR code, decides from the changed paths. A PR that touches no AI
+artifact passes with no executor checks. A PR that touches `ai-annotations.json`
+or `ai-annotations-meta.json` must originate from an approved **same-repository**
+executor branch (`claude/*` or `codex/*`) and change only the complete, valid
+artifact pair — so renaming a branch, or a fork impersonating `claude/*`, can
+never bypass validation. Branch prefixes identify the approved executor only
+AFTER an artifact change is detected; they never determine whether validation
+runs. Event-controlled values (branch/repo names) are passed via environment
+variables, never interpolated into the shell. The job has read-only contents
+permission and no repository secret, and blocks artifact deletion and rename. It
+is not a provenance/current-fingerprint gate until P3.1 adds trusted source
+discovery and planner recomputation.
 
 ## P3.0 status and boundaries
 
@@ -246,6 +255,11 @@ validation only.
 - committed timestamps are canonical UTC `Z`;
 - summaries and model labels are canonicalized;
 - artifact deletion and rename are blocked for agent PRs;
+- every AI-artifact PR is inspected regardless of branch name (the gate is path-triggered);
+- only approved same-repository executor branches may modify AI artifacts;
+- the `verify-agent-artifacts` check is a REQUIRED status check on `main` — a
+  repository ruleset / branch-protection setting that cannot be enforced from
+  repo code, so it must be configured before P3 is treated as PR-gated;
 - the agent PR workflow executes only trusted base-branch code;
 - no API key, provider adapter, model call, or scheduled executor exists;
 - `pnpm p3-gate` is green.
