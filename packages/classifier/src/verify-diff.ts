@@ -2,10 +2,17 @@ import { execFileSync } from 'node:child_process';
 
 /** The only files an autonomous executor may propose for merge in P3. */
 export const AGENT_EDITABLE_PATHS = new Set(['ai-annotations.json', 'ai-annotations-meta.json']);
+const REQUIRED_ARTIFACT_PAIR = ['ai-annotations.json', 'ai-annotations-meta.json'] as const;
+
+export interface GitDiffEntry {
+  status: string;
+  path: string;
+  previousPath?: string;
+}
 
 export class AgentDiffError extends Error {
-  constructor(paths: readonly string[]) {
-    super(`agent branch changes paths outside the AI artifact allowlist: ${paths.join(', ')}`);
+  constructor(paths: readonly string[], reason = 'agent branch violates the AI artifact gate') {
+    super(`${reason}: ${paths.join(', ')}`);
     this.name = 'AgentDiffError';
   }
 }
@@ -24,7 +31,50 @@ export function verifyAgentDiffPaths(paths: readonly string[]): void {
     const normalized = normalizeRepoPath(path);
     return normalized === null || !AGENT_EDITABLE_PATHS.has(normalized);
   });
-  if (rejected.length > 0) throw new AgentDiffError(rejected);
+  if (rejected.length > 0) {
+    throw new AgentDiffError(
+      rejected,
+      'agent branch changes paths outside the AI artifact allowlist',
+    );
+  }
+}
+
+/** Throws unless the agent only adds or updates the complete artifact pair. */
+export function verifyAgentDiffEntries(entries: readonly GitDiffEntry[]): void {
+  const touchedPaths = entries.flatMap((entry) =>
+    entry.previousPath === undefined ? [entry.path] : [entry.previousPath, entry.path],
+  );
+  verifyAgentDiffPaths(touchedPaths);
+
+  const disallowedLifecycle = entries.filter(
+    (entry) => entry.status.startsWith('D') || entry.status.startsWith('R'),
+  );
+  if (disallowedLifecycle.length > 0) {
+    throw new AgentDiffError(
+      disallowedLifecycle.flatMap(
+        (entry) => [entry.previousPath, entry.path].filter(Boolean) as string[],
+      ),
+      'agent branch may not delete or rename AI artifacts',
+    );
+  }
+
+  const unsupportedStatus = entries.filter((entry) => entry.status !== 'A' && entry.status !== 'M');
+  if (unsupportedStatus.length > 0) {
+    throw new AgentDiffError(
+      unsupportedStatus.map((entry) => entry.path),
+      'agent branch may only add or update AI artifacts',
+    );
+  }
+
+  const changedArtifacts = new Set(entries.map((entry) => entry.path));
+  if (changedArtifacts.size === 0) return;
+  const missing = REQUIRED_ARTIFACT_PAIR.filter((path) => !changedArtifacts.has(path));
+  if (missing.length > 0 || changedArtifacts.size !== REQUIRED_ARTIFACT_PAIR.length) {
+    throw new AgentDiffError(
+      [...missing, ...changedArtifacts],
+      'agent branch must add or update the complete AI artifact pair',
+    );
+  }
 }
 
 /** Reads a NUL-delimited Git diff so unusual legal filenames cannot bypass checks. */
@@ -38,12 +88,43 @@ export function changedPathsBetween(
   headRef: string,
   cwd = process.cwd(),
 ): string[] {
-  const output = execFileSync('git', ['diff', '--name-only', '-z', `${baseRef}...${headRef}`], {
-    encoding: 'buffer',
-    cwd,
-  });
-  return output
+  return changedPathEntriesBetween(baseRef, headRef, cwd).map((entry) => entry.path);
+}
+
+/** Reads NUL-delimited Git status records, including rename source+target paths. */
+export function changedPathEntriesBetween(
+  baseRef: string,
+  headRef: string,
+  cwd = process.cwd(),
+): GitDiffEntry[] {
+  const output = execFileSync(
+    'git',
+    ['diff', '--name-status', '-z', '-M', `${baseRef}...${headRef}`],
+    {
+      encoding: 'buffer',
+      cwd,
+    },
+  );
+  const tokens = output
     .toString('utf8')
     .split('\0')
     .filter((path) => path.length > 0);
+  const entries: GitDiffEntry[] = [];
+  for (let index = 0; index < tokens.length; ) {
+    const status = tokens[index++];
+    if (status === undefined) break;
+    if (status.startsWith('R')) {
+      const previousPath = tokens[index++];
+      const path = tokens[index++];
+      if (previousPath === undefined || path === undefined) {
+        throw new Error('malformed git rename diff output');
+      }
+      entries.push({ status, previousPath, path });
+      continue;
+    }
+    const path = tokens[index++];
+    if (path === undefined) throw new Error('malformed git diff output');
+    entries.push({ status, path });
+  }
+  return entries;
 }

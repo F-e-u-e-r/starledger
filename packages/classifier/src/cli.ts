@@ -12,7 +12,7 @@ import { Command } from 'commander';
 import { assembleAiArtifacts, verifyAiArtifacts } from './assemble';
 import { loadAiConfig } from './config';
 import { validateCandidate } from './validate-candidate';
-import { changedPathsBetween, verifyAgentDiffPaths } from './verify-diff';
+import { changedPathEntriesBetween, verifyAgentDiffEntries } from './verify-diff';
 import { CLASSIFIER_VERSION } from './index';
 
 function readJson(path: string): unknown {
@@ -67,6 +67,7 @@ program
       const manifest = buildClassificationManifest({
         promptVersion: config.ai.prompt_version,
         executionProfileVersion: config.ai.execution_profile.execution_profile_version,
+        executorKind: config.ai.executor_kind,
         jobs: [],
       });
       writeText(opts.out, serializeClassificationManifest(manifest));
@@ -174,9 +175,9 @@ program
   .option('--head <ref>', 'head reference', 'HEAD')
   .action((opts: { base: string; head: string }) => {
     try {
-      const paths = changedPathsBetween(opts.base, opts.head);
-      verifyAgentDiffPaths(paths);
-      process.stdout.write(`agent diff verified (${paths.length} allowed path(s)).\n`);
+      const entries = changedPathEntriesBetween(opts.base, opts.head);
+      verifyAgentDiffEntries(entries);
+      process.stdout.write(`agent diff verified (${entries.length} allowed change(s)).\n`);
     } catch (error) {
       fatal(error);
     }

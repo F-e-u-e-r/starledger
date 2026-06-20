@@ -1,4 +1,5 @@
 export * from './taxonomy';
+export * from './scalars';
 export * from './execution-profile';
 export * from './annotation';
 export * from './artifact';

@@ -40,6 +40,7 @@ export function makeJobInput(
     source_fingerprint: 'b'.repeat(64),
     prompt_version: 'classify-v1',
     execution_profile_version: 'agent-v1',
+    executor_kind: 'claude-routine',
     input: {
       name_with_owner: 'example/repository',
       description: 'A repository used to test deterministic agent contracts.',
@@ -78,7 +79,7 @@ export function makeCandidate(
     summary:
       'A concise, factual description of this repository that remains within the documented summary bounds for the public artifact.',
     execution: {
-      kind: 'claude-routine',
+      kind: job.executor_kind,
       profile_version: job.execution_profile_version,
       model_label: 'informational-only',
     },

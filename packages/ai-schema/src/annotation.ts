@@ -1,12 +1,12 @@
 import { z } from 'zod';
-import {
-  CategorySchema,
-  MAX_TAGS,
-  SUMMARY_MAX_LENGTH,
-  SUMMARY_MIN_LENGTH,
-  TagSchema,
-} from './taxonomy';
+import { CategorySchema, MAX_TAGS, TagSchema } from './taxonomy';
 import { AgentExecutorKindSchema } from './execution-profile';
+import {
+  CanonicalSummarySchema,
+  GitObjectOidSchema,
+  OptionalModelLabelSchema,
+  UtcTimestampSchema,
+} from './scalars';
 
 const HEX64 = /^[0-9a-f]{64}$/;
 
@@ -25,7 +25,7 @@ export const AnnotationSourceSchema = z
     /** README blob path (`null` for a metadata-only source). */
     readme_path: z.string().min(1).nullable(),
     /** README blob OID (`null` for a metadata-only source). */
-    readme_oid: z.string().min(1).nullable(),
+    readme_oid: GitObjectOidSchema.nullable(),
     repo_metadata_sha256: z.string().regex(HEX64, 'must be a lowercase hex sha256'),
     /** The composite source fingerprint (P3.1) that gates reclassification. */
     fingerprint: z.string().regex(HEX64, 'must be a lowercase hex sha256'),
@@ -63,9 +63,9 @@ export const AnnotationGenerationSchema = z
     /** StarLedger-controlled methodology/cache version, for example `agent-v1`. */
     execution_profile_version: z.string().min(1),
     /** Optional executor-reported label. It is never trusted as a cache key. */
-    model_label: z.string().min(1).max(128).nullable(),
+    model_label: OptionalModelLabelSchema,
     prompt_version: z.string().min(1),
-    generated_at: z.string(),
+    generated_at: UtcTimestampSchema,
   })
   .strict();
 export type AnnotationGeneration = z.infer<typeof AnnotationGenerationSchema>;
@@ -100,7 +100,7 @@ export const AnnotationSchema = z
     node_id: z.string().min(1),
     category: CategorySchema,
     tags: TagsSchema,
-    summary: z.string().min(SUMMARY_MIN_LENGTH).max(SUMMARY_MAX_LENGTH),
+    summary: CanonicalSummarySchema,
     source: AnnotationSourceSchema,
     generation: AnnotationGenerationSchema,
   })

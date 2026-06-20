@@ -1,12 +1,36 @@
 import { execFileSync } from 'node:child_process';
-import { mkdirSync, mkdtempSync, writeFileSync } from 'node:fs';
+import { mkdtempSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { describe, expect, it } from 'vitest';
-import { AgentDiffError, changedPathsBetween, verifyAgentDiffPaths } from '../src/verify-diff';
+import {
+  AgentDiffError,
+  changedPathEntriesBetween,
+  changedPathsBetween,
+  verifyAgentDiffEntries,
+  verifyAgentDiffPaths,
+} from '../src/verify-diff';
 
 function git(repo: string, args: readonly string[]): string {
   return execFileSync('git', args, { cwd: repo, encoding: 'utf8' }).trim();
+}
+
+function initRepo(withArtifacts = false): { repo: string; base: string } {
+  const repo = mkdtempSync(join(tmpdir(), 'starledger-agent-diff-'));
+  git(repo, ['init']);
+  git(repo, ['config', 'user.name', 'StarLedger Test']);
+  git(repo, ['config', 'user.email', 'starledger-test@example.com']);
+  if (withArtifacts) {
+    writeArtifacts(repo, 'base');
+    git(repo, ['add', 'ai-annotations.json', 'ai-annotations-meta.json']);
+  }
+  git(repo, ['commit', '--allow-empty', '-m', 'base']);
+  return { repo, base: git(repo, ['rev-parse', 'HEAD']) };
+}
+
+function writeArtifacts(repo: string, value: string): void {
+  writeFileSync(join(repo, 'ai-annotations.json'), `${value}-annotations\n`, 'utf8');
+  writeFileSync(join(repo, 'ai-annotations-meta.json'), `${value}-meta\n`, 'utf8');
 }
 
 describe('agent diff allowlist', () => {
@@ -29,29 +53,52 @@ describe('agent diff allowlist', () => {
     }
   });
 
-  it('DIFF-4: reads real Git diffs before applying the agent path allowlist', () => {
-    const repo = mkdtempSync(join(tmpdir(), 'starledger-agent-diff-'));
-    git(repo, ['init']);
-    git(repo, ['config', 'user.name', 'StarLedger Test']);
-    git(repo, ['config', 'user.email', 'starledger-test@example.com']);
-    git(repo, ['commit', '--allow-empty', '-m', 'base']);
-    const base = git(repo, ['rev-parse', 'HEAD']);
-
-    writeFileSync(join(repo, 'ai-annotations.json'), '{}\n', 'utf8');
-    writeFileSync(join(repo, 'ai-annotations-meta.json'), '{}\n', 'utf8');
+  it('DIFF-4: artifact pair add is allowed', () => {
+    const { repo, base } = initRepo();
+    writeArtifacts(repo, 'head');
     git(repo, ['add', 'ai-annotations.json', 'ai-annotations-meta.json']);
     git(repo, ['commit', '-m', 'agent artifacts']);
-    const artifactHead = git(repo, ['rev-parse', 'HEAD']);
-    const allowedPaths = changedPathsBetween(base, artifactHead, repo);
+    const allowedPaths = changedPathsBetween(base, 'HEAD', repo);
     expect(allowedPaths.sort()).toEqual(['ai-annotations-meta.json', 'ai-annotations.json']);
-    expect(() => verifyAgentDiffPaths(allowedPaths)).not.toThrow();
+    expect(() =>
+      verifyAgentDiffEntries(changedPathEntriesBetween(base, 'HEAD', repo)),
+    ).not.toThrow();
+  });
 
-    mkdirSync(join(repo, 'packages/classifier/src'), { recursive: true });
-    writeFileSync(join(repo, 'packages/classifier/src/cli.ts'), 'export {};\n', 'utf8');
-    git(repo, ['add', 'packages/classifier/src/cli.ts']);
-    git(repo, ['commit', '-m', 'agent source edit']);
-    const rejectedPaths = changedPathsBetween(base, 'HEAD', repo);
-    expect(rejectedPaths).toContain('packages/classifier/src/cli.ts');
-    expect(() => verifyAgentDiffPaths(rejectedPaths)).toThrow(AgentDiffError);
+  it('DIFF-5: artifact pair update is allowed', () => {
+    const { repo, base } = initRepo(true);
+    writeArtifacts(repo, 'updated');
+    git(repo, ['add', 'ai-annotations.json', 'ai-annotations-meta.json']);
+    git(repo, ['commit', '-m', 'agent artifact update']);
+    expect(() =>
+      verifyAgentDiffEntries(changedPathEntriesBetween(base, 'HEAD', repo)),
+    ).not.toThrow();
+  });
+
+  it('DIFF-6: deleting one artifact is rejected', () => {
+    const { repo, base } = initRepo(true);
+    git(repo, ['rm', 'ai-annotations.json']);
+    git(repo, ['commit', '-m', 'delete one artifact']);
+    expect(() => verifyAgentDiffEntries(changedPathEntriesBetween(base, 'HEAD', repo))).toThrow(
+      AgentDiffError,
+    );
+  });
+
+  it('DIFF-7: deleting both artifacts is rejected', () => {
+    const { repo, base } = initRepo(true);
+    git(repo, ['rm', 'ai-annotations.json', 'ai-annotations-meta.json']);
+    git(repo, ['commit', '-m', 'delete both artifacts']);
+    expect(() => verifyAgentDiffEntries(changedPathEntriesBetween(base, 'HEAD', repo))).toThrow(
+      AgentDiffError,
+    );
+  });
+
+  it('DIFF-8: renaming an artifact is rejected', () => {
+    const { repo, base } = initRepo(true);
+    git(repo, ['mv', 'ai-annotations.json', 'ai-annotations-renamed.json']);
+    git(repo, ['commit', '-m', 'rename artifact']);
+    expect(() => verifyAgentDiffEntries(changedPathEntriesBetween(base, 'HEAD', repo))).toThrow(
+      AgentDiffError,
+    );
   });
 });

@@ -32,6 +32,13 @@
           "type": "string",
           "minLength": 1
         },
+        "executor_kind": {
+          "type": "string",
+          "enum": [
+            "claude-routine",
+            "codex-automation"
+          ]
+        },
         "input": {
           "type": "object",
           "properties": {
@@ -73,7 +80,8 @@
                     },
                     "oid": {
                       "type": "string",
-                      "minLength": 1
+                      "minLength": 1,
+                      "maxLength": 128
                     },
                     "content": {
                       "type": "string"
@@ -232,6 +240,7 @@
         "taxonomy_version",
         "prompt_version",
         "execution_profile_version",
+        "executor_kind",
         "input",
         "constraints"
       ],

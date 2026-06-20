@@ -1,5 +1,6 @@
 import { z } from 'zod';
 import { AI_SCHEMA_VERSION } from './artifact';
+import { AgentExecutorKindSchema } from './execution-profile';
 import {
   canonicalizeClassificationJob,
   ClassificationJobSchema,
@@ -18,6 +19,7 @@ export const ClassificationManifestSchema = z
     taxonomy_version: z.literal(TAXONOMY_VERSION),
     prompt_version: z.string().min(1),
     execution_profile_version: z.string().min(1),
+    executor_kind: AgentExecutorKindSchema,
     jobs: z.array(ClassificationJobSchema),
   })
   .strict()
@@ -42,7 +44,8 @@ export const ClassificationManifestSchema = z
       if (
         job.taxonomy_version !== manifest.taxonomy_version ||
         job.prompt_version !== manifest.prompt_version ||
-        job.execution_profile_version !== manifest.execution_profile_version
+        job.execution_profile_version !== manifest.execution_profile_version ||
+        job.executor_kind !== manifest.executor_kind
       ) {
         ctx.addIssue({
           code: z.ZodIssueCode.custom,
@@ -57,6 +60,7 @@ export type ClassificationManifest = z.infer<typeof ClassificationManifestSchema
 export interface BuildClassificationManifestInput {
   promptVersion: string;
   executionProfileVersion: string;
+  executorKind: z.infer<typeof AgentExecutorKindSchema>;
   jobs: readonly ClassificationJob[];
 }
 
@@ -68,6 +72,7 @@ export function buildClassificationManifest(
     taxonomy_version: TAXONOMY_VERSION,
     prompt_version: input.promptVersion,
     execution_profile_version: input.executionProfileVersion,
+    executor_kind: input.executorKind,
     jobs: [...input.jobs].sort((a, b) => compareText(a.node_id, b.node_id)),
   });
 }
@@ -81,6 +86,7 @@ export function serializeClassificationManifest(manifest: ClassificationManifest
         taxonomy_version: validated.taxonomy_version,
         prompt_version: validated.prompt_version,
         execution_profile_version: validated.execution_profile_version,
+        executor_kind: validated.executor_kind,
         jobs: validated.jobs.map(canonicalizeClassificationJob),
       },
       null,

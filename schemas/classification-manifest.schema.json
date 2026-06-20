@@ -20,6 +20,13 @@
           "type": "string",
           "minLength": 1
         },
+        "executor_kind": {
+          "type": "string",
+          "enum": [
+            "claude-routine",
+            "codex-automation"
+          ]
+        },
         "jobs": {
           "type": "array",
           "items": {
@@ -52,6 +59,9 @@
               "execution_profile_version": {
                 "type": "string",
                 "minLength": 1
+              },
+              "executor_kind": {
+                "$ref": "#/definitions/ClassificationManifest/properties/executor_kind"
               },
               "input": {
                 "type": "object",
@@ -94,7 +104,8 @@
                           },
                           "oid": {
                             "type": "string",
-                            "minLength": 1
+                            "minLength": 1,
+                            "maxLength": 128
                           },
                           "content": {
                             "type": "string"
@@ -253,6 +264,7 @@
               "taxonomy_version",
               "prompt_version",
               "execution_profile_version",
+              "executor_kind",
               "input",
               "constraints"
             ],
@@ -265,6 +277,7 @@
         "taxonomy_version",
         "prompt_version",
         "execution_profile_version",
+        "executor_kind",
         "jobs"
       ],
       "additionalProperties": false

@@ -17,7 +17,8 @@ individual repository cannot be classified.
 Claude Routines and Codex App Automations are interchangeable **agent
 executors**, not StarLedger's trusted core. They can create untrusted candidate
 classifications only. The repository owns planning, validation, serialization,
-hashing, and publication eligibility.
+hashing, and eventual publication gates. P3.0 only supplies a trusted structural
+artifact gate; it does not prove classification provenance.
 
 ```text
 deterministic planner
@@ -39,7 +40,9 @@ worktree-based fallback. Enable only one scheduled executor at a time.
 `codex/` pull requests. It uses `pull_request_target`, checks out the protected
 base revision, and fetches the candidate commit as data only. The trusted CLI,
 not agent-controlled PR code, validates changed paths and artifacts. The job has
-read-only contents permission and no secrets.
+read-only contents permission and no secrets. The workflow blocks artifact
+deletion and rename, but it is not a provenance/current-fingerprint gate until
+P3.1 adds trusted source discovery and planner recomputation.
 
 ## P3.0 status and boundaries
 
@@ -55,6 +58,7 @@ the executor platform and is never a StarLedger configuration value.
 
 ```text
 packages/ai-schema/src/
+  scalars.ts            UTC timestamps, canonical summaries, model labels, Git OIDs
   taxonomy.ts           fixed category/tag vocabulary and limits
   annotation.ts         strict public annotation contract
   artifact.ts/meta.ts   deterministic public files and exact-byte hash
@@ -88,13 +92,17 @@ Unknown categories and tags are rejected. The taxonomy test verifies every
 controlled tag remains within `TAG_MAX_LENGTH`.
 
 `execution_profile_version` is `agent-v1`. It is owned by StarLedger and is the
-authoritative methodology/cache invalidation key. Bump it if the instructions,
-selected model, reasoning level, or executor policy changes enough to warrant
+authoritative methodology/cache invalidation key. `executor_kind` is bound to
+each manifest and job; switching between `claude-routine` and `codex-automation`
+therefore produces new job IDs and prevents one executor's candidates from
+satisfying the other executor's manifest. Bump the profile if the instructions,
+selected model, reasoning level, or methodology changes enough to warrant
 reclassification. An executor-reported `model_label` is optional observation
-data, not a trust or cache key.
+data, canonicalized, and never a trust or cache key.
 
 The supported `execution.kind` values are `claude-routine` and
-`codex-automation`. They validate identically.
+`codex-automation`. They share the same candidate schema, but each manifest is
+bound to exactly one of them.
 
 ## Public artifact contracts
 
@@ -135,17 +143,26 @@ source fingerprint, and generation provenance:
 the annotation count, taxonomy version, canonical dataset hash, and generation
 timestamp. It is updated only when annotation bytes change.
 
+All committed timestamps are UTC ISO-8601 strings ending in `Z`. Summaries are
+normalized before validation: Unicode NFC, CRLF/CR to LF, horizontal whitespace
+collapsed, newlines collapsed to spaces, and leading/trailing whitespace
+trimmed. The committed artifact only accepts canonical single-paragraph
+summaries and rejects control characters. `readme_oid` is an opaque Git object
+ID from GitHub, not a StarLedger SHA-256 fingerprint.
+
 ## Job and candidate contract
 
 Each `ClassificationJob` includes an immutable `job_id`, `node_id`, source
-fingerprint, taxonomy/prompt/profile versions, bounded canonical metadata and
-optional README input, plus the full allowed taxonomy constraints. `job_id` is a
-SHA-256 over all of those immutable fields with canonical key and list order.
+fingerprint, taxonomy/prompt/profile versions, `executor_kind`, bounded
+canonical metadata and optional README input, plus the full allowed taxonomy
+constraints. `job_id` is a SHA-256 over all of those immutable fields with
+canonical key and list order.
 
 Every candidate must repeat `job_id`, `node_id`, `source_fingerprint`,
 `taxonomy_version`, `prompt_version`, and `execution_profile_version` exactly.
-The deterministic validator rejects mismatches as stale or invalid. Candidate
-tags are deduplicated and sorted before artifact construction; unknown values and
+The candidate's `execution.kind` must match the job's `executor_kind`. The
+deterministic validator rejects mismatches as stale or invalid. Candidate tags
+are deduplicated and sorted before artifact construction; unknown values and
 over-budget values are rejected. The resulting public artifact is strict and
 canonical.
 
@@ -165,9 +182,10 @@ only accepts candidates that pass exact job matching; it merges by `node_id`,
 sorts, serializes fixed key order, and derives metadata from exact bytes.
 
 `p3-agent-gate` is for an executor branch or PR only. It rejects every changed
-path except `ai-annotations.json` and `ai-annotations-meta.json`, then validates
-the artifact pair if present. The `ai-agent-pr.yml` workflow independently runs
-the equivalent checks with trusted base-branch code. Do not run it as a general
+path except `ai-annotations.json` and `ai-annotations-meta.json`, requires the
+artifact pair to be added or updated together, and rejects deletion or rename of
+either artifact. The `ai-agent-pr.yml` workflow independently runs the
+equivalent checks with trusted base-branch code. Do not run it as a general
 source-code CI gate.
 
 ## Executor operating policy
@@ -175,7 +193,7 @@ source-code CI gate.
 Use the shared repository prompt. Treat all repository material as untrusted
 data. Keep executor network access and connectors minimal. The agent cannot
 choose the job set, taxonomy, schema, source fingerprint, hash, artifact order,
-publication decision, or files outside the path allowlist.
+publication decision, executor binding, or files outside the path allowlist.
 
 For a Claude Routine, preserve the default restricted `claude/` branch policy;
 do not enable unrestricted pushes or auto-merge. For Codex App Automation, use a
@@ -199,8 +217,38 @@ schemas/classification-candidate.schema.json
 schema regeneration, and schema drift verification.
 
 P3.0 proves strict taxonomy validation, tag-length bounds, deterministic job and
-manifest bytes, exact candidate/job matching, deterministic artifact bytes and
-hashes, public-artifact secret/README exclusion, and the agent diff allowlist.
+manifest bytes, exact candidate/job/executor matching, deterministic artifact
+bytes and hashes, public-artifact secret/README exclusion, canonical UTC
+timestamps, summary/model-label normalization, artifact deletion/rename
+blocking, and the agent diff allowlist.
+
+## Gate semantics
+
+- **P3.0 structural gate:** validates changed paths, add/update lifecycle,
+  public artifact schemas, exact artifact hash, deterministic serialization, and
+  executor/job/candidate structural consistency. It runs only trusted base-branch
+  code and uses no secrets. It does not prove classification provenance.
+- **P3.1 provenance/current-fingerprint gate:** will recompute current jobs and
+  fingerprints from canonical stars plus trusted README/metadata discovery, then
+  verify that candidates correspond to those jobs and that `dataset_sha256`
+  matches the current canonical dataset.
+- **P3.3 publication gate:** will connect validated artifacts, classifier state,
+  reviewed merge, and Pages deployment.
+
+Until P3.1 exists, do not enable scheduled Claude Routine or Codex Automation
+runs, do not auto-merge agent PRs, and treat green agent CI as structural
+validation only.
+
+## P3.0 exit conditions
+
+- all schemas are strict;
+- every job and candidate is bound to one executor;
+- committed timestamps are canonical UTC `Z`;
+- summaries and model labels are canonicalized;
+- artifact deletion and rename are blocked for agent PRs;
+- the agent PR workflow executes only trusted base-branch code;
+- no API key, provider adapter, model call, or scheduled executor exists;
+- `pnpm p3-gate` is green.
 
 ## Subsequent milestones
 

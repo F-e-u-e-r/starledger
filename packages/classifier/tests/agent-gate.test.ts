@@ -1,0 +1,37 @@
+import { existsSync, readFileSync } from 'node:fs';
+import { dirname, resolve } from 'node:path';
+import { fileURLToPath } from 'node:url';
+import { describe, expect, it } from 'vitest';
+
+const root = resolve(dirname(fileURLToPath(import.meta.url)), '../../..');
+
+function readRepoFile(path: string): string {
+  return readFileSync(resolve(root, path), 'utf8');
+}
+
+describe('P3 structural agent gate', () => {
+  it('GATE-1: the workflow never checks out or executes agent-controlled code', () => {
+    const workflow = readRepoFile('.github/workflows/ai-agent-pr.yml');
+    expect(workflow).toContain('pull_request_target:');
+    expect(workflow).toContain('ref: ${{ github.event.pull_request.base.sha }}');
+    expect(workflow).toContain('refs/pull/${{ github.event.pull_request.number }}/head');
+    expect(workflow).not.toContain('ref: ${{ github.event.pull_request.head');
+  });
+
+  it('GATE-2: the workflow has no secrets and only read-only contents permission', () => {
+    const workflow = readRepoFile('.github/workflows/ai-agent-pr.yml');
+    expect(workflow).toContain('permissions:\n  contents: read');
+    expect(workflow).not.toContain('secrets.');
+  });
+
+  it('GATE-3: the P3 spec describes the current gate as structural, not provenance validation', () => {
+    const spec = readRepoFile('docs/P3-ai-spec.md');
+    expect(spec).toMatch(/trusted structural\s+artifact gate/);
+    expect(spec).toContain('does not prove classification provenance');
+  });
+
+  it('GATE-4: no scheduled Routine/Codex classifier workflow exists in P3.0', () => {
+    expect(existsSync(resolve(root, '.github/workflows/classify.yml'))).toBe(false);
+    expect(readRepoFile('.github/workflows/ai-agent-pr.yml')).not.toContain('schedule:');
+  });
+});

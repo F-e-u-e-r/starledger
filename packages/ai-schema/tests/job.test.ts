@@ -19,10 +19,11 @@ describe('agent job and manifest contracts', () => {
     expect(first.job_id).toBe(second.job_id);
   });
 
-  it('JOB-2: prompt, taxonomy, and execution profile changes change job_id', () => {
+  it('JOB-2/JOB-4: prompt, taxonomy, execution profile, and executor changes change job_id', () => {
     const job = makeJob();
     expect(makeJob({ prompt_version: 'classify-v2' }).job_id).not.toBe(job.job_id);
     expect(makeJob({ execution_profile_version: 'agent-v2' }).job_id).not.toBe(job.job_id);
+    expect(makeJob({ executor_kind: 'codex-automation' }).job_id).not.toBe(job.job_id);
     expect(
       classificationJobId({
         ...job,
@@ -37,11 +38,13 @@ describe('agent job and manifest contracts', () => {
     const first = buildClassificationManifest({
       promptVersion: 'classify-v1',
       executionProfileVersion: 'agent-v1',
+      executorKind: 'claude-routine',
       jobs: [b, a],
     });
     const second = buildClassificationManifest({
       promptVersion: 'classify-v1',
       executionProfileVersion: 'agent-v1',
+      executorKind: 'claude-routine',
       jobs: [a, b],
     });
     expect(first.jobs.map((job) => job.node_id)).toEqual(['R_a', 'R_b']);

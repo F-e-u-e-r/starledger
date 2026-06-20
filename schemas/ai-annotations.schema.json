@@ -144,7 +144,8 @@
                     "anyOf": [
                       {
                         "type": "string",
-                        "minLength": 1
+                        "minLength": 1,
+                        "maxLength": 128
                       },
                       {
                         "type": "null"
@@ -200,7 +201,8 @@
                     "minLength": 1
                   },
                   "generated_at": {
-                    "type": "string"
+                    "type": "string",
+                    "format": "date-time"
                   }
                 },
                 "required": [

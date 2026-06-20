@@ -1,7 +1,9 @@
 import { existsSync, readFileSync } from 'node:fs';
 import {
   AGENT_EXECUTION_PROFILE_VERSION,
+  DEFAULT_AGENT_EXECUTOR_KIND,
   DEFAULT_AGENT_EXECUTION_PROFILE,
+  AgentExecutorKindSchema,
   AgentExecutionProfileSchema,
 } from '@starred/ai-schema';
 import { parse as parseYaml } from 'yaml';
@@ -20,6 +22,8 @@ export const AiConfigSchema = z
         enabled: z.boolean().default(false),
         /** A prompt bump deliberately invalidates future job fingerprints. */
         prompt_version: z.string().min(1).default('classify-v1'),
+        /** The single executor allowed to process manifests created from this config. */
+        executor_kind: AgentExecutorKindSchema.default(DEFAULT_AGENT_EXECUTOR_KIND),
         /** The StarLedger-controlled method/cache version, not a provider model id. */
         execution_profile: AgentExecutionProfileSchema.default(DEFAULT_AGENT_EXECUTION_PROFILE),
         /** Hard caps on untrusted input length (implemented with README discovery in P3.1). */
@@ -50,6 +54,7 @@ export function loadAiConfig(path?: string): AiConfig {
   }
   return AiConfigSchema.parse({
     ai: {
+      executor_kind: DEFAULT_AGENT_EXECUTOR_KIND,
       execution_profile: {
         ...DEFAULT_AGENT_EXECUTION_PROFILE,
         execution_profile_version: AGENT_EXECUTION_PROFILE_VERSION,

@@ -9,15 +9,15 @@ ai:
   # and artifact commands remain safe to run while this is false.
   enabled: false
 
-  # Bump either value whenever the classification methodology changes. Both are
+  # The manifest is bound to exactly one executor. Do not schedule Claude and
+  # Codex at the same time; switching executor deliberately creates new job ids.
+  executor_kind: claude-routine
+
+  # Bump either value whenever the classification methodology changes. They are
   # embedded in the immutable job id and therefore intentionally reclassify.
   prompt_version: classify-v1
   execution_profile:
     execution_profile_version: agent-v1
-    # Keep the list sorted. Do not schedule both executors at the same time.
-    allowed_executors:
-      - claude-routine
-      - codex-automation
 
   # Hard caps for future P3.1 preprocessing. README text is untrusted and no
   # URL found inside it may be fetched.

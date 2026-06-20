@@ -1,5 +1,6 @@
 import { z } from 'zod';
 import { AI_SCHEMA_VERSION, sha256 } from './artifact';
+import { UtcTimestampSchema } from './scalars';
 import { TAXONOMY_VERSION } from './taxonomy';
 
 const HEX64 = /^[0-9a-f]{64}$/;
@@ -18,7 +19,7 @@ export const AiAnnotationsMetaSchema = z
     annotation_count: z.number().int().nonnegative(),
     taxonomy_version: z.literal(TAXONOMY_VERSION),
     dataset_sha256: z.string().regex(HEX64, 'must be a lowercase hex sha256'),
-    generated_at: z.string(),
+    generated_at: UtcTimestampSchema,
   })
   .strict();
 export type AiAnnotationsMeta = z.infer<typeof AiAnnotationsMetaSchema>;

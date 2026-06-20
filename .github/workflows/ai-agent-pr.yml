@@ -47,12 +47,29 @@ jobs:
 
       - name: verify public AI artifacts with trusted schemas
         env:
+          BASE_REF: ${{ github.event.pull_request.base.sha }}
           CANDIDATE_REF: origin/ai-agent-pr
         run: |
+          base_annotations=false
+          base_meta=false
           annotations=false
           meta=false
+          if git cat-file -e "$BASE_REF:ai-annotations.json" 2>/dev/null; then base_annotations=true; fi
+          if git cat-file -e "$BASE_REF:ai-annotations-meta.json" 2>/dev/null; then base_meta=true; fi
           if git cat-file -e "$CANDIDATE_REF:ai-annotations.json" 2>/dev/null; then annotations=true; fi
           if git cat-file -e "$CANDIDATE_REF:ai-annotations-meta.json" 2>/dev/null; then meta=true; fi
+          if [ "$base_annotations" != "$base_meta" ]; then
+            echo 'Base AI artifacts are inconsistent; maintenance is required outside the agent gate'
+            exit 1
+          fi
+          if [ "$base_annotations" = true ] && [ "$annotations" = false ]; then
+            echo 'Agent PRs may not delete AI artifacts'
+            exit 1
+          fi
+          if [ "$base_meta" = true ] && [ "$meta" = false ]; then
+            echo 'Agent PRs may not delete AI artifacts'
+            exit 1
+          fi
           if [ "$annotations" != "$meta" ]; then
             echo 'AI artifacts must be added, updated, or removed together'
             exit 1

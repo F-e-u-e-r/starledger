@@ -1,5 +1,7 @@
 import { z } from 'zod';
 import { AI_SCHEMA_VERSION, sha256 } from './artifact';
+import { AgentExecutorKindSchema, type AgentExecutorKind } from './execution-profile';
+import { GitObjectOidSchema } from './scalars';
 import {
   CATEGORIES,
   MAX_TAGS,
@@ -35,7 +37,7 @@ function sortedUnique<T extends string>(
 export const ClassificationReadmeInputSchema = z
   .object({
     path: z.string().min(1),
-    oid: z.string().min(1),
+    oid: GitObjectOidSchema,
     /** Preprocessed, bounded untrusted text. Manifests are temporary and ignored. */
     content: z.string(),
   })
@@ -89,6 +91,7 @@ export const ClassificationJobSchema = z
     taxonomy_version: z.literal(TAXONOMY_VERSION),
     prompt_version: z.string().min(1),
     execution_profile_version: z.string().min(1),
+    executor_kind: AgentExecutorKindSchema,
     input: ClassificationInputSchema,
     constraints: ClassificationConstraintsSchema,
   })
@@ -111,6 +114,7 @@ export interface ClassificationJobIdentity {
   taxonomy_version: string;
   prompt_version: string;
   execution_profile_version: string;
+  executor_kind: AgentExecutorKind;
   input: ClassificationInput;
   constraints: ClassificationConstraints;
 }
@@ -152,6 +156,7 @@ export function classificationJobId(job: ClassificationJobIdentity): string {
     taxonomy_version: job.taxonomy_version,
     prompt_version: job.prompt_version,
     execution_profile_version: job.execution_profile_version,
+    executor_kind: job.executor_kind,
     input: canonicalizeInput(job.input),
     constraints: canonicalizeConstraints(job.constraints),
   };
@@ -176,6 +181,7 @@ export function buildClassificationJob(input: BuildClassificationJobInput): Clas
     taxonomy_version: TAXONOMY_VERSION,
     prompt_version: input.prompt_version,
     execution_profile_version: input.execution_profile_version,
+    executor_kind: input.executor_kind,
     input: parsedInput,
     constraints: parsedConstraints,
   };
@@ -192,6 +198,7 @@ export function canonicalizeClassificationJob(job: ClassificationJob): Record<st
     taxonomy_version: job.taxonomy_version,
     prompt_version: job.prompt_version,
     execution_profile_version: job.execution_profile_version,
+    executor_kind: job.executor_kind,
     input: canonicalizeInput(job.input),
     constraints: canonicalizeConstraints(job.constraints),
   };

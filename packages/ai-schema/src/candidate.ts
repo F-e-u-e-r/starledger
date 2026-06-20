@@ -2,21 +2,15 @@ import { z } from 'zod';
 import { AI_SCHEMA_VERSION } from './artifact';
 import { AgentExecutorKindSchema } from './execution-profile';
 import { JobIdSchema, LowercaseSha256Schema } from './job';
-import {
-  MAX_TAGS,
-  SUMMARY_MAX_LENGTH,
-  SUMMARY_MIN_LENGTH,
-  TAXONOMY_VERSION,
-  CategorySchema,
-  TagSchema,
-} from './taxonomy';
+import { RawModelLabelSchema, RawSummarySchema } from './scalars';
+import { MAX_TAGS, TAXONOMY_VERSION, CategorySchema, TagSchema } from './taxonomy';
 
 /** An executor-reported label is operational context only, never a trust boundary. */
 export const CandidateExecutionSchema = z
   .object({
     kind: AgentExecutorKindSchema,
     profile_version: z.string().min(1),
-    model_label: z.string().min(1).max(128).nullable(),
+    model_label: RawModelLabelSchema,
   })
   .strict();
 export type CandidateExecution = z.infer<typeof CandidateExecutionSchema>;
@@ -37,7 +31,7 @@ export const ClassificationCandidateSchema = z
     execution_profile_version: z.string().min(1),
     category: CategorySchema,
     tags: z.array(TagSchema).max(MAX_TAGS),
-    summary: z.string().min(SUMMARY_MIN_LENGTH).max(SUMMARY_MAX_LENGTH),
+    summary: RawSummarySchema,
     execution: CandidateExecutionSchema,
   })
   .strict();

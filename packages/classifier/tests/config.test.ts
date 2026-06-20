@@ -6,11 +6,8 @@ describe('AiConfigSchema', () => {
     const config = AiConfigSchema.parse({});
     expect(config.ai.enabled).toBe(false);
     expect(config.ai.prompt_version).toBe('classify-v1');
+    expect(config.ai.executor_kind).toBe('claude-routine');
     expect(config.ai.execution_profile.execution_profile_version).toBe('agent-v1');
-    expect(config.ai.execution_profile.allowed_executors).toEqual([
-      'claude-routine',
-      'codex-automation',
-    ]);
     expect(config.ai.budget.max_total_per_run).toBe(25);
   });
 
