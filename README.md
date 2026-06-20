@@ -7,10 +7,10 @@ A personal GitHub stars dashboard and repository discovery pipeline, built in ph
 | **P0** | Deterministic **exporter**: stars → canonical `stars.json`            | ✅ complete                                        |
 | P1     | Static **dashboard** on GitHub Pages (client-side filter/sort/search) | ✅ complete                                        |
 | P2     | **Notifier**: YouTube / awesome-stars → one-shot Telegram delivery    | release candidate (P2.5 closure); live run pending |
-| P3     | **AI classification**: categories, tags, summaries, semantic search   | planned                                            |
+| P3     | **AI classification**: categories, tags, summaries, semantic search   | P3.0 contracts and agent protocol in progress      |
 | P4     | Reusable template / workflow (fork model, no key custody)             | planned                                            |
 
-Contracts: **[`docs/P0-exporter-spec.md`](docs/P0-exporter-spec.md)** (exporter) · **[`docs/P1-dashboard-spec.md`](docs/P1-dashboard-spec.md)** (dashboard) · **[`docs/P2-notifier-spec.md`](docs/P2-notifier-spec.md)** (notifier).
+Contracts: **[`docs/P0-exporter-spec.md`](docs/P0-exporter-spec.md)** (exporter) · **[`docs/P1-dashboard-spec.md`](docs/P1-dashboard-spec.md)** (dashboard) · **[`docs/P2-notifier-spec.md`](docs/P2-notifier-spec.md)** (notifier) · **[`docs/P3-ai-spec.md`](docs/P3-ai-spec.md)** (optional AI enrichment).
 
 ## Quick start
 
@@ -22,6 +22,7 @@ pnpm build          # tsup + vite → dist (CLI + dashboard)
 pnpm schemas        # regenerate schemas/*.json from the Zod schemas
 pnpm release-gate   # full P0 gate: typecheck·lint·test·build·schemas·real-git smoke
 pnpm p2-gate        # P2 notifier gate: quality checks + state/replay smokes
+pnpm p3-gate        # P3.0 contracts: quality checks + generated AI-schema drift
 
 pnpm --filter @starred/dashboard dev    # run the dashboard locally (reads ./stars.json)
 ```
@@ -53,6 +54,8 @@ packages/schema          @starred/schema         canonical Zod model + JSON Sche
 packages/github-client   @starred/github-client  errors · retry coordinator · GraphQL probe/pagination/hydrate (bisection) · REST enumeration
 packages/exporter        @starred/exporter        config · enumerate (dual-path) · hydrate-merge · degraded gate · serialize · staged git publish · CLI
 packages/notifier        @starred/notifier        YouTube / awesome-stars source polling · durable state branch · pending queue · CLI
+packages/ai-schema       @starred/ai-schema       strict optional-AI artifact, job, manifest, and candidate contracts
+packages/classifier      @starred/classifier      deterministic candidate validation, artifact assembly, and agent diff gate
 apps/dashboard           @starred/dashboard       Vite + React static site: trusted loading + schema validation (P1)
 schemas/                 generated JSON Schemas
 ```

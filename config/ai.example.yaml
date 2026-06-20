@@ -1,0 +1,32 @@
+# Agent-executor configuration (P3). Copy to ai.yaml and adjust.
+#
+# No API key, provider, or model is configured here. Claude Routines and Codex
+# App Automations use their own subscription authentication and are replaceable
+# untrusted candidate producers. Their model label is informational only.
+
+ai:
+  # Master switch for future planner/executor runs. The deterministic validation
+  # and artifact commands remain safe to run while this is false.
+  enabled: false
+
+  # Bump either value whenever the classification methodology changes. Both are
+  # embedded in the immutable job id and therefore intentionally reclassify.
+  prompt_version: classify-v1
+  execution_profile:
+    execution_profile_version: agent-v1
+    # Keep the list sorted. Do not schedule both executors at the same time.
+    allowed_executors:
+      - claude-routine
+      - codex-automation
+
+  # Hard caps for future P3.1 preprocessing. README text is untrusted and no
+  # URL found inside it may be fetched.
+  readme_max_chars: 30000
+  metadata_max_chars: 5000
+
+  # Future P3.1 planner ceilings: hard repository limits, not cost estimates.
+  budget:
+    max_new_per_run: 20
+    max_refresh_per_run: 5
+    max_retry_per_run: 5
+    max_total_per_run: 25

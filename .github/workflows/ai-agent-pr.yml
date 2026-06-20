@@ -1,0 +1,66 @@
+name: AI agent artifact gate
+
+# This deliberately runs from the trusted default branch. It fetches agent
+# artifacts as data but never checks out or executes agent-controlled source.
+on:
+  pull_request_target:
+    types: [opened, reopened, synchronize, ready_for_review]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ai-agent-pr-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+jobs:
+  verify-agent-artifacts:
+    if: >-
+      startsWith(github.event.pull_request.head.ref, 'claude/') ||
+      startsWith(github.event.pull_request.head.ref, 'codex/')
+    runs-on: ubuntu-latest
+    steps:
+      # Check out the protected base revision. Do not execute code from the PR.
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.base.sha }}
+          fetch-depth: 0
+
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: pnpm
+
+      - run: pnpm install --frozen-lockfile
+
+      - name: fetch agent commit as data
+        run: |
+          git fetch --no-tags origin \
+            "+refs/pull/${{ github.event.pull_request.number }}/head:refs/remotes/origin/ai-agent-pr"
+
+      - name: enforce the agent path allowlist with trusted code
+        run: |
+          node --import tsx packages/classifier/src/cli.ts verify-agent-diff \
+            --base '${{ github.event.pull_request.base.sha }}' \
+            --head origin/ai-agent-pr
+
+      - name: verify public AI artifacts with trusted schemas
+        env:
+          CANDIDATE_REF: origin/ai-agent-pr
+        run: |
+          annotations=false
+          meta=false
+          if git cat-file -e "$CANDIDATE_REF:ai-annotations.json" 2>/dev/null; then annotations=true; fi
+          if git cat-file -e "$CANDIDATE_REF:ai-annotations-meta.json" 2>/dev/null; then meta=true; fi
+          if [ "$annotations" != "$meta" ]; then
+            echo 'AI artifacts must be added, updated, or removed together'
+            exit 1
+          fi
+          if [ "$annotations" = true ]; then
+            git show "$CANDIDATE_REF:ai-annotations.json" > "$RUNNER_TEMP/ai-annotations.json"
+            git show "$CANDIDATE_REF:ai-annotations-meta.json" > "$RUNNER_TEMP/ai-annotations-meta.json"
+            node --import tsx packages/classifier/src/cli.ts verify-artifacts \
+              --annotations "$RUNNER_TEMP/ai-annotations.json" \
+              --meta "$RUNNER_TEMP/ai-annotations-meta.json"
+          fi

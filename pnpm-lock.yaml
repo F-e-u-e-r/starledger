@@ -70,6 +70,33 @@ importers:
         specifier: ^5.4.11
         version: 5.4.21(@types/node@22.19.21)
 
+  packages/ai-schema:
+    dependencies:
+      zod:
+        specifier: ^3.24.1
+        version: 3.25.76
+      zod-to-json-schema:
+        specifier: ^3.24.1
+        version: 3.25.2(zod@3.25.76)
+
+  packages/classifier:
+    dependencies:
+      '@starred/ai-schema':
+        specifier: workspace:*
+        version: link:../ai-schema
+      '@starred/github-client':
+        specifier: workspace:*
+        version: link:../github-client
+      commander:
+        specifier: ^12.1.0
+        version: 12.1.0
+      yaml:
+        specifier: ^2.6.1
+        version: 2.9.0
+      zod:
+        specifier: ^3.24.1
+        version: 3.25.76
+
   packages/deploy:
     dependencies:
       '@starred/schema':

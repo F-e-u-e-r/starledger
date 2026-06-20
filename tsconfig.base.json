@@ -21,7 +21,9 @@
     "baseUrl": ".",
     "paths": {
       "@starred/schema": ["packages/schema/src"],
-      "@starred/github-client": ["packages/github-client/src"]
+      "@starred/github-client": ["packages/github-client/src"],
+      "@starred/ai-schema": ["packages/ai-schema/src"],
+      "@starred/classifier": ["packages/classifier/src"]
     }
   }
 }
