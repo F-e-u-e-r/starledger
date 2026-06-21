@@ -8,8 +8,15 @@
     "paths": [
       "README.md"
     ],
-    "last_commit_sha": "160c6926aa0c894874162a0481c287f47d4117c5"
+    "last_commit_sha": "8aac7344b4eb0540d91aad97fc6d13131530131d"
   },
   "pending": [],
-  "deliveries": []
+  "deliveries": [
+    {
+      "notification_key": "awesome_stars:shadcn-labs/agentcn:R_kgDOS9OLdg",
+      "status": "sent",
+      "completed_at": "2026-06-21T01:41:46.962Z",
+      "detail": null
+    }
+  ]
 }
