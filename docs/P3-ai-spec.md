@@ -380,6 +380,15 @@ must both be configured as required status checks on `main` (a repository rulese
 / branch-protection setting that CANNOT be enforced from repository code). Neither
 may be skipped on an AI-artifact PR.
 
+**One-time workflow bootstrap.** The PR that first introduces
+`ai-provenance.yml` cannot run that workflow as a required `pull_request_target`
+check: GitHub correctly executes only the protected base revision, which does not
+yet contain either the workflow or the trusted CLI command. That bootstrap PR
+must contain no public AI artifacts, pass the existing structural gate and
+`pnpm p3-gate`, and receive human review. After it merges, open a source-only PR
+to register a green `verify-ai-provenance` check, add it to the `main` ruleset,
+and only then enable an executor to create artifact PRs.
+
 **Merge rules.** A successful new candidate adds an annotation; a successful
 refresh replaces the matching one; a refresh with no candidate retains the
 previous valid annotation; a removed star prunes its annotation; an unchanged
