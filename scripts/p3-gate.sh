@@ -1,11 +1,11 @@
 #!/usr/bin/env bash
-# P3.0 contracts gate:
+# P3 quality gate:
 #
 #   typecheck · lint · format check · tests · build
 #   · AI JSON Schema generation + drift check
 #
-# P3.0 is contracts and deterministic agent-boundary scaffold only. README
-# discovery, scheduling, publication, and dashboard smokes land later.
+# P3.0–P3.3 cover contracts, deterministic planning, agent-boundary validation,
+# and provenance checks. Dashboard enrichment and live closeout land later.
 set -euo pipefail
 cd "$(dirname "$0")/.."
 
@@ -28,4 +28,4 @@ else
   echo "(not a git repository — skipping schemas drift check)"
 fi
 
-printf '\n\033[1;32mP3.0 contracts gate passed.\033[0m\n'
+printf '\n\033[1;32mP3 gate passed.\033[0m\n'

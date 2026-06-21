@@ -87,6 +87,9 @@ importers:
       '@starred/github-client':
         specifier: workspace:*
         version: link:../github-client
+      '@starred/schema':
+        specifier: workspace:*
+        version: link:../schema
       commander:
         specifier: ^12.1.0
         version: 12.1.0
@@ -99,6 +102,9 @@ importers:
 
   packages/deploy:
     dependencies:
+      '@starred/ai-schema':
+        specifier: workspace:*
+        version: link:../ai-schema
       '@starred/schema':
         specifier: workspace:*
         version: link:../schema

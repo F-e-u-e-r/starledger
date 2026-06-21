@@ -1,4 +1,4 @@
-import { execFileSync } from 'node:child_process';
+import { execFileSync, spawnSync } from 'node:child_process';
 
 /** The only files an autonomous executor may propose for merge in P3. */
 export const AGENT_EDITABLE_PATHS = new Set(['ai-annotations.json', 'ai-annotations-meta.json']);
@@ -158,4 +158,20 @@ export function touchesAiArtifacts(entries: readonly GitDiffEntry[]): boolean {
  */
 export function readArtifactAtRef(ref: string, path: string, cwd = process.cwd()): string {
   return execFileSync('git', ['show', `${ref}:${path}`], { encoding: 'utf8', cwd });
+}
+
+/**
+ * Like {@link readArtifactAtRef} but returns null — quietly — when the path is
+ * absent at the ref (e.g. the first AI PR, where the base has no annotations
+ * yet). Probing with `cat-file -e` keeps git's "does not exist" diagnostic off
+ * stderr, so an expected absence is not mistaken for an error.
+ */
+export function tryReadArtifactAtRef(
+  ref: string,
+  path: string,
+  cwd = process.cwd(),
+): string | null {
+  const probe = spawnSync('git', ['cat-file', '-e', `${ref}:${path}`], { cwd });
+  if (probe.status !== 0) return null;
+  return readArtifactAtRef(ref, path, cwd);
 }

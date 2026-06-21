@@ -19,14 +19,20 @@ ai:
   execution_profile:
     execution_profile_version: agent-v1
 
-  # Hard caps for future P3.1 preprocessing. README text is untrusted and no
-  # URL found inside it may be fetched.
+  # Hard caps on untrusted README/metadata preprocessing. README text is
+  # untrusted data and no URL found inside it is ever fetched.
   readme_max_chars: 30000
   metadata_max_chars: 5000
 
-  # Future P3.1 planner ceilings: hard repository limits, not cost estimates.
+  # Planner ceilings: hard per-run repository limits, not cost estimates. The
+  # planner selects new > due-retry > changed-fingerprint jobs up to these caps.
   budget:
     max_new_per_run: 20
     max_refresh_per_run: 5
     max_retry_per_run: 5
     max_total_per_run: 25
+
+  # Operational state (README path/OID cache, retry bookkeeping, terminal-
+  # unavailable flags) is committed to the dedicated `starledger-ai-state` branch
+  # as classifier-state.json — never on main, independent of the notifier's state
+  # branch. It never stores README content, prompts, candidates, or secrets.

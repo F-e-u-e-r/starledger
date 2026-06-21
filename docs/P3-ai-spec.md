@@ -17,8 +17,8 @@ individual repository cannot be classified.
 Claude Routines and Codex App Automations are interchangeable **agent
 executors**, not StarLedger's trusted core. They can create untrusted candidate
 classifications only. The repository owns planning, validation, serialization,
-hashing, and eventual publication gates. P3.0 only supplies a trusted structural
-artifact gate; it does not prove classification provenance.
+hashing, and publication gates. P3.0 supplied the trusted structural artifact gate;
+P3.3 adds current-source provenance validation for artifact PRs.
 
 ```text
 deterministic planner
@@ -50,8 +50,8 @@ AFTER an artifact change is detected; they never determine whether validation
 runs. Event-controlled values (branch/repo names) are passed via environment
 variables, never interpolated into the shell. The job has read-only contents
 permission and no repository secret, and blocks artifact deletion and rename. It
-is not a provenance/current-fingerprint gate until P3.1 adds trusted source
-discovery and planner recomputation.
+is a structural gate only; P3.3's separate provenance gate adds current-source
+and current-fingerprint validation.
 
 ## P3.0 status and boundaries
 
@@ -180,15 +180,15 @@ canonical.
 ```text
 pnpm classifier plan --out .ai-runs/manifest.json
 pnpm classifier validate-candidates --manifest .ai-runs/manifest.json --candidates .ai-runs/candidates.json
-pnpm classifier apply --manifest .ai-runs/manifest.json --candidates .ai-runs/candidates.json --dataset-sha <sha256> --generated-at <ISO-8601> --out-dir .
+pnpm classifier apply --manifest .ai-runs/manifest.json --candidates .ai-runs/candidates.json --generated-at <ISO-8601> --out-dir .
 pnpm classifier verify-artifacts --annotations ai-annotations.json --meta ai-annotations-meta.json
 pnpm p3-agent-gate origin/main
 ```
 
-P3.0 `plan` deliberately emits an empty, valid manifest. P3.1 supplies bounded
-repository discovery, preprocessing, fingerprints, and actual jobs. `apply`
-only accepts candidates that pass exact job matching; it merges by `node_id`,
-sorts, serializes fixed key order, and derives metadata from exact bytes.
+The P3.0 scaffold emitted an empty, valid manifest. P3.1 now supplies bounded
+repository discovery, preprocessing, fingerprints, and actual jobs. `apply` only
+accepts candidates that pass exact job matching; it merges by `node_id`, sorts,
+serializes fixed key order, and derives metadata from exact bytes.
 
 `p3-agent-gate` is for an executor branch or PR only. It rejects every changed
 path except `ai-annotations.json` and `ai-annotations-meta.json`, requires the
@@ -201,7 +201,8 @@ source-code CI gate.
 
 Use the shared repository prompt. Treat all repository material as untrusted
 data. Keep executor network access and connectors minimal. The agent cannot
-choose the job set, taxonomy, schema, source fingerprint, hash, artifact order,
+choose the job set, taxonomy, schema, source fingerprint, manifest dataset SHA,
+hash, artifact order,
 publication decision, executor binding, or files outside the path allowlist.
 
 For a Claude Routine, preserve the default restricted `claude/` branch policy;
@@ -237,16 +238,23 @@ blocking, and the agent diff allowlist.
   public artifact schemas, exact artifact hash, deterministic serialization, and
   executor/job/candidate structural consistency. It runs only trusted base-branch
   code and uses no secrets. It does not prove classification provenance.
-- **P3.1 provenance/current-fingerprint gate:** will recompute current jobs and
-  fingerprints from canonical stars plus trusted README/metadata discovery, then
-  verify that candidates correspond to those jobs and that `dataset_sha256`
-  matches the current canonical dataset.
-- **P3.3 publication gate:** will connect validated artifacts, classifier state,
-  reviewed merge, and Pages deployment.
+- **P3.1 planning (delivered):** deterministic trusted README/metadata discovery,
+  per-repo source fingerprints, and a budget-limited `ClassificationManifest`
+  carrying `dataset_sha256`. It produces jobs from canonical stars only; it is not
+  itself a PR gate.
+- **P3.3 provenance gate (delivered):** `verify-ai-provenance` recomputes current
+  jobs and fingerprints from the protected base dataset plus live README
+  discovery, and rejects any changed annotation that does not match a current job
+  — stale fingerprint/OID/metadata, invented node, wrong `dataset_sha256`, wrong
+  executor/profile, or an over-budget delta.
+- **P3.3 publication (delivered):** validated artifacts publish through a reviewed
+  merge; the Pages workflow stages them fail-soft and deploys the merged commit.
+  Operational state on `starledger-ai-state` is written only by the trusted
+  `ai-state` workflow, never by an executor.
 
-Until P3.1 exists, do not enable scheduled Claude Routine or Codex Automation
-runs, do not auto-merge agent PRs, and treat green agent CI as structural
-validation only.
+With the P3.3 provenance gate in place an executor may run, but keep BOTH
+`verify-agent-artifacts` and `verify-ai-provenance` required on `main`, and do not
+auto-merge agent PRs — every AI artifact still publishes through human review.
 
 ## P3.0 exit conditions
 
@@ -264,14 +272,150 @@ validation only.
 - no API key, provider adapter, model call, or scheduled executor exists;
 - `pnpm p3-gate` is green.
 
+## P3.1 — trusted sources, fingerprints, and planner
+
+P3.1 turns the empty P3.0 scaffold into a real deterministic planner. It calls no
+agent, publishes no annotation, and does not touch `stars.json` or the dashboard.
+`pnpm classifier plan` now:
+
+1. **Loads + verifies the canonical dataset** exactly as the dashboard loader and
+   exporter do (both schemas, exact `stars_sha256`, `repo_count`, unique
+   node_ids). Only repositories that pass classify; the dataset SHA is recorded.
+2. **Discovers the preferred README** through a narrow `ReadmeSource` seam: a
+   lightweight `getReadmeRef` (path + blob OID, resolved for a known path by a
+   content-free GraphQL `object(expression:"HEAD:<path>")` probe) and a heavyweight
+   `getReadmeContent`. An unchanged OID never downloads content; a repository with
+   no README classifies from canonical metadata instead.
+3. **Preprocesses README text as untrusted, bounded data** — NFC, LF endings,
+   badge/image/comment noise removed, code blocks capped, truncated to
+   `readme_max_chars`. Preprocessing is a pure function with no network access, so
+   a link inside a README is never fetched.
+4. **Computes a per-repo `source_fingerprint`** over the source identity (README
+   path+OID, or `metadata`), the classification-relevant canonical metadata
+   (`repo_metadata_sha256`), and the taxonomy/prompt/profile/executor versions. It
+   DELIBERATELY excludes the whole-dataset SHA: an unchanged README OID must let
+   the planner skip a repository, and an unrelated star delta must not churn a
+   repository's annotation. The dataset SHA is represented at the manifest and
+   `ai-annotations-meta.json` level instead, where the P3.3 gate verifies it.
+5. **Plans a budget-limited manifest** by a fixed precedence — terminal →
+   not-yet-due retry → due retry → new → changed-fingerprint refresh → skip — with
+   per-bucket and total per-run ceilings, sorted deterministically before the cut.
+   Jobs come ONLY from verified canonical stars: an agent cannot add, remove, or
+   alter a job, and a repository removed from the dataset is never planned.
+6. **Persists operational state** to the dedicated `starledger-ai-state` branch
+   (`classifier-state.json`): README path/OID cache, retry bookkeeping, and
+   terminal-unavailable flags only — never README content, prompts, candidates,
+   model output, secrets, or raw error bodies. The branch is independent of the
+   notifier's, and load validates before replace, so a corrupt remote document
+   never overwrites the last-known-good.
+
+## P3.2 — agent executor integration
+
+P3.2 lets an external **agent executor** turn a trusted manifest into candidate
+JSON. The executor is the ONLY model-calling component and runs OUTSIDE this
+repository: there is no `AI_API_KEY`, no provider adapter, and no model call in
+GitHub Actions. The repository supplies the deterministic CLI, the shared prompt,
+and the trust boundary; the executor supplies untrusted candidates.
+
+`prompts/classify-agent-v1.md` is the single versioned instruction transport for
+both executors. It states that all repository material is untrusted data (never an
+instruction), that the agent must use only each job's `constraints`, copy the job
+identity verbatim, emit a `ClassificationCandidate`, modify only the two AI
+artifacts, and never push `main`, push a state branch, or merge a PR. A test pins
+those invariants so the prompt cannot silently weaken.
+
+**Executors.** Claude Routine is the primary, cloud-hosted, scheduled executor; it
+opens a `claude/*` pull request. Codex App Automation is a local, worktree-based
+fallback that opens a `codex/*` PR. Each is bound to exactly one `executor_kind`;
+switching executor produces new job IDs, so one executor's candidates can never
+satisfy the other's manifest. Enable only one scheduled executor at a time — there
+is no in-repo schedule for either (the gate workflow is the only AI-related CI).
+See `docs/P3.2-executor-runbook.md` for setup and the command sequence.
+
+**Reconciliation and failure handling.** `reconcileRun` matches each candidate to a
+manifest job by `job_id` and validates it exactly. A candidate that matches no
+manifest job, declares the wrong executor, carries a stale fingerprint, or fails
+validation is REJECTED — the CLI `apply` hard-fails rather than letting a bad
+candidate enter an artifact. A manifest job with no valid candidate is recorded as
+pending and reclassified on a later run, so a job is never silently dropped and an
+executor can never introduce a node the planner did not authorize. Partial
+candidate sets are therefore first-class.
+
+**Merge discipline.** The structural gate restricts an executor PR to the complete
+`ai-annotations.json` + `ai-annotations-meta.json` pair; manifests and candidates
+live under ignored `.ai-runs/` and are rejected if a PR tries to commit them. State
+is written only by the trusted `ai-state` workflow on the `starledger-ai-state`
+branch — never by the agent, never on `main`, and never auto-merged.
+
+## P3.3 — provenance gate and publication
+
+P3.3 adds the SECOND required check, `verify-ai-provenance`, and wires publication
+to GitHub Pages. The structural gate proves an AI-artifact PR is shaped correctly;
+the provenance gate proves it is TRUE.
+
+**Provenance gate.** For every PR that touches an AI artifact, trusted base-branch
+code (`.github/workflows/ai-provenance.yml`) recomputes the current jobs from the
+protected base dataset and live README discovery, and verifies each CHANGED
+annotation against them. Even when the artifact schema is valid, it rejects:
+
+- an annotation whose source fingerprint, README path/OID, or canonical metadata
+  hash does not match the recomputed current job (stale or invented);
+- a head `dataset_sha256` that is not the current canonical SHA;
+- an annotation for a `node_id` not in the canonical dataset, or a prune of one
+  still present;
+- an `executor_kind` / `execution_profile_version` / `prompt_version` that does
+  not match configuration;
+- a changed-annotation delta larger than one run's budget (`max_total_per_run`).
+
+It also re-checks artifact integrity (schema + exact meta hash), so it stands
+alone. The README discovery target always comes from the trusted dataset, never
+from the untrusted PR, so a hostile PR cannot direct it to fetch arbitrary repos.
+Like the structural gate it runs on `pull_request_target`, checks out the
+protected base, fetches the head as data, and never executes PR code; unlike it,
+it uses the read-only workflow `GITHUB_TOKEN` for README discovery, so it lives in
+a SEPARATE workflow to keep the structural gate secret-free.
+
+**Both checks are required.** `verify-agent-artifacts` and `verify-ai-provenance`
+must both be configured as required status checks on `main` (a repository ruleset
+/ branch-protection setting that CANNOT be enforced from repository code). Neither
+may be skipped on an AI-artifact PR.
+
+**Merge rules.** A successful new candidate adds an annotation; a successful
+refresh replaces the matching one; a refresh with no candidate retains the
+previous valid annotation; a removed star prunes its annotation; an unchanged
+annotation stays byte-identical (a no-op keeps its original `generated_at`); an
+invalid candidate changes nothing. The deterministic assembler and provenance
+gate reject timestamp-only or metadata-only artifact updates, so an unchanged run
+produces no churn.
+
+**Publication.** Remote Git remains the publication boundary: valid PR → structural
+gate → provenance gate → human review → merge. The Pages workflow stages the AI
+artifacts into the deployed site FAIL-SOFT — a missing, malformed, or
+hash-mismatched pair is skipped, never blocking the canonical deployment — and a
+merge that changes the artifacts triggers a Pages deploy of the merged commit.
+Auto-merge stays disabled in v1.
+
+**Operational state.** The `starledger-ai-state` branch (`classifier-state.json`)
+is written ONLY by the trusted `ai-state.yml` workflow, never by an executor: it
+runs the deterministic planner with `--save-state` on the protected default
+branch, refreshing the README path/OID cache, pruning stars that left the dataset,
+and commit-on-change pushing the result. The executor only READS this state to
+plan. An unclassified repository is always re-planned within budget, so a job is
+never silently dropped; v1 does not yet increment per-attempt backoff, because
+precise attempt counting needs run-outcome observation a trusted reconstruction
+cannot derive from canonical data alone.
+
 ## Subsequent milestones
 
-- **P3.1:** preferred README discovery, preprocessing, source fingerprints,
-  bounded job planning, and a separate classifier operational state branch.
-- **P3.2:** executor integration for Claude Routine first and Codex Automation
-  fallback, with candidate generation only. No API adapter is required.
-- **P3.3:** real-Git PR validation/publication workflow, state persistence, and
-  Pages deployment after a reviewed merge.
+- **P3.1 (delivered):** preferred README discovery, untrusted preprocessing,
+  per-repo source fingerprints, bounded job planning, and a dedicated
+  `starledger-ai-state` operational-state branch.
+- **P3.2 (delivered):** shared versioned prompt, executor reconciliation (partial
+  sets, executor binding, no-smuggle), and the Claude Routine / Codex Automation
+  runbook. Candidate generation only — no API adapter, no model call in CI.
+- **P3.3 (delivered):** the `verify-ai-provenance` gate, fail-soft Pages
+  publication of the merged commit, and operational-state persistence on the
+  `starledger-ai-state` branch.
 - **P3.4:** fail-soft dashboard loading, node-id join, category/tag facets,
   secondary summaries, and enriched lexical search.
 - **P3.5:** live closeout and a separate semantic-search decision record.

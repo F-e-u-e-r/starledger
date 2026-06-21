@@ -27,6 +27,10 @@
             "codex-automation"
           ]
         },
+        "dataset_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
         "jobs": {
           "type": "array",
           "items": {
@@ -45,8 +49,7 @@
                 "minLength": 1
               },
               "source_fingerprint": {
-                "type": "string",
-                "pattern": "^[0-9a-f]{64}$"
+                "$ref": "#/definitions/ClassificationManifest/properties/dataset_sha256"
               },
               "taxonomy_version": {
                 "type": "string",
@@ -91,7 +94,7 @@
                     "maxItems": 100
                   },
                   "repo_metadata_sha256": {
-                    "$ref": "#/definitions/ClassificationManifest/properties/jobs/items/properties/source_fingerprint"
+                    "$ref": "#/definitions/ClassificationManifest/properties/dataset_sha256"
                   },
                   "readme": {
                     "anyOf": [
@@ -278,6 +281,7 @@
         "prompt_version",
         "execution_profile_version",
         "executor_kind",
+        "dataset_sha256",
         "jobs"
       ],
       "additionalProperties": false
