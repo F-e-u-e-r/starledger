@@ -39,12 +39,14 @@ describe('agent job and manifest contracts', () => {
       promptVersion: 'classify-v1',
       executionProfileVersion: 'agent-v1',
       executorKind: 'claude-routine',
+      datasetSha256: 'd'.repeat(64),
       jobs: [b, a],
     });
     const second = buildClassificationManifest({
       promptVersion: 'classify-v1',
       executionProfileVersion: 'agent-v1',
       executorKind: 'claude-routine',
+      datasetSha256: 'd'.repeat(64),
       jobs: [a, b],
     });
     expect(first.jobs.map((job) => job.node_id)).toEqual(['R_a', 'R_b']);

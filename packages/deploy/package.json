@@ -13,6 +13,7 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
+    "@starred/ai-schema": "workspace:*",
     "@starred/schema": "workspace:*"
   }
 }

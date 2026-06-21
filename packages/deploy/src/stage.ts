@@ -1,9 +1,12 @@
 import { copyFileSync, existsSync, readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
-import { verifyDatasetIntegrity } from './dataset';
+import { AiAnnotationsMetaSchema, AiAnnotationsSchema } from '@starred/ai-schema';
+import { sha256Hex, verifyDatasetIntegrity } from './dataset';
 
 export const STARS_FILE = 'stars.json';
 export const DATASET_META_FILE = 'dataset-meta.json';
+export const AI_ANNOTATIONS_FILE = 'ai-annotations.json';
+export const AI_ANNOTATIONS_META_FILE = 'ai-annotations-meta.json';
 
 /** Files that must never reach the public Pages artifact (telemetry / secrets). */
 export const FORBIDDEN_IN_DIST = ['run-meta.json', 'config.yaml', '.env'] as const;
@@ -57,4 +60,42 @@ export function stageDashboardData(opts: StageOptions): StageResult {
   copyFileSync(metaPath, resolve(distDir, DATASET_META_FILE));
 
   return { repoCount: verified.meta.repo_count, sha256: verified.sha256 };
+}
+
+export interface AiStageResult {
+  staged: boolean;
+  reason?: string;
+}
+
+/**
+ * Stage the OPTIONAL AI artifacts into the dist, FAIL-SOFT: a missing, malformed,
+ * or hash-mismatched pair is skipped (never throws), so an AI problem can never
+ * block the canonical Pages deployment. The dashboard validates again at runtime.
+ */
+export function stageAiArtifacts(opts: StageOptions): AiStageResult {
+  const annPath = resolve(opts.dataDir, AI_ANNOTATIONS_FILE);
+  const metaPath = resolve(opts.dataDir, AI_ANNOTATIONS_META_FILE);
+  if (!existsSync(annPath) || !existsSync(metaPath)) {
+    return { staged: false, reason: 'no AI artifacts present' };
+  }
+  try {
+    const annText = readFileSync(annPath, 'utf8');
+    const metaText = readFileSync(metaPath, 'utf8');
+    const annotations = AiAnnotationsSchema.parse(JSON.parse(annText));
+    const meta = AiAnnotationsMetaSchema.parse(JSON.parse(metaText));
+    if (meta.annotations_sha256 !== sha256Hex(annText)) {
+      return { staged: false, reason: 'AI artifact hash mismatch — skipped' };
+    }
+    if (meta.annotation_count !== annotations.annotations.length) {
+      return { staged: false, reason: 'AI artifact count mismatch — skipped' };
+    }
+    if (meta.taxonomy_version !== annotations.taxonomy_version) {
+      return { staged: false, reason: 'AI artifact taxonomy mismatch — skipped' };
+    }
+    copyFileSync(annPath, resolve(opts.distDir, AI_ANNOTATIONS_FILE));
+    copyFileSync(metaPath, resolve(opts.distDir, AI_ANNOTATIONS_META_FILE));
+    return { staged: true };
+  } catch (error) {
+    return { staged: false, reason: error instanceof Error ? error.message : 'AI staging skipped' };
+  }
 }

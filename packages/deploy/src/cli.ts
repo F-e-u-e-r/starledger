@@ -3,7 +3,7 @@ import { resolve } from 'node:path';
 import { argv, env, exit } from 'node:process';
 import { verifyDatasetIntegrity } from './dataset';
 import { writeFixtureDataset } from './fixture';
-import { DATASET_META_FILE, STARS_FILE, stageDashboardData } from './stage';
+import { DATASET_META_FILE, STARS_FILE, stageAiArtifacts, stageDashboardData } from './stage';
 import { staticSmoke, verifyBuiltArtifact } from './verify';
 
 const repoRoot = resolve(import.meta.dirname, '../../..');
@@ -30,6 +30,8 @@ async function main(): Promise<void> {
     case 'stage': {
       const r = stageDashboardData({ dataDir: data, distDir: dist });
       console.log(`[deploy] staged ${r.repoCount} repos (sha ${r.sha256.slice(0, 12)}…) → ${dist}`);
+      const ai = stageAiArtifacts({ dataDir: data, distDir: dist });
+      console.log(`[deploy] AI artifacts: ${ai.staged ? 'staged' : `skipped (${ai.reason})`}`);
       break;
     }
     case 'verify': {

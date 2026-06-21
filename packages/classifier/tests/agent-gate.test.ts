@@ -46,4 +46,25 @@ describe('P3 structural agent gate', () => {
     // The job must invoke the trusted, path-triggered gate command.
     expect(raw).toContain('verify-agent-pr');
   });
+
+  it('PROV-GATE: the provenance workflow is base-checked-out, head-as-data, and runs verify-ai-provenance', () => {
+    const raw = readRepoFile('.github/workflows/ai-provenance.yml');
+    expect(raw).toContain('pull_request_target:');
+    expect(raw).toContain('ref: ${{ github.event.pull_request.base.sha }}');
+    expect(raw).toContain('refs/pull/${{ github.event.pull_request.number }}/head');
+    expect(raw).not.toContain('ref: ${{ github.event.pull_request.head');
+    expect(raw).toContain('permissions:\n  contents: read');
+    expect(raw).toContain('verify-ai-provenance');
+  });
+
+  it('STATE-GATE: operational state is written by a trusted workflow, never by a PR-exposed one', () => {
+    const raw = readRepoFile('.github/workflows/ai-state.yml');
+    // Trusted: runs from the default branch on a schedule, never pull_request(_target).
+    expect(raw).not.toContain('pull_request');
+    expect(raw).toContain('schedule:');
+    expect(raw).toContain('contents: write');
+    // It writes state via the deterministic planner, not an executor.
+    expect(raw).toContain('classifier/src/cli.ts plan');
+    expect(raw).toContain('--save-state');
+  });
 });

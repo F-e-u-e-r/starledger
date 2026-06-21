@@ -48,4 +48,23 @@ describe('deterministic AI artifact assembly', () => {
     expect(result.changed).toBe(false);
     expect(result.annotations[0]?.generation.generated_at).toBe('2026-06-20T00:00:00Z');
   });
+
+  it('ART-4: non-canonical artifact bytes are rejected even when their hash matches', () => {
+    const job = makeJob();
+    const validated = validateCandidate(makeCandidate(job), job);
+    const result = assembleAiArtifacts({
+      currentAnnotations: [],
+      validatedCandidates: [validated],
+      datasetSha256: DATASET_SHA,
+      generatedAt: '2026-06-20T00:00:00Z',
+    });
+    const nonCanonical = `${result.annotationsBytes.trimEnd()}\n\n`;
+    const meta = result.metaBytes?.replace(
+      result.meta?.annotations_sha256 ?? '',
+      sha256(nonCanonical),
+    );
+    expect(() => verifyAiArtifacts(nonCanonical, meta ?? '')).toThrow(
+      'ai-annotations.json is not deterministically serialized',
+    );
+  });
 });

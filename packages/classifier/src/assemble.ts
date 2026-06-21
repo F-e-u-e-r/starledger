@@ -100,6 +100,12 @@ export function assembleAiArtifacts(input: AssembleAiArtifactsInput): AssembledA
 export function verifyAiArtifacts(annotationsBytes: string, metaBytes: string): void {
   const annotations = AiAnnotationsSchema.parse(JSON.parse(annotationsBytes));
   const meta = zodMetaParse(metaBytes);
+  if (annotationsBytes !== serializeAnnotations(annotations.annotations)) {
+    throw new Error('ai-annotations.json is not deterministically serialized');
+  }
+  if (metaBytes !== serializeAiAnnotationsMeta(meta)) {
+    throw new Error('ai-annotations-meta.json is not deterministically serialized');
+  }
   if (meta.annotations_sha256 !== sha256(annotationsBytes)) {
     throw new Error('ai-annotations-meta.json hash does not match ai-annotations.json bytes');
   }

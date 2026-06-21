@@ -16,6 +16,8 @@ on:
     paths:
       - 'stars.json'
       - 'dataset-meta.json'
+      - 'ai-annotations.json'
+      - 'ai-annotations-meta.json'
       - 'apps/dashboard/**'
       - 'packages/**'
       - '.github/workflows/pages.yml'
