@@ -5,8 +5,9 @@
 # untrusted candidate producers. Their model label is informational only.
 
 ai:
-  # Master switch for future planner/executor runs. The deterministic validation
-  # and artifact commands remain safe to run while this is false.
+  # Operational interlock. While false, the planner writes an empty manifest and
+  # the provenance gate rejects attempted artifact publication. Deterministic
+  # validation commands remain safe to run.
   enabled: false
 
   # The manifest is bound to exactly one executor. Do not schedule Claude and

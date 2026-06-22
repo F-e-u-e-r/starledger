@@ -9,6 +9,8 @@ import {
 import { parse as parseYaml } from 'yaml';
 import { z } from 'zod';
 
+export const DEFAULT_AI_CONFIG_PATH = 'config/ai.yaml';
+
 /**
  * Versioned agent-executor configuration. This contract intentionally contains
  * no API key, provider, model, or timeout: Claude Routines and Codex
@@ -47,8 +49,8 @@ export const AiConfigSchema = z
 
 export type AiConfig = z.infer<typeof AiConfigSchema>;
 
-export function loadAiConfig(path?: string): AiConfig {
-  if (path !== undefined && existsSync(path)) {
+export function loadAiConfig(path = DEFAULT_AI_CONFIG_PATH): AiConfig {
+  if (existsSync(path)) {
     const raw: unknown = parseYaml(readFileSync(path, 'utf8')) ?? {};
     return AiConfigSchema.parse(raw);
   }
@@ -61,4 +63,15 @@ export function loadAiConfig(path?: string): AiConfig {
       },
     },
   });
+}
+
+/**
+ * `enabled` is an operational interlock, not an informational preference. The
+ * planner emits no jobs while disabled and the provenance gate rejects any
+ * attempted artifact publication.
+ */
+export function assertAiClassificationEnabled(config: AiConfig['ai']): void {
+  if (!config.enabled) {
+    throw new Error('AI classification is disabled; set ai.enabled=true in config/ai.yaml');
+  }
 }
