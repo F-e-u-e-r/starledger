@@ -3,6 +3,7 @@ import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import {
   AiAnnotationsSchema,
+  buildClassificationManifest,
   ClassificationCandidatesSchema,
   ClassificationManifestSchema,
   serializeClassificationManifest,
@@ -11,7 +12,7 @@ import { createGithubClient } from '@starred/github-client';
 import { Command } from 'commander';
 import { verifyAgentPullRequestFromGit } from './agent-gate';
 import { assembleAiArtifacts, verifyAiArtifacts } from './assemble';
-import { loadAiConfig } from './config';
+import { assertAiClassificationEnabled, loadAiConfig } from './config';
 import { loadCanonicalDataset } from './dataset';
 import { reconcileRun } from './executor';
 import { planClassification } from './planner';
@@ -95,6 +96,20 @@ program
           readFileSync(opts.stars, 'utf8'),
           readFileSync(opts.meta, 'utf8'),
         );
+        if (!config.ai.enabled) {
+          const manifest = buildClassificationManifest({
+            promptVersion: config.ai.prompt_version,
+            executionProfileVersion: config.ai.execution_profile.execution_profile_version,
+            executorKind: config.ai.executor_kind,
+            datasetSha256: dataset.datasetSha256,
+            jobs: [],
+          });
+          writeText(opts.out, serializeClassificationManifest(manifest));
+          process.stdout.write(
+            `AI classification disabled; wrote an empty manifest without README discovery: ${opts.out}\n`,
+          );
+          return;
+        }
         const existingAnnotations =
           opts.current !== undefined && existsSync(opts.current)
             ? AiAnnotationsSchema.parse(readJson(opts.current)).annotations
@@ -300,6 +315,7 @@ program
         return;
       }
       const config = loadAiConfig(program.opts<{ config?: string }>().config).ai;
+      assertAiClassificationEnabled(config);
       const token = process.env.STAR_SYNC_TOKEN ?? process.env.GITHUB_TOKEN;
       if (token === undefined || token === '') {
         throw new Error(
