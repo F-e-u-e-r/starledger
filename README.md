@@ -54,11 +54,19 @@ packages/schema          @starred/schema         canonical Zod model + JSON Sche
 packages/github-client   @starred/github-client  errors · retry coordinator · GraphQL probe/pagination/hydrate (bisection) · REST enumeration
 packages/exporter        @starred/exporter        config · enumerate (dual-path) · hydrate-merge · degraded gate · serialize · staged git publish · CLI
 packages/notifier        @starred/notifier        YouTube / awesome-stars source polling · durable state branch · pending queue · CLI
-packages/ai-schema       @starred/ai-schema       strict optional-AI artifact, job, manifest, and candidate contracts
-packages/classifier      @starred/classifier      deterministic candidate validation, artifact assembly, and agent diff gate
-apps/dashboard           @starred/dashboard       Vite + React static site: trusted loading + schema validation (P1)
+packages/ai-schema       @starred/ai-schema       strict optional-AI artifact/job/manifest/candidate contracts (+ crypto-free /contracts browser entrypoint)
+packages/classifier      @starred/classifier      trusted planner, fingerprints, candidate reconciliation, artifact assembly, structural + provenance gates, operational state
+apps/dashboard           @starred/dashboard       Vite + React static site: trusted canonical loading + optional fail-soft AI enrichment
 schemas/                 generated JSON Schemas
 ```
+
+The optional P3 AI layer adds the workflows `ai-agent-pr.yml` (structural gate),
+`ai-provenance.yml` (provenance gate), and `ai-state.yml` (trusted operational
+state), plus the optional, fail-soft `ai-annotations.json` / `ai-annotations-meta.json`
+artifacts the dashboard enriches from when present. The agent executor itself runs
+**outside** this repo (no model call in CI); see
+[`docs/P3-ai-spec.md`](docs/P3-ai-spec.md) and the
+[`docs/P3.2-executor-runbook.md`](docs/P3.2-executor-runbook.md).
 
 ## Running the notifier
 
