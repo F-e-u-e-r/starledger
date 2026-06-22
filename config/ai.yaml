@@ -1,0 +1,17 @@
+# Active P3 executor configuration. This file intentionally contains no API key
+# or model credential; Claude Routine uses its own subscription authentication.
+ai:
+  enabled: true
+  executor_kind: claude-routine
+  prompt_version: classify-v1
+  execution_profile:
+    execution_profile_version: agent-v1
+
+  # Keep the first live classification run deliberately small.
+  readme_max_chars: 30000
+  metadata_max_chars: 5000
+  budget:
+    max_new_per_run: 1
+    max_refresh_per_run: 0
+    max_retry_per_run: 0
+    max_total_per_run: 1
