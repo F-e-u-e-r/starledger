@@ -1,0 +1,29 @@
+{
+  "schema_version": "1.0",
+  "taxonomy_version": "1",
+  "annotations": [
+    {
+      "node_id": "MDEwOlJlcG9zaXRvcnk0MzQyNTQ4MA==",
+      "category": "education-reference",
+      "tags": [
+        "awesome-list",
+        "library"
+      ],
+      "summary": "Awesome Quant is a curated, community-maintained list of open-source libraries, frameworks, and tools for quantitative finance, covering numerical computing, derivatives pricing, technical indicators, backtesting, portfolio optimization, and market data across Python, R, Julia, and other languages.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "a9d52cf4409d86040260a415c57ca9d02603fae9",
+        "repo_metadata_sha256": "afcbe527232e3c9ee2683099de7f45bf4e5c10b0a2059080be40738c6cc060c7",
+        "fingerprint": "9ce0a62c47f773d8755cf1c861e3b9b7831f59d7b93725449754db6731da722f"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-06-22T17:03:35Z"
+      }
+    }
+  ]
+}
