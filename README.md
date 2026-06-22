@@ -2,13 +2,13 @@
 
 A personal GitHub stars dashboard and repository discovery pipeline, built in phases:
 
-| Phase  | What                                                                  | Status                                                                                                                         |
-| ------ | --------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------ |
-| **P0** | Deterministic **exporter**: stars → canonical `stars.json`            | ✅ complete                                                                                                                    |
-| P1     | Static **dashboard** on GitHub Pages (client-side filter/sort/search) | ✅ complete                                                                                                                    |
-| P2     | **Notifier**: YouTube / awesome-stars → one-shot Telegram delivery    | release candidate (P2.5 closure); live run pending                                                                             |
-| P3     | **AI classification**: categories, tags, summaries, semantic search   | P3.0–P3.4 implementation complete; P3.5 ADR complete; provenance-gate registration + live closeout pending before executor use |
-| P4     | Reusable template / workflow (fork model, no key custody)             | planned                                                                                                                        |
+| Phase  | What                                                                  | Status                                                                                                                      |
+| ------ | --------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------- |
+| **P0** | Deterministic **exporter**: stars → canonical `stars.json`            | ✅ complete                                                                                                                 |
+| P1     | Static **dashboard** on GitHub Pages (client-side filter/sort/search) | ✅ complete                                                                                                                 |
+| P2     | **Notifier**: YouTube / awesome-stars → one-shot Telegram delivery    | release candidate (P2.5 closure); live run pending                                                                          |
+| P3     | **AI classification**: categories, tags, summaries, semantic search   | P3.0–P3.4 implementation complete; P3.5 ADR complete; required checks configured, live closeout pending before executor use |
+| P4     | Reusable template / workflow (fork model, no key custody)             | planned                                                                                                                     |
 
 Contracts: **[`docs/P0-exporter-spec.md`](docs/P0-exporter-spec.md)** (exporter) · **[`docs/P1-dashboard-spec.md`](docs/P1-dashboard-spec.md)** (dashboard) · **[`docs/P2-notifier-spec.md`](docs/P2-notifier-spec.md)** (notifier) · **[`docs/P3-ai-spec.md`](docs/P3-ai-spec.md)** (optional AI enrichment).
 
@@ -54,11 +54,19 @@ packages/schema          @starred/schema         canonical Zod model + JSON Sche
 packages/github-client   @starred/github-client  errors · retry coordinator · GraphQL probe/pagination/hydrate (bisection) · REST enumeration
 packages/exporter        @starred/exporter        config · enumerate (dual-path) · hydrate-merge · degraded gate · serialize · staged git publish · CLI
 packages/notifier        @starred/notifier        YouTube / awesome-stars source polling · durable state branch · pending queue · CLI
-packages/ai-schema       @starred/ai-schema       strict optional-AI artifact, job, manifest, and candidate contracts
-packages/classifier      @starred/classifier      deterministic candidate validation, artifact assembly, and agent diff gate
-apps/dashboard           @starred/dashboard       Vite + React static site: trusted loading + schema validation (P1)
+packages/ai-schema       @starred/ai-schema       strict optional-AI artifact/job/manifest/candidate contracts (+ crypto-free /contracts browser entrypoint)
+packages/classifier      @starred/classifier      trusted planner, fingerprints, candidate reconciliation, artifact assembly, structural + provenance gates, operational state
+apps/dashboard           @starred/dashboard       Vite + React static site: trusted canonical loading + optional fail-soft AI enrichment
 schemas/                 generated JSON Schemas
 ```
+
+The optional P3 AI layer adds the workflows `ai-agent-pr.yml` (structural gate),
+`ai-provenance.yml` (provenance gate), and `ai-state.yml` (trusted operational
+state), plus the optional, fail-soft `ai-annotations.json` / `ai-annotations-meta.json`
+artifacts the dashboard enriches from when present. The agent executor itself runs
+**outside** this repo (no model call in CI); see
+[`docs/P3-ai-spec.md`](docs/P3-ai-spec.md) and the
+[`docs/P3.2-executor-runbook.md`](docs/P3.2-executor-runbook.md).
 
 ## Running the notifier
 

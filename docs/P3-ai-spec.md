@@ -455,12 +455,12 @@ with no secret/backend and acceptable size + latency — see
 
 **Live closeout is operational and still PENDING.** There is no AI artifact on
 `main` yet, so no real executor run, provenance validation of a real artifact, AI
-Pages deploy, or no-churn second run has occurred. Before enabling an executor,
-add `verify-ai-provenance` to the `main` ruleset as a required check — it is
-registered and tested but NOT yet required (only `verify-agent-artifacts` is).
-Then: enable exactly one executor, produce one real artifact PR, confirm BOTH
-required checks, merge via human review, confirm the Pages deploy and live AI
-facets, and prove an unchanged second run produces no artifact PR or churn.
+Pages deploy, or no-churn second run has occurred. `verify-ai-provenance` is now
+required alongside `verify-agent-artifacts` and CI on `main`. Before enabling an
+executor, confirm those protections remain active. Then: enable exactly one
+executor, produce one real artifact PR, confirm all required checks, merge via
+human review, confirm the Pages deploy and live AI facets, and prove an unchanged
+second run produces no artifact PR or churn.
 
 `pnpm p3-gate` is the aggregate gate: typecheck, lint, format, the full test suite
 (AI schema drift, fingerprint/planner, injection fixtures, structural + provenance
