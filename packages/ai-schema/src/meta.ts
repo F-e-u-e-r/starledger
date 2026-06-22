@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { AI_SCHEMA_VERSION, sha256 } from './artifact';
+import { AI_SCHEMA_VERSION } from './artifact';
 import { UtcTimestampSchema } from './scalars';
 import { TAXONOMY_VERSION } from './taxonomy';
 
@@ -23,26 +23,6 @@ export const AiAnnotationsMetaSchema = z
   })
   .strict();
 export type AiAnnotationsMeta = z.infer<typeof AiAnnotationsMetaSchema>;
-
-export interface BuildAiAnnotationsMetaInput {
-  /** The EXACT serialized `ai-annotations.json` bytes (from `serializeAnnotations`). */
-  annotationsBytes: string;
-  annotationCount: number;
-  /** SHA-256 of the canonical `stars.json` the annotations were computed against. */
-  datasetSha256: string;
-  generatedAt: string;
-}
-
-export function buildAiAnnotationsMeta(input: BuildAiAnnotationsMetaInput): AiAnnotationsMeta {
-  return AiAnnotationsMetaSchema.parse({
-    schema_version: AI_SCHEMA_VERSION,
-    annotations_sha256: sha256(input.annotationsBytes),
-    annotation_count: input.annotationCount,
-    taxonomy_version: TAXONOMY_VERSION,
-    dataset_sha256: input.datasetSha256,
-    generated_at: input.generatedAt,
-  });
-}
 
 /** Canonical meta bytes: fixed key order, 2-space indent, single trailing newline. */
 export function serializeAiAnnotationsMeta(meta: AiAnnotationsMeta): string {

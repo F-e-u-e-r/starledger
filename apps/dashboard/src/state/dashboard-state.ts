@@ -20,6 +20,8 @@ export interface DashboardState {
   languages: string[];
   topics: string[];
   licenses: string[];
+  categories: string[];
+  aiTags: string[];
 
   archived: BooleanFilter;
   fork: BooleanFilter;
@@ -37,6 +39,8 @@ export const DEFAULT_DASHBOARD_STATE: DashboardState = {
   languages: [],
   topics: [],
   licenses: [],
+  categories: [],
+  aiTags: [],
   archived: null,
   fork: null,
   stale: null,
@@ -64,6 +68,8 @@ const PARAM = {
   languages: 'language',
   topics: 'topic',
   licenses: 'license',
+  categories: 'category',
+  aiTags: 'aiTag',
   archived: 'archived',
   fork: 'fork',
   stale: 'stale',
@@ -119,6 +125,8 @@ export function normalizeDashboardState(state: DashboardState): DashboardState {
     languages: canonicalStrings(state.languages),
     topics: canonicalStrings(state.topics),
     licenses: canonicalStrings(state.licenses),
+    categories: canonicalStrings(state.categories),
+    aiTags: canonicalStrings(state.aiTags),
     archived: state.archived,
     fork: state.fork,
     stale: state.stale,
@@ -149,6 +157,8 @@ export function parseDashboardState(params: URLSearchParams): DashboardState {
     languages: params.getAll(PARAM.languages),
     topics: params.getAll(PARAM.topics),
     licenses: params.getAll(PARAM.licenses),
+    categories: params.getAll(PARAM.categories),
+    aiTags: params.getAll(PARAM.aiTags),
     archived: parseBooleanFilter(params.getAll(PARAM.archived)),
     fork: parseBooleanFilter(params.getAll(PARAM.fork)),
     stale: parseBooleanFilter(params.getAll(PARAM.stale)),
@@ -188,6 +198,8 @@ export function serializeDashboardState(state: DashboardState): string {
   for (const v of s.languages) params.append(PARAM.languages, v);
   for (const v of s.topics) params.append(PARAM.topics, v);
   for (const v of s.licenses) params.append(PARAM.licenses, v);
+  for (const v of s.categories) params.append(PARAM.categories, v);
+  for (const v of s.aiTags) params.append(PARAM.aiTags, v);
 
   appendBoolean(params, PARAM.archived, s.archived);
   appendBoolean(params, PARAM.fork, s.fork);

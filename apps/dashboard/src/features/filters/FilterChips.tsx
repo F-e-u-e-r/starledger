@@ -46,6 +46,20 @@ function buildChips(
       remove: () => update({ licenses: state.licenses.filter((x) => x !== v) }),
     });
   }
+  for (const v of state.categories) {
+    chips.push({
+      id: `category:${v}`,
+      label: `Category: ${v}`,
+      remove: () => update({ categories: state.categories.filter((x) => x !== v) }),
+    });
+  }
+  for (const v of state.aiTags) {
+    chips.push({
+      id: `aiTag:${v}`,
+      label: `AI tag: ${v}`,
+      remove: () => update({ aiTags: state.aiTags.filter((x) => x !== v) }),
+    });
+  }
   if (state.archived !== null) {
     chips.push({
       id: 'archived',

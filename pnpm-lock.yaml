@@ -41,6 +41,9 @@ importers:
 
   apps/dashboard:
     dependencies:
+      '@starred/ai-schema':
+        specifier: workspace:*
+        version: link:../../packages/ai-schema
       '@starred/schema':
         specifier: workspace:*
         version: link:../../packages/schema

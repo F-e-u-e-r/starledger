@@ -16,5 +16,8 @@ export default defineConfig({
   test: {
     include: ['packages/**/tests/**/*.test.ts', 'apps/**/src/**/*.test.{ts,tsx}'],
     environment: 'node',
+    // The worker-thread pool can hang without output on some environments
+    // (observed in review); the process-fork pool is robust for these suites.
+    pool: 'forks',
   },
 });

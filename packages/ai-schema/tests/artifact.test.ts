@@ -1,11 +1,7 @@
 import { describe, expect, it } from 'vitest';
-import {
-  AiAnnotationsSchema,
-  buildAiAnnotations,
-  serializeAnnotations,
-  sha256,
-} from '../src/artifact';
-import { buildAiAnnotationsMeta } from '../src/meta';
+import { AiAnnotationsSchema, buildAiAnnotations, serializeAnnotations } from '../src/artifact';
+import { sha256 } from '../src/hash';
+import { buildAiAnnotationsMeta } from '../src/meta-build';
 import { makeAnnotation } from './helpers';
 
 describe('AI artifact determinism + integrity', () => {

@@ -1,6 +1,7 @@
 import { useCallback, useId, useMemo, useRef, useState } from 'react';
 import type { CanonicalRepo } from '@starred/schema';
 import { NoResults } from '../../components/states';
+import type { LoadedAnnotations } from '../../data/load-annotations';
 import { useDashboardState } from '../../state/use-dashboard-state';
 import { activeFilterCount, FilterChips } from '../filters/FilterChips';
 import { FilterControls } from '../filters/FilterControls';
@@ -65,10 +66,12 @@ export function RepositoryView({
   repos,
   datasetGeneratedAt,
   initialNow,
+  annotations,
 }: {
   repos: CanonicalRepo[];
   datasetGeneratedAt?: string;
   initialNow?: Date;
+  annotations?: LoadedAnnotations | null;
 }) {
   const { state, update, reset } = useDashboardState();
   const [sessionNow] = useState(() => initialNow ?? new Date());
@@ -76,8 +79,13 @@ export function RepositoryView({
   const closeFilters = useCallback(() => setFiltersOpen(false), []);
   const searchId = useId();
 
-  const prepared = useMemo(() => prepareRepositories(repos, sessionNow), [repos, sessionNow]);
-  const facets = useMemo(() => deriveFacetOptions(repos), [repos]);
+  const annotationsByNodeId = annotations?.byNodeId;
+  const prepared = useMemo(
+    () => prepareRepositories(repos, sessionNow, annotationsByNodeId),
+    [repos, sessionNow, annotationsByNodeId],
+  );
+  const facets = useMemo(() => deriveFacetOptions(prepared), [prepared]);
+  const aiCount = useMemo(() => prepared.reduce((n, r) => (r.ai ? n + 1 : n), 0), [prepared]);
   const hasDegraded = useMemo(() => repos.some((repo) => repo.hydration_status !== 'ok'), [repos]);
   const results = useMemo(
     () => selectFromPrepared(prepared, dashboardToView(state)),
@@ -101,6 +109,7 @@ export function RepositoryView({
           </div>
           <p className="dataset-status">
             {repos.length} starred repositories · {formatLastSynced(datasetGeneratedAt, sessionNow)}
+            {annotations ? ` · ${aiCount} of ${repos.length} AI-enriched` : ''}
           </p>
         </div>
         <div className="toolbar">
