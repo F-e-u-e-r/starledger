@@ -6,3 +6,8 @@ pnpm-lock.yaml
 stars.json
 dataset-meta.json
 run-meta.json
+
+# Deterministic generated AI artifacts. Their bytes are owned by
+# @starred/ai-schema serialization and verified by schema/hash gates.
+ai-annotations.json
+ai-annotations-meta.json

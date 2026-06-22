@@ -36,6 +36,12 @@ describe('P3 structural agent gate', () => {
     expect(readRepoFile('.github/workflows/ai-agent-pr.yml')).not.toContain('schedule:');
   });
 
+  it('FORMAT-1: deterministic AI artifacts are not rewritten by Prettier', () => {
+    const ignored = readRepoFile('.prettierignore');
+    expect(ignored).toMatch(/(^|\n)ai-annotations\.json(?:\n|$)/);
+    expect(ignored).toMatch(/(^|\n)ai-annotations-meta\.json(?:\n|$)/);
+  });
+
   it('GATE-13: the gate is path-triggered — no job-level branch condition, and it runs verify-agent-pr', () => {
     const raw = readRepoFile('.github/workflows/ai-agent-pr.yml');
     // The original bypass was a job-level branch-prefix `if:`. Guard it from returning.
