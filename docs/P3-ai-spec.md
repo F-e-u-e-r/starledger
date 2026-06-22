@@ -414,6 +414,77 @@ never silently dropped; v1 does not yet increment per-attempt backoff, because
 precise attempt counting needs run-outcome observation a trusted reconstruction
 cannot derive from canonical data alone.
 
+## P3.4 — dashboard AI enrichment
+
+P3.4 surfaces the published annotations in the dashboard as an OPTIONAL, fail-soft
+layer loaded AFTER the canonical dataset. Canonical loading stays fail-closed; AI
+loading never blocks it.
+
+`data/load-annotations.ts` mirrors the canonical loader (meta → sha-busted content
+→ verify bytes → parse), but resolves to `null` on ANY problem — a missing,
+malformed, mis-hashed, or schema-invalid artifact (LOAD-2/3/4). It validates BOTH
+files against the SHARED contract via the crypto-free `@starred/ai-schema/contracts`
+entrypoint (`AiAnnotationsMetaSchema` + `AiAnnotationsSchema`), so the browser
+enforces the exact published contract with zero drift and no `node:crypto`.
+
+Annotations join the canonical repositories ONLY by `node_id`: an orphan
+annotation is ignored, an unannotated repository stays fully visible, and AI never
+overrides a canonical field (JOIN-1..4). The AI layer adds:
+
+- a category filter and an AI-tag filter (OR within a facet, AND across facets),
+  surfaced only when valid annotations exist, with `category=` / `aiTag=` URL
+  parameters that round-trip (deduplicated, sorted);
+- AI category, tags, and summary folded into the existing lexical search;
+- a per-card secondary, clearly-labelled "AI-generated" summary, category badge,
+  tags, and generated date — the GitHub description stays primary and is never
+  replaced;
+- an "N of M AI-enriched" coverage count, so partial coverage looks intentional.
+
+Publication is already handled by P3.3's fail-soft `stageAiArtifacts`: the Pages
+build contains the AI files when present (DEPLOY-1) and a canonical-only build
+remains valid when they are absent (DEPLOY-2).
+
+## P3.5 — closeout and the semantic-search decision
+
+P3.5 delivers the semantic-search ADR; the operational closeout remains pending.
+Required P3 search is lexical over name, GitHub description, topics, language, and
+the AI category/tags/summary. True vector search is DEFERRED
+to a future hosted phase unless a client-side experiment proves it adds relevance
+with no secret/backend and acceptable size + latency — see
+`docs/adr/ADR-001-semantic-search.md`. Deferral is a valid, successful outcome.
+
+**Live closeout is operational and still PENDING.** There is no AI artifact on
+`main` yet, so no real executor run, provenance validation of a real artifact, AI
+Pages deploy, or no-churn second run has occurred. Before enabling an executor,
+add `verify-ai-provenance` to the `main` ruleset as a required check — it is
+registered and tested but NOT yet required (only `verify-agent-artifacts` is).
+Then: enable exactly one executor, produce one real artifact PR, confirm BOTH
+required checks, merge via human review, confirm the Pages deploy and live AI
+facets, and prove an unchanged second run produces no artifact PR or churn.
+
+`pnpm p3-gate` is the aggregate gate: typecheck, lint, format, the full test suite
+(AI schema drift, fingerprint/planner, injection fixtures, structural + provenance
+gates, real-Git artifact smokes, dashboard canonical-only AND AI-enabled suites),
+build, and generated-schema drift.
+
+## P3 exit conditions
+
+The contract, gate, and implementation conditions below are met and tested; the
+live-validated conditions (a real merged artifact, live facets, and a no-churn
+second run) remain PENDING the operational closeout above.
+
+- canonical stars remain untouched by AI;
+- jobs are generated only by trusted deterministic code;
+- agent candidates are schema- and provenance-bound;
+- classification is incremental and budgeted;
+- stale or invented candidates cannot merge;
+- previous annotations survive a refresh failure;
+- the dashboard works fully without AI (fail-soft) and fails closed only on
+  canonical data;
+- live AI facets, secondary summaries, and AI-aware search work when present;
+- an unchanged second run produces no artifact churn;
+- semantic search is explicitly deferred by ADR-001 (lexical search shipped).
+
 ## Subsequent milestones
 
 - **P3.1 (delivered):** preferred README discovery, untrusted preprocessing,
@@ -425,6 +496,10 @@ cannot derive from canonical data alone.
 - **P3.3 (delivered):** the `verify-ai-provenance` gate, fail-soft Pages
   publication of the merged commit, and operational-state persistence on the
   `starledger-ai-state` branch.
-- **P3.4:** fail-soft dashboard loading, node-id join, category/tag facets,
-  secondary summaries, and enriched lexical search.
-- **P3.5:** live closeout and a separate semantic-search decision record.
+- **P3.4 (implementation delivered):** fail-soft AI loading with strict contract
+  validation, node-id join, category/AI-tag facets with URL state, AI-aware lexical
+  search, secondary labelled card summaries, and a coverage count.
+- **P3.5 (ADR delivered; live closeout pending):** the semantic-search ADR (vector
+  search deferred; lexical search shipped) and the P3 exit conditions. The live
+  operational closeout — a real executor artifact PR, both required checks,
+  reviewed merge, Pages deploy, and a no-churn second run — has NOT yet run.

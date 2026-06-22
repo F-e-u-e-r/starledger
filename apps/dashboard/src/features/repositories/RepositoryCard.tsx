@@ -96,6 +96,7 @@ export function RepositoryCard({ repo, now = new Date() }: { repo: DerivedRepo; 
     repo.anyRelease === 'has' && (repo.stableRelease !== 'has' || latestTag !== stableTag);
   const visibleTopics = topicsExpanded ? repo.topics : repo.topics.slice(0, TOPIC_LIMIT);
   const hiddenTopicCount = Math.max(0, repo.topics.length - visibleTopics.length);
+  const aiGenerated = repo.ai ? fmtDate(repo.ai.generatedAt) : null;
 
   return (
     <li className="card">
@@ -131,6 +132,31 @@ export function RepositoryCard({ repo, now = new Date() }: { repo: DerivedRepo; 
         <p className="card-desc" title={repo.description}>
           {repo.description}
         </p>
+      ) : null}
+
+      {repo.ai ? (
+        <section className="card-ai" aria-label="AI enrichment">
+          <p className="ai-head">
+            <span className="badge badge-ai">
+              AI<span className="visually-hidden">-generated</span>
+            </span>
+            <span className="ai-category">{repo.ai.category}</span>
+          </p>
+          <p className="ai-summary">{repo.ai.summary}</p>
+          {repo.ai.tags.length > 0 ? (
+            <ul className="ai-tags" aria-label="AI tags">
+              {repo.ai.tags.map((t) => (
+                <li key={t} className="ai-tag">
+                  {t}
+                </li>
+              ))}
+            </ul>
+          ) : null}
+          <p className="ai-meta muted">
+            AI-generated{aiGenerated ? ` · ${aiGenerated}` : ''}
+            {repo.ai.modelLabel ? ` · ${repo.ai.modelLabel}` : ''}
+          </p>
+        </section>
       ) : null}
 
       <ul className="repo-highlights" aria-label="Repository highlights">

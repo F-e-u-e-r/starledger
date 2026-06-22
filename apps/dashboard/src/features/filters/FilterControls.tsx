@@ -295,6 +295,41 @@ export function FilterControls({
           hideLegend
         />
       </FilterSection>
+      {facets.categories.length > 0 ? (
+        <FilterSection
+          title="AI category"
+          count={facets.categories.length}
+          selectedCount={state.categories.length}
+          defaultOpen
+        >
+          <CheckboxFacet
+            legend="AI category"
+            options={facets.categories.map(opt)}
+            selected={state.categories}
+            onChange={(categories) => update({ categories })}
+            initialLimit={10}
+            hideLegend
+            help="AI-generated classification — secondary to the GitHub description."
+          />
+        </FilterSection>
+      ) : null}
+      {facets.aiTags.length > 0 ? (
+        <FilterSection
+          title="AI tags"
+          count={facets.aiTags.length}
+          selectedCount={state.aiTags.length}
+          defaultOpen={false}
+        >
+          <CheckboxFacet
+            legend="AI tags"
+            options={facets.aiTags.map(opt)}
+            selected={state.aiTags}
+            onChange={(aiTags) => update({ aiTags })}
+            initialLimit={12}
+            hideLegend
+          />
+        </FilterSection>
+      ) : null}
       <FilterSection title="Repository type" count={3} selectedCount={repoTypeSelected} defaultOpen>
         <TriStateFacet
           legend="Archived"

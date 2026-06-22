@@ -1,4 +1,5 @@
 import type { CanonicalRepo, StarsFile } from '@starred/schema';
+import type { LoadedAnnotations, RepoAnnotation } from './data/load-annotations';
 import type { LoadedDataset } from './data/load-stars';
 
 export function makeRepo(overrides: Partial<CanonicalRepo> = {}): CanonicalRepo {
@@ -33,6 +34,25 @@ export function makeRepo(overrides: Partial<CanonicalRepo> = {}): CanonicalRepo 
 
 export function makeStarsFile(repos: CanonicalRepo[]): StarsFile {
   return { schema_version: '1.0', repos };
+}
+
+export function makeAnnotation(overrides: Partial<RepoAnnotation> = {}): RepoAnnotation {
+  return {
+    category: 'developer-tools',
+    tags: ['automation', 'cli'],
+    summary: 'A concise AI summary of what this repository does and who it is for.',
+    generatedAt: '2026-06-20T00:00:00Z',
+    modelLabel: 'informational-only',
+    ...overrides,
+  };
+}
+
+export function makeAnnotations(entries: Record<string, RepoAnnotation>): LoadedAnnotations {
+  return {
+    byNodeId: new Map(Object.entries(entries)),
+    taxonomyVersion: '1',
+    generatedAt: '2026-06-20T00:00:00Z',
+  };
 }
 
 export function makeDataset(repos: CanonicalRepo[]): LoadedDataset {

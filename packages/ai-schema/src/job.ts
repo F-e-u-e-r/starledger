@@ -1,5 +1,6 @@
 import { z } from 'zod';
-import { AI_SCHEMA_VERSION, sha256 } from './artifact';
+import { AI_SCHEMA_VERSION } from './artifact';
+import { sha256 } from './hash';
 import { AgentExecutorKindSchema, type AgentExecutorKind } from './execution-profile';
 import { GitObjectOidSchema } from './scalars';
 import {

@@ -1,4 +1,3 @@
-import { createHash } from 'node:crypto';
 import { z } from 'zod';
 import { type Annotation, AnnotationSchema } from './annotation';
 import { TAXONOMY_VERSION } from './taxonomy';
@@ -43,11 +42,6 @@ export const AiAnnotationsSchema = z
     }
   });
 export type AiAnnotations = z.infer<typeof AiAnnotationsSchema>;
-
-/** Lowercase-hex SHA-256 of the exact UTF-8 bytes (mirrors the exporter). */
-export function sha256(text: string): string {
-  return createHash('sha256').update(text, 'utf8').digest('hex');
-}
 
 function compareNodeId(a: string, b: string): number {
   return a < b ? -1 : a > b ? 1 : 0;

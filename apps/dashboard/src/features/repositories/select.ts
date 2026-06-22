@@ -1,5 +1,6 @@
 import type { CanonicalRepo } from '@starred/schema';
 import { type DerivedRepo, deriveRepo } from '../../data/derive-fields';
+import type { RepoAnnotation } from '../../data/load-annotations';
 import type { DashboardState } from '../../state/dashboard-state';
 import { applyFilters, type FilterState } from '../filters/filters';
 import { buildSearchText, matchesSearchText } from '../search/search';
@@ -21,8 +22,15 @@ export interface SearchableRepo extends DerivedRepo {
  * and precompute searchable text ONCE. Memoize by [repos, now]; everything after
  * this is independent of the dataset metadata and the clock.
  */
-export function prepareRepositories(repos: readonly CanonicalRepo[], now: Date): SearchableRepo[] {
-  return repos.map((repo) => ({ ...deriveRepo(repo, now), searchText: buildSearchText(repo) }));
+export function prepareRepositories(
+  repos: readonly CanonicalRepo[],
+  now: Date,
+  annotations?: ReadonlyMap<string, RepoAnnotation>,
+): SearchableRepo[] {
+  return repos.map((repo) => {
+    const derived = deriveRepo(repo, now, annotations?.get(repo.node_id) ?? null);
+    return { ...derived, searchText: buildSearchText(derived) };
+  });
 }
 
 /**
@@ -57,6 +65,8 @@ export function dashboardToView(s: DashboardState): ViewState {
       languages: s.languages,
       topics: s.topics,
       licenses: s.licenses,
+      categories: s.categories,
+      aiTags: s.aiTags,
       archived: s.archived,
       fork: s.fork,
       stale: s.stale,
@@ -71,18 +81,39 @@ export interface FacetOptions {
   languages: string[];
   topics: string[];
   licenses: string[];
+  /** AI facets — empty (and therefore hidden) unless valid annotations are present. */
+  categories: string[];
+  aiTags: string[];
 }
 
-/** Facet option lists derived from the dataset (so they track the data, not a hardcoded list). */
-export function deriveFacetOptions(repos: readonly CanonicalRepo[]): FacetOptions {
+/**
+ * Facet option lists derived from the dataset (so they track the data, not a
+ * hardcoded list). Accepts canonical OR AI-joined repos; the category/aiTag
+ * facets stay empty until annotations are present.
+ */
+export function deriveFacetOptions(
+  repos: readonly (CanonicalRepo & { ai?: RepoAnnotation | null })[],
+): FacetOptions {
   const languages = new Set<string>();
   const topics = new Set<string>();
   const licenses = new Set<string>();
+  const categories = new Set<string>();
+  const aiTags = new Set<string>();
   for (const repo of repos) {
     if (repo.primary_language) languages.add(repo.primary_language);
     for (const topic of repo.topics) topics.add(topic);
     if (repo.license_spdx) licenses.add(repo.license_spdx);
+    if (repo.ai) {
+      categories.add(repo.ai.category);
+      for (const tag of repo.ai.tags) aiTags.add(tag);
+    }
   }
   const sorted = (set: Set<string>) => [...set].sort((a, b) => (a < b ? -1 : a > b ? 1 : 0));
-  return { languages: sorted(languages), topics: sorted(topics), licenses: sorted(licenses) };
+  return {
+    languages: sorted(languages),
+    topics: sorted(topics),
+    licenses: sorted(licenses),
+    categories: sorted(categories),
+    aiTags: sorted(aiTags),
+  };
 }

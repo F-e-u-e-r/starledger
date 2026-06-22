@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import { AnnotationSchema } from '../src/annotation';
 import { serializeAnnotations } from '../src/artifact';
-import { buildAiAnnotationsMeta } from '../src/meta';
+import { buildAiAnnotationsMeta } from '../src/meta-build';
 import { normalizeSummary } from '../src/scalars';
 import { makeAnnotation } from './helpers';
 

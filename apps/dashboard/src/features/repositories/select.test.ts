@@ -50,6 +50,8 @@ describe('selectRepositories (RESULT-1, PERF-1)', () => {
       languages: ['Go'],
       topics: ['a', 'b'],
       licenses: ['Apache-2.0', 'MIT'],
+      categories: [],
+      aiTags: [],
     });
   });
 
@@ -102,6 +104,8 @@ describe('prepared pipeline (PERF-2 / PERF-3)', () => {
       languages: ['Go', 'TypeScript'],
       topics: [],
       licenses: [],
+      categories: [],
+      aiTags: [],
     });
   });
 

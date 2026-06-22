@@ -605,3 +605,63 @@ a {
     align-self: flex-start;
   }
 }
+
+/* --- AI enrichment (P3.4): a clearly-secondary layer below the GitHub description. --- */
+.card-ai {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  padding: 0.5rem 0.6rem;
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--accent);
+  border-radius: 6px;
+  background: var(--surface);
+}
+
+.ai-head {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  margin: 0;
+}
+
+.badge-ai {
+  color: var(--accent);
+  border-color: var(--accent);
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
+.ai-category {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--fg);
+}
+
+.ai-summary {
+  margin: 0;
+  font-size: 0.86rem;
+  color: var(--muted);
+}
+
+.ai-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.ai-tag {
+  font-size: 0.72rem;
+  background: var(--chip-bg);
+  border-radius: 999px;
+  padding: 0.05rem 0.4rem;
+  color: var(--muted);
+}
+
+.ai-meta {
+  margin: 0;
+  font-size: 0.72rem;
+}
