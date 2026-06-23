@@ -7,11 +7,11 @@ ai:
   execution_profile:
     execution_profile_version: agent-v1
 
-  # Keep the first live classification run deliberately small.
+  # Keep each live classification run bounded while allowing three new repositories.
   readme_max_chars: 30000
   metadata_max_chars: 5000
   budget:
-    max_new_per_run: 1
+    max_new_per_run: 3
     max_refresh_per_run: 0
     max_retry_per_run: 0
-    max_total_per_run: 1
+    max_total_per_run: 3
