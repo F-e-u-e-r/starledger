@@ -24,6 +24,29 @@
         "prompt_version": "classify-v1",
         "generated_at": "2026-06-22T17:25:01Z"
       }
+    },
+    {
+      "node_id": "MDEwOlJlcG9zaXRvcnk1MzgwOTA5MA==",
+      "category": "libraries-frameworks",
+      "tags": [
+        "frontend",
+        "library"
+      ],
+      "summary": "Anime.js is a lightweight, multipurpose JavaScript animation library with a simple, powerful API for animating CSS properties, SVG attributes, DOM attributes, and JavaScript objects, including staggered timing, custom easing, and looped or alternating playback for web interfaces.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "11e8d61143d56f82c5940267d990425bc6de5482",
+        "repo_metadata_sha256": "4ed42770cc390aff33e2b5338bbc6f1a48bbf304d4e4dacf1ef772aee0a9316a",
+        "fingerprint": "8dc76133cbf437972bd0bda8677a00989aa4bc599648660d62cd99f658caab8a"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "claude-sonnet-4-6",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-06-22T17:40:39Z"
+      }
     }
   ]
 }
