@@ -47,6 +47,75 @@
         "prompt_version": "classify-v1",
         "generated_at": "2026-06-22T17:40:39Z"
       }
+    },
+    {
+      "node_id": "MDEwOlJlcG9zaXRvcnk1NDM0Njc5OQ==",
+      "category": "education-reference",
+      "tags": [
+        "api",
+        "awesome-list"
+      ],
+      "summary": "A community-curated, categorized list of free public APIs spanning domains such as animals, anime, security, finance, books, and business, used as a discovery reference for developers looking for third-party APIs to integrate.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "a6e0a112253f8113a51426f734bedaf9735d5c45",
+        "repo_metadata_sha256": "afdc5f5816c1a24fae53a2fc27a3e47d6f7a127b3cd54234a76afd80c0903e1b",
+        "fingerprint": "bcfd2f4894c8fafebe522867943b80095ea1f9a62b9738060c1955e5030890af"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "claude-sonnet-4-6",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-06-23T08:30:50Z"
+      }
+    },
+    {
+      "node_id": "MDEwOlJlcG9zaXRvcnk1NTA4NTg1",
+      "category": "self-hosted-homelab",
+      "tags": [
+        "backend",
+        "self-hosted"
+      ],
+      "summary": "YOURLS is a self-hosted, open-source URL shortener written in PHP, giving operators full control over their own shortened links, detailed click statistics, and an extensible plugin system on their own server.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "7016843e854c05bbbb028e5a2e27c7f59a58dee2",
+        "repo_metadata_sha256": "e18dc7a5bd43b82287b5c341cc8b1943c9c16644964e53f5bcf730e8109fef4d",
+        "fingerprint": "a136675810f858ae3aba9bc3c8271034fa151a3ef621ea4264ac1abcfc97229f"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "claude-sonnet-4-6",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-06-23T08:30:50Z"
+      }
+    },
+    {
+      "node_id": "MDEwOlJlcG9zaXRvcnk2MzIyNjk5",
+      "category": "self-hosted-homelab",
+      "tags": [
+        "rest-api",
+        "self-hosted"
+      ],
+      "summary": "FreshRSS is a lightweight, self-hostable RSS and Atom feed aggregator written in PHP, supporting multi-user access, web scraping for sites without feeds, WebSub push updates, and a Google Reader-compatible API for mobile clients.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "24583e9f24bfc82183dc0a77eaa9d23f303407a4",
+        "repo_metadata_sha256": "21bbf0638d905e6a30cb48a589dd76f2b64a950b8fd6ea1dbfbfaccee0ce249b",
+        "fingerprint": "6fe535f5579b0072e5426671149e034c28bb3952642243f54913cf7b0ad79f92"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "claude-sonnet-4-6",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-06-23T08:30:50Z"
+      }
     }
   ]
 }
