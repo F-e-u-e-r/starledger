@@ -446,21 +446,29 @@ remains valid when they are absent (DEPLOY-2).
 
 ## P3.5 — closeout and the semantic-search decision
 
-P3.5 delivers the semantic-search ADR; the operational closeout remains pending.
+P3.5 delivers the semantic-search ADR and validates live artifact publication;
+the final operational closeout remains pending.
 Required P3 search is lexical over name, GitHub description, topics, language, and
 the AI category/tags/summary. True vector search is DEFERRED
 to a future hosted phase unless a client-side experiment proves it adds relevance
 with no secret/backend and acceptable size + latency — see
 `docs/adr/ADR-001-semantic-search.md`. Deferral is a valid, successful outcome.
 
-**Live closeout is operational and still PENDING.** There is no AI artifact on
-`main` yet, so no real executor run, provenance validation of a real artifact, AI
-Pages deploy, or no-churn second run has occurred. `verify-ai-provenance` is now
-required alongside `verify-agent-artifacts` and CI on `main`. Before enabling an
-executor, confirm those protections remain active. Then: enable exactly one
-executor, produce one real artifact PR, confirm all required checks, merge via
-human review, confirm the Pages deploy and live AI facets, and prove an unchanged
-second run produces no artifact PR or churn.
+**Live artifact publication is validated.** Three manually started Claude Routine
+runs produced and merged PRs #17, #18, and #20. Each changed only the public
+artifact pair, passed CI plus the structural and provenance gates, and deployed
+through Pages. The public artifact bytes and metadata hashes were verified against
+`main`; the current published coverage is five annotations out of 492 canonical
+repositories. The third run exercised the configured `max_total_per_run: 3`
+budget without exceeding it.
+
+**Final operational closeout remains pending.** `verify-ai-provenance` remains
+required alongside `verify-agent-artifacts` and CI on `main`. Continue bounded,
+manual backfill with exactly one executor enabled. Before P3 is fully closed,
+visually confirm the public dashboard's category/tag facets and secondary summary,
+then run the executor unchanged after the current collection is fully accounted
+for and prove it produces neither an artifact PR nor byte churn. Existing fixture
+and no-op tests support this behavior but do not replace the required live replay.
 
 `pnpm p3-gate` is the aggregate gate: typecheck, lint, format, the full test suite
 (AI schema drift, fingerprint/planner, injection fixtures, structural + provenance
@@ -469,9 +477,9 @@ build, and generated-schema drift.
 
 ## P3 exit conditions
 
-The contract, gate, and implementation conditions below are met and tested; the
-live-validated conditions (a real merged artifact, live facets, and a no-churn
-second run) remain PENDING the operational closeout above.
+The contract, gate, and implementation conditions below are met and tested. Live
+artifact publication is also verified; the visible-dashboard check and no-churn
+replay remain pending the operational closeout above.
 
 - canonical stars remain untouched by AI;
 - jobs are generated only by trusted deterministic code;
@@ -481,8 +489,10 @@ second run) remain PENDING the operational closeout above.
 - previous annotations survive a refresh failure;
 - the dashboard works fully without AI (fail-soft) and fails closed only on
   canonical data;
-- live AI facets, secondary summaries, and AI-aware search work when present;
-- an unchanged second run produces no artifact churn;
+- public AI artifact deployment is hash-verified against `main`;
+- live AI facets, secondary summaries, and AI-aware search still need visual
+  confirmation on the public dashboard;
+- an unchanged live run produces no artifact churn after bounded backfill;
 - semantic search is explicitly deferred by ADR-001 (lexical search shipped).
 
 ## Subsequent milestones
@@ -499,7 +509,8 @@ second run) remain PENDING the operational closeout above.
 - **P3.4 (implementation delivered):** fail-soft AI loading with strict contract
   validation, node-id join, category/AI-tag facets with URL state, AI-aware lexical
   search, secondary labelled card summaries, and a coverage count.
-- **P3.5 (ADR delivered; live closeout pending):** the semantic-search ADR (vector
-  search deferred; lexical search shipped) and the P3 exit conditions. The live
-  operational closeout — a real executor artifact PR, both required checks,
-  reviewed merge, Pages deploy, and a no-churn second run — has NOT yet run.
+- **P3.5 (ADR and live artifact publication delivered; final closeout pending):**
+  vector search is deferred and lexical search shipped. Three validated Claude
+  Routine artifact PRs have merged and deployed five annotations under bounded
+  budgets. Public dashboard visual confirmation and the post-backfill no-churn
+  replay remain pending.
