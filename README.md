@@ -2,15 +2,15 @@
 
 A personal GitHub stars dashboard and repository discovery pipeline, built in phases:
 
-| Phase  | What                                                                  | Status                                                                                              |
-| ------ | --------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------- |
-| **P0** | Deterministic **exporter**: stars → canonical `stars.json`            | ✅ complete                                                                                         |
-| P1     | Static **dashboard** on GitHub Pages (client-side filter/sort/search) | ✅ complete                                                                                         |
-| P2     | **Notifier**: YouTube / awesome-stars → one-shot Telegram delivery    | release candidate (P2.5 closure); live run pending                                                  |
-| P3     | **AI classification**: categories, tags, summaries, semantic search   | P3.0–P3.4 complete; P3.5 live artifact publication validated; visual UI + no-churn closeout pending |
-| P4     | Reusable template / workflow (fork model, no key custody)             | planned                                                                                             |
+| Phase  | What                                                                                    | Status                                                                                                                |
+| ------ | --------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------- |
+| **P0** | Deterministic **exporter**: stars → canonical `stars.json`                              | ✅ complete                                                                                                           |
+| P1     | Static **dashboard** on GitHub Pages (client-side filter/sort/search)                   | ✅ complete                                                                                                           |
+| P2     | **Notifier**: YouTube / awesome-stars → one-shot Telegram delivery                      | implementation complete (P2.5 closure); hosted Telegram delivery + replay validation pending                          |
+| P3     | **AI classification**: categories, tags, summaries, semantic search                     | P3.0–P3.5 implementation + live artifact publication complete; visual UI + no-churn closeout pending                  |
+| P4     | Reusable **template** (fork model, no key custody): setup doctor + deterministic export | in progress — spec, inventory, config examples, `setup:doctor`, `template:build` landed; clean-room + publish pending |
 
-Contracts: **[`docs/P0-exporter-spec.md`](docs/P0-exporter-spec.md)** (exporter) · **[`docs/P1-dashboard-spec.md`](docs/P1-dashboard-spec.md)** (dashboard) · **[`docs/P2-notifier-spec.md`](docs/P2-notifier-spec.md)** (notifier) · **[`docs/P3-ai-spec.md`](docs/P3-ai-spec.md)** (optional AI enrichment).
+Contracts: **[`docs/P0-exporter-spec.md`](docs/P0-exporter-spec.md)** (exporter) · **[`docs/P1-dashboard-spec.md`](docs/P1-dashboard-spec.md)** (dashboard) · **[`docs/P2-notifier-spec.md`](docs/P2-notifier-spec.md)** (notifier) · **[`docs/P3-ai-spec.md`](docs/P3-ai-spec.md)** (optional AI enrichment) · **[`docs/P4-template-spec.md`](docs/P4-template-spec.md)** (reusable template).
 
 ## Quick start
 
@@ -97,3 +97,22 @@ smoke:telegram`. The local test-chat smoke has passed; a live controlled
 delivery + no-duplicate replay on hosted Actions remains the final validation —
 the step-by-step runbook is the **Live validation** section of
 [`docs/P2-notifier-spec.md`](docs/P2-notifier-spec.md).
+
+## Reusable template (P4)
+
+This repo is the personal production deployment. A sanitized, reusable starter is
+generated from it — see **[`docs/P4-template-spec.md`](docs/P4-template-spec.md)**
+and the exact ships/never-ships split in
+**[`docs/P4-template-inventory.md`](docs/P4-template-inventory.md)**.
+
+```bash
+pnpm setup:doctor                 # local setup + required GitHub-token readiness
+pnpm template:build --out ../starledger-template   # deterministic export (use --verify to gate)
+(cd ../starledger-template && pnpm setup:doctor --template-clean)
+```
+
+`setup:doctor` exits `0` ready · `20` incomplete / needs setup · `10` invalid /
+unsafe. New users start at [`docs/setup/`](docs/setup): `secrets.md`,
+`github-pages.md`, `notifier.md`, `ai-executor.md`, `troubleshooting.md`, and the
+`clean-room-validation.md` runbook. No StarLedger service key, central OAuth, or
+shared backend is ever required — only user-owned tokens.
