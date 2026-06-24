@@ -1,0 +1,18 @@
+# TEMPORARY — P2.5 hosted validation only. Removed in rollback.
+
+youtube:
+  channels: []
+
+awesome_stars:
+  repository: F-e-u-e-r/starledger-discovery-fixture
+  ref: main
+  paths:
+    - README.md
+
+state:
+  branch: starledger-validation-state
+  file: notifier-state.json
+  remote: origin
+
+telegram:
+  disable_web_page_preview: true
