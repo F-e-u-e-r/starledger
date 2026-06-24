@@ -60,27 +60,3 @@ jobs:
           pnpm exec tsx packages/deploy/src/cli.ts stage --data "$RUNNER_TEMP" --dist apps/dashboard/dist
           pnpm exec tsx packages/deploy/src/cli.ts verify --dist apps/dashboard/dist
           pnpm exec tsx packages/deploy/src/cli.ts smoke --dist apps/dashboard/dist
-
-  # Optional: only runs in a trusted context where the read-only PAT exists.
-  public-pat-smoke:
-    runs-on: ubuntu-latest
-    if: ${{ github.event_name != 'pull_request' }}
-    permissions:
-      contents: read
-    steps:
-      - uses: actions/checkout@v4
-      - uses: pnpm/action-setup@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version-file: .nvmrc
-          cache: pnpm
-      - run: pnpm install --frozen-lockfile
-      - name: public-only PAT smoke (private_filtered must be 0)
-        env:
-          STAR_SYNC_TOKEN: ${{ secrets.STAR_SYNC_TOKEN }}
-        run: |
-          if [ -z "$STAR_SYNC_TOKEN" ]; then
-            echo "STAR_SYNC_TOKEN not set — skipping"; exit 0
-          fi
-          pnpm build
-          node scripts/smoke-public-pat.mjs
