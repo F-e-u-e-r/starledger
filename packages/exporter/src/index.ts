@@ -251,10 +251,15 @@ export async function run(options: RunOptions = {}): Promise<RunOutcome> {
   writeMeta(meta);
 
   if (publishResult.datasetChanged && !publishResult.commitCreated) {
-    throw new DeferredError('git commit failed; remote last-known-good unchanged', 'COMMIT_FAILED');
+    throw new DeferredError(
+      withFailureDetail('git commit failed; remote last-known-good unchanged', publishResult),
+      'COMMIT_FAILED',
+    );
   }
   if (publishResult.datasetChanged && publishResult.commitCreated && !publishResult.pushSucceeded) {
-    throw new PushFailedError('git push failed; remote last-known-good unchanged');
+    throw new PushFailedError(
+      withFailureDetail('git push failed; remote last-known-good unchanged', publishResult),
+    );
   }
 
   return {
@@ -265,4 +270,13 @@ export async function run(options: RunOptions = {}): Promise<RunOutcome> {
     config,
     runMeta: meta,
   };
+}
+
+/**
+ * Append the underlying git failure detail (already URL-credential redacted by
+ * the git layer; token-redacted again by the CLI) so deferred-publication logs
+ * are actionable instead of opaque.
+ */
+function withFailureDetail(base: string, result: PublishResult): string {
+  return result.failure ? `${base}: ${result.failure.message}` : base;
 }
