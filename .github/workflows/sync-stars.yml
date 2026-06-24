@@ -47,6 +47,9 @@ jobs:
         id: export
         env:
           STAR_SYNC_TOKEN: ${{ secrets.STAR_SYNC_TOKEN }}
+          # actions/checkout pins the event SHA in detached HEAD; tell the
+          # exporter which branch to push the dataset commit to.
+          STARLEDGER_PUBLISH_BRANCH: ${{ github.ref_name }}
         run: |
           echo "workflow sha: $GITHUB_SHA"
           echo "checked out sha: $(git rev-parse HEAD)"
