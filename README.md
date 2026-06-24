@@ -6,7 +6,7 @@ A personal GitHub stars dashboard and repository discovery pipeline, built in ph
 | ------ | --------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------- |
 | **P0** | Deterministic **exporter**: stars → canonical `stars.json`                              | ✅ complete                                                                                                                     |
 | P1     | Static **dashboard** on GitHub Pages (client-side filter/sort/search)                   | ✅ complete                                                                                                                     |
-| P2     | **Notifier**: YouTube / awesome-stars → one-shot Telegram delivery                      | implementation complete (P2.5 closure); hosted Telegram delivery + replay validation pending                                    |
+| P2     | **Notifier**: YouTube / awesome-stars → one-shot Telegram delivery                      | ✅ complete — hosted Telegram delivery + no-duplicate replay validated via a controlled fixture source                          |
 | P3     | **AI classification**: categories, tags, summaries, semantic search                     | P3.0–P3.5 implementation + live artifact publication complete; visual UI + no-churn closeout pending                            |
 | P4     | Reusable **template** (fork model, no key custody): setup doctor + deterministic export | ✅ complete — template published; hosted clean-room validation passed, v1.2.0-alpha.1 tagged; notifier/AI stay explicit opt-ins |
 
@@ -93,10 +93,10 @@ config/state) — a fatal run persists nothing. A pending item stuck past
 `retry.attention_after_attempts` is reported as `attention` but never dropped.
 
 To manually send the test-chat smoke message, run `TELEGRAM_SMOKE=1 pnpm
-smoke:telegram`. The local test-chat smoke has passed; a live controlled
-delivery + no-duplicate replay on hosted Actions remains the final validation —
-the step-by-step runbook is the **Live validation** section of
-[`docs/P2-notifier-spec.md`](docs/P2-notifier-spec.md).
+smoke:telegram`. Hosted validation completed on 2026-06-24: a controlled fixture
+source verified cold-start baseline, one Telegram delivery, and no-duplicate
+replay on GitHub Actions. The runbook remains in the **Live validation** section
+of [`docs/P2-notifier-spec.md`](docs/P2-notifier-spec.md).
 
 ## Reusable template (P4)
 
