@@ -2,13 +2,13 @@
 
 A personal GitHub stars dashboard and repository discovery pipeline, built in phases:
 
-| Phase  | What                                                                                    | Status                                                                                                                |
-| ------ | --------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------- |
-| **P0** | Deterministic **exporter**: stars → canonical `stars.json`                              | ✅ complete                                                                                                           |
-| P1     | Static **dashboard** on GitHub Pages (client-side filter/sort/search)                   | ✅ complete                                                                                                           |
-| P2     | **Notifier**: YouTube / awesome-stars → one-shot Telegram delivery                      | implementation complete (P2.5 closure); hosted Telegram delivery + replay validation pending                          |
-| P3     | **AI classification**: categories, tags, summaries, semantic search                     | P3.0–P3.5 implementation + live artifact publication complete; visual UI + no-churn closeout pending                  |
-| P4     | Reusable **template** (fork model, no key custody): setup doctor + deterministic export | in progress — spec, inventory, config examples, `setup:doctor`, `template:build` landed; clean-room + publish pending |
+| Phase  | What                                                                                    | Status                                                                                                                 |
+| ------ | --------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------- |
+| **P0** | Deterministic **exporter**: stars → canonical `stars.json`                              | ✅ complete                                                                                                            |
+| P1     | Static **dashboard** on GitHub Pages (client-side filter/sort/search)                   | ✅ complete                                                                                                            |
+| P2     | **Notifier**: YouTube / awesome-stars → one-shot Telegram delivery                      | implementation complete (P2.5 closure); hosted Telegram delivery + replay validation pending                           |
+| P3     | **AI classification**: categories, tags, summaries, semantic search                     | P3.0–P3.5 implementation + live artifact publication complete; visual UI + no-churn closeout pending                   |
+| P4     | Reusable **template** (fork model, no key custody): setup doctor + deterministic export | template published; local clean-room validation passed; hosted user-token deployment remains a documented opt-in check |
 
 Contracts: **[`docs/P0-exporter-spec.md`](docs/P0-exporter-spec.md)** (exporter) · **[`docs/P1-dashboard-spec.md`](docs/P1-dashboard-spec.md)** (dashboard) · **[`docs/P2-notifier-spec.md`](docs/P2-notifier-spec.md)** (notifier) · **[`docs/P3-ai-spec.md`](docs/P3-ai-spec.md)** (optional AI enrichment) · **[`docs/P4-template-spec.md`](docs/P4-template-spec.md)** (reusable template).
 
