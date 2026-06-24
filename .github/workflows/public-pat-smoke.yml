@@ -1,0 +1,37 @@
+name: Public PAT smoke
+
+# This is a live integration check against the account's real starred
+# repositories. It is intentionally manual rather than a push gate: GitHub's
+# secondary rate limits are external state, not a deterministic repository
+# correctness signal.
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+# Avoid concurrent manual invocations spending the same PAT/API budget.
+concurrency:
+  group: public-pat-smoke
+  cancel-in-progress: false
+
+jobs:
+  public-pat-smoke:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - name: public-only PAT smoke (private_filtered must be 0)
+        env:
+          STAR_SYNC_TOKEN: ${{ secrets.STAR_SYNC_TOKEN }}
+        run: |
+          if [ -z "$STAR_SYNC_TOKEN" ]; then
+            echo "STAR_SYNC_TOKEN not set — skipping"; exit 0
+          fi
+          pnpm build
+          node scripts/smoke-public-pat.mjs
