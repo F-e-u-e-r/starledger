@@ -169,6 +169,14 @@ importers:
         specifier: ^3.24.1
         version: 3.25.2(zod@3.25.76)
 
+  packages/setup-doctor:
+    dependencies:
+      yaml:
+        specifier: ^2.6.1
+        version: 2.9.0
+
+  packages/template-builder: {}
+
 packages:
 
   '@asamuzakjp/css-color@3.2.0':
