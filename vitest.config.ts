@@ -11,6 +11,8 @@ export default defineConfig({
     alias: {
       '@starred/schema': resolve(root, 'packages/schema/src/index.ts'),
       '@starred/github-client': resolve(root, 'packages/github-client/src/index.ts'),
+      '@starred/discovery/contracts': resolve(root, 'packages/discovery/src/contracts.ts'),
+      '@starred/discovery': resolve(root, 'packages/discovery/src/index.ts'),
     },
   },
   test: {
