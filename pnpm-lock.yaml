@@ -111,6 +111,9 @@ importers:
       '@starred/ai-schema':
         specifier: workspace:*
         version: link:../ai-schema
+      '@starred/discovery':
+        specifier: workspace:*
+        version: link:../discovery
       '@starred/schema':
         specifier: workspace:*
         version: link:../schema
