@@ -24,7 +24,24 @@ jobs:
       sha: ${{ steps.export.outputs.sha }}
       changed: ${{ steps.export.outputs.changed }}
     steps:
+      # Publish to the protected default branch with a dedicated GitHub App
+      # installation token. The App is scoped to THIS repository and is a
+      # ruleset bypass actor on main, so the dataset commit can land without a
+      # broad github-actions[bot] bypass or an admin PAT. actions/checkout
+      # persists this token as the git credential, so the exporter's push
+      # authenticates as the App. STAR_SYNC_TOKEN stays a read-only stars/API
+      # token and is NOT used for git auth.
+      - name: create sync app token
+        id: sync-token
+        uses: actions/create-github-app-token@v2
+        with:
+          app-id: ${{ vars.STARLEDGER_SYNC_APP_ID }}
+          private-key: ${{ secrets.STARLEDGER_SYNC_APP_PRIVATE_KEY }}
+
       - uses: actions/checkout@v4
+        with:
+          ref: main
+          token: ${{ steps.sync-token.outputs.token }}
 
       - uses: pnpm/action-setup@v4
       - uses: actions/setup-node@v4
@@ -42,7 +59,8 @@ jobs:
 
       # The exporter validates, then commits + pushes ONLY on a content change.
       # It reads stars with STAR_SYNC_TOKEN; the commit is pushed with the
-      # checkout-configured GITHUB_TOKEN (no second write-capable PAT).
+      # checkout-configured GitHub App token (a ruleset bypass actor on main),
+      # never with STAR_SYNC_TOKEN.
       - name: run exporter
         id: export
         env:
