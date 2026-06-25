@@ -46,12 +46,13 @@ Out of scope: dashboard/UI (P1), notifier (P2), AI/README (P3), template/action 
 
 ## 3. Authentication model
 
-| Token                    | Use                         | Notes                                                                |
-| ------------------------ | --------------------------- | -------------------------------------------------------------------- |
-| `STAR_SYNC_TOKEN`        | read the viewer's stars     | fine-grained PAT, read-only, `Starring: read`; no write to the repo. |
-| `GITHUB_TOKEN` (Actions) | commit + push, deploy Pages | `permissions: contents: write`; auto-injected.                       |
+| Token                      | Use                                                                            | Notes                                                                                                                    |
+| -------------------------- | ------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------ |
+| `STAR_SYNC_TOKEN`          | read the viewer's stars + public repo metadata                                 | fine-grained PAT, read-only, `Starring: read`; **not** used for git publication.                                         |
+| Dedicated GitHub App token | `sync-stars.yml` checkout + push to publish `stars.json` + `dataset-meta.json` | repository-scoped installation token; the App is the ruleset bypass actor; replaces the old `GITHUB_TOKEN` publish path. |
+| `GITHUB_TOKEN` (Actions)   | available to Actions; deploy Pages                                             | auto-injected; **not** the dataset publication credential.                                                               |
 
-`viewer.starredRepositories` resolves to the token owner; `GITHUB_TOKEN` is `github-actions[bot]` (no stars) → cannot enumerate.
+`viewer.starredRepositories` resolves to the `STAR_SYNC_TOKEN` owner; `GITHUB_TOKEN` is `github-actions[bot]` (no stars) → cannot enumerate.
 
 ---
 
