@@ -11,7 +11,7 @@
 | P5.4      | Candidate artifact generation + CLI      | complete      |
 | P5.5      | Dashboard Discovery Inbox view           | complete      |
 | P5.6      | Manual workflow (`workflow_dispatch`)    | complete      |
-| P5.7      | Hosted validation                        | pending       |
+| P5.7      | Hosted validation                        | complete      |
 
 ## Goal
 
@@ -205,10 +205,10 @@ Merged if:
 Optional fail-soft loading mirroring the P3 AI enrichment pattern:
 
 - If files are absent: dashboard still works (canonical stars view unaffected).
-- If schema invalid: show "Discovery Inbox unavailable."
-- If candidates exist: show Discovery Inbox tab/card.
+- If schema invalid, integrity fails, or counts mismatch: fail-soft suppresses the optional Discovery Inbox tab; canonical stars remain unaffected.
+- If candidates exist and validate: show Discovery Inbox tab/card.
 
-Fields: repo name, description, language, stars, source kind, source count, status, discovered_at, open GitHub link, already-starred indicator.
+Fields: repo name, description, language, stars, source kind, source count, status, discovered_at, open GitHub link. Already-starred repos are excluded before artifact generation, so the dashboard does not render an already-starred indicator.
 
 Filters: status, language, source kind, archived / active.
 
@@ -226,6 +226,25 @@ Behavior:
 4. If candidates changed: create branch `discovery/inbox-<timestamp>`, commit artifacts, open PR
 
 Never pushes directly to main.
+
+## Hosted validation evidence
+
+P5.7 hosted validation completed on 2026-06-25:
+
+- Temporary manual candidate config committed to main in `69f4c3e` with `linkwarden/linkwarden` as the single validation candidate.
+- Discovery Inbox workflow dispatched manually; the successful run was `28181731509`.
+- The workflow generated candidate artifacts, pushed branch `discovery/inbox-20260625-153542`, and opened PR #35, `feat(discovery): update candidate artifacts`.
+- PR #35 changed only `discovery-candidates.json` and `discovery-candidates-meta.json`.
+- `pnpm discover verify` passed locally against PR #35 with `candidate_count: 1`; `pnpm install`, `pnpm build`, and `pnpm format:check` also passed.
+- Hosted CI for PR #35 passed in run `28181781470`.
+- PR #35 merged in `cbad7f2`; the temporary input config was removed from main in `0ea9a8c`.
+
+Validation guardrails:
+
+- No schedule is enabled for Discovery Inbox.
+- No auto-star behavior exists.
+- No agent direct-write path exists for candidate artifacts or decisions.
+- No central key custody is introduced; the workflow uses repo-owned `STAR_SYNC_TOKEN` for GitHub API reads.
 
 ## Template safety
 
