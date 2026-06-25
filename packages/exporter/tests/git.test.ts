@@ -3,7 +3,7 @@ import { mkdtempSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { afterEach, beforeEach, describe, expect, it } from 'vitest';
-import { RealGitPublisher, redactGitOutput } from '../src/git';
+import { isNonFastForward, RealGitPublisher, redactGitOutput } from '../src/git';
 
 /** Run git in `cwd`, returning trimmed stdout. */
 function g(cwd: string, ...args: string[]): string {
@@ -86,20 +86,164 @@ describe('RealGitPublisher.push — detached-HEAD publication', () => {
     );
   });
 
-  it('surfaces git stderr on a rejected push instead of swallowing it', async () => {
-    const { work, c0 } = initRepo();
-    // Advance remote main to c1, then build a divergent commit on c0 → non-fast-forward.
-    writeFileSync(join(work, 'stars.json'), '{"repos":[{"node_id":"C1"}]}\n');
-    g(work, 'add', 'stars.json');
-    g(work, 'commit', '--quiet', '-m', 'c1');
+  it('rebases the dataset commit onto an advanced remote and publishes (no conflict)', async () => {
+    const { work, remote, c0 } = initRepo();
+    // A concurrent commit advanced remote main, touching an UNRELATED file.
+    writeFileSync(join(work, 'README.md'), '# advanced\n');
+    g(work, 'add', 'README.md');
+    g(work, 'commit', '--quiet', '-m', 'docs: advance remote');
     g(work, 'push', '--quiet', 'origin', 'HEAD:refs/heads/main');
-    detachAndCommit(work, c0, '{"repos":[{"node_id":"DIVERGENT"}]}\n');
+    const c1 = g(work, 'rev-parse', 'HEAD');
+
+    // Our sync ran from the now-stale c0 checkout and produced a data commit.
+    detachAndCommit(work, c0, '{"repos":[{"node_id":"FRESH"}]}\n');
     process.env.STARLEDGER_PUBLISH_BRANCH = 'main';
 
-    await expect(new RealGitPublisher(work).push()).rejects.toThrow(
-      /git push .* failed:.*(rejected|fetch first|non-fast-forward)/is,
-    );
+    await new RealGitPublisher(work).push();
+
+    // Remote advanced to our rebased HEAD; the concurrent commit is preserved
+    // (it is an ancestor) and both files coexist at the tip.
+    expect(g(remote, 'rev-parse', 'refs/heads/main')).toBe(g(work, 'rev-parse', 'HEAD'));
+    expect(() => g(work, 'merge-base', '--is-ancestor', c1, 'HEAD')).not.toThrow();
+    expect(g(work, 'show', 'HEAD:README.md')).toContain('advanced');
+    expect(g(work, 'show', 'HEAD:stars.json')).toContain('FRESH');
   });
+
+  it('fails closed without force-pushing when a concurrent data commit conflicts', async () => {
+    const { work, remote, c0 } = initRepo();
+    // A concurrent run advanced remote main with ITS OWN stars.json (the conflict).
+    writeFileSync(join(work, 'stars.json'), '{"repos":[{"node_id":"CONCURRENT"}]}\n');
+    g(work, 'add', 'stars.json');
+    g(work, 'commit', '--quiet', '-m', 'concurrent data commit');
+    g(work, 'push', '--quiet', 'origin', 'HEAD:refs/heads/main');
+    const remoteTip = g(remote, 'rev-parse', 'refs/heads/main');
+
+    // Our run, from the stale c0 checkout, produced a different dataset.
+    detachAndCommit(work, c0, '{"repos":[{"node_id":"OURS"}]}\n');
+    process.env.STARLEDGER_PUBLISH_BRANCH = 'main';
+
+    const err = await new RealGitPublisher(work).push().then(
+      () => null,
+      (e: Error) => e,
+    );
+    expect(err).toBeInstanceOf(Error);
+    // Fail-closed messaging, and the underlying git conflict is surfaced (not swallowed).
+    expect(err?.message).toMatch(/aborted to preserve the remote last-known-good/);
+    expect(err?.message).toMatch(/conflict/i);
+
+    // Remote last-known-good is untouched (no force-push) and the aborted rebase
+    // left the work tree clean.
+    expect(g(remote, 'rev-parse', 'refs/heads/main')).toBe(remoteTip);
+    expect(g(work, 'status', '--porcelain')).toBe('');
+  });
+});
+
+/**
+ * The fetch→rebase→push retry control flow, exercised through the injected git
+ * executor. A genuine non-fast-forward-then-success race is impractical to stage
+ * against a real remote, so we drive the executor's responses directly.
+ */
+describe('RealGitPublisher.push — non-fast-forward retry', () => {
+  const saved = { ...process.env };
+  beforeEach(() => {
+    delete process.env.GITHUB_REF_NAME;
+    process.env.STARLEDGER_PUBLISH_BRANCH = 'main';
+  });
+  afterEach(() => {
+    process.env = { ...saved };
+  });
+
+  const rejected = (): Error =>
+    new Error(
+      'git push origin HEAD:refs/heads/main failed: ! [rejected] main -> main (fetch first)\n' +
+        'error: failed to push some refs to origin',
+    );
+
+  it('retries once when the push is rejected non-fast-forward, then succeeds', async () => {
+    const verbs: string[] = [];
+    let pushes = 0;
+    const run = async (args: readonly string[]): Promise<string> => {
+      verbs.push(args[0] ?? '');
+      if (args[0] === 'push') {
+        pushes += 1;
+        if (pushes === 1) throw rejected();
+      }
+      return '';
+    };
+
+    await new RealGitPublisher('/unused', run).push();
+
+    // Exactly one retry: two full fetch→rebase→push cycles.
+    expect(verbs).toEqual(['fetch', 'rebase', 'push', 'fetch', 'rebase', 'push']);
+    expect(pushes).toBe(2);
+  });
+
+  it('fails closed after a single retry when the push keeps being rejected', async () => {
+    let pushes = 0;
+    const run = async (args: readonly string[]): Promise<string> => {
+      if (args[0] === 'push') {
+        pushes += 1;
+        throw rejected();
+      }
+      return '';
+    };
+
+    await expect(new RealGitPublisher('/unused', run).push()).rejects.toThrow(
+      /rejected|fetch first/i,
+    );
+    expect(pushes).toBe(2); // initial + one retry, then give up — never an unbounded loop
+  });
+
+  it('does not retry a non-race push failure (fails closed immediately)', async () => {
+    let pushes = 0;
+    const run = async (args: readonly string[]): Promise<string> => {
+      if (args[0] === 'push') {
+        pushes += 1;
+        throw new Error(
+          'git push origin HEAD:refs/heads/main failed: fatal: Authentication failed',
+        );
+      }
+      return '';
+    };
+
+    await expect(new RealGitPublisher('/unused', run).push()).rejects.toThrow(
+      /Authentication failed/,
+    );
+    expect(pushes).toBe(1); // an auth failure is not a lost race; do not retry
+  });
+
+  it('never issues a force push or --force-with-lease', async () => {
+    const seen: string[][] = [];
+    const run = async (args: readonly string[]): Promise<string> => {
+      seen.push([...args]);
+      return '';
+    };
+
+    await new RealGitPublisher('/unused', run).push();
+
+    const flat = seen.flat();
+    expect(flat).not.toContain('--force');
+    expect(flat).not.toContain('-f');
+    expect(flat.some((a) => a.startsWith('--force-with-lease'))).toBe(false);
+  });
+});
+
+describe('isNonFastForward', () => {
+  it.each([
+    '! [rejected]        main -> main (fetch first)',
+    '! [rejected]        main -> main (non-fast-forward)',
+    'Updates were rejected because the remote contains work that you do not have locally.',
+    'Updates were rejected because the tip of your current branch is behind its remote counterpart.',
+  ])('classifies a lost-race rejection as retryable: %s', (msg) => {
+    expect(isNonFastForward(msg)).toBe(true);
+  });
+
+  it.each(['fatal: Authentication failed', 'fatal: unable to access', 'pre-receive hook declined'])(
+    'treats a non-race failure as terminal: %s',
+    (msg) => {
+      expect(isNonFastForward(msg)).toBe(false);
+    },
+  );
 });
 
 describe('redactGitOutput', () => {

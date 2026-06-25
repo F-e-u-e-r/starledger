@@ -50,6 +50,10 @@ jobs:
           # actions/checkout pins the event SHA in detached HEAD; tell the
           # exporter which branch to push the dataset commit to.
           STARLEDGER_PUBLISH_BRANCH: ${{ github.ref_name }}
+          # A GitHub secondary-rate-limit cooldown (Retry-After) can be 300s,
+          # which exceeds the conservative 120s library default and would abort
+          # the run. The daily job can afford to wait, so widen the budget.
+          STARLEDGER_RETRY_MAX_TOTAL_WAIT_MS: '600000'
         run: |
           echo "workflow sha: $GITHUB_SHA"
           echo "checked out sha: $(git rev-parse HEAD)"
