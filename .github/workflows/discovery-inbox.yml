@@ -38,6 +38,14 @@ jobs:
             --stars stars.json \
             --out-dir .
 
+      - name: Verify generated discovery artifacts
+        run: |
+          if [ -f discovery-candidates.json ] || [ -f discovery-candidates-meta.json ]; then
+            node packages/discovery/dist/cli.js verify --dir .
+          else
+            echo "No discovery artifacts present. Nothing to verify."
+          fi
+
       - name: Check for changes
         id: changes
         run: |
