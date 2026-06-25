@@ -25,6 +25,8 @@ regenerated from scratch by the template user's own first run.
 | `run-meta.json`, `ai-run-meta.json`            | Per-run telemetry                                         | Already git-ignored; per-execution, never committed.       |
 | `.ai-runs/`                                    | Scratch manifests from planner runs                       | Already git-ignored; ephemeral.                            |
 | `notifier-state.json`, `classifier-state.json` | Delivery / classifier operational state                   | User-specific state; normally branch-resident.             |
+| `discovery-candidates.json`                    | Generated discovery candidate artifacts                   | Personal data. Recreated by user's first discovery run.    |
+| `discovery-candidates-meta.json`               | Fingerprint of the discovery candidates                   | Bound to the maintainer's candidates.                      |
 
 ## Never ships — tracked personal _configuration_
 
@@ -68,7 +70,7 @@ branch history, and the `gh-pages`/Pages environment.
 | `prompts/`                                                                                      | `classify-agent-v1.md` — the executor prompt contract.                                                                                             |
 | `.github/workflows/`                                                                            | All CI/CD workflows. `sync-stars.yml`, `notify.yml`, and `ai-state.yml` are emitted **dispatch-only** (schedules commented out); others unchanged. |
 | `docs/`                                                                                         | Specs + setup guides. Personal P0–P3 notes are reusable architecture docs and ship as-is.                                                          |
-| `config/*.example.yaml`                                                                         | `ai.example.yaml`, `notifier.example.yaml`, `template.example.yaml`.                                                                               |
+| `config/*.example.yaml`                                                                         | `ai.example.yaml`, `notifier.example.yaml`, `template.example.yaml`, `discovery-inbox.example.yaml`, `discovery-decisions.example.yaml`.           |
 | `config.example.yaml` (repo root)                                                               | **Exporter** example config. Easy to miss — it is at the root, not under `config/`.                                                                |
 | `package.json`, `pnpm-lock.yaml`, `pnpm-workspace.yaml`                                         | Workspace definition + frozen lockfile.                                                                                                            |
 | `tsconfig*.json`, `vitest.config.ts`, `eslint.config.js`, `.prettierrc.json`, `.prettierignore` | Tooling config.                                                                                                                                    |

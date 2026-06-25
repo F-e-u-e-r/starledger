@@ -1,6 +1,8 @@
 # StarLedger
 
-A personal GitHub stars dashboard and repository discovery pipeline, built in phases:
+StarLedger is an alpha-stage, self-owned GitHub stars dashboard and discovery workflow.
+
+Built in phases:
 
 | Phase  | What                                                                                    | Status                                                                                                                          |
 | ------ | --------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------- |
@@ -9,8 +11,9 @@ A personal GitHub stars dashboard and repository discovery pipeline, built in ph
 | P2     | **Notifier**: YouTube / awesome-stars → one-shot Telegram delivery                      | ✅ complete — hosted Telegram delivery + no-duplicate replay validated via a controlled fixture source                          |
 | P3     | **AI classification**: categories, tags, summaries, semantic search                     | P3.0–P3.5 implementation + live artifact publication complete; visual UI + no-churn closeout pending                            |
 | P4     | Reusable **template** (fork model, no key custody): setup doctor + deterministic export | ✅ complete — template published; hosted clean-room validation passed, v1.2.0-alpha.1 tagged; notifier/AI stay explicit opt-ins |
+| P5     | **Discovery Inbox**: candidate repo intake, dedupe, dashboard review, manual workflow   | in progress                                                                                                                     |
 
-Contracts: **[`docs/P0-exporter-spec.md`](docs/P0-exporter-spec.md)** (exporter) · **[`docs/P1-dashboard-spec.md`](docs/P1-dashboard-spec.md)** (dashboard) · **[`docs/P2-notifier-spec.md`](docs/P2-notifier-spec.md)** (notifier) · **[`docs/P3-ai-spec.md`](docs/P3-ai-spec.md)** (optional AI enrichment) · **[`docs/P4-template-spec.md`](docs/P4-template-spec.md)** (reusable template).
+Contracts: **[`docs/P0-exporter-spec.md`](docs/P0-exporter-spec.md)** (exporter) · **[`docs/P1-dashboard-spec.md`](docs/P1-dashboard-spec.md)** (dashboard) · **[`docs/P2-notifier-spec.md`](docs/P2-notifier-spec.md)** (notifier) · **[`docs/P3-ai-spec.md`](docs/P3-ai-spec.md)** (optional AI enrichment) · **[`docs/P4-template-spec.md`](docs/P4-template-spec.md)** (reusable template) · **[`docs/P5-discovery-inbox-spec.md`](docs/P5-discovery-inbox-spec.md)** (discovery inbox).
 
 ## Quick start
 
@@ -56,7 +59,8 @@ packages/exporter        @starred/exporter        config · enumerate (dual-path
 packages/notifier        @starred/notifier        YouTube / awesome-stars source polling · durable state branch · pending queue · CLI
 packages/ai-schema       @starred/ai-schema       strict optional-AI artifact/job/manifest/candidate contracts (+ crypto-free /contracts browser entrypoint)
 packages/classifier      @starred/classifier      trusted planner, fingerprints, candidate reconciliation, artifact assembly, structural + provenance gates, operational state
-apps/dashboard           @starred/dashboard       Vite + React static site: trusted canonical loading + optional fail-soft AI enrichment
+packages/discovery       @starred/discovery       manual candidate intake · GitHub resolution · stars dedupe · deterministic artifact generation · CLI
+apps/dashboard           @starred/dashboard       Vite + React static site: trusted canonical loading + optional fail-soft AI enrichment + discovery inbox
 schemas/                 generated JSON Schemas
 ```
 
@@ -116,3 +120,24 @@ unsafe. New users start at [`docs/setup/`](docs/setup): `secrets.md`,
 `github-pages.md`, `notifier.md`, `ai-executor.md`, `troubleshooting.md`, and the
 `clean-room-validation.md` runbook. No StarLedger service key, central OAuth, or
 shared backend is ever required — only user-owned tokens.
+
+## Discovery Inbox (P5)
+
+Add candidate repositories to review in `config/discovery-inbox.yaml` (starting
+from `config/discovery-inbox.example.yaml`), then run the discovery pipeline:
+
+```bash
+export STAR_SYNC_TOKEN=github_pat_...
+pnpm discover --inbox config/discovery-inbox.yaml --stars stars.json --out-dir .
+pnpm discover verify            # validate generated artifacts
+```
+
+Candidates are resolved via the GitHub API, deduplicated against `stars.json` by
+`node_id`, and emitted as `discovery-candidates.json` + `discovery-candidates-meta.json`.
+Human decisions (dismiss/promote) go in `config/discovery-decisions.yaml`. The
+dashboard loads these artifacts fail-soft and shows a Discovery Inbox tab when
+candidates are present. A manual-only `workflow_dispatch` workflow can produce a
+candidate PR on GitHub Actions.
+
+See **[`docs/P5-discovery-inbox-spec.md`](docs/P5-discovery-inbox-spec.md)** for
+the full architecture.

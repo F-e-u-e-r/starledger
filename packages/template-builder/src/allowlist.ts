@@ -53,6 +53,8 @@ export const EXCLUDE_BASENAMES = new Set([
   'ai-run-meta.json',
   'notifier-state.json',
   'classifier-state.json',
+  'discovery-candidates.json',
+  'discovery-candidates-meta.json',
   '.DS_Store',
   'config.yaml',
   'ai.yaml',

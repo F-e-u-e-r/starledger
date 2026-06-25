@@ -24,7 +24,9 @@
       "@starred/github-client": ["packages/github-client/src"],
       "@starred/ai-schema": ["packages/ai-schema/src"],
       "@starred/ai-schema/contracts": ["packages/ai-schema/src/contracts"],
-      "@starred/classifier": ["packages/classifier/src"]
+      "@starred/classifier": ["packages/classifier/src"],
+      "@starred/discovery": ["packages/discovery/src"],
+      "@starred/discovery/contracts": ["packages/discovery/src/contracts"]
     }
   }
 }
