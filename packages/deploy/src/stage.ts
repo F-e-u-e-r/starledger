@@ -1,12 +1,18 @@
 import { copyFileSync, existsSync, readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { AiAnnotationsMetaSchema, AiAnnotationsSchema } from '@starred/ai-schema';
+import {
+  DiscoveryCandidatesFileSchema,
+  DiscoveryCandidatesMetaSchema,
+} from '@starred/discovery/contracts';
 import { sha256Hex, verifyDatasetIntegrity } from './dataset';
 
 export const STARS_FILE = 'stars.json';
 export const DATASET_META_FILE = 'dataset-meta.json';
 export const AI_ANNOTATIONS_FILE = 'ai-annotations.json';
 export const AI_ANNOTATIONS_META_FILE = 'ai-annotations-meta.json';
+export const DISCOVERY_CANDIDATES_FILE = 'discovery-candidates.json';
+export const DISCOVERY_CANDIDATES_META_FILE = 'discovery-candidates-meta.json';
 
 /** Files that must never reach the public Pages artifact (telemetry / secrets). */
 export const FORBIDDEN_IN_DIST = ['run-meta.json', 'config.yaml', '.env'] as const;
@@ -97,5 +103,47 @@ export function stageAiArtifacts(opts: StageOptions): AiStageResult {
     return { staged: true };
   } catch (error) {
     return { staged: false, reason: error instanceof Error ? error.message : 'AI staging skipped' };
+  }
+}
+
+export interface DiscoveryStageResult {
+  staged: boolean;
+  reason?: string;
+}
+
+/**
+ * Stage OPTIONAL Discovery Inbox artifacts into the dist, FAIL-SOFT like AI
+ * artifacts. The dashboard performs the same schema/hash/count checks at
+ * runtime, but Pages should only publish artifacts that are internally coherent.
+ */
+export function stageDiscoveryArtifacts(opts: StageOptions): DiscoveryStageResult {
+  const candidatesPath = resolve(opts.dataDir, DISCOVERY_CANDIDATES_FILE);
+  const metaPath = resolve(opts.dataDir, DISCOVERY_CANDIDATES_META_FILE);
+  if (!existsSync(candidatesPath) && !existsSync(metaPath)) {
+    return { staged: false, reason: 'no discovery artifacts present' };
+  }
+  if (!existsSync(candidatesPath) || !existsSync(metaPath)) {
+    return { staged: false, reason: 'incomplete discovery artifact pair — skipped' };
+  }
+
+  try {
+    const candidatesText = readFileSync(candidatesPath, 'utf8');
+    const metaText = readFileSync(metaPath, 'utf8');
+    const candidates = DiscoveryCandidatesFileSchema.parse(JSON.parse(candidatesText));
+    const meta = DiscoveryCandidatesMetaSchema.parse(JSON.parse(metaText));
+    if (meta.dataset_sha !== sha256Hex(candidatesText)) {
+      return { staged: false, reason: 'discovery artifact hash mismatch — skipped' };
+    }
+    if (meta.candidate_count !== candidates.candidates.length) {
+      return { staged: false, reason: 'discovery artifact count mismatch — skipped' };
+    }
+    copyFileSync(candidatesPath, resolve(opts.distDir, DISCOVERY_CANDIDATES_FILE));
+    copyFileSync(metaPath, resolve(opts.distDir, DISCOVERY_CANDIDATES_META_FILE));
+    return { staged: true };
+  } catch (error) {
+    return {
+      staged: false,
+      reason: error instanceof Error ? error.message : 'discovery staging skipped',
+    };
   }
 }
