@@ -16,7 +16,10 @@ function initRepo(): { work: string; remote: string; c0: string } {
   const remote = join(base, 'remote.git');
   const work = join(base, 'work');
   execFileSync('git', ['init', '--bare', remote]);
-  execFileSync('git', ['clone', '--quiet', remote, work]);
+  // Cloning the freshly-init'd bare repo prints "warning: You appear to have
+  // cloned an empty repository." to stderr even with --quiet; ignore it so the
+  // test logs stay clean (a real clone failure still throws on non-zero exit).
+  execFileSync('git', ['clone', '--quiet', remote, work], { stdio: 'ignore' });
   g(work, 'config', 'user.email', 'tester@example.com');
   g(work, 'config', 'user.name', 'Tester');
   writeFileSync(join(work, 'stars.json'), '{"repos":[]}\n');
@@ -73,8 +76,12 @@ describe('RealGitPublisher.push — detached-HEAD publication', () => {
     await new RealGitPublisher(work).push();
 
     expect(g(remote, 'rev-parse', 'refs/heads/main')).toBe(g(work, 'rev-parse', 'HEAD'));
-    // The wrong branch was never created on the remote.
-    expect(() => g(remote, 'rev-parse', 'refs/heads/does-not-exist')).toThrow();
+    // The wrong branch was never created on the remote. Use `show-ref --verify
+    // --quiet`, which exits non-zero SILENTLY for a missing ref, so the negative
+    // assertion does not spew a git "ambiguous argument" fatal into the logs.
+    expect(() =>
+      g(remote, 'show-ref', '--verify', '--quiet', 'refs/heads/does-not-exist'),
+    ).toThrow();
   });
 
   it('fails closed with an actionable message when the branch is unresolvable', async () => {
