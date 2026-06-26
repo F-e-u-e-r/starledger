@@ -38,13 +38,13 @@ jobs:
           app-id: ${{ vars.STARLEDGER_SYNC_APP_ID }}
           private-key: ${{ secrets.STARLEDGER_SYNC_APP_PRIVATE_KEY }}
 
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
         with:
           ref: main
           token: ${{ steps.sync-token.outputs.token }}
 
-      - uses: pnpm/action-setup@v4
-      - uses: actions/setup-node@v4
+      - uses: pnpm/action-setup@v6
+      - uses: actions/setup-node@v5
         with:
           node-version-file: .nvmrc
           cache: pnpm
