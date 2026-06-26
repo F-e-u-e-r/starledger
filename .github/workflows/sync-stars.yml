@@ -29,7 +29,7 @@ jobs:
       # token and is NOT used for git auth.
       - name: create sync app token
         id: sync-token
-        uses: actions/create-github-app-token@v2
+        uses: actions/create-github-app-token@v3
         with:
           app-id: ${{ vars.STARLEDGER_SYNC_APP_ID }}
           private-key: ${{ secrets.STARLEDGER_SYNC_APP_PRIVATE_KEY }}
