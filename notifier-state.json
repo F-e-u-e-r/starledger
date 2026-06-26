@@ -8,7 +8,7 @@
     "paths": [
       "README.md"
     ],
-    "last_commit_sha": "659ae0f7e7a3a2d41f49ddf7572f65e2237f64c1"
+    "last_commit_sha": "e18a0edfa154be60dcd5059a44dea32ea5f8aa85"
   },
   "pending": [],
   "deliveries": [
@@ -16,6 +16,12 @@
       "notification_key": "awesome_stars:shadcn-labs/agentcn:R_kgDOS9OLdg",
       "status": "sent",
       "completed_at": "2026-06-21T01:41:46.962Z",
+      "detail": null
+    },
+    {
+      "notification_key": "awesome_stars:ente/ente:R_kgDOIWVEMQ",
+      "status": "sent",
+      "completed_at": "2026-06-26T01:32:01.747Z",
       "detail": null
     }
   ]
