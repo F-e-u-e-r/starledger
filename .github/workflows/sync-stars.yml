@@ -6,12 +6,11 @@ on:
     - cron: '23 5 * * *'
   workflow_dispatch:
 
-# Write access to commit the refreshed dataset; pages/id-token so the called
-# deploy job (pages.yml) is permitted to publish.
+# Write access for the dataset commit only. The exporter pushes with the GitHub
+# App token (a ruleset bypass actor); Pages deploys via pages.yml's own push
+# trigger on the data commit, so this job needs neither pages nor id-token.
 permissions:
   contents: write
-  pages: write
-  id-token: write
 
 concurrency:
   group: sync-stars
@@ -20,9 +19,6 @@ concurrency:
 jobs:
   sync:
     runs-on: ubuntu-latest
-    outputs:
-      sha: ${{ steps.export.outputs.sha }}
-      changed: ${{ steps.export.outputs.changed }}
     steps:
       # Publish to the protected default branch with a dedicated GitHub App
       # installation token. The App is scoped to THIS repository and is a
@@ -95,17 +91,3 @@ jobs:
 
       - name: validate the committed dataset
         run: pnpm exec tsx packages/deploy/src/cli.ts check-data --data .
-
-  # Call the SAME deploy flow directly (a GITHUB_TOKEN commit does not trigger
-  # the push-based Pages workflow). Deploy on a real change, or on a manual run.
-  deploy:
-    needs: sync
-    if: ${{ needs.sync.outputs.changed == 'true' || github.event_name == 'workflow_dispatch' }}
-    permissions:
-      contents: read
-      pages: write
-      id-token: write
-    uses: ./.github/workflows/pages.yml
-    with:
-      ref: ${{ needs.sync.outputs.sha }}
-    secrets: inherit
