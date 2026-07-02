@@ -129,17 +129,34 @@ a {
   padding-right: 2.2rem;
 }
 
-.search-clear {
+/* The app renders its own .search-clear control, so suppress WebKit's native
+   search cancel button — otherwise both appear side by side. */
+.search input[type='search']::-webkit-search-cancel-button {
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+/* Scoped under `.search` so it out-specifies `.toolbar button` (0,0,2,0 vs
+   0,0,1,1). Otherwise that rule wins: on mobile it sets width:100% (stretching
+   this absolutely-positioned control across the whole field) and everywhere it
+   forces a border + opaque background over the input. */
+.search .search-clear {
   position: absolute;
   right: 0.25rem;
   top: 50%;
   transform: translateY(-50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
   width: 1.75rem;
   height: 1.75rem;
+  padding: 0;
   border: 0;
   border-radius: 50%;
   background: transparent;
   color: var(--muted);
+  font-size: 1.1rem;
+  line-height: 1;
   cursor: pointer;
 }
 
