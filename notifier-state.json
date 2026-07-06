@@ -8,7 +8,7 @@
     "paths": [
       "README.md"
     ],
-    "last_commit_sha": "c4c0f0020440fec3452536a22cd91e727bdb909c"
+    "last_commit_sha": "ad57a1414d2a3540f21cd1f42d524388044d0275"
   },
   "pending": [],
   "deliveries": [
@@ -70,6 +70,18 @@
       "notification_key": "awesome_stars:cloudflare/kumo:R_kgDOQMK3dA",
       "status": "sent",
       "completed_at": "2026-07-04T07:17:01.517Z",
+      "detail": null
+    },
+    {
+      "notification_key": "awesome_stars:athledev-labs/opennook:R_kgDOSjCshg",
+      "status": "sent",
+      "completed_at": "2026-07-06T09:12:02.147Z",
+      "detail": null
+    },
+    {
+      "notification_key": "awesome_stars:microsoft/pg_durable:R_kgDORPvt5w",
+      "status": "sent",
+      "completed_at": "2026-07-06T09:12:02.147Z",
       "detail": null
     }
   ]
