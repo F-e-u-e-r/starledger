@@ -8,7 +8,7 @@ import { staticSmoke, verifyBuiltArtifact } from '../src/verify';
 
 // Mirror the production index.html CSP meta so the fixture exercises SEC-B.
 const CSP_META =
-  "<meta http-equiv=\"Content-Security-Policy\" content=\"default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'self'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'\" />";
+  "<meta http-equiv=\"Content-Security-Policy\" content=\"default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'self'; base-uri 'none'; form-action 'none'\" />";
 
 function builtDist(base = '/repo/') {
   const root = mkdtempSync(join(tmpdir(), 'verify-'));

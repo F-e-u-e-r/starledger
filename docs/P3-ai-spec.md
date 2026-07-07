@@ -462,13 +462,27 @@ through Pages. The public artifact bytes and metadata hashes were verified again
 repositories. The third run exercised the configured `max_total_per_run: 3`
 budget without exceeding it.
 
-**Final operational closeout remains pending.** `verify-ai-provenance` remains
-required alongside `verify-agent-artifacts` and CI on `main`. Continue bounded,
-manual backfill with exactly one executor enabled. Before P3 is fully closed,
-visually confirm the public dashboard's category/tag facets and secondary summary,
-then run the executor unchanged after the current collection is fully accounted
-for and prove it produces neither an artifact PR nor byte churn. Existing fixture
-and no-op tests support this behavior but do not replace the required live replay.
+**Operational closeout — status (updated 2026-07-08).** `verify-ai-provenance`
+remains required alongside `verify-agent-artifacts` and CI on `main`. Continue
+bounded, manual backfill with exactly one executor enabled.
+
+- ✅ **Public-dashboard visual confirmation — DONE.** Verified live at
+  `https://f-e-u-e-r.github.io/starledger/` under the new strict CSP: React
+  mounts and the stylesheet applies (the CSP does not break the app), and the
+  category/tag facets, AI badge, secondary summary, AI tags, the "N of M
+  enriched" counter (`5 of 550`), and AI-aware search all render.
+- ✅ **No-churn replay, deterministic half — DONE (offline).**
+  `classifier verify-artifacts` passes on the committed pair, re-serializing the
+  committed annotations is byte-identical, and the meta `annotations_sha256` +
+  `annotation_count` match. So the assembler produces zero byte churn on an
+  unchanged set.
+- ⏳ **No-churn replay, live half — PENDING (credentialed).** Running
+  `classifier plan --current ai-annotations.json` against live README OIDs at the
+  current base (to prove the planner emits zero jobs) needs a `STAR_SYNC_TOKEN`
+  and is the owner's step; the offline checks above support but do not replace it.
+
+Existing fixture and no-op tests support this behavior but do not replace the
+required live planner replay.
 
 `pnpm p3-gate` is the aggregate gate: typecheck, lint, format, the full test suite
 (AI schema drift, fingerprint/planner, injection fixtures, structural + provenance
@@ -478,8 +492,9 @@ build, and generated-schema drift.
 ## P3 exit conditions
 
 The contract, gate, and implementation conditions below are met and tested. Live
-artifact publication is also verified; the visible-dashboard check and no-churn
-replay remain pending the operational closeout above.
+artifact publication is verified, and (2026-07-08) the visible-dashboard check is
+DONE and the deterministic no-churn replay is verified offline; only the live
+credentialed planner replay remains pending the operational closeout above.
 
 - canonical stars remain untouched by AI;
 - jobs are generated only by trusted deterministic code;
