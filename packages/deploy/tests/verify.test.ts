@@ -109,4 +109,24 @@ describe('verifyBuiltArtifact / staticSmoke (DEPLOY-1/2, PATH-2)', () => {
       /Content-Security-Policy/,
     );
   });
+
+  it('SEC-B: directives cannot be borrowed from a later meta tag (split-tag bypass)', () => {
+    const root = mkdtempSync(join(tmpdir(), 'verify-'));
+    const dataDir = join(root, 'data');
+    const distDir = join(root, 'dist');
+    mkdirSync(dataDir);
+    mkdirSync(join(distDir, 'assets'), { recursive: true });
+    writeFileSync(join(distDir, 'assets', 'index-abc.js'), 'console.log(1)\n');
+    // The CSP meta itself has NO content; a later decoy meta carries directives.
+    // The browser enforces nothing from the empty CSP meta, so this must fail.
+    const splitTag =
+      '<meta http-equiv="Content-Security-Policy"><meta name="decoy" content="default-src \'none\'; script-src \'self\'" />';
+    writeFileSync(
+      join(distDir, 'index.html'),
+      `<!doctype html><html><head>${splitTag}<script type="module" src="/repo/assets/index-abc.js"></script></head><body><div id="root"></div></body></html>`,
+    );
+    writeFixtureDataset(dataDir);
+    stageDashboardData({ dataDir, distDir });
+    expect(() => verifyBuiltArtifact({ distDir, base: '/repo/' })).toThrow(/content attribute/);
+  });
 });

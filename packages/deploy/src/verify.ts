@@ -38,21 +38,28 @@ const FORBIDDEN_CSP_DIRECTIVES = ['frame-ancestors'];
  * a meta-ineffective one, the deploy must fail here rather than silently shipping
  * an unprotected — or console-erroring — page. HTML comments are stripped first,
  * so a commented-out CSP meta (which the browser does NOT enforce) cannot satisfy
- * the required-directive check, and an explanatory comment mentioning a directive
- * name can neither satisfy nor trip these checks. The policy is then extracted
- * from the meta's `content` attribute.
+ * the check, and an explanatory comment mentioning a directive name cannot trip
+ * it. The policy is read from a SINGLE `<meta …>` tag (attributes cannot span the
+ * closing `>`), so directives can never be borrowed from a later unrelated tag's
+ * `content` attribute (a split-tag bypass).
  */
 function assertContentSecurityPolicy(html: string): void {
   const active = html.replace(/<!--[\s\S]*?-->/g, '');
-  const meta = active.match(
-    /http-equiv=["']?Content-Security-Policy["']?[\s\S]*?content="([^"]*)"/i,
+  const cspTag = (active.match(/<meta\b[^>]*>/gi) ?? []).find((tag) =>
+    /http-equiv\s*=\s*["']?Content-Security-Policy["']?/i.test(tag),
   );
-  if (!meta) {
+  if (!cspTag) {
     throw new Error(
       'index.html is missing the Content-Security-Policy meta (SEC-B): Pages cannot set a CSP header, so this meta is the only backstop',
     );
   }
-  const policy = meta[1] ?? '';
+  const content = cspTag.match(/content\s*=\s*"([^"]*)"/i);
+  if (!content) {
+    throw new Error(
+      'the Content-Security-Policy meta has no content attribute (SEC-B): an empty policy enforces nothing',
+    );
+  }
+  const policy = content[1] ?? '';
   for (const directive of REQUIRED_CSP_DIRECTIVES) {
     if (!policy.includes(directive)) {
       throw new Error(
