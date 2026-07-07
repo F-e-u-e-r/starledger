@@ -152,6 +152,49 @@ describe('runPipeline', () => {
     expect(result.candidates.candidates).toHaveLength(0);
   });
 
+  it('B2: cold start (stars.json absent) dedupes against nothing rather than failing', async () => {
+    const starsPath = join(tmpDir, 'does-not-exist.json');
+    const repos = new Map([
+      ['owner/repo', fakeResolved({ node_id: 'R_1', full_name: 'owner/repo' })],
+    ]);
+    const result = await runPipeline({
+      manualEntries: [{ url: 'https://github.com/owner/repo' }],
+      starsPath,
+      decisions: emptyDecisions,
+      resolver: makeResolver(repos),
+      now: fixedNow,
+    });
+    expect(result.candidates.candidates).toHaveLength(1);
+  });
+
+  it('B2: fails closed when stars.json is present but not valid JSON', async () => {
+    const starsPath = join(tmpDir, 'stars.json');
+    writeFileSync(starsPath, '{ this is not json');
+    await expect(
+      runPipeline({
+        manualEntries: [{ url: 'https://github.com/owner/repo' }],
+        starsPath,
+        decisions: emptyDecisions,
+        resolver: makeResolver(new Map()),
+        now: fixedNow,
+      }),
+    ).rejects.toThrow(/not valid JSON/);
+  });
+
+  it('B2: fails closed when stars.json is present but fails schema validation', async () => {
+    const starsPath = join(tmpDir, 'stars.json');
+    writeFileSync(starsPath, JSON.stringify({ schema_version: '1.0', repos: 'nope' }));
+    await expect(
+      runPipeline({
+        manualEntries: [{ url: 'https://github.com/owner/repo' }],
+        starsPath,
+        decisions: emptyDecisions,
+        resolver: makeResolver(new Map()),
+        now: fixedNow,
+      }),
+    ).rejects.toThrow(/schema validation/);
+  });
+
   it('deduplicates by node_id when multiple URLs resolve to same repo', async () => {
     const starsPath = join(tmpDir, 'stars.json');
     writeStars(starsPath, []);

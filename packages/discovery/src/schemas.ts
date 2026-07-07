@@ -1,3 +1,4 @@
+import { HttpsUrlSchema } from '@starred/schema';
 import { z } from 'zod';
 
 export const DISCOVERY_SCHEMA_VERSION = 1;
@@ -18,7 +19,7 @@ export const DiscoverySourceSchema = z
   .object({
     kind: SourceKindSchema,
     source_id: z.string().min(1),
-    source_url: z.string().url().optional(),
+    source_url: HttpsUrlSchema.optional(),
     observed_at: z.string().min(1),
     raw_ref: z.string().optional(),
   })
@@ -34,7 +35,7 @@ export const DiscoveryCandidateSchema = z
     owner: z.string().min(1),
     name: z.string().min(1),
     full_name: z.string().min(1),
-    html_url: z.string().url(),
+    html_url: HttpsUrlSchema,
     description: z.string().nullable(),
     homepage_url: z.string().nullable(),
     primary_language: z.string().nullable(),

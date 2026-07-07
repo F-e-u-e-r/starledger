@@ -6,6 +6,10 @@ import { writeFixtureDataset } from '../src/fixture';
 import { stageDashboardData } from '../src/stage';
 import { staticSmoke, verifyBuiltArtifact } from '../src/verify';
 
+// Mirror the production index.html CSP meta so the fixture exercises SEC-B.
+const CSP_META =
+  "<meta http-equiv=\"Content-Security-Policy\" content=\"default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'self'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'\" />";
+
 function builtDist(base = '/repo/') {
   const root = mkdtempSync(join(tmpdir(), 'verify-'));
   const dataDir = join(root, 'data');
@@ -15,7 +19,7 @@ function builtDist(base = '/repo/') {
   writeFileSync(join(distDir, 'assets', 'index-abc.js'), 'console.log(1)\n');
   writeFileSync(
     join(distDir, 'index.html'),
-    `<!doctype html><html><head><script type="module" src="${base}assets/index-abc.js"></script></head><body><div id="root"></div></body></html>`,
+    `<!doctype html><html><head>${CSP_META}<script type="module" src="${base}assets/index-abc.js"></script></head><body><div id="root"></div></body></html>`,
   );
   writeFixtureDataset(dataDir);
   stageDashboardData({ dataDir, distDir });
@@ -48,5 +52,24 @@ describe('verifyBuiltArtifact / staticSmoke (DEPLOY-1/2, PATH-2)', () => {
     const { distDir, base } = builtDist();
     const r = await staticSmoke({ distDir, base });
     expect(r.repoCount).toBe(1);
+  });
+
+  it('SEC-B: a built dist whose index.html dropped the CSP meta is rejected', () => {
+    const root = mkdtempSync(join(tmpdir(), 'verify-'));
+    const dataDir = join(root, 'data');
+    const distDir = join(root, 'dist');
+    mkdirSync(dataDir);
+    mkdirSync(join(distDir, 'assets'), { recursive: true });
+    writeFileSync(join(distDir, 'assets', 'index-abc.js'), 'console.log(1)\n');
+    // Same well-formed dist as builtDist(), but WITHOUT the CSP meta.
+    writeFileSync(
+      join(distDir, 'index.html'),
+      '<!doctype html><html><head><script type="module" src="/repo/assets/index-abc.js"></script></head><body><div id="root"></div></body></html>',
+    );
+    writeFixtureDataset(dataDir);
+    stageDashboardData({ dataDir, distDir });
+    expect(() => verifyBuiltArtifact({ distDir, base: '/repo/' })).toThrow(
+      /Content-Security-Policy/,
+    );
   });
 });

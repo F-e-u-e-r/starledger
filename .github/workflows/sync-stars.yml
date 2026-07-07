@@ -27,6 +27,15 @@ jobs:
       # persists this token as the git credential, so the exporter's push
       # authenticates as the App. STAR_SYNC_TOKEN stays a read-only stars/API
       # token and is NOT used for git auth.
+      #
+      # LOAD-BEARING INVARIANT (OPS-A): the dataset commit MUST be pushed with a
+      # token that can trigger a downstream workflow. GitHub deliberately does
+      # NOT run workflows for pushes made with the default GITHUB_TOKEN
+      # (anti-recursion). This App installation token DOES trigger them, which is
+      # the ONLY thing that fires pages.yml's `push` trigger and deploys the new
+      # data. If anyone "simplifies" this back to GITHUB_TOKEN, sync stays green
+      # but the live site silently freezes on stale data with no failed run to
+      # notice. Do not change the push credential without re-checking pages.yml.
       - name: create sync app token
         id: sync-token
         uses: actions/create-github-app-token@v3
@@ -91,3 +100,30 @@ jobs:
 
       - name: validate the committed dataset
         run: pnpm exec tsx packages/deploy/src/cli.ts check-data --data .
+
+      # run-meta.json carries the degraded ratio + retry/hydrate telemetry the
+      # exporter emits. Surface it into the run summary and keep it as an
+      # artifact so an exit-20 deferral is diagnosable after the runner is gone
+      # (B3). `if: always()` so it is captured even when the exporter failed.
+      - name: publish run-meta telemetry
+        if: always()
+        run: |
+          if [ -f run-meta.json ]; then
+            {
+              echo '### Sync run-meta'
+              echo '```json'
+              cat run-meta.json
+              echo '```'
+            } >> "$GITHUB_STEP_SUMMARY"
+          else
+            echo '::warning::run-meta.json not found — exporter may have exited before writing telemetry'
+          fi
+
+      - name: upload run-meta artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: run-meta
+          path: run-meta.json
+          if-no-files-found: warn
+          retention-days: 30

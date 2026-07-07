@@ -151,6 +151,10 @@ program
               save.pushed ? 'pushed' : save.changed ? 'committed (push skipped)' : 'unchanged'
             }.\n`,
           );
+          if (save.pushError) {
+            // Already redacted by the store; surface it so a skipped push is diagnosable (B4).
+            process.stderr.write(`  ✗ state push failed: ${save.pushError}\n`);
+          }
         }
       } catch (error) {
         fatal(error);

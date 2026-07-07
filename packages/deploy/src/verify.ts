@@ -22,6 +22,30 @@ function assetUrls(html: string): string[] {
     .filter((u) => u.includes('/assets/'));
 }
 
+/** Directives that must survive into the built index.html (SEC-B). */
+const REQUIRED_CSP_DIRECTIVES = ["default-src 'none'", "script-src 'self'"];
+
+/**
+ * Assert the Content-Security-Policy meta survived the build (SEC-B). GitHub
+ * Pages cannot send a CSP response header, so this meta is the only backstop;
+ * if a tooling change ever drops it (or weakens the load-bearing directives),
+ * the deploy must fail here rather than silently shipping an unprotected page.
+ */
+function assertContentSecurityPolicy(html: string): void {
+  if (!/http-equiv=["']?Content-Security-Policy["']?/i.test(html)) {
+    throw new Error(
+      'index.html is missing the Content-Security-Policy meta (SEC-B): Pages cannot set a CSP header, so this meta is the only backstop',
+    );
+  }
+  for (const directive of REQUIRED_CSP_DIRECTIVES) {
+    if (!html.includes(directive)) {
+      throw new Error(
+        `Content-Security-Policy is missing the required "${directive}" directive (SEC-B)`,
+      );
+    }
+  }
+}
+
 /**
  * Validate a built + staged dist before upload (DEPLOY-1):
  *  - index.html, a non-empty assets/, and both data files exist;
@@ -53,6 +77,7 @@ export function verifyBuiltArtifact(opts: VerifyOptions): VerifyResult {
   assertNoForbiddenFiles(distDir);
 
   const html = readFileSync(indexPath, 'utf8');
+  assertContentSecurityPolicy(html);
   const assets = assetUrls(html);
   if (assets.length === 0) throw new Error('index.html references no /assets/ URLs');
   if (base !== '/') {

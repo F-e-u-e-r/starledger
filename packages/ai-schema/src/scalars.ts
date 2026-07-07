@@ -18,6 +18,39 @@ function hasRawTextControlCharacter(value: string): boolean {
   return false;
 }
 
+/**
+ * Bidi controls, zero-width characters, and C1 controls are invisible or
+ * reading-direction-altering. They slip past the C0/DEL check above (they are
+ * all > 127), yet a malicious starred README that steers the classifier could
+ * smuggle one into `summary` — the one attacker-influenceable free-text field
+ * rendered under the authoritative "AI" badge in the owner's dashboard (SEC-A).
+ * U+202E can visually reverse a summary; zero-width chars can hide or split
+ * text past a substring search. This is defence-in-depth to match the codebase
+ * blocking C0 everywhere else.
+ *
+ * U+200C/U+200D (ZWNJ/ZWJ) are deliberately NOT rejected: they are legitimate
+ * in Arabic/Persian shaping and in emoji ZWJ sequences.
+ */
+function hasUnsafeFormatCharacter(value: string): boolean {
+  for (let index = 0; index < value.length; index += 1) {
+    const code = value.charCodeAt(index);
+    if (
+      code === 0x061c || // ARABIC LETTER MARK
+      code === 0x200b || // ZERO WIDTH SPACE
+      code === 0x200e || // LEFT-TO-RIGHT MARK
+      code === 0x200f || // RIGHT-TO-LEFT MARK
+      (code >= 0x202a && code <= 0x202e) || // bidi embeddings + overrides (incl. RLO)
+      code === 0x2060 || // WORD JOINER
+      (code >= 0x2066 && code <= 0x2069) || // bidi isolates
+      code === 0xfeff || // ZERO WIDTH NO-BREAK SPACE / BOM
+      (code >= 0x0080 && code <= 0x009f) // C1 controls (incl. NEL U+0085)
+    ) {
+      return true;
+    }
+  }
+  return false;
+}
+
 export const UtcTimestampSchema = z
   .string()
   .datetime({ offset: true })
@@ -62,6 +95,9 @@ export const CanonicalSummarySchema = z
   .refine((value) => !hasCanonicalControlCharacter(value), {
     message: 'summary must not contain control characters',
   })
+  .refine((value) => !hasUnsafeFormatCharacter(value), {
+    message: 'summary must not contain bidi, zero-width, or C1 format characters',
+  })
   .refine((value) => value === normalizeSummary(value), {
     message: 'summary must be normalized',
   });
@@ -90,6 +126,9 @@ export const OptionalModelLabelSchema = z
   .nullable()
   .refine((value) => value === null || !hasCanonicalControlCharacter(value), {
     message: 'model_label must not contain control characters',
+  })
+  .refine((value) => value === null || !hasUnsafeFormatCharacter(value), {
+    message: 'model_label must not contain bidi, zero-width, or C1 format characters',
   })
   .refine((value) => value === normalizeOptionalModelLabel(value), {
     message: 'model_label must be normalized',

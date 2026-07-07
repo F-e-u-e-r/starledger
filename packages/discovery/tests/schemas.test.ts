@@ -135,3 +135,24 @@ describe('DiscoveryCandidatesMetaSchema', () => {
     ).toBe(false);
   });
 });
+
+describe('S1: discovery URLs are pinned to https', () => {
+  it('rejects a javascript: html_url (it flows straight into <a href>)', () => {
+    expect(
+      DiscoveryCandidateSchema.safeParse({ ...validCandidate, html_url: 'javascript:alert(1)' })
+        .success,
+    ).toBe(false);
+  });
+
+  it('rejects a non-https source_url', () => {
+    expect(
+      DiscoverySourceSchema.safeParse({ ...validSource, source_url: 'javascript:alert(1)' })
+        .success,
+    ).toBe(false);
+  });
+
+  it('still accepts the https URLs', () => {
+    expect(DiscoveryCandidateSchema.safeParse(validCandidate).success).toBe(true);
+    expect(DiscoverySourceSchema.safeParse(validSource).success).toBe(true);
+  });
+});
