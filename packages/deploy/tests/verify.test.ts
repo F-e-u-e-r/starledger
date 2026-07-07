@@ -90,4 +90,23 @@ describe('verifyBuiltArtifact / staticSmoke (DEPLOY-1/2, PATH-2)', () => {
     stageDashboardData({ dataDir, distDir });
     expect(() => verifyBuiltArtifact({ distDir, base: '/repo/' })).toThrow(/frame-ancestors/);
   });
+
+  it('SEC-B: a commented-out CSP meta is rejected (the browser does not enforce it)', () => {
+    const root = mkdtempSync(join(tmpdir(), 'verify-'));
+    const dataDir = join(root, 'data');
+    const distDir = join(root, 'dist');
+    mkdirSync(dataDir);
+    mkdirSync(join(distDir, 'assets'), { recursive: true });
+    writeFileSync(join(distDir, 'assets', 'index-abc.js'), 'console.log(1)\n');
+    // Well-formed except the CSP meta is commented out — an inert, unenforced policy.
+    writeFileSync(
+      join(distDir, 'index.html'),
+      `<!doctype html><html><head><!-- ${CSP_META} --><script type="module" src="/repo/assets/index-abc.js"></script></head><body><div id="root"></div></body></html>`,
+    );
+    writeFixtureDataset(dataDir);
+    stageDashboardData({ dataDir, distDir });
+    expect(() => verifyBuiltArtifact({ distDir, base: '/repo/' })).toThrow(
+      /Content-Security-Policy/,
+    );
+  });
 });

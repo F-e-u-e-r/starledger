@@ -36,12 +36,17 @@ const FORBIDDEN_CSP_DIRECTIVES = ['frame-ancestors'];
  * Pages cannot send a CSP response header, so this meta is the only backstop;
  * if a tooling change drops it, weakens a load-bearing directive, or reintroduces
  * a meta-ineffective one, the deploy must fail here rather than silently shipping
- * an unprotected — or console-erroring — page. The policy is extracted from the
- * meta's `content` attribute so an explanatory HTML comment mentioning a
- * directive name can neither satisfy nor trip these checks.
+ * an unprotected — or console-erroring — page. HTML comments are stripped first,
+ * so a commented-out CSP meta (which the browser does NOT enforce) cannot satisfy
+ * the required-directive check, and an explanatory comment mentioning a directive
+ * name can neither satisfy nor trip these checks. The policy is then extracted
+ * from the meta's `content` attribute.
  */
 function assertContentSecurityPolicy(html: string): void {
-  const meta = html.match(/http-equiv=["']?Content-Security-Policy["']?[\s\S]*?content="([^"]*)"/i);
+  const active = html.replace(/<!--[\s\S]*?-->/g, '');
+  const meta = active.match(
+    /http-equiv=["']?Content-Security-Policy["']?[\s\S]*?content="([^"]*)"/i,
+  );
   if (!meta) {
     throw new Error(
       'index.html is missing the Content-Security-Policy meta (SEC-B): Pages cannot set a CSP header, so this meta is the only backstop',
