@@ -458,9 +458,10 @@ with no secret/backend and acceptable size + latency — see
 runs produced and merged PRs #17, #18, and #20. Each changed only the public
 artifact pair, passed CI plus the structural and provenance gates, and deployed
 through Pages. The public artifact bytes and metadata hashes were verified against
-`main`; the current published coverage is five annotations out of 492 canonical
-repositories. The third run exercised the configured `max_total_per_run: 3`
-budget without exceeding it.
+`main`; the published coverage was five annotations out of the 492 canonical
+repositories present at the time — still five today, now against 550, as no
+executor has run since. The third run exercised the configured
+`max_total_per_run: 3` budget without exceeding it.
 
 **Operational closeout — status (updated 2026-07-08).** `verify-ai-provenance`
 remains required alongside `verify-agent-artifacts` and CI on `main`. Continue
@@ -505,9 +506,11 @@ credentialed planner replay remains pending the operational closeout above.
 - the dashboard works fully without AI (fail-soft) and fails closed only on
   canonical data;
 - public AI artifact deployment is hash-verified against `main`;
-- live AI facets, secondary summaries, and AI-aware search still need visual
-  confirmation on the public dashboard;
-- an unchanged live run produces no artifact churn after bounded backfill;
+- live AI facets, secondary summaries, and AI-aware search are visually confirmed
+  on the public dashboard (2026-07-08);
+- an unchanged run produces no artifact churn: proven offline via the
+  deterministic assembler replay; the live credentialed planner replay is still
+  pending;
 - semantic search is explicitly deferred by ADR-001 (lexical search shipped).
 
 ## Subsequent milestones
@@ -527,5 +530,6 @@ credentialed planner replay remains pending the operational closeout above.
 - **P3.5 (ADR and live artifact publication delivered; final closeout pending):**
   vector search is deferred and lexical search shipped. Three validated Claude
   Routine artifact PRs have merged and deployed five annotations under bounded
-  budgets. Public dashboard visual confirmation and the post-backfill no-churn
-  replay remain pending.
+  budgets. Public dashboard visual confirmation is DONE (2026-07-08) and the
+  deterministic no-churn replay is verified offline; only the live credentialed
+  planner replay remains pending.

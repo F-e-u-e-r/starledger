@@ -24,23 +24,41 @@ function assetUrls(html: string): string[] {
 
 /** Directives that must survive into the built index.html (SEC-B). */
 const REQUIRED_CSP_DIRECTIVES = ["default-src 'none'", "script-src 'self'"];
+/**
+ * Directives that are IGNORED when a CSP is delivered via <meta> (they need a
+ * response header Pages cannot set) and only log a console error. They must not
+ * be reintroduced into the meta policy (SEC-B).
+ */
+const FORBIDDEN_CSP_DIRECTIVES = ['frame-ancestors'];
 
 /**
  * Assert the Content-Security-Policy meta survived the build (SEC-B). GitHub
  * Pages cannot send a CSP response header, so this meta is the only backstop;
- * if a tooling change ever drops it (or weakens the load-bearing directives),
- * the deploy must fail here rather than silently shipping an unprotected page.
+ * if a tooling change drops it, weakens a load-bearing directive, or reintroduces
+ * a meta-ineffective one, the deploy must fail here rather than silently shipping
+ * an unprotected — or console-erroring — page. The policy is extracted from the
+ * meta's `content` attribute so an explanatory HTML comment mentioning a
+ * directive name can neither satisfy nor trip these checks.
  */
 function assertContentSecurityPolicy(html: string): void {
-  if (!/http-equiv=["']?Content-Security-Policy["']?/i.test(html)) {
+  const meta = html.match(/http-equiv=["']?Content-Security-Policy["']?[\s\S]*?content="([^"]*)"/i);
+  if (!meta) {
     throw new Error(
       'index.html is missing the Content-Security-Policy meta (SEC-B): Pages cannot set a CSP header, so this meta is the only backstop',
     );
   }
+  const policy = meta[1] ?? '';
   for (const directive of REQUIRED_CSP_DIRECTIVES) {
-    if (!html.includes(directive)) {
+    if (!policy.includes(directive)) {
       throw new Error(
         `Content-Security-Policy is missing the required "${directive}" directive (SEC-B)`,
+      );
+    }
+  }
+  for (const directive of FORBIDDEN_CSP_DIRECTIVES) {
+    if (policy.includes(directive)) {
+      throw new Error(
+        `Content-Security-Policy must not include "${directive}" (SEC-B): it is ignored in a <meta> and only logs a console error; framing protection needs a response header Pages cannot set`,
       );
     }
   }

@@ -1,9 +1,8 @@
 import { appendFileSync, existsSync, readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { argv, env, exit } from 'node:process';
-import { DatasetMetaSchema } from '@starred/schema';
 import { verifyDatasetIntegrity } from './dataset';
-import { checkFreshness } from './freshness';
+import { evaluateDeployFreshness } from './freshness';
 import { writeFixtureDataset } from './fixture';
 import {
   DATASET_META_FILE,
@@ -26,16 +25,6 @@ function flag(name: string): string | undefined {
 function derivedBase(): string {
   const repo = env.GITHUB_REPOSITORY?.split('/')[1];
   return env.GITHUB_ACTIONS && repo ? `/${repo}/` : '/';
-}
-
-/** Public URL of the live dataset-meta.json for a project Pages site, or undefined. */
-function derivedLiveMetaUrl(): string | undefined {
-  const slug = env.GITHUB_REPOSITORY; // "owner/repo"
-  if (!slug || !slug.includes('/')) return undefined;
-  const [owner, name] = slug.split('/');
-  if (!owner || !name) return undefined;
-  // Pages subdomains are the owner login lowercased; the repo path keeps its case.
-  return `https://${owner.toLowerCase()}.github.io/${name}/${DATASET_META_FILE}`;
 }
 
 /** Best-effort append to the GitHub Actions run summary (no-op off CI). */
@@ -100,34 +89,30 @@ async function main(): Promise<void> {
     }
     case 'freshness': {
       // OPS-A: compare the PUBLIC live dataset-meta.json against main HEAD's
-      // committed copy. Read-only; needs no secret. Exit 3 on drift so the
-      // scheduled run fails visibly (a one-off can be a deploy in flight; a
-      // persistent red is a silent freeze). Exit 1 (via main().catch) if the
-      // live site is unreachable/malformed — we cannot conclude "fresh".
-      const metaPath = resolve(data, DATASET_META_FILE);
-      if (!existsSync(metaPath)) throw new Error(`canonical dataset-meta not found in ${data}`);
-      const expectedSha = DatasetMetaSchema.parse(
-        JSON.parse(readFileSync(metaPath, 'utf8')),
-      ).stars_sha256;
-      const url = flag('url') ?? derivedLiveMetaUrl();
-      if (!url) {
-        throw new Error('could not derive the live URL; pass --url <https://…/dataset-meta.json>');
-      }
-      const result = await checkFreshness({ url, expectedSha });
-      if (result.status === 'fresh') {
+      // VERIFIED fingerprint (evaluateDeployFreshness re-hashes stars.json so a
+      // stale committed meta can't self-certify). Read-only; needs no secret.
+      // Exit 3 on drift so the scheduled run fails visibly (a one-off can be a
+      // deploy in flight; a persistent red is a silent freeze). Exit 1 (via
+      // main().catch) if the dataset/live site is unverifiable — never "fresh".
+      const outcome = await evaluateDeployFreshness({
+        dataDir: data,
+        url: flag('url'),
+        repoSlug: env.GITHUB_REPOSITORY,
+      });
+      if (outcome.status === 'fresh') {
         console.log(
-          `[deploy] freshness OK: live site matches main HEAD (${expectedSha.slice(0, 12)}…)`,
+          `[deploy] freshness OK: live site matches main HEAD (${outcome.expectedSha.slice(0, 12)}…)`,
         );
         break;
       }
-      const detail =
-        `live site is serving ${result.liveSha.slice(0, 12)}… but main HEAD is ` +
-        `${expectedSha.slice(0, 12)}… — deploy drift (OPS-A)`;
-      console.error(`[deploy] DRIFT: ${detail}`);
+      console.error(
+        `[deploy] DRIFT: live site is serving ${outcome.liveSha.slice(0, 12)}… but main HEAD is ` +
+          `${outcome.expectedSha.slice(0, 12)}… — deploy drift (OPS-A)`,
+      );
       appendStepSummary(
         `### ⚠️ Deploy freshness drift (OPS-A)\n\n` +
-          `- live \`stars_sha256\`: \`${result.liveSha}\`\n` +
-          `- main HEAD \`stars_sha256\`: \`${expectedSha}\`\n\n` +
+          `- live \`stars_sha256\`: \`${outcome.liveSha}\`\n` +
+          `- main HEAD \`stars_sha256\`: \`${outcome.expectedSha}\`\n\n` +
           `The published site does not match main HEAD. A single occurrence can be a ` +
           `deploy in flight; a persistent drift is a silent freeze — see the OPS-A ` +
           `invariant in \`.github/workflows/sync-stars.yml\`.`,

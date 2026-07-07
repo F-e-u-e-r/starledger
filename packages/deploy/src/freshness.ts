@@ -1,4 +1,8 @@
+import { existsSync, readFileSync } from 'node:fs';
+import { join } from 'node:path';
 import { DatasetMetaSchema } from '@starred/schema';
+import { verifyDatasetIntegrity } from './dataset';
+import { DATASET_META_FILE, STARS_FILE } from './stage';
 
 /**
  * Deploy-freshness guard (OPS-A). The daily sync commits fresh data to main and
@@ -74,4 +78,64 @@ export async function checkFreshness(opts: CheckFreshnessOptions): Promise<Fresh
   }
   const liveSha = parseLiveStarsSha(await res.text());
   return compareFreshness(liveSha, opts.expectedSha);
+}
+
+/**
+ * Public URL of the live dataset-meta.json for a project Pages site, or undefined
+ * when the slug is missing/malformed. Pages subdomains are the owner login
+ * lowercased; the repo path keeps its case. Pure so it is unit-testable without
+ * the environment.
+ */
+export function deriveLiveMetaUrl(repoSlug: string | undefined): string | undefined {
+  if (!repoSlug || !repoSlug.includes('/')) return undefined;
+  const [owner, name] = repoSlug.split('/');
+  if (!owner || !name) return undefined;
+  return `https://${owner.toLowerCase()}.github.io/${name}/${DATASET_META_FILE}`;
+}
+
+export interface EvaluateFreshnessOptions {
+  /** Directory holding main HEAD's stars.json + dataset-meta.json. */
+  dataDir: string;
+  /** Live URL override; when absent it is derived from repoSlug. */
+  url?: string;
+  /** Repo slug ("owner/repo") for URL derivation when url is absent. */
+  repoSlug?: string;
+  /** Injectable for tests; defaults to the global fetch. */
+  fetchImpl?: typeof fetch;
+}
+
+export interface FreshnessOutcome extends FreshnessResult {
+  /** The live URL that was actually checked. */
+  url: string;
+}
+
+/**
+ * The full freshness evaluation used by the CLI/workflow. It derives main HEAD's
+ * VERIFIED fingerprint by re-hashing stars.json and confirming dataset-meta
+ * agrees (verifyDatasetIntegrity) — so a stale or corrupt committed meta cannot
+ * "self-certify" the site as fresh against itself — then resolves the live URL,
+ * fetches, and compares. Every failure mode (missing data, an inconsistent local
+ * dataset, an underivable URL, an unreachable/malformed live artifact) THROWS,
+ * fail-closed: the monitor never reports "fresh" from a state it could not verify.
+ */
+export async function evaluateDeployFreshness(
+  opts: EvaluateFreshnessOptions,
+): Promise<FreshnessOutcome> {
+  const starsPath = join(opts.dataDir, STARS_FILE);
+  const metaPath = join(opts.dataDir, DATASET_META_FILE);
+  if (!existsSync(starsPath) || !existsSync(metaPath)) {
+    throw new Error(
+      `canonical dataset (stars.json + dataset-meta.json) not found in ${opts.dataDir}`,
+    );
+  }
+  const expectedSha = verifyDatasetIntegrity(
+    readFileSync(starsPath, 'utf8'),
+    readFileSync(metaPath, 'utf8'),
+  ).sha256;
+  const url = opts.url ?? deriveLiveMetaUrl(opts.repoSlug);
+  if (!url) {
+    throw new Error('could not derive the live URL; pass --url <https://…/dataset-meta.json>');
+  }
+  const result = await checkFreshness({ url, expectedSha, fetchImpl: opts.fetchImpl });
+  return { ...result, url };
 }

@@ -72,4 +72,22 @@ describe('verifyBuiltArtifact / staticSmoke (DEPLOY-1/2, PATH-2)', () => {
       /Content-Security-Policy/,
     );
   });
+
+  it('SEC-B: a CSP that reintroduces the meta-ineffective frame-ancestors is rejected', () => {
+    const root = mkdtempSync(join(tmpdir(), 'verify-'));
+    const dataDir = join(root, 'data');
+    const distDir = join(root, 'dist');
+    mkdirSync(dataDir);
+    mkdirSync(join(distDir, 'assets'), { recursive: true });
+    writeFileSync(join(distDir, 'assets', 'index-abc.js'), 'console.log(1)\n');
+    const cspWithFrameAncestors =
+      "<meta http-equiv=\"Content-Security-Policy\" content=\"default-src 'none'; script-src 'self'; frame-ancestors 'none'\" />";
+    writeFileSync(
+      join(distDir, 'index.html'),
+      `<!doctype html><html><head>${cspWithFrameAncestors}<script type="module" src="/repo/assets/index-abc.js"></script></head><body><div id="root"></div></body></html>`,
+    );
+    writeFixtureDataset(dataDir);
+    stageDashboardData({ dataDir, distDir });
+    expect(() => verifyBuiltArtifact({ distDir, base: '/repo/' })).toThrow(/frame-ancestors/);
+  });
 });
