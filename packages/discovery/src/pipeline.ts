@@ -38,14 +38,36 @@ export interface PipelineResult {
 }
 
 function loadStarredNodeIds(starsPath: string): Set<string> {
+  // Cold start (no dataset yet) legitimately has nothing to dedupe against. But
+  // a stars.json that is present-but-unreadable/invalid must FAIL CLOSED, not
+  // fall open to an empty set: an empty set silently disables the
+  // already-starred dedupe, so a candidate you already starred could be
+  // re-surfaced (and, once wired into discovery, re-processed) (B2).
+  let text: string;
+  try {
+    text = readFileSync(starsPath, 'utf8');
+  } catch (err) {
+    if ((err as NodeJS.ErrnoException).code === 'ENOENT') return new Set();
+    throw new Error(
+      `cannot read stars dataset at ${starsPath}: ${err instanceof Error ? err.message : String(err)}`,
+    );
+  }
   let raw: unknown;
   try {
-    raw = JSON.parse(readFileSync(starsPath, 'utf8'));
-  } catch {
-    return new Set();
+    raw = JSON.parse(text);
+  } catch (err) {
+    throw new Error(
+      `stars dataset at ${starsPath} is present but not valid JSON: ${
+        err instanceof Error ? err.message : String(err)
+      }`,
+    );
   }
   const parsed = StarsFileSchema.safeParse(raw);
-  if (!parsed.success) return new Set();
+  if (!parsed.success) {
+    throw new Error(
+      `stars dataset at ${starsPath} is present but fails schema validation; refusing to dedupe fail-open`,
+    );
+  }
   return new Set(parsed.data.repos.map((r) => r.node_id));
 }
 

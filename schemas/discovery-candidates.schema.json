@@ -100,8 +100,7 @@
                     "minLength": 1
                   },
                   "source_url": {
-                    "type": "string",
-                    "format": "uri"
+                    "$ref": "#/definitions/DiscoveryCandidatesFile/properties/candidates/items/properties/html_url"
                   },
                   "observed_at": {
                     "type": "string",

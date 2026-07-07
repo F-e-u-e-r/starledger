@@ -26,7 +26,13 @@ export const ConfigSchema = z
 export type Config = z.infer<typeof ConfigSchema>;
 
 export function loadConfig(path?: string): Config {
-  if (path !== undefined && existsSync(path)) {
+  if (path !== undefined) {
+    // An explicitly-supplied path that does not exist is a typo, NOT a request
+    // for defaults: falling back would silently run with unintended settings,
+    // contradicting the fail-closed philosophy (B1).
+    if (!existsSync(path)) {
+      throw new TerminalError(`config file not found: ${path}`, 'CONFIG_NOT_FOUND');
+    }
     const raw: unknown = parseYaml(readFileSync(path, 'utf8')) ?? {};
     return ConfigSchema.parse(raw);
   }

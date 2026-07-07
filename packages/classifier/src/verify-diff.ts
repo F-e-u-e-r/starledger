@@ -103,6 +103,9 @@ export function changedPathEntriesBetween(
     {
       encoding: 'buffer',
       cwd,
+      // Node's default 1MB maxBuffer would ENOBUFS-fail (fail-closed but noisy)
+      // on a large diff; match the state stores' 64MB ceiling (B5).
+      maxBuffer: 64 * 1024 * 1024,
     },
   );
   const tokens = output
@@ -157,7 +160,13 @@ export function touchesAiArtifacts(entries: readonly GitDiffEntry[]): boolean {
  * code. Only the fixed AI artifact paths are ever passed here.
  */
 export function readArtifactAtRef(ref: string, path: string, cwd = process.cwd()): string {
-  return execFileSync('git', ['show', `${ref}:${path}`], { encoding: 'utf8', cwd });
+  // The full annotations artifact is read through here; a growing dataset would
+  // exceed Node's default 1MB maxBuffer. Match the state stores' 64MB (B5).
+  return execFileSync('git', ['show', `${ref}:${path}`], {
+    encoding: 'utf8',
+    cwd,
+    maxBuffer: 64 * 1024 * 1024,
+  });
 }
 
 /**

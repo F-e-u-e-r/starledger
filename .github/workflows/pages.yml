@@ -1,16 +1,11 @@
 name: Pages
 
 on:
-  # Reusable: the scheduled sync calls this after committing fresh data.
-  workflow_call:
-    inputs:
-      ref:
-        description: Git ref to build and deploy
-        type: string
-        required: false
-        default: ''
   workflow_dispatch:
-  # Human pushes to main that change the app or the dataset.
+  # Deploys are driven entirely by pushes to main that change the app or the
+  # dataset — including the daily sync's dataset commit (pushed with a
+  # workflow-triggering App token; see sync-stars.yml's OPS-A invariant). The
+  # old `workflow_call` entry point had no caller and was removed (B6).
   push:
     branches: [main]
     paths:
@@ -45,7 +40,7 @@ jobs:
     steps:
       - uses: actions/checkout@v5
         with:
-          ref: ${{ inputs.ref || github.sha }}
+          ref: ${{ github.sha }}
       - id: check
         run: |
           if [ -f stars.json ] && [ -f dataset-meta.json ]; then
@@ -62,7 +57,7 @@ jobs:
     steps:
       - uses: actions/checkout@v5
         with:
-          ref: ${{ inputs.ref || github.sha }}
+          ref: ${{ github.sha }}
 
       - uses: pnpm/action-setup@v6
       - uses: actions/setup-node@v5
