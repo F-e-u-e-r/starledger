@@ -101,6 +101,16 @@ export async function rebaseAiAnnotationsMeta(input: MetaRebaseInput): Promise<M
   });
   if (!provenance.ok) return { ok: false, violations: provenance.violations };
 
+  // The live Git-backed gate rejects a PR that changes only the meta (base
+  // annotations == head annotations). Mirror that here so the helper never
+  // approves a no-op the merge gate would reject anyway: a rebase must carry a
+  // real annotation add/modify/prune.
+  if (provenance.changed.length === 0 && provenance.pruned.length === 0) {
+    return reject(
+      'no annotation change vs base: a metadata-only re-stamp is rejected by the live gate',
+    );
+  }
+
   // 3. Emit the head meta with ONLY `dataset_sha256` moved to the current base.
   const rebased = AiAnnotationsMetaSchema.parse({
     ...headMeta,

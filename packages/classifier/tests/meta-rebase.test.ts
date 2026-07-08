@@ -235,4 +235,23 @@ describe('rebaseAiAnnotationsMeta (ROAD-A, model-free)', () => {
     });
     expect(result.ok).toBe(false);
   });
+
+  it('refuses a no-op rebase where head annotations equal the base (metadata-only)', async () => {
+    const a = repo('a');
+    const dataset = load([a]);
+    const ann = makeAnnotationFor(a, expectedFingerprint(a, CONFIG, REF), REF);
+    const headAnnotationsBytes = serializeAnnotations([ann]);
+    const result = await rebaseAiAnnotationsMeta({
+      repos: dataset.repos,
+      datasetSha256: dataset.datasetSha256,
+      baseAnnotations: [ann], // base already carries this annotation → head == base
+      headAnnotationsBytes,
+      headMetaBytes: buildHeadMeta(headAnnotationsBytes, STALE_SHA),
+      source: sourceFor([a]),
+      config: CONFIG,
+      maxChangedPerRun: 25,
+    });
+    expect(result.ok).toBe(false);
+    expect(result.violations.some((v) => v.reason.includes('metadata-only'))).toBe(true);
+  });
 });
