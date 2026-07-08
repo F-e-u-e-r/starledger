@@ -3,30 +3,89 @@ import { join, resolve } from 'node:path';
 import { describe, expect, it } from 'vitest';
 import { findUnpinnedActionRefs } from '../src/workflows';
 
-describe('findUnpinnedActionRefs (S4)', () => {
+const SHA = '93cb6efe18208431cddfb8368fd83d5badbf9bfd';
+
+describe('findUnpinnedActionRefs (S4, YAML-aware)', () => {
   it('accepts a 40-hex SHA-pinned ref (tag comment ignored)', () => {
-    const wf = '      - uses: actions/checkout@93cb6efe18208431cddfb8368fd83d5badbf9bfd # v5\n';
+    const wf = `jobs:
+  build:
+    steps:
+      - uses: actions/checkout@${SHA} # v5
+`;
     expect(findUnpinnedActionRefs(wf)).toEqual([]);
   });
 
-  it('reports a mutable tag and a branch ref', () => {
-    const wf = [
-      '      - uses: actions/checkout@v5',
-      '        uses: actions/setup-node@main',
-      '      - uses: pnpm/action-setup@0ebf47130e4866e96fce0953f49152a61190b271 # v6',
-    ].join('\n');
-    expect(findUnpinnedActionRefs(wf)).toEqual(['actions/checkout@v5', 'actions/setup-node@main']);
+  it('reports a mutable tag and a branch ref, across block and step forms', () => {
+    const wf = `jobs:
+  build:
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@main
+      - uses: pnpm/action-setup@${SHA} # v6
+`;
+    expect(findUnpinnedActionRefs(wf).sort()).toEqual([
+      'actions/checkout@v5',
+      'actions/setup-node@main',
+    ]);
   });
 
-  it('ignores local action / reusable-workflow refs', () => {
-    const wf = '      - uses: ./.github/actions/local\n    uses: ../shared/wf.yml\n';
+  it('catches quoted keys, quoted values, and flow-mapping forms', () => {
+    const wf = `jobs:
+  a:
+    steps:
+      - "uses": actions/checkout@v5
+      - uses: "actions/setup-node@v5"
+      - { uses: actions/upload-artifact@v4 }
+`;
+    expect(findUnpinnedActionRefs(wf).sort()).toEqual([
+      'actions/checkout@v5',
+      'actions/setup-node@v5',
+      'actions/upload-artifact@v4',
+    ]);
+  });
+
+  it('does NOT flag a pinned ref that is quoted (quotes are stripped by parsing)', () => {
+    const wf = `jobs:
+  a:
+    steps:
+      - uses: "actions/checkout@${SHA}"
+`;
+    expect(findUnpinnedActionRefs(wf)).toEqual([]);
+  });
+
+  it('ignores action-ref text inside a run: script block', () => {
+    const wf = `jobs:
+  a:
+    steps:
+      - run: |
+          echo "docs example: uses: actions/checkout@v5"
+      - uses: actions/checkout@${SHA} # v5
+`;
+    expect(findUnpinnedActionRefs(wf)).toEqual([]);
+  });
+
+  it('ignores local action and local reusable-workflow refs', () => {
+    const wf = `jobs:
+  call:
+    uses: ./.github/workflows/reusable.yml
+  build:
+    steps:
+      - uses: ./.github/actions/local
+`;
     expect(findUnpinnedActionRefs(wf)).toEqual([]);
   });
 
   it('reports a ref with no @ pin at all', () => {
-    expect(findUnpinnedActionRefs('      - uses: actions/checkout\n')).toEqual([
-      'actions/checkout',
-    ]);
+    const wf = `jobs:
+  a:
+    steps:
+      - uses: actions/checkout
+`;
+    expect(findUnpinnedActionRefs(wf)).toEqual(['actions/checkout']);
+  });
+
+  it('reports an unparseable workflow rather than silently passing', () => {
+    expect(findUnpinnedActionRefs('jobs: [unbalanced')[0]).toMatch(/unparseable/);
   });
 });
 
