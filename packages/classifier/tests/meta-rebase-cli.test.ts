@@ -1,4 +1,12 @@
-import { existsSync, mkdtempSync, readdirSync, readFileSync, writeFileSync } from 'node:fs';
+import { execFileSync } from 'node:child_process';
+import {
+  existsSync,
+  mkdirSync,
+  mkdtempSync,
+  readdirSync,
+  readFileSync,
+  writeFileSync,
+} from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join, resolve } from 'node:path';
 import {
@@ -208,20 +216,140 @@ describe('runMetaRebaseCommand (ROAD-A manual CLI orchestration)', () => {
     expect(res.wrote).toBe(false);
     expect(res.violations.some((v) => v.reason.includes('metadata-only'))).toBe(true);
   });
+
+  it('fails closed when a SUPPLIED base-annotations path does not exist (typo)', async () => {
+    const a = repo('a');
+    const ann = makeAnnotationFor(a, expectedFingerprint(a, CONFIG, REF), REF);
+    const fx = fixture([a], [ann]);
+    await expect(
+      runMetaRebaseCommand({
+        starsPath: fx.starsPath,
+        datasetMetaPath: fx.metaPath,
+        baseAnnotationsPath: join(fx.dir, 'does-not-exist.json'),
+        headAnnotationsPath: fx.headAnnotationsPath,
+        headMetaPath: fx.headMetaPath,
+        outDir: fx.outDir,
+        dryRun: false,
+        source: sourceFor([a]),
+        config: CONFIG,
+        maxChangedPerRun: 25,
+      }),
+    ).rejects.toThrow(/base annotations file not found/);
+  });
+
+  it('leaves no partial pair if the second artifact write fails', async () => {
+    const a = repo('a');
+    const ann = makeAnnotationFor(a, expectedFingerprint(a, CONFIG, REF), REF);
+    const fx = fixture([a], [ann]);
+    // Make the meta output path a directory so the SECOND writeFileSync throws.
+    mkdirSync(join(fx.outDir, 'ai-annotations-meta.json'), { recursive: true });
+    await expect(
+      runMetaRebaseCommand({
+        starsPath: fx.starsPath,
+        datasetMetaPath: fx.metaPath,
+        headAnnotationsPath: fx.headAnnotationsPath,
+        headMetaPath: fx.headMetaPath,
+        outDir: fx.outDir,
+        dryRun: false,
+        source: sourceFor([a]),
+        config: CONFIG,
+        maxChangedPerRun: 25,
+      }),
+    ).rejects.toThrow();
+    // the first (annotations) file was cleaned up — no lone artifact left behind
+    expect(existsSync(join(fx.outDir, 'ai-annotations.json'))).toBe(false);
+  });
 });
 
 describe('meta-rebase stays manual (not wired into CI)', () => {
-  it('no workflow or script invokes the meta-rebase command', () => {
-    const root = resolve(import.meta.dirname, '../../..');
-    const scan: string[] = [];
+  const root = resolve(import.meta.dirname, '../../..');
+
+  it('no workflow, script, or package.json script invokes the meta-rebase command', () => {
+    const offenders: string[] = [];
+    // Workflow + script files: any mention at all.
     for (const rel of ['.github/workflows', 'scripts']) {
       const dir = join(root, rel);
       if (!existsSync(dir)) continue;
       for (const f of readdirSync(dir)) {
-        const p = join(dir, f);
-        if (readFileSync(p, 'utf8').includes('meta-rebase')) scan.push(`${rel}/${f}`);
+        if (readFileSync(join(dir, f), 'utf8').includes('meta-rebase'))
+          offenders.push(`${rel}/${f}`);
       }
     }
-    expect(scan).toEqual([]);
+    // package.json scripts (root + every workspace package/app) — CI runs `pnpm` scripts.
+    const pkgDirs = [root];
+    for (const group of ['packages', 'apps']) {
+      const dir = join(root, group);
+      if (!existsSync(dir)) continue;
+      for (const f of readdirSync(dir)) pkgDirs.push(join(dir, f));
+    }
+    for (const d of pkgDirs) {
+      const pj = join(d, 'package.json');
+      if (!existsSync(pj)) continue;
+      const scripts = ((
+        JSON.parse(readFileSync(pj, 'utf8')) as { scripts?: Record<string, string> }
+      ).scripts ?? {}) as Record<string, string>;
+      for (const [name, cmd] of Object.entries(scripts)) {
+        if (cmd.includes('meta-rebase')) offenders.push(`${pj} script "${name}"`);
+      }
+    }
+    expect(offenders).toEqual([]);
+  });
+});
+
+describe('meta-rebase CLI action gates', () => {
+  const root = resolve(import.meta.dirname, '../../..');
+
+  it('exits 10 with a token error when no GitHub token is set (enabled config)', () => {
+    const dir = mkdtempSync(join(tmpdir(), 'meta-rebase-cli-gate-'));
+    const a = repo('a');
+    const ann = makeAnnotationFor(a, expectedFingerprint(a, CONFIG, REF), REF);
+    const { starsText, metaText } = makeDataset([a]);
+    const stars = join(dir, 'stars.json');
+    const meta = join(dir, 'dataset-meta.json');
+    const ha = join(dir, 'ai-annotations.json');
+    const hm = join(dir, 'ai-annotations-meta.json');
+    const config = join(dir, 'ai.yaml');
+    writeFileSync(stars, starsText);
+    writeFileSync(meta, metaText);
+    const headBytes = serializeAnnotations([ann]);
+    writeFileSync(ha, headBytes);
+    writeFileSync(hm, headMetaBytes(headBytes, STALE_SHA));
+    writeFileSync(config, 'ai:\n  enabled: true\n');
+
+    let status: number | null = null;
+    let stderr = '';
+    try {
+      execFileSync(
+        process.execPath,
+        [
+          '--import',
+          'tsx',
+          'packages/classifier/src/cli.ts',
+          '--config',
+          config,
+          'meta-rebase',
+          '--stars',
+          stars,
+          '--meta',
+          meta,
+          '--head-annotations',
+          ha,
+          '--head-meta',
+          hm,
+          '--dry-run',
+        ],
+        {
+          cwd: root,
+          encoding: 'utf8',
+          env: { ...process.env, STAR_SYNC_TOKEN: '', GITHUB_TOKEN: '' },
+        },
+      );
+    } catch (err) {
+      const e = err as { status?: number; stderr?: string };
+      status = e.status ?? null;
+      stderr = e.stderr ?? '';
+    }
+    expect(status).toBe(10);
+    expect(stderr).toMatch(/token/i);
   });
 });

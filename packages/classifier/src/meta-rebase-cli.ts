@@ -1,6 +1,6 @@
-import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
+import { existsSync, mkdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
-import { AiAnnotationsSchema } from '@starred/ai-schema';
+import { type Annotation, AiAnnotationsSchema } from '@starred/ai-schema';
 import { loadCanonicalDataset } from './dataset';
 import { rebaseAiAnnotationsMeta } from './meta-rebase';
 import type { PlannerConfig } from './planner';
@@ -57,11 +57,18 @@ export async function runMetaRebaseCommand(
   );
   const headAnnotationsBytes = readFileSync(opts.headAnnotationsPath, 'utf8');
   const headMetaBytes = readFileSync(opts.headMetaPath, 'utf8');
-  const baseAnnotations =
-    opts.baseAnnotationsPath !== undefined && existsSync(opts.baseAnnotationsPath)
-      ? AiAnnotationsSchema.parse(JSON.parse(readFileSync(opts.baseAnnotationsPath, 'utf8')))
-          .annotations
-      : [];
+  // A SUPPLIED but missing base path is an operator typo — fail closed rather
+  // than silently comparing against an empty base (which would defeat the
+  // metadata-only refusal). Only an OMITTED path means "no prior state".
+  let baseAnnotations: readonly Annotation[] = [];
+  if (opts.baseAnnotationsPath !== undefined) {
+    if (!existsSync(opts.baseAnnotationsPath)) {
+      throw new Error(`base annotations file not found: ${opts.baseAnnotationsPath}`);
+    }
+    baseAnnotations = AiAnnotationsSchema.parse(
+      JSON.parse(readFileSync(opts.baseAnnotationsPath, 'utf8')),
+    ).annotations;
+  }
 
   const result = await rebaseAiAnnotationsMeta({
     repos: dataset.repos,
@@ -83,7 +90,19 @@ export async function runMetaRebaseCommand(
   mkdirSync(opts.outDir, { recursive: true });
   const annotationsPath = join(opts.outDir, 'ai-annotations.json');
   const metaPath = join(opts.outDir, 'ai-annotations-meta.json');
-  writeFileSync(annotationsPath, result.annotationsBytes ?? '', 'utf8');
-  writeFileSync(metaPath, result.metaBytes ?? '', 'utf8');
+  try {
+    writeFileSync(annotationsPath, result.annotationsBytes ?? '', 'utf8');
+    writeFileSync(metaPath, result.metaBytes ?? '', 'utf8');
+  } catch (err) {
+    // Never leave a half-written pair: a lone re-stamped file is worse than none.
+    for (const p of [annotationsPath, metaPath]) {
+      try {
+        if (existsSync(p)) rmSync(p);
+      } catch {
+        /* best-effort cleanup */
+      }
+    }
+    throw err;
+  }
   return { ok: true, violations: [], wrote: true, annotationsPath, metaPath };
 }
