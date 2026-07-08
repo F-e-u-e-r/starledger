@@ -1,7 +1,8 @@
-import { existsSync, readFileSync } from 'node:fs';
+import { appendFileSync, existsSync, readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { argv, env, exit } from 'node:process';
 import { verifyDatasetIntegrity } from './dataset';
+import { evaluateDeployFreshness } from './freshness';
 import { writeFixtureDataset } from './fixture';
 import {
   DATASET_META_FILE,
@@ -24,6 +25,17 @@ function flag(name: string): string | undefined {
 function derivedBase(): string {
   const repo = env.GITHUB_REPOSITORY?.split('/')[1];
   return env.GITHUB_ACTIONS && repo ? `/${repo}/` : '/';
+}
+
+/** Best-effort append to the GitHub Actions run summary (no-op off CI). */
+function appendStepSummary(markdown: string): void {
+  const path = env.GITHUB_STEP_SUMMARY;
+  if (!path) return;
+  try {
+    appendFileSync(path, markdown + '\n');
+  } catch {
+    /* the summary is diagnostic only; never let it fail the check */
+  }
 }
 
 async function main(): Promise<void> {
@@ -75,9 +87,42 @@ async function main(): Promise<void> {
       console.log(`[deploy] wrote fixture dataset (${r.repoCount} repos) → ${out}`);
       break;
     }
+    case 'freshness': {
+      // OPS-A: compare the PUBLIC live dataset-meta.json against main HEAD's
+      // VERIFIED fingerprint (evaluateDeployFreshness re-hashes stars.json so a
+      // stale committed meta can't self-certify). Read-only; needs no secret.
+      // Exit 3 on drift so the scheduled run fails visibly (a one-off can be a
+      // deploy in flight; a persistent red is a silent freeze). Exit 1 (via
+      // main().catch) if the dataset/live site is unverifiable — never "fresh".
+      const outcome = await evaluateDeployFreshness({
+        dataDir: data,
+        url: flag('url'),
+        repoSlug: env.GITHUB_REPOSITORY,
+      });
+      if (outcome.status === 'fresh') {
+        console.log(
+          `[deploy] freshness OK: live site matches main HEAD (${outcome.expectedSha.slice(0, 12)}…)`,
+        );
+        break;
+      }
+      console.error(
+        `[deploy] DRIFT: live site is serving ${outcome.liveSha.slice(0, 12)}… but main HEAD is ` +
+          `${outcome.expectedSha.slice(0, 12)}… — deploy drift (OPS-A)`,
+      );
+      appendStepSummary(
+        `### ⚠️ Deploy freshness drift (OPS-A)\n\n` +
+          `- live \`stars_sha256\`: \`${outcome.liveSha}\`\n` +
+          `- main HEAD \`stars_sha256\`: \`${outcome.expectedSha}\`\n\n` +
+          `The published site does not match main HEAD. A single occurrence can be a ` +
+          `deploy in flight; a persistent drift is a silent freeze — see the OPS-A ` +
+          `invariant in \`.github/workflows/sync-stars.yml\`.`,
+      );
+      exit(3);
+      break;
+    }
     default:
       console.error(
-        'usage: deploy <stage|verify|smoke|fixture> [--data dir] [--dist dir] [--base /x/] [--out dir]',
+        'usage: deploy <stage|verify|smoke|fixture|freshness> [--data dir] [--dist dir] [--base /x/] [--out dir] [--url URL]',
       );
       exit(2);
   }

@@ -8,7 +8,7 @@ import { staticSmoke, verifyBuiltArtifact } from '../src/verify';
 
 // Mirror the production index.html CSP meta so the fixture exercises SEC-B.
 const CSP_META =
-  "<meta http-equiv=\"Content-Security-Policy\" content=\"default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'self'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'\" />";
+  "<meta http-equiv=\"Content-Security-Policy\" content=\"default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'self'; base-uri 'none'; form-action 'none'\" />";
 
 function builtDist(base = '/repo/') {
   const root = mkdtempSync(join(tmpdir(), 'verify-'));
@@ -70,6 +70,117 @@ describe('verifyBuiltArtifact / staticSmoke (DEPLOY-1/2, PATH-2)', () => {
     stageDashboardData({ dataDir, distDir });
     expect(() => verifyBuiltArtifact({ distDir, base: '/repo/' })).toThrow(
       /Content-Security-Policy/,
+    );
+  });
+
+  it('SEC-B: a CSP that reintroduces the meta-ineffective frame-ancestors is rejected', () => {
+    const root = mkdtempSync(join(tmpdir(), 'verify-'));
+    const dataDir = join(root, 'data');
+    const distDir = join(root, 'dist');
+    mkdirSync(dataDir);
+    mkdirSync(join(distDir, 'assets'), { recursive: true });
+    writeFileSync(join(distDir, 'assets', 'index-abc.js'), 'console.log(1)\n');
+    const cspWithFrameAncestors =
+      "<meta http-equiv=\"Content-Security-Policy\" content=\"default-src 'none'; script-src 'self'; frame-ancestors 'none'\" />";
+    writeFileSync(
+      join(distDir, 'index.html'),
+      `<!doctype html><html><head>${cspWithFrameAncestors}<script type="module" src="/repo/assets/index-abc.js"></script></head><body><div id="root"></div></body></html>`,
+    );
+    writeFixtureDataset(dataDir);
+    stageDashboardData({ dataDir, distDir });
+    expect(() => verifyBuiltArtifact({ distDir, base: '/repo/' })).toThrow(/frame-ancestors/);
+  });
+
+  it('SEC-B: a commented-out CSP meta is rejected (the browser does not enforce it)', () => {
+    const root = mkdtempSync(join(tmpdir(), 'verify-'));
+    const dataDir = join(root, 'data');
+    const distDir = join(root, 'dist');
+    mkdirSync(dataDir);
+    mkdirSync(join(distDir, 'assets'), { recursive: true });
+    writeFileSync(join(distDir, 'assets', 'index-abc.js'), 'console.log(1)\n');
+    // Well-formed except the CSP meta is commented out — an inert, unenforced policy.
+    writeFileSync(
+      join(distDir, 'index.html'),
+      `<!doctype html><html><head><!-- ${CSP_META} --><script type="module" src="/repo/assets/index-abc.js"></script></head><body><div id="root"></div></body></html>`,
+    );
+    writeFixtureDataset(dataDir);
+    stageDashboardData({ dataDir, distDir });
+    expect(() => verifyBuiltArtifact({ distDir, base: '/repo/' })).toThrow(
+      /Content-Security-Policy/,
+    );
+  });
+
+  it('SEC-B: directives cannot be borrowed from a later meta tag (split-tag bypass)', () => {
+    const root = mkdtempSync(join(tmpdir(), 'verify-'));
+    const dataDir = join(root, 'data');
+    const distDir = join(root, 'dist');
+    mkdirSync(dataDir);
+    mkdirSync(join(distDir, 'assets'), { recursive: true });
+    writeFileSync(join(distDir, 'assets', 'index-abc.js'), 'console.log(1)\n');
+    // The CSP meta itself has NO content; a later decoy meta carries directives.
+    // The browser enforces nothing from the empty CSP meta, so this must fail.
+    const splitTag =
+      '<meta http-equiv="Content-Security-Policy"><meta name="decoy" content="default-src \'none\'; script-src \'self\'" />';
+    writeFileSync(
+      join(distDir, 'index.html'),
+      `<!doctype html><html><head>${splitTag}<script type="module" src="/repo/assets/index-abc.js"></script></head><body><div id="root"></div></body></html>`,
+    );
+    writeFixtureDataset(dataDir);
+    stageDashboardData({ dataDir, distDir });
+    expect(() => verifyBuiltArtifact({ distDir, base: '/repo/' })).toThrow(/content attribute/);
+  });
+
+  // Build a staged dist whose <head> contains exactly `headHtml`, for CSP tests.
+  function distWithHead(headHtml: string): string {
+    const root = mkdtempSync(join(tmpdir(), 'verify-'));
+    const dataDir = join(root, 'data');
+    const distDir = join(root, 'dist');
+    mkdirSync(dataDir);
+    mkdirSync(join(distDir, 'assets'), { recursive: true });
+    writeFileSync(join(distDir, 'assets', 'index-abc.js'), 'console.log(1)\n');
+    writeFileSync(
+      join(distDir, 'index.html'),
+      `<!doctype html><html><head>${headHtml}<script type="module" src="/repo/assets/index-abc.js"></script></head><body><div id="root"></div></body></html>`,
+    );
+    writeFixtureDataset(dataDir);
+    stageDashboardData({ dataDir, distDir });
+    return distDir;
+  }
+
+  it('SEC-B: a non-enforcing Content-Security-Policy-Report-Only meta is rejected', () => {
+    const reportOnly = CSP_META.replace(
+      'http-equiv="Content-Security-Policy"',
+      'http-equiv="Content-Security-Policy-Report-Only"',
+    );
+    expect(() =>
+      verifyBuiltArtifact({ distDir: distWithHead(reportOnly), base: '/repo/' }),
+    ).toThrow(/enforcing Content-Security-Policy/);
+  });
+
+  it("SEC-B: a weakened script-src (adds 'unsafe-inline') is rejected", () => {
+    const weakened = CSP_META.replace("script-src 'self'", "script-src 'self' 'unsafe-inline'");
+    expect(() => verifyBuiltArtifact({ distDir: distWithHead(weakened), base: '/repo/' })).toThrow(
+      /unsafe-inline/,
+    );
+  });
+
+  it('SEC-B: decoy data-* attributes do not satisfy the CSP check', () => {
+    const decoy = CSP_META.replace('http-equiv=', 'data-http-equiv=').replace(
+      'content=',
+      'data-content=',
+    );
+    expect(() => verifyBuiltArtifact({ distDir: distWithHead(decoy), base: '/repo/' })).toThrow(
+      /enforcing Content-Security-Policy/,
+    );
+  });
+
+  it('SEC-B: a duplicate directive (weakened first, pinned second) is rejected', () => {
+    const dup = CSP_META.replace(
+      "script-src 'self'",
+      "script-src 'self' 'unsafe-inline'; script-src 'self'",
+    );
+    expect(() => verifyBuiltArtifact({ distDir: distWithHead(dup), base: '/repo/' })).toThrow(
+      /duplicate "script-src"/,
     );
   });
 });
