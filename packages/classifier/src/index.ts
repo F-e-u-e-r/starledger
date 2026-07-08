@@ -12,5 +12,6 @@ export * from './state';
 export * from './state-store';
 export * from './planner';
 export * from './provenance';
+export * from './meta-rebase';
 
 export const CLASSIFIER_VERSION = '0.4.0';
