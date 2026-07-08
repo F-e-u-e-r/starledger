@@ -24,8 +24,8 @@ in-flight PR's `dataset_sha256` onto the current base WITHOUT calling the model.
 
 ## The threat PROV-5 covers
 
-PROV-5 enforces an invariant: *the base the annotations were verified against
-equals the base the meta points to.* Without it, a PR could present annotations
+PROV-5 enforces an invariant: _the base the annotations were verified against
+equals the base the meta points to._ Without it, a PR could present annotations
 verified against base X while the meta claims base Y — decoupling the verification
 context from the published pointer, so a consumer trusting `dataset_sha256` could
 be misled about which dataset the annotations correspond to. PROV-5 is the only
