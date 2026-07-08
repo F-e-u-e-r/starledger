@@ -10,6 +10,28 @@ function leadingSpaces(line: string): number {
   return m?.[1]?.length ?? 0;
 }
 
+/**
+ * Return every `uses:` action ref in a workflow that is NOT pinned to a full
+ * 40-hex commit SHA (S4). A mutable tag (`@v3`, `@main`) or branch lets the
+ * action's code change under a fixed ref — a supply-chain risk, acute for the
+ * publish-credential actions (see docs/adr/ADR-003-sha-pin-actions.md). Local
+ * refs (`./…`, `../…`) are ours, so they are ignored; anything else whose ref
+ * after the final `@` is not 40 hex chars is reported.
+ */
+export function findUnpinnedActionRefs(yaml: string): string[] {
+  const unpinned: string[] = [];
+  for (const line of yaml.split('\n')) {
+    const m = /^\s*(?:-\s*)?uses:\s*(\S+)/.exec(line);
+    if (!m) continue;
+    const ref = m[1] ?? '';
+    if (ref.startsWith('./') || ref.startsWith('../')) continue; // local action / reusable workflow
+    const at = ref.lastIndexOf('@');
+    const pin = at >= 0 ? ref.slice(at + 1) : '';
+    if (!/^[0-9a-f]{40}$/.test(pin)) unpinned.push(ref);
+  }
+  return unpinned;
+}
+
 export interface NeutralizeResult {
   text: string;
   changed: boolean;
