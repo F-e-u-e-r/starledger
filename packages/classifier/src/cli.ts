@@ -18,6 +18,7 @@ import { reconcileRun } from './executor';
 import { planClassification } from './planner';
 import { verifyAiProvenanceFromGit } from './provenance';
 import { OctokitReadmeSource } from './readme-source';
+import { runMetaRebaseCommand } from './meta-rebase-cli';
 import { loadClassifierState, serializeClassifierState } from './state';
 import { GitClassifierStateStore } from './state-store';
 import {
@@ -347,5 +348,69 @@ program
       fatal(error);
     }
   });
+
+program
+  .command('meta-rebase')
+  .description(
+    'MANUAL, model-free re-stamp of an in-flight AI PR meta onto the current base ' +
+      '(ROAD-A). Re-verifies the head against the current base and changes only ' +
+      'dataset_sha256. NOT run by any workflow/CI; the live verify-ai-provenance gate ' +
+      'stays the authority. See docs/adr/ADR-002-meta-rebase.md.',
+  )
+  .requiredOption('--stars <path>', 'current canonical stars.json')
+  .requiredOption('--meta <path>', 'current dataset-meta.json')
+  .requiredOption('--head-annotations <path>', 'in-flight head ai-annotations.json')
+  .requiredOption('--head-meta <path>', 'in-flight head ai-annotations-meta.json')
+  .option('--base-annotations <path>', 'current base ai-annotations.json (prior trusted state)')
+  .option('--out-dir <path>', 'directory to write the re-stamped pair (omit for report-only)')
+  .option('--dry-run', 'verify + report only; write nothing', false)
+  .action(
+    async (opts: {
+      stars: string;
+      meta: string;
+      headAnnotations: string;
+      headMeta: string;
+      baseAnnotations?: string;
+      outDir?: string;
+      dryRun?: boolean;
+    }) => {
+      try {
+        const config = loadAiConfig(program.opts<{ config?: string }>().config);
+        assertAiClassificationEnabled(config.ai);
+        const token = process.env.STAR_SYNC_TOKEN ?? process.env.GITHUB_TOKEN;
+        if (token === undefined || token === '') {
+          throw new Error(
+            'a GitHub token (STAR_SYNC_TOKEN or GITHUB_TOKEN) is required for README discovery',
+          );
+        }
+        const source = new OctokitReadmeSource(createGithubClient(token, 'starledger-classifier'));
+        const result = await runMetaRebaseCommand({
+          starsPath: opts.stars,
+          datasetMetaPath: opts.meta,
+          baseAnnotationsPath: opts.baseAnnotations,
+          headAnnotationsPath: opts.headAnnotations,
+          headMetaPath: opts.headMeta,
+          outDir: opts.outDir,
+          dryRun: opts.dryRun === true,
+          source,
+          config: config.ai,
+          maxChangedPerRun: config.ai.budget.max_total_per_run,
+        });
+        if (!result.ok) {
+          throw new Error(
+            'meta-rebase refused (annotations are not valid against the current base):\n' +
+              result.violations.map((v) => `  - ${v.node_id || '(meta)'}: ${v.reason}`).join('\n'),
+          );
+        }
+        process.stdout.write(
+          result.wrote
+            ? `meta-rebase OK: re-stamped pair written → ${result.annotationsPath}, ${result.metaPath}\n`
+            : 'meta-rebase OK (report-only): head is valid against the current base; nothing written.\n',
+        );
+      } catch (error) {
+        fatal(error);
+      }
+    },
+  );
 
 void program.parseAsync(process.argv);
