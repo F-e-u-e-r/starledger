@@ -22,35 +22,56 @@ function assetUrls(html: string): string[] {
     .filter((u) => u.includes('/assets/'));
 }
 
-/** Directives that must survive into the built index.html (SEC-B). */
-const REQUIRED_CSP_DIRECTIVES = ["default-src 'none'", "script-src 'self'"];
 /**
- * Directives that are IGNORED when a CSP is delivered via <meta> (they need a
- * response header Pages cannot set) and only log a console error. They must not
- * be reintroduced into the meta policy (SEC-B).
+ * The EXACT Content-Security-Policy the built index.html must ship (SEC-B). The
+ * deploy pins the WHOLE policy — every directive and its exact source list — so
+ * that a dropped directive, a weakened source (e.g. adding `'unsafe-inline'`), an
+ * extra/meta-ineffective directive (`frame-ancestors`), or a swap to the
+ * non-enforcing `Content-Security-Policy-Report-Only` all fail the gate rather
+ * than silently shipping. Change this map deliberately if the policy legitimately
+ * evolves. Source lists are compared order-insensitively.
  */
-const FORBIDDEN_CSP_DIRECTIVES = ['frame-ancestors'];
+const EXPECTED_CSP: Record<string, readonly string[]> = {
+  'default-src': ["'none'"],
+  'script-src': ["'self'"],
+  'style-src': ["'self'"],
+  'img-src': ["'self'", 'data:'],
+  'font-src': ["'self'"],
+  'connect-src': ["'self'"],
+  'base-uri': ["'none'"],
+  'form-action': ["'none'"],
+};
+
+/** Parse a CSP policy string into a directive→sources map (directive names lowercased). */
+function parseCspPolicy(policy: string): Map<string, string[]> {
+  const map = new Map<string, string[]>();
+  for (const part of policy.split(';')) {
+    const tokens = part.trim().split(/\s+/).filter(Boolean);
+    const name = tokens.shift();
+    if (name) map.set(name.toLowerCase(), tokens);
+  }
+  return map;
+}
 
 /**
- * Assert the Content-Security-Policy meta survived the build (SEC-B). GitHub
- * Pages cannot send a CSP response header, so this meta is the only backstop;
- * if a tooling change drops it, weakens a load-bearing directive, or reintroduces
- * a meta-ineffective one, the deploy must fail here rather than silently shipping
- * an unprotected — or console-erroring — page. HTML comments are stripped first,
- * so a commented-out CSP meta (which the browser does NOT enforce) cannot satisfy
- * the check, and an explanatory comment mentioning a directive name cannot trip
- * it. The policy is read from a SINGLE `<meta …>` tag (attributes cannot span the
- * closing `>`), so directives can never be borrowed from a later unrelated tag's
- * `content` attribute (a split-tag bypass).
+ * Assert the built index.html ships EXACTLY the pinned Content-Security-Policy
+ * (SEC-B). GitHub Pages cannot send a CSP response header, so this meta is the
+ * only backstop; the deploy must fail here rather than ship a missing, weakened,
+ * report-only, or console-erroring policy. HTML comments are stripped first (a
+ * commented-out CSP is not browser-enforced); the policy is read from a SINGLE
+ * `<meta …>` tag whose `http-equiv` equals `Content-Security-Policy` exactly (so
+ * a `-Report-Only` suffix or a later unrelated tag cannot satisfy the check), and
+ * every directive's source list must match the pin exactly.
  */
 function assertContentSecurityPolicy(html: string): void {
   const active = html.replace(/<!--[\s\S]*?-->/g, '');
-  const cspTag = (active.match(/<meta\b[^>]*>/gi) ?? []).find((tag) =>
-    /http-equiv\s*=\s*["']?Content-Security-Policy["']?/i.test(tag),
-  );
+  const cspTag = (active.match(/<meta\b[^>]*>/gi) ?? []).find((tag) => {
+    const equiv = tag.match(/http-equiv\s*=\s*["']?([^"'>\s]+)["']?/i);
+    return equiv !== null && equiv[1]!.toLowerCase() === 'content-security-policy';
+  });
   if (!cspTag) {
     throw new Error(
-      'index.html is missing the Content-Security-Policy meta (SEC-B): Pages cannot set a CSP header, so this meta is the only backstop',
+      'index.html is missing an enforcing Content-Security-Policy meta (SEC-B): Pages cannot set a CSP header, so this meta is the only backstop',
     );
   }
   const content = cspTag.match(/content\s*=\s*"([^"]*)"/i);
@@ -59,18 +80,26 @@ function assertContentSecurityPolicy(html: string): void {
       'the Content-Security-Policy meta has no content attribute (SEC-B): an empty policy enforces nothing',
     );
   }
-  const policy = content[1] ?? '';
-  for (const directive of REQUIRED_CSP_DIRECTIVES) {
-    if (!policy.includes(directive)) {
+  const actual = parseCspPolicy(content[1] ?? '');
+
+  const extra = [...actual.keys()].filter((name) => !(name in EXPECTED_CSP));
+  if (extra.length > 0) {
+    throw new Error(
+      `Content-Security-Policy has unexpected directive(s) "${extra.join(', ')}" (SEC-B): update the pinned policy deliberately (header-only directives such as frame-ancestors are ineffective in a <meta>)`,
+    );
+  }
+  for (const [name, want] of Object.entries(EXPECTED_CSP)) {
+    const got = actual.get(name);
+    if (!got) {
       throw new Error(
-        `Content-Security-Policy is missing the required "${directive}" directive (SEC-B)`,
+        `Content-Security-Policy is missing the required "${name}" directive (SEC-B)`,
       );
     }
-  }
-  for (const directive of FORBIDDEN_CSP_DIRECTIVES) {
-    if (policy.includes(directive)) {
+    const wantSorted = [...want].sort().join(' ');
+    const gotSorted = [...got].sort().join(' ');
+    if (wantSorted !== gotSorted) {
       throw new Error(
-        `Content-Security-Policy must not include "${directive}" (SEC-B): it is ignored in a <meta> and only logs a console error; framing protection needs a response header Pages cannot set`,
+        `Content-Security-Policy directive "${name}" must be exactly "${want.join(' ')}" but is "${got.join(' ')}" (SEC-B): no weakening (e.g. 'unsafe-inline') is allowed`,
       );
     }
   }

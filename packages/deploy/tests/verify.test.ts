@@ -129,4 +129,38 @@ describe('verifyBuiltArtifact / staticSmoke (DEPLOY-1/2, PATH-2)', () => {
     stageDashboardData({ dataDir, distDir });
     expect(() => verifyBuiltArtifact({ distDir, base: '/repo/' })).toThrow(/content attribute/);
   });
+
+  // Build a staged dist whose <head> contains exactly `headHtml`, for CSP tests.
+  function distWithHead(headHtml: string): string {
+    const root = mkdtempSync(join(tmpdir(), 'verify-'));
+    const dataDir = join(root, 'data');
+    const distDir = join(root, 'dist');
+    mkdirSync(dataDir);
+    mkdirSync(join(distDir, 'assets'), { recursive: true });
+    writeFileSync(join(distDir, 'assets', 'index-abc.js'), 'console.log(1)\n');
+    writeFileSync(
+      join(distDir, 'index.html'),
+      `<!doctype html><html><head>${headHtml}<script type="module" src="/repo/assets/index-abc.js"></script></head><body><div id="root"></div></body></html>`,
+    );
+    writeFixtureDataset(dataDir);
+    stageDashboardData({ dataDir, distDir });
+    return distDir;
+  }
+
+  it('SEC-B: a non-enforcing Content-Security-Policy-Report-Only meta is rejected', () => {
+    const reportOnly = CSP_META.replace(
+      'http-equiv="Content-Security-Policy"',
+      'http-equiv="Content-Security-Policy-Report-Only"',
+    );
+    expect(() =>
+      verifyBuiltArtifact({ distDir: distWithHead(reportOnly), base: '/repo/' }),
+    ).toThrow(/enforcing Content-Security-Policy/);
+  });
+
+  it("SEC-B: a weakened script-src (adds 'unsafe-inline') is rejected", () => {
+    const weakened = CSP_META.replace("script-src 'self'", "script-src 'self' 'unsafe-inline'");
+    expect(() => verifyBuiltArtifact({ distDir: distWithHead(weakened), base: '/repo/' })).toThrow(
+      /unsafe-inline/,
+    );
+  });
 });
