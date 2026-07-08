@@ -34,28 +34,37 @@ check that binds the meta's dataset pointer to the verified base.
 ## Decision
 
 Ship a **pure, model-free `rebaseAiAnnotationsMeta`** helper that re-stamps the
-meta ONLY after re-running the FULL provenance gate against the current base:
+meta ONLY after re-verifying the head against the current base:
 
-1. Require the head `ai-annotations.json` bytes to be canonical (byte-identical
-   to `serializeAnnotations` of their parse); reject otherwise.
+1. Validate the head artifact PAIR with the SAME integrity check the assembler
+   and live gate use (`verifyAiArtifacts`): schema, canonical serialization of
+   BOTH `ai-annotations.json` and `ai-annotations-meta.json`, exact annotations
+   hash, count, and taxonomy. A tampered or non-canonical head meta is rejected
+   here, so the re-stamp can only ever change `dataset_sha256` — it can never
+   silently repair a wrong `taxonomy_version`, `annotation_count`,
+   `annotations_sha256`, or field ordering.
 2. Run `verifyAnnotationProvenance` against the current base with
-   `headMetaDatasetSha256 := datasetSha256` — i.e. as if the meta were already
-   re-stamped. This runs every per-annotation check (README OID/path, canonical
-   metadata, source fingerprint, executor/profile/prompt, per-run budget, prune)
-   **plus PROV-5** unchanged.
-3. Emit the re-stamped meta ONLY if that verification passes; the annotation
-   bytes are preserved exactly and the meta's `generated_at` is preserved (no
-   timestamp churn) — only `dataset_sha256` (and the derived `annotations_sha256`
-   over the unchanged bytes) reflect the current base.
+   `headMetaDatasetSha256 := datasetSha256`. This re-runs every PER-ANNOTATION
+   check (README OID/path, canonical metadata, source fingerprint,
+   executor/profile/prompt, per-run budget, prune) against the current base. It
+   does NOT re-check PROV-5: forcing the two SHAs equal makes PROV-5 pass
+   trivially, which is deliberate — the helper asks "would the head pass every
+   OTHER check if the meta pointed at the current base?".
+3. Emit a meta identical to the validated head EXCEPT `dataset_sha256`, which
+   moves to the current base. `generated_at`, `annotations_sha256`,
+   `annotation_count`, `taxonomy_version`, and `schema_version` are all preserved
+   from the head meta — no timestamp churn, no field repair.
 
 ### Why this preserves PROV-5's coverage rather than relaxing it
 
-The re-stamp writes `dataset_sha256 = current base` ONLY after the annotations
-have been re-verified against that current base. So the PROV-5 invariant — the
-verified base equals the pointed-to base — still holds by construction. A
-re-stamped artifact is exactly as trustworthy as a fresh classification run
-against the current base. **PROV-5 in `verify-ai-provenance` is not changed, and
-remains the final authority at merge time.**
+PROV-5 in `verify-ai-provenance` is NOT changed. The helper re-stamps
+`dataset_sha256 = current base` ONLY after the annotations have passed every
+per-annotation check against that current base — so the PROV-5 invariant (the
+verified base equals the pointed-to base) holds by construction of the re-stamped
+artifact, rather than by re-checking the stale pointer. A re-stamped artifact is
+exactly as trustworthy as a fresh classification against the current base, and
+the live gate re-runs the REAL PROV-5 (head meta vs current dataset) at merge as
+the final authority.
 
 ## What this does NOT do (scope guard)
 

@@ -1,4 +1,10 @@
-import { AiAnnotationsMetaSchema, serializeAnnotations } from '@starred/ai-schema';
+import {
+  AiAnnotationsMetaSchema,
+  AiAnnotationsSchema,
+  buildAiAnnotationsMeta,
+  serializeAiAnnotationsMeta,
+  serializeAnnotations,
+} from '@starred/ai-schema';
 import type { CanonicalRepo } from '@starred/schema';
 import { describe, expect, it } from 'vitest';
 import { loadCanonicalDataset } from '../src/dataset';
@@ -17,6 +23,7 @@ import {
 const CONFIG = aiConfig();
 const REF = { path: 'README.md', oid: 'oid-1' };
 const HEAD_TS = '2026-07-01T00:00:00Z';
+const STALE_SHA = 'e'.repeat(64); // the in-flight head meta's (now stale) dataset_sha256
 
 function load(repos: CanonicalRepo[]) {
   const { starsText, metaText } = makeDataset(repos);
@@ -29,19 +36,37 @@ function sourceFor(repos: CanonicalRepo[], ref = REF): FakeReadmeSource {
   );
 }
 
+/** Build a canonical head meta over `annotationsBytes` with a given dataset SHA. */
+function buildHeadMeta(
+  annotationsBytes: string,
+  datasetSha256: string,
+  generatedAt = HEAD_TS,
+): string {
+  const count = AiAnnotationsSchema.parse(JSON.parse(annotationsBytes)).annotations.length;
+  return serializeAiAnnotationsMeta(
+    buildAiAnnotationsMeta({
+      annotationsBytes,
+      annotationCount: count,
+      datasetSha256,
+      generatedAt,
+    }),
+  );
+}
+
 describe('rebaseAiAnnotationsMeta (ROAD-A, model-free)', () => {
-  it('re-stamps the meta to the current base when the head passes provenance', async () => {
+  it('re-stamps ONLY dataset_sha256 onto the current base, preserving generated_at', async () => {
     const a = repo('a');
     const dataset = load([a]);
     const ann = makeAnnotationFor(a, expectedFingerprint(a, CONFIG, REF), REF);
     const headAnnotationsBytes = serializeAnnotations([ann]);
+    const headMetaBytes = buildHeadMeta(headAnnotationsBytes, STALE_SHA);
 
     const result = await rebaseAiAnnotationsMeta({
       repos: dataset.repos,
       datasetSha256: dataset.datasetSha256,
       baseAnnotations: [],
       headAnnotationsBytes,
-      headGeneratedAt: HEAD_TS,
+      headMetaBytes,
       source: sourceFor([a]),
       config: CONFIG,
       maxChangedPerRun: 25,
@@ -50,9 +75,14 @@ describe('rebaseAiAnnotationsMeta (ROAD-A, model-free)', () => {
     expect(result.ok).toBe(true);
     expect(result.annotationsBytes).toBe(headAnnotationsBytes); // bytes preserved exactly
     const meta = AiAnnotationsMetaSchema.parse(JSON.parse(result.metaBytes!));
-    expect(meta.dataset_sha256).toBe(dataset.datasetSha256); // re-stamped onto current base
-    expect(meta.generated_at).toBe(HEAD_TS); // no timestamp churn
-    expect(meta.annotation_count).toBe(1);
+    expect(meta.dataset_sha256).toBe(dataset.datasetSha256); // moved to current base
+    expect(meta.generated_at).toBe(HEAD_TS); // preserved from head meta (no churn)
+    // ONLY dataset_sha256 differs from the original head meta:
+    const head = AiAnnotationsMetaSchema.parse(JSON.parse(headMetaBytes));
+    expect({ ...meta, dataset_sha256: STALE_SHA }).toEqual(head);
+    expect(result.metaBytes).toBe(
+      serializeAiAnnotationsMeta({ ...head, dataset_sha256: dataset.datasetSha256 }),
+    );
   });
 
   it('the re-stamped artifacts pass the real provenance gate (PROV-5 satisfied)', async () => {
@@ -65,18 +95,20 @@ describe('rebaseAiAnnotationsMeta (ROAD-A, model-free)', () => {
       datasetSha256: dataset.datasetSha256,
       baseAnnotations: [],
       headAnnotationsBytes,
-      headGeneratedAt: HEAD_TS,
+      headMetaBytes: buildHeadMeta(headAnnotationsBytes, STALE_SHA),
       source: sourceFor([a]),
       config: CONFIG,
       maxChangedPerRun: 25,
     });
     const meta = AiAnnotationsMetaSchema.parse(JSON.parse(result.metaBytes!));
+    // A gate run against the STALE head meta would fail PROV-5; against the
+    // re-stamped meta it passes.
     const gate = await verifyAnnotationProvenance({
       repos: dataset.repos,
       datasetSha256: dataset.datasetSha256,
       baseAnnotations: [],
       headAnnotations: [ann],
-      headMetaDatasetSha256: meta.dataset_sha256, // the re-stamped pointer
+      headMetaDatasetSha256: meta.dataset_sha256,
       source: sourceFor([a]),
       config: CONFIG,
       maxChangedPerRun: 25,
@@ -89,12 +121,13 @@ describe('rebaseAiAnnotationsMeta (ROAD-A, model-free)', () => {
     const dataset = load([a]);
     const staleRef = { path: 'README.md', oid: 'oid-old' };
     const ann = makeAnnotationFor(a, expectedFingerprint(a, CONFIG, staleRef), staleRef);
+    const headAnnotationsBytes = serializeAnnotations([ann]);
     const result = await rebaseAiAnnotationsMeta({
       repos: dataset.repos,
       datasetSha256: dataset.datasetSha256,
       baseAnnotations: [],
-      headAnnotationsBytes: serializeAnnotations([ann]),
-      headGeneratedAt: HEAD_TS,
+      headAnnotationsBytes,
+      headMetaBytes: buildHeadMeta(headAnnotationsBytes, STALE_SHA),
       source: sourceFor([a], { path: 'README.md', oid: 'oid-new' }),
       config: CONFIG,
       maxChangedPerRun: 25,
@@ -108,12 +141,13 @@ describe('rebaseAiAnnotationsMeta (ROAD-A, model-free)', () => {
     const a = repo('a');
     const dataset = load([a]);
     const ghost = makeAnnotationFor(repo('ghost'), 'f'.repeat(64), null);
+    const headAnnotationsBytes = serializeAnnotations([ghost]);
     const result = await rebaseAiAnnotationsMeta({
       repos: dataset.repos,
       datasetSha256: dataset.datasetSha256,
       baseAnnotations: [],
-      headAnnotationsBytes: serializeAnnotations([ghost]),
-      headGeneratedAt: HEAD_TS,
+      headAnnotationsBytes,
+      headMetaBytes: buildHeadMeta(headAnnotationsBytes, STALE_SHA),
       source: sourceFor([a]),
       config: CONFIG,
       maxChangedPerRun: 25,
@@ -122,25 +156,64 @@ describe('rebaseAiAnnotationsMeta (ROAD-A, model-free)', () => {
     expect(result.metaBytes).toBeUndefined();
   });
 
-  it('rejects non-canonical ai-annotations.json bytes', async () => {
+  it('rejects a head meta whose annotation_count was tampered (no silent repair)', async () => {
     const a = repo('a');
     const dataset = load([a]);
     const ann = makeAnnotationFor(a, expectedFingerprint(a, CONFIG, REF), REF);
-    const canonical = serializeAnnotations([ann]);
-    const nonCanonical = JSON.stringify(JSON.parse(canonical)); // compact, no indent/newline
-    expect(nonCanonical).not.toBe(canonical);
+    const headAnnotationsBytes = serializeAnnotations([ann]);
+    const good = AiAnnotationsMetaSchema.parse(
+      JSON.parse(buildHeadMeta(headAnnotationsBytes, STALE_SHA)),
+    );
+    const tampered = serializeAiAnnotationsMeta({ ...good, annotation_count: 99 });
     const result = await rebaseAiAnnotationsMeta({
       repos: dataset.repos,
       datasetSha256: dataset.datasetSha256,
       baseAnnotations: [],
-      headAnnotationsBytes: nonCanonical,
-      headGeneratedAt: HEAD_TS,
+      headAnnotationsBytes,
+      headMetaBytes: tampered,
       source: sourceFor([a]),
       config: CONFIG,
       maxChangedPerRun: 25,
     });
     expect(result.ok).toBe(false);
-    expect(result.violations.some((v) => v.reason.includes('canonical'))).toBe(true);
+    expect(result.violations[0]!.reason).toMatch(/invalid|count/i);
+  });
+
+  it('rejects a non-canonical head meta', async () => {
+    const a = repo('a');
+    const dataset = load([a]);
+    const ann = makeAnnotationFor(a, expectedFingerprint(a, CONFIG, REF), REF);
+    const headAnnotationsBytes = serializeAnnotations([ann]);
+    const nonCanonical = JSON.stringify(JSON.parse(buildHeadMeta(headAnnotationsBytes, STALE_SHA)));
+    const result = await rebaseAiAnnotationsMeta({
+      repos: dataset.repos,
+      datasetSha256: dataset.datasetSha256,
+      baseAnnotations: [],
+      headAnnotationsBytes,
+      headMetaBytes: nonCanonical,
+      source: sourceFor([a]),
+      config: CONFIG,
+      maxChangedPerRun: 25,
+    });
+    expect(result.ok).toBe(false);
+  });
+
+  it('rejects non-canonical ai-annotations.json bytes', async () => {
+    const a = repo('a');
+    const dataset = load([a]);
+    const ann = makeAnnotationFor(a, expectedFingerprint(a, CONFIG, REF), REF);
+    const nonCanonical = JSON.stringify(JSON.parse(serializeAnnotations([ann])));
+    const result = await rebaseAiAnnotationsMeta({
+      repos: dataset.repos,
+      datasetSha256: dataset.datasetSha256,
+      baseAnnotations: [],
+      headAnnotationsBytes: nonCanonical,
+      headMetaBytes: buildHeadMeta(nonCanonical, STALE_SHA),
+      source: sourceFor([a]),
+      config: CONFIG,
+      maxChangedPerRun: 25,
+    });
+    expect(result.ok).toBe(false);
   });
 
   it('exceeding the per-run budget is rejected (PROV-8 preserved)', async () => {
@@ -149,12 +222,13 @@ describe('rebaseAiAnnotationsMeta (ROAD-A, model-free)', () => {
     const dataset = load([a, b]);
     const annA = makeAnnotationFor(a, expectedFingerprint(a, CONFIG, REF), REF);
     const annB = makeAnnotationFor(b, expectedFingerprint(b, CONFIG, REF), REF);
+    const headAnnotationsBytes = serializeAnnotations([annA, annB]);
     const result = await rebaseAiAnnotationsMeta({
       repos: dataset.repos,
       datasetSha256: dataset.datasetSha256,
       baseAnnotations: [],
-      headAnnotationsBytes: serializeAnnotations([annA, annB]),
-      headGeneratedAt: HEAD_TS,
+      headAnnotationsBytes,
+      headMetaBytes: buildHeadMeta(headAnnotationsBytes, STALE_SHA),
       source: sourceFor([a, b]),
       config: CONFIG,
       maxChangedPerRun: 1,

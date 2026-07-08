@@ -1,11 +1,12 @@
 import {
+  type AiAnnotationsMeta,
+  AiAnnotationsMetaSchema,
   type Annotation,
   AiAnnotationsSchema,
-  buildAiAnnotationsMeta,
   serializeAiAnnotationsMeta,
-  serializeAnnotations,
 } from '@starred/ai-schema';
 import type { CanonicalRepo } from '@starred/schema';
+import { verifyAiArtifacts } from './assemble';
 import type { PlannerConfig } from './planner';
 import type { ReadmeSource } from './readme-source';
 import { type ProvenanceViolation, verifyAnnotationProvenance } from './provenance';
@@ -19,8 +20,8 @@ export interface MetaRebaseInput {
   baseAnnotations: readonly Annotation[];
   /** EXACT ai-annotations.json bytes proposed by the in-flight head PR. */
   headAnnotationsBytes: string;
-  /** The head meta's `generated_at`, PRESERVED unchanged (no timestamp churn). */
-  headGeneratedAt: string;
+  /** EXACT ai-annotations-meta.json bytes of the in-flight head PR (only `dataset_sha256` will change). */
+  headMetaBytes: string;
   /** Live README discovery — the SAME seam the planner / provenance gate uses. */
   source: ReadmeSource;
   config: PlannerConfig;
@@ -37,60 +38,62 @@ export interface MetaRebaseResult {
   metaBytes?: string;
 }
 
+function reject(reason: string): MetaRebaseResult {
+  return { ok: false, violations: [{ node_id: '', reason }] };
+}
+
 /**
  * Meta-rebase (ROAD-A), model-free. Re-stamp an in-flight AI PR's
  * `ai-annotations-meta.json.dataset_sha256` onto the CURRENT base so the daily
- * sync tick stops invalidating it via PROV-5 — WITHOUT calling a model.
+ * sync tick stops invalidating it, WITHOUT calling a model.
  *
- * It re-runs the EXACT provenance gate against the current base with the meta
- * assumed already re-stamped (`headMetaDatasetSha256 := datasetSha256`), so a
- * re-stamp is produced ONLY when the annotations would independently pass every
- * per-annotation check plus PROV-5 against the new base. This PRESERVES PROV-5's
- * coverage (the verified base still equals the pointed-to base); it does not
- * relax it. The live `verify-ai-provenance` gate stays the final authority.
+ * It (1) re-validates the head artifact PAIR with the SAME integrity check the
+ * assembler and live gate use — schema, canonical serialization of BOTH files,
+ * exact annotations hash, count, and taxonomy — so a tampered or non-canonical
+ * head meta is rejected rather than silently "repaired"; (2) re-runs the
+ * per-annotation provenance checks (README OID/path, canonical metadata, source
+ * fingerprint, executor/profile/prompt, per-run budget, prune) against the
+ * CURRENT base; and (3) emits a meta identical to the head EXCEPT
+ * `dataset_sha256`, which moves to the current base. Every other field
+ * (`schema_version`, `annotations_sha256`, `annotation_count`, `taxonomy_version`,
+ * `generated_at`) is preserved from the validated head meta — no timestamp churn.
  *
- * The annotation bytes are preserved exactly and the meta `generated_at` is
- * preserved; only `dataset_sha256` (and the derived `annotations_sha256` over the
- * unchanged bytes) move to the current base.
+ * On PROV-5: this does NOT re-check PROV-5 — it FORCES `headMetaDatasetSha256 :=
+ * datasetSha256`, i.e. it asks "would the head pass every OTHER check if the meta
+ * pointed at the current base?" and, if so, makes that true by stamping. The
+ * PROV-5 invariant (verified base == pointed-to base) is thereby ESTABLISHED, and
+ * the live `verify-ai-provenance` gate re-runs the REAL PROV-5 at merge time as
+ * the final authority. See docs/adr/ADR-002-meta-rebase.md.
  *
  * SECURITY: NOT wired into any workflow, required check, ruleset bypass, or
- * auto-merge — a manual/executor helper only. See docs/adr/ADR-002-meta-rebase.md.
+ * auto-merge — a manual/executor helper only. The caller MUST supply the TRUSTED
+ * current base (repos, datasetSha256, baseAnnotations, source) loaded from the
+ * protected branch, exactly as the provenance gate does.
  */
 export async function rebaseAiAnnotationsMeta(input: MetaRebaseInput): Promise<MetaRebaseResult> {
+  // 1. Validate the head PAIR (schema, canonical form of both files, exact hash,
+  //    count, taxonomy) — the same check the assembler/live gate use. This
+  //    rejects any tampered or non-canonical head meta up front, so the re-stamp
+  //    below can only ever change `dataset_sha256`, never silently repair a field.
   let annotations: Annotation[];
+  let headMeta: AiAnnotationsMeta;
   try {
+    verifyAiArtifacts(input.headAnnotationsBytes, input.headMetaBytes);
     annotations = AiAnnotationsSchema.parse(JSON.parse(input.headAnnotationsBytes)).annotations;
+    headMeta = AiAnnotationsMetaSchema.parse(JSON.parse(input.headMetaBytes));
   } catch (err) {
-    return {
-      ok: false,
-      violations: [
-        {
-          node_id: '',
-          reason: `ai-annotations.json is not valid: ${err instanceof Error ? err.message : String(err)}`,
-        },
-      ],
-    };
+    return reject(
+      `head AI artifact pair is invalid: ${err instanceof Error ? err.message : String(err)}`,
+    );
   }
 
-  // The re-stamped meta's annotations_sha256 is computed over these exact bytes,
-  // so a non-canonical body would disagree with the assembler and the live gate.
-  if (serializeAnnotations(annotations) !== input.headAnnotationsBytes) {
-    return {
-      ok: false,
-      violations: [
-        { node_id: '', reason: 'ai-annotations.json is not in canonical serialized form' },
-      ],
-    };
-  }
-
+  // 2. Re-verify the per-annotation provenance against the CURRENT base, with the
+  //    meta pointer forced to current (see the PROV-5 note above).
   const provenance = await verifyAnnotationProvenance({
     repos: input.repos,
     datasetSha256: input.datasetSha256,
     baseAnnotations: input.baseAnnotations,
     headAnnotations: annotations,
-    // Assume the meta is already re-stamped: this is the ONLY difference from a
-    // fresh classification, and it is safe precisely because every other check
-    // below must still pass against the current base.
     headMetaDatasetSha256: input.datasetSha256,
     source: input.source,
     config: input.config,
@@ -98,16 +101,15 @@ export async function rebaseAiAnnotationsMeta(input: MetaRebaseInput): Promise<M
   });
   if (!provenance.ok) return { ok: false, violations: provenance.violations };
 
-  const meta = buildAiAnnotationsMeta({
-    annotationsBytes: input.headAnnotationsBytes,
-    annotationCount: annotations.length,
-    datasetSha256: input.datasetSha256,
-    generatedAt: input.headGeneratedAt,
+  // 3. Emit the head meta with ONLY `dataset_sha256` moved to the current base.
+  const rebased = AiAnnotationsMetaSchema.parse({
+    ...headMeta,
+    dataset_sha256: input.datasetSha256,
   });
   return {
     ok: true,
     violations: [],
     annotationsBytes: input.headAnnotationsBytes,
-    metaBytes: serializeAiAnnotationsMeta(meta),
+    metaBytes: serializeAiAnnotationsMeta(rebased),
   };
 }
