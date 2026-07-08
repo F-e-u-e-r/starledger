@@ -205,7 +205,11 @@ importers:
         specifier: ^2.6.1
         version: 2.9.0
 
-  packages/template-builder: {}
+  packages/template-builder:
+    dependencies:
+      yaml:
+        specifier: ^2.6.1
+        version: 2.9.0
 
 packages:
 
