@@ -42,13 +42,39 @@ const EXPECTED_CSP: Record<string, readonly string[]> = {
   'form-action': ["'none'"],
 };
 
-/** Parse a CSP policy string into a directive→sources map (directive names lowercased). */
+/**
+ * Parse `name="value"` attributes from a single tag string (lowercased names,
+ * first occurrence wins — the order browsers honor). The leading `(?:^|\s)`
+ * requires a real attribute-name boundary, so a decoy like `data-http-equiv`
+ * is captured under its own name and never mistaken for `http-equiv`.
+ */
+function parseTagAttributes(tag: string): Map<string, string> {
+  const attrs = new Map<string, string>();
+  for (const m of tag.matchAll(/(?:^|\s)([a-zA-Z][a-zA-Z0-9-]*)\s*=\s*"([^"]*)"/g)) {
+    const name = m[1]!.toLowerCase();
+    if (!attrs.has(name)) attrs.set(name, m[2] ?? '');
+  }
+  return attrs;
+}
+
+/**
+ * Parse a CSP policy string into a directive→sources map (directive names
+ * lowercased). A DUPLICATE directive is rejected: browsers enforce only the
+ * first occurrence, so a duplicate could hide a weakened first directive behind
+ * a pinned-looking second one.
+ */
 function parseCspPolicy(policy: string): Map<string, string[]> {
   const map = new Map<string, string[]>();
   for (const part of policy.split(';')) {
     const tokens = part.trim().split(/\s+/).filter(Boolean);
-    const name = tokens.shift();
-    if (name) map.set(name.toLowerCase(), tokens);
+    const name = tokens.shift()?.toLowerCase();
+    if (!name) continue;
+    if (map.has(name)) {
+      throw new Error(
+        `Content-Security-Policy has a duplicate "${name}" directive (SEC-B): browsers enforce only the first, so a duplicate can hide a weakened policy`,
+      );
+    }
+    map.set(name, tokens);
   }
   return map;
 }
@@ -65,22 +91,20 @@ function parseCspPolicy(policy: string): Map<string, string[]> {
  */
 function assertContentSecurityPolicy(html: string): void {
   const active = html.replace(/<!--[\s\S]*?-->/g, '');
-  const cspTag = (active.match(/<meta\b[^>]*>/gi) ?? []).find((tag) => {
-    const equiv = tag.match(/http-equiv\s*=\s*["']?([^"'>\s]+)["']?/i);
-    return equiv !== null && equiv[1]!.toLowerCase() === 'content-security-policy';
-  });
-  if (!cspTag) {
+  let policyText: string | undefined;
+  for (const tag of active.match(/<meta\b[^>]*>/gi) ?? []) {
+    const attrs = parseTagAttributes(tag);
+    if (attrs.get('http-equiv')?.toLowerCase() === 'content-security-policy') {
+      policyText = attrs.get('content'); // undefined ⇒ the CSP meta has no content
+      break;
+    }
+  }
+  if (policyText === undefined) {
     throw new Error(
-      'index.html is missing an enforcing Content-Security-Policy meta (SEC-B): Pages cannot set a CSP header, so this meta is the only backstop',
+      'index.html is missing an enforcing Content-Security-Policy meta with a content attribute (SEC-B): Pages cannot set a CSP header, so this meta is the only backstop',
     );
   }
-  const content = cspTag.match(/content\s*=\s*"([^"]*)"/i);
-  if (!content) {
-    throw new Error(
-      'the Content-Security-Policy meta has no content attribute (SEC-B): an empty policy enforces nothing',
-    );
-  }
-  const actual = parseCspPolicy(content[1] ?? '');
+  const actual = parseCspPolicy(policyText);
 
   const extra = [...actual.keys()].filter((name) => !(name in EXPECTED_CSP));
   if (extra.length > 0) {

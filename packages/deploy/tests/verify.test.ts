@@ -163,4 +163,24 @@ describe('verifyBuiltArtifact / staticSmoke (DEPLOY-1/2, PATH-2)', () => {
       /unsafe-inline/,
     );
   });
+
+  it('SEC-B: decoy data-* attributes do not satisfy the CSP check', () => {
+    const decoy = CSP_META.replace('http-equiv=', 'data-http-equiv=').replace(
+      'content=',
+      'data-content=',
+    );
+    expect(() => verifyBuiltArtifact({ distDir: distWithHead(decoy), base: '/repo/' })).toThrow(
+      /enforcing Content-Security-Policy/,
+    );
+  });
+
+  it('SEC-B: a duplicate directive (weakened first, pinned second) is rejected', () => {
+    const dup = CSP_META.replace(
+      "script-src 'self'",
+      "script-src 'self' 'unsafe-inline'; script-src 'self'",
+    );
+    expect(() => verifyBuiltArtifact({ distDir: distWithHead(dup), base: '/repo/' })).toThrow(
+      /duplicate "script-src"/,
+    );
+  });
 });
