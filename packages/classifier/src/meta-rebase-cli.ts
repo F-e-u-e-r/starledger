@@ -1,4 +1,4 @@
-import { existsSync, mkdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
+import { existsSync, mkdirSync, readFileSync, renameSync, rmSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { type Annotation, AiAnnotationsSchema } from '@starred/ai-schema';
 import { loadCanonicalDataset } from './dataset';
@@ -103,21 +103,24 @@ export async function runMetaRebaseCommand(
   mkdirSync(opts.outDir, { recursive: true });
   const annotationsPath = join(opts.outDir, 'ai-annotations.json');
   const metaPath = join(opts.outDir, 'ai-annotations-meta.json');
-  // Files that already existed (e.g. under `--out-dir .`) must NOT be deleted by
-  // cleanup — only remove what THIS run newly created, so a failed write never
-  // clobbers the operator's previous pair.
-  const preExisting = new Set([annotationsPath, metaPath].filter((p) => existsSync(p)));
+  // Write BOTH to temp files, then rename into place, so the operator's previous
+  // pair (e.g. under `--out-dir .`) is only ever replaced by a fully-written new
+  // pair — a write-phase failure leaves the real files untouched. The two renames
+  // are not one atomic step, but that residual (first ok, second fails) is far
+  // smaller than a mid-write failure and leaves both files present for recovery.
+  const tmpAnnotations = `${annotationsPath}.rebase-tmp`;
+  const tmpMeta = `${metaPath}.rebase-tmp`;
   try {
-    writeFileSync(annotationsPath, result.annotationsBytes ?? '', 'utf8');
-    writeFileSync(metaPath, result.metaBytes ?? '', 'utf8');
+    writeFileSync(tmpAnnotations, result.annotationsBytes ?? '', 'utf8');
+    writeFileSync(tmpMeta, result.metaBytes ?? '', 'utf8');
+    renameSync(tmpAnnotations, annotationsPath);
+    renameSync(tmpMeta, metaPath);
   } catch (err) {
-    for (const p of [annotationsPath, metaPath]) {
-      if (!preExisting.has(p) && existsSync(p)) {
-        try {
-          rmSync(p);
-        } catch {
-          /* best-effort cleanup */
-        }
+    for (const p of [tmpAnnotations, tmpMeta]) {
+      try {
+        if (existsSync(p)) rmSync(p);
+      } catch {
+        /* best-effort cleanup */
       }
     }
     throw err;

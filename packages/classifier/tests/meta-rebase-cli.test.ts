@@ -244,39 +244,16 @@ describe('runMetaRebaseCommand (ROAD-A manual CLI orchestration)', () => {
     ).rejects.toThrow(/base annotations file not found/);
   });
 
-  it('leaves no partial pair if the second artifact write fails', async () => {
-    const a = repo('a');
-    const ann = makeAnnotationFor(a, expectedFingerprint(a, CONFIG, REF), REF);
-    const fx = fixture([a], [ann]);
-    // Make the meta output path a directory so the SECOND writeFileSync throws.
-    mkdirSync(join(fx.outDir, 'ai-annotations-meta.json'), { recursive: true });
-    await expect(
-      runMetaRebaseCommand({
-        starsPath: fx.starsPath,
-        datasetMetaPath: fx.metaPath,
-        headAnnotationsPath: fx.headAnnotationsPath,
-        headMetaPath: fx.headMetaPath,
-        outDir: fx.outDir,
-        dryRun: false,
-        coldStart: true,
-        source: sourceFor([a]),
-        config: CONFIG,
-        maxChangedPerRun: 25,
-      }),
-    ).rejects.toThrow();
-    // the first (annotations) file was cleaned up — no lone artifact left behind
-    expect(existsSync(join(fx.outDir, 'ai-annotations.json'))).toBe(false);
-  });
-
-  it('does NOT delete a pre-existing output file when a write fails (no clobber)', async () => {
+  it('a write-phase failure preserves the pre-existing pair intact (atomic temp+rename)', async () => {
     const a = repo('a');
     const ann = makeAnnotationFor(a, expectedFingerprint(a, CONFIG, REF), REF);
     const fx = fixture([a], [ann]);
     mkdirSync(fx.outDir, { recursive: true });
     // A pre-existing pair the operator must not lose (as under `--out-dir .`).
+    writeFileSync(join(fx.outDir, 'ai-annotations.json'), 'OLD-ANN');
     writeFileSync(join(fx.outDir, 'ai-annotations-meta.json'), 'OLD-META');
-    // Force the FIRST write to fail so nothing is overwritten: its path is a dir.
-    mkdirSync(join(fx.outDir, 'ai-annotations.json'), { recursive: true });
+    // Sabotage the temp write so nothing is renamed into place.
+    mkdirSync(join(fx.outDir, 'ai-annotations.json.rebase-tmp'), { recursive: true });
     await expect(
       runMetaRebaseCommand({
         starsPath: fx.starsPath,
@@ -291,7 +268,8 @@ describe('runMetaRebaseCommand (ROAD-A manual CLI orchestration)', () => {
         maxChangedPerRun: 25,
       }),
     ).rejects.toThrow();
-    // the pre-existing meta was preserved, not deleted by cleanup
+    // BOTH pre-existing files are untouched — never overwritten or deleted.
+    expect(readFileSync(join(fx.outDir, 'ai-annotations.json'), 'utf8')).toBe('OLD-ANN');
     expect(readFileSync(join(fx.outDir, 'ai-annotations-meta.json'), 'utf8')).toBe('OLD-META');
   });
 
