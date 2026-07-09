@@ -12,8 +12,16 @@ export interface MetaRebaseCommandOptions {
   starsPath: string;
   /** Current base dataset-meta.json path. */
   datasetMetaPath: string;
-  /** Current base ai-annotations.json path (prior trusted state); optional. */
+  /** Current base ai-annotations.json path (prior trusted state). */
   baseAnnotationsPath?: string;
+  /**
+   * Explicit acknowledgment that the current base has NO annotations yet (the
+   * first AI PR). Required when `baseAnnotationsPath` is omitted — otherwise a
+   * forgotten base path would silently verify against an empty base and disagree
+   * with the live gate (counting every existing annotation as changed, missing
+   * the metadata-only refusal).
+   */
+  coldStart?: boolean;
   /** In-flight head ai-annotations.json path. */
   headAnnotationsPath: string;
   /** In-flight head ai-annotations-meta.json path. */
@@ -68,6 +76,11 @@ export async function runMetaRebaseCommand(
     baseAnnotations = AiAnnotationsSchema.parse(
       JSON.parse(readFileSync(opts.baseAnnotationsPath, 'utf8')),
     ).annotations;
+  } else if (opts.coldStart !== true) {
+    throw new Error(
+      'specify --base-annotations <path> (the current base ai-annotations.json), ' +
+        'or --cold-start if the base has no annotations yet',
+    );
   }
 
   const result = await rebaseAiAnnotationsMeta({
@@ -90,16 +103,21 @@ export async function runMetaRebaseCommand(
   mkdirSync(opts.outDir, { recursive: true });
   const annotationsPath = join(opts.outDir, 'ai-annotations.json');
   const metaPath = join(opts.outDir, 'ai-annotations-meta.json');
+  // Files that already existed (e.g. under `--out-dir .`) must NOT be deleted by
+  // cleanup — only remove what THIS run newly created, so a failed write never
+  // clobbers the operator's previous pair.
+  const preExisting = new Set([annotationsPath, metaPath].filter((p) => existsSync(p)));
   try {
     writeFileSync(annotationsPath, result.annotationsBytes ?? '', 'utf8');
     writeFileSync(metaPath, result.metaBytes ?? '', 'utf8');
   } catch (err) {
-    // Never leave a half-written pair: a lone re-stamped file is worse than none.
     for (const p of [annotationsPath, metaPath]) {
-      try {
-        if (existsSync(p)) rmSync(p);
-      } catch {
-        /* best-effort cleanup */
+      if (!preExisting.has(p) && existsSync(p)) {
+        try {
+          rmSync(p);
+        } catch {
+          /* best-effort cleanup */
+        }
       }
     }
     throw err;

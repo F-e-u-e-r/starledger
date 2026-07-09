@@ -362,6 +362,7 @@ program
   .requiredOption('--head-annotations <path>', 'in-flight head ai-annotations.json')
   .requiredOption('--head-meta <path>', 'in-flight head ai-annotations-meta.json')
   .option('--base-annotations <path>', 'current base ai-annotations.json (prior trusted state)')
+  .option('--cold-start', 'the current base has no annotations yet (first AI PR)', false)
   .option('--out-dir <path>', 'directory to write the re-stamped pair (omit for report-only)')
   .option('--dry-run', 'verify + report only; write nothing', false)
   .action(
@@ -371,6 +372,7 @@ program
       headAnnotations: string;
       headMeta: string;
       baseAnnotations?: string;
+      coldStart?: boolean;
       outDir?: string;
       dryRun?: boolean;
     }) => {
@@ -388,6 +390,7 @@ program
           starsPath: opts.stars,
           datasetMetaPath: opts.meta,
           baseAnnotationsPath: opts.baseAnnotations,
+          coldStart: opts.coldStart === true,
           headAnnotationsPath: opts.headAnnotations,
           headMetaPath: opts.headMeta,
           outDir: opts.outDir,

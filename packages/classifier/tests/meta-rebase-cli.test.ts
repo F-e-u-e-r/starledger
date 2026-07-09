@@ -101,6 +101,7 @@ describe('runMetaRebaseCommand (ROAD-A manual CLI orchestration)', () => {
       headMetaPath: fx.headMetaPath,
       outDir: fx.outDir,
       dryRun: false,
+      coldStart: true,
       source: sourceFor([a]),
       config: CONFIG,
       maxChangedPerRun: 25,
@@ -126,6 +127,7 @@ describe('runMetaRebaseCommand (ROAD-A manual CLI orchestration)', () => {
       headMetaPath: fx.headMetaPath,
       outDir: fx.outDir,
       dryRun: true,
+      coldStart: true,
       source: sourceFor([a]),
       config: CONFIG,
       maxChangedPerRun: 25,
@@ -145,6 +147,7 @@ describe('runMetaRebaseCommand (ROAD-A manual CLI orchestration)', () => {
       headAnnotationsPath: fx.headAnnotationsPath,
       headMetaPath: fx.headMetaPath,
       dryRun: false,
+      coldStart: true,
       source: sourceFor([a]),
       config: CONFIG,
       maxChangedPerRun: 25,
@@ -165,6 +168,7 @@ describe('runMetaRebaseCommand (ROAD-A manual CLI orchestration)', () => {
       headMetaPath: fx.headMetaPath,
       outDir: fx.outDir,
       dryRun: false,
+      coldStart: true,
       source: sourceFor([a], { path: 'README.md', oid: 'oid-new' }),
       config: CONFIG,
       maxChangedPerRun: 25,
@@ -188,6 +192,7 @@ describe('runMetaRebaseCommand (ROAD-A manual CLI orchestration)', () => {
       headMetaPath: fx.headMetaPath,
       outDir: fx.outDir,
       dryRun: false,
+      coldStart: true,
       source: sourceFor([a, b]),
       config: CONFIG,
       maxChangedPerRun: 1,
@@ -208,6 +213,7 @@ describe('runMetaRebaseCommand (ROAD-A manual CLI orchestration)', () => {
       headMetaPath: fx.headMetaPath,
       outDir: fx.outDir,
       dryRun: false,
+      coldStart: true,
       source: sourceFor([a]),
       config: CONFIG,
       maxChangedPerRun: 25,
@@ -230,6 +236,7 @@ describe('runMetaRebaseCommand (ROAD-A manual CLI orchestration)', () => {
         headMetaPath: fx.headMetaPath,
         outDir: fx.outDir,
         dryRun: false,
+        coldStart: true,
         source: sourceFor([a]),
         config: CONFIG,
         maxChangedPerRun: 25,
@@ -251,6 +258,7 @@ describe('runMetaRebaseCommand (ROAD-A manual CLI orchestration)', () => {
         headMetaPath: fx.headMetaPath,
         outDir: fx.outDir,
         dryRun: false,
+        coldStart: true,
         source: sourceFor([a]),
         config: CONFIG,
         maxChangedPerRun: 25,
@@ -258,6 +266,53 @@ describe('runMetaRebaseCommand (ROAD-A manual CLI orchestration)', () => {
     ).rejects.toThrow();
     // the first (annotations) file was cleaned up — no lone artifact left behind
     expect(existsSync(join(fx.outDir, 'ai-annotations.json'))).toBe(false);
+  });
+
+  it('does NOT delete a pre-existing output file when a write fails (no clobber)', async () => {
+    const a = repo('a');
+    const ann = makeAnnotationFor(a, expectedFingerprint(a, CONFIG, REF), REF);
+    const fx = fixture([a], [ann]);
+    mkdirSync(fx.outDir, { recursive: true });
+    // A pre-existing pair the operator must not lose (as under `--out-dir .`).
+    writeFileSync(join(fx.outDir, 'ai-annotations-meta.json'), 'OLD-META');
+    // Force the FIRST write to fail so nothing is overwritten: its path is a dir.
+    mkdirSync(join(fx.outDir, 'ai-annotations.json'), { recursive: true });
+    await expect(
+      runMetaRebaseCommand({
+        starsPath: fx.starsPath,
+        datasetMetaPath: fx.metaPath,
+        headAnnotationsPath: fx.headAnnotationsPath,
+        headMetaPath: fx.headMetaPath,
+        outDir: fx.outDir,
+        dryRun: false,
+        coldStart: true,
+        source: sourceFor([a]),
+        config: CONFIG,
+        maxChangedPerRun: 25,
+      }),
+    ).rejects.toThrow();
+    // the pre-existing meta was preserved, not deleted by cleanup
+    expect(readFileSync(join(fx.outDir, 'ai-annotations-meta.json'), 'utf8')).toBe('OLD-META');
+  });
+
+  it('requires an explicit --base-annotations or --cold-start (no silent empty base)', async () => {
+    const a = repo('a');
+    const ann = makeAnnotationFor(a, expectedFingerprint(a, CONFIG, REF), REF);
+    const fx = fixture([a], [ann]);
+    await expect(
+      runMetaRebaseCommand({
+        starsPath: fx.starsPath,
+        datasetMetaPath: fx.metaPath,
+        headAnnotationsPath: fx.headAnnotationsPath,
+        headMetaPath: fx.headMetaPath,
+        outDir: fx.outDir,
+        dryRun: false,
+        // no baseAnnotationsPath and no coldStart
+        source: sourceFor([a]),
+        config: CONFIG,
+        maxChangedPerRun: 25,
+      }),
+    ).rejects.toThrow(/--cold-start/);
   });
 });
 
