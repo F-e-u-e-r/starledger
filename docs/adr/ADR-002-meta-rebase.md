@@ -72,7 +72,10 @@ the final authority.
   structural gate, `max_total_per_run`, the AI budget, or any required-check /
   ruleset-bypass semantics.
 - It is **not** wired into any workflow, required check, bypass actor, or
-  auto-merge path. It is a manual/executor helper only.
+  auto-merge path. It is exposed ONLY as a manual `pnpm classifier meta-rebase`
+  command an operator/executor runs by hand (see the P3.2 runbook); a test
+  asserts no workflow or script invokes it. The re-stamped PR still passes through
+  BOTH gates + human review at merge.
 - It does **not** call a model and needs no new secret; in production it uses the
   same read-only README discovery seam (`ReadmeSource`) the planner already uses.
 
