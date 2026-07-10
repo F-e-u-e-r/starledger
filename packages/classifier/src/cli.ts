@@ -357,11 +357,11 @@ program
       'dataset_sha256. NOT run by any workflow/CI; the live verify-ai-provenance gate ' +
       'stays the authority. See docs/adr/ADR-002-meta-rebase.md.',
   )
-  .requiredOption('--stars <path>', 'current canonical stars.json')
-  .requiredOption('--meta <path>', 'current dataset-meta.json')
-  .requiredOption('--head-annotations <path>', 'in-flight head ai-annotations.json')
-  .requiredOption('--head-meta <path>', 'in-flight head ai-annotations-meta.json')
-  .option('--base-annotations <path>', 'current base ai-annotations.json (prior trusted state)')
+  .requiredOption('--stars <path>', 'CURRENT BASE stars.json (post-sync main, NOT the head PR)')
+  .requiredOption('--meta <path>', 'CURRENT BASE dataset-meta.json (post-sync main)')
+  .requiredOption('--head-annotations <path>', 'in-flight HEAD PR ai-annotations.json')
+  .requiredOption('--head-meta <path>', 'in-flight HEAD PR ai-annotations-meta.json')
+  .option('--base-annotations <path>', 'CURRENT BASE ai-annotations.json (prior trusted state)')
   .option('--cold-start', 'the current base has no annotations yet (first AI PR)', false)
   .option('--out-dir <path>', 'directory to write the re-stamped pair (omit for report-only)')
   .option('--dry-run', 'verify + report only; write nothing', false)
