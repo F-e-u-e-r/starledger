@@ -26,3 +26,6 @@ classifier-state.json
 
 # Playwright MCP browser session artifacts
 .playwright-mcp/
+
+# Local code-review drafts (kept out of the repo)
+/docs/reviews/
