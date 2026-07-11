@@ -1,4 +1,4 @@
-import { RetryCoordinator } from '@starred/github-client';
+import { RetryBudgetExhaustedError, RetryCoordinator } from '@starred/github-client';
 import { describe, expect, it, vi } from 'vitest';
 import { OctokitReadmeSource } from '../src/readme-source';
 
@@ -115,7 +115,7 @@ describe('OctokitReadmeSource — vanished repo & transient graphql faults', () 
   }
   const httpStatus = (status: number, message: string): Error =>
     Object.assign(new Error(message), { status });
-  // A coordinator that never really sleeps, so retry paths stay instant + deterministic.
+  // A no-sleep coordinator so retry paths stay instant + deterministic.
   const instantCoordinator = (): RetryCoordinator =>
     new RetryCoordinator({ sleep: async () => {}, now: () => 0, random: () => 0 });
 
@@ -151,6 +151,26 @@ describe('OctokitReadmeSource — vanished repo & transient graphql faults', () 
     expect(request).not.toHaveBeenCalled(); // fast path resolved; no README payload transferred
   });
 
+  it('retries an HTTP 500 (server hiccup is transient, not terminal), then succeeds', async () => {
+    // Guards classifyError treating 500 as retryable alongside 502/503/504 — a
+    // malformed request is 400/422, so a 500 here is a server fault worth retrying.
+    const graphql = vi
+      .fn()
+      .mockRejectedValueOnce(httpStatus(500, 'Internal Server Error'))
+      .mockResolvedValueOnce({ repository: { object: { oid: 'oid-500' } } });
+    const request = vi.fn();
+    const src = new OctokitReadmeSource(
+      { graphql, octokit: { request } } as never,
+      instantCoordinator(),
+    );
+
+    await expect(src.getReadmeRef(REPO, 'README.md')).resolves.toEqual({
+      path: 'README.md',
+      oid: 'oid-500',
+    });
+    expect(graphql).toHaveBeenCalledTimes(2); // 500 retried, not thrown as terminal
+  });
+
   it('propagates a terminal graphql error (auth) instead of masking it as a missing README', async () => {
     const graphql = vi.fn(() => Promise.reject(httpStatus(401, 'Bad credentials')));
     const request = vi.fn();
@@ -163,20 +183,15 @@ describe('OctokitReadmeSource — vanished repo & transient graphql faults', () 
     expect(request).not.toHaveBeenCalled(); // a real fault must fail loudly, never fall through to null
   });
 
-  it('falls through to REST discovery on an empty 2xx envelope (undefined), never crashing', async () => {
-    // Raw @octokit/graphql yields `undefined` for a data-less 2xx body; the probe
-    // must read that as "no OID" and rediscover, not throw a TypeError mid-sweep.
-    const graphql = vi.fn(() => Promise.resolve(undefined));
-    const request = vi.fn(() =>
-      Promise.resolve({
-        data: {
-          path: 'README.md',
-          sha: 'oid-rest',
-          content: Buffer.from('# rest', 'utf8').toString('base64'),
-          encoding: 'base64',
-        },
-      }),
-    );
+  it('retries an empty 2xx envelope (undefined) instead of downgrading to REST', async () => {
+    // Raw @octokit/graphql yields `undefined` for a data-less 2xx body — a transient
+    // glitch, not "no README". Per github-client's requireResponse contract the probe
+    // retries the OID query rather than silently falling through to a REST content fetch.
+    const graphql = vi
+      .fn()
+      .mockResolvedValueOnce(undefined)
+      .mockResolvedValueOnce({ repository: { object: { oid: 'oid-recovered' } } });
+    const request = vi.fn();
     const src = new OctokitReadmeSource(
       { graphql, octokit: { request } } as never,
       instantCoordinator(),
@@ -184,9 +199,31 @@ describe('OctokitReadmeSource — vanished repo & transient graphql faults', () 
 
     await expect(src.getReadmeRef(REPO, 'README.md')).resolves.toEqual({
       path: 'README.md',
-      oid: 'oid-rest',
+      oid: 'oid-recovered',
     });
-    expect(request).toHaveBeenCalledTimes(1); // fell through to REST, no crash
+    expect(graphql).toHaveBeenCalledTimes(2); // retried the envelope, did NOT fall through
+    expect(request).not.toHaveBeenCalled();
+  });
+
+  it('retries a malformed envelope ({} with no repository field), then succeeds', async () => {
+    // `{}` / `[]` are records/objects but lack the `repository` field — malformed,
+    // not "no README". They must retry, not fall straight through to REST.
+    const graphql = vi
+      .fn()
+      .mockResolvedValueOnce({})
+      .mockResolvedValueOnce({ repository: { object: { oid: 'oid-recovered' } } });
+    const request = vi.fn();
+    const src = new OctokitReadmeSource(
+      { graphql, octokit: { request } } as never,
+      instantCoordinator(),
+    );
+
+    await expect(src.getReadmeRef(REPO, 'README.md')).resolves.toEqual({
+      path: 'README.md',
+      oid: 'oid-recovered',
+    });
+    expect(graphql).toHaveBeenCalledTimes(2);
+    expect(request).not.toHaveBeenCalled();
   });
 
   it('retries a GraphQL execution timeout (HTTP 200 errors, no status), then succeeds', async () => {
@@ -217,7 +254,11 @@ describe('OctokitReadmeSource — vanished repo & transient graphql faults', () 
     expect(graphql).toHaveBeenCalledTimes(2);
   });
 
-  it('exhausts the retry budget on a persistent transient fault and fails loudly', async () => {
+  it('propagates a DeferredError when the GraphQL probe exhausts its retry budget', async () => {
+    // A persistent transient fault (5xx / exec-timeout / empty envelope) that never
+    // recovers surfaces RetryBudgetExhaustedError — a DeferredError the CLI turns into
+    // exit 20 (defer the run, keep last-known-good). It is NOT degraded to metadata nor
+    // silently downgraded to a REST content fetch; REST is never even attempted.
     const graphql = vi.fn(() => Promise.reject(httpStatus(503, 'Service Unavailable')));
     const request = vi.fn();
     const src = new OctokitReadmeSource(
@@ -225,8 +266,10 @@ describe('OctokitReadmeSource — vanished repo & transient graphql faults', () 
       instantCoordinator(),
     );
 
-    await expect(src.getReadmeRef(REPO, 'README.md')).rejects.toThrow();
-    expect(graphql).toHaveBeenCalledTimes(4); // DEFAULT_RETRY.maxAttempts — then it stops, no infinite loop
+    await expect(src.getReadmeRef(REPO, 'README.md')).rejects.toBeInstanceOf(
+      RetryBudgetExhaustedError,
+    );
+    expect(graphql).toHaveBeenCalledTimes(4); // DEFAULT_RETRY.maxAttempts
     expect(request).not.toHaveBeenCalled();
   });
 
@@ -245,5 +288,59 @@ describe('OctokitReadmeSource — vanished repo & transient graphql faults', () 
 
     await expect(src.getReadmeRef(REPO, 'README.md')).rejects.toThrow();
     expect(request).not.toHaveBeenCalled();
+  });
+
+  it('does NOT swallow a NOT_FOUND on a nested repository path', async () => {
+    // Only path exactly ['repository'] means the repo is gone. A deeper path such as
+    // ['repository','object'] must propagate, not be absorbed as "repo gone".
+    const nested = Object.assign(new Error('Request failed'), {
+      errors: [{ type: 'NOT_FOUND', path: ['repository', 'object'], message: 'nope' }],
+    });
+    const graphql = vi.fn(() => Promise.reject(nested));
+    const request = vi.fn();
+    const src = new OctokitReadmeSource(
+      { graphql, octokit: { request } } as never,
+      instantCoordinator(),
+    );
+
+    await expect(src.getReadmeRef(REPO, 'README.md')).rejects.toThrow();
+    expect(request).not.toHaveBeenCalled();
+  });
+
+  it('does NOT swallow a mixed error array (NOT_FOUND alongside another error)', async () => {
+    // .every() guard: a repository NOT_FOUND reported together with any OTHER error
+    // must not be absorbed as "repo gone" — it propagates so the real fault surfaces.
+    const mixed = Object.assign(new Error('Request failed'), {
+      errors: [
+        { type: 'NOT_FOUND', path: ['repository'], message: 'gone' },
+        { type: 'SERVICE_UNAVAILABLE', message: 'blip' },
+      ],
+    });
+    const graphql = vi.fn(() => Promise.reject(mixed));
+    const request = vi.fn();
+    const src = new OctokitReadmeSource(
+      { graphql, octokit: { request } } as never,
+      instantCoordinator(),
+    );
+
+    await expect(src.getReadmeRef(REPO, 'README.md')).rejects.toThrow();
+    expect(request).not.toHaveBeenCalled();
+  });
+
+  it('still treats a NOT_FOUND with no path as the repository being gone', async () => {
+    // Defensive branch: GitHub always sends path ['repository'], but a path-less
+    // NOT_FOUND must never slip back into a crash — it is still the deleted repo.
+    const pathless = Object.assign(new Error('Request failed'), {
+      errors: [{ type: 'NOT_FOUND', message: 'gone' }],
+    });
+    const graphql = vi.fn(() => Promise.reject(pathless));
+    const request = vi.fn(() => Promise.reject(httpStatus(404, 'Not Found')));
+    const src = new OctokitReadmeSource(
+      { graphql, octokit: { request } } as never,
+      instantCoordinator(),
+    );
+
+    await expect(src.getReadmeRef(REPO, 'README.md')).resolves.toBeNull();
+    expect(graphql).toHaveBeenCalledTimes(1); // settled → no retry
   });
 });
