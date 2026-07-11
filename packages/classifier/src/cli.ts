@@ -8,7 +8,7 @@ import {
   ClassificationManifestSchema,
   serializeClassificationManifest,
 } from '@starred/ai-schema';
-import { createGithubClient } from '@starred/github-client';
+import { createGithubClient, ExporterError } from '@starred/github-client';
 import { Command } from 'commander';
 import { verifyAgentPullRequestFromGit } from './agent-gate';
 import { assembleAiArtifacts, verifyAiArtifacts } from './assemble';
@@ -38,9 +38,14 @@ function writeText(path: string, text: string): void {
 }
 
 function fatal(error: unknown): never {
+  // Honor the error's exit code so a DeferredError (recoverable — e.g. a probe that
+  // exhausted retries or a rate-limit cooldown) exits 20 ("retry next run, keep
+  // last-known-good") instead of masquerading as a terminal exit 10, matching the
+  // exporter CLI. Non-ExporterError faults stay terminal (10).
+  const exitCode = error instanceof ExporterError ? error.exitCode : 10;
   const message = error instanceof Error ? error.message : String(error);
-  process.stderr.write(`fatal (exit 10): ${message}\n`);
-  process.exit(10);
+  process.stderr.write(`fatal (exit ${exitCode}): ${message}\n`);
+  process.exit(exitCode);
 }
 
 const program = new Command();
