@@ -8,7 +8,7 @@
     "paths": [
       "README.md"
     ],
-    "last_commit_sha": "d62373dace4372651a76039c4e8bf90b34dc2fb9"
+    "last_commit_sha": "3ac4f11cff0ac5db21a3cc6b3f47946fd75fa9ba"
   },
   "pending": [],
   "deliveries": [
@@ -100,6 +100,18 @@
       "notification_key": "awesome_stars:vercel-labs/native:R_kgDOSYKDUw",
       "status": "sent",
       "completed_at": "2026-07-09T05:09:19.485Z",
+      "detail": null
+    },
+    {
+      "notification_key": "awesome_stars:jcranokc/app-monitor:R_kgDOTSj-4A",
+      "status": "sent",
+      "completed_at": "2026-07-11T06:28:16.286Z",
+      "detail": null
+    },
+    {
+      "notification_key": "awesome_stars:malisper/pgrust:R_kgDOSHQfjw",
+      "status": "sent",
+      "completed_at": "2026-07-11T06:28:16.286Z",
       "detail": null
     }
   ]
