@@ -8,7 +8,7 @@
     "paths": [
       "README.md"
     ],
-    "last_commit_sha": "3ac4f11cff0ac5db21a3cc6b3f47946fd75fa9ba"
+    "last_commit_sha": "01f23f34beb84452391275089c28bc35eee745a9"
   },
   "pending": [],
   "deliveries": [
@@ -112,6 +112,54 @@
       "notification_key": "awesome_stars:malisper/pgrust:R_kgDOSHQfjw",
       "status": "sent",
       "completed_at": "2026-07-11T06:28:16.286Z",
+      "detail": null
+    },
+    {
+      "notification_key": "awesome_stars:charmbracelet/bubbletea:MDEwOlJlcG9zaXRvcnkyMzMxMzAwODk=",
+      "status": "sent",
+      "completed_at": "2026-07-12T06:48:03.289Z",
+      "detail": null
+    },
+    {
+      "notification_key": "awesome_stars:emilkowalski/skills:R_kgDORogeyA",
+      "status": "sent",
+      "completed_at": "2026-07-12T06:48:03.289Z",
+      "detail": null
+    },
+    {
+      "notification_key": "awesome_stars:lakehq/sail:R_kgDOK8KcKA",
+      "status": "sent",
+      "completed_at": "2026-07-12T06:48:03.289Z",
+      "detail": null
+    },
+    {
+      "notification_key": "awesome_stars:mattpocock/dictionary-of-ai-coding:R_kgDOSRkPEA",
+      "status": "sent",
+      "completed_at": "2026-07-12T06:48:03.289Z",
+      "detail": null
+    },
+    {
+      "notification_key": "awesome_stars:nguyenphutrong/quotio:R_kgDOQuWrCw",
+      "status": "sent",
+      "completed_at": "2026-07-12T06:48:03.289Z",
+      "detail": null
+    },
+    {
+      "notification_key": "awesome_stars:ogulcancelik/herdr:R_kgDORymbOg",
+      "status": "sent",
+      "completed_at": "2026-07-12T06:48:03.289Z",
+      "detail": null
+    },
+    {
+      "notification_key": "awesome_stars:pamburus/hl:MDEwOlJlcG9zaXRvcnkyODQ5MDY4NzY=",
+      "status": "sent",
+      "completed_at": "2026-07-12T06:48:03.289Z",
+      "detail": null
+    },
+    {
+      "notification_key": "awesome_stars:unslothai/unsloth:R_kgDOKznBOA",
+      "status": "sent",
+      "completed_at": "2026-07-12T06:48:03.289Z",
       "detail": null
     }
   ]
