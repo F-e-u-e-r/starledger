@@ -1418,6 +1418,127 @@
         "prompt_version": "classify-v1",
         "generated_at": "2026-07-15T22:23:03Z"
       }
+    },
+    {
+      "node_id": "R_kgDOI8Hdkw",
+      "category": "education-reference",
+      "tags": [
+        "desktop-app",
+        "gui"
+      ],
+      "summary": "MuJing is a desktop application for learning English vocabulary through real context taken from movies, TV shows, and documents. It offers spelling practice, subtitle transcription, dictation tests, and a video player that shows the words being learned, plus personalized vocabulary lists generated from your own content. Runs on Windows and macOS.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "2b69408fc236f94582d5ebc17715daa4b8db3ce5",
+        "repo_metadata_sha256": "4731db7fec1a1f0124bc24371f9e5322d8f63064cb7de10c6962ccf86c287810",
+        "fingerprint": "d7dbff082190c154409b47e6397ed8bb9517e25a497b91b4e509a222e797cc4c"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-15T23:21:46Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOI8uUYg",
+      "category": "ai-ml",
+      "tags": [
+        "benchmark",
+        "llm",
+        "machine-learning"
+      ],
+      "summary": "FinGPT is an open-source project from the AI4Finance Foundation providing financial large language models fine-tuned with LoRA for tasks such as sentiment analysis, relation extraction, headline classification, and named-entity recognition. It publishes instruction-tuning datasets, benchmarks, and released models on Hugging Face for lightweight, low-cost adaptation to financial data.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "fc5fc28e9c5e2cb62ec0ebda34fd2b4cf5b0d81b",
+        "repo_metadata_sha256": "f2669111ac0554a97a847dd9a15e6d39d903702b44ef19559991c456e737f4ac",
+        "fingerprint": "03cc4af49981e28ff85346c8900a597b4e676b1fadfaed784b9077e28502a3ba"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-15T23:21:46Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOIFKaXA",
+      "category": "developer-tools",
+      "tags": [
+        "api",
+        "cli",
+        "desktop-app",
+        "graphql",
+        "rest-api",
+        "testing"
+      ],
+      "summary": "Bruno is an open-source, offline-first API client and IDE for exploring and testing APIs, positioned as a lightweight alternative to Postman and Insomnia. It stores collections as plain-text files on your filesystem so you can version and collaborate on them with Git, and includes a CLI for running collections in automated testing and CI/CD pipelines.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "readme.md",
+        "readme_oid": "9d78ea58dfb639bcaa897cc4139526e6eaadcde6",
+        "repo_metadata_sha256": "09246995d53d6f4dedb0f52b148be028e40cdeb9e2ba8d9fcb327bae70522042",
+        "fingerprint": "d2ce03e4345821bc6eb666ba2e4ffcfea3def01a1df00431c617fafe7e8779af"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-15T23:21:46Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOIN1WiA",
+      "category": "developer-tools",
+      "tags": [
+        "build-tool",
+        "cli",
+        "desktop-app"
+      ],
+      "summary": "Pake is a Rust and Tauri based tool that turns any webpage into a lightweight desktop application with a single command. Its installers are far smaller than Electron equivalents, and it supports macOS, Windows, and Linux with features such as keyboard shortcuts, immersive windows, drag and drop, style customization, and ad removal via a CLI or online building.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "4d8555255a6c600acaec0b3c3e139530c25fc865",
+        "repo_metadata_sha256": "088167f50c5dcef77925beff0f2cc25851824d3a275beb99d9a539438d1e6ea7",
+        "fingerprint": "27e7b55d187989cf0aab5b60f24f58a5840a6f16dde216ecf4a0f6d736f0a0fd"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-15T23:21:46Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOIS4yWA",
+      "category": "other",
+      "tags": [
+        "cli",
+        "game"
+      ],
+      "summary": "shadPS4 is an early, open-source PlayStation 4 emulator for Windows, Linux, macOS, and FreeBSD written in C++. This is the emulator core without a GUI; it can already run games such as Bloodborne, Dark Souls Remastered, and Red Dead Redemption, supports keyboard, mouse, and controller input, and can load supported PlayStation 4 firmware modules.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "35a4db71b18a03422a533f6ca9ba218a6059af0f",
+        "repo_metadata_sha256": "2b825ec2b4b0cf3d39cece725d90a79ccf9da225735f687137eebd5a621facb1",
+        "fingerprint": "88a44c1dc409b775059b4cab4bd74855da83cc3073f3edeb94987bf056e8a488"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-15T23:21:46Z"
+      }
     }
   ]
 }
