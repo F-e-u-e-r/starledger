@@ -7,11 +7,14 @@ ai:
   execution_profile:
     execution_profile_version: agent-v1
 
-  # Keep each live classification run bounded while allowing three new repositories.
+  # Keep each live classification run bounded while allowing five new repositories.
+  # Ramp: validated end to end at 5; raise to 10 only after several clean gated
+  # merges (bigger batches = larger per-merge review load and blast radius, and
+  # more live READMEs for the provenance gate to recompute per PR).
   readme_max_chars: 30000
   metadata_max_chars: 5000
   budget:
-    max_new_per_run: 3
+    max_new_per_run: 5
     max_refresh_per_run: 0
     max_retry_per_run: 0
-    max_total_per_run: 3
+    max_total_per_run: 5
