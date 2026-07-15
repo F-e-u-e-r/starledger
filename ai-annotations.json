@@ -587,6 +587,125 @@
         "prompt_version": "classify-v1",
         "generated_at": "2026-07-15T12:29:34Z"
       }
+    },
+    {
+      "node_id": "MDEwOlJlcG9zaXRvcnkyMzIwOTE0MA==",
+      "category": "libraries-frameworks",
+      "tags": [
+        "api",
+        "library",
+        "sdk"
+      ],
+      "summary": "A Python library that wraps the Federal Reserve Economic Data (FRED) and ALFRED web services. It returns economic time series as pandas Series or DataFrame objects and provides methods for handling historical data revisions, vintage dates, and full-text series search.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "993caa4a589813635659acd20040c70e5cc0999b",
+        "repo_metadata_sha256": "481c5755e7dd433b762957c5dfcbc1a88bd4f3a17825a7e3b1fed154cb9d5262",
+        "fingerprint": "08f3a323e06c2447c1a841f3b14bacce04f94b42863b10fa1432a68aff6747f8"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-15T13:25:21Z"
+      }
+    },
+    {
+      "node_id": "MDEwOlJlcG9zaXRvcnkyMzMxMzAwODk=",
+      "category": "libraries-frameworks",
+      "tags": [
+        "library",
+        "terminal",
+        "tui"
+      ],
+      "summary": "A Go framework for building terminal user interface applications based on The Elm Architecture, structuring programs around a model with Init, Update, and View methods. It supports inline and full-window layouts, a cell-based renderer, keyboard and mouse handling, and clipboard support.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "4d08d355bf1076e36b4f3843ed59a8a37e8d332c",
+        "repo_metadata_sha256": "5640db927557759aa4714d0c9e8f7953be1c847d09cd18ecf45faacc3ad8735d",
+        "fingerprint": "0a2440ec6b701c13310e250fe0e852606b4095862f4630d3539bf5db51745d76"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-15T13:25:21Z"
+      }
+    },
+    {
+      "node_id": "MDEwOlJlcG9zaXRvcnkyNTQ4MzI3OTk=",
+      "category": "security-privacy",
+      "tags": [
+        "automation",
+        "cli",
+        "security-scanner"
+      ],
+      "summary": "A Python command-line launcher that organizes and installs a large collection of third-party penetration testing tools across categories such as information gathering, wireless attacks, SQL injection, phishing, forensics, and reverse engineering, with keyword search and tag filtering.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "8156b5db091c3825e046e4fab11c492d7a416cb9",
+        "repo_metadata_sha256": "e51d01abbf612e02156c24c1f93a29cf46d32f9d7a5c7c7b23d19b559702ab4b",
+        "fingerprint": "e420cb789323e6903574c098e2f2abc69c0ad767825205b342176522b49db6d6"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-15T13:25:21Z"
+      }
+    },
+    {
+      "node_id": "MDEwOlJlcG9zaXRvcnkyNjIyOTYxMjI=",
+      "category": "ai-ml",
+      "tags": [
+        "library",
+        "machine-learning"
+      ],
+      "summary": "An OCR and document parsing toolkit that converts images and PDFs into structured Markdown or JSON output. It offers multilingual text recognition across more than 100 languages plus vision-language models for tables, formulas, and layout, intended to feed data into LLM and RAG pipelines.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "6458242fc136e2fc514fee9c8e4896d09bb8fab5",
+        "repo_metadata_sha256": "680968297cae5516472fbd0c5d549f63646b1a46af8350b38d9e02a6161a83ae",
+        "fingerprint": "aecccefa58019e2b377d27cf426b72f5f7d59e1c4c35c3c8754b84f8ceb26f9a"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-15T13:25:21Z"
+      }
+    },
+    {
+      "node_id": "MDEwOlJlcG9zaXRvcnkyNjkzMzYxNDg=",
+      "category": "devops-infrastructure",
+      "tags": [
+        "automation",
+        "containers",
+        "kubernetes"
+      ],
+      "summary": "Shell scripts and Docker images for running macOS virtual machines inside Docker containers on Linux or Windows using QEMU and KVM. It supports X11 forwarding, SSH and VNC access, USB passthrough, and Kubernetes deployment, and targets CI/CD and macOS security research.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "ee714ed9ae573107c5ca151a99fcefd62151fdfb",
+        "repo_metadata_sha256": "6354cedbb1a65fb40d161962a846cb1cb9fa04a5415b04df1a8ff24c22709e02",
+        "fingerprint": "541ad0f6294af89efc182bce9913e35888e4f600fba864b309d6a45364a0ba4d"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-15T13:25:21Z"
+      }
     }
   ]
 }
