@@ -470,6 +470,123 @@
         "prompt_version": "classify-v1",
         "generated_at": "2026-07-15T10:23:05Z"
       }
+    },
+    {
+      "node_id": "MDEwOlJlcG9zaXRvcnkxNzAwNjcyNDY=",
+      "category": "ai-ml",
+      "tags": [
+        "llm",
+        "machine-learning"
+      ],
+      "summary": "Code and pretrained models from OpenAI accompanying the paper Language Models are Unsupervised Multitask Learners. This archived, as-is repository serves as a Python starting point for researchers and engineers to experiment with the GPT-2 language model.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "8fbba72e32e93c11deeb678705d22eb88aad8496",
+        "repo_metadata_sha256": "9b9f4328125e1eeeeefc67c68eba48ccb9d05bc2b7d42f1bd42dff2091075cf3",
+        "fingerprint": "260c4254d80ed1db3dba9b896fb050bcbcfc13e2874184f9282c790860c1e5ab"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-15T12:29:34Z"
+      }
+    },
+    {
+      "node_id": "MDEwOlJlcG9zaXRvcnkxOTcyMDY0MTA=",
+      "category": "media-creative",
+      "tags": [
+        "cli",
+        "library"
+      ],
+      "summary": "A Python library and command-line tool that embeds and extracts blind, invisible image watermarks using a DWT-DCT-SVD algorithm. The watermark can be recovered without the original image and survives attacks such as rotation, cropping, masking, resizing, and noise.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "bbfea0ee0bb29c7725e09f7b6845727906eb9e44",
+        "repo_metadata_sha256": "be588e7967fb4552a48d753a4804006c647583cee657017d3adf40623dd408e2",
+        "fingerprint": "86e207c9ff8a9537172882bd3f71197de2bdcb0399bb8a8effa14efd4629eccb"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-15T12:29:34Z"
+      }
+    },
+    {
+      "node_id": "MDEwOlJlcG9zaXRvcnkxOTg4MzI0MDA=",
+      "category": "education-reference",
+      "tags": [
+        "documentation",
+        "visualization"
+      ],
+      "summary": "An introductory Python training course from J.P. Morgan for business analysts and traders, delivered as Jupyter notebooks. It is a motivational demonstration of numerical computing and data visualization for people without a formal programming background, rather than a full computer science curriculum.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "4891c4e4c22b4f764409c6e5bea83750c6e2398f",
+        "repo_metadata_sha256": "9f3700cf2dada62038c1664d9abaf5e45e36b84196c3dfc156ba7b9601b2722d",
+        "fingerprint": "37910ef94777faf647b01d0cd48888396d16168944245978eec86b134430507f"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-15T12:29:34Z"
+      }
+    },
+    {
+      "node_id": "MDEwOlJlcG9zaXRvcnkyMDY0MTA4Mzg=",
+      "category": "education-reference",
+      "tags": [
+        "documentation"
+      ],
+      "summary": "Google's publicly shared engineering practices documentation, capturing collective best practices developed over time. It currently centers on the Code Review Guidelines, comprising a Code Reviewer's Guide and a Change Author's Guide, and is offered so other organizations can benefit from the knowledge.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "a0ef07fe22fe3b391caf4cea4ef074cda22c57c3",
+        "repo_metadata_sha256": "c934a22a2e86a237d9bae42a609a37a759094f6d1eac7a60d28e629a2ae0af07",
+        "fingerprint": "b94e8ed59de05b4522949acbca0bb82cea0285365e93efc92facb2b70e7549d5"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-15T12:29:34Z"
+      }
+    },
+    {
+      "node_id": "MDEwOlJlcG9zaXRvcnkyMTQ4NDc4MQ==",
+      "category": "security-privacy",
+      "tags": [
+        "authentication",
+        "database",
+        "kubernetes",
+        "self-hosted",
+        "terminal"
+      ],
+      "summary": "JumpServer is an open-source Privileged Access Management platform, or bastion host, built with Django. It gives DevOps and IT teams on-demand, secure browser-based access to SSH, RDP, Kubernetes, database, and RemoteApp endpoints, with auditing and access control provided through multiple connector components.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "6317ca7834c5b0f4e4032818fb224a1bb5d6cb16",
+        "repo_metadata_sha256": "373d6104e577c62e03e60dc813c5a94c55035b5145eea6462063ced3da298cac",
+        "fingerprint": "2b116c086952f96b6b7af7b23182b64c6c170ec2b014271e9c636ee2cd62057a"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-15T12:29:34Z"
+      }
     }
   ]
 }
