@@ -706,6 +706,122 @@
         "prompt_version": "classify-v1",
         "generated_at": "2026-07-15T13:25:21Z"
       }
+    },
+    {
+      "node_id": "MDEwOlJlcG9zaXRvcnkyNzE2MTY3NzY=",
+      "category": "education-reference",
+      "tags": [
+        "awesome-list",
+        "documentation"
+      ],
+      "summary": "A community-maintained repository collecting links to WWDC events, meetups, keynote watch parties, articles, videos, and tutorials from across the Apple and Swift developer community. Contributors submit pull requests to share events and learning resources, with archives of previous years.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "8b22ed43b8799d8a1ec042c907d1f454974373e8",
+        "repo_metadata_sha256": "b0b79ebd6e185898545c74e8d5862f68d3d4a7048b4a1a550e77b0b1068bb174",
+        "fingerprint": "2b49bf575b8e08186e1bdb652cb0ea77ae6ece3d8da742146d12db2d9b40dc7a"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-15T17:22:42Z"
+      }
+    },
+    {
+      "node_id": "MDEwOlJlcG9zaXRvcnkyNzM4NzE4NTk=",
+      "category": "self-hosted-homelab",
+      "tags": [
+        "networking",
+        "self-hosted"
+      ],
+      "summary": "An open source, self-hosted implementation of the Tailscale control server, written in Go. It coordinates WireGuard public keys, assigns client IP addresses, and manages a single private Tailscale network (tailnet), aimed at self-hosters, hobbyists, and small labs.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "865151c8020f95da4d45e86fb2c093de749ef824",
+        "repo_metadata_sha256": "19a455aa008c52c852c8baf3dbeb614f9f93a1499bc99d6eb0f562750a5ccf47",
+        "fingerprint": "e961c4894746aae320885aed9518f249ad5cd56a4c775935aa8532b205fcc6ca"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-15T17:22:42Z"
+      }
+    },
+    {
+      "node_id": "MDEwOlJlcG9zaXRvcnkyNzQ0OTU0MjU=",
+      "category": "media-creative",
+      "tags": [
+        "frontend",
+        "library"
+      ],
+      "summary": "A React-based toolkit for creating videos programmatically, interactively, or with coding agents. Developers animate content with code, batch-render videos on their own infrastructure, and build video tools or editors, using React code as the source of truth.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "90118b2449ade4dae0e982e63677c83e4d50deb9",
+        "repo_metadata_sha256": "6749bdac2ca9ef51125ca7568d32e1323fa73e7016e10547930d8cb3aa1593de",
+        "fingerprint": "d7b3eed171d059d7a67a5dad0d3a1ffe6e25b4ea2984234559c71fd1236675bf"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-15T17:22:42Z"
+      }
+    },
+    {
+      "node_id": "MDEwOlJlcG9zaXRvcnkyNzUzODY5MTA=",
+      "category": "security-privacy",
+      "tags": [
+        "cli",
+        "scraping"
+      ],
+      "summary": "A command-line OSINT tool that collects a dossier on a person from a username alone, checking for accounts across thousands of sites and gathering available public information from their pages. It requires no API keys and is used for reconnaissance and investigation.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "6be6e26c1350422fd35dfc94677042f3985cfd72",
+        "repo_metadata_sha256": "220097bc1036cb32464bbb917adf8e82167be0fb519300b9cfb18157dbc05f47",
+        "fingerprint": "7e087e4b234f50b03516d445bb6b0d6a2668a1e1ecc05804f803697bb84d167a"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-15T17:22:42Z"
+      }
+    },
+    {
+      "node_id": "MDEwOlJlcG9zaXRvcnkyODAzNjM5NTI=",
+      "category": "data-analytics",
+      "tags": [
+        "dashboard",
+        "self-hosted",
+        "visualization"
+      ],
+      "summary": "A modern, simple, privacy-focused web analytics platform and open-source alternative to Google Analytics, Mixpanel, and Amplitude. Self-hosted with Node.js and PostgreSQL, it offers product and web analytics including charts, cohort analysis, and user-journey insights.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "474c75b3f0e5ab3d1d2b14e4f39881eaeb26e574",
+        "repo_metadata_sha256": "c8609230cfa6d1d81db387f4a93c2d6e08238a9751df7dfdb04805564a1c3b41",
+        "fingerprint": "9b1f064086bb7008fe79e59f0221eba962b1cf38c420a47992dc9fcc32dbe2f6"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-15T17:22:42Z"
+      }
     }
   ]
 }
