@@ -1056,6 +1056,124 @@
         "prompt_version": "classify-v1",
         "generated_at": "2026-07-15T19:23:05Z"
       }
+    },
+    {
+      "node_id": "MDEwOlJlcG9zaXRvcnkzNjM4OTY0",
+      "category": "devops-infrastructure",
+      "tags": [
+        "automation",
+        "configuration",
+        "deployment",
+        "orchestration"
+      ],
+      "summary": "Ansible is an agentless IT automation platform for configuration management, application deployment, cloud provisioning, ad-hoc task execution, and multi-node orchestration. It uses SSH and a human-readable language to describe infrastructure, managing remote machines in parallel without installing agents on them.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "ed464e118bf451b1274cee7994d0b66f1774c632",
+        "repo_metadata_sha256": "0397acc6676bf7cc5c8492c6266dd37f74f03d1ea5a9c5802ba3a1d24c91dbeb",
+        "fingerprint": "04f391897f7981f1c892cc472d76d894a2fce4b591589063a9d71dea6ff308ba"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-15T20:22:36Z"
+      }
+    },
+    {
+      "node_id": "MDEwOlJlcG9zaXRvcnkzNjU2NTA5ODY=",
+      "category": "education-reference",
+      "tags": [
+        "documentation"
+      ],
+      "summary": "A reference collection of Warren Buffett's annual letters to the shareholders of Berkshire Hathaway spanning 1957 to 2024. The repository gathers these letters as source material on value investing associated with Buffett and his partner Charlie Munger.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "8fa5923bd1c10fbdd9321552cb3682cc11479ed5",
+        "repo_metadata_sha256": "c9f4f81b58b325070d0101ca14014ff27860386d5e0eb00d2efa8a5a7d56a415",
+        "fingerprint": "f25f3a7db9c42d217ce0a2a63821315077d4a3ce3c4c9215a51ca82902735200"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-15T20:22:36Z"
+      }
+    },
+    {
+      "node_id": "MDEwOlJlcG9zaXRvcnkzODM4MDcxNzY=",
+      "category": "other",
+      "tags": [
+        "desktop-app",
+        "gui"
+      ],
+      "summary": "Moira is a Chinese astrological chart-casting application (Qi Zheng Si Yu) repackaged here as a portable Windows build made from the original Moira-jre.exe installer with no code changes. It runs on a bundled Java runtime and is launched by clicking Moira.exe, with JRE and class paths configurable in Moira.ini.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "3de2ff843a37756c973fd5da584a2ae0e6899dcd",
+        "repo_metadata_sha256": "75d8233b88fececaa30636f45f3f8bd07529feb364cf0828de2ba7f462a4c231",
+        "fingerprint": "83804e179d4af5ba380f8cbf942807546f1e7f1a1d226d7de4883392a218cde5"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-15T20:22:36Z"
+      }
+    },
+    {
+      "node_id": "MDEwOlJlcG9zaXRvcnkzOTA0MDE5OTI=",
+      "category": "ai-ml",
+      "tags": [
+        "benchmark",
+        "library",
+        "machine-learning"
+      ],
+      "summary": "Merlion is a Python machine learning library for time series intelligence. It offers an end-to-end framework for forecasting, anomaly detection, and change point detection on univariate and multivariate data, with standardized benchmarking, AutoML hyperparameter tuning and model selection, and post-processing that makes anomaly scores more interpretable.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "be8317bf90c107a6b6b5634406551e7a368fa57e",
+        "repo_metadata_sha256": "f7fb951080a3a083aa5495c13d4d801bc7c6dc5387ca9cf0b5a54a462fe8dd17",
+        "fingerprint": "c7918b6a6a4ac7134d8024b86aea26c709724a422e656d855480a6ef4d8a47dc"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-15T20:22:36Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOG3LkHA",
+      "category": "developer-tools",
+      "tags": [
+        "cli",
+        "library",
+        "networking"
+      ],
+      "summary": "curl-impersonate is a special build of curl that mimics the TLS and HTTP/2 handshakes of major browsers such as Chrome, Edge, Safari, and Firefox, so requests are not distinguished by fingerprinting. It works as a command-line tool like regular curl or as a drop-in library replacement for libcurl.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "3195b6c1c4ed2008c02122eef6ff4aa569efccdc",
+        "repo_metadata_sha256": "45728627c4ec28b3a28aeaa75f10e74b8ed19c0680d1ed4f91815dd316923ffa",
+        "fingerprint": "3079acf70bb6efa9b32c64c7c88fbecdcbb13af6cb4be4b9a6489b2fed3d1d7e"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-15T20:22:36Z"
+      }
     }
   ]
 }
