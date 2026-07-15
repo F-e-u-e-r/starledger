@@ -8,7 +8,7 @@
     "paths": [
       "README.md"
     ],
-    "last_commit_sha": "01f23f34beb84452391275089c28bc35eee745a9"
+    "last_commit_sha": "04f7657b56c1525e1929adebdd5d54e825e0b958"
   },
   "pending": [],
   "deliveries": [
@@ -160,6 +160,24 @@
       "notification_key": "awesome_stars:unslothai/unsloth:R_kgDOKznBOA",
       "status": "sent",
       "completed_at": "2026-07-12T06:48:03.289Z",
+      "detail": null
+    },
+    {
+      "notification_key": "awesome_stars:apple/foundation-models-utilities:R_kgDOS0DBDg",
+      "status": "sent",
+      "completed_at": "2026-07-15T06:30:15.531Z",
+      "detail": null
+    },
+    {
+      "notification_key": "awesome_stars:opencut-app/opencut:R_kgDOO_yqIA",
+      "status": "sent",
+      "completed_at": "2026-07-15T06:30:15.531Z",
+      "detail": null
+    },
+    {
+      "notification_key": "awesome_stars:team-reflect/reflect-open:R_kgDOS09mLA",
+      "status": "sent",
+      "completed_at": "2026-07-15T06:30:15.531Z",
       "detail": null
     }
   ]
