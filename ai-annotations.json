@@ -26,6 +26,29 @@
       }
     },
     {
+      "node_id": "MDEwOlJlcG9zaXRvcnk1Mjk1MDI=",
+      "category": "libraries-frameworks",
+      "tags": [
+        "library",
+        "scraping"
+      ],
+      "summary": "Scrapy is a cross-platform web scraping framework for Python 3.10+ that extracts structured data from websites. Maintained by Zyte and community contributors, it is installed with pip and documented for building crawlers and scrapers.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.rst",
+        "readme_oid": "6235cb20c217c9d1584ed40b2b3734322851c267",
+        "repo_metadata_sha256": "4864b30695ef5556edfc8b75bd893d7730d0a887ecb11ed98685c14dc974c3fe",
+        "fingerprint": "773934da89934e09b5566520d3bceef370018395329e2388ca4f2519dea7db40"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-15T08:21:21Z"
+      }
+    },
+    {
       "node_id": "MDEwOlJlcG9zaXRvcnk1MzgwOTA5MA==",
       "category": "libraries-frameworks",
       "tags": [
@@ -115,6 +138,109 @@
         "model_label": "claude-sonnet-4-6",
         "prompt_version": "classify-v1",
         "generated_at": "2026-06-23T08:30:50Z"
+      }
+    },
+    {
+      "node_id": "MDEwOlJlcG9zaXRvcnk2NjY3MDgxOQ==",
+      "category": "libraries-frameworks",
+      "tags": [
+        "automation",
+        "cli",
+        "library",
+        "proxy",
+        "scraping"
+      ],
+      "summary": "Crawlee is a TypeScript web scraping and browser automation library for Node.js used to build reliable crawlers. It offers a single interface for HTTP and headless browser crawling with Playwright and Puppeteer, persistent request queues, integrated proxy rotation, and automatic scaling.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "7727f527b78b8ffd35f11bf85dc0d4431c8905e4",
+        "repo_metadata_sha256": "1c9422d030ee188b77a36368c618ec870f1b11afebec17f7c6a40b673aee1e07",
+        "fingerprint": "226bad7360a05aae3b21722765c2e7b0b9abd7a24ed40c9c6522c8162475d718"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-15T08:21:21Z"
+      }
+    },
+    {
+      "node_id": "MDEwOlJlcG9zaXRvcnk2ODYxOTc1OQ==",
+      "category": "libraries-frameworks",
+      "tags": [
+        "cli",
+        "frontend",
+        "library",
+        "theme"
+      ],
+      "summary": "Creative Tim UI is a React component library built on top of shadcn/ui for building modern web applications faster. It provides pre-built, customizable components and blocks for Next.js projects, installed through a CLI or the shadcn registry, and configured with Tailwind CSS.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "7c7e8ef78182373eb894ac3606002de90377ac86",
+        "repo_metadata_sha256": "1fbd72d003aebc25cbcf36faf48b58186a40d01240124d0dd0af71092ecfa536",
+        "fingerprint": "4c6329d431c6188e8c51778542c309eee92e7063e2963fc6dd134e233b12453d"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-15T08:21:21Z"
+      }
+    },
+    {
+      "node_id": "MDEwOlJlcG9zaXRvcnk3Mzk2NDg5NQ==",
+      "category": "ai-ml",
+      "tags": [
+        "ai-agents",
+        "bot",
+        "cli",
+        "llm",
+        "sdk"
+      ],
+      "summary": "Botpress is an open-source platform for building chatbots and LLM-powered assistants integrated with OpenAI. This repository holds public integrations for the Botpress Hub, developer tools including a CLI, SDK, and API client, and example bots built as code.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "readme.md",
+        "readme_oid": "6ff9edc0c7ec42304b8bf67ee6f3d5b32ac2473c",
+        "repo_metadata_sha256": "8d2e39eb3325d579e45f428189af338c80d257ec99bd34e0b4d7b0cd5a2b4e76",
+        "fingerprint": "568319a8bb11afc97eb7623105cbf035a924facd131ff5c8f5d610f9cbbb1e81"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-15T08:21:21Z"
+      }
+    },
+    {
+      "node_id": "MDEwOlJlcG9zaXRvcnk3ODg2OTQzMA==",
+      "category": "libraries-frameworks",
+      "tags": [
+        "backend",
+        "database",
+        "game",
+        "real-time",
+        "self-hosted"
+      ],
+      "summary": "Nakama is a scalable open-source game backend server providing user accounts, storage, social features, realtime and turn-based multiplayer, matchmaking, chat, leaderboards, and tournaments. It runs on CockroachDB or Postgres, deploys via Docker or binaries, and is extensible with Lua, TypeScript, or Go.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "67e333af7aac48a2a589a9880cb549d1fc72e9c2",
+        "repo_metadata_sha256": "2803373514a48b85014f72555d34d77d99025202a822d58b84446c7d3ac17975",
+        "fingerprint": "c4aa7a0c7e29014972e48a49116225efd8514b9649a54526e313a070b6b0936c"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-15T08:21:21Z"
       }
     }
   ]
