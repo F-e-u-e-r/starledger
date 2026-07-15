@@ -173,7 +173,9 @@ Deterministic CLI sequence (from the runbook):
 12. Commit ONLY ai-annotations.json and ai-annotations-meta.json.
 
 13. Open ONE pull request to main.
-    Title: feat(ai): add AI annotations (<N> repos, <YYYY-MM-DD>)
+    Title: feat(ai): add AI annotations (<N> repos, <TS>)
+      where TS = "$(TZ='Asia/Taipei' date +'%Y-%m-%d %H:%M') UTC+8" — Asia/Taipei
+      local time WITH the minute, so same-day PRs never share a title.
     Body:
     * Automated Claude Routine executor run (executor kind: claude-routine).
     * Only ai-annotations.json and ai-annotations-meta.json changed; temporary
