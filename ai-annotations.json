@@ -1174,6 +1174,125 @@
         "prompt_version": "classify-v1",
         "generated_at": "2026-07-15T20:22:36Z"
       }
+    },
+    {
+      "node_id": "R_kgDOGfQZkg",
+      "category": "security-privacy",
+      "tags": [
+        "automation",
+        "configuration",
+        "networking",
+        "proxy"
+      ],
+      "summary": "A collection of Shadowrocket proxy rule sets for iOS with strong ad-filtering. The rules are automatically generated from sources such as GFWList, EasyList and Peter Lowe's lists, deduplicated, and rebuilt and published every day.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "readme.md",
+        "readme_oid": "719c133eb0f71c602bc47300b53fa4aaa48fb9f8",
+        "repo_metadata_sha256": "695a1b326b70729c4824bf6faa8a0655ce4d2a1dd8ccffa9a403033f36cd2cc8",
+        "fingerprint": "74e7d7ea938a2c9234a17addcaab636f4bb7c6402fc4db2bce2b5677d8e7a508"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-15T21:22:13Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOGhF4bg",
+      "category": "education-reference",
+      "tags": [
+        "awesome-list",
+        "library"
+      ],
+      "summary": "A curated \"awesome\" list of libraries, packages, and resources for systematic and quantitative trading, spanning crypto, stocks, futures, options, CFDs and FX, with projects selected for domain fit and code quality.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "Readme.md",
+        "readme_oid": "5fcca1a07e35af039a8447cfba207dae24aa5da2",
+        "repo_metadata_sha256": "e01ed653c222b75916c400b3167694ed94dc9bca1e6b9e8cd6ebdde05ba3df78",
+        "fingerprint": "755699dbd6d05cecb00ae8c8b8cd592a723416637c159946fa04b4df11a3f605"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-15T21:22:13Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOGyI-8A",
+      "category": "self-hosted-homelab",
+      "tags": [
+        "backup",
+        "self-hosted"
+      ],
+      "summary": "A high-performance, self-hosted photo and video management solution with mobile and web apps for backing up, organizing, and browsing a media library, offered as an open-source alternative to Google Photos.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "13c4009b6803bc7115a5464206f2367d6a17669e",
+        "repo_metadata_sha256": "175bcac64c448ea4488a457f6be648534e108d35d5359869140f17c5d3657c24",
+        "fingerprint": "2040fd0baa99e2bd84b4424b359b1a5ac8b929aaa51c140a3293dfd5a378a5e2"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-15T21:22:13Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOHFhdAg",
+      "category": "developer-tools",
+      "tags": [
+        "gui",
+        "library",
+        "terminal"
+      ],
+      "summary": "A fast, feature-rich, cross-platform terminal emulator written in Zig that uses platform-native UI and GPU acceleration. It also provides libghostty, a zero-dependency C and Zig library for embedding terminal functionality.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "808b684daf0411275d7571e0f2fa299e3a9266bb",
+        "repo_metadata_sha256": "66cec17b795076648daac2ee036316246cc25300ade55cecf17e1096009d1a9b",
+        "fingerprint": "0dd19095a1f93390158db309999d5299f91806d1de60de4712d6052b119f0739"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-15T21:22:13Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOHGP7Lw",
+      "category": "education-reference",
+      "tags": [
+        "documentation",
+        "llm",
+        "machine-learning"
+      ],
+      "summary": "A comprehensive collection of Chinese-language deep learning study notes in Jupyter notebooks, compiled from popular video courses and covering computer vision, NLP, PyTorch, and large-model agents.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "54027bb30e29767de4629aa1f3635e56ad4a307e",
+        "repo_metadata_sha256": "23b0d0466361cd72b8c2daea00c4fbb8e1eae3f19d0e3704b2cbdc0d8a37e86c",
+        "fingerprint": "55c086fb3847f3e9a2deee845512382a778dd771dab99534168d40cec2725238"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-15T21:22:13Z"
+      }
     }
   ]
 }
