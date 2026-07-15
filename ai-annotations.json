@@ -1293,6 +1293,131 @@
         "prompt_version": "classify-v1",
         "generated_at": "2026-07-15T21:22:13Z"
       }
+    },
+    {
+      "node_id": "R_kgDOHfAAfQ",
+      "category": "productivity-automation",
+      "tags": [
+        "automation",
+        "plugin",
+        "scraping"
+      ],
+      "summary": "A browser userscript that enables downloading images, GIFs, audio, and videos from the Telegram web app, including from chats, stories, and channels where saving media is normally restricted. It is installed through a userscript manager such as Tampermonkey or Violentmonkey.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "cf1f0eee42192cec72ffb5a13b804adda8104078",
+        "repo_metadata_sha256": "c23bcca1a55654ff2d74b219d92be68032d58ceb351675c1bd926345d2443399",
+        "fingerprint": "7b2f9a3f86adf81c3be7d2aa1c185f31d36965244bf25ab720c8c27c24cfaeb2"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-15T22:23:03Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOHl9dBA",
+      "category": "developer-tools",
+      "tags": [
+        "cli",
+        "linter",
+        "search"
+      ],
+      "summary": "A command-line tool written in Rust for structural search, linting, and rewriting of source code. It matches abstract syntax tree nodes rather than plain text, letting users write code-like patterns with wildcards to find and transform code across many languages using tree-sitter.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "504d24e820e460b23fc36084f33b270737c1053d",
+        "repo_metadata_sha256": "618b2869dcb8d686377361af57331f879190b2cc30f37a58af13214527577ddb",
+        "fingerprint": "8299d60cda76e844d5bb37b2b635f506a4196f551a87ef344a34de8d16babffc"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-15T22:23:03Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOHoRNyA",
+      "category": "media-creative",
+      "tags": [
+        "api",
+        "frontend",
+        "scraping",
+        "self-hosted"
+      ],
+      "summary": "An open-source media downloader with a web frontend and API, distributed as a monorepo. Users paste a link from services such as YouTube, TikTok, Instagram, or SoundCloud to save publicly accessible video, audio, and images. It runs without ads or trackers and can be self-hosted.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "795eb7e30a742fbf5ebcf16991e6e5c90332f614",
+        "repo_metadata_sha256": "3f91b938e0fe3aa31d81bea51df69d96d1e9dc7c7f46e08a97f958b968b6cf55",
+        "fingerprint": "cd3a553d15a28bfe558501d77f7f796eadb93f6431f5b734e61a9bee4ccedb30"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-15T22:23:03Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOHrwnHA",
+      "category": "devops-infrastructure",
+      "tags": [
+        "backup",
+        "containers",
+        "dashboard",
+        "deployment",
+        "monitoring",
+        "self-hosted"
+      ],
+      "summary": "An open-source, web-based control panel for managing Linux servers. It offers a graphical interface for deploying websites with SSL, managing Docker containers, images, networks, and volumes, installing applications from a marketplace, configuring firewall and security rules, and scheduling automated backups.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "d0fc96dcfcb1bb9652d15f6a35b827736abdb427",
+        "repo_metadata_sha256": "b48c44e23964ea318b7975caa42a48b87fde41db1ff5c558a7982fca07f53daa",
+        "fingerprint": "5e3ef12d77a1cd581fda8d6a27aa9340ebd30458b96a7d695aa48d81c0b91637"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-15T22:23:03Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOI67vwg",
+      "category": "developer-tools",
+      "tags": [
+        "ai-agents",
+        "automation",
+        "cli",
+        "scraping"
+      ],
+      "summary": "A headless web browser written from scratch in Zig for automation and AI agents rather than as a Chromium or WebKit fork. It exposes a Chrome DevTools Protocol interface compatible with Puppeteer and Playwright, and targets low memory use and fast execution when loading many web pages.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "9a880cba34e3f47453d4f2589612f9351df4a685",
+        "repo_metadata_sha256": "f236d0d78659af953cce4b652d9662c5d68c00325128ba94dd644a4118da56f0",
+        "fingerprint": "bd1b4a83495a1954050078ab0d66a2acac0a1dc89c652f2ec92f44ed74ca34dd"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-15T22:23:03Z"
+      }
     }
   ]
 }
