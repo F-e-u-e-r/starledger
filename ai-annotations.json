@@ -242,6 +242,118 @@
         "prompt_version": "classify-v1",
         "generated_at": "2026-07-15T08:21:21Z"
       }
+    },
+    {
+      "node_id": "MDEwOlJlcG9zaXRvcnk4NTA3NzU1OA==",
+      "category": "education-reference",
+      "tags": [
+        "documentation"
+      ],
+      "summary": "Community-driven collection of interactive roadmaps, guides, and educational resources that help developers plan learning paths across frontend, backend, DevOps, and other career tracks. Built in TypeScript and organized around clickable topic nodes.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "readme.md",
+        "readme_oid": "96ab9c6e6805921721a1350897f544c841c889e6",
+        "repo_metadata_sha256": "e1e1f1bd605dd7c5c136a6784da3227ed252227dbf6e8445c16b0800662b5136",
+        "fingerprint": "5d4ae4182656769834dc08a176a7694e3e379f6c420eff8093204257fca523b4"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-15T09:22:55Z"
+      }
+    },
+    {
+      "node_id": "MDEwOlJlcG9zaXRvcnk5MTk0ODU0MA==",
+      "category": "data-analytics",
+      "tags": [
+        "api",
+        "library"
+      ],
+      "summary": "Python library for downloading historical and live market data from Yahoo! Finance, returning results as pandas data structures. Commonly used to fetch stock, financial, and other market data for analysis.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "00cf0d8d3ab5d281ef7a75afe3169f3e1699159c",
+        "repo_metadata_sha256": "95f9e1d5d415f46fdc96c18b6e2325ade04c9634b2eda8e0d76fb852fd09dacf",
+        "fingerprint": "1a0de724d335a67b3a05c014368e8c819da739e9bb5ec98f0a79afbb97580b7a"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-15T09:22:55Z"
+      }
+    },
+    {
+      "node_id": "MDEwOlJlcG9zaXRvcnkxMDA2NjMzNDE=",
+      "category": "devops-infrastructure",
+      "tags": [
+        "automation"
+      ],
+      "summary": "A repository that stores system-administration and management-related scripts, primarily in Python, gathered together so they can be conveniently retrieved and reused.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "52b1aaef5a1fe2342c912d3a98e9a78eebdce617",
+        "repo_metadata_sha256": "329c023b0d41677e9e2758120c282fba932267a9496f8edf9b60539267e510c2",
+        "fingerprint": "609a6cb53fa740744d63b1965c3ccf791ca4c9922a7ec4f4c9b09ec2b05d3908"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-15T09:22:55Z"
+      }
+    },
+    {
+      "node_id": "MDEwOlJlcG9zaXRvcnkxMTE1ODM1OTM=",
+      "category": "mobile",
+      "tags": [
+        "cli",
+        "desktop-app"
+      ],
+      "summary": "Application for displaying and controlling an Android device from a computer, supporting screen mirroring and recording. Written in C and built on components such as FFmpeg and SDL2.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "54aa707f237b5939f904c9eab0b6208b59812401",
+        "repo_metadata_sha256": "d5ce9ce73e0a3fae063cd70840c7676a9f977eb70fac8cea9f8cafc0f31b1a5c",
+        "fingerprint": "f73a7fbd5b3aee5a4c30f52f9e9462a47f078d242ce3b76367148c5af520aea2"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-15T09:22:55Z"
+      }
+    },
+    {
+      "node_id": "MDEwOlJlcG9zaXRvcnkxMjcwMDgzMDc=",
+      "category": "education-reference",
+      "tags": [
+        "awesome-list"
+      ],
+      "summary": "A curated list that tracks current concerning and harmful uses of artificial intelligence, covering areas such as discrimination, disinformation, and surveillance, with the goal of raising awareness of AI misuse in society.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "e27df34e7595f6a3afd62d219802b39fcf513246",
+        "repo_metadata_sha256": "0dc4b026f768286b62d2a8f352995ae712e789fda3a0927be262a4ca174631bb",
+        "fingerprint": "86ace5d2dbfdf8313bfd2b60782bae60d17c63e61270be9e431be2421dc774b6"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-15T09:22:55Z"
+      }
     }
   ]
 }
