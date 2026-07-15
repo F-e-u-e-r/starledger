@@ -822,6 +822,123 @@
         "prompt_version": "classify-v1",
         "generated_at": "2026-07-15T17:22:42Z"
       }
+    },
+    {
+      "node_id": "MDEwOlJlcG9zaXRvcnkyOTE3MDM1NjE=",
+      "category": "libraries-frameworks",
+      "tags": [
+        "automation",
+        "library",
+        "scraping"
+      ],
+      "summary": "AutoScraper is a lightweight Python library for automatic web scraping. Given a URL and sample data, it learns the extraction rules and returns similar elements, then reuses the trained model on new pages to fetch matching or exact content.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "a09a2f9f697163054d420a1a2f7ff2ff7219220b",
+        "repo_metadata_sha256": "17291abba8eebf402751e934f2d10344316c60e21c6e9236a9d3c978d369bab2",
+        "fingerprint": "c10378e95a57b55fa7eba7c9ae83af457d28e779383e6aeabc49dda8c28a81b4"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-15T18:23:03Z"
+      }
+    },
+    {
+      "node_id": "MDEwOlJlcG9zaXRvcnkyOTk4MzI4NjA=",
+      "category": "communication-collaboration",
+      "tags": [
+        "authentication",
+        "real-time",
+        "sdk",
+        "self-hosted"
+      ],
+      "summary": "LiveKit is an open-source, WebRTC-based platform for adding scalable real-time video, audio, and data to applications. Its Go server runs as a distributed SFU with JWT authentication, client and server SDKs, and single-binary, Docker, or Kubernetes deployment.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "c49da91db47f98557f93125ffa6f3756608b1361",
+        "repo_metadata_sha256": "a3063a7f8dbe62eefacd9cdc7da74a3b4be54293a79e0278441df233777c1b24",
+        "fingerprint": "7050db13706ec5c62924bf798b17ad9826ef2fab383b566acddf91809aff5db5"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-15T18:23:03Z"
+      }
+    },
+    {
+      "node_id": "MDEwOlJlcG9zaXRvcnkzMDA1OTI5MDc=",
+      "category": "security-privacy",
+      "tags": [
+        "cli",
+        "library"
+      ],
+      "summary": "GHunt is an offensive Google framework focused on OSINT. It provides CLI modules and a Python library to gather information on email addresses, Gaia IDs, and Drive files, geolocate BSSIDs, and export results as JSON, built with a fully async design.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "9999ce9da99953132d71a816ef59db062f7d1a21",
+        "repo_metadata_sha256": "a34632b5f0731d3e18932b29be67d20bd78e76ea623a0410c66adcfd8ed63e51",
+        "fingerprint": "5add8237f80ec1acdb64a704cf08f18ce5e82b65b99793ea58f195eb988bd575"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-15T18:23:03Z"
+      }
+    },
+    {
+      "node_id": "MDEwOlJlcG9zaXRvcnkzMTkwMjk4NDY=",
+      "category": "security-privacy",
+      "tags": [],
+      "summary": "Depix is a proof-of-concept implementing a technique to recover plaintext from pixelized screenshots, demonstrating that certain pixelization applied to obscure text can be reversed to reveal the original content.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "bdaada2412ad14b8c4eedbe81ec8e83c0077d7ee",
+        "repo_metadata_sha256": "7d67b11897a1f4adfc81a7fed44fd2516ba7d6ddf72661f79e31591e88ab823d",
+        "fingerprint": "1d8838d3c00ab2b5f74a0ea36bc69437530b26a6abd99e77a49c400af77eaf2d"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-15T18:23:03Z"
+      }
+    },
+    {
+      "node_id": "MDEwOlJlcG9zaXRvcnkzMjMwNDg3MDI=",
+      "category": "data-analytics",
+      "tags": [
+        "ai-agents",
+        "api",
+        "cli",
+        "rest-api"
+      ],
+      "summary": "OpenBB Open Data Platform is an open-source toolset that integrates proprietary, licensed, and public financial data into downstream applications. It exposes data to Python, Excel, REST APIs, and MCP servers for AI agents, and ships a CLI plus a FastAPI backend.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "33f9961b4a3ea6906e203a5168e3d2b6b8088739",
+        "repo_metadata_sha256": "a167caaaf83855304b778a3cc3ef3503fd8df4725e3ff92e8043211ba53d5317",
+        "fingerprint": "0b2077f9b750dd3326ba9e72310858380d19916d8b9a85a6b3f2d421b0a1d2ea"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-15T18:23:03Z"
+      }
     }
   ]
 }
