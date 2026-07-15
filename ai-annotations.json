@@ -939,6 +939,123 @@
         "prompt_version": "classify-v1",
         "generated_at": "2026-07-15T18:23:03Z"
       }
+    },
+    {
+      "node_id": "MDEwOlJlcG9zaXRvcnkzMjQ4NDM4MQ==",
+      "category": "education-reference",
+      "tags": [
+        "awesome-list",
+        "documentation"
+      ],
+      "summary": "A curated list of software services (SaaS, PaaS, IaaS, and other offerings) that provide free developer tiers, scoped to services useful to system administrators and DevOps practitioners, assembled from community pull requests and reviews.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "5483ce144d01f31d057a6d0b2eeff426255740f3",
+        "repo_metadata_sha256": "b6ec0bfc7cb17f4d8dbcd8c22c90854c95541bc3e5682729a299415583b6e351",
+        "fingerprint": "8bbc3b7ee6921008a3d31b78fe21f91727e2696e0dde095b84d6f7953339cc9f"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-15T19:23:05Z"
+      }
+    },
+    {
+      "node_id": "MDEwOlJlcG9zaXRvcnkzNDIzODg3NDU=",
+      "category": "data-analytics",
+      "tags": [
+        "library",
+        "machine-learning"
+      ],
+      "summary": "Kats is a Python toolkit from Facebook's Infrastructure Data Science team for time series analysis, offering forecasting, anomaly and change-point detection, feature extraction and embedding, and multivariate analysis in one lightweight, extensible framework.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "2a389156842b76ff105a341eacd586a5519cc538",
+        "repo_metadata_sha256": "caf87c6e7596ee000543dcf1e358d55ecec9026a7395eb9d0ffe14687c519c85",
+        "fingerprint": "46d5193cc23a1e56e21ebf0783d19145e3ed30e55e859c47e73a612948bfbee9"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-15T19:23:05Z"
+      }
+    },
+    {
+      "node_id": "MDEwOlJlcG9zaXRvcnkzNDQ5NDkzNjE=",
+      "category": "libraries-frameworks",
+      "tags": [
+        "api",
+        "library",
+        "real-time",
+        "scraping"
+      ],
+      "summary": "A Node.js library for retrieving real-time market prices, indicator values, and TradingView technical analysis, supporting backtesting, replay mode, custom date ranges, and access to invite-only indicators for building trading bots and alerts.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "666100018f9d8d8868fbc3e3f18afafd22da0b30",
+        "repo_metadata_sha256": "cc2ab685f061cf359b2701e1b86459007e4ea60e40727b70c2b014d59f0189a1",
+        "fingerprint": "c87df94cc156dbd40abf4a3479d7f8efd4f7060cf40c57c84a63e9d298c32be5"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-15T19:23:05Z"
+      }
+    },
+    {
+      "node_id": "MDEwOlJlcG9zaXRvcnkzNTAzNjAxODQ=",
+      "category": "productivity-automation",
+      "tags": [
+        "automation",
+        "self-hosted"
+      ],
+      "summary": "Cal.diy is the community-driven, open-source edition of Cal.com, a self-hostable scheduling platform for managing bookings and appointments, built with Next.js, Prisma, tRPC, and the T3 stack, and intended for personal, non-production self-hosted use.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "4bfd00c01597ecb1fbd76bcaff5d018c7b61b7bd",
+        "repo_metadata_sha256": "c920bba94f4c4eece00b913ce8e73f7681b311071cbbd2300fe61f9d7e6899b8",
+        "fingerprint": "333897adeaccd2574394ce23498c405a68133bc7f1b3e3eda2d9f7e4498a4fca"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-15T19:23:05Z"
+      }
+    },
+    {
+      "node_id": "MDEwOlJlcG9zaXRvcnkzNTczNjI4MDM=",
+      "category": "media-creative",
+      "tags": [
+        "desktop-app",
+        "gui"
+      ],
+      "summary": "FreeMoCap is a free, open-source, hardware- and software-agnostic motion capture system with a Python graphical interface, providing minimal-cost, research-grade markerless motion capture for decentralized scientific research, education, and training.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "787dace0ad1b181ec3daef010af494439938b986",
+        "repo_metadata_sha256": "210db765c1949746d1d553e0907f14c4e7388692b9acacb027896026a97fb262",
+        "fingerprint": "39304031dee390a0e16f3f2035e0a153467393be967800aa06354c20ee5a8d38"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-15T19:23:05Z"
+      }
     }
   ]
 }
