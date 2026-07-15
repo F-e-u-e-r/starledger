@@ -80,12 +80,58 @@ export function normalizeSummary(value: string): string {
     .trim();
 }
 
+/**
+ * A factual repository summary never needs a URL; a malicious starred README that
+ * steers the classifier could smuggle a link (tracking, phishing, SEO spam) into
+ * `summary`, the one attacker-influenceable free-text field rendered under the
+ * authoritative "AI" badge. This rejects the COMMON explicit link forms:
+ *   - any `scheme://…` (http, https, ftp, git, file, ws, …),
+ *   - a protocol-relative `//dotted.host`,
+ *   - a `www.` host,
+ * checked on the raw value AND its NFKC-folded copy, so fullwidth / compatibility
+ * look-alikes (`ｈｔｔｐｓ：／／…`) cannot slip past the NFC-only canonical check.
+ *
+ * It is NOT a complete URL detector, by design. Deliberately NOT rejected — because
+ * catching them deterministically without a real URL parser false-positives on
+ * ordinary technical prose — are bare scheme-less domains ("evil.com/x" vs
+ * "Node.js"), non-`//` schemes ("mailto:" / "magnet:" / "tel:" — matching a bare
+ * `scheme:` false-positives on the "Magnet:" app name and "Tel:" prefixes), `//token`
+ * without a dotted authority ("//go:build"), a bare "://"
+ * with no scheme ("a parser for ://-style syntax"), IDN / IPv6 / ideographic-dot
+ * authorities, and markup characters ("List<T>", "arr[0]", "a < b"). The enforcing
+ * boundary is LAYERED and does not rest on this regex: the executor prompt already
+ * forbids links, `verify-agent-artifacts` / `verify-ai-provenance` parse through this
+ * schema at merge, and `summary` is rendered as PLAIN TEXT (auto-escaped React text
+ * children). Any consumer that markdown-renders, linkifies, or places `summary` in an
+ * href / src / CSS url MUST re-open this control. This regex is the deterministic
+ * backstop for the obvious cases, not the whole defense.
+ */
+function hasUrl(value: string): boolean {
+  // Summaries are length-bounded (<= SUMMARY_MAX_LENGTH; the raw candidate <= 2000).
+  // Short-circuit anything larger BEFORE probing: Zod still runs a refinement after
+  // .max() reports its (non-fatal) size issue, and the scheme alternative backtracks
+  // polynomially on a long run of scheme characters, so an oversized crafted string
+  // could burn CPU. The length refine already rejects it, so returning false changes
+  // no verdict. The boundary classes exclude identifier-continuation code points —
+  // connectors (`\p{Pc}`, e.g. `_`), dashes (`\p{Pd}`, e.g. `-`), and marks (`\p{M}`) —
+  // so identifiers like `parse_www.config` and `config-www.local` are not matches.
+  if (value.length > 4000) return false;
+  const probe = (s: string): boolean =>
+    /[a-z][a-z0-9+.-]*:\/\/|(?:^|[^\p{L}\p{N}\p{Pc}\p{M}\p{Pd}/])\/\/[a-z0-9][a-z0-9-]*\.[a-z0-9]|(?:^|[^\p{L}\p{N}\p{Pc}\p{M}\p{Pd}])www\.[a-z0-9]/iu.test(
+      s,
+    );
+  return probe(value) || probe(value.normalize('NFKC'));
+}
+
 export const RawSummarySchema = z
   .string()
   .min(1)
   .max(2_000)
   .refine((value) => !hasRawTextControlCharacter(value), {
     message: 'summary must not contain control characters',
+  })
+  .refine((value) => !hasUrl(value), {
+    message: 'summary must not contain a URL (scheme://, //host, or www.)',
   });
 
 export const CanonicalSummarySchema = z
@@ -97,6 +143,9 @@ export const CanonicalSummarySchema = z
   })
   .refine((value) => !hasUnsafeFormatCharacter(value), {
     message: 'summary must not contain bidi, zero-width, or C1 format characters',
+  })
+  .refine((value) => !hasUrl(value), {
+    message: 'summary must not contain a URL (scheme://, //host, or www.)',
   })
   .refine((value) => value === normalizeSummary(value), {
     message: 'summary must be normalized',
