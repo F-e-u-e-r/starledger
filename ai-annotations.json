@@ -354,6 +354,122 @@
         "prompt_version": "classify-v1",
         "generated_at": "2026-07-15T09:22:55Z"
       }
+    },
+    {
+      "node_id": "MDEwOlJlcG9zaXRvcnkxMzI3NTA3MjQ=",
+      "category": "education-reference",
+      "tags": [
+        "awesome-list",
+        "documentation"
+      ],
+      "summary": "A community-compiled collection of well-written, step-by-step guides for recreating popular technologies from scratch, covering topics such as databases, operating systems, shells, Git, emulators, programming languages, and neural networks. It is organized as a categorized list to help developers learn by building.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "9a553c729b29bc69296d7092fc1c314c2c811bad",
+        "repo_metadata_sha256": "491895931c6aaa68b4a29da552c5773e261258f4b603fe7956fcfe051af5c0ea",
+        "fingerprint": "e0043c20ae17965f84b3a8f7c54968ad51ff1c743593e0b791d14fb088da3ecd"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-15T10:23:05Z"
+      }
+    },
+    {
+      "node_id": "MDEwOlJlcG9zaXRvcnkxNTIzMTIxMg==",
+      "category": "web-applications",
+      "tags": [
+        "backend",
+        "cms",
+        "frontend",
+        "plugin"
+      ],
+      "summary": "The Jetpack monorepo holding source code for the Jetpack WordPress plugins along with shared Composer and JavaScript packages used by them. Jetpack offers security, performance, marketing, and design tools for WordPress sites, and the repository documents build steps and a Docker-based local development workflow.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "readme.md",
+        "readme_oid": "9bc082fb12f7bb72be449a7826bc4fe8bedcafb2",
+        "repo_metadata_sha256": "925a86d8bbdea981a326c865af8bb9bee47b58b48570ef48c6fec7cbd2eaff80",
+        "fingerprint": "41f32fca2a336af008b504149a655c1cfbc95d7bdfcdfc0a24ac0e6c3895595a"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-15T10:23:05Z"
+      }
+    },
+    {
+      "node_id": "MDEwOlJlcG9zaXRvcnkxNTk1ODY3Ng==",
+      "category": "security-privacy",
+      "tags": [],
+      "summary": "A generic Android deobfuscator that virtually executes an app to understand its behavior, then optimizes the code so it behaves identically but is easier for a human to read. It includes smalivm, a Dalvik virtual machine sandbox, and applies optimizations such as constant propagation, dead code removal, and string decryption.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "490540ec10acdc3063632f1fa3a1bccb80239235",
+        "repo_metadata_sha256": "91e871e2618457e8e3bd792da1e26832cadcfb1fed8c84c8e44c891c6a0c3738",
+        "fingerprint": "0bd1c32ccd6e2b12bb5a3c4c8cbf628633fc2420c17a4219403f3e167a8eb45f"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-15T10:23:05Z"
+      }
+    },
+    {
+      "node_id": "MDEwOlJlcG9zaXRvcnkxNjEwMTIwMTk=",
+      "category": "self-hosted-homelab",
+      "tags": [
+        "api",
+        "backend",
+        "self-hosted"
+      ],
+      "summary": "A free and open-source media system that lets you manage and stream your own media collection from a dedicated server to end-user apps. Jellyfin is a cross-platform .NET alternative to the proprietary Emby and Plex, providing a server backend and API with no premium licenses, hidden features, or strings attached.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "5e066f3d310254d50a96e6564ef43b04e1139516",
+        "repo_metadata_sha256": "8e2dfaa7c5690d6ab19194c78272bd7d6249d3bca253eb9bc707baf09cc87378",
+        "fingerprint": "aef66b468cc9bbc0988ee0ab9b240e4b477265a602ae6681f29a002879fa5513"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-15T10:23:05Z"
+      }
+    },
+    {
+      "node_id": "MDEwOlJlcG9zaXRvcnkxNjI5OTg0Nzk=",
+      "category": "security-privacy",
+      "tags": [
+        "cli",
+        "scraping",
+        "search"
+      ],
+      "summary": "A command-line OSINT tool that hunts down social media accounts by a given username across hundreds of social networks. It can be installed through package managers such as pipx and dnf or run via Docker, helping researchers gather publicly available account information from a single query.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "docs/README.md",
+        "readme_oid": "b3d6f0c1a82082fde5cfc1219abdb7e23386c389",
+        "repo_metadata_sha256": "0c0dff3cb9cf64a1c6743e7f323c6c5cde12c0019d22bea194c5fc5e7486d8c8",
+        "fingerprint": "5c6c8428da2297754f666d8b06fc8444daeda1284f39f0bdfe8ebf888463991b"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-15T10:23:05Z"
+      }
     }
   ]
 }
