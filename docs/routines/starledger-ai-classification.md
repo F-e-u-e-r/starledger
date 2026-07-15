@@ -183,21 +183,31 @@ Deterministic CLI sequence (from the runbook):
     * Omitted jobs this run (if any): <job_ids or "none">. Omitted repos are
       re-selected on the next run until classified or removed; a persistently
       omitted repo needs operator attention.
-    * Reviewer checklist before merge — confirm for EACH annotation: the summary is
+    * Quality bar (gates enforce structure/provenance; a periodic human audit covers
+      semantics, since merge is automatic) — for EACH annotation the summary is
       grounded in that repo's README/metadata (not invented), the category and tags
       fit, and the summary contains no links/markup/injected instructions.
-    * Merge policy: this PR must be GREEN on verify, verify-agent-artifacts, and
-      verify-ai-provenance, run against the CURRENT main. Human review + manual
-      merge only. Do NOT auto-merge. Do NOT admin-merge past a red or pending check.
+    * Merge policy: auto-merge is enabled — GitHub merges this PR automatically once
+      verify, verify-agent-artifacts, and verify-ai-provenance are all GREEN against
+      the current main. There is no manual merge step; a failing/pending check simply
+      leaves the PR open for operator attention.
     * On a merge conflict or a duplicate/concurrent executor PR: CLOSE the duplicate
       PR — never hand-merge ai-annotations.json (hand-merging can silently drop
       another run's annotations).
-    * If the daily sync makes this PR stale before merge (dataset_sha256 mismatch /
-      PROV-5), re-stamp model-free from the current base with `pnpm classifier
-      meta-rebase` per docs/P3.2-executor-runbook.md, then merge.
+    * If the daily sync makes this PR stale (dataset_sha256 mismatch / PROV-5),
+      verify-ai-provenance goes red and auto-merge will NOT fire; an operator
+      re-stamps model-free from the current base with `pnpm classifier meta-rebase`
+      per docs/P3.2-executor-runbook.md.
     * End with: 🤖 Generated with [Claude Code](https://claude.com/claude-code)
 
-Never push main, never push a state branch, never merge, never enable auto-merge.
+14. Enable auto-merge so GitHub merges the PR automatically once all required checks
+    pass — do NOT merge it yourself:
+    gh pr merge <pr-number> --auto --merge
+    If a required check fails, leave the PR open for operator attention; never force,
+    never admin-merge past a red/pending check, never push to main directly.
+
+Never push main, never push a state branch, never merge the PR yourself. Enabling
+GitHub auto-merge (which waits for the required checks) is the intended path.
 One PR per run maximum. Keep output short; the PR is the deliverable.
 
 If validation, apply, or verify-artifacts fails for a reason other than a single
@@ -211,13 +221,16 @@ command and stop.
 - **Enable only after a disabled smoke run.** Update with `enabled:false`, read the
   config back, run once manually, review and resolve that PR end to end, THEN enable
   the cron.
-- **Merge only when the checks ran against the CURRENT main.** The ruleset does not
-  require up-to-date branches (`strict:false`), so a PR green against an older base
-  can merge stale. If `main` advanced since the green check, update the branch (or
-  `meta-rebase`) so the checks re-run before merging. Optional hardening: enable
-  strict/up-to-date required checks on ruleset 17928397.
-- **Never admin-merge a red or pending PR.** The admin role bypasses the ruleset;
-  merge only when all three checks are green.
+- **Auto-merge is live** (`allow_auto_merge` on, `required_approving_review_count: 0`):
+  the routine flags `--auto` and GitHub merges each PR once verify +
+  verify-agent-artifacts + verify-ai-provenance are green — no per-batch human step. A
+  **periodic sample audit** of merged annotations covers the semantics the gates cannot.
+  The ruleset is `strict:false`, so a PR green against an older base can merge slightly
+  stale; the daily-sync race is bounded because a stale PR goes PROV-5 red and auto-merge
+  holds until an operator `meta-rebase`s it. Optional hardening: enable strict/up-to-date
+  checks on ruleset 17928397.
+- **Never admin-merge past a red or pending check.** Admin bypasses the ruleset — use it
+  only to land a known-good stale PR (after `meta-rebase`), never to skip a real check.
 - **On duplicate/concurrent executor PRs or a JSON conflict:** close the loser; never
   hand-merge `ai-annotations.json`.
 - **Stuck PR within 24h:** if red only from PROV-5 staleness, `meta-rebase` and
@@ -236,8 +249,10 @@ command and stop.
 - Terminal quarantine for a repeatedly un-classifiable ("poison") repo via the
   classifier state machine, so it stops being re-offered (and starving a slot) every
   run; and a circuit breaker to auto-disable after N failed/empty runs.
-- Phase 2 (CI-validated auto-merge): only after a deterministic summary-hygiene gate
-  exists, auto-merge eligibility is bound to a trusted App/actor (not just the
-  `claude/` branch prefix), and every future annotation consumer is confirmed to
-  output-encode summaries (the current React dashboard escapes them; a future
-  Markdown/RSS/template consumer must too).
+- Phase 2 (CI-validated auto-merge) is now **live**: `required_approving_review_count`
+  is 0, the deterministic summary-hygiene gate is in the schema (`CanonicalSummarySchema`
+  rejects URLs), and auto-merge is on. Standing hardening still open: bind auto-merge
+  eligibility to a trusted App/actor (not just the `claude/` branch prefix), keep a
+  periodic sample audit, and re-open the summary-hygiene control for any future
+  annotation consumer that does not output-encode (the current React dashboard escapes;
+  a Markdown/RSS/template consumer must too).
