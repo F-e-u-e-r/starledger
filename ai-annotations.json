@@ -2039,6 +2039,136 @@
         "prompt_version": "classify-v1",
         "generated_at": "2026-07-16T03:22:11Z"
       }
+    },
+    {
+      "node_id": "R_kgDOKMNg3A",
+      "category": "ai-ml",
+      "tags": [
+        "ai-agents",
+        "automation",
+        "llm",
+        "no-code",
+        "orchestration",
+        "workflow"
+      ],
+      "summary": "ChatDev 2.0 (DevAll) is a zero-code multi-agent platform for building and running customized LLM-powered agent systems. Users define agents, workflows, and tasks through simple configuration to orchestrate scenarios such as data visualization, 3D generation, and deep research, without writing code.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "f10600b131738b13df6fd6d1fdbd6c6df3644d1f",
+        "repo_metadata_sha256": "b2885f2e5cc9c6475a0ae13fb796406852c1fe171acd2ca21d5078ebea8f2719",
+        "fingerprint": "bc85d7e6ac72d3aa3d5e4a1065aa5d714703f99f5da1734d58ea3d132ffe1dbf"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-16T04:22:54Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOKOGnGg",
+      "category": "productivity-automation",
+      "tags": [
+        "desktop-app",
+        "gui",
+        "networking",
+        "proxy",
+        "scraping"
+      ],
+      "summary": "res-downloader is a cross-platform desktop tool built with Go and Wails for sniffing and downloading network media resources. It captures video, audio, images, m3u8, and live streams from platforms such as WeChat Channels, Douyin, Kuaishou, and Xiaohongshu using a configurable proxy, and runs on Windows, macOS, and Linux.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "c7290e416c8821250d4218f3f58d5af18b82193a",
+        "repo_metadata_sha256": "1be42883c5f6f83d89843504b031d0cc31930bf9f0bc9a940102178de3c1bcb5",
+        "fingerprint": "9b0b302e6616da42c3a61236125dd211e188fcb2db59ca99bc20146b36cb4505"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-16T04:22:54Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOKPKKmg",
+      "category": "data-analytics",
+      "tags": [
+        "dashboard",
+        "library",
+        "no-code",
+        "visualization"
+      ],
+      "summary": "Vizro is an open-source, low-code Python toolkit for building high-quality data visualization apps. With a few lines of configuration it assembles multi-page dashboards from components, controls, actions, and layouts, applying built-in visual design best practices, and supports customization and deployment to production.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "829c51fa0290af43e4e9f3e36bf00a9017fd99e8",
+        "repo_metadata_sha256": "6d101f8a7318c88f9ba800ba3557b5cc7decaa87e5c787c756117d2a6f827ddc",
+        "fingerprint": "7f70c3cd1c00c2f921068c1056d02a2262a1aaa35d5a070ccb30154a04706fae"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-16T04:22:54Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOKTUe1A",
+      "category": "ai-ml",
+      "tags": [
+        "ai-agents",
+        "bot",
+        "llm",
+        "self-hosted",
+        "vector-database",
+        "workflow"
+      ],
+      "summary": "MaxKB (Max Knowledge Brain) is an open-source platform for building enterprise-grade AI agents. It integrates retrieval-augmented generation pipelines, an agentic workflow engine with function and MCP tool-use, and is applied to intelligent customer service, corporate knowledge bases, academic research, and education.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "93f8e95ea706a1a84c2e7200450e0dfacd607a30",
+        "repo_metadata_sha256": "3140aa7bce096926c0ae0e34fc944af42e1569c342c2564a184215c7a62af777",
+        "fingerprint": "3f06c6864172c379a4e63787f2113023257a3ea965087e4807bafc93b6f90cb5"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-16T04:22:54Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOKXoMww",
+      "category": "media-creative",
+      "tags": [
+        "desktop-app",
+        "gui",
+        "machine-learning",
+        "real-time"
+      ],
+      "summary": "Deep-Live-Cam is a tool for real-time face swapping and one-click video deepfakes generated from a single image. Aimed at AI-generated media production, it includes built-in checks that block processing of inappropriate media such as nudity or graphic content.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "38df11c73b9ad91e088bf0a49636599e6ff06b42",
+        "repo_metadata_sha256": "6de089ea1f73a5087cfd679460608a6e4d51e9b20169c729a5c2576deeae238a",
+        "fingerprint": "ce93d5bc8600afa8184b44664e64dac83e57fef9d21aa6ed0805cb9db40df528"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-16T04:22:54Z"
+      }
     }
   ]
 }
