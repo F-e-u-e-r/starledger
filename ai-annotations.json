@@ -2902,6 +2902,130 @@
         "prompt_version": "classify-v1",
         "generated_at": "2026-07-16T10:22:26Z"
       }
+    },
+    {
+      "node_id": "R_kgDOLvbD7w",
+      "category": "media-creative",
+      "tags": [
+        "frontend",
+        "machine-learning"
+      ],
+      "summary": "A browser-based AI image toolkit that runs entirely client-side using ONNX Runtime Web. It offers background removal, AI image upscaling, and batch processing with multiple selectable models, caching models in IndexedDB for offline reuse. No uploads or backend are involved; all processing happens locally on the user's device.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "00dba42851ce43c24deefbe56b230cff1452bde7",
+        "repo_metadata_sha256": "25a3abd278116eb07b2e1c45e9140eccda3e1e803bfa6695104252fc09b243a1",
+        "fingerprint": "e336fa6a9ad44e5cae578e7f2c2737a47583ffea17f683cd5aa40c9af219a087"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-16T11:22:29Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOLyYF_g",
+      "category": "ai-ml",
+      "tags": [
+        "api",
+        "backend",
+        "database",
+        "llm"
+      ],
+      "summary": "A small Python project exploring LangGraph that extracts and categorizes expenses from invoice images and stores them in a PostgreSQL database. It combines LangGraph for the processing chain, FastAPI for the API, and PostgreSQL for storage, exposing routes for categories, payment methods, and expenses.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.MD",
+        "readme_oid": "54f595aa7d4ced080c3b4488c794d2c4c61cff66",
+        "repo_metadata_sha256": "9d322c46f085a62e5fdb9f2d7ccf99cb05608f758f0da55f3d5d95f0d99eca89",
+        "fingerprint": "8002872501dff05ca460b70d939c4e4c5c93f31f51418c4dbc9c1b14b4b1a27a"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-16T11:22:29Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOM-2hAg",
+      "category": "education-reference",
+      "tags": [
+        "documentation",
+        "llm",
+        "machine-learning"
+      ],
+      "summary": "A Chinese translation of the book Hands-On Large Language Models by Jay Alammar and Maarten Grootendorst. It provides annotated example notebooks for each chapter, covering tokens and embeddings, transformer internals, text classification, clustering, prompt engineering, semantic search and RAG, and fine-tuning, along with accompanying Chinese-language video explanations.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "37cbc6b5cd1479e5099b9121f5525fc10f24baca",
+        "repo_metadata_sha256": "b53ddb85073915063cc34cceff4244d043965829c6cab91ef26358d3d11e91be",
+        "fingerprint": "b5e90eee81a3c77f2b9bcda0e1034e4c9d4d1a531d57ea4c7fbdb82c535f30bc"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-16T11:22:29Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOM5je8Q",
+      "category": "media-creative",
+      "tags": [
+        "api",
+        "cli",
+        "library",
+        "llm"
+      ],
+      "summary": "An open-source Python package that transforms multimodal content such as websites, PDFs, images, and YouTube videos into engaging, multilingual audio conversations using generative AI. It supports short and long-form podcasts, integrates with more than 100 LLM models and multiple text-to-speech providers, and works through a Python API or command-line interface.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "6cf7f5c8d018f8fdcd4822bf63de3737dd9e2b66",
+        "repo_metadata_sha256": "7832f47e1876b495a5a1fe6dfb1213f787ca79522e0ef44ea729aee8b687d708",
+        "fingerprint": "2803e844fdcecd5980755dd2b9deebb288c0b703e204ba9a5d529c7eb25573c4"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-16T11:22:29Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOM79FWA",
+      "category": "ai-ml",
+      "tags": [
+        "ai-agents",
+        "automation",
+        "cli",
+        "llm",
+        "self-hosted",
+        "workflow"
+      ],
+      "summary": "An open-source, self-hostable AI command center for running a workforce of AI agents that produce real deliverables. Each session runs in an isolated cloud sandbox on its own branch, and agents commit work that reaches the main branch only through reviewed change requests. It includes connectors, skills, secrets, triggers, and shared memory.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "ae8efda425be2874c1e49b77d842f1bc522d9249",
+        "repo_metadata_sha256": "d13053c34aeb9ead84f061660fd63568669347d8831a218ac11be3443cdd153b",
+        "fingerprint": "b6946cf7608a3d1465fe16e44c0a18708808a4407ddd84d679037533141f306b"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-16T11:22:29Z"
+      }
     }
   ]
 }
