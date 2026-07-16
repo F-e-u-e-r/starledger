@@ -1539,6 +1539,134 @@
         "prompt_version": "classify-v1",
         "generated_at": "2026-07-15T23:21:46Z"
       }
+    },
+    {
+      "node_id": "R_kgDOIWVEMQ",
+      "category": "security-privacy",
+      "tags": [
+        "authentication",
+        "backup",
+        "desktop-app",
+        "encryption",
+        "self-hosted"
+      ],
+      "summary": "Ente is a fully open-source, end-to-end encrypted platform for storing data in the cloud without trusting the provider. It powers three apps: Ente Photos, a Google and Apple Photos alternative; Ente Locker for documents and credentials; and Ente Auth, a two-factor authenticator. Clients cover iOS, Android, web, Linux, macOS and Windows, and the server can be self-hosted.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "40b8136687fbc58874a4a7f7c1e8adfcc4899fbe",
+        "repo_metadata_sha256": "e0946c99f6dc466120974cd0a1400b38878af839db9a84df7a6d6bdedf73ad5e",
+        "fingerprint": "185ac254fbd37ab18df0cc588208c75787cf2f611e56793f08c82dc9c5781567"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-16T00:22:06Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOIj6G7A",
+      "category": "ai-ml",
+      "tags": [
+        "awesome-list",
+        "cli",
+        "documentation",
+        "llm",
+        "self-hosted"
+      ],
+      "summary": "prompts.chat, formerly Awesome ChatGPT Prompts, is an open-source curated library of prompt examples for AI chat models including ChatGPT, Claude, Gemini, Llama and Mistral. It offers a browsable web app, downloadable datasets, a CLI, an MCP server, and a self-hosting option with custom branding, themes and authentication.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "08f8d9bc2d93db5194d4bcfd6840df0f446afee3",
+        "repo_metadata_sha256": "49860a273664d616baa7ed2e7067cc74d130047eea17b375270882638b8c61ac",
+        "fingerprint": "68a551f7840671bd05651f4f830a16bc21bb2532b703c982d8347f6a51fbd531"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-16T00:22:06Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOIkLvCQ",
+      "category": "libraries-frameworks",
+      "tags": [
+        "api",
+        "automation",
+        "library"
+      ],
+      "summary": "finlab.online is a multi-broker order execution framework for automated portfolio rebalancing, part of the FinLab quantitative trading package. It provides broker-specific account implementations for Fugle, Sinopac, Fubon, Masterlink, Schwab, Binance and others, a cloud-connected multi-strategy rebalancing engine, and a Jupyter notebook GUI for interactive order placement.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "66b545d46186fc6e355c7080106c2a671cbf4605",
+        "repo_metadata_sha256": "02aba8a5430582580208cfae1187c697c0e98a2e5e218849f275b03eb8ab304c",
+        "fingerprint": "bf86feb2ffb28cafa9a4af54eac925ffc239ca765fb0d649657d7a514a009cc7"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-16T00:22:06Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOIlMBmA",
+      "category": "ai-ml",
+      "tags": [
+        "ai-agents",
+        "bot",
+        "llm",
+        "plugin",
+        "self-hosted"
+      ],
+      "summary": "AstrBot is an open-source, all-in-one agent chatbot platform that connects mainstream instant-messaging apps such as QQ, Telegram, Discord and Slack to large language models. It supports multimodal conversations, MCP, knowledge bases, personas, an agent sandbox for isolated code execution, a WebUI, and over 1000 community plugins, with Docker and other deployment options.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "aca631384bdca0116468fd1c2a09c1305d1d7aad",
+        "repo_metadata_sha256": "f83081c00b4dc730ac1b09ba1e8ed67875865a538a0fde63b840cbbf60db5767",
+        "fingerprint": "bb39b986cdcb58678e0160542208a9c3715e27ffdd443db24fb9849c6a436374"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-16T00:22:06Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOJ182Uw",
+      "category": "ai-ml",
+      "tags": [
+        "ai-agents",
+        "cli",
+        "code-generation",
+        "library",
+        "llm"
+      ],
+      "summary": "MetaGPT is an open-source multi-agent framework that assigns roles such as product manager, architect, project manager and engineer to LLMs so they collaborate like a software company. From a one-line requirement it produces user stories, competitive analysis, requirements, data structures, APIs and code, usable via a command-line interface or as a Python library.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "080c02cd99015ca01f5db2c1063473fc22939bec",
+        "repo_metadata_sha256": "b82232cc3fbe9154f23aa013b4c249632361c780f4f2b01f70ab8dade7de7f9a",
+        "fingerprint": "1cd53d39380fd7a1d13833e21fe4ed0860103ccbe342ec248bb6fefd41957e68"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-16T00:22:06Z"
+      }
     }
   ]
 }
