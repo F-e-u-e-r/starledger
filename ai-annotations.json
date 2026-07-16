@@ -2656,6 +2656,127 @@
         "prompt_version": "classify-v1",
         "generated_at": "2026-07-16T08:22:10Z"
       }
+    },
+    {
+      "node_id": "R_kgDOLFnGEQ",
+      "category": "productivity-automation",
+      "tags": [
+        "productivity",
+        "self-hosted"
+      ],
+      "summary": "solidtime is a modern open-source time-tracking application for freelancers and agencies. It supports projects, tasks, clients, billable rates, multiple organizations, roles and permissions, and importing time data from tools like Toggl and Clockify. It can be self-hosted or used via its hosted cloud.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "5c5966c9427cc8cd5a2dc11b032bfa01d108a56d",
+        "repo_metadata_sha256": "b66f71252b98648087a310199bbd3ecbef6ac08dab1c6470acdc84d3b94db1c4",
+        "fingerprint": "8902e0dfb164341e9e045b23206e2cf644da91e7c4d9dd79a7fdf7923c34c84d"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-16T09:22:59Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOLJ2hkg",
+      "category": "ai-ml",
+      "tags": [
+        "cli",
+        "library",
+        "machine-learning",
+        "sdk"
+      ],
+      "summary": "Argmax Open-Source SDK Swift is a collection of turn-key on-device inference frameworks for Apple Silicon: WhisperKit for speech-to-text with OpenAI Whisper, SpeakerKit for speaker diarization with Pyannote, and TTSKit for text-to-speech with Qwen-TTS. It includes a Swift CLI and a local inference server.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "53b8ea1e13e081f433d10e64d3eb8380a9d879b5",
+        "repo_metadata_sha256": "b8192a34d3f707fe2b1c60753499e5143123ea840f10a21189cb2233f0427853",
+        "fingerprint": "57ce24cb74588c39368c864b846ee65f67ba67750c24971359966fee999e0620"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-16T09:22:59Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOLL2Hhg",
+      "category": "education-reference",
+      "tags": [
+        "llm",
+        "machine-learning"
+      ],
+      "summary": "A set of Jupyter notebooks that accompany a video playlist teaching retrieval augmented generation (RAG) from scratch. It builds up an understanding of indexing, retrieval, and generation to expand a language model's knowledge base using documents retrieved from an external data source.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "db6875f644e1f063bbc03f286e93a16326969be7",
+        "repo_metadata_sha256": "233105c6421ef63e3999e3d02e34899cbac11eee35be637115a6c0518b74123c",
+        "fingerprint": "494f2e54b9f6370110ff31a99f6b7df07ba7f43994ee073588f014c037e463a4"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-16T09:22:59Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOLWm5EQ",
+      "category": "ai-ml",
+      "tags": [
+        "cli",
+        "llm",
+        "machine-learning"
+      ],
+      "summary": "A collection of example MLX Swift programs for iOS and macOS, including LLM chat and text generation, MNIST training, LoRA fine-tuning, and Stable Diffusion image generation, along with command-line tools for running language and image models on Apple devices.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "8e27e8ff14c5b2fb874805965cb23e0c34842805",
+        "repo_metadata_sha256": "3b6f4550751e2b3f96f9ceb4c36caf3e9ef6ea5e625e523e2df45fc9524d10b6",
+        "fingerprint": "d7c33f19318ee9b3b69b06a959167396959080a0d573b32b1590c25110c974b6"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-16T09:22:59Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOLZpAvQ",
+      "category": "ai-ml",
+      "tags": [
+        "api",
+        "cli",
+        "etl",
+        "machine-learning",
+        "sdk"
+      ],
+      "summary": "MinerU is a high-accuracy document parsing engine that converts PDFs and Office documents such as DOCX, PPTX, and XLSX, plus images and web pages, into structured, LLM-ready Markdown or JSON. It uses a combined vision-language and OCR engine with multi-language support and offers SDKs, a CLI, a REST API, and offline deployment.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "d056e5ca21a9f45504cbdecf74e6d25c3bb750b8",
+        "repo_metadata_sha256": "db692c19837ef43c7548a9dbde750f992a4f75c6685c75a2787a2056b585d34d",
+        "fingerprint": "5faa9d0a46ff39c2182a2d2dfca1af6428a05664632fb82703ddc87415717405"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-16T09:22:59Z"
+      }
     }
   ]
 }
