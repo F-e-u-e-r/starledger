@@ -3143,6 +3143,139 @@
         "prompt_version": "classify-v1",
         "generated_at": "2026-07-16T12:22:12Z"
       }
+    },
+    {
+      "node_id": "R_kgDOMNlpaQ",
+      "category": "ai-ml",
+      "tags": [
+        "api",
+        "cli",
+        "llm",
+        "machine-learning",
+        "networking",
+        "self-hosted"
+      ],
+      "summary": "exo connects your devices into a single AI cluster to run large language models locally, splitting models across devices with topology-aware parallelism, tensor parallelism, and RDMA over Thunderbolt for lower latency. It uses MLX for inference and exposes OpenAI, Claude, and Ollama-compatible APIs plus a built-in dashboard for managing the cluster.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "cdb7c5f063b6f56b1ebef14518b6c676b103f7e1",
+        "repo_metadata_sha256": "44fdcdaa288a25218b484ffb446ec17b227b7fd5c7cddd5f02c1b5e05ca51c91",
+        "fingerprint": "bf6d0a1e521987d86481842b1c1834dcb1534312edf4afb409ed2e1bb6abb088"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-16T13:22:26Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOMS1zRw",
+      "category": "data-analytics",
+      "tags": [
+        "automation",
+        "containers",
+        "dashboard",
+        "kubernetes",
+        "scraping",
+        "self-hosted"
+      ],
+      "summary": "Scraperr is a self-hosted web scraping application that extracts data using XPath selectors without writing code. It supports queue management for multiple jobs, domain spidering, custom request headers, automatic media downloads, results visualization in tables, and export to markdown and CSV. It deploys via Docker or Helm.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "ed586f0622b6dd26ceae01010c0cf32bff12561f",
+        "repo_metadata_sha256": "9236de04f86cb23ee89b2827b168360ee046150c512c4a9bbdebc6153210a564",
+        "fingerprint": "17b4e432d50f61374b484d34c18340dde48587cfd7e5d52d9e834c3376515c69"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-16T13:22:26Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOMSHYTA",
+      "category": "education-reference",
+      "tags": [
+        "api",
+        "awesome-list",
+        "documentation",
+        "llm"
+      ],
+      "summary": "A curated reference list of services that provide free access or trial credits toward API-based LLM usage. It catalogs free providers such as OpenRouter, Google AI Studio, Groq, Cohere, and others, along with providers offering trial credits, helping developers find legitimate ways to access language models via API.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "d0e3cdf7fb7ddd261d980e451ff6614d3fb6ac29",
+        "repo_metadata_sha256": "d266b946edb8ffaccde9bb2d77dc80914b7e4a7226fa0f74a5ee244ccbd2c470",
+        "fingerprint": "cbead8b9c9639f50dc70c19898e6f8e42ed3eaf788f974300127b1b9f8ec4021"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-16T13:22:26Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOMV5hJw",
+      "category": "education-reference",
+      "tags": [
+        "ai-agents",
+        "documentation",
+        "llm",
+        "machine-learning",
+        "search",
+        "vector-database"
+      ],
+      "summary": "A community-driven collection of runnable notebook tutorials covering Retrieval-Augmented Generation techniques, from foundational retrieval to advanced and agentic approaches. Each notebook pairs the intuition with working code and references, helping developers build more accurate, context-rich retrieval systems for language models.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "68f3aa9e9a21ce06e1b1e1349a7d93755bd5ab2e",
+        "repo_metadata_sha256": "29a7d334ef8796f9e13d2487ee6d44fd02a6b3b54f54788c5f404e3e1576d692",
+        "fingerprint": "ae166dd4211f1799ff6f3fe0b61ee9eda7e12fab5edc7d4520bca36f21a2a490"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-16T13:22:26Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOM_t66Q",
+      "category": "libraries-frameworks",
+      "tags": [
+        "ai-agents",
+        "automation",
+        "cli",
+        "library",
+        "proxy",
+        "scraping"
+      ],
+      "summary": "Scrapling is an adaptive Python web scraping framework that scales from a single request to full crawls. Its parser learns from website changes and relocates elements automatically, its fetchers bypass common anti-bot systems, and its spider framework supports concurrent multi-session crawls with pause/resume and proxy rotation. It also ships a CLI and an MCP server for AI agents.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "2f39ac975b2399a768a32444dd41d49f73ba4ba4",
+        "repo_metadata_sha256": "20b6a542c21cc38d08728603e48cd440a467626b288fb46fab1967214aae0ac3",
+        "fingerprint": "91b610967f6c09c4fd874c73248462d5839ac39e114e08ad801750ee67d6f38e"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-16T13:22:26Z"
+      }
     }
   ]
 }
