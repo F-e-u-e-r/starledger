@@ -3778,6 +3778,128 @@
         "prompt_version": "classify-v1",
         "generated_at": "2026-07-16T17:23:44Z"
       }
+    },
+    {
+      "node_id": "R_kgDONTqV6w",
+      "category": "data-analytics",
+      "tags": [
+        "cli",
+        "database",
+        "real-time",
+        "sdk",
+        "vector-database"
+      ],
+      "summary": "HelixDB is an OLTP graph-vector database written in Rust and running on object storage. It combines graph and vector data models while also supporting key-value, document, and relational data, and ships a CLI plus Rust, TypeScript, Go, and Python SDKs for building AI, knowledge-graph, and RAG applications.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "00cf376b9632ee8044546afc37419f246770eb88",
+        "repo_metadata_sha256": "154eab05b7ae579daab9bc7074f21e535aa9547d8fa1ea9ed39f3bcc66dfb9ff",
+        "fingerprint": "b390edb9a9aa07764bbf9cb89652cabefa33884acbf6bc77e6afd5bb7fc5cb38"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-16T18:21:50Z"
+      }
+    },
+    {
+      "node_id": "R_kgDONW60Aw",
+      "category": "libraries-frameworks",
+      "tags": [
+        "benchmark",
+        "library",
+        "networking",
+        "real-time"
+      ],
+      "summary": "A Linux C/C++ library that parses and decodes real-time UDP market-data packets from the Taiwan Stock Exchange (TWSE), focusing on the real-time Format 6. It exposes both Python and C/C++ interfaces and reports lower latency than fetching data through APIs such as Shioaji.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "c393a6526a899433309fc010a726988941dd1c5d",
+        "repo_metadata_sha256": "0e041e0c60b8d2f4825d13ae87458182d874f67c770facab2dc8fe0f83a9ed68",
+        "fingerprint": "0c3d92eb86ab272faec9179eef78375edc55f542f9e6ebbf2a08528f1c36cee4"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-16T18:21:50Z"
+      }
+    },
+    {
+      "node_id": "R_kgDONWBgsA",
+      "category": "education-reference",
+      "tags": [
+        "ai-agents",
+        "documentation",
+        "llm"
+      ],
+      "summary": "A beginner course from Microsoft with 18 lessons on building AI agents, covering agentic design patterns, tool use, RAG, planning, multi-agent systems, memory, and production deployment. It includes Python code samples using the Microsoft Agent Framework and Foundry, short videos, and many community-contributed language translations.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "b8ac93f6a7a48075b5f1546fece5870a7b1d9283",
+        "repo_metadata_sha256": "ad1cd3668698c399d2a9937568b6446c29379c4de6c220a131da856e0c94514c",
+        "fingerprint": "19252b8df252dd6d56cdb26e06a3b1ef94115f72b55e828d401f6b3ede6fb5c3"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-16T18:21:50Z"
+      }
+    },
+    {
+      "node_id": "R_kgDONWoU0w",
+      "category": "ai-ml",
+      "tags": [
+        "ai-agents",
+        "cli",
+        "llm"
+      ],
+      "summary": "An educational proof-of-concept AI-powered hedge fund in Python in which multiple agents, several modeled on famous investors alongside valuation, sentiment, fundamentals, technicals, risk, and portfolio agents, collaborate to generate simulated trading signals. It runs via a command-line interface or a web app and does not place real trades.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "40803b752f0c912a1625848f6864b3c5c2d244cc",
+        "repo_metadata_sha256": "d8599e339f6de5510f20bb4723c71c846922dd3327aabd6feef0ee8c0f20fbd6",
+        "fingerprint": "84eb343b46958cff52c1dcd2f933f936ce45e73fe65a28b50205ce34a88709fb"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-16T18:21:50Z"
+      }
+    },
+    {
+      "node_id": "R_kgDONWz9pg",
+      "category": "education-reference",
+      "tags": [
+        "awesome-list",
+        "documentation"
+      ],
+      "summary": "A curated awesome-list collection of Model Context Protocol (MCP) servers, gathered as a community directory of AI and MCP-related resources for discovering available server implementations.",
+      "source": {
+        "kind": "metadata",
+        "readme_path": null,
+        "readme_oid": null,
+        "repo_metadata_sha256": "71112a038fcdd12839e94c77620941952e9aacb5829eede3d7074a81ba5bae3f",
+        "fingerprint": "6ea7bd5c9668226ac804f1cad22926045b3e99f2631425188e3c2e546196c028"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-16T18:21:50Z"
+      }
     }
   ]
 }
