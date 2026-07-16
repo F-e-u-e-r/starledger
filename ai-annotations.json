@@ -3400,6 +3400,131 @@
         "prompt_version": "classify-v1",
         "generated_at": "2026-07-16T14:23:54Z"
       }
+    },
+    {
+      "node_id": "R_kgDOMv5TUQ",
+      "category": "developer-tools",
+      "tags": [
+        "ai-agents",
+        "code-generation",
+        "desktop-app",
+        "editor",
+        "llm"
+      ],
+      "summary": "Void is an open-source desktop code editor forked from VS Code that lets developers run AI agents on their codebase, checkpoint and visualize changes, and use any model or a locally hosted one. The project is now deprecated and no longer accepting contributions.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "219b1d6b6b480dbd36e39281792c32956f946067",
+        "repo_metadata_sha256": "5d023c0ca53d29e4c3c6302c8f98bb3f6feb58c713473586dd58ac70474e89db",
+        "fingerprint": "646e71a6b0aeb4a09a9e3ab3df1f7b744655b814e111f92efc544c57b038f962"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-16T15:23:19Z"
+      }
+    },
+    {
+      "node_id": "R_kgDON-_mZQ",
+      "category": "developer-tools",
+      "tags": [
+        "ai-agents",
+        "api",
+        "cli",
+        "llm",
+        "orchestration",
+        "proxy"
+      ],
+      "summary": "Claude Code Router is a local control plane for coding agents that gives Claude Code, Codex, Grok CLI, and compatible API clients one stable local endpoint, then routes requests across models, orchestrates tools, and adapts API endpoints automatically.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "007d0360cd4bda537ece0dbb099cff962bf9fc15",
+        "repo_metadata_sha256": "b14bcdbc022757387d4436041400b0da1ea9550431e3895892f80cabe817d9f5",
+        "fingerprint": "6c9279d01f0e09edbf66de63478fa76b6138ec9551614956a08f41330573f8ba"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-16T15:23:19Z"
+      }
+    },
+    {
+      "node_id": "R_kgDON4uODQ",
+      "category": "developer-tools",
+      "tags": [
+        "ai-agents",
+        "api",
+        "code-generation",
+        "frontend"
+      ],
+      "summary": "Framelink Figma Context MCP is a Model Context Protocol server that gives AI coding tools like Cursor access to Figma design data. It simplifies and translates layout and styling information from the Figma API so models can implement designs more accurately in any framework.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "9cdbf3d390182517966f54aa5033413f23aebc50",
+        "repo_metadata_sha256": "e502b0fccbfa78f94e687455c131b2572631793642a0955e062013989ea42e5c",
+        "fingerprint": "7b0494f048d4f3fc361bce9261427840da95a200adf3485ef50f6033e04c474b"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-16T15:23:19Z"
+      }
+    },
+    {
+      "node_id": "R_kgDON7GlUA",
+      "category": "mobile",
+      "tags": [
+        "library",
+        "sdk"
+      ],
+      "summary": "expo-tappay-ios is a React Native module for iOS that wraps the TapPay iOS SDK (v2.19.0), providing a simple API to integrate TapPay payment services, including Apple Pay, into Expo managed and bare workflow projects. The project is no longer maintained.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "43ac6db73ef3a37d0cddf56084f2a6f557e4a913",
+        "repo_metadata_sha256": "bc59e19f16d51fc80c32c7a3471c23a681a26ebcf042e1681e42bb817554448c",
+        "fingerprint": "c9e89a6fc19431045a206872fe09dd29dc23bff9f93a2bcd951d7023f4672b88"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-16T15:23:19Z"
+      }
+    },
+    {
+      "node_id": "R_kgDON7hysA",
+      "category": "web-applications",
+      "tags": [
+        "frontend",
+        "machine-learning",
+        "productivity"
+      ],
+      "summary": "BrowseryTools is a collection of 130+ browser-based tools for productivity and developers, built with Next.js, TypeScript, and Tailwind CSS. Every tool runs entirely client-side with no uploads or servers, and it includes on-device AI tools powered by Transformers.js.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "346f2d006dde99daa6cc504c7b4063a340546a0b",
+        "repo_metadata_sha256": "0649c9e33950fd529004c9604c3e128abd95e33a7ea45a8afa513d18b9dcc485",
+        "fingerprint": "f5d56f04100b9e533e2d09342f4a040b6e4cb0159592cc4bfa938be192108f17"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-16T15:23:19Z"
+      }
     }
   ]
 }
