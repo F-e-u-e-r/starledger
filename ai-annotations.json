@@ -2291,6 +2291,130 @@
         "prompt_version": "classify-v1",
         "generated_at": "2026-07-16T05:22:20Z"
       }
+    },
+    {
+      "node_id": "R_kgDOKigCXg",
+      "category": "media-creative",
+      "tags": [
+        "editor",
+        "gui",
+        "visualization"
+      ],
+      "summary": "SuperSplat is a free, open-source editor for inspecting, editing, optimizing, and publishing 3D Gaussian Splats. Built on web technologies, it runs entirely in the browser with nothing to download or install, and offers a hosted live version.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "669d5b98b2b6b3bae6e0c9cbb021f400389bed4a",
+        "repo_metadata_sha256": "1a5484457993ae5232d47f56dd841b04f611626fc0daecff61b0781fd2f38eb8",
+        "fingerprint": "ba496107def814ade70a3a833cc5e0332916a6daded97eb1692bce85761bc4be"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-16T06:22:12Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOKlrpgA",
+      "category": "ai-ml",
+      "tags": [
+        "ai-agents",
+        "automation",
+        "library",
+        "llm",
+        "orchestration",
+        "workflow"
+      ],
+      "summary": "CrewAI is an open-source Python framework for building production-ready multi-agent workflows. It provides high-level Crews for autonomous, role-based agent collaboration and low-level, event-driven Flows for precise workflow control.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "f0e4b08d9b8289c6c08e0651070ff7d17b40f806",
+        "repo_metadata_sha256": "7fd3f1806962ee1378a8337157360490b25924e63b5e1fc644ba76b6756411b6",
+        "fingerprint": "88aad5fd1d2be9ee49669767525cb401367edaa0024ee1d8609973344acbcbe5"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-16T06:22:12Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOKu2F5w",
+      "category": "media-creative",
+      "tags": [
+        "desktop-app",
+        "editor",
+        "real-time",
+        "self-hosted"
+      ],
+      "summary": "Cap is an open-source alternative to Loom for recording, editing, and sharing screen recordings. It offers Instant Mode for quick share links and Studio Mode for polished local editing, with macOS and Windows apps, team workspaces, and full self-hosting via Docker.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "f8943348fba9b76da87028ba0a92a59f3ef64262",
+        "repo_metadata_sha256": "eddf3f5d08498d53994f72bc738b2dd5fb3cc59003bc4ca49357be70cd7af239",
+        "fingerprint": "ce5e8391b679783cdbd1ac5c0cbbb7ea086ffde00622b8cd4ca00bf4cb8f7871"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-16T06:22:12Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOKznBOA",
+      "category": "ai-ml",
+      "tags": [
+        "gui",
+        "llm",
+        "machine-learning",
+        "self-hosted"
+      ],
+      "summary": "Unsloth Studio is an application for running and training open language, audio, embedding, and vision models locally on Windows, Linux, and macOS. It supports downloading, fine-tuning, inference, tool calling, and exporting models to formats such as GGUF and safetensors.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "ef45b91430085df6769ce3549109f4fd045c0e3a",
+        "repo_metadata_sha256": "e04d74709402b772b498483781210e88ad56c81cbaba400ba6f80b1a37b6c541",
+        "fingerprint": "7b8ce2a0f41b34bc4fdafedfb32c0fb01c7a64910c07d547caa3e4a118175ba9"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-16T06:22:12Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOL-k9-Q",
+      "category": "education-reference",
+      "tags": [
+        "awesome-list",
+        "documentation"
+      ],
+      "summary": "A curated collection of assorted study materials and books gathered in PDF, PPT, and DOC formats. According to the repository description, the download links are intended to remain permanently valid.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "f5a50a706894ac464d824dead295d9caed7f5279",
+        "repo_metadata_sha256": "93ab4807dd6431fd3dc44cfde89e9fe6c11e53deae2361e179c94839446394d1",
+        "fingerprint": "25efc5ce952832541c23761256c7cd479a060ecd4c041afc684b6bed10246d0c"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-16T06:22:12Z"
+      }
     }
   ]
 }
