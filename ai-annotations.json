@@ -1667,6 +1667,131 @@
         "prompt_version": "classify-v1",
         "generated_at": "2026-07-16T00:22:06Z"
       }
+    },
+    {
+      "node_id": "R_kgDOJ7ALLA",
+      "category": "developer-tools",
+      "tags": [
+        "api",
+        "networking",
+        "proxy",
+        "scraping"
+      ],
+      "summary": "A frequently updated list of free public proxies covering HTTP, HTTPS, SOCKS4, and SOCKS5 protocols from many countries. Proxies are refreshed every few minutes, sorted by type and country, and made available in JSON, TXT, and CSV formats, through direct download endpoints, or via an official npm module.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "e01339923b1fde8b2f1dca55beea6fae8928a0d2",
+        "repo_metadata_sha256": "3402704c3a47128db3065a7bbafea144ab378132264c371353c0cc774e0a31c2",
+        "fingerprint": "6c57fab4d09ad495b799e2c5b95f0e54881aad429195094fc84f9bc5bdc7fe58"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-16T01:21:42Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOJAaI8g",
+      "category": "communication-collaboration",
+      "tags": [
+        "api",
+        "automation",
+        "bot",
+        "llm"
+      ],
+      "summary": "A Python project that integrates ChatGPT into the Line messaging app, letting users converse with the model directly in Line. It also connects to an image-generation model for creating pictures from text prompts, supports voice input, and provides commands for registering an API token, setting a system role, and clearing history.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "6791232ae98a22a80744c5aca11c9514ec7fd68e",
+        "repo_metadata_sha256": "87026877da98e8a27271cf3e6ed652eb16c3eea84a89f7e3c85203528cbe0b78",
+        "fingerprint": "709dbf3ce9d826abc2b4fece0ef6de0f443333c507bea3a5005ba96437c358f3"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-16T01:21:42Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOJB9QTg",
+      "category": "productivity-automation",
+      "tags": [
+        "frontend",
+        "llm",
+        "productivity",
+        "search",
+        "static-site-generator"
+      ],
+      "summary": "A web-based tool for managing, customizing, and sharing AI prompts, built with Docusaurus and React. It offers a searchable, tag-filtered library of ready-to-use prompts in many languages, personal collections, custom prompts, community sharing and voting, data export, and a companion browser extension.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "15a07fcb9204e4b466d4d52e6e9c0bdb80369431",
+        "repo_metadata_sha256": "4a2dc110d12d3d5707178ae4caa2e8bac22e360aa6510fe97bf1c61c2d6ce2af",
+        "fingerprint": "68723105652d5882ee0dc2b3924ad4e2c45bb19d6cb341b38bb87f1996073df4"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-16T01:21:42Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOJFL2oQ",
+      "category": "productivity-automation",
+      "tags": [
+        "api",
+        "desktop-app",
+        "llm",
+        "plugin"
+      ],
+      "summary": "A browser extension and cross-platform desktop application for text translation powered by large language model APIs. Beyond translation across many languages, it supports text polishing and summarization, streaming responses, text-to-speech, screenshot translation, and vocabulary books, and runs on Windows, macOS, and Linux.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "c410c1235b97f3fb3b4aca9ed9965a3336fe5e5f",
+        "repo_metadata_sha256": "752145f7eb42c24900fd3c39b1c5cb91cc893c464d1b21352adbbc0e2234d368",
+        "fingerprint": "8227131b6cb9e11e7c3f54803fabc44a5d5bcad56f3553ce3525b72a7956e6d2"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-16T01:21:42Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOJFz54w",
+      "category": "productivity-automation",
+      "tags": [
+        "automation",
+        "cli",
+        "llm"
+      ],
+      "summary": "A Python command-line tool that uses ChatGPT to translate documents, accepting PDF, TXT, Markdown, HTML, or RTF files or a folder of files. It produces both a direct translation and a bilingual output file, supports multithreading and configurable target languages, and includes optimized PDF parsing.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "e423d8e158f1c562433ba25eb71eb6d765aed31a",
+        "repo_metadata_sha256": "42adf0bf9869389a6f9879b2d71f6fba22852ddb2ab61704e7d30f3f83154aa8",
+        "fingerprint": "385b6b9ad30a04c2e5aa6c42bde989d542ff8c28527c2062f48f35b522576213"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-16T01:21:42Z"
+      }
     }
   ]
 }
