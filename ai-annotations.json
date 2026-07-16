@@ -1295,6 +1295,31 @@
       }
     },
     {
+      "node_id": "R_kgDOHJb-YQ",
+      "category": "self-hosted-homelab",
+      "tags": [
+        "api",
+        "productivity",
+        "search",
+        "self-hosted"
+      ],
+      "summary": "Linkwarden is a self-hosted, open-source collaborative bookmark manager for collecting, reading, annotating, and preserving webpages. It captures a screenshot, PDF, and HTML archive of each link, and offers full-text search, tags, collections, browser extensions, and native mobile apps.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "d9142cb1cbfc9f79550220eec7855a5b74b3af81",
+        "repo_metadata_sha256": "caa3818c3ec77430261581cbd4f61566e9a9e6a5aff4ddb31da708ae3cccb575",
+        "fingerprint": "da10027e121fb27005264c6bfda7cac0d2adbfa4a910854bd3a7524093dd9641"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-16T08:22:10Z"
+      }
+    },
+    {
       "node_id": "R_kgDOHfAAfQ",
       "category": "productivity-automation",
       "tags": [
@@ -2536,6 +2561,100 @@
         "model_label": "informational-only",
         "prompt_version": "classify-v1",
         "generated_at": "2026-07-16T07:22:54Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOL9wAiA",
+      "category": "productivity-automation",
+      "tags": [
+        "automation",
+        "llm",
+        "self-hosted"
+      ],
+      "summary": "RSSBrew is a self-hosted, easy-to-deploy RSS tool written in Python. It aggregates multiple RSS feeds, applies custom filters, and generates AI-powered summaries along with daily and weekly digests of articles.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "551c90a73fe0e71b867a309465e7c1dda755f68e",
+        "repo_metadata_sha256": "272c801d650e5b5ef365d27592d7620b16189cd29f835268a57f6b41140a8011",
+        "fingerprint": "d688e3f80a1be38eeae870f83e5883208a5059a269eedcc70dd0c197f0df7087"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-16T08:22:10Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOLE4yzg",
+      "category": "education-reference",
+      "tags": [
+        "awesome-list",
+        "documentation",
+        "llm"
+      ],
+      "summary": "GPT-Prompt-Hub is an open-source, community-driven collection of structured prompts for large language models such as Claude, GPT, and Gemini. Each prompt is organized as a brief covering role, objective, inputs, output, constraints, and an example.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "514907d9c25d45f44ba1e02834c28dce253f5236",
+        "repo_metadata_sha256": "81022a19480e6a59291ac7339d7c54b9a122ae277725dd3f50bc086ea365be1b",
+        "fingerprint": "21027157a4977f7b703430cc5d1cf37037644116d1aaf8ee729552e60ba191da"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-16T08:22:10Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOLEzKcw",
+      "category": "ai-ml",
+      "tags": [
+        "gui",
+        "machine-learning"
+      ],
+      "summary": "GPT-SoVITS is a Python web UI for few-shot and zero-shot voice conversion and text-to-speech. It can produce a usable TTS model from about one minute of voice data, supports cross-lingual synthesis, and includes tooling to train and fine-tune voice models.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "9880de32d93ef33300fb7f0acc1fadbaabc0dbf2",
+        "repo_metadata_sha256": "58671ff51d969d4b657cb65cf581ddae2f59d4a9f78c1a56ee83bd76005fbfc2",
+        "fingerprint": "7f2ff8b62be065290590d6407b798af498351c178996e44dc92366e75ed4bf43"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-16T08:22:10Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOLFKgcg",
+      "category": "media-creative",
+      "tags": [
+        "desktop-app",
+        "gui"
+      ],
+      "summary": "wechatVideoDownload is a desktop tool for downloading WeChat Channels content, including videos, live-stream replays, and live streams. It can capture download links, batch-download selected clips over a chosen range, and optionally display video titles.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "9685a65aaf404dd899204c877704df2299262184",
+        "repo_metadata_sha256": "c1cb81b237d68142242414f3bb53cf224581654993748a33e6dd01a736f852b7",
+        "fingerprint": "f47bb2624125ee430ae49dc674da561ecea6b08b149853bd5d4439a11f7e2b37"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-16T08:22:10Z"
       }
     }
   ]
