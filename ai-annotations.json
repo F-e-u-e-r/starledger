@@ -1792,6 +1792,128 @@
         "prompt_version": "classify-v1",
         "generated_at": "2026-07-16T01:21:42Z"
       }
+    },
+    {
+      "node_id": "R_kgDOJckNQg",
+      "category": "education-reference",
+      "tags": [
+        "documentation",
+        "llm"
+      ],
+      "summary": "A Chinese-language LLM learning handbook for developers that translates, reproduces, and reorganizes Andrew Ng's large-model course series, covering prompt engineering, building systems with LLM APIs, RAG development, and model fine-tuning as a structured beginner-to-advanced curriculum.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "d52280213d9930a57955babbfde635951a4c325c",
+        "repo_metadata_sha256": "4f6199f2c3e5680019055d7f1a2aa979ee42dd87b2234472501ee91129fafdf8",
+        "fingerprint": "1655c12d9608f6ef3b4dcfa02ca521f856172dbfc608400b89e121221e8dcee1"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-16T02:22:58Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOJg7yeg",
+      "category": "media-creative",
+      "tags": [
+        "desktop-app",
+        "self-hosted",
+        "workflow"
+      ],
+      "summary": "A free, self-hostable studio for generating AI images and videos from over 200 models, offering text-to-image, image-to-image, text-to-video, image-to-video, and lip-sync workflows, with browser, desktop-app, and local inference engine options and no built-in content filters.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "4016dd0215d4c8ddaa28d24937052efe2d7685f8",
+        "repo_metadata_sha256": "a8acb408cfa98af80cc78240253bec0698e27e064da018e9878e1b8c41edb596",
+        "fingerprint": "7ef1fe498f1042a78fb684cca0c1577e264fc78c7a18e1625ff1633cfeb7714a"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-16T02:22:58Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOJm2SAQ",
+      "category": "ai-ml",
+      "tags": [
+        "llm",
+        "rest-api",
+        "search",
+        "self-hosted",
+        "vector-database"
+      ],
+      "summary": "A private, on-premise document intelligence platform for chatting with your own files locally so no data leaves the machine. It combines retrieval-augmented generation with hybrid semantic and keyword search, reranking, query decomposition, and an answer-verification pass, served through a web UI and REST API.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "702dcd0d7e5fb07a3ba1cc433804227c33858e51",
+        "repo_metadata_sha256": "4fe2b40f7f236751e3a40dd3c04213d436f613282976ce23c9559576e27fd68a",
+        "fingerprint": "415b2c548113d066fb1b0b708df5e1ebd912fa502b7b7319708325f775ee2b3e"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-16T02:22:58Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOJtVdAQ",
+      "category": "developer-tools",
+      "tags": [
+        "automation",
+        "cli",
+        "gui",
+        "scraping"
+      ],
+      "summary": "A multi-platform social media data collection tool that scrapes public posts and comments from Xiaohongshu, Douyin, Kuaishou, Bilibili, Weibo, Tieba, and Zhihu using browser automation to reuse login state. It supports keyword search, creator pages, proxy pools, a web UI, and CSV, JSON, SQLite, and MySQL storage.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "f31032d9c6afc8436c866b84ad9f58c663c5f4ee",
+        "repo_metadata_sha256": "461e0f83da4b34eee7597a53b640786a78618fe4ccf721674de1b591522a628e",
+        "fingerprint": "8f1f301177a110ce45c649f6bae654a8f6f472874f933528e5152d25e756b942"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-16T02:22:58Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOJueYYw",
+      "category": "ai-ml",
+      "tags": [
+        "library",
+        "llm",
+        "machine-learning"
+      ],
+      "summary": "A Python library that runs inference for very large language models on a single low-memory GPU by loading one transformer layer at a time, reducing VRAM needs without quantization, distillation, or pruning. It supports Llama, Qwen, DeepSeek, Mistral, and other open model families through one AutoModel interface.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "a54f380b3197d4418c0905e13111979a613392f4",
+        "repo_metadata_sha256": "c9effa531dee6b5b5074f485ca5801054630ddfe5078feeb29aacc6a18c4fa89",
+        "fingerprint": "197d62410da898608445fdbc84fa668c4ca68349d93824aebb8fea519425db90"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-16T02:22:58Z"
+      }
     }
   ]
 }
