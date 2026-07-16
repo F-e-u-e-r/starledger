@@ -2415,6 +2415,128 @@
         "prompt_version": "classify-v1",
         "generated_at": "2026-07-16T06:22:12Z"
       }
+    },
+    {
+      "node_id": "R_kgDOL0nxgA",
+      "category": "ai-ml",
+      "tags": [
+        "ai-agents",
+        "awesome-list",
+        "llm"
+      ],
+      "summary": "A curated, open-source collection of over 100 runnable AI agent and RAG example applications built in Python, with step-by-step tutorials. The projects are Apache-2.0 licensed and work with multiple model providers such as Claude, Gemini, GPT, DeepSeek, Llama, and Qwen.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "2969b8728ca10d24f45c9b4aab30692fbba0d051",
+        "repo_metadata_sha256": "bf83340c45208ef17ffb31d76a88ba3e6e2af1f7c6c548ca8ba70c64c525f24e",
+        "fingerprint": "1a36b0e7f1baf76b4e88ba772b8ec1ce9b73d45bba57f87c06e8fe039b4ac390"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-16T07:22:54Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOL1Au9w",
+      "category": "ai-ml",
+      "tags": [
+        "library",
+        "machine-learning"
+      ],
+      "summary": "TimesFM is a pretrained, decoder-only time-series foundation model developed by Google Research for time-series forecasting. Distributed as a Python package with checkpoints published on Hugging Face, it supports fine-tuning and integrations with BigQuery ML and Vertex AI.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "925b79d2b0c5d606fb7993b64228c6a05d6e0476",
+        "repo_metadata_sha256": "9a8dd3cba49085a38de29d358de19d3af546fdbcb1e1d9489e2cf29b8cd80c0c",
+        "fingerprint": "78ec20b048d4dd2629d0af15fb7b0a4c2b1c91d52c44e3a55dba7c5901e544af"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-16T07:22:54Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOL5OWWw",
+      "category": "developer-tools",
+      "tags": [
+        "ai-agents",
+        "api",
+        "llm",
+        "markdown",
+        "scraping"
+      ],
+      "summary": "Crawl4AI is an open-source, LLM-friendly web crawler and scraper written in Python that converts web pages into clean Markdown for retrieval-augmented generation, AI agents, and data pipelines. It includes a Dockerized API server with authentication enabled by default.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "83855376224ae501ff4edc24ef8978c0db9dcf51",
+        "repo_metadata_sha256": "e964f12643be1c31dfe9285635c0e382104913e4c08bef67ebba182f890da3a8",
+        "fingerprint": "8169efbdaebb8281557980c60b2b95dad5c8680e495868aa58f4d8b8c6b8f0db"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-16T07:22:54Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOL8-cgg",
+      "category": "security-privacy",
+      "tags": [
+        "cli",
+        "gui",
+        "tui"
+      ],
+      "summary": "ST3GG is an open-source, all-in-one steganography suite that hides data inside images, audio, documents, network packets, and other files using more than 100 encoding techniques. It runs entirely in the browser as a static site or as a Python command-line, terminal, and web interface.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "4f38c6261222f0228a794bc1d12e6f17899c98cb",
+        "repo_metadata_sha256": "3661dded9fa71df07bc170d7f48b92111f932f5b3556289fbb9b5311ca6991b3",
+        "fingerprint": "b918dea33c1fd9a8f625a01b3bd654aeefca652d83cd3be4e8fe02e1637d17dd"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-16T07:22:54Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOL90GLQ",
+      "category": "security-privacy",
+      "tags": [
+        "authentication",
+        "backend",
+        "library",
+        "plugin"
+      ],
+      "summary": "Better Auth is a framework-agnostic authentication and authorization framework for TypeScript. It provides built-in features such as two-factor authentication, multi-tenant support, and single sign-on, plus a plugin ecosystem for adding advanced functionality with minimal code.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "28ac7c56d7cbd8dce9a7fd21e5bac7a06b36f1fe",
+        "repo_metadata_sha256": "fdd71e8c508c8c10d16164cab0c62ad75650f76fa95a301cc4dec77da5b1c560",
+        "fingerprint": "1f7da74127add55b701198673acbdc9cdd4501d296c40dc31ecb913f35a23735"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-16T07:22:54Z"
+      }
     }
   ]
 }
