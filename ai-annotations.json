@@ -3026,6 +3026,123 @@
         "prompt_version": "classify-v1",
         "generated_at": "2026-07-16T11:22:29Z"
       }
+    },
+    {
+      "node_id": "R_kgDOM9RF8g",
+      "category": "ai-ml",
+      "tags": [
+        "cli",
+        "machine-learning"
+      ],
+      "summary": "F5-TTS is a text-to-speech system built on a diffusion transformer with ConvNeXt V2 and flow matching, released alongside an E2 TTS reproduction and a Sway Sampling inference strategy. It provides base models plus Python training and inference code for faster, fluent, and faithful speech synthesis.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "e0903aea55ae3e02c0cfa77407dcf7a49940633d",
+        "repo_metadata_sha256": "3f185fb4cb507ec3406013dfbde7cce0d62227492c80e537f059a00ae62ab948",
+        "fingerprint": "e9224fabf9ad2042b481c09947fcab272b01be507dcaa5e513762282b249449d"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-16T12:22:12Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOMB5_ZA",
+      "category": "ai-ml",
+      "tags": [
+        "caching",
+        "llm",
+        "machine-learning"
+      ],
+      "summary": "LMCache is a KV cache management layer that speeds up large language model inference by storing and reusing key-value caches across requests and nodes. It integrates with serving stacks such as vLLM, supports CPU memory offloading and peer-to-peer sharing, and aims to serve LLMs faster and more cheaply.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "9927f767d6a5aaf3c5ea6c399a94494dcc829625",
+        "repo_metadata_sha256": "2bb3ed7bf88ed589930e4d164da259c4cdfac298bb10e79d429a6d3dd59df154",
+        "fingerprint": "19e2dc89315ac166c38707793204a4a5685aea4d3fd6454877912aab16941f79"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-16T12:22:12Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOMCtNDQ",
+      "category": "web-applications",
+      "tags": [
+        "networking"
+      ],
+      "summary": "DigitalPlat FreeDomain is a service that offers free domain names such as .dpdns.org, .us.kg, and .qzz.io that anyone can register and point to a DNS provider like Cloudflare. It aims to make the web more accessible by removing domain cost, and reports over 500,000 domains already registered.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "fb654a6b53b3242f3e21da01b3a3074b7e21e240",
+        "repo_metadata_sha256": "f480c37011a3dfbdb9f80aa6ab01796b2e815b71df5e0ec7f6d91835003caf27",
+        "fingerprint": "6da3f6f26f119dd4c0911272b6a446819a8f36f47e32354b0b0bafad0de9d4d5"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-16T12:22:12Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOMGbPlg",
+      "category": "developer-tools",
+      "tags": [
+        "ai-agents",
+        "database",
+        "sdk"
+      ],
+      "summary": "MCP Toolbox for Databases is an open source Model Context Protocol server that connects AI agents, IDEs, and applications to databases such as PostgreSQL, MySQL, BigQuery, and Spanner. It ships prebuilt generic tools for exploring data plus a framework for building secure custom tools with structured queries.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "d10587ddae9b6dcb35fe465d2ad3c8236fbfb0cf",
+        "repo_metadata_sha256": "d8b94cb6769808e14ce62136e0c7c8a97acc8855f5cccbc9b1505861e2aefa94",
+        "fingerprint": "b585c06a57367b64ae54d6cd76e43f50927c41a4c08668369d958be13a2a123d"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-16T12:22:12Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOMLfXnA",
+      "category": "ai-ml",
+      "tags": [
+        "ai-agents",
+        "library",
+        "real-time"
+      ],
+      "summary": "TEN is an open-source framework for building real-time, multimodal conversational voice AI agents. Its ecosystem includes the core framework, agent examples, voice activity detection, and turn detection, with support for self-hosting via Docker and other cloud services for developers building interactive agents.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "2f97c20ff53ca27cfd66928792347199fe8c055e",
+        "repo_metadata_sha256": "0a4cb92401577473cc4ed59ccd18ea625a0c2b01d5a399e1ede6ccca7b9653ff",
+        "fingerprint": "9e177477eb1b57509be1325320890a8db778d64685bd48ef096999b9ed47d66f"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-16T12:22:12Z"
+      }
     }
   ]
 }
