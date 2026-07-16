@@ -3654,6 +3654,130 @@
         "prompt_version": "classify-v1",
         "generated_at": "2026-07-16T16:22:25Z"
       }
+    },
+    {
+      "node_id": "R_kgDONDsQ1w",
+      "category": "ai-ml",
+      "tags": [
+        "llm",
+        "rest-api",
+        "search",
+        "self-hosted",
+        "vector-database"
+      ],
+      "summary": "Open Notebook is an open-source, privacy-focused, self-hosted alternative to Google Notebook LM. It organizes multi-modal research sources such as PDFs, videos, audio, and web pages, supports 18+ AI model providers, generates multi-speaker podcasts, and provides full-text and vector search, AI chat, and a REST API with Docker deployment.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "4fe9418db9e74e1fd9a8499db7f34f4cfac1e34c",
+        "repo_metadata_sha256": "37b33b3fbdc8ba03592055f9a138589592d2b1bdcd35d2ce2d0854de1a9c544e",
+        "fingerprint": "c4e495fc08d4692c8cf1d66a8fcdc78d4244c3d4661ef45c35147730dbf1f210"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-16T17:23:44Z"
+      }
+    },
+    {
+      "node_id": "R_kgDONI2BTQ",
+      "category": "ai-ml",
+      "tags": [
+        "benchmark",
+        "llm",
+        "machine-learning"
+      ],
+      "summary": "DRAG is a Python research implementation of Distributed Retrieval-Augmented Generation. It runs local large language models through Ollama, including Llama 3.2, Gemma 2, and Qwen 2.5, and evaluates them on Hugging Face datasets such as MMLU using NLTK for text processing within a simulator.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "c9bf722277b218392041bb046cc2ddd41cd70ba1",
+        "repo_metadata_sha256": "dd57c20b9bf4564cf601360a6da18a36a6a5e32872e40acfe9907be6ad47de43",
+        "fingerprint": "3a1a7db4045a9c949b3ddcac02f0c0706a28cf5ef4c10456dc007e7a7cced3af"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-16T17:23:44Z"
+      }
+    },
+    {
+      "node_id": "R_kgDONIn9tw",
+      "category": "ai-ml",
+      "tags": [
+        "ai-agents",
+        "automation",
+        "cli",
+        "library",
+        "llm",
+        "scraping"
+      ],
+      "summary": "Browser Use is an open-source Python library that lets an AI agent control a web browser the way a person does, opening pages, clicking, typing, and filling forms from a natural-language task. It works with any LLM provider, supports custom tools, a CLI, and MCP, and automates web work such as form filling, data extraction, scraping, and QA testing.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "d08644593c2a3d998b0c5b33dfdd00cab25d8e2f",
+        "repo_metadata_sha256": "bc384106fb01198d9fa6cb52e5e3b63c2e80f65d816e7b2480a29ba35336b861",
+        "fingerprint": "91f579fc7f2a418cdd8903aa35e7dd05106882a6828286b3795f287722205aec"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-16T17:23:44Z"
+      }
+    },
+    {
+      "node_id": "R_kgDONO810w",
+      "category": "developer-tools",
+      "tags": [
+        "cli",
+        "library",
+        "llm",
+        "markdown"
+      ],
+      "summary": "MarkItDown is a lightweight Python utility and command-line tool for converting files into Markdown for use with LLMs and text-analysis pipelines. It supports PDF, PowerPoint, Word, Excel, images with OCR, audio transcription, HTML, and other formats while preserving document structure, and offers a plugin system and optional Azure integrations.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "aa2f58bb8a655fbc1a18bd57e1e2c5cf11b4d1f6",
+        "repo_metadata_sha256": "b02bf1c58f31f11e5ff26df250a4b933507fe3e1907df01ca979539a71cea86c",
+        "fingerprint": "d09e784594929b232db6bec123a91f9622b90ba89198b528340a18fdd7ab815b"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-16T17:23:44Z"
+      }
+    },
+    {
+      "node_id": "R_kgDONPHflw",
+      "category": "education-reference",
+      "tags": [
+        "awesome-list"
+      ],
+      "summary": "Awesome AI SEO is a curated list of tools, platforms, prompts, and resources that apply artificial intelligence to search engine optimization. It organizes entries across categories including AI SEO platforms, open-source projects, keyword research and clustering, content generation, SEO auditing, technical SEO, SERP tracking, prompt libraries, courses, and communities.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "43f93b452d938d8584278e58338fc54d8b32cadc",
+        "repo_metadata_sha256": "999ba2a5b6bfedaefc1e7c934dd36544e8617baafa2d4cc49735beb6ad5f330b",
+        "fingerprint": "757a984c7c06d6a711c860a651d983ca919c5652b2b0ce46535b2ce68d6bcc0d"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-16T17:23:44Z"
+      }
     }
   ]
 }
