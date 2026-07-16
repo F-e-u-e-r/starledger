@@ -2777,6 +2777,131 @@
         "prompt_version": "classify-v1",
         "generated_at": "2026-07-16T09:22:59Z"
       }
+    },
+    {
+      "node_id": "R_kgDOL_2xwg",
+      "category": "ai-ml",
+      "tags": [
+        "ai-agents",
+        "desktop-app",
+        "llm",
+        "markdown",
+        "productivity"
+      ],
+      "summary": "Cherry Studio is a cross-platform desktop client for Windows, Mac, and Linux that connects to multiple LLM providers such as OpenAI, Gemini, and Anthropic, plus local models via Ollama and LM Studio. It offers 300+ preconfigured AI assistants, multi-model conversations, document and data processing, AI translation, and MCP server support.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "eff783c08dd02468801d3bd4e34cd4eb4a465e60",
+        "repo_metadata_sha256": "9fc4dba485cbd86e604a6cc75f2d823f3c612df913496f72ed7a124e099efbbe",
+        "fingerprint": "9989c5e1cda6899fa8ae3ec1a4cb341232114d58fce846653b9a49dd98d3d2be"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-16T10:22:26Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOLk7NSQ",
+      "category": "self-hosted-homelab",
+      "tags": [
+        "containers",
+        "self-hosted",
+        "visualization"
+      ],
+      "summary": "Dawarich is a self-hostable web application that serves as an alternative to Google Timeline for tracking and visualizing location history. It shows data on an interactive map, creates and analyzes trips, supports family location sharing, imports from Google Maps Timeline, OwnTracks, GPX and GeoJSON, and reports travel statistics. It runs via Docker Compose.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "1959446b20b823d2c266954f1eb38033efd821f3",
+        "repo_metadata_sha256": "a46f7704768b684d889c9ba47f6842b68c266790e9c1eba22d6245004da8cb7d",
+        "fingerprint": "0eb57166eb3279cf7d681fec2b16495d2af24c8310c5ff3445ceb09dd0688a24"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-16T10:22:26Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOLr2o1g",
+      "category": "ai-ml",
+      "tags": [
+        "containers",
+        "llm",
+        "search",
+        "self-hosted"
+      ],
+      "summary": "Vane is a privacy-focused, self-hostable AI answering engine that runs on your own hardware. It combines web search through SearxNG with local LLMs via Ollama or cloud providers like OpenAI, Anthropic, and Groq to deliver answers with cited sources. Features include multiple search modes, file uploads, image and video search, and a developer API.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "9c11a47d7ec693ee69571254e937af71921e74c6",
+        "repo_metadata_sha256": "7b8ba3cb89d31aeace56dbafb4ddf09399aa4ddc8bad3d84baf86f3ee9c4a9bb",
+        "fingerprint": "87453d47bd8e34159cd3e84e52f4edff938de2b4e8d597c2798367ce716d59ef"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-16T10:22:26Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOLrbIZQ",
+      "category": "education-reference",
+      "tags": [
+        "documentation",
+        "llm",
+        "machine-learning"
+      ],
+      "summary": "Dive into LLMs is a free series of hands-on programming tutorials for large language models, expanded from Shanghai Jiao Tong University course material. Delivered as Jupyter notebooks, it covers fine-tuning and deployment, prompting and chain-of-thought, knowledge editing, mathematical reasoning, text watermarking, jailbreak attacks, multimodal models, GUI agents, and RLHF alignment.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "933f8fae9ba3cf9fd0a3d314793749451b5bd0b2",
+        "repo_metadata_sha256": "df19caeea06aec4c6aa3c9de710b0d27ec202dac7977eac53aaf4ec30a132bd4",
+        "fingerprint": "77a2b1fc5c73bfd74cb0a4b94a875b1b7ab272c2b032a9ce4d94189a2b10bfa9"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-16T10:22:26Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOLunVBg",
+      "category": "developer-tools",
+      "tags": [
+        "api",
+        "llm",
+        "markdown",
+        "scraping",
+        "sdk"
+      ],
+      "summary": "Firecrawl is an API to search, scrape, and crawl the web at scale, turning pages into clean Markdown or structured JSON for AI applications and agents. It handles proxies, rate limits, and JavaScript-heavy pages, and provides endpoints for search, scrape, crawl, map, and batch scrape, plus SDKs for Python, Node.js, Go, Rust, and other languages.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "b529073d6f2ca2f3affb5d06acbab3f65da4a556",
+        "repo_metadata_sha256": "fe6b83dc785eb8dfd3e92726e39fd81b837a4d6879273199e1ad278fad767642",
+        "fingerprint": "d1d7cbe0b720abce32d5e4152b29f5b353d20a0918f7b51f2c4ca4870cfe1629"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-16T10:22:26Z"
+      }
     }
   ]
 }
