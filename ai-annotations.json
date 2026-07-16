@@ -3276,6 +3276,130 @@
         "prompt_version": "classify-v1",
         "generated_at": "2026-07-16T13:22:26Z"
       }
+    },
+    {
+      "node_id": "R_kgDOMbt5gA",
+      "category": "ai-ml",
+      "tags": [
+        "llm",
+        "machine-learning"
+      ],
+      "summary": "MiniMind is an open-source project and tutorial for training a roughly 64M-parameter language model from scratch in about two hours on a single GPU. Its core algorithms are implemented in native PyTorch and cover tokenizer training, pretraining, supervised fine-tuning, LoRA, DPO, RLAIF, tool use, adaptive thinking, distillation and MoE variants.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "2711df5ce8a9a53164b6dcc6bd81859be1349de7",
+        "repo_metadata_sha256": "f7ac33b0660a22d9aec0850f0ead7415490bdadaf8694ba214fd8228d698c170",
+        "fingerprint": "da248162185d8fcd8b2af786f68774306a0b879aecc82f6289baf9287ee659a6"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-16T14:23:54Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOMdP6aA",
+      "category": "ai-ml",
+      "tags": [
+        "ai-agents",
+        "rest-api",
+        "scraping",
+        "search",
+        "self-hosted"
+      ],
+      "summary": "SurfSense is an open-source, self-hostable competitive intelligence platform for AI agents, positioned as a NotebookLM alternative with live scraping connectors. It exposes platform-native data from sources such as Reddit, YouTube and web search through a REST API and an MCP server, and keeps findings searchable in a citation-backed knowledge base.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "ba289ada4e0ba0e18a236f5b4ba335391c41e639",
+        "repo_metadata_sha256": "de7f6d141576342243d5b481077aacb33fe2f09110d99f606a0b21bc617c3ea3",
+        "fingerprint": "8e84b167fd5aaf0dfcd86033dcfbbc1d2a6d97c3930bb2a9b85526ccb637f79f"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-16T14:23:54Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOMnaJ3w",
+      "category": "developer-tools",
+      "tags": [
+        "api",
+        "plugin",
+        "scraping"
+      ],
+      "summary": "The official ScrapeGraphAI browser extension for Chromium-based browsers and Firefox. After entering a ScrapeGraphAI API key, a user opens any webpage, types natural-language scraping instructions, and the extension extracts the requested data through the ScrapeGraphAI service, with support for custom URLs and downloadable results.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "readme.md",
+        "readme_oid": "ef97006127b49c51018a846cfa2866d7b971b69e",
+        "repo_metadata_sha256": "6028962890cf31e1d167270e8ba15135bd5e07f89b9e99e4fc43feb01a21a754",
+        "fingerprint": "68705c5a400754584181b89065106c3ef89bacd9d8c1669fc1b22d98e792aca6"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-16T14:23:54Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOMneZ9w",
+      "category": "developer-tools",
+      "tags": [
+        "ai-agents",
+        "cli",
+        "desktop-app",
+        "llm"
+      ],
+      "summary": "goose is an open-source, extensible AI agent from the Agentic AI Foundation that runs locally as a native desktop app, a CLI, and an API. Built in Rust, it can install, execute, edit and test code and automate workflows, working with more than 15 LLM providers and connecting to extensions through the Model Context Protocol.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "f6f0522594c649dd2ba6eff75d1cfca3aca064d8",
+        "repo_metadata_sha256": "115cd1288df078d59cc84f6e671b6190bada99b4e6ad2e24d81e45d4ffd61e21",
+        "fingerprint": "ac118b7f77fba7ecf8ef5240f72188d80507140beb8fa503524abafedab6b2ae"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-16T14:23:54Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOMqDqIA",
+      "category": "data-analytics",
+      "tags": [
+        "ai-agents",
+        "dashboard",
+        "desktop-app",
+        "real-time",
+        "visualization"
+      ],
+      "summary": "Fincept Terminal is a native C++20 and Qt6 desktop application for financial analytics and investment research, with embedded Python for computation. It provides multi-asset analytics, portfolio optimization and risk metrics, over 100 data connectors, real-time and paper trading, a QuantLib quantitative suite, and configurable AI agents across multiple LLM providers.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "92611f634d2e275b58e24f0b339e614e92fdbf68",
+        "repo_metadata_sha256": "5942cfa6f95a7a0a3d3d6b3a6ac2bb0120df52436c5f3ce5a9dadee0bbbf9b01",
+        "fingerprint": "6050d7a1ee8f976ce4bde617032771ae8db437f40eed26733568cd7548d0610c"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-16T14:23:54Z"
+      }
     }
   ]
 }
