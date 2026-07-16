@@ -3525,6 +3525,135 @@
         "prompt_version": "classify-v1",
         "generated_at": "2026-07-16T15:23:19Z"
       }
+    },
+    {
+      "node_id": "R_kgDON8Qxng",
+      "category": "ai-ml",
+      "tags": [
+        "ai-agents",
+        "automation",
+        "cli",
+        "llm",
+        "self-hosted"
+      ],
+      "summary": "A fully local, privacy-focused AI assistant that autonomously browses the web, writes and runs code, and plans tasks using local reasoning models such as Ollama or LM Studio, keeping all conversations and data on the user's own hardware.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "b33d7153ac3ed18fe5b54be03247732e32bdbb53",
+        "repo_metadata_sha256": "34b235ae48cab7704c115576dd86105e878a71313a9130375f2628a69a4e762b",
+        "fingerprint": "e71c05fe1194ed0098c0454d3ae347295ba19f8120f1acff63bbd8e19af4091d"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-16T16:22:25Z"
+      }
+    },
+    {
+      "node_id": "R_kgDON91aYw",
+      "category": "developer-tools",
+      "tags": [
+        "ai-agents",
+        "automation",
+        "cli",
+        "code-generation",
+        "terminal"
+      ],
+      "summary": "An agentic coding tool that runs in the terminal, understands your codebase, and helps developers work faster by executing routine tasks, explaining complex code, and handling git workflows through natural language commands.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "80aa75edf74a5f9e1269811b4e8b5852be91e66e",
+        "repo_metadata_sha256": "39584f23bc42e021a381c0bdc85551c02d7252a1ce54ff235f46623329f8febc",
+        "fingerprint": "292db77d4e0bb93ae028a6109b61a0479685b3bc88cc0d6671294dc508365573"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-16T16:22:25Z"
+      }
+    },
+    {
+      "node_id": "R_kgDON9kY1A",
+      "category": "ai-ml",
+      "tags": [
+        "llm",
+        "real-time",
+        "rest-api",
+        "search",
+        "self-hosted"
+      ],
+      "summary": "A privacy-focused web application that uses large language models such as Gemini, OpenAI, and Anthropic to generate in-depth research reports in minutes, with integrated web search, local data storage, and both SSE and MCP server APIs.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "e1406796c754ee74bd9d9cf2cdadd4ee3f7793ae",
+        "repo_metadata_sha256": "0bd3f9e76c2fe85ccbb620d1657d71fd22c3abaec4b52bd75ab691418d707b16",
+        "fingerprint": "0abe59f2f3b6754c89514635962f501d63b489bc1405576b153cd973d18e3255"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-16T16:22:25Z"
+      }
+    },
+    {
+      "node_id": "R_kgDON9sc-Q",
+      "category": "developer-tools",
+      "tags": [
+        "ai-agents",
+        "api",
+        "cli",
+        "rest-api",
+        "self-hosted"
+      ],
+      "summary": "A Model Context Protocol server that gives AI agents access to Google Maps, offering 18 tools for geocoding, routing, place search, distance calculation, elevation, timezone, weather, and air quality, with stdio, HTTP, and CLI modes.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "c3281cde488b626c92d5fd4fc01c4f9814fad743",
+        "repo_metadata_sha256": "594b5de1b996a6606cc2e2b15ebd891b1d8df5403e4bdfaeefeec8a14e496df0",
+        "fingerprint": "870237892a9ca7cbb51e80c89b6154bfbb44bc16ae02101771738fb215ff3a84"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-16T16:22:25Z"
+      }
+    },
+    {
+      "node_id": "R_kgDONDfpqg",
+      "category": "libraries-frameworks",
+      "tags": [
+        "frontend",
+        "library",
+        "llm",
+        "theme"
+      ],
+      "summary": "A chatbot component kit built on the shadcn/ui ecosystem for building customizable AI chat interfaces, providing rich chat UI, file attachments, tool integration states, theming, dark and light modes, and composable React components.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "6dce73a5ef104c310641e596b5ba3468c47095a7",
+        "repo_metadata_sha256": "754a972a2ceee8642a57458310abe09dd9d0530be68c0b34b5859396f4499d99",
+        "fingerprint": "de00ed5a3100214df372451f8ee0ca064be02cc428f8dac3382b0ab80eb8fc17"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-16T16:22:25Z"
+      }
     }
   ]
 }
