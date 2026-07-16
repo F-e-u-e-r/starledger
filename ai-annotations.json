@@ -1914,6 +1914,131 @@
         "prompt_version": "classify-v1",
         "generated_at": "2026-07-16T02:22:58Z"
       }
+    },
+    {
+      "node_id": "R_kgDOJwiHTg",
+      "category": "developer-tools",
+      "tags": [
+        "backend",
+        "database",
+        "game",
+        "real-time",
+        "web-framework"
+      ],
+      "summary": "SpacetimeDB is a relational database that also acts as a server. You upload your application logic directly into the database as a module written in Rust, C#, or other supported languages, and clients connect to it directly, executing your logic and synchronizing state to connected clients in real-time without a server in between.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "2df4c9ad1e796496842abbbedd753040aea23f8f",
+        "repo_metadata_sha256": "2662ec8cb72ad8cf4cca88aaac93e87000286c383405120c952e4a0a509a7876",
+        "fingerprint": "6a0406d0a4652f25e7d7cb6a0b263f2896911d341ad965544bc415630479947b"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-16T03:22:11Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOJwwGvg",
+      "category": "education-reference",
+      "tags": [
+        "documentation",
+        "llm",
+        "machine-learning"
+      ],
+      "summary": "A course for getting into large language models, divided into LLM Fundamentals, the LLM Scientist, and the LLM Engineer tracks. It provides roadmaps, articles, and Colab notebooks covering the mathematics, techniques, and application deployment behind building and using LLMs.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "c605bee6695691d73a68de0aa21669b0f67b5412",
+        "repo_metadata_sha256": "cadc93d1e25934da944811e5be52d80c78f56b126c678d47db301f3e45e84c8c",
+        "fingerprint": "be2a2fa0cf9df7b173ff5ec1aa51411f944f32392162de3091985517a6300762"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-16T03:22:11Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOKALCgQ",
+      "category": "ai-ml",
+      "tags": [
+        "api",
+        "llm",
+        "proxy",
+        "sdk",
+        "self-hosted"
+      ],
+      "summary": "LiteLLM is an open-source AI gateway that provides a single, unified interface to call over 100 large language model providers such as OpenAI, Anthropic, Gemini, Bedrock, and Azure using the OpenAI format. It ships as a Python SDK and a self-hosted proxy server with cost tracking, guardrails, load balancing, and logging.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "32b0160dbaaf0ec0e9ae1e178e4a406e3215c487",
+        "repo_metadata_sha256": "b6f951140e3ef536f3f882e6bf8c240a14c1f274517e0d0538d350e8c5b7ec1a",
+        "fingerprint": "e1b26ed4c1506ba41408921874b92950cd477d1e03c94a72814f43dd28490c62"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-16T03:22:11Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOKCmt-A",
+      "category": "media-creative",
+      "tags": [
+        "machine-learning",
+        "plugin",
+        "real-time"
+      ],
+      "summary": "A GPU-accelerated, self-contained MediaPipe plugin for TouchDesigner that runs on Mac and PC with no installation. It supports nearly all MediaPipe vision models and includes example components for loading and displaying model data from a webcam or other sources inside TouchDesigner projects.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "3207d03dea6427242ab9a660a6271366f535d7bc",
+        "repo_metadata_sha256": "5f833f6e92ff458ff2d5ff7ca706f7107da4fe02b976f79a874bb448d18e609c",
+        "fingerprint": "15510a8caaaf806efc21854f19eb91aa06947be78538e0c344f26891e5256619"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-16T03:22:11Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOKH31kA",
+      "category": "ai-ml",
+      "tags": [
+        "ai-agents",
+        "database",
+        "self-hosted",
+        "vector-database"
+      ],
+      "summary": "Cognee is an open-source AI memory platform that gives AI agents persistent long-term memory across sessions. It ingests data in any format and builds a self-hosted knowledge graph, combining vector embeddings, graph reasoning, and ontology generation so agents can recall and connect information with full context.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "ade32367a02d9eb1d88fc6e2527f93e56942c4c5",
+        "repo_metadata_sha256": "3fcefeb9b5a98e64e9db90f48fd78911f5b20a7351ea0be60b95ccef82f1285e",
+        "fingerprint": "f223c668950d7f2d1df3e7ab7cf5a6a2e406c78efde373d7a854337b3114740f"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-16T03:22:11Z"
+      }
     }
   ]
 }
