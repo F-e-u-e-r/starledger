@@ -2169,6 +2169,128 @@
         "prompt_version": "classify-v1",
         "generated_at": "2026-07-16T04:22:54Z"
       }
+    },
+    {
+      "node_id": "R_kgDOK_BP3Q",
+      "category": "ai-ml",
+      "tags": [
+        "machine-learning"
+      ],
+      "summary": "A Google Colab notebook that runs OpenAI's faster-whisper to automatically generate subtitles or transcriptions from uploaded video files. Audio is pre-processed with ffmpeg, then transcribed or translated using GPU-accelerated automatic speech recognition, with output saved as SRT or TXT files.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "f50a9c15ebec2285f0bbd3d3b4f3c32bd620eb98",
+        "repo_metadata_sha256": "ac19896c97963a4d9c217ccfe50294fd2cd618775e2ff2e611fbc96ed82be085",
+        "fingerprint": "46a138644cdcdf96df604dfa84cdb023f1869248e57a972fcd2c52b5589896b3"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-16T05:22:20Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOKc_0Jw",
+      "category": "ai-ml",
+      "tags": [
+        "ai-agents",
+        "llm",
+        "sdk"
+      ],
+      "summary": "BAML is a statically typed programming language for building LLM agents, with a TypeScript-like syntax and Rust-like type safety. Types persist at runtime with no 'any', errors are statically analyzed, and BAML can run standalone or be called from Python, TypeScript, Go, and other languages.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "5ddc4a4787f799791db845cb103f6251b80df182",
+        "repo_metadata_sha256": "fb435828e62f0b062485f650e2095334f8c8fdf1d7009fc285de687251851a17",
+        "fingerprint": "24346990649fbe44842f2a1e42e9efc9386c310a79e2330c5d45175bbada7a48"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-16T05:22:20Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOKcitcA",
+      "category": "self-hosted-homelab",
+      "tags": [
+        "authentication",
+        "containers",
+        "dashboard",
+        "notifications",
+        "self-hosted"
+      ],
+      "summary": "Wallos is an open-source, self-hostable web application for tracking personal subscriptions and recurring expenses. It supports multiple currencies with conversion, customizable categories and themes, spending statistics, OIDC authentication, and payment notifications via email, Discord, Telegram, and webhooks, and can be deployed bare-metal or with Docker.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "dd37b12873a8705543f55614661f2b9bf40640e3",
+        "repo_metadata_sha256": "353cdf87b0a9a80a7321665873e336690c4befc90eb69cb9002c9595fbd338ba",
+        "fingerprint": "c5bc156e0bc64884313144254fd9f464a64a1e6e9919aefe8a73f9acb2a73f0e"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-16T05:22:20Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOKdDCcw",
+      "category": "ai-ml",
+      "tags": [
+        "llm",
+        "plugin",
+        "search",
+        "self-hosted",
+        "vector-database"
+      ],
+      "summary": "Open WebUI is an extensible, feature-rich, self-hosted AI platform that operates entirely offline and supports LLM runners like Ollama and OpenAI-compatible APIs. It includes a built-in RAG inference engine backed by multiple vector databases, granular role-based access control, plugin support, and web search integration.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "bc504ce641157310b558bd0ae49035d21598d7f9",
+        "repo_metadata_sha256": "4c837e2be4e9e2d81b4a4e60578ccd372dda5b3d69893e3236f1ba34b8c71212",
+        "fingerprint": "6b5c237d39859a1e9a475afabd91d58586fb57d3fd95cd158d4dbf1fd7dceed7"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-16T05:22:20Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOKehMrA",
+      "category": "ai-ml",
+      "tags": [
+        "benchmark",
+        "cli",
+        "machine-learning"
+      ],
+      "summary": "An opinionated command-line tool to transcribe audio files on-device using OpenAI's Whisper, powered by Hugging Face Transformers, Optimum, and flash-attn. It supports batching and Flash Attention 2 for fast transcription on NVIDIA GPUs and Apple Silicon, with optional speaker diarization.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "09abc8f1feabbe9e8995be1fcf41faa002fee149",
+        "repo_metadata_sha256": "685950109252d686108ca1ae1ed9abd9b29d71de33417cccdf5d52f3d5385222",
+        "fingerprint": "a44624cdea702dad471dfb9b56cae35524bad9abef45ce07275ec0deff6bbbc6"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-16T05:22:20Z"
+      }
     }
   ]
 }
