@@ -1,0 +1,58 @@
+name: AI stall watch
+
+# Pages the operator (Telegram) when an open executor PR has stalled the hourly
+# AI-classification campaign: the routine's STEP-0 throttle skips every run
+# while such a PR is open, which is fail-safe but silent (a 13h unnoticed stall
+# was observed on 2026-07-16/17). Detection, state classification, and message
+# composition live in scripts/ai-stall-watch.sh — shellcheck-able and runnable
+# locally (read-only) — so this workflow is only scheduling plus credentials.
+on:
+  schedule:
+    # Non-zero minute avoids the top-of-hour scheduler surge; offset from the
+    # hourly executor (:17-ish) and notifier (:17) crons.
+    - cron: '43 * * * *'
+  workflow_dispatch:
+    inputs:
+      stall_hours:
+        description: 'alert when an executor PR has been open longer than this many hours'
+        required: false
+        default: '2'
+      dry_run:
+        description: 'print the composed alert instead of sending it (true|false)'
+        required: false
+        default: 'false'
+
+# Explicit block zeroes everything else. contents:read is required to check out
+# the script from this PRIVATE repo; checks:read for the check-runs endpoint;
+# pull-requests:read to list PRs and their files. No write scopes.
+permissions:
+  contents: read
+  pull-requests: read
+  checks: read
+
+concurrency:
+  group: ai-stall-watch
+  cancel-in-progress: false
+
+jobs:
+  watch:
+    runs-on: ubuntu-latest
+    # A hung API/transport call must not squat the concurrency group across
+    # later scheduled runs; the script also bounds the Telegram call itself.
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@93cb6efe18208431cddfb8368fd83d5badbf9bfd # v5
+        with:
+          persist-credentials: false
+
+      - name: detect stalled executor PRs and page the operator
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+          # Scheduled events carry NO workflow_dispatch defaults — `inputs` is
+          # empty there — so the fallbacks below are load-bearing.
+          STALL_HOURS: ${{ inputs.stall_hours || '2' }}
+          DRY_RUN: ${{ inputs.dry_run || 'false' }}
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+        run: bash scripts/ai-stall-watch.sh

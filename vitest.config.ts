@@ -32,6 +32,10 @@ export default defineConfig({
         '**/*.d.ts',
         '**/generate-schemas.ts', // build-time codegen
         '**/cli.ts', // process entry points (commander wiring; delegate to lib)
+        // Same entry-point rationale: the classifier's commander wiring, split out
+        // of cli.ts so tests can import construction without parseAsync (#56).
+        // Every action delegates to covered lib code; fatal.ts stays covered.
+        'packages/classifier/src/program.ts',
         'apps/*/src/main.tsx', // React bootstrap, no logic
         // Pure re-export barrels (no logic). NOTE: packages/exporter/src/index.ts
         // is the run() orchestration, NOT a barrel — keep it in the base.

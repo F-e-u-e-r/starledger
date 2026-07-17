@@ -17,7 +17,11 @@ export interface ReadmeRef {
  * The seam between trusted planning and GitHub, split so the planner avoids the
  * expensive operation:
  *   - `getReadmeRef`: the lightweight identity probe — preferred README path +
- *     blob OID, NO content. When `knownPath` is supplied (the path a prior run
+ *     blob OID, NO content. A `null` means "no README the pipeline can actually
+ *     LOAD" — not merely "GitHub reports no preferred path": a README whose
+ *     bytes the endpoint will not return (over 1 MB → `encoding: "none"`) is
+ *     reported as null too, so the planner and the provenance gate always reach
+ *     the same source kind. When `knownPath` is supplied (the path a prior run
  *     recorded) an implementation MAY resolve the current OID for exactly that
  *     path without downloading any content, falling back to full preferred-README
  *     discovery only when the path no longer exists. `knownPath` is an
@@ -40,6 +44,15 @@ interface GithubReadmeResponse {
   sha?: unknown;
   content?: unknown;
   encoding?: unknown;
+}
+
+/** The ONE definition of a README the pipeline can actually load, shared by
+ * discovery (`getReadmeRef`) and the byte fetch (`getReadmeContent`) so the two
+ * can never disagree about a repo's source kind. An EMPTY base64 content is a
+ * usable (empty) README; `encoding: "none"` — GitHub's shape for files over
+ * 1 MB, whose bytes the endpoint refuses to return — is not. */
+function isLoadableReadme(res: GithubReadmeResponse): boolean {
+  return typeof res.content === 'string' && res.encoding === 'base64';
 }
 
 interface BlobOidResponse {
@@ -130,7 +143,14 @@ export class OctokitReadmeSource implements ReadmeSource {
       // the known path no longer exists → fall through to authoritative discovery
     }
     const res = await this.requestReadme(repo);
-    if (res === null) return null;
+    // A README the pipeline cannot LOAD is reported exactly like a missing one.
+    // GitHub answers 200 for a preferred README over 1 MB but omits the bytes
+    // (`encoding: "none"`, empty content); treating that as a usable ref made the
+    // planner demote to a metadata-kind job while the provenance gate (which
+    // probes refs only, never content) still expected readme-kind — a permanent
+    // plan/gate split observed live on PRs #91/#92 (2026-07-16/17). Discovery and
+    // content fetch share ONE usability predicate so they can never diverge again.
+    if (res === null || !isLoadableReadme(res)) return null;
     const path = typeof res.path === 'string' ? res.path : null;
     const oid = typeof res.sha === 'string' ? res.sha : null;
     return path !== null && oid !== null ? { path, oid } : null;
@@ -138,15 +158,10 @@ export class OctokitReadmeSource implements ReadmeSource {
 
   async getReadmeContent(repo: RepoCoordinates, path: string): Promise<string | null> {
     const res = await this.requestReadme(repo);
-    if (
-      res === null ||
-      res.path !== path ||
-      typeof res.content !== 'string' ||
-      res.encoding !== 'base64'
-    ) {
+    if (res === null || res.path !== path || !isLoadableReadme(res)) {
       return null;
     }
-    return Buffer.from(res.content, 'base64').toString('utf8');
+    return Buffer.from(res.content as string, 'base64').toString('utf8');
   }
 
   /**

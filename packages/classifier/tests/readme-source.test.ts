@@ -21,6 +21,33 @@ describe('OctokitReadmeSource', () => {
     expect(request).toHaveBeenCalledTimes(1);
   });
 
+  it('reports a README whose bytes GitHub withholds (>1 MB → encoding "none") as absent', async () => {
+    // The measured response shape behind PRs #91/#92: HTTP 200 with path+sha
+    // populated but no loadable bytes. Discovery must report null — the same
+    // answer the provenance gate will compute — instead of a usable-looking ref.
+    const request = vi.fn().mockResolvedValue({
+      data: { path: 'README.md', sha: 'oid-huge', content: '', encoding: 'none', size: 1_153_334 },
+    });
+    const source = new OctokitReadmeSource({ octokit: { request } } as never);
+
+    await expect(source.getReadmeRef(REPO)).resolves.toBeNull();
+    await expect(source.getReadmeContent(REPO, 'README.md')).resolves.toBeNull();
+    expect(request).toHaveBeenCalledTimes(1); // one memoized response answers both
+  });
+
+  it('treats an EMPTY base64 README as usable (an empty file is not a missing one)', async () => {
+    const request = vi.fn().mockResolvedValue({
+      data: { path: 'README.md', sha: 'oid-empty', content: '', encoding: 'base64' },
+    });
+    const source = new OctokitReadmeSource({ octokit: { request } } as never);
+
+    await expect(source.getReadmeRef(REPO)).resolves.toEqual({
+      path: 'README.md',
+      oid: 'oid-empty',
+    });
+    await expect(source.getReadmeContent(REPO, 'README.md')).resolves.toBe('');
+  });
+
   it('does not return cached preferred content for a path that changed after the probe', async () => {
     const request = vi.fn().mockResolvedValue({
       data: {

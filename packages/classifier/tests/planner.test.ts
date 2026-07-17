@@ -316,3 +316,55 @@ describe('planner — prioritization, budget, and trust', () => {
     expect(large.manifest.dataset_sha256).not.toBe(small.manifest.dataset_sha256);
   });
 });
+
+describe('planner — README probed but not fetchable (omit, never demote; PRs #91/#92)', () => {
+  // A job whose README probe succeeded but whose bytes cannot be fetched must be
+  // OMITTED, not demoted to metadata in place: the provenance gate rediscovers
+  // refs WITHOUT content, so an in-place metadata artifact contradicts it and
+  // goes permanently red (the live incident on PRs #91/#92).
+  const unfetchable: FakeReadmeEntry = { ref: { path: 'README.md', oid: 'oid-1' } }; // no content
+
+  it('OMIT-1: the job is dropped, a meaningful prior state entry survives untouched, and a healthy sibling still ships', async () => {
+    const a = repo('a');
+    const b = repo('b');
+    const priorA = {
+      node_id: 'R_a',
+      readme_path: 'README.md',
+      readme_oid: 'oid-0',
+      last_fingerprint: null,
+      attempts: 0,
+      last_error_code: null,
+      next_retry_at: null,
+      terminal_unavailable: false,
+    };
+    const source = new FakeReadmeSource(
+      readmeEntries({
+        'owner-a/repo-a': unfetchable,
+        'owner-b/repo-b': {
+          ref: { path: 'README.md', oid: 'oid-b' },
+          content: '# B\n\nHealthy sibling README.',
+        },
+      }),
+    );
+    const { manifest, decisions, nextState, omittedUnfetchable } = await plan({
+      repos: [a, b],
+      source,
+      state: { schema_version: EMPTY_CLASSIFIER_STATE.schema_version, repos: [priorA] },
+    });
+    expect(manifest.jobs.map((j) => j.node_id)).toEqual(['R_b']);
+    expect(decisions.find((d) => d.node_id === 'R_a')?.selected).toBe(false);
+    expect(decisions.find((d) => d.node_id === 'R_b')?.selected).toBe(true);
+    expect(omittedUnfetchable).toEqual(['R_a']);
+    // Exact prior-state preservation: the probe's fresh oid must NOT be cached.
+    expect(nextState.repos.find((r) => r.node_id === 'R_a')).toEqual(priorA);
+  });
+
+  it('OMIT-2: without prior state the omitted repo leaves no invented state entry', async () => {
+    const a = repo('a');
+    const source = new FakeReadmeSource(readmeEntries({ 'owner-a/repo-a': unfetchable }));
+    const { manifest, nextState, omittedUnfetchable } = await plan({ repos: [a], source });
+    expect(manifest.jobs).toHaveLength(0);
+    expect(nextState.repos.find((r) => r.node_id === 'R_a')).toBeUndefined();
+    expect(omittedUnfetchable).toEqual(['R_a']);
+  });
+});
