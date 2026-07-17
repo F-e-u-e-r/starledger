@@ -5039,6 +5039,130 @@
         "prompt_version": "classify-v1",
         "generated_at": "2026-07-17T21:23:31Z"
       }
+    },
+    {
+      "node_id": "R_kgDOOiIsNw",
+      "category": "developer-tools",
+      "tags": [
+        "code-generation",
+        "documentation",
+        "llm",
+        "self-hosted"
+      ],
+      "summary": "An open-source implementation of DeepWiki that automatically generates interactive documentation wikis for GitHub, GitLab, or BitBucket repositories. It analyzes code structure, produces comprehensive documentation and visual diagrams, and organizes them into a navigable wiki. It can run self-hosted and supports multiple LLM providers.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "8abbe674051c9797b159e81c7d5ce39967231c7f",
+        "repo_metadata_sha256": "73af1b96132661c38b29bab9367001eabad3c1c54fb15834057f31abe38407be",
+        "fingerprint": "173aca6e486180fed153dd09f7284fb5de22d139e88abcc5ca43979250b86da9"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-17T22:22:28Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOOigsTg",
+      "category": "education-reference",
+      "tags": [
+        "awesome-list",
+        "documentation",
+        "llm"
+      ],
+      "summary": "A community-driven collection of rules and workflows for the Cline coding assistant. Users can browse and apply these prompts directly from the Prompts Library inside the Cline extension, and contribute their own rules or workflows as Markdown files through pull requests.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "f4c8c54bb6fa1e01811eb8d70fb0db910ca2ac0d",
+        "repo_metadata_sha256": "08ca8e258efbe2aac4747e4d69b5c8185aeaa6d3efb3b03608d2d19c5f9f4b6c",
+        "fingerprint": "bda69a131fdd64421651483ef3e0861daee4d94f9b70daa7b6b5c5a7fd0d0c86"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-17T22:22:28Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOOlTIcA",
+      "category": "productivity-automation",
+      "tags": [
+        "ai-agents",
+        "automation",
+        "cli",
+        "workflow"
+      ],
+      "summary": "Workflow Use creates and runs deterministic browser-automation workflows (RPA). You record a workflow once and replay it, with steps falling back to the AI-powered Browser Use agent when they fail. A generation mode builds reusable workflows from natural-language task descriptions, and a CLI plus web GUI manage and execute them.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "7199195837d280f9a2c8f9abe07c473c85057209",
+        "repo_metadata_sha256": "5ac014fedb0dfd31e24ff45dfb1d2cc9853094a0a7edabc1a0e2462cf5401b2c",
+        "fingerprint": "1c362417fdb1e3f1d245b3e2e660d4adee48e8acafc1f88a57236a7883015214"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-17T22:22:28Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOOluM0g",
+      "category": "data-analytics",
+      "tags": [
+        "dashboard",
+        "machine-learning",
+        "search",
+        "visualization"
+      ],
+      "summary": "Embedding Atlas provides interactive visualizations for large embeddings and their metadata, letting you visualize, cross-filter, and search across data. It offers automatic clustering and labeling, real-time nearest-neighbor search powered by WebGPU, linked cross-filtering dashboards, and multimodal viewers. Available as a CLI, a Python notebook widget, and an npm package.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "a7ca1b386be33cefc5e968656e952617bdd32eea",
+        "repo_metadata_sha256": "8bfc3775a9aa334f94ae19e576f21c9e08e5630b409785e5f057be36a393b0b5",
+        "fingerprint": "1ea645ff92b83473fb5949062e72f349afe0dd6e7d6319b091de2fd456c0d6b9"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-17T22:22:28Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOOpEY6A",
+      "category": "developer-tools",
+      "tags": [
+        "cli",
+        "machine-learning",
+        "markdown",
+        "sdk"
+      ],
+      "summary": "OpenDataLoader PDF is an open-source Java-based PDF parser that extracts AI-ready data from PDFs as Markdown, JSON with bounding boxes, and HTML. It supports OCR, table and formula extraction, and a hybrid local and AI mode, plus automatic tagging of untagged PDFs for accessibility. It offers Python, Node.js, and Java SDKs and a LangChain integration for RAG pipelines.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "51e45dba5f67ee3a63a804392bf43b59508d8468",
+        "repo_metadata_sha256": "d1c9806a66b66c741c5d648f825a7dcf6e649f33d7d6913118bf8214e5a661ec",
+        "fingerprint": "007f0f25b9cc4c8fb627b985d35e217ea012dd41376b0ca6928cf987d62a4a09"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-17T22:22:28Z"
+      }
     }
   ]
 }
