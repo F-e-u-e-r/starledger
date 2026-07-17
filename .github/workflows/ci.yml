@@ -48,6 +48,11 @@ jobs:
           node scripts/smoke-notifier-state.mjs
           node scripts/smoke-notifier-replay.mjs
 
+      # Hermetic: stub gh/curl fixtures on PATH — no network, no secrets, so it
+      # is safe on fork PRs and deterministic (no dependency on live PR state).
+      - name: AI stall-watch smoke (no secrets)
+        run: bash scripts/smoke-stall-watch.sh
+
       - name: schema drift (regenerate + verify clean)
         run: |
           pnpm schemas

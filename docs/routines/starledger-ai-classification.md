@@ -235,6 +235,10 @@ command and stop.
   hand-merge `ai-annotations.json`.
 - **Stuck PR within 24h:** if red only from PROV-5 staleness, `meta-rebase` and
   merge; otherwise close it. A stuck matching PR halts the hourly campaign (STEP 0).
+- **Stall watchdog:** `.github/workflows/ai-stall-watch.yml` (logic in
+  `scripts/ai-stall-watch.sh`) pages Telegram hourly while an executor-shaped PR
+  sits open longer than 2h, with state-dependent advice mirroring the rules
+  above; act per the stuck-PR rule. Dispatch it with `dry_run=true` to preview.
 - **Watch the omit rate.** A repo omitted every run starves a batch slot; classify or
   remove it manually until terminal quarantine (below) exists.
 - **Definition of done:** when runs consistently report an empty manifest, disable
@@ -249,6 +253,23 @@ command and stop.
 - Terminal quarantine for a repeatedly un-classifiable ("poison") repo via the
   classifier state machine, so it stops being re-offered (and starving a slot) every
   run; and a circuit breaker to auto-disable after N failed/empty runs.
+- **knownPath residuals** (2026-07-17, follow-up to the PRs #91/#92 fix): a README
+  larger than 1 MB comes back from the REST readme endpoint with
+  `encoding:"none"` and no bytes; the source seam now reports it as "no usable
+  README" for planner AND gate alike, and a probe-ok-but-unfetchable job is
+  omitted (never demoted in place; omissions are printed by `plan`). Two distinct
+  cases remain open for repos with a RECORDED readme path:
+  1. the recorded file itself later becomes unloadable (grows past 1 MB): its OID
+     changes → a refresh job is planned via the content-free knownPath OID
+     shortcut → content-miss → **omitted every cycle** (slot starvation, no red
+     PR);
+  2. a higher-precedence README appears (`.github/`/root) while the recorded
+     file stays byte-identical: the probed fingerprint equals the recorded one →
+     the repo is **skip-current** and never re-planned at all — a silently stale
+     annotation, with no omit loop and no signal.
+     Neither exists in the dataset today. The proper fix for both is authoritative
+     preferred-README rediscovery (not the knownPath shortcut) on content-miss and
+     periodically for settled repos; fold into the quarantine work above.
 - Phase 2 (CI-validated auto-merge) is now **live**: `required_approving_review_count`
   is 0, the deterministic summary-hygiene gate is in the schema (`CanonicalSummarySchema`
   rejects URLs), and auto-merge is on. Standing hardening still open: bind auto-merge
