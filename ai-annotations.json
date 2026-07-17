@@ -4785,6 +4785,134 @@
         "prompt_version": "classify-v1",
         "generated_at": "2026-07-17T19:22:36Z"
       }
+    },
+    {
+      "node_id": "R_kgDOOT_tqg",
+      "category": "developer-tools",
+      "tags": [
+        "ai-agents",
+        "library",
+        "llm",
+        "testing"
+      ],
+      "summary": "Scenario is an agent testing framework that simulates users to exercise real agent behavior across scenarios and edge cases, offering multi-turn control and evaluation at any point in a conversation. It is eval-framework agnostic and available in Python, TypeScript, and Go.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "dce3597a8c99df176978b29fd9a60e1091ae2e49",
+        "repo_metadata_sha256": "d31841892b1e5cf7bb305ea46689bf02737f9911fe0fcbc9081d5e67a22448c9",
+        "fingerprint": "49a6c110020c3a4952592d57f9efd8332fe725372f0a650501f9652ac5dadcfc"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-17T20:28:31Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOOXRIQw",
+      "category": "developer-tools",
+      "tags": [
+        "authentication",
+        "cli",
+        "scraping",
+        "search"
+      ],
+      "summary": "RedNote MCP is a Model Context Protocol server that lets AI clients such as Cursor access Xiaohongshu (RedNote) content. It supports cookie-based authentication with persistence, keyword note search, a command-line initialization tool, and retrieving notes by URL.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "a32738a87540dcbdb950277fc2649524756aafc0",
+        "repo_metadata_sha256": "9186065ab9c47627ba7c2e388d37b2307f91623575e98c7cad0f55b4d1bb6ad9",
+        "fingerprint": "56d14a4d3ff763def8a9c02309a89fcb31985016a08157846e9a1350cbe41136"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-17T20:28:31Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOOXpEPw",
+      "category": "productivity-automation",
+      "tags": [
+        "ai-agents",
+        "automation",
+        "cli",
+        "desktop-app",
+        "sdk",
+        "workflow"
+      ],
+      "summary": "Terminator is a Windows desktop automation framework and computer-use MCP server that lets AI assistants control applications and browsers through UI element locators. It combines deterministic pre-recorded workflows with AI-based recovery and ships Python, TypeScript, Rust, and CLI libraries.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "7cf377e4c254a32008e96fe4c06507d556d72421",
+        "repo_metadata_sha256": "7586bf27871eca48c62b27b12e5a9e192c90eb7a94b0a35036f8fd8956244d11",
+        "fingerprint": "87634b05b18c3346a374424fdbc7372c8289d0c34b6b15396e752743070b81ad"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-17T20:28:31Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOO_yqIA",
+      "category": "media-creative",
+      "tags": [
+        "desktop-app",
+        "editor",
+        "plugin"
+      ],
+      "summary": "OpenCut is a free, open-source video editor for web, desktop, and mobile, positioned as an alternative to CapCut. It is being rewritten around a Rust core with a plugin-first architecture, and plans an editor API, headless batch rendering, and an in-editor scripting tab.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "08cef45afb531c600819ff3dde2d05a3a6c5006e",
+        "repo_metadata_sha256": "b4ab25584d47af8dd3352001abfe0ded2857e8060924b0e9cf0cc8e69b7a72fb",
+        "fingerprint": "4dab626b21da2664da5a1c5013e7bf9764774243eaf8c0d2180f3ab3a74e23d2"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-17T20:28:31Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOOaQ0cA",
+      "category": "ai-ml",
+      "tags": [
+        "ai-agents",
+        "library",
+        "llm",
+        "machine-learning",
+        "orchestration",
+        "workflow"
+      ],
+      "summary": "EvoAgentX is an open-source framework for building, evaluating, and evolving LLM-based agents and agentic workflows. It auto-constructs multi-agent workflows from a single prompt, scores agent behavior with built-in evaluators, and optimizes them with self-evolving algorithms, alongside memory modules and human-in-the-loop control.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "3d354eea40e9143f3dee90546fedfbda642e1a37",
+        "repo_metadata_sha256": "8f1b712ca0bd24e77e910abdd9dd89a10f5dddbed7ab8c2f68fda260c9196dd5",
+        "fingerprint": "0ca3a82794a1d7b6ea592049bcbaa5b1c35382a099cbc02888e74a1256d44e20"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-17T20:28:31Z"
+      }
     }
   ]
 }
