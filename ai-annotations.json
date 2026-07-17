@@ -4538,6 +4538,131 @@
         "prompt_version": "classify-v1",
         "generated_at": "2026-07-17T16:28:15Z"
       }
+    },
+    {
+      "node_id": "R_kgDOODKOXw",
+      "category": "developer-tools",
+      "tags": [
+        "ai-agents",
+        "automation",
+        "cli",
+        "llm",
+        "workflow"
+      ],
+      "summary": "Taskmaster is a task-management system for AI-driven development, distributed as the task-master-ai npm package with a CLI and MCP integration. It plugs into AI code editors and chat assistants such as Cursor, Windsurf, Lovable, and Roo to plan and track development tasks.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "1bf67c568b7943b01b17263f7ac6226b4c63123f",
+        "repo_metadata_sha256": "036db06274f6e8ae36e9f2b607b1b1052e091fc8eabd8bec03fc01275de1142b",
+        "fingerprint": "cee38c064c0af723bfa80e72e770963c5d75d08933a56c72e7e87c025c99a698"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-17T17:25:06Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOODsgVw",
+      "category": "education-reference",
+      "tags": [
+        "ai-agents",
+        "documentation",
+        "llm"
+      ],
+      "summary": "A reference collection documenting the system prompts, internal tools, and AI model configurations used by many commercial AI coding and assistant products, including Cursor, Claude Code, Devin, Lovable, Replit, v0, and Windsurf. It is organized as source files gathered for study.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "49fa9fc2069e82eeff7fb027bafe15745ec248ed",
+        "repo_metadata_sha256": "b6f934fc0bd35028cb3e829739eec60f91b27414625fc5b097a23628a12fbd4d",
+        "fingerprint": "6680f3a41b94cdb8b12594fbcb6d13be52f4ff77ec414c4888c00ddb594d27e5"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-17T17:25:06Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOOGL6dA",
+      "category": "self-hosted-homelab",
+      "tags": [
+        "automation",
+        "llm",
+        "self-hosted"
+      ],
+      "summary": "TaxHacker is a self-hosted accounting web app for freelancers and small businesses that uses LLMs to read photos of receipts, invoices, and PDFs and extract fields such as amounts, dates, merchants, and taxes into a structured database. It supports custom AI prompts, currency conversion, categories, and import/export.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "cfe4868825f817a3fb51370d8b716dad3476c870",
+        "repo_metadata_sha256": "346d8d6990a4058bd33dc5ecdcd9921b3ce2739b8d8889a441e590162b6e1fd8",
+        "fingerprint": "e66b8b30a6a7d02ed9fb24adb1e1881a51d8f0e442419a2a87813075868b8c20"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-17T17:25:06Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOOH7hgA",
+      "category": "developer-tools",
+      "tags": [
+        "ai-agents",
+        "api",
+        "llm",
+        "rest-api",
+        "search"
+      ],
+      "summary": "An implementation of a Model Context Protocol (MCP) server that connects AI models to Obsidian knowledge bases. It exposes tools to read, create, update, and delete notes, manage folder hierarchies, and run full-text search, using the Obsidian REST API with a filesystem fallback.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "b110ea63a78abeb893e8821b20dd7268a5e5c2fb",
+        "repo_metadata_sha256": "7618a8c2db145ea2d2f79dc7b11d4263ff90b1875be453beecfe8e5360e2a0f8",
+        "fingerprint": "e551d31416a3d624cc8149e9782d0c628f11bae6ec9bf738bb7890f3a5d61318"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-17T17:25:06Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOONWTjQ",
+      "category": "web-applications",
+      "tags": [
+        "ai-agents",
+        "frontend",
+        "llm",
+        "visualization"
+      ],
+      "summary": "Next AI Draw.io is a Next.js web application that integrates AI with draw.io diagrams, letting users create, modify, and enhance diagrams through natural-language commands. It supports multiple model providers, an admin panel, and deployment via Docker, Vercel, or Cloudflare Workers.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "7362bb907ee3542431ba9daf107898a6782a5647",
+        "repo_metadata_sha256": "ea1d39e6ab4b9c6b84665a5351b30599cc91db619c40a9894cb8c474bca53803",
+        "fingerprint": "abe38953fd4a33e2d58a68b3e89fa842962d083f8e31f3bc23c07c498320a3af"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-17T17:25:06Z"
+      }
     }
   ]
 }
