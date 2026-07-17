@@ -3778,6 +3778,123 @@
         "prompt_version": "classify-v1",
         "generated_at": "2026-07-16T17:23:44Z"
       }
+    },
+    {
+      "node_id": "R_kgDONTqV6w",
+      "category": "data-analytics",
+      "tags": [
+        "cli",
+        "database",
+        "vector-database"
+      ],
+      "summary": "HelixDB is an OLTP graph-vector database built in Rust on object storage. It combines graph and vector data models (and also KV, document, and relational data) in a single platform for AI applications, knowledge graphs, and agent memory, and ships a CLI to run and manage local instances or connect to Helix Cloud.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "00cf376b9632ee8044546afc37419f246770eb88",
+        "repo_metadata_sha256": "154eab05b7ae579daab9bc7074f21e535aa9547d8fa1ea9ed39f3bcc66dfb9ff",
+        "fingerprint": "b390edb9a9aa07764bbf9cb89652cabefa33884acbf6bc77e6afd5bb7fc5cb38"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-17T08:22:11Z"
+      }
+    },
+    {
+      "node_id": "R_kgDONW60Aw",
+      "category": "libraries-frameworks",
+      "tags": [
+        "library",
+        "networking",
+        "real-time"
+      ],
+      "summary": "A Linux C/C++ library that parses and decodes UDP market-data packets streamed directly from the Taiwan Stock Exchange (TWSE). It focuses on the real-time Format 6 feed for low-latency consumption in IDC/colocation environments and exposes a Python interface for handling incoming packets.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "c393a6526a899433309fc010a726988941dd1c5d",
+        "repo_metadata_sha256": "0e041e0c60b8d2f4825d13ae87458182d874f67c770facab2dc8fe0f83a9ed68",
+        "fingerprint": "0c3d92eb86ab272faec9179eef78375edc55f542f9e6ebbf2a08528f1c36cee4"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-17T08:22:11Z"
+      }
+    },
+    {
+      "node_id": "R_kgDONWBgsA",
+      "category": "education-reference",
+      "tags": [
+        "ai-agents",
+        "documentation",
+        "llm"
+      ],
+      "summary": "A beginner-oriented course of 18 lessons teaching the fundamentals of building AI agents, covering agentic frameworks and generative-AI concepts. The lesson material is offered in many languages through translations that are kept up to date via a GitHub Action.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "b8ac93f6a7a48075b5f1546fece5870a7b1d9283",
+        "repo_metadata_sha256": "ad1cd3668698c399d2a9937568b6446c29379c4de6c220a131da856e0c94514c",
+        "fingerprint": "19252b8df252dd6d56cdb26e06a3b1ef94115f72b55e828d401f6b3ede6fb5c3"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-17T08:22:11Z"
+      }
+    },
+    {
+      "node_id": "R_kgDONWoU0w",
+      "category": "ai-ml",
+      "tags": [
+        "ai-agents",
+        "llm"
+      ],
+      "summary": "A proof-of-concept, educational AI-powered hedge fund that explores using AI to make trading decisions. Several investor agents modeled on well-known investors work together to analyze trades; the project is for educational purposes only and is not intended for real trading or investment.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "40803b752f0c912a1625848f6864b3c5c2d244cc",
+        "repo_metadata_sha256": "d8599e339f6de5510f20bb4723c71c846922dd3327aabd6feef0ee8c0f20fbd6",
+        "fingerprint": "84eb343b46958cff52c1dcd2f933f936ce45e73fe65a28b50205ce34a88709fb"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-17T08:22:11Z"
+      }
+    },
+    {
+      "node_id": "R_kgDONWz9pg",
+      "category": "education-reference",
+      "tags": [
+        "awesome-list"
+      ],
+      "summary": "A curated awesome-list that collects MCP servers, tagged for AI and MCP. It gathers references to many MCP server projects in a single place for discovery and reference.",
+      "source": {
+        "kind": "metadata",
+        "readme_path": null,
+        "readme_oid": null,
+        "repo_metadata_sha256": "71112a038fcdd12839e94c77620941952e9aacb5829eede3d7074a81ba5bae3f",
+        "fingerprint": "6ea7bd5c9668226ac804f1cad22926045b3e99f2631425188e3c2e546196c028"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-17T08:22:11Z"
+      }
     }
   ]
 }
