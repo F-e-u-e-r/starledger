@@ -4412,6 +4412,132 @@
         "prompt_version": "classify-v1",
         "generated_at": "2026-07-17T15:22:45Z"
       }
+    },
+    {
+      "node_id": "R_kgDOO3hF2A",
+      "category": "self-hosted-homelab",
+      "tags": [
+        "machine-learning",
+        "monitoring",
+        "networking",
+        "real-time",
+        "self-hosted"
+      ],
+      "summary": "RuView is a WiFi sensing platform that captures Channel State Information from low-cost ESP32 sensors to detect presence, breathing and heart rate, and movement through walls without cameras. It integrates with Home Assistant, Apple Home, Google Home, and Alexa.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "7b8c77e4400dd4e06d288cc6b08e942c24bf0d56",
+        "repo_metadata_sha256": "15e8651dac40f42b94a024ffc8c8020ab9e23d9ab996c012b080bc604f7c8e38",
+        "fingerprint": "c769f63ccc7fe025531433f29351f8c201035cb3d49fedaaa17f2234b9b229d5"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-17T16:28:15Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOO3qbaQ",
+      "category": "developer-tools",
+      "tags": [
+        "ai-agents",
+        "automation",
+        "documentation",
+        "llm",
+        "workflow"
+      ],
+      "summary": "n8n-MCP is a Model Context Protocol server that gives AI assistants such as Claude structured access to documentation, properties, and operations for over 2,000 n8n workflow automation nodes, so they can help build and validate n8n workflows.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "5ee9e3007e5e30493295a22d5093f8b50bcbf4a2",
+        "repo_metadata_sha256": "3432ba2332f2d3eb2bd7ba8c212e6f84eb4f7cf72f957b2241f9e928f3560a1a",
+        "fingerprint": "38f0d510f154a98aa8593986ed4466906fbe80a83e434bc0dd617feda689edce"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-17T16:28:15Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOO5fHPg",
+      "category": "education-reference",
+      "tags": [
+        "ai-agents",
+        "awesome-list",
+        "documentation",
+        "llm"
+      ],
+      "summary": "A curated educational collection of foundational guides and whitepapers on building AI agents, gathering publicly available reference materials from OpenAI, Anthropic, and Google for engineers, product teams, and researchers designing agent systems.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "b3e3d1a7a862119dfa98f07f7301224fb50a6f58",
+        "repo_metadata_sha256": "125ce62a939a1bb09c6d834d93609db40e9eb68f334744a78a978de5aa8806e8",
+        "fingerprint": "d1711815719f1f6d1614dd4a9b0c4022d6d525a1ae7746247196345fa0dc3c54"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-17T16:28:15Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOO6LMmw",
+      "category": "self-hosted-homelab",
+      "tags": [
+        "backend",
+        "self-hosted"
+      ],
+      "summary": "OpenList is a community-driven, self-hosted file listing program and fork of AList, written in Go. It aggregates many storage backends including local disk, OneDrive, Google Drive, S3, FTP/SFTP, and WebDAV behind a single web interface.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "cbe127d8a901a4deb71fe67face54978d3fd45ff",
+        "repo_metadata_sha256": "4baa2dc529f658ddcdb8526a6d93e43e8d9121eb2164be72af31653c7a72d800",
+        "fingerprint": "373637d52a34aa0232bac1db1f096a1d646759007b89e5aff8cc5e9b79bacf2b"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-17T16:28:15Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOO9AkxA",
+      "category": "developer-tools",
+      "tags": [
+        "containers",
+        "desktop-app",
+        "gui",
+        "llm",
+        "machine-learning"
+      ],
+      "summary": "Orchard is a native Swift macOS desktop app for managing Apple containers and machines and running local MLX AI models. It complements the Apple container CLI with a GUI, wires local models into containers, and offers sandboxes with isolation controls and an in-app chat tester.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "8d8191b23c1d05f64eaf63764a0a905790bb8fff",
+        "repo_metadata_sha256": "8e549d6c04bd5c77875ff06e940037212465dd1327c6fb74df1bd16113d94f1f",
+        "fingerprint": "61331cf6765728332fa76eb3b09db3c8d0426f32451bdf16deb476c509a119e8"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-17T16:28:15Z"
+      }
     }
   ]
 }
