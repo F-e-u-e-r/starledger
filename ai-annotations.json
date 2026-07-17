@@ -4160,6 +4160,135 @@
         "prompt_version": "classify-v1",
         "generated_at": "2026-07-17T13:22:40Z"
       }
+    },
+    {
+      "node_id": "R_kgDONsXL_w",
+      "category": "ai-ml",
+      "tags": [
+        "ai-agents",
+        "automation",
+        "benchmark",
+        "gui",
+        "llm",
+        "machine-learning"
+      ],
+      "summary": "UI-TARS is an open-source multimodal vision-language agent model for automated GUI interaction across desktop, mobile, and browser environments. It reasons before acting using reinforcement learning and reports state-of-the-art results on computer-use, browser, and phone grounding benchmarks, with released model weights and post-processing tools.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "f2330c980fdc87ec8f886de038554aaacbd9133d",
+        "repo_metadata_sha256": "d569c84cb1be0a84efb84786264983e47a98b1105e5029f78577b9724d535bb0",
+        "fingerprint": "4a3983dd3457d74885e0fd83357e4fa5b84b2a670bbc75c7ec0ec7485edbc738"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-17T14:23:04Z"
+      }
+    },
+    {
+      "node_id": "R_kgDONsXMew",
+      "category": "ai-ml",
+      "tags": [
+        "ai-agents",
+        "automation",
+        "cli",
+        "desktop-app",
+        "gui",
+        "llm"
+      ],
+      "summary": "UI-TARS-desktop is an open-source multimodal AI agent stack shipping Agent TARS and a desktop application. It brings GUI-agent and vision capabilities to the terminal, computer, and browser through a CLI and web UI, integrating cutting-edge multimodal language models with agent infrastructure and MCP server support.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "f0212726e09f5b83f136b5e69b615f4a4fe858ca",
+        "repo_metadata_sha256": "edfafd6d2b43d2280b21f7f269c2d52919416e9cad841568b0bd102ad4626703",
+        "fingerprint": "d708c29eba2f2360ed66e2f2f3a6bd7bce279488f6750b5e2c69437f77cc6c39"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-17T14:23:04Z"
+      }
+    },
+    {
+      "node_id": "R_kgDONtOTwg",
+      "category": "ai-ml",
+      "tags": [
+        "library",
+        "machine-learning"
+      ],
+      "summary": "Hunyuan3D-2 is an open-source system from Tencent for generating high-resolution textured 3D assets using large-scale diffusion models. It supports image-to-3D and text-to-3D shape generation and texture synthesis, and ships released model weights, inference code, and technical reports.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "91de822eee09281220e8608757f777f7548a083a",
+        "repo_metadata_sha256": "853541622297a1a8e33e1254fbb58d71ab0158b0897c1706e4218c4e3aa6b044",
+        "fingerprint": "2ef84fafce13b97ed7f631bc5a04b80f6e16587db76979575d787e559c3538d6"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-17T14:23:04Z"
+      }
+    },
+    {
+      "node_id": "R_kgDONyaAvQ",
+      "category": "ai-ml",
+      "tags": [
+        "ai-agents",
+        "automation",
+        "benchmark",
+        "containers",
+        "sdk"
+      ],
+      "summary": "Cua is open-source infrastructure for building Computer-Use Agents that control full desktops on macOS, Linux, and Windows. It provides agent-ready sandboxes, SDKs, virtualization tooling, and benchmarks with reinforcement-learning environments to train and evaluate AI agents that operate real operating systems.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "fd7d0edca59928b14f34b44543197e35a994692f",
+        "repo_metadata_sha256": "36ba36d91c9ef4b38a16c3fcbe9a3e6898f3a22bedb6ca2160465296c739a54d",
+        "fingerprint": "c98971507d48aa09269ee6b6911677a0d332a621821fa3e860c9863ca1f44743"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-17T14:23:04Z"
+      }
+    },
+    {
+      "node_id": "R_kgDONz7H2A",
+      "category": "ai-ml",
+      "tags": [
+        "ai-agents",
+        "automation",
+        "llm",
+        "scraping",
+        "search"
+      ],
+      "summary": "Open Deep Research is a minimal open-source AI research agent that performs iterative, deep research on any topic by combining search engines, web scraping, and large language models. It refines its research direction over time, deep dives into subtopics, and outputs a markdown report while aiming to stay under 500 lines of code.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "78d7dcaad5524e630b5c106f46bf4782a56b7ce5",
+        "repo_metadata_sha256": "2a2956cdfcd8d75a97eada263ae51e7284f5386660606fd1d86e0d6e4e3db238",
+        "fingerprint": "390d98671c51a55cd39de7b7cfd9f9876a8bc99e43e646b3d7de1557c644744d"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-17T14:23:04Z"
+      }
     }
   ]
 }
