@@ -4913,6 +4913,132 @@
         "prompt_version": "classify-v1",
         "generated_at": "2026-07-17T20:28:31Z"
       }
+    },
+    {
+      "node_id": "R_kgDOOcMgyQ",
+      "category": "devops-infrastructure",
+      "tags": [
+        "cli",
+        "monitoring",
+        "notifications",
+        "observability",
+        "self-hosted",
+        "serverless"
+      ],
+      "summary": "SolStatus is an uptime monitoring service designed to be easy and cheap to run at scale, letting users create endpoint checks for uptime, latency, and status codes. It runs on Cloudflare Workers, ships a CLI to deploy, manage, and destroy the infrastructure, and supports OpsGenie alerts when there are consecutive failures. The project has been archived by its author.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "836fcc67fc37b657e46c198a94afa2aaebd10978",
+        "repo_metadata_sha256": "f1240727cccf6a61c813befeb39cd3a9912ab9e3c4c60c867a3c7555eaca2e40",
+        "fingerprint": "0afb6af093047844cdbd02e163717b8791498b32daf736be5123ca33ce23ee7e"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-17T21:23:31Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOOcuBrQ",
+      "category": "education-reference",
+      "tags": [
+        "documentation",
+        "llm",
+        "machine-learning"
+      ],
+      "summary": "A tutorial collection that teaches large language model theory alongside code, progressing from foundational to advanced topics. It covers transformer architecture, training and inference, LLM performance evaluation, encoder-only, encoder-decoder, and decoder-only models such as the GPT, LLaMA, and DeepSeek series, and alternative architectures including SSM and RWKV.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "ef0399e2c0b7eb890f861ceff51093a197af9a52",
+        "repo_metadata_sha256": "1073bd749de66e4beaebc8de518556034f2d139df720cfb0c119e3b2ab638c9e",
+        "fingerprint": "40c2be5fa918f2514339c35634fba339297c3380da76afd63cb6c29aec6dd358"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-17T21:23:31Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOOg1eRg",
+      "category": "media-creative",
+      "tags": [
+        "awesome-list",
+        "frontend",
+        "llm",
+        "search"
+      ],
+      "summary": "A curated, continuously updated collection of image-generation prompts for models such as Nano Banana, GPT-5, GPT-4o, Grok, and Doubao. It includes a script that parses the Markdown prompt cases into a structured JSON dataset and a static gallery front end that supports browsing, tag filtering, keyword search, viewing case details, and one-click prompt copying.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "cd0ae22aec81d1295311dd17ca5c3f64053d8048",
+        "repo_metadata_sha256": "abaefd22e92567ab63fa3f409a09d7161beb9821fdc13bb3b5bf24f7f61ebbed",
+        "fingerprint": "a224946f6c796905be3690cf9c555a16555ca85fa476b2f1cbf514f2fc59acf2"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-17T21:23:31Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOOgGNXg",
+      "category": "developer-tools",
+      "tags": [
+        "ai-agents",
+        "code-generation",
+        "desktop-app",
+        "editor",
+        "llm"
+      ],
+      "summary": "stagewise is an open source agentic IDE with a coding agent built in, letting developers browse and build in a single tool. The agent has access to the browser tab's console and debugger, can make temporary test changes or edit a connected codebase, and integrates with existing editors to view and apply changes. It supports bring-your-own-key for all major AI model providers.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "253f224d5105ec2d7ae03d5c82b0a628fb042cd0",
+        "repo_metadata_sha256": "cd43d8217ce1bc269ef7f946bdbed642d09bac43e7f4451769b77e10d8763015",
+        "fingerprint": "6bd12dc230041749a09bc312dd1ca2fb91363aec1cdbfc8834dfe6c59dd07315"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-17T21:23:31Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOOiErXQ",
+      "category": "ai-ml",
+      "tags": [
+        "llm",
+        "machine-learning",
+        "search"
+      ],
+      "summary": "UniversalRAG is an any-to-any retrieval-augmented generation framework that retrieves across multiple modalities and granularities using a modality-aware routing mechanism that dynamically selects the appropriate modality-specific corpus per query. It includes scripts for dataset preparation, embedding preprocessing, query routing, and evaluation, and was presented as an ACL 2026 oral paper.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "617f210735e1d29e283fd8e141284a14571c0788",
+        "repo_metadata_sha256": "c5f26d66a1f5bd85e4a70c1bdf7216e477c939b0ecd8ed70f4739fd433b8c6ff",
+        "fingerprint": "51e36266e962cada5c958f25f04cef35ec0533d6e04af215cc1cfdce0f4c655e"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-17T21:23:31Z"
+      }
     }
   ]
 }
