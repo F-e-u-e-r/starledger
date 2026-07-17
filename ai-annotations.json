@@ -4663,6 +4663,128 @@
         "prompt_version": "classify-v1",
         "generated_at": "2026-07-17T17:25:06Z"
       }
+    },
+    {
+      "node_id": "R_kgDOOQlDnQ",
+      "category": "ai-ml",
+      "tags": [
+        "library",
+        "llm",
+        "machine-learning",
+        "vector-database"
+      ],
+      "summary": "Chonkie is a lightweight Python library for chunking and ingesting text into RAG pipelines, offering many chunker types, embeddings, and 32+ integrations with vector databases, plus multilingual support and a focus on speed and minimal dependencies.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "0fe313b4a4ec4d637935439262324d1d4c4c2ae9",
+        "repo_metadata_sha256": "b256f96d39ef15a9240c930a600c6e60b987ff3576f61ee6ad5a55854a5afb89",
+        "fingerprint": "70042f268190dfb17bb86f78482e9aac73de0ca23c343e47b0fddd7e2d4986e2"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-17T19:22:36Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOORzPeg",
+      "category": "education-reference",
+      "tags": [
+        "ai-agents",
+        "documentation",
+        "llm"
+      ],
+      "summary": "A hands-on guide to building LLM agents from scratch with LangGraph, organized into notebooks that progress from agent basics to evaluation, human-in-the-loop, and memory, culminating in a deployable email assistant connected to the Gmail API.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "2b941956e0f73f538c542fa5fc9f7006d94ecb06",
+        "repo_metadata_sha256": "a9c53a72b6c7a91f02ad3083203f5a7ae7bba94b4f0562051ebb1a22ed740788",
+        "fingerprint": "0414b53156efe3e0d02daf64250d7c6f2d239f736a3b59081f20583bff7e412d"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-17T19:22:36Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOOSIGEQ",
+      "category": "ai-ml",
+      "tags": [
+        "ai-agents",
+        "llm",
+        "search"
+      ],
+      "summary": "PageIndex is a reasoning-based, vectorless RAG system that indexes documents as hierarchical trees for context-aware retrieval without vector databases or chunking, letting LLM agents search and reason over long professional documents via API, MCP, or self-hosting.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "594b70e8e1b35568fe4d3dc220fe518dd70173f9",
+        "repo_metadata_sha256": "cac7304911500906e76ab517850bede84c1e6195d6af5eccf9e14b443c2f5547",
+        "fingerprint": "2e2507d33265515de8afdafb337ae84abd5e54313e3b375802aeaf514ce67f5c"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-17T19:22:36Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOOSd7kw",
+      "category": "developer-tools",
+      "tags": [
+        "ai-agents",
+        "automation",
+        "testing"
+      ],
+      "summary": "An MCP server that launches a browser-automation agent to autonomously navigate, test, and debug web applications, capturing screenshots, console errors, and network traffic for a coding agent; the project has been sunset by its authors.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "bf3f21f846ffc813ab01e5f93a8213e5e0be18ec",
+        "repo_metadata_sha256": "e3825a36395df80b38b2ee86d99194adb1d57f357efaf3f405ed7bf696d9c684",
+        "fingerprint": "c713dbdc460bedb007d2e362adcfeaf5d9e7ef0c8fda7d10d8d74972893b3e3e"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-17T19:22:36Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOOT0nBA",
+      "category": "developer-tools",
+      "tags": [
+        "authentication",
+        "code-generation",
+        "documentation",
+        "llm"
+      ],
+      "summary": "Git-Friend is an AI-powered GitHub companion web app built with React, TypeScript, and Firebase that resolves Git and GitHub questions through AI chat, generates professional README files, and adds Gitmoji emojis to commits, with Google authentication.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "282761a1c69bd68c9c188c0f0f9a3a8ed42f3056",
+        "repo_metadata_sha256": "ee978242cccef1420207cccab1c9d6ccf3b8a2ba86307a21ce2b026409b66c41",
+        "fingerprint": "8ab00cfa9349c2d236c7dc1699fb8f622d6135429c31fe5d72d3d0afc45352b3"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-17T19:22:36Z"
+      }
     }
   ]
 }
