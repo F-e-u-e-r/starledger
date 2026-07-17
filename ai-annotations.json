@@ -4289,6 +4289,129 @@
         "prompt_version": "classify-v1",
         "generated_at": "2026-07-17T14:23:04Z"
       }
+    },
+    {
+      "node_id": "R_kgDONzjBFg",
+      "category": "ai-ml",
+      "tags": [
+        "ai-agents",
+        "cli",
+        "llm"
+      ],
+      "summary": "A Python command-line tool that lets multiple LLM agents converse with each other through the Ollama API. Each agent has a configurable model, temperature, context size, and system prompt, with response streaming, JSON or interactive configuration, selectable turn-order strategies, and saved conversation logs.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "6594110d4ad1b9fcad531b455ed3efe9af0b6d61",
+        "repo_metadata_sha256": "35cd861b9fe7750e12e7f70ecc66e963b970f68a9574529200cb4ebaec7315ed",
+        "fingerprint": "57162fcee9bc125f14d289d0aa5a2ee0b70f9df1dac37242a204afb4d82117fc"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-17T15:22:45Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOO-F1kg",
+      "category": "developer-tools",
+      "tags": [
+        "cli",
+        "monitoring",
+        "terminal"
+      ],
+      "summary": "A privacy-first terminal monitor for Claude Code usage. It pairs a Rich live display with official statusline rate limits, machine-readable state and export output, usage forecasting with warnings, and an opt-in local warehouse for tracking token consumption over time.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "270b9dc93445e38aca76b9443e91b1a29a8ecdb4",
+        "repo_metadata_sha256": "6394e65295ae43dea11730f62a29177a1051d07c1edae629f7608997e9b6a4cc",
+        "fingerprint": "ee8737a5d35b3d758a33759de877cac7541f2f908b722c4d79c21c583b56e4dc"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-17T15:22:45Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOO07yiQ",
+      "category": "ai-ml",
+      "tags": [
+        "ai-agents",
+        "cli",
+        "llm",
+        "orchestration",
+        "workflow"
+      ],
+      "summary": "An agent meta-harness that wraps Claude Code and Codex with an execution layer for coordinating multi-agent swarms. It adds specialized agents, self-learning memory across sessions, federated communication between machines, and automatic task routing through a CLI and MCP server.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "284d81196fa2a0eb12f0a060c22caea2f8b3a902",
+        "repo_metadata_sha256": "2327a533d73bb5b78a438430fd88371fac67aa994aa7059b43284d7318894092",
+        "fingerprint": "53a6745bf09823df3c0daa6a78f7eab2ec76b98a9f1d38b2fb17358bbc2cf202"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-17T15:22:45Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOO1-onw",
+      "category": "ai-ml",
+      "tags": [
+        "ai-agents",
+        "documentation",
+        "llm"
+      ],
+      "summary": "WFGY 5.0 Polaris Protocol is a staged open-source release offering a governed protocol layer for AI reasoning, retrieval-augmented generation, and agents. It bundles the Problem Map troubleshooting atlas, portable protocol components, and reproducibility materials for building structured language systems.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "193a11760cf62a7463a6dfd98d7a1caf7d3b2abb",
+        "repo_metadata_sha256": "f6bc745c4fdfbb2d8ea9eaf8272e52e419c79a708b2e6f1081046aea8f22af43",
+        "fingerprint": "b8e889efaf0bb9d506eda1463c510e7bc886a2ad93243808badfabf4d15e19b1"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-17T15:22:45Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOO3BfkQ",
+      "category": "ai-ml",
+      "tags": [
+        "library",
+        "llm",
+        "machine-learning",
+        "search"
+      ],
+      "summary": "RAG-Anything is an all-in-one multimodal retrieval-augmented generation framework for Python. It processes documents that combine text and images, offers a VLM-enhanced query mode blending visual and textual context, and integrates natively with the LightRAG engine.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "01d5de76eca2a231fc7b6fd29743f6ee053fc6c3",
+        "repo_metadata_sha256": "455c50a3683b3b5dbdcfe72bb6c4b9ba532ad1316a989f50df578db7ec391bd1",
+        "fingerprint": "1917bb50b949919c3efef8fedbacafde776e630528981aabe1f686c78dadbeb7"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-17T15:22:45Z"
+      }
     }
   ]
 }
