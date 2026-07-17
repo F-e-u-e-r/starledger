@@ -5163,6 +5163,128 @@
         "prompt_version": "classify-v1",
         "generated_at": "2026-07-17T22:22:28Z"
       }
+    },
+    {
+      "node_id": "R_kgDOOpGAbg",
+      "category": "libraries-frameworks",
+      "tags": [
+        "ai-agents",
+        "bot",
+        "frontend",
+        "real-time"
+      ],
+      "summary": "A dependency-free, embeddable JavaScript floating chat widget that connects to an n8n AI agent API. It offers a customizable theme, smooth animations, streaming replies, Markdown rendering, responsive design, and configurable callbacks for adding an AI chat interface to any website.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "b38f043ade80d1b43d8b485dd304f0c436ca274d",
+        "repo_metadata_sha256": "4c5de407d049a03d2da5622e3d3f6f5d14c77bc315e86dd2f424d542990fe311",
+        "fingerprint": "53528e9cea9778a253b7a1e0f6f23d987130e3c36f53a94d164d05bb077692cb"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-17T23:23:08Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOOpypRA",
+      "category": "productivity-automation",
+      "tags": [
+        "automation",
+        "awesome-list",
+        "documentation",
+        "search",
+        "workflow"
+      ],
+      "summary": "A large curated collection of over 4,000 n8n automation workflows with a fast, self-hosted searchable interface built on SQLite full-text search. It provides categorized browsing, documentation, Docker support, and a live web interface for discovering and downloading workflow files.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "9d7ebdb4f692e76b6a9f386a99b39dfdc74d2857",
+        "repo_metadata_sha256": "8db3ca2ceb19002f09df30d40992533c2d34c3c313289bb6835337abba096c54",
+        "fingerprint": "c971b4fb3f00457ed035086339d0951293b3420d9857bf98a699fdb42051ca70"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-17T23:23:08Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOOwH-zg",
+      "category": "media-creative",
+      "tags": [
+        "plugin"
+      ],
+      "summary": "A browser userscript for Tampermonkey-style managers that integrates multiple third-party parsing interfaces to play membership-restricted videos from major Chinese streaming platforms such as iQiyi, Tencent, Youku, Mango TV, and Bilibili. It removes ads and supports both desktop and mobile browsers.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "108dbe3dbffb9c07cadbed4ed1374d77881737aa",
+        "repo_metadata_sha256": "6a60a6446b7c024c9c02105f8b56ad4583b5bcdf1457935e85ce1efc3f49fd9e",
+        "fingerprint": "d600e1cb53323a7255d90f67297ce6f1976f9c9ff1d738cc2fb164828e3d3019"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-17T23:23:08Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOOyaCsA",
+      "category": "media-creative",
+      "tags": [
+        "gui",
+        "llm",
+        "machine-learning",
+        "search"
+      ],
+      "summary": "An AI-powered video clipping tool that transcribes media with OpenAI Whisper speech recognition and uses large language models to segment and summarize content. Users find and export clips through natural-language queries, generate SRT subtitles, batch-process files, and re-analyze without reprocessing audio.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "58f6569796125702b4032a3fba0e35d74f519c15",
+        "repo_metadata_sha256": "442e79d387f932bcb73dcd84fa27c79d4125b528a4892630399b3ff8fe05b1d6",
+        "fingerprint": "767787311773e1ca12fedc985b33d69d333ce42785616b20facd7a5608bfbaf5"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-17T23:23:08Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOP-2oUg",
+      "category": "ai-ml",
+      "tags": [
+        "benchmark",
+        "machine-learning",
+        "markdown"
+      ],
+      "summary": "A state-of-the-art OCR model that converts images and PDFs into structured HTML, Markdown, or JSON while preserving layout information. It handles complex tables, forms, and handwriting across more than 90 languages and reports leading results on external OCR benchmarks for document intelligence.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "470ce598fed114d7c6d7c61fec8a78323d12d0f3",
+        "repo_metadata_sha256": "cac99bce946dd985ed80bce50a39bdd34bc23ca13336bf02e2e2d23cd4ebc56b",
+        "fingerprint": "ce21816236e92bcd7f8535c35952c379c189fb4e2110e21035c5191828abead3"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-17T23:23:08Z"
+      }
     }
   ]
 }
