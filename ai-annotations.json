@@ -4031,6 +4031,135 @@
         "prompt_version": "classify-v1",
         "generated_at": "2026-07-17T12:23:38Z"
       }
+    },
+    {
+      "node_id": "R_kgDONhs6sw",
+      "category": "ai-ml",
+      "tags": [
+        "ai-agents",
+        "rest-api",
+        "sdk",
+        "search",
+        "self-hosted",
+        "vector-database"
+      ],
+      "summary": "Open-source context retrieval layer that connects apps, databases, and documents, then syncs, indexes, and exposes their data through a unified search interface so AI agents and RAG systems can retrieve grounded, up-to-date context. Access is via Python and TypeScript SDKs, a REST API, MCP, or a CLI, and it can be self-hosted or cloud-hosted.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "5018e34d8b9f1c8f724e498ca33d1d294d11b609",
+        "repo_metadata_sha256": "4a0573a027bf5dbeceedc642ac6792e1b14619c70e60d41fc16df611d58254f8",
+        "fingerprint": "ffac9607feae02d12fc9a0375ff0ea03206cd3c53711021d5af312332e08db8d"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-17T13:22:40Z"
+      }
+    },
+    {
+      "node_id": "R_kgDONjF_4A",
+      "category": "ai-ml",
+      "tags": [
+        "ai-agents",
+        "cli",
+        "library",
+        "llm",
+        "orchestration"
+      ],
+      "summary": "A multi-agent LLM framework for financial-trading research that assigns specialized roles such as fundamental, sentiment, news, and technical analysts plus researcher, trader, and risk-management agents, which debate and collaborate to reach trading decisions. Built on LangGraph, it supports many LLM providers and ships an interactive CLI and a Python package.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "e57a267098c5747935eccc36e181b15fd5c11e96",
+        "repo_metadata_sha256": "b642b5a5267e37314010ef8257e414016cbe3f8a3944e1bb659b709341817fa8",
+        "fingerprint": "f7e9889ae004f48ad57123d37bae3af335be8a6d5983d01cf78c1d068ff41097"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-17T13:22:40Z"
+      }
+    },
+    {
+      "node_id": "R_kgDONkPjQg",
+      "category": "productivity-automation",
+      "tags": [
+        "ai-agents",
+        "automation",
+        "llm",
+        "plugin",
+        "scraping"
+      ],
+      "summary": "An open-source Chrome and Edge extension for AI-powered web automation, presented as a free alternative to OpenAI Operator. A multi-agent system with Planner and Navigator agents runs locally in the browser and connects to your own LLM provider keys to carry out multi-step web tasks such as research, data extraction, and summarization while keeping credentials on your machine.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "76d4cc6ba21f42cb1cb179fe867c57e445828a9d",
+        "repo_metadata_sha256": "1c9519fac3fd0de379909e2a5f5bc8b1cb115316a440cf97b277c2431823fa6a",
+        "fingerprint": "b8a68e9b9ebbebce670f3e968be9472f3d62ef308c20060b3d58d2db07ab83ef"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-17T13:22:40Z"
+      }
+    },
+    {
+      "node_id": "R_kgDONl-mqg",
+      "category": "productivity-automation",
+      "tags": [
+        "llm",
+        "markdown",
+        "plugin",
+        "search",
+        "vector-database"
+      ],
+      "summary": "A Cursor-inspired AI assistant plugin for Obsidian that adds context-aware autocomplete, inline editing, and chat with selected notes or the entire vault. It provides semantic vault search backed by a built-in local embedding model, plus workspaces, custom modes, Model Context Protocol integrations, and support for many LLM providers.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "289fdac5348331ba502161adba6b2e7eeefda902",
+        "repo_metadata_sha256": "852d69f289ac7106cfa24fb1e44a7c9e6a1e5ede7f5011e7bf0db95f390bda11",
+        "fingerprint": "deb186d559f2eea54fbfd76982d41068e19ee548bd6e030870a9af34256859f5"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-17T13:22:40Z"
+      }
+    },
+    {
+      "node_id": "R_kgDONqMoZQ",
+      "category": "media-creative",
+      "tags": [
+        "cli",
+        "gui",
+        "machine-learning"
+      ],
+      "summary": "A command-line and GUI tool that converts .epub e-books into .m4b audiobooks using Kokoro, an 82M-parameter text-to-speech model. It supports multiple languages and voices, adjustable narration speed, interactive chapter selection, and optional CUDA GPU acceleration, and it relies on ffmpeg and espeak-ng.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "85811a6e760c58a7506c9529bcea4f10543d25b0",
+        "repo_metadata_sha256": "815f961ebf70a51bf274093a0709fa6d301aa2f3f4e143c57bc459234b236aa3",
+        "fingerprint": "22081065a4e8e24cab9297d01f005690ea7ae4d2a1b4404d1b78939f7cfd1caa"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-17T13:22:40Z"
+      }
     }
   ]
 }
