@@ -3900,6 +3900,137 @@
         "prompt_version": "classify-v1",
         "generated_at": "2026-07-17T11:22:50Z"
       }
+    },
+    {
+      "node_id": "R_kgDONXs8_A",
+      "category": "libraries-frameworks",
+      "tags": [
+        "frontend",
+        "library",
+        "llm",
+        "sdk",
+        "web-framework"
+      ],
+      "summary": "OpenUI is a full-stack framework for generative UI built around OpenUI Lang, a compact streaming-first language for model-generated interfaces. It provides a React runtime, built-in component libraries, prompt generation from a component library, and prebuilt chat surfaces, plus runtime bindings for Vue and Svelte.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "e257732ac11d2947938c754023f023cda13f2478",
+        "repo_metadata_sha256": "790f272b3b772b5a722f3938cf98a8a5048619c39a677414db91be2ae3aa0a92",
+        "fingerprint": "ea9afb45a1908b359af3ff73105f31f86f05d2127699305888f333254a35b815"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-17T12:23:38Z"
+      }
+    },
+    {
+      "node_id": "R_kgDONa1RRQ",
+      "category": "productivity-automation",
+      "tags": [
+        "desktop-app",
+        "llm",
+        "markdown",
+        "productivity",
+        "self-hosted"
+      ],
+      "summary": "anarlog is an open-source, local-first AI meeting notetaker built with Tauri. It records meetings, transcribes audio on-device, and saves notes as markdown files on disk. It works with any OpenAI-compatible LLM provider, including local models, and requires no accounts or cloud backend.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "a1db3dc31a247525b8626430c1434dc22e032601",
+        "repo_metadata_sha256": "fc642d27f4e0ed87e57785a243510b9b63de628ed58abda448a00e62f950f514",
+        "fingerprint": "d75292334c93ce495eb835c427451155658d2d32f3d556d6491655182adba76c"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-17T12:23:38Z"
+      }
+    },
+    {
+      "node_id": "R_kgDONbw-OQ",
+      "category": "ai-ml",
+      "tags": [
+        "ai-agents",
+        "automation",
+        "llm",
+        "orchestration",
+        "workflow"
+      ],
+      "summary": "AutoHedge is a Python framework for building autonomous, agent-driven trading systems. It combines swarm intelligence with specialized AI agents for strategy, quantitative analysis, risk management, and execution to automate market analysis, position sizing, and order placement. It currently supports autonomous trading on Solana.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "83ed776ab67c398e7a347bf9be219794e175a1f9",
+        "repo_metadata_sha256": "77ce53c2903817aee1858c5d89452ddf41e6447b0c6c62143d8847b981ddfda3",
+        "fingerprint": "b17a5bb148152a2cf446a6ce686adb668c99dca6b34fabd2d1dced346ed10bd2"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-17T12:23:38Z"
+      }
+    },
+    {
+      "node_id": "R_kgDONcaCaA",
+      "category": "devops-infrastructure",
+      "tags": [
+        "api",
+        "authentication",
+        "backend",
+        "llm",
+        "proxy",
+        "self-hosted"
+      ],
+      "summary": "Gemini Balance is a Python FastAPI application that acts as a proxy and load balancer for the Google Gemini API. It manages multiple API keys with automatic rotation, authentication, model filtering, and key status monitoring, and exposes both Gemini and OpenAI-compatible endpoints. It ships Docker images for self-hosting.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "5326ed72fef5da972aaed068226f7c1a92f8083f",
+        "repo_metadata_sha256": "257f0acb4fbaea600d78ae7a3328045d5b90998cbbe9904ad42a0ec1c1328c1b",
+        "fingerprint": "b648e8f4ad4c0a13554f9689327579161ce5bdf99714ce9ddf05aa5b4bbf8d9e"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-17T12:23:38Z"
+      }
+    },
+    {
+      "node_id": "R_kgDONeluaA",
+      "category": "media-creative",
+      "tags": [
+        "automation",
+        "cli",
+        "desktop-app",
+        "llm",
+        "workflow"
+      ],
+      "summary": "KrillinAI is a Go audio and video localization tool that runs a full pipeline: video download, Whisper speech recognition, LLM subtitle translation, TTS dubbing, portrait reformatting, and cover generation. It supports over 100 languages and OpenAI-compatible models, and offers desktop, server, and staged CLI modes.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "5b1345322972ba7097ecb64ecef8d9f49215119e",
+        "repo_metadata_sha256": "7e8fc2a6b5b9fa64843da4bde753ab79b14aa90f122b989da330ef2aa357beac",
+        "fingerprint": "122d40369fe4217dbe36c45a4bb47d69d7731d64739bb10aa51c0dc93578100c"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-17T12:23:38Z"
+      }
     }
   ]
 }
