@@ -7037,6 +7037,138 @@
         "prompt_version": "classify-v1",
         "generated_at": "2026-07-18T14:21:31Z"
       }
+    },
+    {
+      "node_id": "R_kgDOQFGGXQ",
+      "category": "developer-tools",
+      "tags": [
+        "ai-agents",
+        "automation",
+        "code-generation",
+        "llm",
+        "plugin",
+        "productivity"
+      ],
+      "summary": "An open-source library of production-ready skills, agents, and plugins for Claude Code and a dozen other AI coding tools, covering engineering, DevOps, marketing, compliance, C-level advisory, research, and productivity, with custom slash commands and reusable reference packages.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "7af908d9d17dba8300a4fce322369bdffd3b02dc",
+        "repo_metadata_sha256": "0bc47ef36c98e0219b8f3fafdb9a4216e6ec3efea7aacfcc53521198d46b01d1",
+        "fingerprint": "ab0086b290f1f5058e51eb5c82d8dcbb4f18b94004745ab1efd01541b1d59a07"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-18T15:23:13Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOQFWqwg",
+      "category": "productivity-automation",
+      "tags": [
+        "ai-agents",
+        "automation",
+        "llm",
+        "productivity",
+        "workflow"
+      ],
+      "summary": "A Claude Skills-based toolkit of workflows and checklists for individual equity investors and swing traders, structuring market review, risk management, trade planning, and journaling. It is positioned as an educational decision-process aid, not a signal service or automated trading system.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "ba9127f27104c41648bb5aff2d4af55d60e4e6da",
+        "repo_metadata_sha256": "9f3073d3190a6a2d7ebb41373c578fd3f4566e33946f584c82944e0033a92f0e",
+        "fingerprint": "368bbb3e5011896df3e268fba90da0bd4c7f23548626a5f1546825ed6df5404b"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-18T15:23:13Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOQHJC2g",
+      "category": "media-creative",
+      "tags": [
+        "automation",
+        "containers",
+        "desktop-app",
+        "scraping",
+        "self-hosted"
+      ],
+      "summary": "An open-source, cross-platform desktop video downloader built with Electron and powered by yt-dlp, downloading from over 1000 sites with configurable output containers and RSS-based automatic background downloads. It also ships a Docker-ready web and API server.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "ebc548a1cbc5fff2cc011b87fec4b597e27cf71a",
+        "repo_metadata_sha256": "d9b1c038158341bf07d912be0c2d8be2a506c64e6e3d0855e995eb9db060e998",
+        "fingerprint": "433b0e71b9116e37efae29e90a36debd157b60ca840b9d2ef4f01f471b8bb3a1"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-18T15:23:13Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOQHqzaA",
+      "category": "education-reference",
+      "tags": [
+        "ai-agents",
+        "documentation",
+        "llm",
+        "machine-learning",
+        "vector-database"
+      ],
+      "summary": "A systematic open-source teaching project, written in Chinese, for building full-stack AI agents from scratch in Python. It progresses through prompting, LLM calls, function calling, LangChain, RAG, LangGraph, and MCP with runnable example modules paired with detailed explanatory blog posts.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "987cb2f86a6ae13972847f63c3bfe89c6a592ea4",
+        "repo_metadata_sha256": "33abd34eccdab303fc04441eaa5425a1c8ffe3e46783404ec135c848fe99fb76",
+        "fingerprint": "dc5a749251440fa06a4e737b3855752e748ecfdfe6253f50db4f3e326e9c7c2e"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-18T15:23:13Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOQKjGbg",
+      "category": "ai-ml",
+      "tags": [
+        "ai-agents",
+        "automation",
+        "dashboard",
+        "llm",
+        "real-time",
+        "self-hosted"
+      ],
+      "summary": "An open-source, self-hosted AI trading terminal written in Go where a language model drives the strategy while the runtime clamps every order to hard risk limits it cannot override. It supports nine exchanges, autopilot execution, encrypted local credentials, and a public return leaderboard.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "9a817eaebb3a3fcb33ec561643fa3b9f24a8b169",
+        "repo_metadata_sha256": "5a02d07bb24a0a00237750632d29c4d8cae7f0b2c775335be189f454519de20d",
+        "fingerprint": "ab9c82f9c497704a0f3773dbeb4b636c0758c9468474d5e44a93f4b50d888c74"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-18T15:23:13Z"
+      }
     }
   ]
 }
