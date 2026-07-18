@@ -7419,6 +7419,127 @@
         "prompt_version": "classify-v1",
         "generated_at": "2026-07-18T17:24:26Z"
       }
+    },
+    {
+      "node_id": "R_kgDOQdLIuw",
+      "category": "ai-ml",
+      "tags": [
+        "ai-agents",
+        "llm",
+        "machine-learning"
+      ],
+      "summary": "MiroFish is a multi-agent AI prediction engine that extracts real-world seed information such as breaking news or financial signals and constructs a high-fidelity digital sandbox where thousands of agents with memory and personas interact, letting users simulate social evolution and forecast future trajectories.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "de082935a72b3f67da8105ce84657bf271870227",
+        "repo_metadata_sha256": "653d69bce86eeaba616cf2a1228e32cd037183bc8f90372b76274dbb232d3d76",
+        "fingerprint": "a9b7f8fa837347e31a55d5333eb5a54007f4a9e0ec5bf3d4ec8d55b1d607f44a"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-18T18:22:39Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOQdV8Sw",
+      "category": "ai-ml",
+      "tags": [
+        "machine-learning"
+      ],
+      "summary": "TRELLIS.2 is a 4-billion-parameter large 3D generative model for high-fidelity image-to-3D generation. It uses a field-free sparse voxel structure called O-Voxel to reconstruct assets with complex topology, sharp features, and full PBR materials, and ships inference and training code.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "1c0ad06b5dcb3f0ed57ec83bda599c7b00559325",
+        "repo_metadata_sha256": "07a01c7cf19cc0edf68840274760ad3ecab9ed3cbc2be0dd94d02897c17b3c19",
+        "fingerprint": "49614c12d8b32807e6a62eb319c996371f44beaaa8656ce6be9a8acc3b01ba08"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-18T18:22:39Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOQdXgUQ",
+      "category": "developer-tools",
+      "tags": [
+        "api",
+        "authentication",
+        "desktop-app",
+        "gui",
+        "proxy",
+        "self-hosted"
+      ],
+      "summary": "Antigravity Manager is a cross-platform desktop application built with Tauri and Rust for managing multiple AI accounts and acting as a local API gateway. It converts web sessions into OpenAI, Anthropic, and Gemini compatible endpoints, adding one-click account switching, model routing, and quota monitoring.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "4c35e75e8a43967c729bf85aebf53b09110d18f0",
+        "repo_metadata_sha256": "f5cce9e19ea59238f67769d75c6659214d328f6cb34e592d93a50451a9ae1015",
+        "fingerprint": "124eae7ba4f1f688b9dc6270642a8f1360285661d51d8cbb09babd2ab27c4c38"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-18T18:22:39Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOQeb_KQ",
+      "category": "education-reference",
+      "tags": [
+        "cli",
+        "documentation",
+        "plugin",
+        "productivity"
+      ],
+      "summary": "A curated collection of over forty tips for using Claude Code effectively, ranging from basics to advanced workflows. It includes a customizable status-line script, guidance on running Claude Code inside a container, and a dx plugin providing skills for everyday development tasks.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "75c9d69c954c407545002d97b6b0d61cfd999ccc",
+        "repo_metadata_sha256": "6c201462af44ed9b5ef7c12655d9d120994f643ef5b818f47592b361bad39994",
+        "fingerprint": "95a6f2f70519a25b6c4e922b7bb29490f517669c61dd94d9734fe5c7e27a9acc"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-18T18:22:39Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOQeuD7w",
+      "category": "media-creative",
+      "tags": [
+        "desktop-app",
+        "self-hosted"
+      ],
+      "summary": "Folia is a music player centered on full-screen immersive lyrics, supporting NetEase Cloud, Navidrome, and local libraries. It offers smart lyric matching, AI-generated color themes, and multiple full-screen lyric animations, with Electron desktop builds and a Node.js web version.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "422fe4b3533d417689e627d02566f07f7694bdd2",
+        "repo_metadata_sha256": "eea61f1ec8d943d2545ee61d0fe777a133c0a12f36e0d8002d67e91b70e170e2",
+        "fingerprint": "5c078da305c5e3f5f223e6dd9daed35cc773300657a8c3f198691f7594e63551"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-18T18:22:39Z"
+      }
     }
   ]
 }
