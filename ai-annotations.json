@@ -6528,6 +6528,135 @@
         "prompt_version": "classify-v1",
         "generated_at": "2026-07-18T10:21:52Z"
       }
+    },
+    {
+      "node_id": "R_kgDOQ3GISg",
+      "category": "data-analytics",
+      "tags": [
+        "ai-agents",
+        "automation",
+        "dashboard",
+        "llm",
+        "notifications"
+      ],
+      "summary": "LLM-powered stock analysis system covering A-share, Hong Kong, US, Japanese, Korean, and Taiwanese markets. It aggregates multi-source market data and news, generates a daily decision dashboard with scores and buy and sell points, and pushes the reports to WeCom, Feishu, Telegram, Discord, Slack, and email on a schedule.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "de1d7d52a6b9b43ede46618241b541b6b03d7049",
+        "repo_metadata_sha256": "76739e6736eb375671e03fb8e22d2c2865706d91c3d6b0ab0de97cee3af83350",
+        "fingerprint": "5462c64af4b8ae511462751d7a1239da239f36fd8f0b678a61603522324a1f05"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-18T11:22:38Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOQ536sA",
+      "category": "developer-tools",
+      "tags": [
+        "ai-agents",
+        "cli",
+        "library",
+        "plugin",
+        "workflow"
+      ],
+      "summary": "Installable library of over 1,900 reusable agentic skills for coding agents such as Claude Code, Cursor, Codex CLI, and Gemini CLI. It provides an installer CLI, a read-only local MCP server for skill search and recommendation, specialized plugins, curated bundles, and ordered execution workflows.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "2f266ec99d1cc3d6c4fb9d20fddad1f05bcc722c",
+        "repo_metadata_sha256": "eea62e7ab1cdcbb6457aa077894c31818292a4fc1d185eeb30cc176cd55f2485",
+        "fingerprint": "308be71e865f49758c59dfd1c0cecff709914e87bd0dc20aa4d15cd453bb3a67"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-18T11:22:38Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOQ5MB9g",
+      "category": "developer-tools",
+      "tags": [
+        "ai-agents",
+        "automation",
+        "cli",
+        "dashboard",
+        "orchestration",
+        "self-hosted"
+      ],
+      "summary": "Open-source platform for managing coding agents as teammates. Assign issues to agents that pick up work, write code, report blockers, and update status autonomously, group them into squads with a leader that routes work, schedule recurring autopilots, and run local or cloud runtimes from one dashboard. Works with Claude Code, Codex, and other agent CLIs.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "38bbc9e008e9bb7ada9564cd19a2f44f6c7fa7f5",
+        "repo_metadata_sha256": "5a0ca293629d56429049de5aed1bf3a8ae030e2ba01e4383e19bcef9af5d4c41",
+        "fingerprint": "55d670f74aae6ebc1177ae24fd2f2853f0f5e29a349d477d115dfc4996834be6"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-18T11:22:38Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOQ5W3kQ",
+      "category": "productivity-automation",
+      "tags": [
+        "automation",
+        "cli",
+        "scraping"
+      ],
+      "summary": "Command-line tool that automatically downloads books from Z-Library and uploads them to Google NotebookLM in a single step. It prioritizes PDF with an EPUB-to-Markdown fallback, uses browser automation for a one-time login, and splits large files into chunks for reliable upload. It can also be used as a Claude skill.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "87b4cd236b830d6f285a24dbc88560722fed068f",
+        "repo_metadata_sha256": "c77a2d21577a8b254b65ca532e58d45c38698ae9fc5d9897e9941e42b2496784",
+        "fingerprint": "a4f27d3fdd98678786b9610386f81f804fd2b37c8ab4022c5f847dd2cb569719"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-18T11:22:38Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOQ5rUSg",
+      "category": "productivity-automation",
+      "tags": [
+        "ai-agents",
+        "automation",
+        "desktop-app",
+        "llm",
+        "workflow"
+      ],
+      "summary": "Open-source AI desktop agent, built with Electron, that automates file management, document creation, and browser tasks locally on your machine. Bring your own API keys for OpenAI, Anthropic, Google, or xAI, or run local models via Ollama. It runs locally with per-folder access control and approval for every action.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "f7f3196e52814c47e05b14e82b6788d621f84243",
+        "repo_metadata_sha256": "4d587bd0b1bfe386d63c4492afefb459ca46bb1e1bf6ca1b13e093676da4dbf9",
+        "fingerprint": "7465d9bb5f9d6a1275f2829db1acbc1351a3529f79ebcbb7f251d10cebb15518"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-18T11:22:38Z"
+      }
     }
   ]
 }
