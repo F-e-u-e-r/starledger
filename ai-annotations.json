@@ -6272,6 +6272,134 @@
         "prompt_version": "classify-v1",
         "generated_at": "2026-07-18T08:22:03Z"
       }
+    },
+    {
+      "node_id": "R_kgDOQ05ExA",
+      "category": "developer-tools",
+      "tags": [
+        "ai-agents",
+        "automation",
+        "configuration",
+        "documentation",
+        "workflow"
+      ],
+      "summary": "A reference collection of Claude Code project configuration examples, demonstrating hooks, skills, agents, slash commands, MCP server integrations, and scheduled GitHub Actions workflows for automating code review, quality checks, and dependency audits.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "43a3fad0ec37545d1039dec81561e9515323de1e",
+        "repo_metadata_sha256": "1f555343dcce6d66a3d19a4031e49dab1965de2035c8582a227914e55b0d13b5",
+        "fingerprint": "4a59350711702cbd9afea306d10da52b10b0d5e9b75653ee1697280ba3a1179c"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-18T09:23:29Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOQ0yzMQ",
+      "category": "developer-tools",
+      "tags": [
+        "ai-agents",
+        "automation",
+        "backup",
+        "cli",
+        "configuration"
+      ],
+      "summary": "A guided command-line tool that keeps a single canonical .agents folder as the source of truth and symlinks shared commands, hooks, skills, and rule files into AI coding clients such as Claude, Codex, Cursor, and Gemini, creating a backup before any change.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "863afe7addbbcd60c3c7b14b2aef5f90a39b02be",
+        "repo_metadata_sha256": "f67e980ee98cab89d2472fa14b72ac0dc4fa7ec1a1f557b027cb1c6798e7b65c",
+        "fingerprint": "72d9b09d977608dd400954eed8d8dfd130af3ae489b8845cf1e752b4cdf3f4cf"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-18T09:23:29Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOQ1CDsA",
+      "category": "productivity-automation",
+      "tags": [
+        "automation",
+        "documentation",
+        "llm",
+        "search"
+      ],
+      "summary": "An AI assistant for preparing Taiwan SBIR grant applications, available as an MCP skill for Claude and as a web app. It offers a searchable knowledge base, an interactive proposal generator, market-data lookups, completeness checklists, and Word document export.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "75dc3d381e3d417a1105b2b278b8df63845b3c6e",
+        "repo_metadata_sha256": "2232682ea7a86f2a9371f32de2712cbb879e58a7179d68514aaff427de960590",
+        "fingerprint": "05756e7fb3ad87c71e0d76743c62caa8cba71557e499136d2e4364aeeedbe7f1"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-18T09:23:29Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOQ1QTVw",
+      "category": "ai-ml",
+      "tags": [
+        "cli",
+        "etl",
+        "llm",
+        "search",
+        "visualization"
+      ],
+      "summary": "An LLM-powered command-line framework that turns unstructured documents into structured knowledge abstracts, ranging from lists and typed models to knowledge graphs, hypergraphs, and spatio-temporal graphs. It bundles extraction engines, YAML templates, semantic search, visualization, and Obsidian export.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "5a0b868b790be87cbdf37a755ef033d2a53b9576",
+        "repo_metadata_sha256": "9b55ff734851a1a31b5e7a38c5a57dd975ef248a302e6259813053380572fa9f",
+        "fingerprint": "1f3c07ca6463207ab374b0d28a1d592821a60865aaba1bc6f86dc5f05a8f991a"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-18T09:23:29Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOQ1Ugwg",
+      "category": "developer-tools",
+      "tags": [
+        "ai-agents",
+        "desktop-app",
+        "gui",
+        "markdown"
+      ],
+      "summary": "A native macOS SwiftUI application for managing local Codex and Claude Code skills. It browses skills from standard skill folders, renders each SKILL.md with Markdown and inline reference previews, imports skills from folders or zip files, and downloads remote skills from a catalog.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "abd3191a7dd4ef5a14450cb1c87ce1e8780af7bf",
+        "repo_metadata_sha256": "31657bfc774fe525f0ad9cc9b89466830057c31734b9d064827499483e8bdc6b",
+        "fingerprint": "7f4407edd46831a156ba4513d3127cc339f952541f1950a81b132e484604eaae"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-18T09:23:29Z"
+      }
     }
   ]
 }
