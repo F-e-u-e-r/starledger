@@ -5285,6 +5285,126 @@
         "prompt_version": "classify-v1",
         "generated_at": "2026-07-17T23:23:08Z"
       }
+    },
+    {
+      "node_id": "R_kgDOP4jlrg",
+      "category": "web-applications",
+      "tags": [
+        "dashboard",
+        "notifications",
+        "real-time",
+        "visualization"
+      ],
+      "summary": "OpenStock is an open-source web application for tracking stock market data, presented as a free alternative to commercial market platforms. It offers real-time price updates, personalized price alerts, and detailed company insights, and is built with Next.js, TypeScript, Tailwind CSS, and shadcn/ui.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "2f06a5b062cfcc03ce430fc617be3b43b9c3a9da",
+        "repo_metadata_sha256": "c25990c1d75c11851527448121fffcb6519e48ba7c4fe96da4dfe3c35bab4589",
+        "fingerprint": "f2a45511f1fc202b6cce2b20b01709bd9894087d23dab3c2876c35127816838a"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-18T00:21:58Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOPCHzDw",
+      "category": "ai-ml",
+      "tags": [
+        "ai-agents",
+        "containers",
+        "llm"
+      ],
+      "summary": "A Chinese-language enhanced fork of the TradingAgents multi-agent framework, providing a learning and research platform for using large language models and multi-agent systems to analyze stocks. It supports multiple LLM providers, custom endpoints, Docker deployment, and A-share, Hong Kong, and US market analysis, and is positioned for study rather than live trading.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "dfb3ca6836e3d8923da38b78927619e9d25119ef",
+        "repo_metadata_sha256": "710e042714e7b8e015002f7e68703edd8375ee2fe2395cdd8296ed37911d2c8b",
+        "fingerprint": "b0198107f9f8896eb4ba089d54b328c3f7bdc15fba62f88335b2f5297f2e2b9c"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-18T00:21:58Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOPD3GSw",
+      "category": "education-reference",
+      "tags": [
+        "ai-agents",
+        "llm"
+      ],
+      "summary": "An educational repository that teaches harness engineering for AI agents by walking through how to build a minimal Claude Code-style agent harness from scratch. It explains that agency comes from the model while the surrounding harness provides the infrastructure to operate, and includes English, Chinese, and Japanese documentation.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "5acc0f2082518cfece1fce3602196211ab548843",
+        "repo_metadata_sha256": "9092f9475dbf0bcb5526677049e090323a66a7052a2c699fc102b50500b4015e",
+        "fingerprint": "91f64ccb46bd1b8d80bf0ce1e7399415ee8a39b725d8fca561dbef9f761ea233"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-18T00:21:58Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOPEtKuQ",
+      "category": "ai-ml",
+      "tags": [
+        "machine-learning"
+      ],
+      "summary": "Kronos is described as the first open-source foundation model for the language of financial markets, trained on candlestick (K-line) data from more than 45 global exchanges. It provides pretrained models on Hugging Face along with fine-tuning scripts, and was accepted to AAAI 2026.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "faffa1578cf0172f6b88f5db8a9b1205668ffef1",
+        "repo_metadata_sha256": "b50bf05e2f2b0ddfa7d6ee864757e535d71372f6f1f64ad32841741961885811",
+        "fingerprint": "68908f8772b6f36410f2b0687630b7f4a8ee2809fe445c653748c4dbdc79ccbb"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-18T00:21:58Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOPFEBIA",
+      "category": "developer-tools",
+      "tags": [
+        "api",
+        "code-generation",
+        "containers",
+        "real-time",
+        "scraping"
+      ],
+      "summary": "ScrapeCraft is an AI-powered, web-based editor for building web-scraping pipelines, comparable to Cursor but specialized for scraping via the ScrapeGraphAI API. It supports multi-URL bulk scraping, Pydantic schema definition, async Python code generation, and real-time WebSocket streaming, with a FastAPI and LangGraph backend, a React frontend, and Docker deployment.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "b1ba502200f88bf787e91399826b91d94e2a7164",
+        "repo_metadata_sha256": "4a541b5dadc9d88ee3776f024006c80c534d77a7d7b83950bc33e71f618f5e9a",
+        "fingerprint": "1e94eddb65407bb1cc307660e0fc516376a15d39d397efa2c9e45ea4c8211adf"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-18T00:21:58Z"
+      }
     }
   ]
 }
