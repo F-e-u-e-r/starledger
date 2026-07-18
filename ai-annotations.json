@@ -7169,6 +7169,133 @@
         "prompt_version": "classify-v1",
         "generated_at": "2026-07-18T15:23:13Z"
       }
+    },
+    {
+      "node_id": "R_kgDOQLtlug",
+      "category": "productivity-automation",
+      "tags": [
+        "ai-agents",
+        "automation",
+        "cli",
+        "llm",
+        "workflow"
+      ],
+      "summary": "A Claude Code workspace for creating long-form, SEO-optimized blog content. It provides custom commands, specialized agents, and marketing skills for researching, writing, analyzing, and optimizing articles, with Python modules for readability, keyword, and SEO quality scoring, plus Google Analytics, Search Console, and WordPress integrations.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "4d3c5f2cd70a6361a6690ecf537ee82c7ad18414",
+        "repo_metadata_sha256": "e31262c77eec6dbbafb282ba40cab7ea9e443d18eba5398000ca8085c6bb4ba4",
+        "fingerprint": "d2a2c764630b23626fc4eed6329fcddb12e0bdc26ee1fb8b7fd5802aa785effc"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-18T16:23:03Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOQMG2Uw",
+      "category": "developer-tools",
+      "tags": [
+        "ai-agents",
+        "cli",
+        "documentation",
+        "llm"
+      ],
+      "summary": "Context Hub gives coding agents curated, versioned, language-specific documentation through the chub CLI. Agents search and fetch open markdown docs to reduce API hallucinations, attach local annotations to record gaps for future sessions, and send up or down feedback to doc authors so the content improves over time.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "946455a8cc7e1e8d7c0013a17c7303b1378230ae",
+        "repo_metadata_sha256": "4b7c63a66d84de5ea93545c763a10dfb3264ccf6ca92e6bc855befb3518f28bc",
+        "fingerprint": "6e5301fd590a946c62822d2ec3b805212fd2f50766f10160876e125f84d71c87"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-18T16:23:03Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOQMK3dA",
+      "category": "libraries-frameworks",
+      "tags": [
+        "cli",
+        "frontend",
+        "gui",
+        "library"
+      ],
+      "summary": "Cloudflare's React component library for building modern, accessible web applications. Built on Base UI, it provides design-system-compliant components that handle keyboard navigation, focus management, and ARIA attributes, supports tree-shaking via granular imports, and includes a CLI for querying component documentation.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "10fb3870212e25b819c8957513f326593881d3de",
+        "repo_metadata_sha256": "41a4d4f4e086b3fbf1c90aba6e5dc2d097a628046e0b597ea1ba0cb65f11789c",
+        "fingerprint": "554ec2d9479309f9a64a68693786166ad5f80918c421793e50b1a59407ee1530"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-18T16:23:03Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOQPd19g",
+      "category": "developer-tools",
+      "tags": [
+        "ai-agents",
+        "cli",
+        "code-generation",
+        "sdk"
+      ],
+      "summary": "MCPorter is a TypeScript runtime, CLI, and code-generation toolkit for the Model Context Protocol. It auto-discovers MCP servers already configured in tools like Cursor, Claude, and Codex, calls their tools from code or the command line, generates standalone CLIs, emits typed TypeScript clients, and records or replays traffic for testing.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "dd1e1c4022e6bc5ff7719e8b57ba7141524d388b",
+        "repo_metadata_sha256": "ee42a6a76b6b796924e3a59ac993457b96a10e408840d2927ec241a9edc9d781",
+        "fingerprint": "da8604ab5360571b06bbf11ac733c88771a55ee3295d3b9331bc06c54cee443c"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-18T16:23:03Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOQTk9ZQ",
+      "category": "data-analytics",
+      "tags": [
+        "automation",
+        "dashboard",
+        "etl",
+        "scraping",
+        "visualization"
+      ],
+      "summary": "Tracks the shareholding ratios of Taiwan's three major institutional investors across listed and OTC stocks. A Python pipeline fetches daily TWSE and TPEX data, estimates trust and dealer holdings from a baseline, computes changes over 5, 20, 60, and 120-day windows, and publishes JSON plus a static ranking dashboard to GitHub Pages.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "1606f722b6bd2d4138f388009815530870b20a60",
+        "repo_metadata_sha256": "98a77dabe1add1f47f7b188e2ed4a5d01669add83c5a8532d8ab1d17db6eff6c",
+        "fingerprint": "379ac4c2cf2f9099319a511163fd01479c891c126489cd4af2d399ace7e45792"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-18T16:23:03Z"
+      }
     }
   ]
 }
