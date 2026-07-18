@@ -6032,6 +6032,130 @@
         "prompt_version": "classify-v1",
         "generated_at": "2026-07-18T06:23:21Z"
       }
+    },
+    {
+      "node_id": "R_kgDOPlRzQQ",
+      "category": "developer-tools",
+      "tags": [
+        "ai-agents",
+        "automation",
+        "cli",
+        "llm",
+        "workflow"
+      ],
+      "summary": "Ralph is a shell-based autonomous development loop for Claude Code that repeatedly invokes the CLI to improve a project until completion. It adds intelligent exit detection, hourly rate limiting, a circuit breaker to prevent runaway loops, session continuity, and per-project .ralphrc configuration.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "f151eaac77e10d6020157991315411a253fc3b70",
+        "repo_metadata_sha256": "3a6a5a9ff228f140519942d994c407401d67a783a714b9f57eccb53fb1026293",
+        "fingerprint": "a058811277ededf7c2125d298deb29a4c2d7db8b5f939d6028a211d280a7d5d1"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-18T07:22:46Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOPng1Jw",
+      "category": "developer-tools",
+      "tags": [
+        "ai-agents",
+        "database",
+        "llm",
+        "plugin",
+        "vector-database"
+      ],
+      "summary": "claude-mem captures what an AI coding agent does during a session, compresses it with AI, and injects relevant context into later sessions to give agents persistent long-term memory. It stores data in SQLite and ChromaDB and works as a plugin with Claude Code, Codex, Gemini, Copilot, and other agents.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "2d875948bc65c033e252753f6ad324cb8301b090",
+        "repo_metadata_sha256": "40a5c4e306497752370832856a55c90c03a696d2284d7d632285389f2f6c1a1f",
+        "fingerprint": "dbbc6dd810d81cbf5ffc996f66b37afe4d9868e91a82b42eca86ed5c2732d51e"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-18T07:22:46Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOPpe8ZA",
+      "category": "media-creative",
+      "tags": [
+        "machine-learning"
+      ],
+      "summary": "ACE-Step 1.5 is an open-source local text-to-music generation model that turns text prompts into music and runs on Mac, AMD, Intel, and CUDA devices. It offers several model variants, including a 4B-parameter XL series for higher audio quality, and aims to rival commercial music generators.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "f5c20302cde16e37e8a17ea28308495371befbfa",
+        "repo_metadata_sha256": "e1ea8e8a0b773e439c749a635dd4fecd779d274d4391f551749fd0dc934f388b",
+        "fingerprint": "e24678d2144ccfc2178832c071ab602a85e8f01d14eaf2491b99543e922ba7f8"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-18T07:22:46Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOPsI_Yg",
+      "category": "productivity-automation",
+      "tags": [
+        "automation",
+        "bot",
+        "scraping"
+      ],
+      "summary": "Tickets Hunter is an open-source automation bot for buying tickets on major Taiwanese and international ticketing platforms. It drives sites through browser automation and uses OCR-based captcha solving to speed up purchases, and the project states it is intended for personal, legal use only.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "83f638c8e0e93a3e611468a4d4b621c31973e06a",
+        "repo_metadata_sha256": "b5d5d4b50f059f478fe6eff91e55514bcc1b4c33402c621cd55680b16776532d",
+        "fingerprint": "f59f8fc159feb7818f380791e26dea6debf5cdf9164f063df14a55c52490f740"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-18T07:22:46Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOPsf3zQ",
+      "category": "ai-ml",
+      "tags": [
+        "ai-agents",
+        "llm",
+        "no-code",
+        "self-hosted",
+        "workflow"
+      ],
+      "summary": "Dograh is an open-source, self-hostable voice AI platform and an alternative to Vapi and Retell for building production voice agents. It offers a visual workflow builder, bring-your-own LLM/STT/TTS models, telephony support, and native MCP integration so AI assistants can help design agents.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "8235bac96e00f498335f3e59c5c31d4a7705bda1",
+        "repo_metadata_sha256": "350d0545b692c4bdfc6f58638216b97d87d7d2837d4d031b0a50edc7e922061f",
+        "fingerprint": "223a19f1129f8d86d70662a4177dd53a15c5715e6480122cc3e3500b0e2cdd8c"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-18T07:22:46Z"
+      }
     }
   ]
 }
