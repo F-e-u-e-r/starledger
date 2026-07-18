@@ -7540,6 +7540,130 @@
         "prompt_version": "classify-v1",
         "generated_at": "2026-07-18T18:22:39Z"
       }
+    },
+    {
+      "node_id": "R_kgDOQfZYbw",
+      "category": "media-creative",
+      "tags": [
+        "automation",
+        "desktop-app",
+        "llm"
+      ],
+      "summary": "An AI-native application that generates editable PowerPoint presentations from prompts, outlines, documents, and custom template images. It supports conversational region-level editing, material parsing, per-page template matching, PPTX export, and project history, with Docker self-hosting and a desktop build.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "fd5159be2dab06e7efbb24507bfe7c5e4c981e07",
+        "repo_metadata_sha256": "a2ef7450fd981c3fb1658e47c6b781168fa8fc702a22078725717041a0d9e041",
+        "fingerprint": "be170d29e067707509ad2f4413e75f657a1a1d4e4d1f5daced6f524d41fbab99"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-18T19:22:36Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOQfttOw",
+      "category": "developer-tools",
+      "tags": [
+        "ai-agents",
+        "cli",
+        "code-generation",
+        "frontend"
+      ],
+      "summary": "An AI skill and CLI that provides design intelligence for building professional UI/UX across multiple platforms and frameworks. Its v2 design-system generator analyzes project requirements to produce tailored design systems, and it integrates with AI coding assistants such as Claude Code, Cursor, and Windsurf.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "81e148859b594ff4de089d80af75ce0476e1250d",
+        "repo_metadata_sha256": "61d60a1287638bdf968169a7c7c0daeb4d69145c93562f6ab3151f76f7fd9575",
+        "fingerprint": "e934471691c6c4c29124b4295d576f1d9767847af7888611fd0b2d9d8119a527"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-18T19:22:36Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOQjAFnQ",
+      "category": "libraries-frameworks",
+      "tags": [
+        "database",
+        "library",
+        "sdk",
+        "search",
+        "vector-database"
+      ],
+      "summary": "An open-source, in-process vector database from Alibaba for low-latency similarity search that embeds directly into applications. It provides dense-vector, sparse-vector, and full-text hybrid retrieval with scalar filtering and reranking, an on-disk DiskANN index, and official Go, Rust, Python, and JavaScript SDKs.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "d7f37e08b50607f9d06bf0e223f16fb942f74436",
+        "repo_metadata_sha256": "b8353cb4b48cfcf557146743c5867d1ea241b0e94a222418da855b86de3dcbd4",
+        "fingerprint": "63268996de71e97ac1b4c09cbb287f8a6566faecdab12fa27359e22c458f98ca"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-18T19:22:36Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOQjgu1A",
+      "category": "education-reference",
+      "tags": [
+        "documentation",
+        "machine-learning",
+        "visualization"
+      ],
+      "summary": "Educational, from-scratch NumPy implementations of the 30 foundational deep-learning papers on Ilya Sutskever's reading list. Each Jupyter notebook runs on synthetic data with extensive visualizations and explanations to demonstrate core concepts, and the suite covers all 30 papers for interactive learning.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "08d6e35abf7dd132379fc302aad8902c07cb4111",
+        "repo_metadata_sha256": "954e46e2ea80fd0475617c0d906742ae5f257e4ae4020673e99f25ed79a11067",
+        "fingerprint": "41108fb7c2f66016baac2c2f56395356a8c73601b294d816d76635a735f80102"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-18T19:22:36Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOQk1Y9Q",
+      "category": "developer-tools",
+      "tags": [
+        "cli",
+        "llm",
+        "markdown",
+        "search"
+      ],
+      "summary": "A local, on-device command-line search engine for markdown notes, documentation, meeting transcripts, and knowledge bases. It combines BM25 full-text search, vector semantic search, and LLM re-ranking via node-llama-cpp with GGUF models, and exposes an MCP server for agentic workflows.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "f601251df8629b4cc657ea65241672d87e7063bb",
+        "repo_metadata_sha256": "ca0315c507acf3443319d830399fc2478d34dfe2613eda0d1c9104f917b254a2",
+        "fingerprint": "c8d89e37fec8e5303e95cf4a91e77ff9877e3301dcd6fa7e0c78685417db4ba6"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-18T19:22:36Z"
+      }
     }
   ]
 }
