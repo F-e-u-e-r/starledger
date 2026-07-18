@@ -6156,6 +6156,122 @@
         "prompt_version": "classify-v1",
         "generated_at": "2026-07-18T07:22:46Z"
       }
+    },
+    {
+      "node_id": "R_kgDOPwqvLQ",
+      "category": "ai-ml",
+      "tags": [
+        "machine-learning"
+      ],
+      "summary": "VoxCPM is a tokenizer-free text-to-speech system that directly generates continuous speech representations through an end-to-end diffusion autoregressive architecture, supporting multilingual speech generation, creative voice design, and true-to-life voice cloning.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "8b201997033e724402796f847c4e6929b41c7b9c",
+        "repo_metadata_sha256": "4b2c73a51b6b9654109df1a04eb5808a98c996afe6c684fddabadc06b9baba5c",
+        "fingerprint": "637d1c48bf669507f429be4f8b34ae61ac798f481c394ae5c87e710e2f0f063c"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-18T08:22:03Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOPz41qA",
+      "category": "ai-ml",
+      "tags": [
+        "cli",
+        "llm",
+        "machine-learning"
+      ],
+      "summary": "Heretic is a command-line tool that automatically removes safety alignment (censorship) from transformer-based language models using directional ablation, known as abliteration, combined with a TPE-based parameter optimizer that co-minimizes refusals and divergence from the original model without post-training.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "6128e7b89f6fa985c850e549d1359d792a4c4b9a",
+        "repo_metadata_sha256": "783d804e27843af6c2f64aaabaff4b501ad9cad305de3bdc4d4b1ba40a085baf",
+        "fingerprint": "edb2ac960d97488977c1aabd88dd15021df5cdea7419c824744398dbb0055070"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-18T08:22:03Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOQ--z2w",
+      "category": "media-creative",
+      "tags": [
+        "ai-agents",
+        "automation",
+        "self-hosted"
+      ],
+      "summary": "waoowaoo is an AI film and video production tool that automatically turns novel text into storyboards, characters, and scenes and assembles them into complete short-drama videos. It offers AI script analysis, consistent character and scene generation, multi-voice AI dubbing, and a multilingual interface, and runs self-hosted via Docker.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "efbb29ecf06b5b56d966092dbd2ec24bee32593e",
+        "repo_metadata_sha256": "e8c77418777903d7608b3bc952d8d6f926128b73afbf430f912c4925e8358221",
+        "fingerprint": "2cf5aaefcc93099ddf151c50d959631e53a0b295f2ea04f052b9a1c8d01fb85e"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-18T08:22:03Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOQ-A7PA",
+      "category": "libraries-frameworks",
+      "tags": [
+        "gui",
+        "library",
+        "theme"
+      ],
+      "summary": "Yororen UI is a headless-first Rust UI library built on top of gpui via gpui-ce, splitting components into headless primitives, JSON themes, and swappable visual renderers. It ships 55 components with runtime theme swapping, an animation system, internationalization with RTL support, and accessibility features.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "838334dd087bc11744634ff0035ab6d3303ea4e9",
+        "repo_metadata_sha256": "206d872c57d8bdd90be35f10286ba1c58a615611e9852ce0688991f7a9d3527d",
+        "fingerprint": "0d23d4605bf5214a96bbec1c872e30d6ab5c9139e357f7cf13dbf2b3d4b341e1"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-18T08:22:03Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOQ-D4bA",
+      "category": "ai-ml",
+      "tags": [
+        "machine-learning"
+      ],
+      "summary": "Qwen3-TTS is an open-source series of text-to-speech models developed by the Qwen team at Alibaba Cloud, supporting stable, expressive, and streaming speech generation, free-form voice design, and vivid voice cloning.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "8287bac4e611b907688a74b90a1d39cf7dbeec58",
+        "repo_metadata_sha256": "581274acc685fd1e76f3037dc045af2eaf64202a5955b490fb745799ec6798c0",
+        "fingerprint": "7d0b108936a03bff87d0459ebf2f18b5e2ca8789efb86ef4915b048a0204fca0"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-18T08:22:03Z"
+      }
     }
   ]
 }
