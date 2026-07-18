@@ -5531,6 +5531,134 @@
         "prompt_version": "classify-v1",
         "generated_at": "2026-07-18T02:23:20Z"
       }
+    },
+    {
+      "node_id": "R_kgDOPNY4UQ",
+      "category": "productivity-automation",
+      "tags": [
+        "automation",
+        "llm",
+        "monitoring",
+        "notifications",
+        "scraping",
+        "self-hosted"
+      ],
+      "summary": "A self-hostable system that uses Playwright and AI models to monitor the Xianyu second-hand marketplace in real time or on a schedule. It analyzes listings, filters by price and region, sends alerts via channels like Telegram, Bark, and ntfy, and is managed through a web UI with Docker deployment.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "af6de028699cfc73afdc66a342a54353d8280eec",
+        "repo_metadata_sha256": "37976f392eb5daa0c5528ab04bf129405687a8029c8e4653baa0dedd8dfe6251",
+        "fingerprint": "594d045da5066c90b81e7ffd55e5136cd975ae657d709ed4837d46d0776a00d5"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-18T03:23:10Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOPOTl2w",
+      "category": "productivity-automation",
+      "tags": [
+        "authentication",
+        "containers",
+        "self-hosted",
+        "visualization"
+      ],
+      "summary": "A minimalist, self-hostable web app for tracking points of interest on interactive maps and planning multi-day trips with detailed itineraries. It supports collaboration and sharing, OIDC authentication, and Docker deployment, with no telemetry, tracking, or ads.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "f07e98ee828b6ee236176412f85190c213dec48d",
+        "repo_metadata_sha256": "9fc86f8b16436db9d32beb869cd8a8ac731353f75a60994147e27a59dd1340f6",
+        "fingerprint": "29d1c6821410644e9b29ab0e028561106bc093b3b8ccb0378b93b06ca59032ed"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-18T03:23:10Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOPOwl0g",
+      "category": "security-privacy",
+      "tags": [
+        "ai-agents",
+        "api",
+        "containers",
+        "llm"
+      ],
+      "summary": "An MCP server that runs GDB with pwndbg in an isolated container to give LLM agents stateful binary-debugging and exploitation tooling for pwn and binary research. It exposes execution control, context snapshots, exploit-driver workflows, and multi-session support over HTTP and stdio transports.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "e113c53a95de47d095a8783c2d9ae49102631928",
+        "repo_metadata_sha256": "ac827b16880506afd61abf4138136b1392c130a3c6aed5a2a6207a4cb869b2c9",
+        "fingerprint": "b53b7550d3cb38148427de0949fad6b38507534305a5d1f57f033fb11c2f8a81"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-18T03:23:10Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOPRF1Gw",
+      "category": "ai-ml",
+      "tags": [
+        "ai-agents",
+        "automation",
+        "bot",
+        "cli",
+        "llm",
+        "tui"
+      ],
+      "summary": "A self-improving AI agent that creates and refines skills from experience, keeps persistent cross-session memory, and searches its own past conversations. It offers a terminal UI, works with many LLM providers, runs on messaging platforms like Telegram and Discord, and supports scheduled automations and subagents.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "d78d6d57f04563f85c4b545703317bed77b6b9b5",
+        "repo_metadata_sha256": "becd9b1d0e6b0630ef075a68354592a72929825b58a2bca694e043318a64f477",
+        "fingerprint": "99539a324ad108a67c103f3ea0a0eaab3ac4f5b53556c1733241985f0dd57593"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-18T03:23:10Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOPRMXrw",
+      "category": "web-applications",
+      "tags": [
+        "containers",
+        "database",
+        "self-hosted"
+      ],
+      "summary": "A self-hostable personal finance and wealth management web application, maintained as a community fork of the abandoned Maybe Finance project. Built with Ruby on Rails, PostgreSQL, and Redis, it can be run locally or deployed with Docker under the AGPLv3 license.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "c2deadee1553fe0638c3a88d1fe1f66287f51653",
+        "repo_metadata_sha256": "8dfae4c61bbbd925cefdfd1953aef07962255a2fca21b8df4aff8afe7e222370",
+        "fingerprint": "ed8c0cb05496d0a4ea19b41c45ecf7862fae8c4d874d5a919fdc8b11af55cfae"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-18T03:23:10Z"
+      }
     }
   ]
 }
