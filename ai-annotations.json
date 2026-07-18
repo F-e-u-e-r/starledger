@@ -6400,6 +6400,134 @@
         "prompt_version": "classify-v1",
         "generated_at": "2026-07-18T09:23:29Z"
       }
+    },
+    {
+      "node_id": "R_kgDOQ1cstg",
+      "category": "libraries-frameworks",
+      "tags": [
+        "ai-agents",
+        "api",
+        "cli",
+        "llm",
+        "sdk"
+      ],
+      "summary": "Unofficial Python API, CLI, and agent skill providing programmatic access to Google NotebookLM, including features the web UI does not expose. Integrates with AI coding agents such as Claude Code and Codex and supports notebook and podcast generation workflows.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "60485863cd0fd703bb16dc17545861b76fd802df",
+        "repo_metadata_sha256": "d8c3b98372fdbc7168986336777068011e530aded43ce2bf6814fb46db980506",
+        "fingerprint": "50d6b39a360e7f8a76d2702b1f8dac93c22e23168d847d4e20fec9089370f7ae"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-18T10:21:52Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOQ1mH3Q",
+      "category": "ai-ml",
+      "tags": [
+        "ai-agents",
+        "api",
+        "library",
+        "llm",
+        "proxy"
+      ],
+      "summary": "A context-compression layer for LLM applications that shrinks tool outputs, logs, files, and RAG chunks before they reach the model to reduce token usage. Ships as a Python library, a proxy, and an MCP server, aiming to cut tokens while preserving answers.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "c61a1b0e9a76af022b23422ae2e30413b0e2c26d",
+        "repo_metadata_sha256": "614e24645253ba317f8508ddb953f1989d82e7b34ebae035ad969a067817e03d",
+        "fingerprint": "5fdb79a07f4bdf456ff4eb9884e14a14ab5565c47509a6da78c53f992a76e8f6"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-18T10:21:52Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOQ2MNCA",
+      "category": "data-analytics",
+      "tags": [
+        "dashboard",
+        "monitoring",
+        "real-time",
+        "visualization"
+      ],
+      "summary": "A real-time global intelligence dashboard that aggregates news and tracks geopolitical and infrastructure developments in a unified situational-awareness interface. Provides AI-powered monitoring across finance, energy, and commodity domains with web and SDK access.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "31231a2a0e798f8f55cac0f6f120fc3384049136",
+        "repo_metadata_sha256": "d97a24965bf6375b3562c2f65d48de8c54b69ede243a19fa56b1ce91d1a961cd",
+        "fingerprint": "808069aedd4ddb02fae5063cda74ed22c048384ec5b902b8ed8db5805a9a6ffc"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-18T10:21:52Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOQ2bIeQ",
+      "category": "developer-tools",
+      "tags": [
+        "ai-agents",
+        "automation",
+        "cli",
+        "orchestration",
+        "workflow"
+      ],
+      "summary": "Multi-agent orchestration for the Claude Code CLI, designed to coordinate teams of agents for parallel coding tasks with minimal setup. Provides workflows and a CLI to run and manage automated multi-agent execution without a steep learning curve.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "d09fe8c0b92809860ae10971b1e52902439ef3f8",
+        "repo_metadata_sha256": "66cae48069669cfd097bac8f62a83661d31ade36afaaed7fc18b18fbb122130b",
+        "fingerprint": "93406bf208fb94a4609a20892a2484e080ccc0d9acd1de63847554603564975b"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-18T10:21:52Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOQ2zHeg",
+      "category": "libraries-frameworks",
+      "tags": [
+        "cli",
+        "frontend",
+        "library",
+        "theme"
+      ],
+      "summary": "An open-source, customizable design system built on React and StyleX, shipping over 150 accessible components with brand-level theming, dark mode, ready-made templates, and a CLI. Designed for use by both developers and AI agents, with no styling-library lock-in.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "fdd09ca3f4e9c811ba1894ee09557de268b1150c",
+        "repo_metadata_sha256": "dedeef9e688e9b91282019530a1ebedeecf7a1357632a34e0c069d0e85c55fd5",
+        "fingerprint": "da195bb7d8cc65fb2ebc1ee49686d343f61af26437bc05ae1351bae8277d6882"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-18T10:21:52Z"
+      }
     }
   ]
 }
