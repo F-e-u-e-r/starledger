@@ -8045,6 +8045,134 @@
         "prompt_version": "classify-v1",
         "generated_at": "2026-07-18T22:22:40Z"
       }
+    },
+    {
+      "node_id": "R_kgDOQwNiZQ",
+      "category": "ai-ml",
+      "tags": [
+        "ai-agents",
+        "automation",
+        "backend",
+        "real-time",
+        "self-hosted"
+      ],
+      "summary": "QuantDinger is an open-source, self-hosted AI trading platform for crypto, stocks, and forex. It combines multi-provider AI market research, Python strategy development, server-side backtesting, and paper or live execution with monitoring, keeping market data, strategy code, and broker credentials under the operator's control.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "7f207895d1b85ba40ad959723151251db3e1e574",
+        "repo_metadata_sha256": "1752648cff9edf02a652eb0cef619ed9fefb4c01c48b82935f666b4d44ec110f",
+        "fingerprint": "de3f34f48b81841524fa3279a600bb58e6d63ee33440791540aa383a48a52f2a"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-18T23:25:40Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOQwTVbg",
+      "category": "devops-infrastructure",
+      "tags": [
+        "ai-agents",
+        "cli",
+        "containers",
+        "kubernetes",
+        "networking",
+        "self-hosted"
+      ],
+      "summary": "Containarium is an open-source, self-hostable runtime that gives each AI agent a persistent, SSH-reachable Linux box with per-tenant network isolation. It uses eBPF egress policy, Kubernetes or LXC backends, and GPU passthrough, and exposes its admin surface and an in-box shell over an MCP-native interface.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "7d0e5cf1616cedd17e0e8fad259bacaf9d2a05af",
+        "repo_metadata_sha256": "a8b4680fec38f4bbd81749c6247e93b22b017923a5ad0ea46ff4424a9b9a6149",
+        "fingerprint": "60aba442fda79811c78c7fc26a310ced5655433482b6f3a6d305cef3bc255fdf"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-18T23:25:40Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOQwa3Uw",
+      "category": "libraries-frameworks",
+      "tags": [
+        "frontend",
+        "library",
+        "theme"
+      ],
+      "summary": "Its Hover is an open-source, MIT-licensed animated icon library built with React and the Motion library. It provides 186+ drop-in icon components that animate on interaction, work with Next.js and shadcn tooling, and can be installed via a shadcn CLI command or by copying the source for customization.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "4e2cdd4acec3041de48a48306975912d247854a8",
+        "repo_metadata_sha256": "7a971f98a61e2f9d1546ae97927ce4099303c961163e4987bb1908ef225899a7",
+        "fingerprint": "682cb24e566ce9f1cee6a6b90a9d9fc61926536cf4941ad951991ab75b5e9595"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-18T23:25:40Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOQyyvQQ",
+      "category": "web-applications",
+      "tags": [
+        "automation",
+        "encryption",
+        "frontend",
+        "workflow"
+      ],
+      "summary": "PDFCraft is a free, privacy-focused PDF toolkit that runs entirely in the browser using WebAssembly, so files are never uploaded to a server. It offers 80+ tools to edit, convert, merge, split, compress, and secure PDFs, plus a beta visual workflow editor for chaining operations into automated batch pipelines.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "ebe64e42c8033856f468b1f5496e2954a6035eac",
+        "repo_metadata_sha256": "0c15d4d58072841b6f03224da13b11ba119eb0f7ac99d679628d79a6567c18d3",
+        "fingerprint": "04638c4b8c7935259cc544ab358254556e113a44967e72a0c8f0e6cd5eb8966f"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-18T23:25:40Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOQz3Myg",
+      "category": "ai-ml",
+      "tags": [
+        "ai-agents",
+        "database",
+        "llm",
+        "search",
+        "vector-database"
+      ],
+      "summary": "OpenViking is an open-source context database for AI agents that unifies agent memory, knowledge RAG, and skills in one store. It aims to replace fragmented, flat retrieval with structured, observable context management, addressing surging context demand and poor retrieval effectiveness in long-running agent tasks.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "40da934aa9beb0bab823288195f6cb8a2e4a8bf6",
+        "repo_metadata_sha256": "0cf3fa37ef8ed4ec77d81ceba517cda051478e8d13ec3dec8b2648a2f6cfe587",
+        "fingerprint": "479a10c004db0fd6797b0290992016eafd6178c17891a6d38b3a4b022d73f946"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-18T23:25:40Z"
+      }
     }
   ]
 }
