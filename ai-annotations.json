@@ -5906,6 +5906,132 @@
         "prompt_version": "classify-v1",
         "generated_at": "2026-07-18T05:22:11Z"
       }
+    },
+    {
+      "node_id": "R_kgDOPazVLw",
+      "category": "data-analytics",
+      "tags": [
+        "ai-agents",
+        "api",
+        "backend",
+        "real-time",
+        "self-hosted"
+      ],
+      "summary": "Open-source MCP server that gives AI assistants such as Claude, ChatGPT, and Cursor real-time market data, technical-analysis indicators, screeners, and backtesting for stocks, crypto, forex, and futures across global exchanges. Data is fetched server-side from public endpoints, and the server can be hosted or self-hosted.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "5368f37b42f9c8b0774ad9a7d8ef2c7fe5f5e2f1",
+        "repo_metadata_sha256": "af6c6abcd24d020662f8c4413b74a73cc2f9bc4abd2649c84da332397060e8ac",
+        "fingerprint": "9dde4d323cd9dab7ec1c7c4ad3d716802aadd9e80a54783bfabb8be2c472ba56"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-18T06:23:21Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOPcM8RA",
+      "category": "ai-ml",
+      "tags": [
+        "ai-agents",
+        "api",
+        "llm",
+        "real-time",
+        "sdk"
+      ],
+      "summary": "Open-source Python framework from Stream for building multi-modal AI agents that watch, listen, and understand video in real time. It combines vision models like YOLO and Roboflow with LLMs from OpenAI, Gemini, and Claude, and uses Stream's edge network for low-latency audio and video, with SDKs for React, Android, iOS, Flutter, and Unity.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "561e41ac2194781218c3fe71b9184989ab3d744c",
+        "repo_metadata_sha256": "7026e70746c0cded766b6b2c3413e158154693d09326fdb36f15217bfee0496d",
+        "fingerprint": "9e3f08abbb741ed21ca7474cdc50eb83dfa5ef7bbae23f026cad7daa090f1a71"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-18T06:23:21Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOPfbZuA",
+      "category": "ai-ml",
+      "tags": [
+        "ai-agents",
+        "desktop-app",
+        "llm",
+        "self-hosted"
+      ],
+      "summary": "Open-source, native macOS harness for running AI agents locally, built purely in Swift and fully offline. It supports any model with persistent memory, autonomous execution, tool use, and cryptographic identity, using Apple's on-device frameworks and MLX so models and data stay on your Mac.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "de1be31eb830040f8f155964ab72e16ada1f9f0c",
+        "repo_metadata_sha256": "1533eccaef2ba2db03740def60b560b5d015956067729f3a9e16275bb38208e9",
+        "fingerprint": "69b5106184128ecab9736427bd44c2bea9606113549a987eec00348d8ded6cd3"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-18T06:23:21Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOPiFCnQ",
+      "category": "developer-tools",
+      "tags": [
+        "ai-agents",
+        "cli",
+        "documentation",
+        "workflow"
+      ],
+      "summary": "GitHub's open-source toolkit for Spec-Driven Development: define detailed specifications before writing code, then build with any AI coding agent. It provides the Specify CLI and a ready-to-use, extensible spec-driven process with role-based bundles that works across many supported AI coding agents.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "793ee2f3c7385f078cec71a783641b87cd097569",
+        "repo_metadata_sha256": "86b2af8005990206445cf761ddddc29bcf202584445541732af1ea9c93d8799b",
+        "fingerprint": "ac1ad50bf33d71a9618e323f7f49b56bf9ccb92ced5f703ad01de6c65a57b2a0"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-18T06:23:21Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOPj60Ig",
+      "category": "ai-ml",
+      "tags": [
+        "llm",
+        "machine-learning",
+        "real-time"
+      ],
+      "summary": "Microsoft's open-source frontier voice AI project providing text-to-speech and speech recognition models. Its VibeVoice-ASR is a unified, natively multilingual speech-to-text model covering over 50 languages that transcribes 60-minute long-form audio in a single pass with speaker, timestamp, and content structure, and supports vLLM inference.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "3e54638eea746e4975f33794f05c99f8c7de0c6d",
+        "repo_metadata_sha256": "db7ad9ab12cc49290ab56957381bb48a5e80fcadb070073739702a805f34ea64",
+        "fingerprint": "a8bad7fee1556535f2cfd1d9d4ff7941dd8d7e68910ee3afc41d780c93a4fc38"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-18T06:23:21Z"
+      }
     }
   ]
 }
