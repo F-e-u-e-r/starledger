@@ -5659,6 +5659,128 @@
         "prompt_version": "classify-v1",
         "generated_at": "2026-07-18T03:23:10Z"
       }
+    },
+    {
+      "node_id": "R_kgDOPXS5wQ",
+      "category": "developer-tools",
+      "tags": [
+        "ai-agents",
+        "cli",
+        "llm",
+        "visualization"
+      ],
+      "summary": "GitNexus is a client-side tool that indexes any codebase into a knowledge graph capturing dependencies, call chains, clusters, and execution flows. It exposes the graph through MCP tools and a browser web UI so AI coding agents and developers can explore code and track its relationships.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "cb4ac5faca66779a9539ff33f1a18e5a5920a4b5",
+        "repo_metadata_sha256": "33f62b8394a6c6d485d83c54f83150780c1e059d7c40a4c372a1335387a7fac2",
+        "fingerprint": "3132abb6117945f6495a5b0c490e6812b3024e614118c20e5631174c9ef28296"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-18T04:28:06Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOPY9pZg",
+      "category": "security-privacy",
+      "tags": [
+        "ai-agents",
+        "automation",
+        "cli",
+        "security-scanner"
+      ],
+      "summary": "Strix is an open-source suite of autonomous AI penetration-testing agents that run applications dynamically to find vulnerabilities and validate them with working proofs-of-concept. It offers a developer-first CLI, multi-agent orchestration, automated fixes and reports, and CI/CD integration.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "f436c754f93b25d4a3c64af3f924a6989f3a70e0",
+        "repo_metadata_sha256": "29de110520c823baac9a544863e8c01d94585e87a743eac85add73cde8924f93",
+        "fingerprint": "b86369a364476c7498f023406cb5475397bdd7aa6a1f237978ef442e9af54869"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-18T04:28:06Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOPYG9FA",
+      "category": "developer-tools",
+      "tags": [
+        "configuration",
+        "desktop-app",
+        "gui"
+      ],
+      "summary": "CC Switch is a cross-platform desktop manager, built with Tauri, that stores and switches configuration profiles for AI coding assistants such as Claude Code, Codex, Gemini CLI, OpenCode, and others, giving users a single graphical interface for managing multiple provider settings.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "38094ad730637872915cb9fdb5bf096a779938fc",
+        "repo_metadata_sha256": "26d000a04a2d0cac0d413b5b18c98580c0b8ea07ecb9f887a793de37824affd3",
+        "fingerprint": "ec9a59932c3ea9556a73058c11e6ecc8945f93b841073bed060ae8c7d2a91bb3"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-18T04:28:06Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOPYbcgQ",
+      "category": "ai-ml",
+      "tags": [
+        "library",
+        "machine-learning"
+      ],
+      "summary": "Kitten TTS is an open-source, lightweight text-to-speech library built on ONNX, offering 15M to 80M parameter models (25-80 MB) that run efficiently on CPU without a GPU. It ships eight built-in voices, adjustable speech speed, text preprocessing, and 24 kHz audio output.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "6d8bb7346f2074bc51b14fb9827059185c834eec",
+        "repo_metadata_sha256": "0ea5fe80d9a0f9aefabffc610dd74d7286a20f75c15c80c56ca7b2980a2506ff",
+        "fingerprint": "dd159184b0e2647b67c2ef9878bde657913749575d9aa36bcba81f7a8bbd5fff"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-18T04:28:06Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOPYoUTA",
+      "category": "developer-tools",
+      "tags": [
+        "ai-agents",
+        "cli",
+        "markdown",
+        "workflow"
+      ],
+      "summary": "OpenSpec is a spec-driven development framework for AI coding assistants. It captures proposals, requirements, technical design, and task checklists as plain Markdown, using a slash-command workflow to explore ideas, propose changes, apply implementations, and archive completed work.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "babff7df44de47f236dab911139eba9950b564a9",
+        "repo_metadata_sha256": "f18c453757ae37edc2100f45316e1a2bc3dbcdbdd565d4dd5dd76729ab2bf2c0",
+        "fingerprint": "03bf8a2ac877d5f8c99f689c8586b477e382573d4c785f6f5f4d74a57a6174fe"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-18T04:28:06Z"
+      }
     }
   ]
 }
