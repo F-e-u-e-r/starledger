@@ -5405,6 +5405,132 @@
         "prompt_version": "classify-v1",
         "generated_at": "2026-07-18T00:21:58Z"
       }
+    },
+    {
+      "node_id": "R_kgDOPFM7Ew",
+      "category": "ai-ml",
+      "tags": [
+        "api",
+        "authentication",
+        "llm",
+        "proxy",
+        "self-hosted"
+      ],
+      "summary": "A proxy server written in Go that exposes OpenAI-, Gemini-, Claude-, and Codex-compatible API endpoints. It lets local clients and SDKs reach multiple large language model provider accounts, including OAuth-authenticated ones, through a single self-hosted interface.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "3145fd733e02b9488011056776cc8a04e6c05627",
+        "repo_metadata_sha256": "94c4b58062409545e729643e9e537f9c5cc583d6b18dbff66e68bdcd9d0e4b43",
+        "fingerprint": "f865f34f74a0fa3ec61def73934510f18557f1fdd80206951a881a0363239ef1"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-18T02:23:20Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOPFfoKA",
+      "category": "communication-collaboration",
+      "tags": [
+        "automation",
+        "bot",
+        "containers",
+        "self-hosted"
+      ],
+      "summary": "A Model Context Protocol server for the PTT bulletin board system, built on the PyPtt library. It lets MCP clients log in to PTT and interact with it programmatically to automate account and board operations, and ships as a Docker image for containerized deployment.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "dfc2561389c4b57dc43650f9b590c79c1488efe5",
+        "repo_metadata_sha256": "1147a3e8b202e57f292a669c60f90702eb7ef5be822f5ff3f03e28e373504b9c",
+        "fingerprint": "c3e5ad2b70bc1c3c9a92d57daff3bcad66a674064a3685eb1d7725dc9521ff9e"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-18T02:23:20Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOPJPepw",
+      "category": "ai-ml",
+      "tags": [
+        "library",
+        "llm",
+        "machine-learning",
+        "visualization"
+      ],
+      "summary": "A Python library that uses large language models to extract structured information from unstructured text based on user-defined instructions. It maps each extraction back to its exact source location and generates self-contained interactive HTML visualizations of the results.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "590b9b14525e85bc095a9f12ba4ac2541d64ba00",
+        "repo_metadata_sha256": "3f4b19741a786b4f63c8c8b2c3734f3bcec191b3d05f7a0b5cab1977e32a5cd1",
+        "fingerprint": "8d6309630447c21995e742315827373ed70cabe71b851d6b8011c6fa8226ae45"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-18T02:23:20Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOPJUN0Q",
+      "category": "security-privacy",
+      "tags": [
+        "ai-agents",
+        "api",
+        "llm",
+        "plugin"
+      ],
+      "summary": "A Ghidra extension that implements a Model Context Protocol server, exposing the reverse-engineering platform's analysis capabilities such as functions, strings, imports, and exports. It lets external AI assistants and tools drive binary analysis through a standardized API.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "0a68459a4b55ee5a8f72877266462da9ff81c8db",
+        "repo_metadata_sha256": "e5bb83fb4dd50acc7967524f634c914ee6f41def003dfd9a1f070ef1694aaa0e",
+        "fingerprint": "64a6009061153a31a173d10ffe936b1918474549eed83a8da7da524e8c32f948"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-18T02:23:20Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOPNKIQA",
+      "category": "ai-ml",
+      "tags": [
+        "ai-agents",
+        "automation",
+        "llm",
+        "orchestration"
+      ],
+      "summary": "A Python framework that emulates Grok heavy's deep analysis by orchestrating multiple specialized AI agents in parallel. Built on OpenRouter's API, it generates tailored research sub-questions, runs agents concurrently, and synthesizes their outputs into one comprehensive answer.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "617ca3bb327f9e924828d768bfcf7a2a8ba280f4",
+        "repo_metadata_sha256": "0519c60fc2796a9f4288f294e3ffd506711bb165c5ed0e782374541f8cbd5752",
+        "fingerprint": "02847ca1577bab0169bc8224ebcc4de91d02503ffba7501914c287c8d0d7b250"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-18T02:23:20Z"
+      }
     }
   ]
 }
