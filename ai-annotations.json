@@ -6907,6 +6907,136 @@
         "prompt_version": "classify-v1",
         "generated_at": "2026-07-18T13:23:27Z"
       }
+    },
+    {
+      "node_id": "R_kgDOQACmhA",
+      "category": "ai-ml",
+      "tags": [
+        "api",
+        "automation",
+        "llm",
+        "proxy",
+        "self-hosted",
+        "workflow"
+      ],
+      "summary": "OpenAI-compatible API middleware that exposes n8n agents and workflows as OpenAI models for any OpenAI-compatible client. Supports streaming and non-streaming responses, multi-model JSON configuration, session tracking, per-endpoint rate limiting, and Docker deployment with hot-reload of models.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "377b7b2897ac3bec15a307b0e15d8ffcb0cd40f2",
+        "repo_metadata_sha256": "dbdeced99367540582fdb00dceaf534c6cdcfbe85c40d484ab74f4409753c28b",
+        "fingerprint": "220c359d4ab57dd77da04fd60ae44a3e78eac293f4a4cc8ea81c2f6ffa4626f9"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-18T14:21:31Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOQBjiAQ",
+      "category": "ai-ml",
+      "tags": [
+        "ai-agents",
+        "awesome-list",
+        "cli",
+        "documentation",
+        "llm"
+      ],
+      "summary": "A curated collection of specialized AI agent personalities that install into coding assistants such as Claude Code, Cursor, Codex, and Gemini CLI. Each agent is a markdown-defined expert with a distinct role, workflow, and deliverables, installed through shell scripts or an accompanying desktop app.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "b9758df639424d9582ba8ccd36187041f1691e80",
+        "repo_metadata_sha256": "168dfdc36eb2446dfed2738a23a08892ad48d0690a61f5260b61e563559364da",
+        "fingerprint": "1637bc7d731308251a27930464a2d9e3fba3e37b042e67ab0e08fb252ed63e7d"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-18T14:21:31Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOQCiLYA",
+      "category": "ai-ml",
+      "tags": [
+        "ai-agents",
+        "automation",
+        "gui",
+        "machine-learning"
+      ],
+      "summary": "A Python mobile automation agent that uses Qwen3-VL vision-language models to visually understand Android screens and control devices through ADB commands. Tasks are described in natural language and run from a Gradio web UI or the command line, with live screenshots and execution logs.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "7749cbe2d3b18c5ebce3dcce7e6567732b9b5ad9",
+        "repo_metadata_sha256": "205737de3492a4d3d97f58d84fadacd667fc552a90349f86c1d40c909ca46b79",
+        "fingerprint": "c3f099a01a0fbf35a233966dd06d49b9830b56d09a43684e05b124b3a2ea4b6a"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-18T14:21:31Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOQCj48w",
+      "category": "ai-ml",
+      "tags": [
+        "ai-agents",
+        "automation",
+        "bot",
+        "cli",
+        "llm"
+      ],
+      "summary": "An autonomous financial research agent that decomposes complex questions into structured research plans, executes them against real-time market data, and validates its own results. Built in TypeScript on the Bun runtime with task planning, self-reflection, loop detection, and an optional WhatsApp interface.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "ed1b9350b9af933eb6c5f9cb12360d4d42da7a0c",
+        "repo_metadata_sha256": "7b0e80ec440ec1b6da0f1eef4cd04fc337d1f3f2b01b5ba7b424b7ea66832500",
+        "fingerprint": "1c6143f787404f22dc547981a38d3fad4c535985e26a34451e81c19dd4fcee99"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-18T14:21:31Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOQD44gg",
+      "category": "media-creative",
+      "tags": [
+        "editor",
+        "frontend",
+        "gui",
+        "plugin",
+        "visualization"
+      ],
+      "summary": "A browser-based 3D building and architectural editor built with React Three Fiber and WebGPU on Next.js. Model sites, buildings, levels, walls, and furnishings with an extensible plugin system, undo/redo history, and IndexedDB persistence, then share the resulting 3D architectural projects.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "b3dd1ec623ec3fd3d32c17030a10d16b81a62393",
+        "repo_metadata_sha256": "d82bcb4ac9f25c7f981ac923805687cd75603da8d3958561aa3a115d17d34c1b",
+        "fingerprint": "fda363b022caefc1b64cabbc77d3f0aa33662d44ea4c8f18adba952a3ed8859a"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-18T14:21:31Z"
+      }
     }
   ]
 }
