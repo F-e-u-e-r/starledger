@@ -7916,6 +7916,135 @@
         "prompt_version": "classify-v1",
         "generated_at": "2026-07-18T21:22:24Z"
       }
+    },
+    {
+      "node_id": "R_kgDOQsZ9fw",
+      "category": "ai-ml",
+      "tags": [
+        "library",
+        "llm",
+        "machine-learning",
+        "sdk"
+      ],
+      "summary": "A plug-and-play Python inference library for Recursive Language Models (RLMs), which let a language model programmatically examine, decompose, and recursively call itself over near-infinite contexts. It provides an inference engine, multiple REPL sandboxes such as local, Docker, Modal, and Prime, and a reinforcement-learning training harness.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "e4a8f33ce870bdcd958d47b0a66c2b6ffaeffb10",
+        "repo_metadata_sha256": "07827eb9cab5b44c2440dfb347b831beec70add6cbf3714586307cf3b96173a3",
+        "fingerprint": "680b0972e82fd615c2b482de86c339534a124e2ef2a1d72be291152350798b34"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-18T22:22:40Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOQscuUA",
+      "category": "ai-ml",
+      "tags": [
+        "ai-agents",
+        "awesome-list",
+        "documentation",
+        "llm",
+        "plugin"
+      ],
+      "summary": "A collection of Agent Skills for context engineering and harness engineering, teaching how to curate the model's context window, design multi-agent architectures, build memory and tools, and evaluate agent behavior. It ships as a Claude Code plugin marketplace and an Open Plugins package usable across agent platforms such as Cursor and Codex.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "5f554d18d584db677e830047002902f07f3698fe",
+        "repo_metadata_sha256": "7bfae2c9e22e46661a11f9492a4a1853884b69ed8b3a2bfcc64bd1a882a2fdf7",
+        "fingerprint": "b2425eaa892dbd580cf04811bc1ae15e1cf04be4be0d8fe26be1444fff4dc60b"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-18T22:22:40Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOQsmVpA",
+      "category": "ai-ml",
+      "tags": [
+        "containers",
+        "llm",
+        "rest-api",
+        "search",
+        "self-hosted",
+        "vector-database"
+      ],
+      "summary": "A high-performance Graph-RAG framework written in Rust that implements the LightRAG algorithm, decomposing documents into a knowledge graph of entities and relationships for retrieval-augmented generation. It offers six query modes, a REST API, PostgreSQL storage with pgvector and Apache AGE, multiple LLM providers, and Docker-based deployment.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "c8231b63c2fca136d1ff26bca00e011f618bdf74",
+        "repo_metadata_sha256": "e15f65504311b612415f08316f4d2836f64ac5d99762195e127a44fa4cbb1258",
+        "fingerprint": "a8876182abf1ded7f852a67a127f4d00f15713e712aced3b7a6506ba215e6239"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-18T22:22:40Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOQtfMFA",
+      "category": "developer-tools",
+      "tags": [
+        "ai-agents",
+        "api",
+        "automation",
+        "cli"
+      ],
+      "summary": "Provides programmatic access to Google NotebookLM through a command-line interface, a Model Context Protocol server, and AI agent skills. Users and AI assistants can manage notebooks and sources, run queries, generate audio, video, and other studio content, and share notebooks, authenticating with browser-extracted cookies.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "ca21d151c700e7ee25a12b04826de16e5f3a1733",
+        "repo_metadata_sha256": "74de3eedfb0ce93297797604295f5f22928e449cf8c1da942c93eafc4006adc5",
+        "fingerprint": "4d5466934adb80da3bf48f8bb2968c2754d162a5c4da8f405df20da10282588a"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-18T22:22:40Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOQurDaA",
+      "category": "communication-collaboration",
+      "tags": [
+        "ai-agents",
+        "bot",
+        "desktop-app",
+        "real-time",
+        "self-hosted"
+      ],
+      "summary": "A collaborative team workspace that brings AI agents into channels, threads, and shared documents alongside people. Built on the OpenClaw agent runtime, it offers real-time public and private channels, direct messages, one-click agent creation, file sharing, and multi-workspace isolation, with both cloud and self-hosted deployment options.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "287e9e20afff28617ed46dfcf3a80b9c8a625216",
+        "repo_metadata_sha256": "673de80f58893f94d6b799a80aa05137c9b3bd3ac6be273107755ec76753ec8c",
+        "fingerprint": "7864ea63c55d16285c353dbe6d9e2c57d60078909f3b2f28b83bcc798347100c"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-18T22:22:40Z"
+      }
     }
   ]
 }
