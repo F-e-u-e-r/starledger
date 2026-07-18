@@ -7788,6 +7788,134 @@
         "prompt_version": "classify-v1",
         "generated_at": "2026-07-18T20:22:03Z"
       }
+    },
+    {
+      "node_id": "R_kgDOQojJXw",
+      "category": "developer-tools",
+      "tags": [
+        "ai-agents",
+        "automation",
+        "code-generation",
+        "llm",
+        "workflow"
+      ],
+      "summary": "A lightweight meta-prompting, context-engineering, and spec-driven development system for the Claude Code coding agent. According to its README, the project has moved and now continues as GSD Core in the Open GSD repository.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "6232a8c42bbdcd0ad5f290c41806c2728c68d194",
+        "repo_metadata_sha256": "7fad06fcbb72843a951589847d7341c64be5f3a22c9826e3fb9ae0a8f399482d",
+        "fingerprint": "06d4d93d86597bd2383127d845cfe41b58c47040311ac1bb02129d5da2ce5424"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-18T21:22:24Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOQpfrOg",
+      "category": "security-privacy",
+      "tags": [
+        "cli",
+        "desktop-app",
+        "gui",
+        "machine-learning"
+      ],
+      "summary": "A Python research project that reverse-engineers Google's SynthID image watermark using signal processing and spectral analysis. It provides watermark detection, a multi-stage removal pipeline, a spectral codebook builder, and an optional drag-and-drop desktop app, stated to be for research and educational use.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "47a15f31ae127ecaa40cb6341c78feb48ead4805",
+        "repo_metadata_sha256": "75a5ec3675e320429be1d3663c7db6b0d71b9917dfd9778cd7ea70743f046b61",
+        "fingerprint": "d36d339edfdb7c2e037969218cbbc532dc2f5044c947b4372cb99047d1cd8465"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-18T21:22:24Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOQptARA",
+      "category": "education-reference",
+      "tags": [
+        "ai-agents",
+        "documentation",
+        "llm",
+        "machine-learning"
+      ],
+      "summary": "A continuously updated reference and interview-preparation guide for designing production AI systems. It covers RAG architectures, LLM engineering, agentic systems, model selection, evaluation, and observability, with case studies, whiteboard exercises, and a large question bank.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "b79801ecfb30fa886687b273b22eeb8db3e618c2",
+        "repo_metadata_sha256": "e71967888deabfd94753897a9a4af08513b3fd79e1d7748cbc2e4a10fd53d5d2",
+        "fingerprint": "33ae4947eed582fc3fae06dcc694ff8d6585e6346b9ef46c00a3efcaa3b09da3"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-18T21:22:24Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOQrrcbw",
+      "category": "media-creative",
+      "tags": [
+        "api",
+        "automation",
+        "containers",
+        "self-hosted"
+      ],
+      "summary": "A free, open-source, self-hosted AI video platform bundling a clip generator, an AI Shorts creator with AI actors, and a YouTube studio for thumbnails and titles. It runs via Docker, integrates Gemini, fal.ai, and ElevenLabs, and can publish directly to TikTok, Instagram, and YouTube.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "25afdf0182c749378fbe50fdd21d1dcf4e642599",
+        "repo_metadata_sha256": "490235261585d0413584878715a9b5e64e014c90717389345b7b243a65401bb6",
+        "fingerprint": "d78a0f64a53f92ef5ee3d79ee43eb82bf3fc3b6b496d693b6d4d2743461aa172"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-18T21:22:24Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOQsFrAA",
+      "category": "data-analytics",
+      "tags": [
+        "automation",
+        "database",
+        "monitoring",
+        "notifications",
+        "scraping",
+        "visualization"
+      ],
+      "summary": "An automated multi-market stock monitoring and data-warehousing system covering six global markets. It scrapes market data into a SQLite database, computes rolling-trading-day indicators and 10% return-bin matrices, renders charts with Matplotlib, and emails interactive daily reports through the Resend API.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "98494f3248be7c4290ac55a3cf8a2e8ed9e98ab0",
+        "repo_metadata_sha256": "116baf7ea986593a12ded7ee4f52cc412031ed23e3430d6e92ac7670611b22a3",
+        "fingerprint": "97fd6d7b6b7456dadfdf89431559520b75924cf91dbfca9b80ba4d15ae44c70a"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-18T21:22:24Z"
+      }
     }
   ]
 }
