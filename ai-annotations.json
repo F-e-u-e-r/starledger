@@ -6657,6 +6657,131 @@
         "prompt_version": "classify-v1",
         "generated_at": "2026-07-18T11:22:38Z"
       }
+    },
+    {
+      "node_id": "R_kgDOQ68taw",
+      "category": "education-reference",
+      "tags": [
+        "documentation",
+        "markdown"
+      ],
+      "summary": "A community archive of Chinese-language deep-dive analyses and bilingual English-Chinese transcripts for 297 episodes of Lenny's Podcast, organized by guest with per-episode analysis reports, transcripts, PDF exports, and topic indexes covering product management, growth, leadership, and AI.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "3cfe20e28f60cf55afaab9a7a8434d87b897810e",
+        "repo_metadata_sha256": "e333aa3ab24baaeed9e6f0377cdec7e84f40ba6e216aea82be46a318fb00bc64",
+        "fingerprint": "6ed61f939f08ecf343e8da82378f7f252c47817f2750525fa9124ae47249987e"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-18T12:22:51Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOQ6n2Jw",
+      "category": "ai-ml",
+      "tags": [
+        "ai-agents",
+        "automation",
+        "documentation",
+        "markdown"
+      ],
+      "summary": "A collection of AI agent skills written as markdown files that give coding agents specialized marketing workflows, covering conversion optimization, copywriting, SEO, analytics, ads, email, and growth engineering. Compatible with Claude Code, Codex, Cursor, and other agents following the Agent Skills standard.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "ce1229ce22126825ff4fcc5fba3fee2262af8c55",
+        "repo_metadata_sha256": "c7fbc7693842ed04cfd68828981a58e34d472c3b191da71b4bc757ffaa713a14",
+        "fingerprint": "d0d86586cf2893d34c21e945e8002cc0d04b32a72c8569e6538806b96b15edfa"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-18T12:22:51Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOQ77-1A",
+      "category": "ai-ml",
+      "tags": [
+        "ai-agents",
+        "automation",
+        "cli",
+        "llm",
+        "plugin",
+        "security-scanner"
+      ],
+      "summary": "A cross-harness operator system for AI coding agents that packages skills, subagents, hooks, rules, and MCP configurations alongside memory persistence, continuous learning, and security scanning. Works across Claude Code, Codex, Cursor, OpenCode, and Gemini, installable as a plugin or via a manual installer.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "12569210285001fdb45870eda2faea630975f43f",
+        "repo_metadata_sha256": "083f3033ff74c1ff4b0e66c260869f947197533acd834aaa27aefafbb4229b45",
+        "fingerprint": "3b01131c6fa621641f68f7032a4a5731025124f55f9ce858f6d71c6ead9e5156"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-18T12:22:51Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOQ79DpA",
+      "category": "developer-tools",
+      "tags": [
+        "ai-agents",
+        "frontend",
+        "gui",
+        "library"
+      ],
+      "summary": "An agent-agnostic React tool that adds a visual feedback toolbar to a web app, letting you click, select, or drag to annotate page elements and copy structured markdown output with CSS selectors, positions, and context so AI coding agents can locate the referenced code. Requires React 18 and a desktop browser.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "afdad2e6d3cce88f4a1dd813022249f6a9967b59",
+        "repo_metadata_sha256": "c0c8e5b3350891788314ec7de62b4fb1182fc6bb55cba094a637427b56203936",
+        "fingerprint": "2f6c0525f61c9b5543d25a7a93ed6155d35a610ea98d0a33efa311b270b29674"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-18T12:22:51Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOQ7Opvg",
+      "category": "ai-ml",
+      "tags": [
+        "ai-agents",
+        "code-generation",
+        "frontend",
+        "plugin"
+      ],
+      "summary": "A library of agent skills and plugins for Google Stitch that work through the Stitch MCP server, providing workflows to generate and edit UI designs, convert frontend code to designs, extract design systems, and build React or React Native components. Compatible with Claude Code, Codex, Gemini CLI, and Cursor.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "82927f91e77e9853c0e0c5db46112dd6878a5f53",
+        "repo_metadata_sha256": "881fa408d33f4792d637e558fd0968d4a38df6b68688505d444dc5fe54ff2b99",
+        "fingerprint": "1f9f1ab0118af83977f0236612db4acd1e98c0b55607e23d2dc926151a6b390d"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-18T12:22:51Z"
+      }
     }
   ]
 }
