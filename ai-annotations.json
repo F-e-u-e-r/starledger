@@ -7296,6 +7296,129 @@
         "prompt_version": "classify-v1",
         "generated_at": "2026-07-18T16:23:03Z"
       }
+    },
+    {
+      "node_id": "R_kgDOQW2AGg",
+      "category": "developer-tools",
+      "tags": [
+        "dashboard",
+        "desktop-app",
+        "llm",
+        "monitoring"
+      ],
+      "summary": "A macOS menu bar app that displays usage limits, reset windows, credit balances, and spend for AI coding providers such as Codex, OpenAI, Claude, Cursor, Gemini, and Copilot, reusing existing provider sessions so no passwords are stored.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "19bb92a763c570bbacab5ed946b6aaf2d0464c62",
+        "repo_metadata_sha256": "8084771a8c3bff4a451701561f63a7e883417f1a98420492d0f8ff3147278221",
+        "fingerprint": "a4cb70bf54a3d35e1a4f3f3fdbdcffcbdb89228480d1c21b523790b31ca6552c"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-18T17:24:26Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOQ_-q4g",
+      "category": "productivity-automation",
+      "tags": [
+        "ai-agents",
+        "automation",
+        "plugin",
+        "productivity",
+        "workflow"
+      ],
+      "summary": "An open-source marketplace of 11 role-based plugins for Claude Cowork and Claude Code that bundle skills, connectors, slash commands, and sub-agents for functions such as sales, finance, legal, marketing, and data, and can be customized to a company's own tools and workflows.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "261e2f47e2b1701258e4bd3ec18620dc5d7c28ad",
+        "repo_metadata_sha256": "3852f0062412b5a0d38810316697ef8cec169ae3d2fc801d8ddd061938294f69",
+        "fingerprint": "5e3848736f812938da9749229ee05043543d351a99591fb9295bb255a8ae272e"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-18T17:24:26Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOQ_KVhA",
+      "category": "developer-tools",
+      "tags": [
+        "cli",
+        "llm",
+        "proxy",
+        "terminal"
+      ],
+      "summary": "A single-binary Rust CLI proxy that filters and compresses command outputs before they reach an LLM's context, reducing token consumption on common development commands by roughly 60 to 90 percent with under 10ms overhead and support for over 100 commands.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "3789143b7f72c763507243cff0ac1e7aaf7f5a32",
+        "repo_metadata_sha256": "21680745d86c909f074710c7e23752b71d97f1f70a4d58fb305b781e32c5e3c4",
+        "fingerprint": "55c5f9eaa1924104a23bf497fbc55908ab63634411fcb281debdfd0697e8b96a"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-18T17:24:26Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOQbOoPg",
+      "category": "education-reference",
+      "tags": [
+        "awesome-list",
+        "documentation"
+      ],
+      "summary": "A curated open-source library of more than 10,000 community-collected prompts for Google's Nano Banana Pro AI image generation model, organized by use case with preview images and available in 16 languages alongside a companion web gallery.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "2a3e68b4912ef4bfc6e910c7f5987cbb10b1a063",
+        "repo_metadata_sha256": "c74ebe297cbdfd63ae26d80f40a3617d96c4e32714fd3234355211cce361ec9c",
+        "fingerprint": "b24d60f830d40c60a7c28d4df086363b1ab724c6956dcfa20b379b5d9e4dc3ef"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-18T17:24:26Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOQchDtQ",
+      "category": "developer-tools",
+      "tags": [
+        "ai-agents",
+        "documentation",
+        "plugin"
+      ],
+      "summary": "A catalog of Agent Skills, which are folders of instructions, scripts, and resources that AI agents can discover to perform specific tasks, for use and distribution with OpenAI Codex; the repository is now deprecated in favor of the OpenAI Plugins repository.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "c205d307226b98189c28cbcce6ff792cbb7b2d05",
+        "repo_metadata_sha256": "f47dee576daf5f6020ba049c954a64b7ede1e77769ace6ad1a03988d5b9a17d4",
+        "fingerprint": "e1c1b45a54be929a201bb70303cac8313fbc0be81184b4652451f7e49f191476"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-18T17:24:26Z"
+      }
     }
   ]
 }
