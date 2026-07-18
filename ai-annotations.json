@@ -5781,6 +5781,131 @@
         "prompt_version": "classify-v1",
         "generated_at": "2026-07-18T04:28:06Z"
       }
+    },
+    {
+      "node_id": "R_kgDOPYtaAQ",
+      "category": "ai-ml",
+      "tags": [
+        "ai-agents",
+        "api",
+        "llm"
+      ],
+      "summary": "WebMCP is a proposed web platform API (document.modelContext) that lets sites expose JavaScript functions and HTML form elements as tools with natural-language descriptions and structured schemas, so AI agents running in the browser can discover and invoke client-side functionality directly.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "c26257dafff7117ad3d72acc2ac22acf97ac3ecd",
+        "repo_metadata_sha256": "34a7428bc1f5bc4fa8b90c21850135b70dd872fadad497861378095b42c6976d",
+        "fingerprint": "ae7c6f443e0dbc23053b635f6bf43083d657bca45aa63a1256da7bc1268a4dc9"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-18T05:22:11Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOPZ417g",
+      "category": "ai-ml",
+      "tags": [
+        "ai-agents",
+        "automation",
+        "desktop-app",
+        "gui",
+        "llm"
+      ],
+      "summary": "AionUi is a free, open-source, cross-platform desktop Cowork application that provides a unified GUI for Claude Code, Codex, Gemini CLI and 20+ other AI agent CLIs, with a built-in agent that can read files and run tasks, multi-agent support, remote access, and scheduled 24/7 automation.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "readme.md",
+        "readme_oid": "6425e28d2e9948214d7f5b9454f56dfeb8ca5ee6",
+        "repo_metadata_sha256": "e45c56a210e7463b347c2596d62b305ba29d6439ceec140e70f04d57b14fbca2",
+        "fingerprint": "5476438778b1e8d697057683234b5f73a37fd8ded4bc0b4395692993f2c04719"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-18T05:22:11Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOP_gcWw",
+      "category": "developer-tools",
+      "tags": [
+        "ai-agents",
+        "automation",
+        "code-generation",
+        "plugin",
+        "workflow"
+      ],
+      "summary": "Superpowers is a software development methodology and composable skills framework for AI coding agents such as Claude Code, Codex, and Cursor. It guides agents through spec-first design, planning, and subagent-driven development emphasizing red/green TDD, YAGNI, and DRY, and installs as a plugin for each harness.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "48e3f1985dbcd5c1ea6a8237bff28ba63931f767",
+        "repo_metadata_sha256": "ba145d3e34f868e423c409ca14903bc46a2c5ad4a737ec4542824c4fff055172",
+        "fingerprint": "f6ccac30f4c0b6facdd5c611abb7791ace8be6f4795a28217f258f16fa4c472a"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-18T05:22:11Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOP_tNCg",
+      "category": "media-creative",
+      "tags": [
+        "desktop-app",
+        "editor",
+        "gui"
+      ],
+      "summary": "OpenScreen is a free, open-source screen recorder and demo-creation tool built with Electron as an alternative to Screen Studio. It records windows or the full screen with audio, a webcam overlay, cursor effects, auto-zoom, on-device captions, and annotations, and exports to MP4 or GIF. The project is now archived.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "5fcd7a55cb7d7d1328c2a2aebe1a5752674aa81f",
+        "repo_metadata_sha256": "de8147cd4d7960ff9b387f06ab5b69f6f5a0f5cf2acb7eff90f65fc8a8ae5e2a",
+        "fingerprint": "13df5435f688693042acea96d34b09ed8104a41e63efec348ea149b123db0d47"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-18T05:22:11Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOPajkBQ",
+      "category": "developer-tools",
+      "tags": [
+        "code-generation",
+        "frontend",
+        "llm",
+        "scraping"
+      ],
+      "summary": "Open Lovable is an open-source example app from the Firecrawl team that lets you chat with an AI to build React apps and to clone or recreate existing websites as modern React apps. It uses Firecrawl to scrape sites and supports LLM providers including Gemini, Anthropic, OpenAI, and Groq.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "b5bbbcdf7592a20bf249a5344689ffe142eab223",
+        "repo_metadata_sha256": "f2bc62a354868c91e51f3bc59fc83278663ccf724314c41cc7dae8dfe75bc65f",
+        "fingerprint": "9a8518b81ff2165ae84350d1a8db67fbc2a55830ad2279c7f1b43e88d2146159"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-18T05:22:11Z"
+      }
     }
   ]
 }
