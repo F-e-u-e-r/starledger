@@ -7664,6 +7664,130 @@
         "prompt_version": "classify-v1",
         "generated_at": "2026-07-18T19:22:36Z"
       }
+    },
+    {
+      "node_id": "R_kgDOQkN95A",
+      "category": "media-creative",
+      "tags": [
+        "desktop-app",
+        "gui",
+        "llm",
+        "plugin"
+      ],
+      "summary": "A Krita plugin that uses a local Ollama LLM such as Gemma to generate, refine, and translate image prompts, then sends them straight into the krita-ai-diffusion Stable Diffusion plugin. It runs fully offline with a dockable panel, voice input, and bilingual English and Chinese output.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "c2893b5d11860c29faf609d41179bf7683ae40fb",
+        "repo_metadata_sha256": "417a61967382000d15fb430acbf7fd9afbfe0142b8a5aa0d62608fe63b577e53",
+        "fingerprint": "97f6529d295c54b4426fef6d30a9c76e14482f8621d9989d7a0de6c95df2ae7f"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-18T20:22:03Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOQlAGiA",
+      "category": "developer-tools",
+      "tags": [
+        "ai-agents",
+        "automation",
+        "documentation"
+      ],
+      "summary": "Vercel's official collection of skills for AI coding agents, following the Agent Skills format. Bundled skills audit Vercel projects for cost and performance, apply React and Next.js best practices, review UI code for accessibility, and check docs against Vercel's writing guidelines.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "daecfea1e60f8f045a3d711c605d70edcdf9d92a",
+        "repo_metadata_sha256": "7f0945eb9bd9ca9b84f35f10f4a39df35e33f2650deff147b9796f2a757a8a0a",
+        "fingerprint": "5177cbacac170bd20d30d394d7eec3a41498dd5d4b6a928ae0b26a49698b2c71"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-18T20:22:03Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOQnMVtQ",
+      "category": "education-reference",
+      "tags": [
+        "awesome-list",
+        "documentation",
+        "llm"
+      ],
+      "summary": "A curated collection of prompt templates for generating presentation slides with NotebookLM and similar tools. Organized by visual style, the prompts help turn papers, notes, and transcripts into clean, structured, presentation-ready decks.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "72b8e767f98d917dd3c126940b9dc5875eb42827",
+        "repo_metadata_sha256": "9c8aa7fbfe39cef2e097b67549a8b169b9d226bb5ddd9f00ae4a0a9cc1f2c0d8",
+        "fingerprint": "18ae7f5d30819825c240a6e823ba00d9d0993d614792ece4086305f590a65563"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-18T20:22:03Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOQngEZw",
+      "category": "productivity-automation",
+      "tags": [
+        "automation",
+        "cli",
+        "productivity",
+        "terminal"
+      ],
+      "summary": "A single-binary Go command-line tool for Google Workspace with task-first commands across Gmail, Calendar, Drive, Docs, Sheets, Slides, and admin. It offers stable JSON and plain output, multiple identities, read-only and agent-safety controls, and a typed MCP server for predictable automation.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "6a8b2472387e81d02bdf7ae4b66c0baf7b65c289",
+        "repo_metadata_sha256": "fd9da27794588ea115eef8765c7ba24087cdf9461c7bbb9adfaed3e9c2282d6b",
+        "fingerprint": "78d3612c071270ab7da46949dada002bed1cdcce4afa4e2cadb2410b7ea8f9dd"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-18T20:22:03Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOQoFz3Q",
+      "category": "other",
+      "tags": [
+        "automation",
+        "bot",
+        "database",
+        "message-queue",
+        "monitoring"
+      ],
+      "summary": "Open-source Polymarket trading infrastructure and strategy reverse-engineering toolkit. It provides Java 21 microservices for automated paper and live execution, market making, and trade ingestion into ClickHouse, with a Redpanda event pipeline, a Grafana and Prometheus monitoring stack, and a quantitative research toolkit.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "bcb496fb0b99cf5b9bb8eccca31faef2f048275d",
+        "repo_metadata_sha256": "9c4fcf83cace3252c82f3a72e6088bb50a44047c27b0804ca8a68053f2765446",
+        "fingerprint": "33a102fef33c10e3146b98bb81818c2b53201600db50a54ea1ec2af5b97e364f"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-18T20:22:03Z"
+      }
     }
   ]
 }
