@@ -10287,6 +10287,133 @@
         "prompt_version": "classify-v1",
         "generated_at": "2026-07-19T16:21:45Z"
       }
+    },
+    {
+      "node_id": "R_kgDORQ8P6g",
+      "category": "devops-infrastructure",
+      "tags": [
+        "dashboard",
+        "logging",
+        "monitoring",
+        "observability",
+        "self-hosted"
+      ],
+      "summary": "Open-source observability platform for traces, logs, and metrics, built on OpenTelemetry and ClickHouse. A TypeScript monorepo pairs a single-page dashboard with an Effect-based backend API, an OTLP ingest gateway, and an alerting worker.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "29a3822d25b7223dc38ae748ca775a7649441a4a",
+        "repo_metadata_sha256": "22d112ef0a35288bc1876c8f211e5c3d51d786bc88d477f3e1aefb4ffa38be5a",
+        "fingerprint": "5c36e7d02219776bba18243a90eccd537958aba2958246c1b6367dae2bcde79c"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-19T17:24:13Z"
+      }
+    },
+    {
+      "node_id": "R_kgDORQePuw",
+      "category": "ai-ml",
+      "tags": [
+        "ai-agents",
+        "automation",
+        "llm"
+      ],
+      "summary": "An experimental autonomous AI agent that runs a continuous think-act-observe loop with access to a Linux sandbox, shell, file I/O, and on-chain transactions. It can modify its own source, spawn child agents, and manages compute through a credit-based survival model.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "0d5dc5b5b6159fd9993687343f7235fab390420e",
+        "repo_metadata_sha256": "7f98a4abcde415dac2e6e60b1d8cc11260a44d6e5f2efbcc11cc694132eafc87",
+        "fingerprint": "3105aa7a54bd52886c9efab97351bb217342386058d2054ffd0f1f43a1284526"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-19T17:24:13Z"
+      }
+    },
+    {
+      "node_id": "R_kgDORQxHDw",
+      "category": "developer-tools",
+      "tags": [
+        "api",
+        "automation",
+        "cli",
+        "dashboard",
+        "orchestration",
+        "scraping"
+      ],
+      "summary": "A standalone Go HTTP server that gives AI agents control over headless Chrome via the Chrome DevTools Protocol. It offers a token-efficient HTTP API, an MCP server, stealth injection, multi-instance orchestration, and a dashboard, defaulting to a local-first security posture.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "b38ab5edd221667e6e5398f76f7cd7b5cc07f33a",
+        "repo_metadata_sha256": "5f2b4358d143e310688f7f4c2db19af5d0d168cf634ff14c6aa6e92e84b036ed",
+        "fingerprint": "45c8bbc3a24d1290d99fde853f93d4e275cf89c9892cced8eb5fb8b5bb3455b3"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-19T17:24:13Z"
+      }
+    },
+    {
+      "node_id": "R_kgDORRCyRw",
+      "category": "developer-tools",
+      "tags": [
+        "ai-agents",
+        "automation",
+        "documentation",
+        "workflow"
+      ],
+      "summary": "A collection of packaged engineering skills and slash commands that guide AI coding agents through the development lifecycle: spec, plan, build, test, review, and ship. Skills encode workflows and quality gates and install into Claude Code, Cursor, Codex, and other agents.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "38c4b1e3c719e20bd6f681574467cefa897fa6a8",
+        "repo_metadata_sha256": "5a748e61b557ffadc5082c2d3d8995c08a17f381027024a0de8ee96d814fba42",
+        "fingerprint": "82b68b4c65afb740283b64b113e581d2e7374ecf88f932eb1ed2267fd0f0666f"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-19T17:24:13Z"
+      }
+    },
+    {
+      "node_id": "R_kgDORRgHdw",
+      "category": "developer-tools",
+      "tags": [
+        "dashboard",
+        "monitoring",
+        "real-time",
+        "self-hosted"
+      ],
+      "summary": "A config-first, file-aware dashboard for monitoring multiple AI agents. It reads OpenClaw agent configuration and each agent's workspace Markdown files to derive agent identity and activity status, and ships as a single HTML file with a minimal Node.js server.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "65c95bcc7364cc9bedbe49b78f7afc04445829fb",
+        "repo_metadata_sha256": "c7a4e21424a8a17c949bc5205a704d72edea35cbe632a3881b2165333cf4b429",
+        "fingerprint": "5f859633de9750a38039a3694041492eab6c5e8c7a3b508068ea4ab53b5ad349"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-19T17:24:13Z"
+      }
     }
   ]
 }
