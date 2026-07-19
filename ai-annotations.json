@@ -311,6 +311,28 @@
       }
     },
     {
+      "node_id": "MDEwOlJlcG9zaXRvcnkxMDQzMzc3NzM=",
+      "category": "education-reference",
+      "tags": [
+        "awesome-list"
+      ],
+      "summary": "A community-curated list of projects built by independent Chinese developers, aggregating apps and websites people make as side projects. Entries are grouped by the date they were added and by contributor, each with a short product description, and new projects are submitted through pull requests or issues.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "8f035a68e5d5261ec40e6a02e96c609d870bf90e",
+        "repo_metadata_sha256": "8a5288d99f5aa141b97543d79a42c361602b618a3b86ca66c382905ee185028c",
+        "fingerprint": "15fd612d059bd95edaa3a9892be98aa47d04cd1e5b722d1d9e326916d667c7c2"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-19T08:22:28Z"
+      }
+    },
+    {
       "node_id": "MDEwOlJlcG9zaXRvcnkxMTE1ODM1OTM=",
       "category": "mobile",
       "tags": [
@@ -472,6 +494,30 @@
       }
     },
     {
+      "node_id": "MDEwOlJlcG9zaXRvcnkxNjk4Mzk4OTM=",
+      "category": "security-privacy",
+      "tags": [
+        "authentication",
+        "documentation",
+        "networking"
+      ],
+      "summary": "An evolving how-to guide for hardening a Linux server, covering SSH key and 2FA setup, restricting sudo and su, application sandboxing, firewall configuration, intrusion detection, and automatic security updates. It aims to explain the reasoning behind each step, not just list the commands.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "5e9de5137a1f6c2647755029b354aa1fd0c6c723",
+        "repo_metadata_sha256": "50f86923df3d0abf686fea33790a6c1f318c3ab432e180c7d78276e0666316eb",
+        "fingerprint": "97b0ad9b32406486d7d5be7c33475db91458a21e31b6cc7202e7b69e40cac99e"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-19T08:22:28Z"
+      }
+    },
+    {
       "node_id": "MDEwOlJlcG9zaXRvcnkxNzAwNjcyNDY=",
       "category": "ai-ml",
       "tags": [
@@ -560,6 +606,28 @@
         "model_label": null,
         "prompt_version": "classify-v1",
         "generated_at": "2026-07-15T12:29:34Z"
+      }
+    },
+    {
+      "node_id": "MDEwOlJlcG9zaXRvcnkyMDgyNzk0MTY=",
+      "category": "education-reference",
+      "tags": [
+        "awesome-list"
+      ],
+      "summary": "A community-maintained list of developer portfolio websites, collected as inspiration for building your own. Entries are organized alphabetically by name and often note the developer’s role or specialty, and new portfolios are added by opening a pull request.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "572738dcf7cf09dce014ceb26a0b39023399afa0",
+        "repo_metadata_sha256": "4bc44781d9daa92e30e282c8ebbc3598da4edfcea1458ae844e86594904bbc2d",
+        "fingerprint": "1760cf90a9944837920dc5c53abfdbe6c32afc4d01daa5622d18fbc517dddef0"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-19T08:22:28Z"
       }
     },
     {
@@ -1819,6 +1887,30 @@
       }
     },
     {
+      "node_id": "R_kgDOJJsuyw",
+      "category": "media-creative",
+      "tags": [
+        "desktop-app",
+        "machine-learning",
+        "plugin"
+      ],
+      "summary": "A local-first application that generates AI subtitles on-device using Whisper and other speech-to-text models, with no cloud or subscription. It runs standalone or connects to DaVinci Resolve, Adobe Premiere Pro, and After Effects, and supports speaker diarization plus transcription or translation across more than 100 languages.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "21233b5601e41e99d10c7a9f00199d64cd0feed9",
+        "repo_metadata_sha256": "4646d25664b32e44d3d39386f6f63fb13898ad20118dad8e9c5cb113ff91a548",
+        "fingerprint": "f89e0351b9d3dd3d7002b75ccacae3fbbbd03dd84ec330d5c8659a546058c631"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-19T08:22:28Z"
+      }
+    },
+    {
       "node_id": "R_kgDOJckNQg",
       "category": "education-reference",
       "tags": [
@@ -1839,6 +1931,26 @@
         "model_label": "informational-only",
         "prompt_version": "classify-v1",
         "generated_at": "2026-07-16T02:22:58Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOJfvKeQ",
+      "category": "other",
+      "tags": [],
+      "summary": "An open-source smart watch built on an STM32 microcontroller with FreeRTOS and the LVGL graphics library. It features low-power sleep and shutdown modes, heart-rate measurement, step counting with an MPU6050, EEPROM data storage, a stack-based screen navigation system, and Bluetooth OTA firmware updates via a bootloader.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "e686b1074000ba32e8403a1a0895a01e3f4f4c30",
+        "repo_metadata_sha256": "734b493bd0c750491e6ea2522c577e528ebc8fa1b85af0d6973149648b5aaee4",
+        "fingerprint": "6196bd557d0ea9411836322eb577ed5f47098a18a8fbf23ebff532ea976912b5"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-19T08:22:28Z"
       }
     },
     {
