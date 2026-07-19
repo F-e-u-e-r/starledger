@@ -8557,6 +8557,130 @@
         "prompt_version": "classify-v1",
         "generated_at": "2026-07-19T02:23:21Z"
       }
+    },
+    {
+      "node_id": "R_kgDOR2y1_A",
+      "category": "ai-ml",
+      "tags": [
+        "ai-agents",
+        "api",
+        "automation",
+        "llm"
+      ],
+      "summary": "Vibe-Trading is a Python personal trading agent that equips an LLM agent with comprehensive trading capabilities, including historical-data loaders, broker connectors, backtesting, and factor analysis. It supports multi-agent quantitative-finance workflows and exposes an API and MCP server.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "7b2d8c789d0af42f8928ceb5b75187308389c5f2",
+        "repo_metadata_sha256": "ee0b67ebac2fa6ff068faf9e32b710dfa1fcafba050dbaf947831ab2c115fce4",
+        "fingerprint": "32adea07029d034dd2596db45a00482d7d2afb0b9ab44f87a97ef2186534dae8"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-19T03:22:48Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOR4-pDw",
+      "category": "developer-tools",
+      "tags": [
+        "ai-agents",
+        "cli",
+        "database",
+        "search"
+      ],
+      "summary": "Graphify is an AI coding-assistant skill that turns a folder of code, SQL schemas, scripts, docs, papers, images, or videos into a queryable knowledge graph. It combines tree-sitter parsing, GraphRAG, and Leiden clustering so assistants can query app code, database schema, and infrastructure together.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "970ebf179a5cedaec668024765a1f0fed3d1a4ef",
+        "repo_metadata_sha256": "987663dafd5a69922afc91b1b39f28f8b5223aa2fb41edf4159c69ca3a606a2e",
+        "fingerprint": "dfa3ff98636a8954df58a0263ba9a3c6d59b245c7cb48cdd36cbe4afe93d3d28"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-19T03:22:48Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOR40_SQ",
+      "category": "developer-tools",
+      "tags": [
+        "ai-agents",
+        "bot",
+        "cli",
+        "proxy"
+      ],
+      "summary": "OpenAB is a lightweight, cloud-native Rust broker that bridges chat platforms such as Discord and Slack to any Agent Client Protocol-compatible coding CLI over stdio JSON-RPC. It stays a thin broker, converging platform adapters on a shared dispatcher and session pool before crossing one ACP boundary to the selected agent runtime.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "a97a527aa06d7fcd3046bf7930dbbaf966cd39e5",
+        "repo_metadata_sha256": "f0db307522eb75c361e31b6b28c20696fbce8fc2eab1b3231be14d4f3367fe59",
+        "fingerprint": "475f75521372204a5eb5f45b3ebbcdffb1eb79b6f93472dc8873de32ea93add7"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-19T03:22:48Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOR50T8g",
+      "category": "productivity-automation",
+      "tags": [
+        "ai-agents",
+        "automation",
+        "cli",
+        "workflow"
+      ],
+      "summary": "Career-Ops turns any AI coding CLI into a job-search command center. It scans job portals, scores listings A-F across five dimensions, generates ATS-optimized tailored CVs, and tracks applications locally, running as a skill inside assistants such as Claude Code, Gemini, Codex, and OpenCode.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "851f390db67c50864dac66ead55e1e5e97fdd4f4",
+        "repo_metadata_sha256": "337edecc567d201b41b32b9c9bf9e322ee6d0ef0397106fca7bed15f5b130208",
+        "fingerprint": "cf945b5d8a3bf5ce4ca1d9db9ff57684b3f1be02015f3cd4f7ad563494f71e17"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-19T03:22:48Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOR5LBqw",
+      "category": "developer-tools",
+      "tags": [
+        "ai-agents",
+        "plugin",
+        "sdk"
+      ],
+      "summary": "The MATLAB Agentic Toolkit gives AI coding agents trusted MATLAB capabilities by automatically installing the MATLAB MCP Server and providing curated skills. It helps agents write idiomatic code, generate and run tests, diagnose errors, and build apps while avoiding hallucinated toolbox functions.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "a763ae55dee8f9e4571288f4e8af58e8b8f61a76",
+        "repo_metadata_sha256": "ad8326deeb06d96c9048b5af07bc93261219f61235e146e6fca8e885294c7146",
+        "fingerprint": "afeb647452f80bae853e3d1770a83b7e41a8cd6759171c13128d48d314b846c1"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-19T03:22:48Z"
+      }
     }
   ]
 }
