@@ -8173,6 +8173,136 @@
         "prompt_version": "classify-v1",
         "generated_at": "2026-07-18T23:25:40Z"
       }
+    },
+    {
+      "node_id": "R_kgDOQzIDZg",
+      "category": "ai-ml",
+      "tags": [
+        "library",
+        "llm",
+        "machine-learning"
+      ],
+      "summary": "A Python library for fine-tuning language, vision, audio, embedding, and OCR models locally on Apple Silicon Macs using Apple's MLX framework. It exposes an Unsloth-compatible API and supports SFT, DPO, ORPO, GRPO, and other training methods, with export to HuggingFace and GGUF formats.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "fa2c1afa25d8970b70ff8c181fb31b024e6d4535",
+        "repo_metadata_sha256": "c3efcee092a2d58644b8f5b40b6e976b79a6d73fc92d91fafa458c0951b44f19",
+        "fingerprint": "22a514d6cdeee9ab16251a0753ca0553650d75ad1234ea57506a6e1402f25bd9"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-19T00:22:44Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOQz_-gA",
+      "category": "media-creative",
+      "tags": [
+        "ai-agents",
+        "automation",
+        "llm",
+        "self-hosted",
+        "workflow"
+      ],
+      "summary": "A full-stack TypeScript platform that automates short-drama video production, using large language models plus image and video generation to turn a script into characters, storyboards, voiceovers, and a finished video. It runs several Mastra AI agents, composes clips with FFmpeg, and can be self-hosted via Docker.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "5a5f50baf759fb292bcce83923d433491089565a",
+        "repo_metadata_sha256": "e333011cdf597c533f7f42a8bda30744f719a8a9abcdaf6485ff548602500c1c",
+        "fingerprint": "f89240c925f7efafb5f09bda6817e2c9c9872994262427080d565690cc387660"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-19T00:22:44Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOQzjEXA",
+      "category": "developer-tools",
+      "tags": [
+        "ai-agents",
+        "automation",
+        "cli",
+        "llm",
+        "orchestration",
+        "workflow"
+      ],
+      "summary": "A workflow engine for Claude Code, built around a Go binary bridge, that turns Claude into a multi-model orchestrator dispatching work to Codex, Gemini, and Grok. It auto-selects among ten strategies by task type, injects state through hooks to survive context compaction, and runs quality gates with dual-model reviews.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "2c7a84080ea21e8bbaebfa21d6425b260120f7f8",
+        "repo_metadata_sha256": "c7f5df90e2e065a9e4577bdfc511b7d34ffd6fb19a3d860f1c4fdca69107b8d0",
+        "fingerprint": "2ea5167ce2e5c49417fdce8c6d6bf7f5dd43db01b92c6312d0bff78e7e9c769c"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-19T00:22:44Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOQzxPKw",
+      "category": "developer-tools",
+      "tags": [
+        "api",
+        "dashboard",
+        "llm",
+        "proxy",
+        "self-hosted"
+      ],
+      "summary": "A local, OpenAI-compatible router that connects AI coding tools such as Claude Code, Cursor, and Cline to more than 40 providers and 100+ models. It adds automatic fallback across subscription, cheap, and free tiers, tracks quota, and compresses tool-result content to reduce token usage, managed from a web dashboard.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "a07dd18cd34b1d5e3da4d332e8f131a3f9eb287f",
+        "repo_metadata_sha256": "3ae9011a393a097ee19e473a2efc9eafe2d6aa741bc1df57c542dbeadf0422a2",
+        "fingerprint": "6ece1feda5ac7682a5783c07ab8688a2c0f526d47b186f26874f6e2997c7e595"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-19T00:22:44Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOR-IkoA",
+      "category": "productivity-automation",
+      "tags": [
+        "automation",
+        "bot",
+        "llm",
+        "monitoring",
+        "notifications",
+        "scraping"
+      ],
+      "summary": "A TypeScript tool that monitors a social-media account's Threads and Facebook posts through Apify, deduplicates new posts, and runs LLM analysis to derive contrarian stock signals that it pushes to Telegram, Discord, and LINE. It supports real-time polling, backtesting against Taiwan stock data, and builds a static signals site.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "62d3b5d16802b2378af0241d797ef823ef6f5bdf",
+        "repo_metadata_sha256": "1c3f33fa6ae0c5046a64af82fbff83543ea6e29fd2539172adb3fdc5f5deb52f",
+        "fingerprint": "c357fdf26332f30e4154082c3ce16bb4c7cecb4bcd1a5432dc11e8c57b111820"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-19T00:22:44Z"
+      }
     }
   ]
 }
