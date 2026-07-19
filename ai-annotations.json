@@ -8434,6 +8434,129 @@
         "prompt_version": "classify-v1",
         "generated_at": "2026-07-19T01:23:10Z"
       }
+    },
+    {
+      "node_id": "R_kgDOR1iJQA",
+      "category": "developer-tools",
+      "tags": [
+        "ai-agents",
+        "cli",
+        "llm"
+      ],
+      "summary": "Unofficial reconstruction of the Anthropic Claude Code CLI TypeScript sources (version 2.1.88), recovered from the published npm package source maps for research purposes only. It contains the restored tools, commands, services, and plugin and skill modules, and is explicitly not the official development repository.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "04e97ab6edc394cdff31b369abd725e92bffb6e5",
+        "repo_metadata_sha256": "a482cf53709fd6932bffa2f6ab13ec5ccb1d04bab25ae8fbcf22c857e0010da6",
+        "fingerprint": "677bf718f955d6b96b0b641863db1e689dd48064882347e42aff46ccf6a2e764"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-19T02:23:21Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOR1kXog",
+      "category": "developer-tools",
+      "tags": [
+        "ai-agents",
+        "cli",
+        "llm",
+        "terminal"
+      ],
+      "summary": "Claw Code is a Rust implementation of the claw command-line agent harness, a terminal-first coding assistant that connects to Anthropic, OpenAI-compatible, and local model backends such as Ollama and llama.cpp, with sessions, tools, and MCP support. It is presented as an agent-maintained exhibit.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "8f41d4ffafd0fc0ff15aea54a665dfc6af5a8dbc",
+        "repo_metadata_sha256": "18e5a4ce17ae8807d4f3be660b6abf6972db3c0653f6a0d9851e9c5c808af2f6",
+        "fingerprint": "39e1df537e2104c1d4c0ad7233948ce62e9c2a32cb272a770e9b7366efd26a5e"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-19T02:23:21Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOR2Chew",
+      "category": "education-reference",
+      "tags": [
+        "ai-agents",
+        "awesome-list",
+        "documentation",
+        "markdown"
+      ],
+      "summary": "A curated collection of DESIGN.md files, plain-text design-system documents extracted from real websites that AI coding agents read to generate UI consistent with a given design language. Each file captures analyzed design patterns, tokens, and rules as markdown for high-quality interface generation.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "766398feac112433a465452f6ca48a92e335d72c",
+        "repo_metadata_sha256": "04805fe12120f77adad2d5ed1ae9e6b3cc690df5706f21a02c44f9d761800e7a",
+        "fingerprint": "f928d723b1dc5357f2d24918dbf40496348ce9ed07dd58757c7253d2dccc8351"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-19T02:23:21Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOR2K4PA",
+      "category": "developer-tools",
+      "tags": [
+        "ai-agents",
+        "automation",
+        "documentation"
+      ],
+      "summary": "A repository of Agent Skills for Google products and Google Cloud, spanning areas such as GKE, BigQuery, IAM, Cloud Run, ads, and analytics. Skills are markdown instruction files, installable through the skills command, that AI coding agents load to carry out tasks against Google technologies.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "a067773e8832daa2ff010a6c78c2d8b3f672d4ca",
+        "repo_metadata_sha256": "7963c1e48792ba1ef032cf429198b4db941254391efad6cafff2736d00f8cc10",
+        "fingerprint": "93fc8db03b9c02ead95d3e940a97effee5c807915d3b798e24e1dad961849808"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-19T02:23:21Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOR2fj6A",
+      "category": "developer-tools",
+      "tags": [
+        "ai-agents",
+        "cli",
+        "llm",
+        "terminal"
+      ],
+      "summary": "OpenClaude is an open-source, terminal-first coding-agent CLI that works across cloud and local model providers, including OpenAI-compatible APIs, Gemini, GitHub Models, Codex, and Ollama. It provides prompts, file and shell tools, agents, MCP, slash commands, streaming output, and a bundled VS Code extension.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "98e5211d23681a11c5f4a827716cddfa7e7d6647",
+        "repo_metadata_sha256": "e5651c57eab4a0463272682b3b3824a2d6c2a3035b6d9d1ed6936f662f2c8190",
+        "fingerprint": "955dcf1bbb39ae52f8b50e0e048fc5d6629a16056f2ba997e7f5f6b00f641bcf"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-19T02:23:21Z"
+      }
     }
   ]
 }
