@@ -9666,6 +9666,129 @@
         "prompt_version": "classify-v1",
         "generated_at": "2026-07-19T11:23:10Z"
       }
+    },
+    {
+      "node_id": "R_kgDORFsgFA",
+      "category": "data-analytics",
+      "tags": [
+        "dashboard",
+        "real-time",
+        "tui",
+        "visualization"
+      ],
+      "summary": "A Python terminal dashboard for Polymarket BTC 15-minute UP/DOWN prediction markets that aggregates Chainlink oracle, Binance, and Polymarket orderbook feeds, computes real-time indicators, logs each market to CSV, and includes backtesting tools for trading strategy research.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "510196bbe6aaf358c79e4207aca0ee504fcb82ef",
+        "repo_metadata_sha256": "87654a0da4549566072707002f5884c9c53bc9031aae0e9ef8b055a467087a6a",
+        "fingerprint": "c3739814b206f8456783d02fe0914fc7fde271db0e03860c834a9b61fead06fb"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-19T12:24:17Z"
+      }
+    },
+    {
+      "node_id": "R_kgDORG3jag",
+      "category": "developer-tools",
+      "tags": [
+        "ai-agents",
+        "cli",
+        "plugin",
+        "workflow"
+      ],
+      "summary": "OMX (oh-my-codex) is a TypeScript command-line tool, installed via npm, that extends the Codex coding agent with hooks, agent teams, HUDs, custom prompts, workflows, and runtime help intended to scale as engineering tasks grow.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "fd494500c447f96bd364967f0dbbe658775e94b6",
+        "repo_metadata_sha256": "93e515d2f7f04fe2434810a97186db958b3519a7f84e5d830778419ad3578fcb",
+        "fingerprint": "310d32f4824640ea39b4ecc0090070f2a6882496630feb5264404aab0dc53b7a"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-19T12:24:17Z"
+      }
+    },
+    {
+      "node_id": "R_kgDORG50zw",
+      "category": "developer-tools",
+      "tags": [
+        "automation",
+        "llm",
+        "scraping",
+        "search"
+      ],
+      "summary": "A Model Context Protocol server built on Node.js and TypeScript that queries Taiwan government e-procurement tenders by scraping the official site with Cheerio and Axios, handling Big5 and UTF-8 encoding and returning formatted listings with bid periods for AI assistants.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "ed0779a162dfb14e0e234c8cf1d26b3b2e675006",
+        "repo_metadata_sha256": "f07c96a941d0ff47a6b794e1cb7613b3df2873d24e8af76a4b02636a213e0676",
+        "fingerprint": "64fad58fd39354376b89288a4386bd1ea1f7148be56242d049abf462b2601f8f"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-19T12:24:17Z"
+      }
+    },
+    {
+      "node_id": "R_kgDORHBdKQ",
+      "category": "developer-tools",
+      "tags": [
+        "llm",
+        "plugin",
+        "visualization"
+      ],
+      "summary": "The official draw.io Model Context Protocol server that lets large language models create and open diagrams in the draw.io editor, offering an inline app server, an npm tool server, assistant plugins, and project-instruction approaches supporting XML, CSV, and Mermaid input.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "bc1858779cb1c20b60ab882e3a3bbe8ca9a65004",
+        "repo_metadata_sha256": "fb814d7a37ea7b4a0120c9d43d5b818786fda1da7e45bdf367796a3b92630d9a",
+        "fingerprint": "9a4dad3e5c58b5d1c591f2fbe60ffbb516c13537098a3b92f6755b918c403213"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-19T12:24:17Z"
+      }
+    },
+    {
+      "node_id": "R_kgDORHkddg",
+      "category": "developer-tools",
+      "tags": [
+        "ai-agents",
+        "cli",
+        "workflow"
+      ],
+      "summary": "A collection of small, composable, model-agnostic agent skills for real software engineering, installable through the npx skills installer onto coding agents, and designed to be easy to adapt and to integrate with GitHub, Linear, or local files for issue tracking.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "8cc79099b6932f274c501e58318db3190fd4662a",
+        "repo_metadata_sha256": "de177b6279c943c3d014c1d217b8407dd1d7ca3efe68b8a4fca49f3f52b7a9ed",
+        "fingerprint": "2aab41d01b2c5d5a366577f336acce8432b34009c9187be5b4b34e67880c895c"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-19T12:24:17Z"
+      }
     }
   ]
 }
