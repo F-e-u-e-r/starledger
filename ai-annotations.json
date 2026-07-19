@@ -10799,6 +10799,133 @@
         "prompt_version": "classify-v1",
         "generated_at": "2026-07-19T20:22:27Z"
       }
+    },
+    {
+      "node_id": "R_kgDORXS4VA",
+      "category": "ai-ml",
+      "tags": [
+        "ai-agents",
+        "cli",
+        "llm",
+        "scraping",
+        "search"
+      ],
+      "summary": "A Python command-line tool that gives AI agents the ability to read and search platforms including Twitter, Reddit, YouTube, GitHub, Bilibili, and XiaoHongShu, handling authentication and access blocks so agents can retrieve web content and transcripts without paid platform APIs.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "717b1fb90e9a8112e7bb06d1cc1a344b0f27f2fc",
+        "repo_metadata_sha256": "ea6fd722fa2a150c0300ed256a4f1819c33be21e771b4464dd370ed01f5acc73",
+        "fingerprint": "c673281d0fe60334b6c101e7ddede560588a7219c6f48e23003d821bcb377cb7"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-19T21:22:04Z"
+      }
+    },
+    {
+      "node_id": "R_kgDORXy93A",
+      "category": "data-analytics",
+      "tags": [
+        "dashboard",
+        "real-time",
+        "visualization"
+      ],
+      "summary": "A TypeScript web application that visualizes Taiwan's real-time transportation and open data on interactive 3D maps, rendering live flights, ships, trains, and buses alongside station, weather, population, and disaster-alert layers with playback of historical trails.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "6fc37d0f70a7c51187376a37d80ab9e2bb489219",
+        "repo_metadata_sha256": "55ddf94fb742e5b573d762cbef8c5632e7ed219f6e4e1e56f84cb4e1fa8dc65d",
+        "fingerprint": "d78b6d0a9b354743dcc2b2c886c88c58aed7777d1ea63c3e0e67c3586db72454"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-19T21:22:04Z"
+      }
+    },
+    {
+      "node_id": "R_kgDORYFOhA",
+      "category": "developer-tools",
+      "tags": [
+        "ai-agents",
+        "cli",
+        "database",
+        "llm",
+        "search"
+      ],
+      "summary": "A code intelligence server that indexes source repositories into a persistent knowledge graph using tree-sitter parsing across many programming languages, exposing sub-millisecond structural queries to AI coding agents through the Model Context Protocol as a single dependency-free binary.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "bb4919ed58bd61ee78d051d5fe5b16c802855afd",
+        "repo_metadata_sha256": "0fed23d6864b344cfa39dcf97199e26b3af9833d2e65f2b358d8e087f2f43663",
+        "fingerprint": "58a0c4e045143efec93d3dadb1d27d2edec987a92d412bbd4044d4db67324702"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-19T21:22:04Z"
+      }
+    },
+    {
+      "node_id": "R_kgDORYHh3g",
+      "category": "ai-ml",
+      "tags": [
+        "ai-agents",
+        "automation",
+        "llm",
+        "orchestration",
+        "workflow"
+      ],
+      "summary": "An open-source agent operating system built in Rust for running autonomous AI agents that work on schedules rather than waiting for prompts, distributed as a single binary with a multi-crate architecture for tasks such as monitoring, building knowledge graphs, and generating leads.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "afffa314c3f47e0d8b0284dabea995e99fbe94c3",
+        "repo_metadata_sha256": "bd42308b8f8ba6bdeac5297e5b368a9b26e35defdc278e1da6d8295ab6c2165c",
+        "fingerprint": "8caca0efedbb548c044cedca2fb44a711fa148283a40b53381ba330bd7426b00"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-19T21:22:04Z"
+      }
+    },
+    {
+      "node_id": "R_kgDORYKHzw",
+      "category": "ai-ml",
+      "tags": [
+        "api",
+        "cli",
+        "llm",
+        "machine-learning"
+      ],
+      "summary": "A Python local AI inference engine optimized for Apple Silicon that serves large language models behind an OpenAI- and Anthropic-compatible API, offering prompt caching, tool calling, and reasoning separation as a drop-in replacement for other local model runners.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "5bb028524273522e673e6577b6484dce914b30f3",
+        "repo_metadata_sha256": "2fd88347acb9bc14fd3aff50a7f0f843b4b006691728174909ec46ba70f057fd",
+        "fingerprint": "9eeeb61f022edda7af4bf24913bad20d6f704d0055efabc579db5e57ecaa395b"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-19T21:22:04Z"
+      }
     }
   ]
 }
