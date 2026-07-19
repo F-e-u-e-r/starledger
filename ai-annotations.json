@@ -9539,6 +9539,133 @@
         "prompt_version": "classify-v1",
         "generated_at": "2026-07-19T10:22:56Z"
       }
+    },
+    {
+      "node_id": "R_kgDORF7NEw",
+      "category": "ai-ml",
+      "tags": [
+        "ai-agents",
+        "automation",
+        "cli",
+        "llm"
+      ],
+      "summary": "A CLI self-evolution engine for AI agents that scans runtime logs and memory, selects reusable Gene and Capsule assets under the GEP protocol, and emits protocol-bound prompts plus auditable evolution events. It integrates with agent runtimes and runs fully offline.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "9deb0e98c5fdbdd5ff8835607ed144f1aaea902e",
+        "repo_metadata_sha256": "f799e8216b7f4838508b5e8c085855e7b8e7b6ceb8f1e5a6f0f082c075f12ba6",
+        "fingerprint": "3f9490b115731ad4d213fa11b52b23ada60ec88adc4fb082716fa7b608ca2a22"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-19T11:23:10Z"
+      }
+    },
+    {
+      "node_id": "R_kgDORF9GhA",
+      "category": "ai-ml",
+      "tags": [
+        "ai-agents",
+        "automation",
+        "cli",
+        "llm",
+        "self-hosted"
+      ],
+      "summary": "A lightweight, self-hosted personal AI agent runtime with a browser WebUI and terminal interface. It connects to chat apps such as Telegram, Discord, and Slack, supports tools, memory, MCP, and model routing, and exposes a Python SDK and OpenAI-compatible API for automations.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "634eb884d34dfa646af6e2b1693fbb88de3b668f",
+        "repo_metadata_sha256": "cccd0da940ecf391545fcd227fd721da988906d9c307fcc822867d1b7208a7c3",
+        "fingerprint": "67dbc9adbeafd1add1ada3b24b69df9f357984a47313d8e0c87220e8918026e6"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-19T11:23:10Z"
+      }
+    },
+    {
+      "node_id": "R_kgDORF9naA",
+      "category": "developer-tools",
+      "tags": [
+        "cli",
+        "dashboard",
+        "desktop-app",
+        "monitoring"
+      ],
+      "summary": "A native Swift macOS menu-bar app that tracks usage of AI coding subscriptions, showing session and weekly limits, credits, and spend for providers like Claude, Codex, Copilot, and Cursor in one popover. It also offers a one-shot CLI and a loopback HTTP API.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "640a3400685302379b268546eeacf6173faf2b8f",
+        "repo_metadata_sha256": "6d732f1fe0b276a9d364a8cca3ce70c967f9beab5736b003b0a6e1dc2445cc66",
+        "fingerprint": "973f80ca3520dfea2cf300ba908cc7a723d7f8e8a19f5d31550b352cfa3e7102"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-19T11:23:10Z"
+      }
+    },
+    {
+      "node_id": "R_kgDORFTiAw",
+      "category": "developer-tools",
+      "tags": [
+        "ai-agents",
+        "automation",
+        "cli",
+        "scraping"
+      ],
+      "summary": "A CLI and MCP server that lets AI agents control your real Chrome browser using your existing login state, reaching many websites through their human interface instead of APIs. It ships community adapters for dozens of platforms and general browser automation commands.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "3706f8137508f4c20a153dddbc2becf799c66fcb",
+        "repo_metadata_sha256": "744a3fcfdf55aa26f637673f3e89e0931d741cb694257123a1b74d5f878c0479",
+        "fingerprint": "866ad1fdf2357399fba02ad9c443cb7bc4c713b91f07c9f875df31c7674cb808"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-19T11:23:10Z"
+      }
+    },
+    {
+      "node_id": "R_kgDORFnVqQ",
+      "category": "ai-ml",
+      "tags": [
+        "ai-agents",
+        "automation",
+        "containers",
+        "llm",
+        "self-hosted"
+      ],
+      "summary": "A lightweight, self-hosted AI assistant that runs each agent in its own isolated Docker container for security. It connects to messaging apps such as WhatsApp, Telegram, Slack, and Discord, supports memory and scheduled jobs, and is built on Anthropic's Claude Agent SDK.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "891ebc0b47045aba55bbe05a30b506f35c027e07",
+        "repo_metadata_sha256": "a3638c654ae87cc1edf7635f31ec4665bdc7f52990af5fa149128d8e36d12fb6",
+        "fingerprint": "352aee943e9bc4994868a2b4060bf5b29fe96167e057c6591e7e6de2ea1663e7"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-19T11:23:10Z"
+      }
     }
   ]
 }
