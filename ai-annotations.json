@@ -2330,6 +2330,32 @@
       }
     },
     {
+      "node_id": "R_kgDOKaSxYQ",
+      "category": "security-privacy",
+      "tags": [
+        "automation",
+        "cli",
+        "networking",
+        "proxy",
+        "self-hosted"
+      ],
+      "summary": "A Shell script suite that installs and configures the sing-box proxy on a VPS. It supports many protocols including Reality, Hysteria2, TUIC, Trojan, Shadowsocks, VMess, VLESS, AnyTLS and ShadowTLS, adds Argo tunnel options, and generates multi-client subscriptions without requiring a domain.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "73e54cd6dc48665ebbbc486103018cbfb37c0c6b",
+        "repo_metadata_sha256": "e5e99b9c7fb63353e0cd099284f6a469fe6c93614ab051531a7d2f0c560d545b",
+        "fingerprint": "1b62e1578376d3060dd3d2e1c22f2ef448713dd1afacd0155c2628c234241791"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-19T09:23:11Z"
+      }
+    },
+    {
       "node_id": "R_kgDOKc_0Jw",
       "category": "ai-ml",
       "tags": [
@@ -2838,6 +2864,32 @@
         "model_label": "informational-only",
         "prompt_version": "classify-v1",
         "generated_at": "2026-07-16T09:22:59Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOLTetxw",
+      "category": "productivity-automation",
+      "tags": [
+        "desktop-app",
+        "gui",
+        "plugin",
+        "productivity",
+        "theme"
+      ],
+      "summary": "A fully customizable desktop environment for Windows 10 and 11 built with Tauri and Rust. It replaces the taskbar, dock and app launcher, adds a tiling window manager and desktop widgets, and offers a CSS/JSON theming engine with plugin widgets, available in over 70 languages.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "9843427b3b73f2dcb5bacc7e4a62a3f4998d029d",
+        "repo_metadata_sha256": "b39bea33d8fb84a5510807007aea6ae4640ea6a29c4e1eb8f686f625ca563fb4",
+        "fingerprint": "72f564a2ce63b2ee4a7f893c1356d3b46d31faf94289b3051d7b82d9ab606330"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-19T09:23:11Z"
       }
     },
     {
@@ -5620,6 +5672,30 @@
       }
     },
     {
+      "node_id": "R_kgDOPJayvA",
+      "category": "media-creative",
+      "tags": [
+        "automation",
+        "desktop-app",
+        "machine-learning"
+      ],
+      "summary": "An open-source cross-platform desktop tool for generating product-marketing and general short videos. It uses AI to write copy from prompts, synthesize voiceovers, batch auto-edit footage, and add subtitles and effects, running locally on Windows, macOS and Linux.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "98f9f8cc81b9e9c9bd69581d970104c5e02662c2",
+        "repo_metadata_sha256": "32d7cb63c39b470e81fa31dd9df2cf5c40bcadc055b9c440e5c7cee20358433f",
+        "fingerprint": "27a85478dcf9742141e2e83a60f7063c52f319f3c8465464993c4e53719a1126"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-19T09:23:11Z"
+      }
+    },
+    {
       "node_id": "R_kgDOPNKIQA",
       "category": "ai-ml",
       "tags": [
@@ -5770,6 +5846,30 @@
         "model_label": null,
         "prompt_version": "classify-v1",
         "generated_at": "2026-07-18T03:23:10Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOPRYubg",
+      "category": "data-analytics",
+      "tags": [
+        "desktop-app",
+        "search",
+        "visualization"
+      ],
+      "summary": "A desktop dataset viewer built with Tauri, React and TypeScript for streaming and browsing very large files. It connects to WebDAV, SSH/SFTP, SMB, S3, local storage and Hugging Face, and previews Parquet, Excel, CSV, JSON, archives and media with fast in-file search.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "e82461c8a8d63bedc264da6622cddfbecd28f1e8",
+        "repo_metadata_sha256": "efdb303f8392defa074b9ce18bed7b9d5156682e3fbbd65c922819738ff636ba",
+        "fingerprint": "ffe34f4dabbce52df125f829410592905c99c291ac9a3114f367db70942095f6"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-19T09:23:11Z"
       }
     },
     {
@@ -6241,6 +6341,30 @@
         "model_label": null,
         "prompt_version": "classify-v1",
         "generated_at": "2026-07-18T07:22:46Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOPsVO8g",
+      "category": "education-reference",
+      "tags": [
+        "ai-agents",
+        "documentation",
+        "llm"
+      ],
+      "summary": "The open-source main repository for the book 'Deep Understanding of AI Agent: Design Principles and Engineering Practice' by Li Bojie. It provides the full Chinese and English text, compiled PDFs, and per-chapter example code on context engineering, memory, tools, coding agents and evaluation.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "a2f6bb1233fc51f52c2b1d0bd2cb755526e426b0",
+        "repo_metadata_sha256": "c2ff3c0d61a9ac3e14754151140607f39c11ac7cedfb2ac136faf1e65909ddb7",
+        "fingerprint": "9659dbce478b41dad302b2e325b975d8a225100b24277f7280ed479254eda530"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-19T09:23:11Z"
       }
     },
     {
