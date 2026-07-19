@@ -9914,6 +9914,123 @@
         "prompt_version": "classify-v1",
         "generated_at": "2026-07-19T13:27:05Z"
       }
+    },
+    {
+      "node_id": "R_kgDORN3Amw",
+      "category": "productivity-automation",
+      "tags": [
+        "ai-agents",
+        "automation",
+        "workflow"
+      ],
+      "summary": "A Claude Code skill for paid-media operations across twelve advertising platforms including Google, Meta, TikTok, and LinkedIn. It turns authorized account data into evidence-backed audits, campaign plans, creative briefs, and versioned JSON reports, staying read-only by default with live account changes gated behind approval, verification, and rollback controls.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "73fa9f837ba43c0f783b57e5cec6310bd554c0c9",
+        "repo_metadata_sha256": "78758c0130ea6fbcfc1d3ea3acd3a52cc6d36201caa00f2ad328ee47b0309765",
+        "fingerprint": "87b066b7a8c05bd6c140213ac81560ad4e3cd09184a55e4cf58c266e321fb5df"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-19T14:22:11Z"
+      }
+    },
+    {
+      "node_id": "R_kgDORNDdaQ",
+      "category": "media-creative",
+      "tags": [
+        "editor",
+        "frontend"
+      ],
+      "summary": "A browser-based video editor for creating product demos and mockups. Users record their screen or upload footage, then add smooth zooms, device frames, 3D camera movement, custom backgrounds, and overlays before exporting up to 4K in MP4, WebM, or GIF. Rendering runs fully in the browser using FFmpeg.wasm and Three.js.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "b2d00534182957f383443fceccd8cbd3093a7670",
+        "repo_metadata_sha256": "78b56ace429400f93e60d947c7f28ceb6e74c139b016bb5bc283dcbe444612fe",
+        "fingerprint": "eeb3cff41a07fa988faa29ac958052c261dcc5b51bc85d893f29fce1f1451ffa"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-19T14:22:11Z"
+      }
+    },
+    {
+      "node_id": "R_kgDORNlLAg",
+      "category": "education-reference",
+      "tags": [
+        "ai-agents",
+        "documentation",
+        "llm"
+      ],
+      "summary": "A Chinese-language tutorial collection covering three AI coding tools: Claude Code, OpenClaw, and Codex. It provides 39 structured guides plus a quick-reference card spanning installation, commands, MCP integration, hooks, subagents, and team workflows, aimed at beginners, developers, and enterprise or academic training.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "7b584b5ccad4f85e9fc1e11c50d30720e0e933ed",
+        "repo_metadata_sha256": "97919ed9fb26bf772c9b24fef94d62fb778e5e7ee352f5f102a84c3eeb177d3b",
+        "fingerprint": "7190e8565e4dc6f64344ec5ac79e005ce8baf0304c8b88d56ddcd582dc9a394c"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-19T14:22:11Z"
+      }
+    },
+    {
+      "node_id": "R_kgDORNt0Vw",
+      "category": "ai-ml",
+      "tags": [
+        "benchmark",
+        "machine-learning"
+      ],
+      "summary": "An open-source image editing foundation model built on PyTorch diffusion methods. It supports instruction-based edits with strong identity consistency, multi-element fusion, portrait makeup, and text style reference, and ships LoRA training code, an optimized inference pipeline, ComfyUI nodes, and the REDEdit-Bench evaluation set.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "3c259f9321d7dd59a35e91393d93c550fd5333d8",
+        "repo_metadata_sha256": "2485930554eb0d21e88b9bf1f4fbeeaad3b1dc12cf24e43b03e9dc921e0f48ee",
+        "fingerprint": "e86a0e2e30487db784cc4c11b070de791f49667687505dd2ac742fab8ac654db"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-19T14:22:11Z"
+      }
+    },
+    {
+      "node_id": "R_kgDORNu2jw",
+      "category": "education-reference",
+      "tags": [
+        "awesome-list",
+        "documentation"
+      ],
+      "summary": "A curated awesome list of resources for software design at the code and component level. It gathers implementation and design patterns, API and interface design guides, architecture decision record templates and tooling, documentation-as-code approaches, architecture verification techniques, operational case studies, and recommended books.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "ff4878f980d8edb119f5d05c9e18f77100c858ec",
+        "repo_metadata_sha256": "2d81150fadc1b7c6cc9f7488cf0f7f6e9162cc2983851461dffa6f9e42e169c0",
+        "fingerprint": "aeb68c362c4bff9fa79266fe6aa4875c4015648bf7031f371c1a353d1e1a7c50"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-19T14:22:11Z"
+      }
     }
   ]
 }
