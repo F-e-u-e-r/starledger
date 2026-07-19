@@ -8681,6 +8681,129 @@
         "prompt_version": "classify-v1",
         "generated_at": "2026-07-19T03:22:48Z"
       }
+    },
+    {
+      "node_id": "R_kgDOR5LKog",
+      "category": "ai-ml",
+      "tags": [
+        "ai-agents",
+        "llm",
+        "search",
+        "vector-database"
+      ],
+      "summary": "Hivemind is a cloud-backed shared memory layer for AI coding agents that captures each session's prompts, tool calls, and responses as structured traces, then mines them for repeated patterns and codifies those into reusable skill files shared across every agent on a team.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "5370dabf30428290e87dfcfe9f6fc82aa954a6d1",
+        "repo_metadata_sha256": "11bf98b38c34a262834b307f9ec51c51c2cdaebead8e124fd76ab3cbf3a36aef",
+        "fingerprint": "0308d2ee8a64c9bd1a3c9376ea5c6989420169a5356e5cdc295992cdd67f01f8"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-19T04:24:40Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOR66oiw",
+      "category": "developer-tools",
+      "tags": [
+        "ai-agents",
+        "automation",
+        "plugin",
+        "workflow"
+      ],
+      "summary": "solopreneur is a family of Claude Code plugins that give solo founders the workflows of a full engineering organization, including plan review, code review loops, and automated PR cycles, plus marketing, design, and platform-specific expert agents installable a la carte.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "f589601cb026cdc392a9f574bd3d681b6882298e",
+        "repo_metadata_sha256": "dad1cb33cd204045eb840ee326330c8674b53297dda320cdc56c248ebb062c7a",
+        "fingerprint": "047f57d7e0096c3863cf556d846afc000e9f9d63d200edaea8dfde7c6df06707"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-19T04:24:40Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOR6DzSw",
+      "category": "ai-ml",
+      "tags": [
+        "ai-agents",
+        "automation",
+        "llm"
+      ],
+      "summary": "Nuwa is an AI agent skill built on the open Agent Skills protocol that distills how a specific person thinks, including their mental models, decision heuristics, and expression style, from just a name, running research, extraction, and validation across many compatible agent runtimes.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "4928a666b42aa08d384270b31c27399103b7e46e",
+        "repo_metadata_sha256": "66c298246d302afe5e5543e90ea03760e85775b0c6e23bf4ba20bbabe68a6b29",
+        "fingerprint": "de48a7d6d75034788c0b34deeaebc017ea0679def3ea79386a653f6a8a793ea0"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-19T04:24:40Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOR6Xyow",
+      "category": "ai-ml",
+      "tags": [
+        "ai-agents",
+        "llm",
+        "search",
+        "self-hosted"
+      ],
+      "summary": "GBrain is a self-hostable knowledge and memory layer for AI agents that adds synthesis, graph traversal, and gap analysis on top of retrieval. It ingests sources such as meetings, emails, and messages, enriches people and companies, and wires into agents like Claude Code or Codex as a shared brain.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "1f87d5883699cb5d47664f207381d774c1cc3837",
+        "repo_metadata_sha256": "805df1135422d81943264923f8fb734e92b3d6b0c50f15bbcd3b7ca3c7938236",
+        "fingerprint": "42c75ea972293d6de6a6bfb432b235da5c6a59857f0302eb953941427dad1bbb"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-19T04:24:40Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOR7t49Q",
+      "category": "media-creative",
+      "tags": [
+        "ai-agents",
+        "desktop-app",
+        "editor"
+      ],
+      "summary": "Palmier Pro is an open source, Swift-native macOS video editor built for AI, letting you and an agent generate and edit videos together inside the timeline. It integrates generative models for creating video and images and connects to agents through MCP.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "e25c03329bfa7ee129e16ed07bbbff8bba194f00",
+        "repo_metadata_sha256": "578f8c02f5ce81cfffd6a68e3a85f970b93c944464606202e6903afbe2f41059",
+        "fingerprint": "9fbbed438fb5f8281f35ee19b16f1f0502a926b5f4e1cc453a0621d11b9bf430"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-19T04:24:40Z"
+      }
     }
   ]
 }
