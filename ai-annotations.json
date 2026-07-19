@@ -10664,6 +10664,141 @@
         "prompt_version": "classify-v1",
         "generated_at": "2026-07-19T19:22:13Z"
       }
+    },
+    {
+      "node_id": "R_kgDORVXPvA",
+      "category": "productivity-automation",
+      "tags": [
+        "api",
+        "automation",
+        "dashboard",
+        "llm",
+        "scraping",
+        "self-hosted"
+      ],
+      "summary": "ClawFeed is a self-hosted, AI-powered news digest that aggregates Twitter, RSS, Hacker News, Reddit, and other sources into structured 4-hourly, daily, weekly, and monthly summaries, with a web dashboard, RSS and JSON feed output, and multi-user Google OAuth support.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "ac22903a91877d852b59e45a2de6200a96facb4e",
+        "repo_metadata_sha256": "55fcb61ffd38393990d801da8dbd8dd6fbc6de47b3d2c600126d24aa3ed3d95c",
+        "fingerprint": "10fb6e6222cca2567a344e414e5b177c5950dec31c525dbb2a8316a163bc913c"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-19T20:22:27Z"
+      }
+    },
+    {
+      "node_id": "R_kgDORW3wCA",
+      "category": "ai-ml",
+      "tags": [
+        "ai-agents",
+        "automation",
+        "dashboard",
+        "llm",
+        "orchestration",
+        "workflow"
+      ],
+      "summary": "Edict is a multi-agent AI orchestration system for the OpenClaw platform, organizing specialized agents after the ancient Chinese Three Departments and Six Ministries structure. It adds an institutional review layer, a real-time Kanban dashboard, per-agent model configuration, and full task audit trails.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "10651bc7b986f299b22195a92b393663370979a2",
+        "repo_metadata_sha256": "47ecd9ebed1c8de9b6076d912f3162df48f476fb7aca11e1ed1f1c04bbc5c320",
+        "fingerprint": "d2ee79e64366f9369b8cf24fd1bdbacdacaa0379943050a3ccd0a877de97b48c"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-19T20:22:27Z"
+      }
+    },
+    {
+      "node_id": "R_kgDORWiFDA",
+      "category": "developer-tools",
+      "tags": [
+        "automation",
+        "cli",
+        "database",
+        "llm",
+        "plugin",
+        "search"
+      ],
+      "summary": "Context Mode is an MCP server that optimizes the context window of AI coding agents. It sandboxes large tool output for up to 98 percent reduction, persists session memory in SQLite with full-text search for continuity across compaction, and enforces tool routing through hooks across 17 platforms.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "b796169524473691594af24995d21ca94027f7c7",
+        "repo_metadata_sha256": "813ac09fde171d64f0bbdc4d51ae70b85f97458158d74042003bace69aa9890b",
+        "fingerprint": "b5621e99dfc977c08bc3c7cc739a3c68b1c4c40b38b643c001ac03f74448c2a0"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-19T20:22:27Z"
+      }
+    },
+    {
+      "node_id": "R_kgDORWpKiA",
+      "category": "media-creative",
+      "tags": [
+        "cli",
+        "desktop-app",
+        "editor",
+        "gui",
+        "machine-learning",
+        "plugin"
+      ],
+      "summary": "PaintFE is a fast, lightweight open-source raster image editor built in Rust and shipped as a single portable executable. It offers layers, 25 blend modes, GPU-accelerated filters, brushes, selection tools, mesh warp, animated GIF and APNG export, an embedded Rhai scripting engine, a CLI batch mode, and local ONNX background removal.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "17d05ca2aec33bba7b6366c75201e6e2c0cd0d38",
+        "repo_metadata_sha256": "3321edea0db1519e81dd3d0ce11c84aaffd62cee8321e0e268c33319c4540fa2",
+        "fingerprint": "25486202ac95d0aa6c6e32a3085dd6e89d5645cc7b414634915489ed5e65116c"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-19T20:22:27Z"
+      }
+    },
+    {
+      "node_id": "R_kgDORXFZgQ",
+      "category": "ai-ml",
+      "tags": [
+        "ai-agents",
+        "api",
+        "automation",
+        "llm",
+        "plugin",
+        "workflow"
+      ],
+      "summary": "Claude for Financial Services provides reference AI agents, skills, and MCP data connectors for investment banking, equity research, private equity, and wealth management workflows. Each agent installs as a Claude Cowork or Claude Code plugin and can also deploy through the Claude Managed Agents API.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "a48f5be80387891bf9550f5c2de1984cdcb35ae4",
+        "repo_metadata_sha256": "c3ed87442152a949d81f41d5c18886f708c962eb52a6ea8cf755b04875ebef20",
+        "fingerprint": "325ad870c3378ca44edf055e895941154017bca6eab49ddc19b2d096485df5d3"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-19T20:22:27Z"
+      }
     }
   ]
 }
