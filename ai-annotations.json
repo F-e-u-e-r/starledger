@@ -10414,6 +10414,126 @@
         "prompt_version": "classify-v1",
         "generated_at": "2026-07-19T17:24:13Z"
       }
+    },
+    {
+      "node_id": "R_kgDORSeX5w",
+      "category": "developer-tools",
+      "tags": [
+        "dashboard",
+        "monitoring",
+        "self-hosted"
+      ],
+      "summary": "A lightweight self-hosted web dashboard for monitoring OpenClaw bots, agents, models, and sessions at a glance. It reads local OpenClaw configuration and session files with no database, presenting bot overviews, model lists, session and token statistics, gateway health, configurable alerts, and an animated pixel-art office view.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "763dd4b19746a55f00a55ef2967c638462d66883",
+        "repo_metadata_sha256": "936ace136fd74f77c3435066804722e75563c34eed49f95678693088bfadf797",
+        "fingerprint": "66af03a86c78de5430ade0ade5a335d51caa18690873b1b4a637fb3ce657350c"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-19T18:22:36Z"
+      }
+    },
+    {
+      "node_id": "R_kgDORT1v6Q",
+      "category": "developer-tools",
+      "tags": [
+        "ai-agents",
+        "cli",
+        "llm"
+      ],
+      "summary": "Edda is a local-first, hash-chained memory ledger for AI coding sessions that captures each decision and its rationale and injects prior decisions into the next session. It works with Claude Code, Cursor, Codex, and other MCP clients through a CLI and hooks, with a deterministic core and optional LLM assist for session digests and decision extraction.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "b3bb65b7f30700804d69c5c2e9cd4bc2f221924f",
+        "repo_metadata_sha256": "20e1848bda6c64afa5e3b9093047a670ca2b80d87a49953624f3113041781f19",
+        "fingerprint": "3c206b313482ead2e096c2cdb17665257e1cae8a6af05a9152b342e22d4d63ec"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-19T18:22:36Z"
+      }
+    },
+    {
+      "node_id": "R_kgDORTPY3g",
+      "category": "ai-ml",
+      "tags": [
+        "ai-agents",
+        "automation",
+        "workflow"
+      ],
+      "summary": "OpenAlice is a local trading workspace that turns coding agents into trading agents by giving them workspaces, markdown issues, tracked entities, an inbox, market data tools, and approval-gated trading primitives across equities, crypto, commodities, forex, and macro. It is experimental software and is not intended for live trading with real funds.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "2c486e761f8172c5dd85e8b9920de4925c3e3cd6",
+        "repo_metadata_sha256": "42570b5e6259f48c2acbbf562720a2165990fcad2f0c9ad7a16da220bce80cb2",
+        "fingerprint": "3fba29b4d874b9f2c0a2abd03a5a1eb003c39af220ab3616fa64cdb7ff62fefb"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-19T18:22:36Z"
+      }
+    },
+    {
+      "node_id": "R_kgDORTXxrg",
+      "category": "ai-ml",
+      "tags": [
+        "ai-agents",
+        "llm",
+        "orchestration"
+      ],
+      "summary": "OpenHuman is a local-first personal AI system that builds a memory of a user's life, orchestrates fleets of agents and workflows, and performs deep research. Described by its authors as a personal AI brain that is simple and powerful, it is in early beta and under active development.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "807a504396667d9c18f728f0488caeb14ebddfef",
+        "repo_metadata_sha256": "9f276d5eda09caa5cf80ecb2001fc1b62bfba2698e73b38b5d888220fd36b8e0",
+        "fingerprint": "0707b7e04d86c3a369fd2a24ce64bd1bfc9f6ea491536d43339cc4d1143b46f8"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-19T18:22:36Z"
+      }
+    },
+    {
+      "node_id": "R_kgDORTexcw",
+      "category": "developer-tools",
+      "tags": [
+        "cli",
+        "llm",
+        "plugin"
+      ],
+      "summary": "Lossless Claw is a Lossless Context Management plugin for the OpenClaw coding agent. It replaces the built-in sliding-window compaction with a DAG-based summarization system that persists every message in a SQLite database while keeping the active context within the model token limits, and it ships with a session migration CLI.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "39b84543e3f0729561f49d0f001d30aec40b9205",
+        "repo_metadata_sha256": "d3f68e1a4281351ce621a792d0b0ee035d8362b537d49950ff7219e97793fa8c",
+        "fingerprint": "2b4d05ae4751ee1b39dd429e2b4d83c39cc2831e3df2351eb89d0993566b1d21"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-19T18:22:36Z"
+      }
     }
   ]
 }
