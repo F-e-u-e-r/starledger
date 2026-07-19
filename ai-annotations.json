@@ -10926,6 +10926,134 @@
         "prompt_version": "classify-v1",
         "generated_at": "2026-07-19T21:22:04Z"
       }
+    },
+    {
+      "node_id": "R_kgDORYbbXA",
+      "category": "ai-ml",
+      "tags": [
+        "ai-agents",
+        "automation",
+        "llm",
+        "observability",
+        "orchestration"
+      ],
+      "summary": "An agent-first framework that connects Claude Enterprise MCP data connectors with a trading pipeline. It turns natural-language trading ideas into deterministic if-else strategy trees, backtests them against historical data for Sharpe ratio, max drawdown and win rate, and outputs signals only, never executing real trades. A multi-agent orchestrator runs strategies in parallel.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "e82c00f6dea6404faa6a86bed5958e558892b2aa",
+        "repo_metadata_sha256": "5ed2190864e043dd99ed7b8bcf7e19545e299153f684cbab2a14ebea5e9610df",
+        "fingerprint": "07c3786856d5daf10b698a5ea993dc29c4cb81be49abf7971c7f84fdc68b41ff"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-19T22:23:44Z"
+      }
+    },
+    {
+      "node_id": "R_kgDORYpFTw",
+      "category": "developer-tools",
+      "tags": [
+        "ai-agents",
+        "automation",
+        "code-generation",
+        "frontend",
+        "static-site-generator"
+      ],
+      "summary": "A Claude Code skill that generates a full knowledge-learning website for any topic from a single sentence: the AI researches the subject, writes core knowledge points and copy, builds pages from a minimal design system, and one-click deploys to Vercel. Generated sites include flashcards, progressive lessons, quizzes, a search index and progress tracking, with PWA and SEO support.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "7fecae4b55e30d1ffb39abec015a2517a0f1dd4d",
+        "repo_metadata_sha256": "7790c6bde420796e47ea4819df5aad4718d67e0698db282ad154d8e8a44d03f2",
+        "fingerprint": "71350ff3c51063e4d8f4f8d9b700bc0511eb87aef3b3881a27afc84d97f3a415"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-19T22:23:44Z"
+      }
+    },
+    {
+      "node_id": "R_kgDORZI0Lw",
+      "category": "web-applications",
+      "tags": [
+        "ai-agents",
+        "dashboard",
+        "desktop-app",
+        "real-time",
+        "self-hosted",
+        "visualization"
+      ],
+      "summary": "A pixel-art office dashboard that visualizes an AI assistant's work state in real time, mapping six work states to areas of a cozy virtual office. It supports multi-agent collaboration via join keys, Chinese/English/Japanese interfaces, AI image-based redecoration, a Flask backend, and an optional Electron desktop-pet mode. It integrates with OpenClaw but can also run standalone.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "de6ead6a80e2769693ecce1d14f1b33842f8b45b",
+        "repo_metadata_sha256": "4927335e4fae4037ee5811ecd04430b38177627211f62985ff01f8e8fd101e63",
+        "fingerprint": "2307770b55f55633754f970efc45034a0e5bc52412b9e7d2d131876e6b0f9501"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-19T22:23:44Z"
+      }
+    },
+    {
+      "node_id": "R_kgDORZbd0w",
+      "category": "developer-tools",
+      "tags": [
+        "automation",
+        "cli",
+        "testing"
+      ],
+      "summary": "A command-line tool that boots a virtual iPhone running iOS 26 on macOS using Apple's Virtualization.framework and PCC research VM infrastructure. It handles firmware download and patching, custom-firmware install with several security-bypass variants, and VM backup and switching, and exposes a host control socket for screenshots and touch injection to support AI-driven end-to-end testing.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "9c4f7a66e47bafc3c9cbfebf66ca5028bcac1ae4",
+        "repo_metadata_sha256": "23cb31e4660c124a318827b13c5a530731dd13bc74c078d52060de6817948600",
+        "fingerprint": "9eb0eecf11a5f397a68a326d6b83026e6e92a83ebb3a67a7cda29a2bd08daf59"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-19T22:23:44Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOR_ZEBA",
+      "category": "productivity-automation",
+      "tags": [
+        "api",
+        "authentication",
+        "automation",
+        "self-hosted"
+      ],
+      "summary": "A tool for ChatGPT Team accounts that automates seat rotation and credential sync: it registers accounts, obtains Codex authentication, rotates seats by remaining quota, and syncs credentials to CLIProxyAPI or Sub2API. It provides a web panel plus API, OAuth import, scheduled quota inspection, and Docker deployment for self-hosting.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "f11d3ad6915724f4506ea3410de8f0a8227a593f",
+        "repo_metadata_sha256": "b77c7d3c492a418cfaede760bcbcb17eb3dc92ebf5d608d08c8c91202fee7baf",
+        "fingerprint": "580e1ce7a9765117e49fca0cb5b3a7fd99650afff39f614e82c8692790b94905"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-19T22:23:44Z"
+      }
     }
   ]
 }
