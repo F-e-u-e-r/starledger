@@ -10534,6 +10534,136 @@
         "prompt_version": "classify-v1",
         "generated_at": "2026-07-19T18:22:36Z"
       }
+    },
+    {
+      "node_id": "R_kgDORUMLDw",
+      "category": "developer-tools",
+      "tags": [
+        "ai-agents",
+        "cli",
+        "dashboard",
+        "desktop-app",
+        "search",
+        "self-hosted"
+      ],
+      "summary": "A local-first Go tool to browse, search, and track token usage and costs across AI coding agent sessions from Claude Code, Codex, and more than 20 other agents. Ships as one binary with a CLI, web UI, desktop app, and local SQLite storage.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "7281609482c5e3fec1766a805ba0990226280fd1",
+        "repo_metadata_sha256": "1a56cf25941a81066b82f3cc98e28c684463771c43d24cf683fc594dd5c25247",
+        "fingerprint": "8e1f8db3c6007e3cf65288160f4112296df4ccd3aaffecb0916d763f64c51540"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-19T19:22:13Z"
+      }
+    },
+    {
+      "node_id": "R_kgDORUQ5bw",
+      "category": "developer-tools",
+      "tags": [
+        "ai-agents",
+        "code-generation",
+        "frontend",
+        "plugin"
+      ],
+      "summary": "A collection of portable agent skills that guide AI coding assistants such as Claude Code, Codex, and Cursor to build stronger frontend interfaces, improving layout, typography, motion, and spacing, plus image-generation skills for reference boards.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "cb3032fd05a3735787015817cc5e7d88f1eec3b8",
+        "repo_metadata_sha256": "d63f8b4b53c8a2fac09946572bbed13987ac52892f2c46758c123699d1b4fb48",
+        "fingerprint": "f31c5a1bd1f6039aeb24a75cabde2e3148018526a8915a6dc1e11367e49b1139"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-19T19:22:13Z"
+      }
+    },
+    {
+      "node_id": "R_kgDORUgjXg",
+      "category": "ai-ml",
+      "tags": [
+        "ai-agents",
+        "networking",
+        "plugin",
+        "real-time",
+        "rest-api"
+      ],
+      "summary": "An OpenClaw plugin implementing the Agent-to-Agent (A2A) protocol v0.3.0 as a gateway for bidirectional communication between AI agents across servers, with JSON-RPC, REST, and gRPC transports, automatic peer discovery, adaptive routing, and circuit-breaker resilience.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "7f1dd7eb418a315ee68c4bb04a463c4c378f6659",
+        "repo_metadata_sha256": "3aaf2901035f34b5b7185f25f464cf951e27b26d8e8afa5069457062ae71a2ee",
+        "fingerprint": "14b13b93b69a0335aad3b0613757700fc1e932d9fb9bbe8e0180eb61d4b92394"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-19T19:22:13Z"
+      }
+    },
+    {
+      "node_id": "R_kgDORUj52g",
+      "category": "productivity-automation",
+      "tags": [
+        "automation",
+        "bot",
+        "llm",
+        "notifications",
+        "self-hosted",
+        "static-site-generator"
+      ],
+      "summary": "A self-hosted, AI-powered news aggregator that fetches, deduplicates, scores, and enriches stories from Hacker News, Reddit, Telegram, RSS, and GitHub, then generates daily English and Chinese briefings delivered via a static site, email, and chat webhooks.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "186217768d88ff77ffcbe76ee5fa343018c8f72a",
+        "repo_metadata_sha256": "8d041bdb6231b3c414ad95b4230f0c4240606acd53a0d6e99cae9a9b06b36b05",
+        "fingerprint": "52b9a206074b30f24618b8f96977fa7bdfbbf55881b67a3ae482f0c4d96dd797"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-19T19:22:13Z"
+      }
+    },
+    {
+      "node_id": "R_kgDORV6yrg",
+      "category": "developer-tools",
+      "tags": [
+        "automation",
+        "library",
+        "scraping",
+        "testing"
+      ],
+      "summary": "A stealth Chromium browser with source-level C++ fingerprint patches offered as a drop-in Playwright and Puppeteer replacement for Python, JavaScript, and .NET, aiming to pass automated bot-detection and CAPTCHA checks during browser automation and web scraping.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "d8d6d7748131c0ee86dbdd367e271b210f5c4420",
+        "repo_metadata_sha256": "a93dd611424ef90c0016b569740a67689175059d0cb3130ef3cbfa3e5c26759b",
+        "fingerprint": "b769c88846a1d43479557f4c4ccd244f69d3c5ec0c77ea9392443bd4565bcaa8"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-19T19:22:13Z"
+      }
     }
   ]
 }
