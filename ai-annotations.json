@@ -8804,6 +8804,135 @@
         "prompt_version": "classify-v1",
         "generated_at": "2026-07-19T04:24:40Z"
       }
+    },
+    {
+      "node_id": "R_kgDOR887hg",
+      "category": "education-reference",
+      "tags": [
+        "ai-agents",
+        "documentation",
+        "llm",
+        "machine-learning",
+        "visualization"
+      ],
+      "summary": "A Claude Code skill that distills Professor Hung-yi Lee's machine-learning lectures into a 916-node knowledge graph and teaching-style guide, letting an AI assistant explain topics like attention or DeepSeek-R1 in his intuition-first structure, calibrated against a real interview with him.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "4e49f1b35e652fac000bd55731734d1060f22d70",
+        "repo_metadata_sha256": "c795fcf92372b079f49df7f983c8f94caeefbda00d654da18374de2d082766c3",
+        "fingerprint": "165b4eb530b2fc9975084521bf0717d59693df8f5fd1d81209e1f93b233f9909"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-19T05:22:08Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOR8ntig",
+      "category": "ai-ml",
+      "tags": [
+        "ai-agents",
+        "automation",
+        "benchmark",
+        "cli",
+        "llm",
+        "plugin"
+      ],
+      "summary": "Webwright is a minimal browser-agent framework where a coding agent uses a terminal to write and run Playwright scripts, treating web tasks as re-runnable code instead of step-by-step actions. It reports state-of-the-art results on long-horizon web benchmarks and ships as a Claude Code and Codex plugin.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "891bbd7dbdd564e6168a9738c5bb32e619e9168c",
+        "repo_metadata_sha256": "6912ae620aeafad3692e8277c2f9eceaaf8f6e382a6c8794aeba9b4e747b006e",
+        "fingerprint": "5d5e41e56ac7495a30b27c9be5c51d82463c1d35aa33ab8a320123d17bfa55e6"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-19T05:22:08Z"
+      }
+    },
+    {
+      "node_id": "R_kgDORA0Gfg",
+      "category": "education-reference",
+      "tags": [
+        "ai-agents",
+        "awesome-list",
+        "documentation"
+      ],
+      "summary": "A curated awesome list of thousands of community-built OpenClaw skills, sourced from the ClawHub registry and organized by category such as coding agents, browser automation, and DevOps, to help users discover and install skills, with notes on vetting sources for security.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "5d18f068eed849b244c63c73f4ae0f4cfcd8a67a",
+        "repo_metadata_sha256": "d0c05cd86e69b8637d6707e44d224e795d7cb8a2aa7221747a65c82cdcefd565",
+        "fingerprint": "a470de48651e31d9b1e7e1b14281619f304e8734c7bb2f42639e6b012f426507"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-19T05:22:08Z"
+      }
+    },
+    {
+      "node_id": "R_kgDORA42tg",
+      "category": "media-creative",
+      "tags": [
+        "ai-agents",
+        "api",
+        "desktop-app",
+        "llm",
+        "machine-learning",
+        "self-hosted"
+      ],
+      "summary": "Voicebox is an open-source, local-first AI voice studio for macOS, Windows, and Linux that clones voices, generates speech across seven TTS engines in 23 languages, dictates into any app with Whisper, and lets MCP-aware agents speak through a built-in REST and MCP server.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "34ef1c0c8d37ea17406bac396bffe7b8ae6b83e3",
+        "repo_metadata_sha256": "3f31b9686c2dc194ef2bf79e0eebe66e4a3b3ffc03e20088094d59254a044a3c",
+        "fingerprint": "c3dfb8d9e9bb44258009cc2f61fc75546d5ff6e2b7fec8ed368efed5ff0f1e2a"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-19T05:22:08Z"
+      }
+    },
+    {
+      "node_id": "R_kgDORA9Mpw",
+      "category": "productivity-automation",
+      "tags": [
+        "ai-agents",
+        "automation",
+        "cli",
+        "scraping"
+      ],
+      "summary": "A Claude Code skill that turns many content sources such as WeChat articles, web pages, YouTube, podcasts, PDFs, EPUB, and Office files into podcasts, slide decks, mind maps, quizzes, and reports by fetching the content and generating outputs through Google NotebookLM.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "1576aa2def6ceedf6b7603a191cfd87bda0293e5",
+        "repo_metadata_sha256": "cc5e861b027e3e6393c83f8124d5abdb9b446d8e53477886a585e2fb1a7d3170",
+        "fingerprint": "0505defdebfaa25763c4b90e1f6cfb81d31f7e4aa8764ffa4b8718575f94a2b1"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-19T05:22:08Z"
+      }
     }
   ]
 }
