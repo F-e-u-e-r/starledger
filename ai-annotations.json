@@ -9059,6 +9059,122 @@
         "prompt_version": "classify-v1",
         "generated_at": "2026-07-19T06:22:19Z"
       }
+    },
+    {
+      "node_id": "R_kgDORCrvwg",
+      "category": "data-analytics",
+      "tags": [
+        "library"
+      ],
+      "summary": "Polars-native Python platform for quantitative alpha research and systematic trading. It provides 72 Rust-backed factor operators for time-series and cross-sectional computation, using a column-based panel model that keeps every symbol on a shared timestamp index, prevents look-ahead bias by construction, and normalizes missing values to a single null type.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "8b83a005290e9c8d9db668c2fe6600fb54f66533",
+        "repo_metadata_sha256": "4f85b3cb167456a85b952fc81f57ec66b7b7a1418d37c96eaeb82d60bc724c9e",
+        "fingerprint": "fc945d39239aaec15c161838c903cd1dcc55d5b07be224b4adf59a68c06a15a7"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-19T07:24:18Z"
+      }
+    },
+    {
+      "node_id": "R_kgDORD4i-A",
+      "category": "developer-tools",
+      "tags": [
+        "automation",
+        "cli"
+      ],
+      "summary": "A command-line tool that hooks into Claude Code's SessionEnd event to generate a receipt for each coding session. It breaks down spend by model along with token counts and can render the result as a styled HTML page, ASCII console output, or a printout on a compatible thermal receipt printer.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "77e84c2f4549db7c5730cf7750ef1deaf04b9351",
+        "repo_metadata_sha256": "05fd36d1f1d52fa09da6d1fe598ba5950b01544d19406c9bcbe059026dcb50b9",
+        "fingerprint": "af8acef57f3cf08f1a1d0787cb611f29b01d38fea46f561199ad09c1acde67b0"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-19T07:24:18Z"
+      }
+    },
+    {
+      "node_id": "R_kgDORDHQWA",
+      "category": "developer-tools",
+      "tags": [
+        "ai-agents",
+        "desktop-app",
+        "notifications",
+        "terminal"
+      ],
+      "summary": "An open-source, Ghostty-based macOS terminal built for working with AI coding agents. It offers vertical and horizontal tabs, notification rings that highlight panes and tabs when agents need attention, a scriptable in-app browser, and a sidebar showing git branch, linked pull request status, working directory, and listening ports.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "8065e5f5d0cce0ed54cc3a4cd455d345e94b0bb7",
+        "repo_metadata_sha256": "5001f48cb3f23361147bfbd938cc9f0b0a2fe37e0530f3c0ed7910f2e8e32f62",
+        "fingerprint": "c79f5b534352d031237dfae15c3ff16794d36d8d30246e7421ab34346640b5f7"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-19T07:24:18Z"
+      }
+    },
+    {
+      "node_id": "R_kgDORDhBEA",
+      "category": "other",
+      "tags": [
+        "configuration"
+      ],
+      "summary": "A personal dotfiles repository that stores the author's own environment configuration files. The repository provides no description or documentation beyond its title, and its primary listed language is GLSL.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "27ef622f06045c5a8051d3b24b7a1526180ed5a1",
+        "repo_metadata_sha256": "027967f7413a9f20e9309f264346e56a082dec5b6b2efe6d1393b1e3ecf79bd3",
+        "fingerprint": "1525b9b9e221960628302ce09c69fe7febf9f8196b325efac8050fa9f6a30233"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-19T07:24:18Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOREUIYg",
+      "category": "productivity-automation",
+      "tags": [
+        "desktop-app",
+        "gui",
+        "productivity"
+      ],
+      "summary": "Thaw is a menu bar management tool for macOS 26 and 27, forked from the Ice project to keep it maintained. Its primary function is hiding and showing menu bar items, and it aims to add further features to become a versatile menu bar utility. It is built with SwiftUI and installable via direct download or Homebrew.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "40b50aa3db313743bc341c5ea1fced0273fbc4ff",
+        "repo_metadata_sha256": "b14d698de53e2feb360fd64480bef9b8e2ee8a9788802d739a7a1c9bba9f9cc6",
+        "fingerprint": "2d1fd23d7f000151764ffd9d64857b69b170e76dd0e7dabe51aaa0dd70991452"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-19T07:24:18Z"
+      }
     }
   ]
 }
