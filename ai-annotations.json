@@ -8303,6 +8303,137 @@
         "prompt_version": "classify-v1",
         "generated_at": "2026-07-19T00:22:44Z"
       }
+    },
+    {
+      "node_id": "R_kgDOR-__Qg",
+      "category": "ai-ml",
+      "tags": [
+        "ai-agents",
+        "api",
+        "backend",
+        "database",
+        "search"
+      ],
+      "summary": "An MCP server written in Python with FastMCP that lets any MCP-compatible AI assistant query Taiwan's public legal data. It exposes eight read-only tools covering Judicial Yuan court judgments, the national regulations database of over 11,700 laws, and Constitutional Court interpretations with an offline cache.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "403eea6bb3b86d6d90ba695bfa713d5d0b942fff",
+        "repo_metadata_sha256": "477dc992c007ec1588ec4cd0e06f9e6d032d4fe70f4fad38c651f13310da6b01",
+        "fingerprint": "1aba91d22b6e593c94a2359a725f566d140cd4ffe1549cda400f3a4cc34612a4"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-19T01:23:10Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOR-gPKw",
+      "category": "media-creative",
+      "tags": [
+        "api",
+        "desktop-app",
+        "gui",
+        "machine-learning",
+        "real-time",
+        "self-hosted"
+      ],
+      "summary": "OmniVoice Studio is an open-source, fully local alternative to ElevenLabs for voice work. It runs zero-shot voice cloning, text-to-speech, video dubbing, dictation, and audiobook creation on your own machine across many languages, bundling multiple TTS and ASR engines behind a desktop app with a FastAPI backend.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "a70e2ae55d217188ee5145dfb7af89ccf872de0b",
+        "repo_metadata_sha256": "e75f7cf817ff3b51a4c02f22a41da82c60511e54f6f5bb2cde694250b5095dff",
+        "fingerprint": "e9316880ba64b1564af2a1a7dc9b820cc4e7144be4dfdfb9d537cad714c43862"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-19T01:23:10Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOR-lJvg",
+      "category": "communication-collaboration",
+      "tags": [
+        "ai-agents",
+        "database",
+        "real-time",
+        "self-hosted",
+        "serverless"
+      ],
+      "summary": "A self-hosted email client that runs entirely on Cloudflare Workers, using Email Routing for delivery, a per-mailbox Durable Object with SQLite for storage, and R2 for attachments. A built-in AI agent can read the inbox, search conversations, and draft replies, always requiring confirmation before sending.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "e1e2eb724d621480fdb6d7f7d17d848ee9fcfbd7",
+        "repo_metadata_sha256": "2e576652d18c02786f46cc20ecbda27a3367977dbd548dd6ebfe0fe113ecbf0a",
+        "fingerprint": "d3d6c8a9140a65c4a4334c1d55489f6d3c09caeeebf5c6795e2a3abfd7fb740a"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-19T01:23:10Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOR05pig",
+      "category": "developer-tools",
+      "tags": [
+        "ai-agents",
+        "automation",
+        "cli",
+        "code-generation",
+        "plugin"
+      ],
+      "summary": "A Claude Code plugin from OpenAI that lets you run Codex from inside Claude Code to review code or delegate tasks. It adds slash commands for read-only and adversarial code reviews, delegating work, transferring sessions, and managing background jobs, wrapping the local Codex CLI and app server.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "937a3037b3fe6716f01b755d798255361af7287e",
+        "repo_metadata_sha256": "cf6c942e68ef223539fc6201162d5401b5a38f10c8a1569260bb5888e68538ff",
+        "fingerprint": "a2d1c2a068c82dd352644ec2f0a986028cfbd1dd98a16255162bbd1593dd9106"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-19T01:23:10Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOR0bkcQ",
+      "category": "ai-ml",
+      "tags": [
+        "ai-agents",
+        "automation",
+        "cli",
+        "llm",
+        "plugin"
+      ],
+      "summary": "dot-skill is a skill engine for AI agent hosts such as Claude Code and Codex that distills a person, a colleague, relationship, or public figure, into a reusable AI Skill from source material like chat logs, documents, or transcripts. The generated Skill aims to reason and speak in that person's frame and voice.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "756b013593f368dd2870a9811c7cd67627e55bae",
+        "repo_metadata_sha256": "900a860ad71bc718cf8a4d78e7132ad0f763f8027bbd53912e7eb45929a853cf",
+        "fingerprint": "4371271f30d0f81157978d8d688c7061891721db4df9344b593e2da1ccbae508"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-19T01:23:10Z"
+      }
     }
   ]
 }
