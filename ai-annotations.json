@@ -10031,6 +10031,135 @@
         "prompt_version": "classify-v1",
         "generated_at": "2026-07-19T14:22:11Z"
       }
+    },
+    {
+      "node_id": "R_kgDORO04Rg",
+      "category": "media-creative",
+      "tags": [
+        "automation",
+        "cli",
+        "llm",
+        "plugin"
+      ],
+      "summary": "A Claude Code custom skill that turns Claude into a video prompt engineer for ByteDance's Seedance 2.0 platform. From a natural-language idea it generates structured, production-ready Chinese prompts covering text-to-video, reference control, timestamp storyboarding, sound design, and multi-segment stitching.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "1a47a6af2ba8e589bd6b781ea54e56857e523e48",
+        "repo_metadata_sha256": "93840de2600d646f0384e08d7028dba03f21563642d27e39759745ed9a517ed6",
+        "fingerprint": "4f9f2b3af5ca44dcc347e7cf81295efac3cc31e4648677bb47728d921443cf67"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-19T15:21:59Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOROahWg",
+      "category": "developer-tools",
+      "tags": [
+        "ai-agents",
+        "automation",
+        "boilerplate",
+        "game",
+        "workflow"
+      ],
+      "summary": "A template that turns a single Claude Code session into a structured game development studio, providing 49 specialized AI agents, 73 workflow skills, validation hooks, path-scoped coding rules, and document templates organized into a director, lead, and specialist hierarchy for solo AI-assisted game development.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "c08cec9c4519c06a01669d4cfc224b74a2d8c884",
+        "repo_metadata_sha256": "910c3daa9196ca42a098306ec0b7ddbcf30464c5001d8fe3c92e8ca06ac598e8",
+        "fingerprint": "d271641e64c59b10f578d194824d4bfa9838d8622fd18e4f841fdc6e5fd1e20e"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-19T15:21:59Z"
+      }
+    },
+    {
+      "node_id": "R_kgDORPMGRg",
+      "category": "data-analytics",
+      "tags": [
+        "backend",
+        "library",
+        "visualization"
+      ],
+      "summary": "A Python backtesting framework for prediction-market trading strategies on Polymarket, built as an extension to NautilusTrader with custom exchange adapters. It adds staged data loading, execution and fee modeling, statistical optimization, and extensive single and multi-market performance charting.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "7c006af3a08c4a715bc496808cfd7161acb3ea6c",
+        "repo_metadata_sha256": "6414b5df95d0d6f76c42a908c19973263a42916f2240a4f69edbdf55250367de",
+        "fingerprint": "7dea966e3cfc05b51365630f6215cf7412ec88b23d5a412d580eeccdd2af8185"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-19T15:21:59Z"
+      }
+    },
+    {
+      "node_id": "R_kgDORPXC2g",
+      "category": "ai-ml",
+      "tags": [
+        "ai-agents",
+        "automation",
+        "bot",
+        "cli",
+        "llm",
+        "self-hosted"
+      ],
+      "summary": "A single-binary Rust agent runtime for self-hosted personal AI assistants. It connects to around twenty LLM providers, reaches users across thirty-plus channels such as Discord, Telegram, email, and CLI, and acts through shell, browser, HTTP, and hardware tools with security policies, sandboxing, and tool receipts.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "6ccb7cac39835f6a7c779e1528f96bd80f831d15",
+        "repo_metadata_sha256": "8324a084f0d6cae25ecd897a96ee47ded0b9d985c010ccfc05099602c7e22a4b",
+        "fingerprint": "9f08af98c11816d67c0166951d182a33cec159c61023d993ffcad1fe054aca34"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-19T15:21:59Z"
+      }
+    },
+    {
+      "node_id": "R_kgDORPZUAQ",
+      "category": "developer-tools",
+      "tags": [
+        "ai-agents",
+        "automation",
+        "cli",
+        "desktop-app",
+        "orchestration",
+        "workflow"
+      ],
+      "summary": "An agentic IDE and orchestrator for running fleets of parallel AI coding agents such as Claude Code, Codex, and Cursor in isolated git worktrees. A local daemon and desktop app supervise sessions, terminals, and pull requests, routing CI failures, review comments, and merge conflicts back to the right agent.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "c873fb7d8b0ff321d8a29e089764865f38847381",
+        "repo_metadata_sha256": "ae6ef00fcabb904a2f76d07b48a8aa41bac7beed745da46bc181fce79f2d7d30",
+        "fingerprint": "da3cb20202e7195f583ea5bcc6f2cb48e5efa6e29ca5e9d5a9ecc2969b56dfb6"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-19T15:21:59Z"
+      }
     }
   ]
 }
