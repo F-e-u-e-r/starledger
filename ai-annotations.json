@@ -10160,6 +10160,133 @@
         "prompt_version": "classify-v1",
         "generated_at": "2026-07-19T15:21:59Z"
       }
+    },
+    {
+      "node_id": "R_kgDORPkI2g",
+      "category": "ai-ml",
+      "tags": [
+        "api",
+        "caching",
+        "desktop-app",
+        "llm",
+        "machine-learning",
+        "self-hosted"
+      ],
+      "summary": "A local LLM inference server for Apple Silicon that serves LLMs, vision-language models, embeddings, and rerankers with continuous batching and a tiered hot RAM and cold SSD KV cache. It exposes OpenAI- and Anthropic-compatible APIs and is managed from a native macOS menu bar app and web admin dashboard.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "cf6aabfbe0b04db5480d962677e615889d649bc5",
+        "repo_metadata_sha256": "885b44a637cb0903c34b6a3db7af7438811912a58dec07c55d5c57dfbaced4fd",
+        "fingerprint": "60184456ae6237a62bf31177664d84a8571c1dcbe938bd259fe6e62ce2015920"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-19T16:21:45Z"
+      }
+    },
+    {
+      "node_id": "R_kgDORPvt5w",
+      "category": "developer-tools",
+      "tags": [
+        "automation",
+        "backend",
+        "database",
+        "orchestration",
+        "workflow"
+      ],
+      "summary": "A PostgreSQL extension that adds durable, fault-tolerant execution to SQL functions. Workflows are defined in SQL with composable operators and checkpointed step by step, so they resume from the last checkpoint after crashes, restarts, or failed steps without external queues, workers, or orchestrators.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "6a8b1df9c79fde3f65c30ab9ccf7f44069d85046",
+        "repo_metadata_sha256": "473427116ec0f35d88d17bd4bf7e2f92f4badfbcfff8f88862677fb3db665e12",
+        "fingerprint": "af2364bed8ca2bda552b1bcdb76860fdd070294f982f4ef0777412f43aa39c82"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-19T16:21:45Z"
+      }
+    },
+    {
+      "node_id": "R_kgDORQ3jDQ",
+      "category": "developer-tools",
+      "tags": [
+        "cli",
+        "networking",
+        "proxy"
+      ],
+      "summary": "A command-line tool that replaces localhost port numbers with stable, named local development URLs, for both human developers and agents. It runs a local reverse proxy with automatic HTTPS and HTTP/2, assigns application ports automatically, and supports monorepos with per-package hostnames.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "2546c271c84aa2c3736d57e33321a8326b0e76d3",
+        "repo_metadata_sha256": "b1f5da8d71017e0b34158aeeed8ca9c3a4b7859c6cc773d1d5d5a67b6da38ce7",
+        "fingerprint": "e110dec89382e02082d331fc4e7b10e6a3a7dd87ebd4767355752423823b0aac"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-19T16:21:45Z"
+      }
+    },
+    {
+      "node_id": "R_kgDORQ6nQA",
+      "category": "ai-ml",
+      "tags": [
+        "benchmark",
+        "cli",
+        "llm",
+        "machine-learning",
+        "tui"
+      ],
+      "summary": "A terminal tool that right-sizes LLM models to a machine’s RAM, CPU, and GPU. It detects the hardware, scores each model across quality, speed, fit, and context, and reports which ones will run well. Ships with an interactive TUI and a classic CLI, and supports local runtimes such as Ollama, llama.cpp, and MLX.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "ace1d683c60b888ecefa82b961a4c7a0d25509e2",
+        "repo_metadata_sha256": "4e2c380a005a220a76b37183ef389e13ae22f8716521842e75b47b7377920f41",
+        "fingerprint": "7e12d218c688ed8900e77c52674520b8ca7a374a680c32e6e5c7df36e9864f59"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-19T16:21:45Z"
+      }
+    },
+    {
+      "node_id": "R_kgDORQ7qrA",
+      "category": "ai-ml",
+      "tags": [
+        "ai-agents",
+        "benchmark",
+        "llm"
+      ],
+      "summary": "An economic benchmark that evaluates AI agents as coworkers by having them complete professional tasks from the GDPVal dataset across dozens of occupations. Each agent starts with a small balance, pays for its own token usage, and must stay solvent, measuring work quality, cost efficiency, and long-term survival rather than only technical scores.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "b9742d265cefd1c014a623434b6dad555bbe37c0",
+        "repo_metadata_sha256": "a90f70375e837019acb9f055dcc466695e5425cbc411bc50de00db1191d75aeb",
+        "fingerprint": "37f8e4c37b1fd1d7668b572bb8e4df0e2c9b7fc8817b889ebdddc12acea6c393"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-19T16:21:45Z"
+      }
     }
   ]
 }
