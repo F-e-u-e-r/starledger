@@ -11054,6 +11054,130 @@
         "prompt_version": "classify-v1",
         "generated_at": "2026-07-19T22:23:44Z"
       }
+    },
+    {
+      "node_id": "R_kgDOR_rxKg",
+      "category": "developer-tools",
+      "tags": [
+        "ai-agents",
+        "automation",
+        "cli",
+        "code-generation",
+        "plugin",
+        "workflow"
+      ],
+      "summary": "A configuration pack for Claude Code that turns it into a simulated engineering team of 12 specialized subagents with distinct roles and tool permissions, 15 automation hooks, and a role-based methodology coordinating planning, implementation, code review, and debugging.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "3dcc1061f321ea022c93d82cd41e89b57a95dbe4",
+        "repo_metadata_sha256": "8c27bc8f6bfed9f31b8c7820722869c03125fcb5520c030fe0859df71c19a907",
+        "fingerprint": "ee6a9ecd0f25f9adf65375f3f63257f426b658f015d962d658e206fcd58bc0d5"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-19T23:23:14Z"
+      }
+    },
+    {
+      "node_id": "R_kgDORa0x3w",
+      "category": "developer-tools",
+      "tags": [
+        "ai-agents",
+        "automation",
+        "bot",
+        "cli",
+        "notifications",
+        "self-hosted"
+      ],
+      "summary": "A Go tool that bridges local AI coding agents such as Claude Code, Codex, Cursor, and Gemini CLI to messaging platforms like Feishu, Slack, Telegram, Discord, and DingTalk, letting users chat with and control their agents from any device, mostly without a public IP.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "db9a33208e77f4dba69bf62d7ceec17fed73d273",
+        "repo_metadata_sha256": "b1167823598dc81c5a518b6e4001ffb074bbeeeac25fdee01c063c4f9c17d521",
+        "fingerprint": "705a9573acc4aff9983dad4aaf1de0bccf38f9c7910e8ff95326482daae0829c"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-19T23:23:14Z"
+      }
+    },
+    {
+      "node_id": "R_kgDORa2upQ",
+      "category": "data-analytics",
+      "tags": [
+        "ai-agents",
+        "llm",
+        "workflow"
+      ],
+      "summary": "A shared collection of investment-analysis skills for AI agents covering tech-stock earnings deep dives, Buffett-style value investing, US market sentiment tracking, global macro-liquidity monitoring, and a Bitcoin cycle timing model. Skills install into Claude Code or other agents and activate automatically by topic.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "5267aacbcc167156fc31edb80075dd33357af52e",
+        "repo_metadata_sha256": "e553b157f3bfcdce963c505ce09f7aa4d5b7d0dd4ba85320464ea9040d31e11e",
+        "fingerprint": "d5c7ed199ce5437be294d8ea7865c44ad3502ec9e2f14363752709711b10c160"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-19T23:23:14Z"
+      }
+    },
+    {
+      "node_id": "R_kgDORbAgSA",
+      "category": "ai-ml",
+      "tags": [
+        "benchmark",
+        "machine-learning"
+      ],
+      "summary": "Research code that trains transformer neural networks directly on Apple's Neural Engine by reverse-engineering its private compiler and client APIs. It runs forward and backward passes on-device, adds INT8 quantization and a GPU-to-ANE pipeline, and documents M4 benchmarks. Presented as a proof of concept, not a production framework.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "6b8f186e5312c3596b24550367623255b4bbd939",
+        "repo_metadata_sha256": "2d27466e87f2731f4fbca42c6f1e364fc707a56e06b72db079f2831090edeac0",
+        "fingerprint": "39195ca95420bf7e13706c1f67f4b0ea7462aee0bf19f6ba5fb62823f8188b36"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-19T23:23:14Z"
+      }
+    },
+    {
+      "node_id": "R_kgDORbCQ_g",
+      "category": "mobile",
+      "tags": [
+        "cli",
+        "self-hosted"
+      ],
+      "summary": "A single shell script that sets up and runs a pre-jailbroken virtual iOS 26.1 phone on macOS. It downloads and merges the split device image, extracts it, and exposes the running virtual device over VNC for local access, with published SHA-256 checksums to verify the downloads.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "e153641e79753b195cdf1a9e63bbab591ee4e32b",
+        "repo_metadata_sha256": "67ebfe00e5cb31b3ccb6af778047acf716b51d6a1b9f8d38c8d81e0277ca699d",
+        "fingerprint": "3af4867f8cce2caa970b98b1c9bcfec3a1706c056e65d3c45f33f39958a79109"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-19T23:23:14Z"
+      }
     }
   ]
 }
