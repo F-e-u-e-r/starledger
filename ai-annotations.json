@@ -7407,6 +7407,31 @@
       }
     },
     {
+      "node_id": "R_kgDOQL2EBg",
+      "category": "developer-tools",
+      "tags": [
+        "automation",
+        "configuration",
+        "documentation",
+        "workflow"
+      ],
+      "summary": "A reference library of production-tested Claude Code infrastructure: skills that auto-activate through hooks, a modular 500-line skill pattern with progressive disclosure, specialized agents, slash commands, and a dev-docs system. It ships a setup wizard, optional AI-powered skill classification, and cross-agent support for Codex.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "9c549332b8f519c3798e466c952dbb735157c6f6",
+        "repo_metadata_sha256": "6b12a54cafe21db9f12be498f5a80d04a577faff03ad9645720101254c416cbd",
+        "fingerprint": "546a8bfa75e0ab93b2f0d7a923d6858932e53be1180aa5442f874a11ab602ac8"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-19T10:22:56Z"
+      }
+    },
+    {
       "node_id": "R_kgDOQLtlug",
       "category": "productivity-automation",
       "tags": [
@@ -8283,6 +8308,31 @@
       }
     },
     {
+      "node_id": "R_kgDOQwI8Aw",
+      "category": "education-reference",
+      "tags": [
+        "ai-agents",
+        "llm",
+        "self-hosted",
+        "vector-database"
+      ],
+      "summary": "DeepTutor is an agent-native, self-hostable learning workspace that unifies tutoring, quiz generation, deep research, visualization, and mastery practice on a single agent loop. It supports multiple LLM providers, retrieval over user knowledge bases with vector backends, persistent memory, a CLI, and Docker deployment.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "55c816c3eb692c2409ab83ae2fbd50cbd017ce6a",
+        "repo_metadata_sha256": "c32b7161828831387861073a944fa795d7ef63c27883a81664bd9b4a596967fb",
+        "fingerprint": "42a488fcb018b686b2218f1e03c86a3f054dcd059b7d5d8e5659577d56da4dd4"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-19T10:22:56Z"
+      }
+    },
+    {
       "node_id": "R_kgDOQwNiZQ",
       "category": "ai-ml",
       "tags": [
@@ -8357,6 +8407,33 @@
         "model_label": null,
         "prompt_version": "classify-v1",
         "generated_at": "2026-07-18T23:25:40Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOQyldew",
+      "category": "media-creative",
+      "tags": [
+        "cli",
+        "dashboard",
+        "llm",
+        "plugin",
+        "vector-database",
+        "workflow"
+      ],
+      "summary": "A Claude Code plugin for long-form web-novel writing that keeps character settings, foreshadowing, and timelines consistent across hundreds of chapters. It provides slash commands for initialization, planning, chapter drafting, review, and querying, backed by a fact-committing state system, RAG retrieval, long-term memory, and a read-only dashboard.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "e485ffc57903073e5ce14cca142871eab5317336",
+        "repo_metadata_sha256": "3f83b401a5b4e62745a36c4fc1d395ae83e7874b0b68bbb0845ed28ab488b572",
+        "fingerprint": "f1fdd1c91f69e55f4429fb6e945db79324462ae3d3c7049608f95977c430b866"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-19T10:22:56Z"
       }
     },
     {
@@ -9410,6 +9487,57 @@
         "model_label": "informational-only",
         "prompt_version": "classify-v1",
         "generated_at": "2026-07-19T07:24:18Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOREzDjQ",
+      "category": "ai-ml",
+      "tags": [
+        "ai-agents",
+        "dashboard",
+        "llm",
+        "self-hosted",
+        "vector-database"
+      ],
+      "summary": "Project Golem is a self-hosted AI operations hub with a web dashboard that combines chat, long-term memory, multi-agent collaboration, a skills system, and MCP tool extensions. It runs on Gemini Web, Ollama, or LM Studio backends and adds features such as a stock board, collaborative calendar, and text RPG.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "e1364f49a1a6dd213818838b822ba8f0490e187f",
+        "repo_metadata_sha256": "24b16117b3fb31724e58c9de0f4c436ea27dea1e56c0e21d91fcbeabbc8998aa",
+        "fingerprint": "5f8ec571d14ab7f8a51698bbda1266906aca12dc18154c3ccdb00b7624bde558"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-19T10:22:56Z"
+      }
+    },
+    {
+      "node_id": "R_kgDORF71Pw",
+      "category": "productivity-automation",
+      "tags": [
+        "ai-agents",
+        "automation",
+        "cli",
+        "self-hosted"
+      ],
+      "summary": "DenchClaw is a managed framework built on OpenClaw for knowledge work, providing CRM automation and outreach agents through a local web UI. It is installed and run via an npx command-line bootstrap that provisions a dedicated OpenClaw gateway and profile, with optional daemonless and Docker operation.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "0084d58e669806750724919945016ea5553ec485",
+        "repo_metadata_sha256": "7aea084d6425d6796453339c2da4074458198a58fa9be42e2ad99f30310e2c7d",
+        "fingerprint": "3f6e257dc231e639ee47578221f275a46382f2be530b9937830c107d241e6afa"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-19T10:22:56Z"
       }
     }
   ]
