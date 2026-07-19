@@ -9789,6 +9789,131 @@
         "prompt_version": "classify-v1",
         "generated_at": "2026-07-19T12:24:17Z"
       }
+    },
+    {
+      "node_id": "R_kgDORHykyw",
+      "category": "productivity-automation",
+      "tags": [
+        "automation",
+        "plugin",
+        "productivity",
+        "scraping"
+      ],
+      "summary": "A Chrome extension that imports web pages, Substack articles, podcasts, RSS feeds, and documentation sites into Google NotebookLM, merging multiple articles into single sources to work around its 50-source limit and rescuing failed imports.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "dce56aeff79aa3533d6e993652cc5afaaa792d86",
+        "repo_metadata_sha256": "da98e8c59ce0d6572001250a9094b80cda6520531628bab7890932bc520c3dda",
+        "fingerprint": "e39a5137b45618c43f6ae38cdc80991c70ee84cd6927b64658d2f54bee83e8bb"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-19T13:27:05Z"
+      }
+    },
+    {
+      "node_id": "R_kgDORI6Odg",
+      "category": "ai-ml",
+      "tags": [
+        "benchmark",
+        "llm",
+        "machine-learning",
+        "visualization"
+      ],
+      "summary": "A Python benchmarking tool that sweeps draft and target model combinations to find the fastest pairing for speculative decoding, measuring LLM inference throughput, saving results to JSON, and rendering them as interactive charts.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "35460d1651049aa85ff56bfbe024377b7723f593",
+        "repo_metadata_sha256": "ab829d443b8ebfe145799b92b3b6b31a840eaa12d35e15aa3401e34c3c7d795c",
+        "fingerprint": "23763641575727a8418f1332920f992cce79a3c12da06d41f88214b8ec68bcf2"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-19T13:27:05Z"
+      }
+    },
+    {
+      "node_id": "R_kgDORIQzlw",
+      "category": "developer-tools",
+      "tags": [
+        "ai-agents",
+        "automation",
+        "awesome-list",
+        "documentation"
+      ],
+      "summary": "A curated, drop-in collection of production-ready Claude Code skills spanning coding, design, documents, media, research, and automation, with each skill kept in its own folder ready to install into a local skills directory.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "1f53a1e34ec815557e1b79b6c4d6d501e3e5cd66",
+        "repo_metadata_sha256": "c293f9a82600ba71bcf9b095abe48d34bdcab7033c1d8cee29e990855c86b597",
+        "fingerprint": "11a40dbb1b69478c492eed51db2e92e554960ead4eb3ee9433b4e741fe7a779c"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-19T13:27:05Z"
+      }
+    },
+    {
+      "node_id": "R_kgDORLrQJg",
+      "category": "education-reference",
+      "tags": [
+        "ai-agents",
+        "automation",
+        "awesome-list",
+        "documentation"
+      ],
+      "summary": "A community-curated collection of real-life OpenClaw agent use cases across social media, content creation, and daily automation, each linking to a walkthrough for setting up the agent to accomplish a practical everyday task.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "739985e80f0f71deb97b87405afe3976f33d11fb",
+        "repo_metadata_sha256": "a0be57f68bf9f23df10a06c6f6473253e2b872fb8dc7213f5461adf964fc6b30",
+        "fingerprint": "978cd97ef1a44799cceade6910ec6f122134f3d0bd2ad6d945d1beca3aa374aa"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-19T13:27:05Z"
+      }
+    },
+    {
+      "node_id": "R_kgDORMH_tg",
+      "category": "productivity-automation",
+      "tags": [
+        "automation",
+        "bot",
+        "cli",
+        "scraping"
+      ],
+      "summary": "A Python command-line tool that automates the Xiaohongshu (RED) platform via the Chrome DevTools Protocol, supporting image and video publishing, multi-account management, headless operation, content search, comment posting, and analytics export.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "7c9adf465878b46297b214e0f2e570ebff073427",
+        "repo_metadata_sha256": "aef186dde6ab760a4c0ca33af84e45ab624da1aed535df79d50a03457109b38c",
+        "fingerprint": "76058ea7c521ab0d5fb883e5ea8813cea6f48172e71e01a06b379bc8ea304650"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-19T13:27:05Z"
+      }
     }
   ]
 }
