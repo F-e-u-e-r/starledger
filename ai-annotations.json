@@ -8933,6 +8933,132 @@
         "prompt_version": "classify-v1",
         "generated_at": "2026-07-19T05:22:08Z"
       }
+    },
+    {
+      "node_id": "R_kgDORAq_-Q",
+      "category": "media-creative",
+      "tags": [
+        "automation",
+        "code-generation",
+        "plugin"
+      ],
+      "summary": "A Claude Code skill for creating programmatic videos with the Remotion React framework. It uses a scene-based architecture with automatic timing, AI-powered text-to-speech via Edge TTS or MiniMax, and supports animations, subtitles, and music visualization.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "765eb7b76a3d056412b2ae2ef942360e77dd72ae",
+        "repo_metadata_sha256": "a9eb7795da337d468cc17dff7842ac3a4920a6bc13c140b06a67fa09e038832d",
+        "fingerprint": "015bfe5097bedd6e606e5c844cd9c78a8c46b2b44e557856884d2be9c6f76f62"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-19T06:22:19Z"
+      }
+    },
+    {
+      "node_id": "R_kgDORBW6qA",
+      "category": "developer-tools",
+      "tags": [
+        "ai-agents",
+        "api",
+        "automation",
+        "proxy",
+        "rest-api",
+        "scraping"
+      ],
+      "summary": "An anti-detection headless browser server for AI agents, built on the Camoufox Firefox fork. It exposes a REST API with token-efficient accessibility snapshots and stable element refs, and supports proxies with GeoIP, session isolation, cookie import, and search macros for common sites.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "0b6a1f21a81a843bd0288155b644db3fcc30ac26",
+        "repo_metadata_sha256": "c8fd510e0d8cda66ca82fb917bacb25bb543287d7b5674cb9a9d6f4572d79d8a",
+        "fingerprint": "243c5e8199d7fcf76e432bc611ffd16b91322c3cfb129981121588f81eed0e9e"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-19T06:22:19Z"
+      }
+    },
+    {
+      "node_id": "R_kgDORBf_rw",
+      "category": "developer-tools",
+      "tags": [
+        "ai-agents",
+        "automation",
+        "cli",
+        "code-generation",
+        "documentation",
+        "workflow"
+      ],
+      "summary": "An engineering framework for AI coding agents that persists specs, tasks, and project memory into your repository so agents follow your conventions. It runs a plan, implement, verify, and finish workflow with auto-injected context and supports multiple AI coding platforms.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "5c1a0ad1a6664b5b311a024c4c1c8df801ecca27",
+        "repo_metadata_sha256": "0f80bb8461be0b4edc5ffc44ccc56c450e7e972032dadce3081499e26846af55",
+        "fingerprint": "e6493ea90ba4d9ea0c45f2d538892a0ebaa1926e8d2ffc786803b11a8015bce8"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-19T06:22:19Z"
+      }
+    },
+    {
+      "node_id": "R_kgDORC62gQ",
+      "category": "ai-ml",
+      "tags": [
+        "machine-learning",
+        "real-time"
+      ],
+      "summary": "An open-source world model for video generation that simulates high-fidelity, diverse environments from an input image and text prompt. It supports camera-pose and action control signals, long-term temporal consistency, and real-time interactivity, and provides public code and model weights.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "b05f9cc1d1a485c0a8fe6c3ed85e2b2c1d6f25dd",
+        "repo_metadata_sha256": "afaa11c01cdf5921cbee67b89ab4c3f8044bd2b1b4f38e07ddc2164f9c087e7e",
+        "fingerprint": "8c9f6465f75df05dc6c0afd333bb9637b53fab5de4250207519b8a6850925627"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-19T06:22:19Z"
+      }
+    },
+    {
+      "node_id": "R_kgDORCCMkQ",
+      "category": "developer-tools",
+      "tags": [
+        "ai-agents",
+        "configuration",
+        "documentation",
+        "plugin"
+      ],
+      "summary": "A single CLAUDE.md guidelines file to improve Claude Code behavior, derived from Andrej Karpathy's observations on LLM coding pitfalls. It defines four principles (think before coding, simplicity first, surgical changes, and goal-driven execution) and installs as a plugin or per-project config.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "7cf07a786532bebe01c65179c8e2c3a98cc0a09b",
+        "repo_metadata_sha256": "ffbfaa6a9e5726fc835119e41a1b3a60057fb4cfaeb45657ae7e5e999bd978c5",
+        "fingerprint": "9a00efe9f74721590941a02eb40fb395339240e145ef2bf56cb3456249ab51d2"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-19T06:22:19Z"
+      }
     }
   ]
 }
