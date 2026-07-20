@@ -11806,6 +11806,137 @@
         "prompt_version": "classify-v1",
         "generated_at": "2026-07-20T05:22:28Z"
       }
+    },
+    {
+      "node_id": "R_kgDORi6O7w",
+      "category": "ai-ml",
+      "tags": [
+        "ai-agents",
+        "automation",
+        "cli",
+        "dashboard",
+        "llm"
+      ],
+      "summary": "CashClaw is an open-source autonomous agent that connects to the Moltlaunch onchain marketplace, evaluating tasks, quoting prices, executing work with an LLM, and learning from client ratings to improve. It runs as a single Node.js process with a local web dashboard.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "cccdac889b40501d69eb485e06b24ce1f017c7f1",
+        "repo_metadata_sha256": "5f3c76a7dcfae619391cdc9ad45673f69234c9d355a6cdccfc7356f292ec3481",
+        "fingerprint": "28f23ad4331c52c43abb1a570fbbf9c5f1e10258f8f2386084f233df03f44146"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-20T06:27:16Z"
+      }
+    },
+    {
+      "node_id": "R_kgDORiHIHw",
+      "category": "security-privacy",
+      "tags": [
+        "ai-agents",
+        "cli",
+        "library",
+        "llm",
+        "security-scanner"
+      ],
+      "summary": "Agent Threat Rules (ATR) is an open, vendor-neutral detection-rule format for AI agent security threats, akin to Sigma or YARA. It ships YAML rules, a TypeScript engine, a Python wrapper, a CLI, and SARIF output, mapping detections to frameworks such as OWASP and MITRE ATLAS.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "c0262a4c66cef19050231f9b51e4e6073d2e4f48",
+        "repo_metadata_sha256": "1e6eecff379210a7ae42ac27acb84f12c08464c0f7b688fa2f622343bcd38200",
+        "fingerprint": "f237e9aa8d351811231d6d513796c6a1459f31b9d03f9d88dced651a4d08d773"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-20T06:27:16Z"
+      }
+    },
+    {
+      "node_id": "R_kgDORici_g",
+      "category": "productivity-automation",
+      "tags": [
+        "automation",
+        "cli",
+        "desktop-app",
+        "gui",
+        "markdown"
+      ],
+      "summary": "doc-cleaner converts everyday documents into clean Markdown, covering PDF, Office, Apple Keynote and Numbers, EPUB and 16 formats in total. It is Chinese-friendly, preserves tables, and runs fully locally with optional AI backends, shipping as a Python CLI and a macOS/Windows desktop app.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "da20d03cb26e2a2f91f958e1c782070d9364ced0",
+        "repo_metadata_sha256": "7cf302b6173f78fb44f1fb67e061a8333fe2853db64ff5035db6663d80f95852",
+        "fingerprint": "61290f7dc68a3b60effcab4f866631674aef7e8d4164028048ff7fa14382f6fd"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-20T06:27:16Z"
+      }
+    },
+    {
+      "node_id": "R_kgDORiwWpA",
+      "category": "developer-tools",
+      "tags": [
+        "ai-agents",
+        "api",
+        "backend",
+        "llm",
+        "sdk"
+      ],
+      "summary": "A Model Context Protocol (MCP) server that connects AI assistants to a Public.com brokerage account. It exposes tools to fetch quotes, view portfolios, and place or cancel stock, options, and crypto orders through natural language, wrapping the publicdotcom-py SDK over stdio or HTTP.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "a8d1ee0f74f58e5abcc866e914f62d04897f018c",
+        "repo_metadata_sha256": "f1adf022cfbf1d5d7aa5351c24de8027ef38950d5dc514bbdb640049a34b0f63",
+        "fingerprint": "a1eb3a1e47fc38ded538babb097f2cb0d664d59849c1a02c2bbd755cde46cecd"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-20T06:27:16Z"
+      }
+    },
+    {
+      "node_id": "R_kgDORk0YLg",
+      "category": "ai-ml",
+      "tags": [
+        "ai-agents",
+        "automation",
+        "cli",
+        "llm",
+        "orchestration",
+        "workflow"
+      ],
+      "summary": "AI Night Shift is an open-source framework for running multiple heterogeneous AI agents, such as Claude Code and Gemini, in coordinated autonomous sessions during off-hours. Agents communicate through a file-based message queue and shared logs, with cron scheduling and a monitoring dashboard.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "69a4a3cefbfa3fffb7c22ef7065be61791fce745",
+        "repo_metadata_sha256": "48d477525a5381d07e8cd89b7dd8c8f49929549338ac323e9edec708af1820d6",
+        "fingerprint": "67ad833f43c9c83b75cdbb047bcdf412aa37cffa8319d4f9c1c0265377bacd20"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-20T06:27:16Z"
+      }
     }
   ]
 }
