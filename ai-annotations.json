@@ -1560,6 +1560,30 @@
       }
     },
     {
+      "node_id": "R_kgDOI9DLBw",
+      "category": "libraries-frameworks",
+      "tags": [
+        "library",
+        "terminal",
+        "tui"
+      ],
+      "summary": "Ratatui is a Rust crate for building terminal user interfaces (TUIs). It provides a flexible way to create text-based interfaces in the terminal for command-line applications, dashboards, and other interactive console programs, offering reusable widgets and starter templates to get going quickly.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "0b8918b85c64d0ffecadfa9be0a42701e99d468c",
+        "repo_metadata_sha256": "310ac563ab52fa4337659dfb91e6e1f4440be17db4ea2c436e2543f605137baa",
+        "fingerprint": "5ecebc5fb1b7c3960dffde8076381679c22af9d3b3b2075b22932f34484d2903"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-20T22:22:30Z"
+      }
+    },
+    {
       "node_id": "R_kgDOIFKaXA",
       "category": "developer-tools",
       "tags": [
@@ -12062,6 +12086,104 @@
         "model_label": "informational-only",
         "prompt_version": "classify-v1",
         "generated_at": "2026-07-20T07:22:21Z"
+      }
+    },
+    {
+      "node_id": "R_kgDORlgffg",
+      "category": "libraries-frameworks",
+      "tags": [
+        "frontend",
+        "library",
+        "llm",
+        "real-time",
+        "sdk"
+      ],
+      "summary": "A React and browser reference implementation providing voice controls for tool-constrained UIs built on OpenAI Realtime. It offers a controller, React bindings, and a launcher widget so apps define narrow, app-owned tools and drive visible UI state through voice rather than free-form browser automation.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "5b6ddbc11f92765ebf4662338e6f159cb2c92e6e",
+        "repo_metadata_sha256": "c82c34b7e0ee5fe4187e997827e624607d54f4dbb18f3369e3269353d1d4c6e7",
+        "fingerprint": "32922c34cd85a82ff1676d0fa4fd0d79c7e18d87cd5e4fbee06c2a0ed7f63a22"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-20T22:22:30Z"
+      }
+    },
+    {
+      "node_id": "R_kgDORlpVZA",
+      "category": "media-creative",
+      "tags": [
+        "desktop-app",
+        "gui"
+      ],
+      "summary": "Recordly is an open-source, cross-platform desktop screen recorder and editor for creating polished demo and product videos. It runs on macOS, Windows, and Linux and adds motion-driven tools such as auto-zooms, cursor polish, webcam overlays, styled frames, timeline editing, and MP4 or GIF export.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "121ef9343266d1ca66ec20df5b3254fd2768ee3e",
+        "repo_metadata_sha256": "50abe5f92c032b0e17ef3b61ae2dd5e3daf915f8690c8512ca98a5128ea7f4c3",
+        "fingerprint": "dc0b7d105ee73e5d6602cc7a267513613ea88d669e16e803ff4a7d95080b35cd"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-20T22:22:30Z"
+      }
+    },
+    {
+      "node_id": "R_kgDORlraMw",
+      "category": "ai-ml",
+      "tags": [
+        "ai-agents",
+        "llm",
+        "markdown"
+      ],
+      "summary": "An AI agent skill for social-media content creation that turns a topic into a complete article, five alternative titles, and image-generation prompts. It adapts writing for WeChat, Xiaohongshu, and Douyin using an internal eleven-dimension content framework and outputs structured Markdown.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "6205ea7eafb85951568e748a024e66981d4a9b83",
+        "repo_metadata_sha256": "ddbfe9eba76acf5677894e871041387f6f42590ea4841ad383a239e936b8c86b",
+        "fingerprint": "d4b037b30c845d5b2a6594b436722d93b6c1701927c697f1d3fa0cb97f8fec23"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-20T22:22:30Z"
+      }
+    },
+    {
+      "node_id": "R_kgDORmcyuQ",
+      "category": "productivity-automation",
+      "tags": [
+        "api",
+        "automation",
+        "cli",
+        "scraping"
+      ],
+      "summary": "boss-cli is a command-line tool for the BOSS Zhipin recruitment platform built on a reverse-engineered API. It supports job search with filters, personalized recommendations, application and interview tracking, recruiter candidate management, cookie or QR authentication, and CSV or JSON export.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "7221e90ce126200efee8fea68d35b6ecb61471d3",
+        "repo_metadata_sha256": "927e1e09dda0167e538cdab65f3034b051f8f0fff01f0a0909f2c31ebdf34029",
+        "fingerprint": "579d44b39758c5cce299b0f7558910bd0c3c08a84d7d26bb6dd94d613a037f31"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-20T22:22:30Z"
       }
     }
   ]
