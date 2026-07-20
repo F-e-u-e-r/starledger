@@ -11436,6 +11436,128 @@
         "prompt_version": "classify-v1",
         "generated_at": "2026-07-20T01:24:25Z"
       }
+    },
+    {
+      "node_id": "R_kgDOReqjdQ",
+      "category": "developer-tools",
+      "tags": [
+        "api",
+        "desktop-app",
+        "llm",
+        "monitoring"
+      ],
+      "summary": "A macOS menu bar app written in Swift that displays your Claude API usage at a glance from the desktop.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "8ef256eb652a0dd23487fd361375d8c2715899f1",
+        "repo_metadata_sha256": "06130737e86f3f35806f7c561620e03c31b2069f15ec915c1c30312fb845ff9b",
+        "fingerprint": "eb85ec8229f528255d37a77f89f8b2551ac2f27261f129f996daa77daf980080"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-20T03:22:21Z"
+      }
+    },
+    {
+      "node_id": "R_kgDORezhhQ",
+      "category": "security-privacy",
+      "tags": [
+        "ai-agents",
+        "dashboard",
+        "monitoring",
+        "real-time",
+        "scraping",
+        "visualization"
+      ],
+      "summary": "An open-source intelligence tool that aggregates real-time tracking data such as aircraft, satellites, maritime activity, CCTV feeds, and seismic events into one unified interface, with optional AI-agent analysis to surface correlations across sources.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "ee49d82389e738cad195bef763390aef9ca8635d",
+        "repo_metadata_sha256": "6768fa04e72e5334c2172f70131fa9a951baf46a7813daf166fcd538f0edf111",
+        "fingerprint": "631620f136419806efd776d9efdadc0ff91fd3d5e8aab9254c35a03753fda401"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-20T03:22:21Z"
+      }
+    },
+    {
+      "node_id": "R_kgDORf475A",
+      "category": "media-creative",
+      "tags": [
+        "automation",
+        "workflow"
+      ],
+      "summary": "A Python end-to-end production workspace for AI-generated short dramas, covering script input, structured storyboarding, consistency management, shot preparation, video generation, and final export.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "9b11a8d77bcf95dbf639b895a61e6503729c1e38",
+        "repo_metadata_sha256": "8c8f9ce5a00a378794c09717ff5fe8df10edfe5eed3bcd6fa61ab78d99cd438b",
+        "fingerprint": "4d9ac5461f9785c37c774b78edcfcd966ae2fd91445bd46da775a24be357f4be"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-20T03:22:21Z"
+      }
+    },
+    {
+      "node_id": "R_kgDORf4_EQ",
+      "category": "education-reference",
+      "tags": [
+        "documentation"
+      ],
+      "summary": "A structured five-dimension scoring framework for evaluating open-source AI projects from a venture-capital investment perspective.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "7617dbdb62fea5286d2fd9607733f1afcfeaf964",
+        "repo_metadata_sha256": "44117c0eb73f1685d1dd88575ed662e5fedab1cc301d10b070dbd34936a527ca",
+        "fingerprint": "ab2cb9a0fbba221b88cc768bb256bf15a919526860ce401b595964f19617ad97"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-20T03:22:21Z"
+      }
+    },
+    {
+      "node_id": "R_kgDORfWRGA",
+      "category": "ai-ml",
+      "tags": [
+        "ai-agents",
+        "api",
+        "llm",
+        "machine-learning"
+      ],
+      "summary": "An all-in-one MLX application for Apple Silicon that combines image generation and editing with chat and code assistance, running local inference and integrating the Anthropic and OpenAI APIs.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "c3839ef7aa9bbbd468bece7a1f93804a23a69a1e",
+        "repo_metadata_sha256": "383bd1a45e9429d3bafc73cfe146520c1e936a46d02452dee9b6c2c26c104548",
+        "fingerprint": "9a354962be57bb6e89795ad3b9819c2dfaa1ca7020d5d3dcfdd74ca2a8b7884c"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-20T03:22:21Z"
+      }
     }
   ]
 }
