@@ -11558,6 +11558,131 @@
         "prompt_version": "classify-v1",
         "generated_at": "2026-07-20T03:22:21Z"
       }
+    },
+    {
+      "node_id": "R_kgDORfYQ7g",
+      "category": "developer-tools",
+      "tags": [
+        "cli",
+        "terminal",
+        "visualization"
+      ],
+      "summary": "chartli is a TypeScript command-line tool that renders charts in the terminal from numeric text data read from a file or standard input. It supports ascii, unicode, braille, spark, bars, columns, heatmap, and svg chart types, with options for width, height, axis labels, series labels, and inline data labels.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "9f6b7c283d62c99d33382121622f772a0fb4489e",
+        "repo_metadata_sha256": "c2c80c493da187f79b5329889a9dcbbc674622ca1fe3f327c77acab2a2e06e20",
+        "fingerprint": "6f2fb6ea74dc8705c4d77155c34c37b9540855d57bdd588c5aa4f0f2577834fc"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-20T04:22:35Z"
+      }
+    },
+    {
+      "node_id": "R_kgDORfurqg",
+      "category": "mobile",
+      "tags": [
+        "api",
+        "authentication",
+        "real-time"
+      ],
+      "summary": "JKVideo is a third-party Bilibili client built with React Native and Expo that runs on Android, iOS, and Web. It offers DASH video playback up to 4K HDR, real-time and video danmaku bullet comments, live streaming, QR-code login, and multi-quality downloads with local-network sharing. Its README states the project is no longer maintained.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "1553dc9ebc4dff8a9a165306b98eaeac7adb88f1",
+        "repo_metadata_sha256": "4d8100bfe926d2edf88f378370759856e4de099312003bf3c3a0d0fccb8e4503",
+        "fingerprint": "62cdfb38bf3f1cbf5256d3de610f303fb4381163dabdb9e5a9c091985debcc77"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-20T04:22:35Z"
+      }
+    },
+    {
+      "node_id": "R_kgDORgE1bA",
+      "category": "web-applications",
+      "tags": [
+        "authentication",
+        "containers",
+        "database",
+        "self-hosted"
+      ],
+      "summary": "Flowclass is an open-source, self-hostable operations platform for education businesses such as tutorial centres and training academies. It provides student CRM, class scheduling, enrolment applications, Stripe-based online payments, invoicing, promotions, and automated email notifications, deployed with Docker across a Next.js web app, a Nest.js API, and an admin panel.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "b3275724220bb2c0d200b6a758ded1f2f1ecfa65",
+        "repo_metadata_sha256": "8d7a5a7c616e582dca9f4fc7a18f4bbeb987d497f0840b649b51762d5bdda56d",
+        "fingerprint": "b785b8477eacc158b71be376527efa7e9f5359a6579bb9fe4f9cf6dec6ac7ba5"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-20T04:22:35Z"
+      }
+    },
+    {
+      "node_id": "R_kgDORgZCPA",
+      "category": "self-hosted-homelab",
+      "tags": [
+        "containers",
+        "dashboard",
+        "monitoring",
+        "networking",
+        "self-hosted",
+        "visualization"
+      ],
+      "summary": "Homelable is a self-hosted homelab infrastructure visualizer that maps devices and services on an interactive network diagram with live online, offline, and unknown status monitoring. It can scan networks with nmap and import topology from Proxmox VE, Zigbee2MQTT, and Z-Wave JS, and optionally exposes an MCP server for AI clients to read and edit the canvas.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "2c41740a03de99870684a0b3467459c73cad3eba",
+        "repo_metadata_sha256": "5566931b17857e269a2e8466bbe72376f9e5bcda80f934f82bc0026033cba3eb",
+        "fingerprint": "1a2e3201cba7f5d5c4ed12a54100121f989baebeee36f0127b9878e6a0306db9"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-20T04:22:35Z"
+      }
+    },
+    {
+      "node_id": "R_kgDORgZXsw",
+      "category": "ai-ml",
+      "tags": [
+        "ai-agents",
+        "automation",
+        "llm",
+        "machine-learning"
+      ],
+      "summary": "autoresearch is a Python project that lets an AI coding agent autonomously experiment with training a small single-GPU language model based on nanochat. The agent edits a single training file, runs fixed five-minute training experiments, and keeps or discards changes based on the validation bits-per-byte metric, enabling many unattended experiments overnight.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "953ea55d5599c45c1be7dad93ec03e47dfa7df9d",
+        "repo_metadata_sha256": "cd86c94db5dccc0e79a5eb638de7989eabead933883f8fbbc45d583e9c33cc71",
+        "fingerprint": "4b07400110878ee5bc73d624e13bb22b8fd50ef83b546737810f888bae396c4b"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-20T04:22:35Z"
+      }
     }
   ]
 }
