@@ -12063,6 +12063,132 @@
         "prompt_version": "classify-v1",
         "generated_at": "2026-07-20T07:22:21Z"
       }
+    },
+    {
+      "node_id": "R_kgDORlgffg",
+      "category": "libraries-frameworks",
+      "tags": [
+        "ai-agents",
+        "frontend",
+        "library",
+        "real-time",
+        "sdk"
+      ],
+      "summary": "React and browser voice controls for tool-constrained UIs built on OpenAI Realtime. It provides a session controller, React hooks, a launcher widget, and an optional ghost-cursor overlay so apps expose narrow, app-owned tools to a voice assistant while the UI stays the source of truth for visible state.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "5b6ddbc11f92765ebf4662338e6f159cb2c92e6e",
+        "repo_metadata_sha256": "c82c34b7e0ee5fe4187e997827e624607d54f4dbb18f3369e3269353d1d4c6e7",
+        "fingerprint": "32922c34cd85a82ff1676d0fa4fd0d79c7e18d87cd5e4fbee06c2a0ed7f63a22"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-20T08:23:00Z"
+      }
+    },
+    {
+      "node_id": "R_kgDORlpVZA",
+      "category": "media-creative",
+      "tags": [
+        "desktop-app",
+        "editor",
+        "gui"
+      ],
+      "summary": "An open-source, cross-platform desktop screen recorder and editor built with Electron for making polished demo and product videos. It offers automatic zoom suggestions, cursor polish, webcam bubble overlays, timeline editing, styled frames and backgrounds, and MP4 or GIF export on macOS, Windows, and Linux.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "121ef9343266d1ca66ec20df5b3254fd2768ee3e",
+        "repo_metadata_sha256": "50abe5f92c032b0e17ef3b61ae2dd5e3daf915f8690c8512ca98a5128ea7f4c3",
+        "fingerprint": "dc0b7d105ee73e5d6602cc7a267513613ea88d669e16e803ff4a7d95080b35cd"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-20T08:23:00Z"
+      }
+    },
+    {
+      "node_id": "R_kgDORlraMw",
+      "category": "ai-ml",
+      "tags": [
+        "ai-agents",
+        "llm",
+        "markdown",
+        "productivity"
+      ],
+      "summary": "A content-creation Skill for AI agents such as Claude Code that turns a single topic into a publish-ready article, five alternative titles with strategy labels, and image-generation prompts. It adapts writing for WeChat, Xiaohongshu, and Douyin using an internal eleven-dimension content framework and outputs structured Markdown.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "6205ea7eafb85951568e748a024e66981d4a9b83",
+        "repo_metadata_sha256": "ddbfe9eba76acf5677894e871041387f6f42590ea4841ad383a239e936b8c86b",
+        "fingerprint": "d4b037b30c845d5b2a6594b436722d93b6c1701927c697f1d3fa0cb97f8fec23"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-20T08:23:00Z"
+      }
+    },
+    {
+      "node_id": "R_kgDORmcyuQ",
+      "category": "productivity-automation",
+      "tags": [
+        "ai-agents",
+        "api",
+        "automation",
+        "cli",
+        "scraping"
+      ],
+      "summary": "A Python command-line tool for the BOSS Zhipin job platform that uses a reverse-engineered API to search jobs, view personalized recommendations, manage applications and interviews, and chat with recruiters. It adds a recruiter mode for candidate management and structured JSON or YAML output designed for AI agents.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "7221e90ce126200efee8fea68d35b6ecb61471d3",
+        "repo_metadata_sha256": "927e1e09dda0167e538cdab65f3034b051f8f0fff01f0a0909f2c31ebdf34029",
+        "fingerprint": "579d44b39758c5cce299b0f7558910bd0c3c08a84d7d26bb6dd94d613a037f31"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-20T08:23:00Z"
+      }
+    },
+    {
+      "node_id": "R_kgDORmyMSA",
+      "category": "developer-tools",
+      "tags": [
+        "automation",
+        "cli",
+        "plugin",
+        "scraping"
+      ],
+      "summary": "A community collection of site adapters for bb-browser that turn websites into CLI commands. Each adapter is a JavaScript function run inside a logged-in browser via bb-browser eval, needing no API keys or cookie extraction. It ships 102 adapters across 36 platforms spanning search engines, social media, news, and developer sites.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "14d883cbab9f6f9098cb349797b0e81b86be2a61",
+        "repo_metadata_sha256": "c8385cf938928684e9364752ae7eae835b403088a2d7e5b2f74dbea7aa280235",
+        "fingerprint": "249f97ac299de88f6499a99be6300aae3784f5f5705af1e9960e749c9c41b5a9"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-20T08:23:00Z"
+      }
     }
   ]
 }
