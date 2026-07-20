@@ -11683,6 +11683,129 @@
         "prompt_version": "classify-v1",
         "generated_at": "2026-07-20T04:22:35Z"
       }
+    },
+    {
+      "node_id": "R_kgDORhiEjA",
+      "category": "developer-tools",
+      "tags": [
+        "ai-agents",
+        "automation",
+        "cli",
+        "code-generation",
+        "package-manager"
+      ],
+      "summary": "CLI-Anything is a framework and package manager for making software agent-native, generating command-line harnesses for applications and codebases through a seven-phase generator and letting AI coding agents browse, install, and run community CLIs from a shared hub.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "95d361434899a2da7a28f7831a2691f22a9c54fa",
+        "repo_metadata_sha256": "0e4335ec262b3b9a1a61361764087a9a8fd435cb808755d12366c2283d854c62",
+        "fingerprint": "fb6fb79334ba33e23c588d1564977376a63592098e7ae423570102620b282c44"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-20T05:22:28Z"
+      }
+    },
+    {
+      "node_id": "R_kgDORhpNIg",
+      "category": "developer-tools",
+      "tags": [
+        "cli",
+        "configuration",
+        "terminal"
+      ],
+      "summary": "A shell installer that configures the Claude Code status line to display usage limits, the working directory, and git branch information, backing up any existing status line and wiring up the required settings through a single npx command.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "c09110e3e63a3d1fc7c590140ff0ccc8409816bd",
+        "repo_metadata_sha256": "2bf0c63023057a36c4d01593bea8d328a6e08f6018298f0d356da6eebb323254",
+        "fingerprint": "94f759eb42162ecf11e1cc1110d1081eeeffa3bd99dd056460df60b331330d67"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-20T05:22:28Z"
+      }
+    },
+    {
+      "node_id": "R_kgDORhpRZQ",
+      "category": "developer-tools",
+      "tags": [
+        "ai-agents",
+        "llm",
+        "plugin"
+      ],
+      "summary": "A skill plugin for AI coding agents that applies scripted performance-review style prompting together with a debugging checklist and proactivity rules, pushing the assistant to keep investigating and exhaust solutions before giving up across Claude Code, Codex, Cursor, and other supported agents.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "5533fb86f2ce46c624938d2aa30b0c0c7b4b1755",
+        "repo_metadata_sha256": "e08660d89327df30b69672c053a55e5b2c01d2554c5e4f4ca931b41963a33b40",
+        "fingerprint": "e92f34b214f29abe63711725b0559827e74e7ad3155d4ce354955e9245853993"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-20T05:22:28Z"
+      }
+    },
+    {
+      "node_id": "R_kgDORi26-Q",
+      "category": "media-creative",
+      "tags": [
+        "ai-agents",
+        "cli",
+        "library"
+      ],
+      "summary": "HyperFrames is an open-source framework that turns HTML, CSS, media, and seekable animations into deterministic MP4 videos, usable from a local command-line tool, from AI coding agents through bundled skills, or as the rendering core behind hosted video authoring workflows.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "a94b9cd123892d2911f4b9787b45f6e3f157f548",
+        "repo_metadata_sha256": "b08cfb52f489a4e30e7aa61b5b90b01390c693178c3940e2c09e5058cc217cb8",
+        "fingerprint": "8f930ef14aea3bdf39dd80ad6bea6e36bbce2705726d5161c6579ea856d2b21e"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-20T05:22:28Z"
+      }
+    },
+    {
+      "node_id": "R_kgDORi2MdA",
+      "category": "ai-ml",
+      "tags": [
+        "ai-agents",
+        "cli",
+        "llm",
+        "machine-learning"
+      ],
+      "summary": "A local-first command-line tool and MCP server that converts YouTube, Bilibili, and Facebook videos into structured knowledge articles, extracting existing subtitles or transcribing audio on-device with Qwen3-ASR and generating multi-style summaries through configurable AI providers.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "f553bd289f59be471c237b3a014eb49fc9428a90",
+        "repo_metadata_sha256": "170599a14329997dac588e1847f085eddee0e16b82a4e30d880f8bff68032cfb",
+        "fingerprint": "1aee73c62ccb376dcbb7b4e4666283519197b29e5aaf222d9955a544200c8672"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-20T05:22:28Z"
+      }
     }
   ]
 }
