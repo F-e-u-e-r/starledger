@@ -11937,6 +11937,132 @@
         "prompt_version": "classify-v1",
         "generated_at": "2026-07-20T06:27:16Z"
       }
+    },
+    {
+      "node_id": "R_kgDORkIb9w",
+      "category": "education-reference",
+      "tags": [
+        "ai-agents",
+        "llm",
+        "sdk",
+        "self-hosted",
+        "web-framework"
+      ],
+      "summary": "OpenMAIC is an open-source multi-agent interactive classroom that delivers an immersive, AI-driven learning experience in one click. Built on Next.js, it supports multiple LLM providers, project-based learning with a classroom UI, an SDK family for its content DSL and rendering, and self-hosting via Vercel.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "12647a32278d28ead9ec94a27bc0683ce1256033",
+        "repo_metadata_sha256": "d5285dcf6d83a31578c613bb786c49a4de8e98794cd6a0ec27d421a56bb2e475",
+        "fingerprint": "31afd756d27461ccc702d0bb116c78945064c1f929c48e1835216f1137e7f890"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-20T07:22:21Z"
+      }
+    },
+    {
+      "node_id": "R_kgDORkNFSA",
+      "category": "developer-tools",
+      "tags": [
+        "ai-agents",
+        "dashboard",
+        "monitoring",
+        "observability",
+        "self-hosted"
+      ],
+      "summary": "A local, self-hosted control center that turns the OpenClaw agent runtime into an observable dashboard, surfacing health, usage, spend, subscription windows, task approvals, and a multi-agent collaboration hall. It ships read-only with local token auth and mutation routes disabled by default.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "8a236fd9289f5b67e44b990709755bc1b6e2924a",
+        "repo_metadata_sha256": "fb6aff7328f2f4c3f42711c2725f910138bf68e66a5e9466621ae6ac715e3b49",
+        "fingerprint": "485ee1b2d5cd7c044ce84863f03d5134b1b6dbe80ed1eb18417b8a0ec2da8c70"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-20T07:22:21Z"
+      }
+    },
+    {
+      "node_id": "R_kgDORkolAw",
+      "category": "developer-tools",
+      "tags": [
+        "ai-agents",
+        "automation",
+        "cli",
+        "code-generation",
+        "workflow"
+      ],
+      "summary": "gstack packages an opinionated Claude Code setup of 23 agent tools that take on roles such as CEO, designer, engineering manager, release manager, doc engineer, and QA, aiming to automate a solo, AI-assisted software development and shipping workflow.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "af534d2c537c73f06a32076f64fc66f0c56e2518",
+        "repo_metadata_sha256": "3ad14b0347617d9ebfe6f66084587697170d03afdca842857f5900e64405ff59",
+        "fingerprint": "28eef05d555059e0ab21968803dbb82d63dd3663cbc29e13665ef8bd3b3ccb09"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-20T07:22:21Z"
+      }
+    },
+    {
+      "node_id": "R_kgDORkwSqw",
+      "category": "developer-tools",
+      "tags": [
+        "api",
+        "code-generation",
+        "documentation",
+        "sdk"
+      ],
+      "summary": "Official ECPay AI Skill package that installs into AI coding assistants such as Claude Code, GitHub Copilot CLI, Cursor, and Codex so they can generate ECPay payment API integration code, diagnose errors, and guide the full integration flow from natural-language requests, without manually reading the docs.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "d15de340ee82812b43fa3d6b8104d8494a1d4f5c",
+        "repo_metadata_sha256": "d1539b3b0e2c4b79848513a803b71b2e045f9e03423cd278656e1076abdbeb8b",
+        "fingerprint": "a7a3bb16910504532004723b0b44f3940cac164c8a404356c57ffe9d2b10463d"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-20T07:22:21Z"
+      }
+    },
+    {
+      "node_id": "R_kgDORlCGJw",
+      "category": "media-creative",
+      "tags": [
+        "ai-agents",
+        "documentation"
+      ],
+      "summary": "A framework-agnostic motion design skill for AI coding agents that teaches timing, easing, choreography, and Disney's 12 animation principles adapted for UI. It includes an 8-step checklist, motion personality archetypes, ready-made animation patterns, and reference tables, and works with CSS, Framer Motion, GSAP, Lottie, and Spring.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "aa631cc60eb17a3ff9fd4df6f03ddd466cc49efa",
+        "repo_metadata_sha256": "e26471f9f1a1a9291f40b10e624850a11552def198461a58eff22277e62af272",
+        "fingerprint": "a1735f1a35116614caf8a039c4d2a1a466b61690581d7b953cb7bcad8e8707d3"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-20T07:22:21Z"
+      }
     }
   ]
 }
