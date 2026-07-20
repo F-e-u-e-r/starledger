@@ -11178,6 +11178,134 @@
         "prompt_version": "classify-v1",
         "generated_at": "2026-07-19T23:23:14Z"
       }
+    },
+    {
+      "node_id": "R_kgDORbIaXQ",
+      "category": "devops-infrastructure",
+      "tags": [
+        "dashboard",
+        "monitoring",
+        "networking",
+        "real-time",
+        "self-hosted",
+        "visualization"
+      ],
+      "summary": "JT-GELFLOW is a self-hosted tool that ingests GELF network logs over UDP and TCP and visualizes real-time traffic through animated flow, 2D map, 3D globe, and Sankey views. It classifies internal and external zones by CIDR and streams graph updates to the browser over WebSocket.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "84be8919114ce710261f8a080b78d0f94c0e65dc",
+        "repo_metadata_sha256": "a1c670e24d318578e56ca96f4cf7ac802c86d29a61ef9a7578c30c5b551fa436",
+        "fingerprint": "b852cfd7999581140c80236b5d776f1591cbe58cacf2ffa4da5ebf5a0452b5f2"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-20T00:28:24Z"
+      }
+    },
+    {
+      "node_id": "R_kgDORbdrFg",
+      "category": "other",
+      "tags": [
+        "ai-agents",
+        "benchmark",
+        "cli",
+        "sdk"
+      ],
+      "summary": "A paper-trading simulator for Polymarket prediction markets aimed at AI agents. It executes orders level by level against live order books, models fees and slippage, supports limit orders and strategy backtesting, and exposes both a command-line interface and an MCP server with tools for agents.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "4a288b4c394423c529ab2df80776d08b75622872",
+        "repo_metadata_sha256": "5bce29a908c99645d873391c671babf2b1e891c9b2a033c63900dc45f4b8ce37",
+        "fingerprint": "b8288f511eb2cd72a3d9c975a8fb9dc2dc089997a64ae2ae797937429702c6a9"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-20T00:28:24Z"
+      }
+    },
+    {
+      "node_id": "R_kgDORbuSxw",
+      "category": "developer-tools",
+      "tags": [
+        "ai-agents",
+        "documentation",
+        "plugin",
+        "visualization"
+      ],
+      "summary": "A skill for coding agents such as Claude Code that generates Excalidraw diagrams from natural-language descriptions. It maps concepts to visual layouts, embeds code snippets and JSON as evidence, and includes a Playwright render pipeline so the agent can visually validate its output and fix layout issues before delivering.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "129290cd9d7d200d719aa237768cb1c27b1c97c1",
+        "repo_metadata_sha256": "66d7d9bf0bdfde7872ddaa6a6fdecc182521950c0a45da5099fc237b124f8431",
+        "fingerprint": "a2d2dd61286ee60580711afb189e6dd41b84362a07bd3bbeb4b79f21637f2629"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-20T00:28:24Z"
+      }
+    },
+    {
+      "node_id": "R_kgDORclJ2Q",
+      "category": "media-creative",
+      "tags": [
+        "ai-agents",
+        "automation",
+        "plugin"
+      ],
+      "summary": "A Claude Code skill that extracts embedded or downloaded subtitles from video files and YouTube URLs, or transcribes audio with the Whisper model when no subtitle track exists, then translates them into bilingual SRT files. It supports 19 languages and defaults to English to Traditional Chinese output.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "0a08543d1e97a97fde6afb6c36fddef66d7323ea",
+        "repo_metadata_sha256": "92270d3c7a1a3909d0e2570101a1dbbcbcbf058d7f120463716059faf12625f2",
+        "fingerprint": "4ee7495929237dab595b5817870611e4c167e52cc6415e4d84c4dd0abdc5c551"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-20T00:28:24Z"
+      }
+    },
+    {
+      "node_id": "R_kgDORclPyA",
+      "category": "ai-ml",
+      "tags": [
+        "ai-agents",
+        "automation",
+        "dashboard",
+        "orchestration",
+        "self-hosted",
+        "workflow"
+      ],
+      "summary": "Paperclip is an open-source Node.js server and React dashboard for orchestrating teams of AI agents. It models a company with org charts, roles, goals, budgets, governance, ticketing, and scheduled heartbeats, coordinating agents such as Claude Code, Codex, Cursor, and OpenClaw across one or many isolated companies.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "35f6849560179525fbdf550eef5eb419f6e73f26",
+        "repo_metadata_sha256": "653d800e43dfa5ffb2168bf970644e6326a00450521f624e82040d2e205c571c",
+        "fingerprint": "b8d1269ae121139acb3d0592874b6bc7db1a017e316b9402f1b8960053e0b98d"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-20T00:28:24Z"
+      }
     }
   ]
 }
