@@ -190,6 +190,26 @@ describe('planner — prioritization, budget, and trust', () => {
     expect(decisions.find((d) => d.node_id === 'R_b')?.bucket).toBe('skip-current');
   });
 
+  it('NOCHURN-1: a whole already-annotated corpus at current fingerprints plans zero jobs and fetches zero READMEs', async () => {
+    const config = aiConfig();
+    const repos = ['a', 'b', 'c', 'd', 'e'].map((s) => repo(s));
+    // Every repo is annotated at exactly the fingerprint its README OID will probe
+    // to, so a re-plan over the unchanged corpus is the offline analog of the owner's
+    // live `plan --current ai-annotations.json` quiet run (see docs/P3-ai-spec.md P3.5).
+    const source = sourceFor(repos); // README at oid === node_id for each
+    const annotations = repos.map((r) =>
+      makeAnnotationFor(r, expectedFingerprint(r, config, { path: 'README.md', oid: r.node_id }), {
+        path: 'README.md',
+        oid: r.node_id,
+      }),
+    );
+    const { manifest, decisions } = await plan({ repos, source, config, annotations });
+    expect(manifest.jobs).toHaveLength(0); // quiet run: nothing to classify
+    expect(decisions).toHaveLength(repos.length);
+    expect(decisions.every((d) => d.bucket === 'skip-current')).toBe(true);
+    expect(source.contentCalls).toHaveLength(0); // no README bytes downloaded on a no-churn run
+  });
+
   it('PLAN-3: per-bucket and total ceilings are never exceeded', async () => {
     const news = Array.from({ length: 20 }, (_, i) => repo(`n${i}`));
     const refs = Array.from({ length: 10 }, (_, i) => repo(`r${i}`));

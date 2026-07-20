@@ -476,14 +476,36 @@ bounded, manual backfill with exactly one executor enabled.
   `classifier verify-artifacts` passes on the committed pair, re-serializing the
   committed annotations is byte-identical, and the meta `annotations_sha256` +
   `annotation_count` match. So the assembler produces zero byte churn on an
-  unchanged set.
-- ⏳ **No-churn replay, live half — PENDING (credentialed).** Running
-  `classifier plan --current ai-annotations.json` against live README OIDs at the
-  current base (to prove the planner emits zero jobs) needs a `STAR_SYNC_TOKEN`
-  and is the owner's step; the offline checks above support but do not replace it.
+  unchanged set (`assemble.test.ts` ART-3). The planner half is covered by the
+  same offline seam: an unchanged README OID is bucketed `skip-current` and
+  emits no job without downloading content (`planner.test.ts` README-2, PLAN-2),
+  and a whole already-annotated corpus at current fingerprints plans zero jobs
+  and fetches zero READMEs (`planner.test.ts` NOCHURN-1). These fixtures stand in
+  for, but do not replace, the credentialed live replay below.
+- ⏳ **No-churn replay, live half — PENDING · OWNER VALIDATION REQUIRED.**
+  Running `classifier plan --current ai-annotations.json` against live README
+  OIDs at the current base needs a `STAR_SYNC_TOKEN` and can only be run by the
+  owner; the offline checks above support but do not replace it. Scope caveat:
+  "the planner emits zero jobs" holds only once every canonical repo is already
+  annotated at its current fingerprint. While the classification backlog is
+  draining (see the dated note below), a live `plan --current` run legitimately
+  emits jobs for the still-unannotated repos. Two distinct checkpoints follow,
+  and they must not be conflated:
+  - **Interim (allowed while draining):** a replay explicitly scoped to the
+    already-annotated subset may be recorded as intermediate evidence that
+    unchanged, annotated repos generate no work. It does **not** close P3.
+  - **Completion gate (required to mark P3 ✅ complete):** after the backlog
+    reaches zero, a full-corpus `plan --current ai-annotations.json` run must
+    emit **zero jobs**. Record that run's URL and its (zero) job count here —
+    that, together with a drained backlog, is what marks P3 complete.
 
-Existing fixture and no-op tests support this behavior but do not replace the
-required live planner replay.
+**Backlog drain — status (updated 2026-07-20).** Classification is incremental
+and still draining: 155 of 589 canonical repositories are annotated, so ~434
+remain. The daily `ai-state` executor continues to produce bounded artifact PRs
+(each ≤5 repos) until the backlog reaches zero; this is expected work, not
+churn. P3 status is therefore "implementation, publication, and visual UI
+complete; backlog draining; final owner-run credentialed no-churn replay
+pending" — **not yet ✅ complete**.
 
 `pnpm p3-gate` is the aggregate gate: typecheck, lint, format, the full test suite
 (AI schema drift, fingerprint/planner, injection fixtures, structural + provenance
@@ -494,8 +516,9 @@ build, and generated-schema drift.
 
 The contract, gate, and implementation conditions below are met and tested. Live
 artifact publication is verified, and (2026-07-08) the visible-dashboard check is
-DONE and the deterministic no-churn replay is verified offline; only the live
-credentialed planner replay remains pending the operational closeout above.
+DONE and the deterministic no-churn replay is verified offline; the backlog
+drain and the live credentialed planner replay remain pending per the
+operational closeout above.
 
 - canonical stars remain untouched by AI;
 - jobs are generated only by trusted deterministic code;
