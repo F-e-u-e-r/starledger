@@ -12185,6 +12185,134 @@
         "prompt_version": "classify-v1",
         "generated_at": "2026-07-20T22:22:30Z"
       }
+    },
+    {
+      "node_id": "R_kgDORmyMSA",
+      "category": "developer-tools",
+      "tags": [
+        "api",
+        "automation",
+        "cli",
+        "scraping"
+      ],
+      "summary": "A community collection of site adapters for bb-browser that turn websites into CLI commands, each running as a JavaScript function inside an already-logged-in browser session. It ships over 100 adapters across dozens of platforms, including search engines, social media, GitHub, developer tools, and finance sites, to fetch data without API keys or cookie extraction.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "14d883cbab9f6f9098cb349797b0e81b86be2a61",
+        "repo_metadata_sha256": "c8385cf938928684e9364752ae7eae835b403088a2d7e5b2f74dbea7aa280235",
+        "fingerprint": "249f97ac299de88f6499a99be6300aae3784f5f5705af1e9960e749c9c41b5a9"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-20T23:22:28Z"
+      }
+    },
+    {
+      "node_id": "R_kgDORnUjiw",
+      "category": "developer-tools",
+      "tags": [
+        "ai-agents",
+        "documentation",
+        "llm",
+        "plugin",
+        "visualization"
+      ],
+      "summary": "A Claude Code plugin that analyzes a codebase with a multi-agent pipeline and builds an interactive knowledge graph of every file, function, class, and dependency. It provides a searchable dashboard, guided tours, diff impact analysis, and business-domain mapping, and installs across Claude Code, Codex, Cursor, Copilot, and Gemini CLI.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "04efe8311e3cf56d088ac4c4f3da8378784205d2",
+        "repo_metadata_sha256": "62e848dbdb322b430c1c3fbeac8d9c92627e26ec7d87922955c93b9b4354bf3d",
+        "fingerprint": "dfd1bda89aaf6bf48b2b64b5b37a96a2cabc2aa310b16807feb994a12e0c2a7a"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-20T23:22:28Z"
+      }
+    },
+    {
+      "node_id": "R_kgDORnVkWQ",
+      "category": "data-analytics",
+      "tags": [
+        "api",
+        "cli",
+        "dashboard",
+        "machine-learning",
+        "real-time"
+      ],
+      "summary": "An open-source research project that uses brute-force computation and train/test validation to find statistical patterns between Donald Trump's social media posts and stock market movements. It analyzes thousands of Truth Social posts, tracks prediction markets, and exposes results through a live dashboard, REST API, command-line interface, and MCP server.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "ef6231d9511c65f73a72f981c9b9dfd23ca41e95",
+        "repo_metadata_sha256": "1e80e76f5c8fa4d1c305cb5591dc8c31984b79b99f88d7568e6a00bb7d02be7c",
+        "fingerprint": "3e48cb5af052578c657632de2f4aa30474b82a261b93f26e48b2071e25f1dc84"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-20T23:22:28Z"
+      }
+    },
+    {
+      "node_id": "R_kgDORnXgiw",
+      "category": "ai-ml",
+      "tags": [
+        "ai-agents",
+        "automation",
+        "bot",
+        "cli",
+        "llm",
+        "self-hosted"
+      ],
+      "summary": "An open-source, self-hostable AI agent platform written mostly in Rust that connects AI runtimes such as Claude Code, Codex, and Gemini to messaging channels like Telegram, LINE, and Discord over MCP. It bundles multi-LLM routing, conversation memory, 130+ MCP tools, local inference, security sandboxing, and an embedded web dashboard.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "f439121b206fb8bd567a9c3fd1c96dd042d8213f",
+        "repo_metadata_sha256": "e505edf6b120ad2a1c70ca4c153eaf68d11b0d90692d223a6c30721410a5f224",
+        "fingerprint": "4e76cdb4520945633046f6d0602c43abdaa5a952d874da0885ebc51715fad099"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-20T23:22:28Z"
+      }
+    },
+    {
+      "node_id": "R_kgDORoU8gg",
+      "category": "ai-ml",
+      "tags": [
+        "benchmark",
+        "llm",
+        "machine-learning"
+      ],
+      "summary": "Reference code for the paper Sparser, Faster, Lighter Transformer Language Models, providing sparse training code and custom CUDA kernels for H100 GPUs that exploit model sparsity through the TwELL packing format to increase inference and training throughput while cutting memory use. It ships pretrained sparse checkpoints and benchmarking scripts.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "52b70b4b409f68716083a8b189b445d1df5ada51",
+        "repo_metadata_sha256": "4b06476fdfcd27385134a717ebb8ced57f5739edced245dd46b4f901952c485a",
+        "fingerprint": "4a24411c5d63f7fb9b72065789dcaf2e16a653530d069798fea6f6bff068f579"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-20T23:22:28Z"
+      }
     }
   ]
 }
