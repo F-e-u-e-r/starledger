@@ -11306,6 +11306,136 @@
         "prompt_version": "classify-v1",
         "generated_at": "2026-07-20T00:28:24Z"
       }
+    },
+    {
+      "node_id": "R_kgDORcxyRg",
+      "category": "developer-tools",
+      "tags": [
+        "ai-agents",
+        "api",
+        "authentication",
+        "automation",
+        "cli",
+        "rest-api"
+      ],
+      "summary": "A Rust command-line tool for Google Workspace that builds its commands dynamically from Google's Discovery Service, covering Drive, Gmail, Calendar, Sheets, Docs, Chat, and Admin. It returns structured JSON output, handles OAuth2 authentication, and ships AI agent skills for automated workflows.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "04c532d0a6936d06d96c0572771feba4274a834e",
+        "repo_metadata_sha256": "3e9a94ad7a226201a59e3351b72a323c1176221240b4479ff442a01155e7bbf7",
+        "fingerprint": "d95eafa60008c0025d25469ec45b1674ebde34a1a7654d946311c029491661cc"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-20T01:24:25Z"
+      }
+    },
+    {
+      "node_id": "R_kgDORe9Fcg",
+      "category": "developer-tools",
+      "tags": [
+        "ai-agents",
+        "automation",
+        "cli",
+        "scraping",
+        "terminal"
+      ],
+      "summary": "A terminal-first Python CLI for Twitter/X that reads timelines, bookmarks, searches, and user profiles using browser-cookie authentication instead of API keys. It can post, reply, like, and retweet, and exports data as YAML or JSON for scripting and AI-agent integration.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "e033cd23c149cdf346648431c922315f77a519d4",
+        "repo_metadata_sha256": "3af7e88d3fa20e693312ce899b99ae26a6f20ca247f9b7337c22ddc8efae6ab0",
+        "fingerprint": "0ff40fbbf62f97558b083e385ac34eb7c84eac2518353054fb2cd588acf99af0"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-20T01:24:25Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOReM-5Q",
+      "category": "productivity-automation",
+      "tags": [
+        "frontend",
+        "gui",
+        "productivity",
+        "visualization"
+      ],
+      "summary": "A 3D WebGL viewer that renders an Obsidian vault as an interactive force-directed knowledge graph, built with Three.js, React, and TypeScript. Nodes float in space with bloom effects and can be arranged into shapes such as a brain, Saturn, spiral, or fractal trees, with folder-based colouring and tiered node sizing.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "b93dd7edbbd391ee82ea2a49cbf29487f5c4392a",
+        "repo_metadata_sha256": "8d32c65c53ae7c5cee74cb57a70faa35e4fe302bdaeb849bffb1e443b3d9b4c2",
+        "fingerprint": "5148fdd36b4d7023f342586933b4d9d23a515f97c1a7e807b78844b7db9be9f2"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-20T01:24:25Z"
+      }
+    },
+    {
+      "node_id": "R_kgDORec43Q",
+      "category": "ai-ml",
+      "tags": [
+        "ai-agents",
+        "code-generation",
+        "documentation",
+        "llm"
+      ],
+      "summary": "Official AI agent skills for GSAP, the GreenSock Animation Platform, that teach coding agents how to use GSAP correctly, covering the core API, timelines, ScrollTrigger, plugins, and framework integration for React, Vue, Svelte, and vanilla JavaScript. Distributed in the Agent Skills format for tools like Claude Code, Cursor, and Copilot.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "5b7def98e5c1ad79d49c01d133f9370ebd65a2c5",
+        "repo_metadata_sha256": "ff07ce4574462f9f9a55fc05654e3cd07ccb8b6b51affdde06a74efb81e4fbf3",
+        "fingerprint": "1d277fe7fb065cd7bd8bc5b8d20f65a9e74947044a3b88f3ce494a6dfc95a7b8"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-20T01:24:25Z"
+      }
+    },
+    {
+      "node_id": "R_kgDORelBDQ",
+      "category": "developer-tools",
+      "tags": [
+        "api",
+        "desktop-app",
+        "graphql",
+        "gui",
+        "rest-api",
+        "testing"
+      ],
+      "summary": "A privacy-first API client built with Tauri v2 as a lightweight, local alternative to Postman, using around 60 MB of RAM with no login or cloud. It stores requests as Git-friendly YAML on the filesystem and supports REST, GraphQL, WebSocket, SSE, gRPC, and MQTT, along with local mock servers and a JS and WASM plugin system.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "2fb1484d0577419b4e109517ebac709e3a9db462",
+        "repo_metadata_sha256": "4e12c117b280a836fda681288b1cb83e544b6fa9a6fab353a5d2619a48f3f7a2",
+        "fingerprint": "304a117433adbd7580fbfe7133a7912fbceda2236f5c7b10762f6ffdc0066063"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-20T01:24:25Z"
+      }
     }
   ]
 }
