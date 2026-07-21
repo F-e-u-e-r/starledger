@@ -14306,6 +14306,134 @@
         "prompt_version": "classify-v1",
         "generated_at": "2026-07-21T15:23:35Z"
       }
+    },
+    {
+      "node_id": "R_kgDOSRWXyw",
+      "category": "developer-tools",
+      "tags": [
+        "automation",
+        "dashboard",
+        "desktop-app",
+        "gui",
+        "networking",
+        "terminal"
+      ],
+      "summary": "KKTerm is a cross-platform native desktop workspace that unifies local terminals, SSH, SFTP, FTP, Telnet, serial, and RDP/VNC connections in mixed multi-pane tabs. It adds a customizable dashboard, IT Ops host and task management, isolated Workspaces, a Windows Install Helper, and an approval-gated AI assistant. Local-first with no telemetry.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "bc07e754214a05b02b2003f05a07c26d5b81ed10",
+        "repo_metadata_sha256": "edce51dd823874d76880c953831b41e3b844cef33b873d54cf4e753b420b6440",
+        "fingerprint": "5797137f2bdc3e8b3c1ca1db898e88183b2e2f389dd14b848de1495a49604c2d"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-21T16:24:05Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOSRkPEA",
+      "category": "education-reference",
+      "tags": [
+        "ai-agents",
+        "documentation",
+        "llm"
+      ],
+      "summary": "A plain-English glossary that defines the vocabulary of AI-assisted coding, covering models, tokens, context windows, tools, MCP, agents, failure modes such as hallucination, and workflow concepts like handoffs, memory, and compaction. Aimed at making AI coding terminology approachable for developers.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "9138b6ce198675c2a6aad853e5034bc24d0b103b",
+        "repo_metadata_sha256": "0a7fd7cc958e69d22ed7223249186dbfd448900d823ea9bb451c87da56f4d533",
+        "fingerprint": "e4ce8b0d42f2279bca9ccf8409d27b84c0a88ae9dcee0c26b7717e7ed547ca41"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-21T16:24:05Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOSUBmOQ",
+      "category": "developer-tools",
+      "tags": [
+        "ai-agents",
+        "automation",
+        "llm",
+        "plugin",
+        "workflow"
+      ],
+      "summary": "Claude Pilot Suite is an opinionated execution playbook for Claude Code, packaged as auto-loaded rules and on-demand skills. It provides three pilot modes: cost-first Haiku, quality-first Sonnet, and ceiling-elevation Opus, with quantitative escalation gates, sub-agent delegation strategies, and pre-flight self-verification checks.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "f35a19e5b0186b139e13ecc8c64d3f19629c902b",
+        "repo_metadata_sha256": "77604961a87d1b1652dc61167ad1b3c056326927671d158aaac8cc09acaba609",
+        "fingerprint": "eef617deb2c5c22b6d4c17ffc8774cda98a8539a35d2d2a20fc119240e5b30b2"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-21T16:24:05Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOSUVjWA",
+      "category": "education-reference",
+      "tags": [
+        "ai-agents",
+        "awesome-list",
+        "documentation",
+        "llm"
+      ],
+      "summary": "A trilingual (Traditional Chinese, Simplified Chinese, English) learning roadmap for agentic AI, structured in eight stages from LLM basics to building multi-agent systems. It curates 240+ projects and resources, offers separate CLI-user and agent-builder tracks, and includes hands-on starter exercises.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "5d39dc86ce590ab40d61bd5739324ed11a826e30",
+        "repo_metadata_sha256": "1c4a0f966f492263a8d813d99625479e014b2e41739362af7cdbb693101c165d",
+        "fingerprint": "900b0e7687927449eeba8a100f2fb4c862899042de0641afa12568f640783f21"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-21T16:24:05Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOSVvFfg",
+      "category": "developer-tools",
+      "tags": [
+        "api",
+        "automation",
+        "configuration",
+        "desktop-app",
+        "llm"
+      ],
+      "summary": "Codex++ is an external launcher and management tool for the OpenAI Codex and ChatGPT desktop app. Using the Chromium DevTools Protocol and a local helper service, it adds provider switching, protocol conversion, session management, and interface enhancements without modifying the official application. Built with Tauri and Rust.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "f6bcd6dc5903a784e2ec6d45b5dbc8d341e98c2f",
+        "repo_metadata_sha256": "e1cb62b1182ad0fa895f965b434db4a0b5bd664fe5ded59332a2faa74bcdcaf3",
+        "fingerprint": "36cfa7eb5f76b4387af5c50ebed6c6044acca4a69dc77d5f1605e52d719091da"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-21T16:24:05Z"
+      }
     }
   ]
 }
