@@ -12558,6 +12558,126 @@
         "prompt_version": "classify-v1",
         "generated_at": "2026-07-21T01:22:28Z"
       }
+    },
+    {
+      "node_id": "R_kgDORstWcA",
+      "category": "developer-tools",
+      "tags": [
+        "ai-agents",
+        "cli",
+        "real-time"
+      ],
+      "summary": "An MCP server that lets multiple Claude Code instances on one machine discover each other and exchange ad-hoc messages. A local broker daemon backed by SQLite registers each session and pushes inbound messages instantly, with tools to list peers, send messages, and set a working summary.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "29a7ea1b0df33dda45886b0672981baf1805df61",
+        "repo_metadata_sha256": "696978f07c786660e82f5f6fddd4f1541f06a14fb9e7e8ae55061cf059389f69",
+        "fingerprint": "7aae919f1b37447ee11f2f3a40b099fc8767df7dd2223b6868ebf36bcdbc062b"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-21T02:23:16Z"
+      }
+    },
+    {
+      "node_id": "R_kgDORtXeKQ",
+      "category": "communication-collaboration",
+      "tags": [
+        "bot",
+        "dashboard",
+        "real-time",
+        "sdk",
+        "self-hosted"
+      ],
+      "summary": "A self-hosted, open-source WeChat bot management and message relay platform built on the iLink protocol. It binds multiple accounts via QR code, manages them from a web dashboard, and forwards messages through an app marketplace, WebSocket, webhook, and AI auto-reply, with SDKs in seven languages.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "6d87ef9c0ce184abc569aef6ccb460db1f54c3a6",
+        "repo_metadata_sha256": "7b8d695c897e26f24ffe276f4c781dbbe1bd5d494ab22baaa659efb265bcefcf",
+        "fingerprint": "b67ffdf58bbc61dd5337102d9b8f1dd7db97e9d5c23a8eccc52fe77441299920"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-21T02:23:16Z"
+      }
+    },
+    {
+      "node_id": "R_kgDORtk9YA",
+      "category": "ai-ml",
+      "tags": [
+        "benchmark",
+        "caching",
+        "llm",
+        "machine-learning"
+      ],
+      "summary": "A fork of llama.cpp that adds delta encoding for KV cache compression, storing periodic keyframes and quantizing per-token differences to cut quantization error at the same storage cost. It also includes a weight-skip prediction kernel, with GPU kernels for CUDA and ROCm and reported perplexity benchmarks.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "05735411cb345b473ee8f7df1c12caf879d95d38",
+        "repo_metadata_sha256": "45ad468ce2526d8de251fc7f54dc3c7591f2e636369e29f1f59573ff17140130",
+        "fingerprint": "607afa2925e216d108d0179ecfc16767ab493b9d7d8f47d6f97d84618451ddcf"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-21T02:23:16Z"
+      }
+    },
+    {
+      "node_id": "R_kgDORuby8g",
+      "category": "security-privacy",
+      "tags": [],
+      "summary": "An Objective-C reimplementation of the DarkSword iOS kernel exploit, based on a previously leaked original and stated to target iOS 15.0 through 26.0.1 with offsets hardcoded for the 15.x series. It is published as uncompiled exploit code for security research on end-of-life devices.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "191b78a6bfc4c4a2f399efc5997f881eb89c5155",
+        "repo_metadata_sha256": "3288fdf5cfa2509764da6311c7e8b04cce6b61ded775d76a79c40bb2a941d09e",
+        "fingerprint": "cc4d81eb526e18dcccd4aebd0836628b950d1a85f846d9559136e608fea521f1"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-21T02:23:16Z"
+      }
+    },
+    {
+      "node_id": "R_kgDORvCTIg",
+      "category": "developer-tools",
+      "tags": [
+        "ai-agents",
+        "automation",
+        "cli",
+        "scraping"
+      ],
+      "summary": "A fast, memory-safe command-line tool written in Rust that fetches information from 55-plus websites such as Twitter, Reddit, and YouTube with a single command. It reuses browser sessions, defines adapters through declarative YAML pipelines, offers AI-assisted adapter discovery, and passes through external CLIs like gh, docker, and kubectl.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "ba3a824204b7f238713ce854dd82fe4ad0a842b0",
+        "repo_metadata_sha256": "818d920ef3bdaf2d90830d94441fc1f9ea3995c93dc090065597662c084ceb9a",
+        "fingerprint": "9bf11863c5f5dff51e4e9f84f2ad0ed19f1c27ff56730fd5fe537ee39ee2f4f2"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-21T02:23:16Z"
+      }
     }
   ]
 }
