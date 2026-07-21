@@ -26,6 +26,30 @@
       }
     },
     {
+      "node_id": "MDEwOlJlcG9zaXRvcnk0ODc2OTI0MQ==",
+      "category": "media-creative",
+      "tags": [
+        "frontend",
+        "real-time",
+        "self-hosted"
+      ],
+      "summary": "Penpot is an open-source design and prototyping platform for teams building digital products at scale. It supports self-hosting, real-time collaboration, and open standards such as SVG, CSS, HTML, and JSON, expressing designs as code so developers can translate them directly.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "5a1d6d60c2315790368230a3832aa0c093ac6b22",
+        "repo_metadata_sha256": "d4ac5a7d25d1ce0486bc2c5dada3f36a568177c938afe08398a973f37addaff2",
+        "fingerprint": "d6ca1c0ef40e8f517aa95d2bf125afc34fcadf6ce8420e650c7ff3042cc17dc6"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-21T08:31:56Z"
+      }
+    },
+    {
       "node_id": "MDEwOlJlcG9zaXRvcnk1Mjk1MDI=",
       "category": "libraries-frameworks",
       "tags": [
@@ -2127,6 +2151,30 @@
       }
     },
     {
+      "node_id": "R_kgDOK1bNkg",
+      "category": "productivity-automation",
+      "tags": [
+        "automation",
+        "cli",
+        "workflow"
+      ],
+      "summary": "social-auto-upload is a Python automation tool that publishes video content to multiple social media platforms, including Douyin, Bilibili, Xiaohongshu, Kuaishou, WeChat Channels, Baijiahao, TikTok, and YouTube. It supports scheduled publishing and extensible per-platform uploader modules configured through example scripts.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "c4920f86458395697340132324b5b587c5b888a8",
+        "repo_metadata_sha256": "0378444de08e018c26552c718def1f08f9ef2fa747b6c765240c8d0e7deedf41",
+        "fingerprint": "b1b7f218c35584d1249d3aacf0a4cfbb61b6e764842444f780cc34c28ed7dee1"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-21T08:31:56Z"
+      }
+    },
+    {
       "node_id": "R_kgDOKALCgQ",
       "category": "ai-ml",
       "tags": [
@@ -3263,6 +3311,30 @@
       }
     },
     {
+      "node_id": "R_kgDOMBgCEg",
+      "category": "libraries-frameworks",
+      "tags": [
+        "frontend",
+        "library",
+        "theme"
+      ],
+      "summary": "cult/ui is a collection of accessible, customizable React UI components styled with Tailwind CSS and compatible with Shadcn. Components can be copied and pasted or installed to assemble a custom component library, and the project also provides Next.js templates and AI agent interface patterns.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "3280bd4289ffd62d8bca288ef05e1273f74de26d",
+        "repo_metadata_sha256": "1369b2af6f1cfc475da31b99c0e18bca281a9a936068a60a468d168e1a756fe1",
+        "fingerprint": "3ed39136d292b9ea0fb42654f0fb118f6d0a83d65170d797b414413fd15a5c74"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-21T08:31:56Z"
+      }
+    },
+    {
       "node_id": "R_kgDOMCtNDQ",
       "category": "web-applications",
       "tags": [
@@ -3466,6 +3538,29 @@
       }
     },
     {
+      "node_id": "R_kgDOMbWZbQ",
+      "category": "ai-ml",
+      "tags": [
+        "llm",
+        "machine-learning"
+      ],
+      "summary": "KTransformers is a flexible research framework for efficient large language model inference and fine-tuning through CPU-GPU heterogeneous computing. It exposes high-performance kt-kernel serving and supervised fine-tuning via LLaMA-Factory, with day-zero support for a range of recent open models.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "819dda00ec4029f00bc6522bc7dd7499cc4ed807",
+        "repo_metadata_sha256": "8f840d968dce1502b44d8cc1bb4ffb3ef795f9fdd9e9bb2b7a4d80bc86173bd8",
+        "fingerprint": "a073db4630a7929151bdb781bf9fc27f92ccb8a8032ab78617ca6d0a57410202"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-21T08:31:56Z"
+      }
+    },
+    {
       "node_id": "R_kgDOMbt5gA",
       "category": "ai-ml",
       "tags": [
@@ -3640,6 +3735,30 @@
         "model_label": "informational-only",
         "prompt_version": "classify-v1",
         "generated_at": "2026-07-16T15:23:19Z"
+      }
+    },
+    {
+      "node_id": "R_kgDON4iw7g",
+      "category": "ai-ml",
+      "tags": [
+        "ai-agents",
+        "llm",
+        "search"
+      ],
+      "summary": "Agentic Company Researcher is a multi-agent tool that generates comprehensive company research reports. A pipeline of specialized AI agents gathers, curates, and synthesizes data from company websites, news, and financial sources, using Tavily for relevance scoring and a dual-model backend for synthesis and report editing.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "bbd90404d6694283445f04133d6fba0a58f80c91",
+        "repo_metadata_sha256": "4fbc02eae508762d9f343063261166eb11f167fe17a97f2e93cc09e8c234bf16",
+        "fingerprint": "acba1ee218d720573d2afc4954d0b61c2bfea7efef9d2d396edd5cdec5fb25d3"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-21T08:31:56Z"
       }
     },
     {
