@@ -10713,6 +10713,32 @@
       }
     },
     {
+      "node_id": "R_kgDORQcoNw",
+      "category": "productivity-automation",
+      "tags": [
+        "desktop-app",
+        "editor",
+        "gui",
+        "markdown",
+        "productivity"
+      ],
+      "summary": "Tolaria is an open-source desktop application for macOS, Windows, and Linux that manages markdown knowledge bases. Notes are stored as plain markdown files with YAML frontmatter, every vault is a git repository that works offline, and the app is built with Tauri, React, and TypeScript.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "419f156233d367500174302c33941813e05af39d",
+        "repo_metadata_sha256": "044846661dcbcc11c1076f6fd8d9d1badea8fc1120bb297f362f5db0f85709fa",
+        "fingerprint": "bef45cce460b2619fac008a784068b6547eaba678ceb0d2bfe648b413ce68f99"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-21T11:22:43Z"
+      }
+    },
+    {
       "node_id": "R_kgDORQePuw",
       "category": "ai-ml",
       "tags": [
@@ -11426,6 +11452,33 @@
         "model_label": null,
         "prompt_version": "classify-v1",
         "generated_at": "2026-07-19T22:23:44Z"
+      }
+    },
+    {
+      "node_id": "R_kgDORZsJNQ",
+      "category": "developer-tools",
+      "tags": [
+        "ai-agents",
+        "benchmark",
+        "cli",
+        "llm",
+        "search",
+        "visualization"
+      ],
+      "summary": "code-review-graph is a local-first Python tool that builds a structural graph of a codebase with Tree-sitter and serves precise context to AI coding assistants through MCP and a CLI. It supports incremental updates, blast-radius impact analysis, semantic search, and a GitHub Action for risk-scored pull request reviews.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "48188036da3adaf8cba68566656e1e3624976af4",
+        "repo_metadata_sha256": "4ed087a9f7a5ccc9727ee6c339968ba910dde4525a1c81e2cb5e041215eb0602",
+        "fingerprint": "602b75f747417a45c0b79202a657af332b1f3f17f19a20c37fb31fe5cc160585"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-21T11:22:43Z"
       }
     },
     {
@@ -12665,6 +12718,31 @@
       }
     },
     {
+      "node_id": "R_kgDORncjDg",
+      "category": "productivity-automation",
+      "tags": [
+        "ai-agents",
+        "automation",
+        "cli",
+        "productivity"
+      ],
+      "summary": "OfficeCLI is a free, open-source, single-binary command-line Office suite that lets AI agents create, read, edit, and automate Word, Excel, and PowerPoint files without a local Office installation. A built-in HTML rendering engine reproduces documents as HTML or PNG so agents can preview and correct their output.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "7530b03caa7180f7fd11edacb72d3c3c173e0933",
+        "repo_metadata_sha256": "4cab050b7c444a5920a5432f90f0ca3ef085c0de0ab8e96952d093e9f0a2483c",
+        "fingerprint": "d3c2fbf29dbacff66fb3fe6f123aaf8dc9da22798cc5a6f75f1e25fa7acf5a06"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-21T11:22:43Z"
+      }
+    },
+    {
       "node_id": "R_kgDORoU8gg",
       "category": "ai-ml",
       "tags": [
@@ -13685,6 +13763,56 @@
         "model_label": null,
         "prompt_version": "classify-v1",
         "generated_at": "2026-07-21T07:30:39Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOS5qzYw",
+      "category": "other",
+      "tags": [
+        "ai-agents",
+        "llm",
+        "plugin",
+        "visualization"
+      ],
+      "summary": "A SKILL.md-standard skill for AI agents such as Claude, Codex, and Cursor that computes Chinese BaZi and Zi Wei Dou Shu astrology charts using deterministic algorithms rather than the language model, offers three analysis modes, and renders an ink-style single-file HTML chart poster. Provided for cultural and entertainment reference.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "11cd3d1ca8e91c6c0540fd439753b3e844cc876a",
+        "repo_metadata_sha256": "eceb9f781950517c00c7100a8ef0cf49e545af78f1e603210b235112c22f721b",
+        "fingerprint": "586d2d2e6f23acf9767884b51da02e3836eefb5055baa83ffa789dba3eb332dd"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-21T11:22:43Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOS6hSLg",
+      "category": "communication-collaboration",
+      "tags": [
+        "ai-agents",
+        "api",
+        "automation",
+        "cli"
+      ],
+      "summary": "A Claude Code Skill and toolkit for publishing to Meta Threads through its API, covering the full setup flow from a Meta app to a long-lived token, multi-post threading with images, an executable shell posting script, and Chrome automation guides for AI-driven workflows.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "dadfd18a535be4f526c837b8ac6e50a9e37cf510",
+        "repo_metadata_sha256": "40f21ae5a9b425e25a8536977199210b734d43a44e3978ab5b6a4e484a878cd5",
+        "fingerprint": "a8da2b32c27caaa51ef7b49030c25d6e32cabf7829074296dc38e0e70ef36b29"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-21T11:22:43Z"
       }
     }
   ]
