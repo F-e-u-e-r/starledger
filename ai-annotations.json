@@ -14064,6 +14064,126 @@
         "prompt_version": "classify-v1",
         "generated_at": "2026-07-21T13:23:21Z"
       }
+    },
+    {
+      "node_id": "R_kgDOSGF1zA",
+      "category": "ai-ml",
+      "tags": [
+        "library",
+        "llm",
+        "machine-learning"
+      ],
+      "summary": "OpenMythos is an open-source Python implementation of a Recurrent-Depth (looped) Transformer, presented as a theoretical reconstruction built from public research. It pairs a Prelude, a looped Recurrent Block, and a Coda, offers switchable MLA or GQA attention and a sparse mixture-of-experts feed-forward, and ships pre-configured model scales.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "688ca025fa31d2c55f6e2b53fb1d94aa8f84fb54",
+        "repo_metadata_sha256": "68177cd05cab88cb5ac2b0f44038978a7e5249afe4cacd819d583fe49f704e9f",
+        "fingerprint": "ffa9fd2dcc9fee5a268705e6e941315b5ace3db0364332504311c525b4ebfd11"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-21T14:24:09Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOSHQfjw",
+      "category": "developer-tools",
+      "tags": [
+        "database"
+      ],
+      "summary": "pgrust is a from-scratch rewrite of the PostgreSQL database server in Rust that targets Postgres 18.3 compatibility. It is disk-compatible and can boot from an existing Postgres data directory, matching expected output across more than 46,000 regression queries. It is built with AI-assisted programming and is not yet production-ready.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "6dfacad4fe6b54fe9789478683b6fbba844f2dc7",
+        "repo_metadata_sha256": "1415cba6309cb37f717188e919902c6ccc26687c1001c0ab3c7ef7a7473acc45",
+        "fingerprint": "00908ad4dac0e2cc5a48606e3d022ef24d46e0e088e4a34fbd6f0223611ac4e3"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-21T14:24:09Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOSJuUpg",
+      "category": "ai-ml",
+      "tags": [
+        "benchmark",
+        "cli",
+        "llm"
+      ],
+      "summary": "MingLi-Bench is a benchmark for evaluating large language models on Chinese traditional fortune telling, covering Bazi and Ziwei Doushu. It provides 160 normalized multiple-choice questions across twelve life aspects, scored by exact match against ground-truth answers, with a command-line runner that routes to models via OpenRouter or native providers.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "dc402c1608a691e5bb94ff14d95fe284098a925b",
+        "repo_metadata_sha256": "7b3fd6b9d5261f55aaa392c07af7dd5016099208315e3d343280994486e55676",
+        "fingerprint": "fa56a81b39df1fa0ad1d1ec2d4c174c4c77f05434678dcb91906bce70eba389a"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-21T14:24:09Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOSKO1KA",
+      "category": "ai-ml",
+      "tags": [
+        "ai-agents",
+        "api",
+        "cli",
+        "scraping",
+        "search"
+      ],
+      "summary": "AgentKey is a plugin and hosted MCP server that gives AI agents unified access to external data, including web search, web scraping, social and content platforms, on-chain and crypto data, finance, and e-commerce, through a single subscription. One install command configures supported agents such as Claude Code, Codex, and Cursor.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "56bf439c0c923e68068930f8a4daff2dad03443c",
+        "repo_metadata_sha256": "51d81c0096a7a5993be303f690fefcde75ee2c12a439baad6976604d4c68cb35",
+        "fingerprint": "6a4dbd19e01d7eba2c228d1cdd3a654530601524efe93cb33d42fb5e882db632"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-21T14:24:09Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOSLJK_w",
+      "category": "ai-ml",
+      "tags": [
+        "ai-agents",
+        "cli",
+        "plugin"
+      ],
+      "summary": "Claude Video is a /watch skill and plugin that lets Claude analyze any video. It downloads with yt-dlp, extracts scene-aware frames with ffmpeg, and builds a timestamped transcript from native captions or a Whisper fallback, then hands the frames and transcript to Claude so it can answer grounded in what was seen and heard.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "8c44cf24840ea019edbe1f26dcab823bb3a8844f",
+        "repo_metadata_sha256": "73a8a0a63ccae2bf866eee92da880c6344f61a18d1ca806d9d3a7af28959163a",
+        "fingerprint": "016f7bf61398985395f75afcc16a167d9e42034af010eb502a21d0a4c55e0e6b"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-21T14:24:09Z"
+      }
     }
   ]
 }
