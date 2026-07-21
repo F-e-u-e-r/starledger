@@ -14434,6 +14434,132 @@
         "prompt_version": "classify-v1",
         "generated_at": "2026-07-21T16:24:05Z"
       }
+    },
+    {
+      "node_id": "R_kgDOSWHWUg",
+      "category": "ai-ml",
+      "tags": [
+        "benchmark",
+        "cli",
+        "llm",
+        "machine-learning",
+        "networking"
+      ],
+      "summary": "DwarfStar is a small, self-contained native inference engine written in C, optimized for running DeepSeek V4 Flash, GLM 5.2, and DeepSeek V4 PRO models locally across Metal, CUDA, and ROCm backends. It supports SSD streaming for models larger than RAM, distributed pipeline and tensor parallelism, and speculative decoding.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "2654c65776d5de4b38a4176c8581a032b6602063",
+        "repo_metadata_sha256": "9161a358c9157c66744c366afeac4a221ff83a0f53748b2365c7d051848c8953",
+        "fingerprint": "ef3a24e8d9425c79fa27142b2ef9fcaee2972b5b24b80114e2e260b5b92c28fc"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-21T18:23:19Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOSWRTEw",
+      "category": "productivity-automation",
+      "tags": [
+        "automation",
+        "cli",
+        "productivity"
+      ],
+      "summary": "A cross-platform command-line utility that strips shared leading indentation and trailing whitespace from clipboard text and pastes it back as plain text. It integrates with Karabiner-Elements on macOS via Option+V and AutoHotkey on Windows via Win+V, and can also be installed as an npm CLI.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "a4f2d3042f74440f2834eb2eddc5ccecf5408dc3",
+        "repo_metadata_sha256": "5daf207e070f461030a53a42018f16cb405a477d49f5e5d655a72fbf47a75ba4",
+        "fingerprint": "f3b04f419c7b61ca2e36b4ef71550ad8b51bc7f3fea0cc65958b95fad79bc657"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-21T18:23:19Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOSYKDUw",
+      "category": "libraries-frameworks",
+      "tags": [
+        "cli",
+        "desktop-app",
+        "frontend",
+        "gui",
+        "sdk"
+      ],
+      "summary": "Native SDK is a toolkit for building native desktop applications where views are declarative markup and app logic is TypeScript or Zig compiled to native code at build time. Its own engine renders every pixel into real OS windows with no browser, WebView, or JavaScript runtime, and it ships a CLI, component catalog, and built-in automation server.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "cc7e23cb927e2282f8a5b97fed648d36fead3d0a",
+        "repo_metadata_sha256": "2bd42887083757ffe2ec2de3da348772a7d133d45b5519413a1946529cdfeb90",
+        "fingerprint": "c93de8aef4d038898334690845c5cd08148bf3c22660c38ee4d2b68540a9d25a"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-21T18:23:19Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOSZ4a8Q",
+      "category": "ai-ml",
+      "tags": [
+        "ai-agents",
+        "api",
+        "database",
+        "llm"
+      ],
+      "summary": "Twinkle Hub is a community feedback and feature-request repository for hub.twinkleai.tw, an MCP-as-a-Service that connects AI clients such as Claude Desktop and Cursor to Taiwan government open datasets, procurement records, and localized utility tools through a single Bearer token. The repository itself contains no source code.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "ee041aca342068bd9230b3cf06e5dc67fe075d31",
+        "repo_metadata_sha256": "c7ee66b9050de42a82a25732965d660a60fc854a3560b2bfd7884dcba62056f5",
+        "fingerprint": "79e933d814ddf1a121498cf61d53f062b686513623d21dc402fcd0319e5780a6"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-21T18:23:19Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOSZ9GvQ",
+      "category": "productivity-automation",
+      "tags": [
+        "automation",
+        "cli",
+        "proxy",
+        "scraping"
+      ],
+      "summary": "A Python command-line toolchain that batch-discovers, validates, and price-checks ChatGPT Team and Business promotional codes across 17 countries. It rotates proxy nodes through a Clash client, queries eligibility APIs, and generates Stripe checkout links for the codes it identifies.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "ebe858eeb0d73f07ee84e743ba291f4dab1d9e97",
+        "repo_metadata_sha256": "376da51751adc96620f80e5e20b863ef07ab37bf8d3ded7c5dac95725e1f4dc5",
+        "fingerprint": "9346effe0147ce0e31f7fe8d68f26d91b388f44fae6ac861c02d0d6d086435cf"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-21T18:23:19Z"
+      }
     }
   ]
 }
