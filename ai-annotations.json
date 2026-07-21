@@ -4367,6 +4367,32 @@
       }
     },
     {
+      "node_id": "R_kgDONif6fg",
+      "category": "productivity-automation",
+      "tags": [
+        "desktop-app",
+        "llm",
+        "productivity",
+        "real-time",
+        "self-hosted"
+      ],
+      "summary": "A privacy-first, self-hosted AI meeting assistant for macOS and Windows that runs entirely on local hardware. It provides live speech-to-text transcription via Whisper and Parakeet, speaker diarization, and meeting summaries generated with Ollama, requiring no cloud services.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "a62e67055589d2a1ee764c48126c30ac8dd4f999",
+        "repo_metadata_sha256": "268b29a9659a4603b0c8f10197514dd0f022bfa4ba96ad05f92559eea3410a8b",
+        "fingerprint": "7c186dcba2ea206610ed3fc6bd8fa1ea3c8f424de77a4d937b13355143f24fba"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-21T09:22:36Z"
+      }
+    },
+    {
       "node_id": "R_kgDONjF_4A",
       "category": "ai-ml",
       "tags": [
@@ -5397,6 +5423,29 @@
       }
     },
     {
+      "node_id": "R_kgDOOjqi0Q",
+      "category": "education-reference",
+      "tags": [
+        "documentation",
+        "llm"
+      ],
+      "summary": "A regularly updated reference collection of extracted system prompts from a range of AI chatbots and coding assistants, including models from Anthropic, OpenAI, Google, and xAI. It documents the hidden instructions these assistants receive, as a resource for studying prompt engineering.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "91ac0063a6ba1cbe8dcbe169decbfc85abb2f892",
+        "repo_metadata_sha256": "ca2093bed223d3d26f96355bfcc3668cd9ccc59431f62d1fd5c672a4d381c4ce",
+        "fingerprint": "91cdacc321079edf6593bfaa838a45ba62a745a3958c55f0126be0c04735e9f3"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-21T09:22:36Z"
+      }
+    },
+    {
       "node_id": "R_kgDOOlTIcA",
       "category": "productivity-automation",
       "tags": [
@@ -5591,6 +5640,30 @@
         "model_label": "informational-only",
         "prompt_version": "classify-v1",
         "generated_at": "2026-07-17T23:23:08Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOP1PUAQ",
+      "category": "ai-ml",
+      "tags": [
+        "ai-agents",
+        "automation",
+        "llm"
+      ],
+      "summary": "An in-page JavaScript agent that lets users control any web interface using natural language. It manipulates the page DOM as text rather than screenshots, works with most mainstream or locally deployed LLMs, and offers an optional browser extension and MCP server for multi-page tasks.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "b938a23b71791bd66aa76dcf735013eea24b73b8",
+        "repo_metadata_sha256": "28be48e8062e0af8f34868b0d4279e41138e165bb993d69a399bdc1c856958d9",
+        "fingerprint": "502a82f08abd35891db3389c65f877d1179764babc5793d96a4be3777393cd7c"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-21T09:22:36Z"
       }
     },
     {
@@ -6289,6 +6362,32 @@
       }
     },
     {
+      "node_id": "R_kgDOPbFNkw",
+      "category": "developer-tools",
+      "tags": [
+        "ai-agents",
+        "cli",
+        "llm",
+        "sdk",
+        "tui"
+      ],
+      "summary": "A TypeScript toolkit for building AI agents, bundling a unified multi-provider LLM API, an agent runtime with tool calling and state management, a terminal UI library with differential rendering, and an interactive, self-extensible coding agent CLI.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "900779b0ab4890ef35077bbfa45c746780506899",
+        "repo_metadata_sha256": "7837b08577eebb835b69ac4f90fe5897a34a70a556b0e121d511d9c40ff77c1f",
+        "fingerprint": "1f1586a03e369c0e23a09437c49918685526c559356d358be61aedc46a705a6a"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-21T09:22:36Z"
+      }
+    },
+    {
       "node_id": "R_kgDOPcM8RA",
       "category": "ai-ml",
       "tags": [
@@ -6778,6 +6877,30 @@
         "model_label": null,
         "prompt_version": "classify-v1",
         "generated_at": "2026-07-18T09:23:29Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOQ1Ybwg",
+      "category": "developer-tools",
+      "tags": [
+        "ai-agents",
+        "automation",
+        "scraping"
+      ],
+      "summary": "A collection of production-grade web scraping and automation skills for AI coding agents such as Claude Code, Cursor, and Codex. Backed by the Apify platform, it lets agents scrape major sites, build and deploy serverless Actors, and reuse a curated library of existing Actors.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "797f5c26ad71acef330fde4b631161f1fa408571",
+        "repo_metadata_sha256": "22ddf65552a2101f2509a5d0870dfbd420e24559d84cdddd1600cafeead40611",
+        "fingerprint": "eec48285a9a7697a23b57634fa2660783f3569ca550f47472a1871ebef90da46"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-21T09:22:36Z"
       }
     },
     {
