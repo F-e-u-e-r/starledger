@@ -1,0 +1,43 @@
+name: P3 completion check
+
+# Read-only, owner-run gate for the P3 completion condition
+# (see docs/P3-completion-runbook.md). It is DORMANT: manual `workflow_dispatch`
+# only, no schedule. It never writes, commits, pushes, opens a PR, or uploads the
+# manifest — it only reports counts + SHAs and fails unless the full-corpus,
+# zero-job gate is satisfied. Building/merging it does NOT mark P3 complete.
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: p3-completion-check
+  cancel-in-progress: true
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      # Always the default/protected branch — never an arbitrary dispatch ref.
+      - uses: actions/checkout@93cb6efe18208431cddfb8368fd83d5badbf9bfd # v5
+        with:
+          ref: ${{ github.event.repository.default_branch }}
+          persist-credentials: false
+
+      - uses: pnpm/action-setup@0ebf47130e4866e96fce0953f49152a61190b271 # v6
+      - uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v5
+        with:
+          node-version-file: .nvmrc
+          cache: pnpm
+
+      - run: pnpm install --frozen-lockfile
+
+      # STAR_SYNC_TOKEN is used ONLY for the planner's live README reads.
+      # The script fails the job unless: node_id set equality (missing=extra=
+      # duplicates=0) AND planned jobs=0 AND omitted-unfetchable=0.
+      - name: P3 completion gate (full-corpus, zero-job)
+        env:
+          STAR_SYNC_TOKEN: ${{ secrets.STAR_SYNC_TOKEN }}
+        run: node scripts/p3-completion-check.mjs

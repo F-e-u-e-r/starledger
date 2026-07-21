@@ -74,24 +74,21 @@ fixtures cannot substitute for.
 
 ### For the "hosted run URL" the gate requires — one approved path
 
-The completion condition requires a **hosted** run URL, not just local terminal output. The one
-approved way to obtain it is a **dedicated, read-only `workflow_dispatch` completion-check job** —
-**not** a reuse of the stateful `ai-state` executor. Reasons: the completion replay forbids
-`--save-state`; the verification job must write no branch/state; and the audit evidence must be a
-clean, side-effect-free run whose URL, SHA, and log are unambiguous. Build that workflow later, in
-its own narrow PR once the backlog is drained; it must be bounded to:
+The completion condition requires a **hosted** run URL, not just local terminal output. That
+workflow **now exists** — **`.github/workflows/p3-completion-check.yml`** (logic in
+`scripts/p3-completion-check.mjs`) — as a **dormant**, read-only `workflow_dispatch` job, built
+ahead of time so the corpus cannot drift while a workflow PR waits on review/CI/merge. It is
+deliberately **not** a reuse of the stateful `ai-state` executor: the completion replay forbids
+`--save-state`, so the job writes no branch/state, opens no PR, holds no write permission, checks
+out the default/protected branch (no arbitrary `ref`), and uses `STAR_SYNC_TOKEN` only for live
+README reads. It reports base SHA, dataset SHA, the `node_id` set metrics, planned jobs, and
+omitted-unfetchable to the step summary, and **fails the job** unless every one passes; it never
+uploads the manifest.
 
-```yaml
-on:
-  workflow_dispatch:
-permissions:
-  contents: read
-```
-
-and additionally: check out the **default/protected** branch (accept no arbitrary `ref` input); do
-**not** pass `--save-state`; write/commit no state; open no PR; hold no write permission; use the
-token only for live README reads; keep the manifest as a short-lived run artifact / step-summary
-evidence. A local run is a fine pre-check, but the recorded gate evidence is this hosted run's URL.
+**When to dispatch:** the moment the backlog first satisfies `missing = extra = duplicates = 0`
+(the set-check above), run **P3 completion check** from the Actions tab **immediately** — do not
+wait, so `main` cannot move between the drain and the run. A green run is the hosted gate evidence;
+record its URL, base SHA, and dataset SHA. A local run is a fine pre-check.
 
 ## What PASS looks like
 
