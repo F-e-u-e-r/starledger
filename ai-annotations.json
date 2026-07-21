@@ -8242,6 +8242,33 @@
       }
     },
     {
+      "node_id": "R_kgDOQlHTFA",
+      "category": "web-applications",
+      "tags": [
+        "api",
+        "backend",
+        "containers",
+        "graphql",
+        "rest-api",
+        "search"
+      ],
+      "summary": "A high-performance Chinese classical poetry API service written in Go, exposing both REST and GraphQL interfaces. It supports simplified and traditional Chinese via a language parameter, full-text and category search, built-in IP rate limiting, and a multi-architecture Docker image covering hundreds of thousands of poems.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "a43abd5403bb18f344c129c8cc9d4dc747765269",
+        "repo_metadata_sha256": "6c86818eeb6cffb154ff8836da2f60a85d8e09a9447def988cb7005ace2b59f9",
+        "fingerprint": "6b8fd4541c385213b2835364e08fc1cb7599a42948b1d634230656276a7ba3aa"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-21T10:23:22Z"
+      }
+    },
+    {
       "node_id": "R_kgDOQnMVtQ",
       "category": "education-reference",
       "tags": [
@@ -8778,6 +8805,32 @@
       }
     },
     {
+      "node_id": "R_kgDOQzKY7g",
+      "category": "developer-tools",
+      "tags": [
+        "automation",
+        "llm",
+        "plugin",
+        "scraping",
+        "search"
+      ],
+      "summary": "A Claude Code CLI skill that connects the agent to Google's AI Mode search using a persistent browser-automation profile. It returns AI-synthesized answers with inline citations from many web sources, aiming for token-efficient research across coding, technical, product, and general topics, with multi-language support.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "0b007224a6bcbd8dbd2136ee9c02474be472a05a",
+        "repo_metadata_sha256": "2b5b5e20513697c1d38729bb5d429215fb2f68654863a1674f55cfd216932aa6",
+        "fingerprint": "6adf36c5d91fc355229c7638be2fe40bacd92ec0af7caab4ecfe413daee5f888"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-21T10:23:22Z"
+      }
+    },
+    {
       "node_id": "R_kgDOQz_-gA",
       "category": "media-creative",
       "tags": [
@@ -8960,6 +9013,32 @@
         "model_label": "informational-only",
         "prompt_version": "classify-v1",
         "generated_at": "2026-07-19T01:23:10Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOR-qLWQ",
+      "category": "devops-infrastructure",
+      "tags": [
+        "ai-agents",
+        "containers",
+        "orchestration",
+        "sdk",
+        "self-hosted"
+      ],
+      "summary": "A high-performance, secure sandbox service for AI agents built on RustVMM and KVM. It creates hardware-isolated sandboxes in under 60ms with minimal memory overhead, is compatible with the E2B SDK, and supports both single-node deployment and scaling to multi-node clusters.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "a824abd39a8d10eb037d6bec6811fedbad0bc4bf",
+        "repo_metadata_sha256": "0b8b64e7c0dcc69325f300cd2f0880bb9937b7ae82fdd09e2b66f5bc833088fd",
+        "fingerprint": "c1691b9341ef741bb2a801f21c415313870ed145907143169eff09c6a34a2f7a"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-21T10:23:22Z"
       }
     },
     {
@@ -10132,6 +10211,32 @@
       }
     },
     {
+      "node_id": "R_kgDORKpYLw",
+      "category": "media-creative",
+      "tags": [
+        "ai-agents",
+        "automation",
+        "containers",
+        "self-hosted",
+        "workflow"
+      ],
+      "summary": "An open-source, self-hosted AI video generation workbench that turns a novel into short videos through an AI-agent pipeline: character, scene, and prop design, script generation, storyboard images, and video clips. It integrates multiple image and video model providers and offers a web workbench with an asynchronous task queue.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "31d1a4e8c724e7ae20398bb12d1c91ad11c17a31",
+        "repo_metadata_sha256": "f931a490eb8a5675b3581a877f81465e50fef5aff0e8039da16626b1554c5411",
+        "fingerprint": "2b7cbeb88066e0f11016d4866f35f40c1a186426a8d78996cca34c69f39310b1"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-21T10:23:22Z"
+      }
+    },
+    {
       "node_id": "R_kgDORLrQJg",
       "category": "education-reference",
       "tags": [
@@ -10425,6 +10530,33 @@
         "model_label": null,
         "prompt_version": "classify-v1",
         "generated_at": "2026-07-19T15:21:59Z"
+      }
+    },
+    {
+      "node_id": "R_kgDORPf6yg",
+      "category": "developer-tools",
+      "tags": [
+        "ai-agents",
+        "api",
+        "cli",
+        "llm",
+        "proxy",
+        "self-hosted"
+      ],
+      "summary": "A free, open-source AI gateway that exposes a single endpoint routing to hundreds of LLM providers and models, with quota-aware automatic fallback, prompt compression to reduce token usage, MCP and A2A support, multimodal input, and desktop and PWA clients. It works with coding agents such as Claude Code, Codex, Cursor, and Cline.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "ef4ff24677f96b30cc4cdc348ba8eac2174538b6",
+        "repo_metadata_sha256": "ba6b46462391b6fd01513fa76f762cd3da7b6491e0d697183357a339c30e5168",
+        "fingerprint": "93d5d7e21a6e1998fae06c639aba61e5d329c15a806b9ca522c1dea9456368c0"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-21T10:23:22Z"
       }
     },
     {
