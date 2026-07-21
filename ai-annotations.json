@@ -14560,6 +14560,129 @@
         "prompt_version": "classify-v1",
         "generated_at": "2026-07-21T18:23:19Z"
       }
+    },
+    {
+      "node_id": "R_kgDOSbtU7Q",
+      "category": "developer-tools",
+      "tags": [
+        "ai-agents",
+        "cli",
+        "desktop-app",
+        "orchestration"
+      ],
+      "summary": "A free, open-source native macOS app and MCP server for context engineering. It assembles reviewable context from files, code maps, repository structure, and Git diffs, hands it to AI coding agents, and orchestrates CLI-backed coding agents across multi-root workspaces.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "5365d977e9b7df5cd8b1b3d80965dbb10b24796a",
+        "repo_metadata_sha256": "f4c0fb7723acc2bd106d5d6cf99dbcd973e7505f7743925ef850fd6b8c02b385",
+        "fingerprint": "063fa386ab360bcdb510e644a3b63ee7dafd3aeaafa0b116225cefa7efeaea9c"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-21T19:22:47Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOScehDA",
+      "category": "security-privacy",
+      "tags": [
+        "ai-agents",
+        "automation",
+        "workflow"
+      ],
+      "summary": "A skill-router pack that directs AI coding agents to reverse-engineering, penetration-testing, and security-research methodologies. It matches a task such as an APK, binary, or CTF challenge to the right playbook and toolchain, tracks detected tools, and records evidence-based findings.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "3d5c81f2749c49b87089e110da9767ed11b01a75",
+        "repo_metadata_sha256": "9eb1256e48b07df8b336c5bba9cb7e557d59c38d0453c5831a4245a7765ce767",
+        "fingerprint": "b1a8d9eed07d5a988c9453181d774f804e01236ac97bcbbe95dac3b27dee3096"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-21T19:22:47Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOSf4wmw",
+      "category": "productivity-automation",
+      "tags": [
+        "ai-agents",
+        "automation",
+        "dashboard",
+        "workflow"
+      ],
+      "summary": "An agent skill that turns Codex or another AI agent into a NotebookLM research operator. It prepares sources, creates or reuses notebooks, generates NotebookLM Studio artifacts such as reports, mind maps, and slide decks, downloads outputs locally, and runs a local dashboard for the workflow.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "36b5a8d169ea36847b7cd62ca981f5c22eef6dfd",
+        "repo_metadata_sha256": "b0ae7a2622d9089e6c28c3fbdc08d2549b9163cf07cf594c10dd48e2decb7fbb",
+        "fingerprint": "5a1124290df281764967c4c75240d8aa539285caaeb6e047b4a595cc5359dd82"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-21T19:22:47Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOSf7lNg",
+      "category": "developer-tools",
+      "tags": [
+        "dashboard",
+        "desktop-app",
+        "monitoring",
+        "tui",
+        "visualization"
+      ],
+      "summary": "A local-only macOS menu bar and Windows system tray app that pins Claude Code, Codex, and Antigravity quota, token usage, and cost to the screen. It reads local log files without calling model APIs and adds HTML reports, a TUI, and multiple visual themes.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "50f240b80372111b55fbd20ecaad044d74746410",
+        "repo_metadata_sha256": "2dbb7af0978cc0d1a7a283b9438f1464068a038eece604fb978c662ff4185257",
+        "fingerprint": "390dc4400a55dc2bb514b7d930f8f339c4279233ec66c6403d31ad32634ea10b"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-21T19:22:47Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOSfMtmg",
+      "category": "ai-ml",
+      "tags": [
+        "benchmark",
+        "machine-learning"
+      ],
+      "summary": "A foundation automatic speech recognition model aimed at robust real-world transcription. It is trained on millions of samples spanning atomic acoustic conditions and compound scenarios such as noise, far-field speech, reverberation, and transmission dropout, with released model weights and datasets.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "d85e8724e784af504ec158c87ae3c0d8895c2e8c",
+        "repo_metadata_sha256": "76e78d8471dbe535c21d87f51cc16351cc5474d3cbb71c0ced67156919cb94a0",
+        "fingerprint": "3edf804331e756d6b21636e57a28f9a83371b2014599885cc635f32baaccd1e1"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-21T19:22:47Z"
+      }
     }
   ]
 }
