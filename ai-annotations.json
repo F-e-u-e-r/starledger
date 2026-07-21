@@ -13059,6 +13059,135 @@
         "prompt_version": "classify-v1",
         "generated_at": "2026-07-21T05:22:22Z"
       }
+    },
+    {
+      "node_id": "R_kgDOS0jW3A",
+      "category": "developer-tools",
+      "tags": [
+        "ai-agents",
+        "cli",
+        "monitoring",
+        "observability",
+        "terminal",
+        "tui"
+      ],
+      "summary": "A macOS command-line tracer that shows what Claude Code does on your machine, rendering a live terminal dashboard of the descendant process tree, file activity, and network connections from kernel events, flagging sensitive paths, and recording each session to JSONL for later replay.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "c32b1230dcc47f4d14c1187ca629ad4219a557c3",
+        "repo_metadata_sha256": "98cd2e902ebd0a3b87a17aeccf75a6ce570709fdd072ac9dcfa1991097061eab",
+        "fingerprint": "1b55882cc88e4ead3da2e05aad6c0194958f6f00354741a20007bf020343ea99"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-21T06:22:20Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOS1O5tg",
+      "category": "developer-tools",
+      "tags": [
+        "ai-agents",
+        "automation",
+        "llm",
+        "plugin"
+      ],
+      "summary": "A community Codex plugin that relays prompts from Codex to ChatGPT through an existing Chrome browser session, optionally switching the requested visible model or mode, then returns the ChatGPT reply, generated images, and Deep Research reports as Markdown and image artifacts back to Codex.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "97a696d62826a61fb7c19d1f91184cf522672fe7",
+        "repo_metadata_sha256": "330ef83edf852dcd01305409ffa27698d60a8da81d716b61e661c02142ae28cc",
+        "fingerprint": "142685a57c757d0da3471fbb2d9e348e6c65051d4b02e686e0e6420056c288fa"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-21T06:22:20Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOS1RfLg",
+      "category": "developer-tools",
+      "tags": [
+        "ai-agents",
+        "automation",
+        "linter",
+        "plugin",
+        "workflow"
+      ],
+      "summary": "A Claude Code plugin and portable toolkit that turns a human standard operating procedure into a controlled, deterministic agentic loop, using per-step hard gates, bounded termination and state, a DRAFT-then-human-approval output model, and a Stop-hook regression gate for regulated or high-stakes work.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "bec0bb6ee124c341d84791f548648d8f6367c51e",
+        "repo_metadata_sha256": "f6f95190583bd497fadc47cfe86cb4e8b72ab29c390eadc228985af87e69be1a",
+        "fingerprint": "9cfbf7fc3a018fa2d967055ab4e048a198f0342ce9075eee50c4c1caf049524d"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-21T06:22:20Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOS1nIlA",
+      "category": "ai-ml",
+      "tags": [
+        "ai-agents",
+        "automation",
+        "search",
+        "workflow"
+      ],
+      "summary": "An autonomous AI agent pipeline for academic literature reviews that runs multi-agent retrieval across Scopus, OpenAlex, and Semantic Scholar, enforces strict DOI verification and journal-quality filtering to reduce hallucination, and compiles an APA 7th Word document with generated data visualizations.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "976c4572ea4b2255f6105da50f884258138848ad",
+        "repo_metadata_sha256": "e7f1037cda8fa1b59920d2403c565f41954be19daef8c645792d85105ac273f7",
+        "fingerprint": "5ec20f2079a5534e89f07c15c6cb016b0f0f62354715eacb8dc64f06bd70e8d3"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-21T06:22:20Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOS2GJWg",
+      "category": "developer-tools",
+      "tags": [
+        "ai-agents",
+        "dashboard",
+        "desktop-app",
+        "monitoring",
+        "visualization"
+      ],
+      "summary": "A native macOS menu-bar app that monitors AI token usage, cost, and remaining subscription quota across 25-plus coding agents such as Claude Code, Codex, and Cursor by reading local session logs on-device, featuring a Liquid Glass dashboard, seven breakdown views, and a 3D contribution graph.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "cd388ffc8cb5ad1873c3af3ee7b10119999f802f",
+        "repo_metadata_sha256": "cb639d29240f183f9b2cecbcf5665d18211d50c0ea4aa0c75b13dfa5743a92da",
+        "fingerprint": "2419744bee3d686c4f4a5644dd51c74e93108381ced9c7625d87486f1eceabde"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-21T06:22:20Z"
+      }
     }
   ]
 }
