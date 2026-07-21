@@ -14807,6 +14807,129 @@
         "prompt_version": "classify-v1",
         "generated_at": "2026-07-21T20:23:53Z"
       }
+    },
+    {
+      "node_id": "R_kgDOSkSdJg",
+      "category": "developer-tools",
+      "tags": [
+        "backend",
+        "cli",
+        "library",
+        "sdk"
+      ],
+      "summary": "Lore is an open-source, content-addressed version control system written in Rust and optimized for projects that combine code with large binary assets, such as games. It stores repository state as Merkle trees with an immutable revision chain, and ships a core library, a server, a CLI, and SDKs for several languages.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "50c16b68201b0335bb2899c02e1c506431ccc1db",
+        "repo_metadata_sha256": "790964a7c9989ab86ac666ba3a0b32ae7e3f3fea4dde68094d75baae6c2aee03",
+        "fingerprint": "f2f544b310f751a8d02f0f3ece2f083741e7404d43b8b37fd78e5d888c142dc8"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-21T21:22:29Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOSo4KbQ",
+      "category": "media-creative",
+      "tags": [
+        "ai-agents",
+        "automation",
+        "cli"
+      ],
+      "summary": "html-video is a local tool that turns HTML, CSS, and data into real MP4 videos, driven by a coding agent. It offers pluggable render engines, 21 curated templates, multi-frame storyboards, an optional AI soundtrack, and both a browser studio and a scriptable CLI, released under Apache-2.0 with no per-render fees.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "a238f81945ddd1bd072037f1650907eaf763b488",
+        "repo_metadata_sha256": "37f26acb9fd2928e8a1ed52b81dcad5b27ab08585cbb11bcb599a307dbfcd6dc",
+        "fingerprint": "4d51e3c6f3a0feb931442fff4e4dafbd4482292942fe7adf4c0b8ccf1830c1b5"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-21T21:22:29Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOSq3Pmw",
+      "category": "media-creative",
+      "tags": [
+        "ai-agents",
+        "automation",
+        "boilerplate"
+      ],
+      "summary": "A self-contained, forkable kit that guides the Claude Code agent through producing three types of video — event recap, tutorial, and social explainer — using pure CSS and JS with Playwright and FFmpeg. A CLAUDE.md entry point drives a five-stage workflow that can be packaged as a skill, and it is verified to run on Windows with Node 24.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "08c9a31f09c9150d7196a0d15999a9294e135dd9",
+        "repo_metadata_sha256": "ba381af2ea015cce09c631142a84264fa39b7a13220aceb8735dd487fd5bd93d",
+        "fingerprint": "22fe93c66892cf58e2308111a5d8bc5f62a9b1250cf7233ade13887d4a8d07df"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-21T21:22:29Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOSqJxOQ",
+      "category": "developer-tools",
+      "tags": [
+        "cli",
+        "productivity",
+        "terminal"
+      ],
+      "summary": "cc-session-reader is a Go CLI that reads Claude Code session transcripts and produces compact summaries, compressing each tool call to a single line while preserving conversation text in full. It provides subcommands to list, read, and inject sessions, uses purely static extraction without an LLM, and ships as an optional Claude Code skill.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "ebf22cad61b0dbc665f59a45fc4995b88526b6e2",
+        "repo_metadata_sha256": "23253f8f47b4edc324d89e69b1b6b68febf8512f6628d91a2fed9be97efe8d23",
+        "fingerprint": "2042535ba5bb7aa98a495af0d66b2a525c68f89ca3d0dc94eaf5b49cc7eb104f"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-21T21:22:29Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOSrFfGQ",
+      "category": "ai-ml",
+      "tags": [
+        "api",
+        "cli",
+        "machine-learning",
+        "search",
+        "vector-database"
+      ],
+      "summary": "PixelRAG is the official codebase for a research system that renders documents — web pages, PDFs, and images — as screenshots and retrieves over the images directly, preserving tables, charts, and layout that text parsing discards. It embeds page images with a fine-tuned vision model and ships a capture CLI plus a FAISS or Qdrant search API.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "83f3c3ed1c6dcccc64434a02ba4a364aafe08f52",
+        "repo_metadata_sha256": "32fcf758cc7fcfd2ad8ba940c09905ec3242cef700b4a05b444de7d3bb9e788d",
+        "fingerprint": "6c6b523864eab99c9219de38611d8fb298c0a34210186760c97a8adf5498890b"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-21T21:22:29Z"
+      }
     }
   ]
 }
