@@ -14930,6 +14930,135 @@
         "prompt_version": "classify-v1",
         "generated_at": "2026-07-21T21:22:29Z"
       }
+    },
+    {
+      "node_id": "R_kgDOStCJPg",
+      "category": "ai-ml",
+      "tags": [
+        "ai-agents",
+        "containers",
+        "llm",
+        "productivity",
+        "self-hosted"
+      ],
+      "summary": "A self-hosted AI workspace that bundles chat and agents over local or API models with deep web research, blind model comparison, a writing-first document editor, an IMAP/SMTP email client, and notes, tasks, and CalDAV calendar. It supports tools, MCP, files, shell, and memory, and deploys via Docker Compose.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "705ec6b682f12b02fff96a387ef236c2ae84eb98",
+        "repo_metadata_sha256": "9b39709e5b338c5a282062d97e014533d86c85ad3683423d7226cf013f50947d",
+        "fingerprint": "cd53a5c5b8784dc973ed9e8ec19ebfed4a1d830f024fe6900604bae6518af89d"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-21T22:22:19Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOSt_XpA",
+      "category": "media-creative",
+      "tags": [
+        "automation",
+        "boilerplate",
+        "workflow"
+      ],
+      "summary": "A framework-style toolkit for automating YouTube and short-form video production. It offers a pure ffmpeg pipeline for vertical Shorts and long-form videos, CapCut draft JSON automation and GUI helpers, mechanical pre-delivery QA checks, and a questionnaire-driven setup that fills blank templates with your own channel data. Ships with no private data.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "a623c428f5ab04802feddb76ad91249642e3ab3b",
+        "repo_metadata_sha256": "5b297a869c38248000e8375c51eafe7be8dd7ff464a76489c780f2d35c01fe5e",
+        "fingerprint": "554fac8d60048017366d87a2d7af1adc36f5a580f2dd6506a34f014ac674cd17"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-21T22:22:19Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOSv6ojg",
+      "category": "productivity-automation",
+      "tags": [
+        "ai-agents",
+        "desktop-app",
+        "editor",
+        "markdown",
+        "productivity",
+        "search"
+      ],
+      "summary": "An AI-native, WYSIWYG markdown editor and knowledge base, available as a macOS desktop app and a local web UI with a CLI. It provides file navigation, tabs, wiki-link graph views, and agentic search, integrates side-by-side AI editing with harnesses like Claude and Codex over MCP, and can sync and share notes through git and GitHub.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "ae967958dad846bd3cbea6ee784f7563225d79ba",
+        "repo_metadata_sha256": "fdcc58ee28b885cce8e9b07fbd918fc4a1f6751d014a775cfa73ad57fc5a167f",
+        "fingerprint": "f2621235e278b2170383fee348a5e0be8d6c63b933005d5ee8bf58c2ee48c20b"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-21T22:22:19Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOTA4V3A",
+      "category": "data-analytics",
+      "tags": [
+        "dashboard",
+        "llm",
+        "notifications",
+        "real-time",
+        "self-hosted",
+        "visualization"
+      ],
+      "summary": "A self-hosted personal dashboard for monitoring US stocks. It streams quotes from Alpaca, computes technical indicators, and runs a rule engine that detects events; a resident LLM analyst then produces structured research and risk alerts, delivered via Telegram and email. Built on Streamlit and SQLite, it never places trades or connects to a broker.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "91e2dedb6e2a2b70d7e434696af1478ea1bcde3d",
+        "repo_metadata_sha256": "1b4982a8158936f6a52512de721ed7e1e7bd7b96b29be6b2d72b453a3752fb49",
+        "fingerprint": "aa35afde17ba2699155c590419c4d936236ba6a17ef1e3e5d3615771cd041499"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-21T22:22:19Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOTBD76Q",
+      "category": "media-creative",
+      "tags": [
+        "ai-agents",
+        "desktop-app",
+        "editor",
+        "gui"
+      ],
+      "summary": "A cross-platform desktop video editor written in Rust on the gpui-ce toolkit, running on macOS, Windows, and Linux. It exposes its timeline, media library, generation, and export tools to AI agents such as Claude Code, Codex, and Cursor through a local MCP server. It is a Rust rewrite of the Palmier Pro editor.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "f28dfdd2edd3a3de5da21432de5a8c99d79a307b",
+        "repo_metadata_sha256": "c6c869a889e326bafbd41605787f899600b383a69a7310f3cbdbed213f2f5d79",
+        "fingerprint": "acd43e55800d617dfe9e7e386df1d325a6551f549dc41841568e9ed063123092"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-21T22:22:19Z"
+      }
     }
   ]
 }
