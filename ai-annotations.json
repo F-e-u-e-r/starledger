@@ -12678,6 +12678,133 @@
         "prompt_version": "classify-v1",
         "generated_at": "2026-07-21T02:23:16Z"
       }
+    },
+    {
+      "node_id": "R_kgDORv_QCA",
+      "category": "ai-ml",
+      "tags": [
+        "benchmark",
+        "library",
+        "llm",
+        "machine-learning"
+      ],
+      "summary": "Python reference implementation of TurboQuant, a transformer KV cache compression method that combines PolarQuant scalar quantization with Walsh-Hadamard rotation. It compresses the key-value cache 3.8 to 6.4 times at near-baseline quality, and ships benchmark data, validation papers, and ports to several inference engines.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "031ebe578c6dccbe53d5d6167e9ef327c8eb7a59",
+        "repo_metadata_sha256": "27838ea0052aedaf1092842318a90366b03dc23b2624bab30e5d69efeeb03a8b",
+        "fingerprint": "88160d729d90fc6e8884bb5cbdcab70a3a7d36c61fc342248765e4658aa99f0f"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-21T03:25:24Z"
+      }
+    },
+    {
+      "node_id": "R_kgDORvaXYw",
+      "category": "data-analytics",
+      "tags": [
+        "database",
+        "etl",
+        "search",
+        "visualization"
+      ],
+      "summary": "A structured equity-research database covering 1,735 Taiwan-listed companies across 99 sectors, with business overviews, supply-chain mapping, and financial data linked through 4,900+ wikilinks into a searchable knowledge graph. It includes Python scripts to refresh financials, audit reports, and build an interactive network graph.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "517ef2dce297b91c5d208ed1a518b8e31e34c1f8",
+        "repo_metadata_sha256": "f110fe843a1c9caa5a55d7f406b6c140e4f6728b5303bbb34e2aa9affccdfe33",
+        "fingerprint": "8f17627e5daf279231d7954311c61ac7e63861871d79deb7f086b3202ff3d963"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-21T03:25:24Z"
+      }
+    },
+    {
+      "node_id": "R_kgDORwLoCw",
+      "category": "developer-tools",
+      "tags": [
+        "ai-agents",
+        "api",
+        "automation",
+        "cli",
+        "rest-api"
+      ],
+      "summary": "Official Lark/Feishu command-line tool from the larksuite team, written in Go for both humans and AI agents. It offers 200+ commands and agent skills spanning Messenger, Docs, Base, Sheets, Calendar, Mail, and Tasks, with a three-layer system of shortcuts, API commands, and raw calls, plus OAuth login and keychain storage.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "0d6fc24c22b72d76e44797f44076fa344e549ea3",
+        "repo_metadata_sha256": "9fa70a76a181192bad92aaf6db63727944c3a1d9a4aa9b9b4b98d050c0372503",
+        "fingerprint": "461e9154d6fcbfd76ebb9e0bd9e95c5da19cc70001d10388af88bffe3ad31595"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-21T03:25:24Z"
+      }
+    },
+    {
+      "node_id": "R_kgDORxT0Ng",
+      "category": "libraries-frameworks",
+      "tags": [
+        "benchmark",
+        "library",
+        "machine-learning",
+        "search",
+        "vector-database"
+      ],
+      "summary": "A Rust vector index with Python bindings implementing Google Research's TurboQuant quantizer for approximate nearest-neighbor search. It compresses embeddings up to 16 times with no training step, offers SIMD-accelerated filtered search, and provides drop-in integrations for LangChain, LlamaIndex, Haystack, and Agno.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "621e2af46de91427503a47b9f2c68ac143ccb82e",
+        "repo_metadata_sha256": "32924310cba643b8bb4bd19be9f97c1d7aae9b05c0251b80871432ecdf8b7849",
+        "fingerprint": "438d6032f8a8ca5cf81a17d672da9f54d25ea1d3276c10852a1fb118798dea35"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-21T03:25:24Z"
+      }
+    },
+    {
+      "node_id": "R_kgDORy4B9g",
+      "category": "productivity-automation",
+      "tags": [
+        "ai-agents",
+        "automation",
+        "productivity",
+        "workflow"
+      ],
+      "summary": "A collection of open-source Claude Code skills for marketing and sales teams, packaged as runnable Python workflows rather than prompts. It covers growth experiments, sales-pipeline automation, content operations, outbound, SEO, and finance analysis, each with a SKILL file an AI coding agent can load and run.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "ca3d16b933cd3a271d853802bc1a4c0df59682bf",
+        "repo_metadata_sha256": "16defddeead667be81e2df96c6e0b134aa0ce0adc553ad520b634e54478d6d46",
+        "fingerprint": "7ac04eb91b358230d2c391cff45e8503d8d3c54816c47c95622b65593b5ef5bd"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-21T03:25:24Z"
+      }
     }
   ]
 }
