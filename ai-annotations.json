@@ -12937,6 +12937,128 @@
         "prompt_version": "classify-v1",
         "generated_at": "2026-07-21T04:22:49Z"
       }
+    },
+    {
+      "node_id": "R_kgDOS-KLqg",
+      "category": "ai-ml",
+      "tags": [
+        "llm",
+        "machine-learning"
+      ],
+      "summary": "An OCR model for document parsing aimed at one-shot long-horizon extraction, positioned as pushing DeepSeek-OCR further. It provides Python inference via Hugging Face transformers, plus vLLM and SGLang server deployment, and handles single images, multi-page batches, and PDFs on NVIDIA GPUs.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "0ab69626b23011bf795881c2ba5218a1658b3d7f",
+        "repo_metadata_sha256": "e38944576d387042fde43a1a2ce286195f150a977b85c4f5c515d33ced19ba0a",
+        "fingerprint": "abbd376b439070a4941d8485510930cfc7b63a4980fa8a77962fd2de5d25afaf"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-21T05:22:22Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOS-b1TA",
+      "category": "security-privacy",
+      "tags": [
+        "ai-agents",
+        "automation",
+        "security-scanner"
+      ],
+      "summary": "A coding-agent skill that runs a six-phase security audit pipeline (recon, hunting, validation, reporting, structured output, and independent verification), orchestrating parallel agents to find exploitable vulnerabilities. Runs are additive and emit machine-readable findings validated against a JSON schema.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "871e44ddfafc8d4ec875c3e7e317f90a92e4a3c1",
+        "repo_metadata_sha256": "71a5a161b5cb2ff65d76450286af5fdf06209337faf7392e5a4eeda0b18ccc09",
+        "fingerprint": "9df5456e7c29919a5a16c1b3734ea718f4ad30e25118c6472eee94b3d5411d41"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-21T05:22:22Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOS09mLA",
+      "category": "productivity-automation",
+      "tags": [
+        "desktop-app",
+        "llm",
+        "markdown",
+        "productivity",
+        "search"
+      ],
+      "summary": "An open-source, local-first Markdown note-taking app for Mac and iOS built around a folder of plain files. It offers daily notes, wiki links and backlinks, local and optional semantic search, audio memos, browser capture, iCloud or git sync, and optional AI queries using user-provided provider keys.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "4aae1474c2183b5645f9fd53cf1c0e00de0b80cb",
+        "repo_metadata_sha256": "70b36dc70563037cd48f05be847873ff50fe24155a8beba2f46a620be0d0955b",
+        "fingerprint": "0508189d968cd418eedf55f0a95e7b9d9a58978dcba2c9751e7b5a189e053545"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-21T05:22:22Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOS0DBDg",
+      "category": "libraries-frameworks",
+      "tags": [
+        "library",
+        "llm",
+        "sdk"
+      ],
+      "summary": "A Swift package of utilities for building with Apple's Foundation Models framework, including custom skills, context-management helpers, and a ChatCompletionsLanguageModel client that connects to any chat-completions REST server. It supports Apple platforms and select Linux distributions via Swift Package Manager.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "949d8aa475882018de2d862858ce7133432b272b",
+        "repo_metadata_sha256": "b8927302e8e562a44c7e89a6020de1d15caf89d0b2c61db3ccf48ab69f86d56a",
+        "fingerprint": "7c2e274aaaf412688fba32216dbb765b1baac93b876663819c52e3ddcf7dfe77"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-21T05:22:22Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOS0aklQ",
+      "category": "developer-tools",
+      "tags": [
+        "ai-agents",
+        "cli",
+        "library",
+        "llm"
+      ],
+      "summary": "A lightweight Rust CLI and library for interacting with Model Context Protocol (MCP) servers over stdio or HTTP. It lists and calls tools with JSON output for shell scripting, keeps warm connections via a lazy-spawn daemon, supports tool filtering, and is designed for use by AI coding agents.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "f9e3992935b1ef74d1d9bc221144abfc96ad5b46",
+        "repo_metadata_sha256": "c1da79d153f3183a33baafae07860879d93801dd221b5d05550506f81508c194",
+        "fingerprint": "15318df5133162c17316c2387ee9b45365126b3c19a89cf3cf513861f6021780"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-21T05:22:22Z"
+      }
     }
   ]
 }
