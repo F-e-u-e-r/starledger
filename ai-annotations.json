@@ -14184,6 +14184,128 @@
         "prompt_version": "classify-v1",
         "generated_at": "2026-07-21T14:24:09Z"
       }
+    },
+    {
+      "node_id": "R_kgDOSLVp6w",
+      "category": "ai-ml",
+      "tags": [
+        "benchmark",
+        "library",
+        "machine-learning"
+      ],
+      "summary": "A research implementation of ELSA (Exact Linear-Scan Attention), computing exact softmax attention as a two-level parallel scan over an associative monoid with O(n) extra memory. It provides CUDA kernels for fast, memory-light Vision Transformers and reports results validated on A100 GPUs.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "35627775c41304ecc64c94aac7309396c4403939",
+        "repo_metadata_sha256": "6b540814dd6506a143702a79c244e1d4baabde61e07b4338413f3f6967c48675",
+        "fingerprint": "4a49eb611018821abeb08dd8698b5c9842c40d77dddb3e86ae06aba9d4d3f56f"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-21T15:23:35Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOSM7BHA",
+      "category": "developer-tools",
+      "tags": [
+        "ai-agents",
+        "cli",
+        "frontend"
+      ],
+      "summary": "A React-based slide framework built for coding agents: describe a deck in natural language and the agent writes the pages while the framework handles a fixed 1920x1080 canvas, scaling, navigation, hot reload, and present mode. It ships a CLI scaffolder, built-in authoring skills, and an in-browser inspector.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "78ee2fefc47b4e943b748d8534375145b950897e",
+        "repo_metadata_sha256": "14c80368a7e3c5efd0f19e2649fba213e8225f7b116e01ae285261b14a575ee0",
+        "fingerprint": "85318f70cb52d8d0a2edce338327e3291f080bbbc5cb7ca437eadb530c27faa5"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-21T15:23:35Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOSNDlSg",
+      "category": "self-hosted-homelab",
+      "tags": [
+        "authentication",
+        "productivity",
+        "rest-api",
+        "self-hosted"
+      ],
+      "summary": "A self-hosted, open-source PDF and Office document processing platform that bundles around 40 tools for tasks such as form-filling, watermarking, merging, splitting, conversion, OCR, redaction, and translation. It adds enterprise features including LDAP/AD authentication, SSO, RBAC, audit logging, and a REST API for on-premises use.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "d066c46867d3d30f3e15ae78ad970c3eda7cacdc",
+        "repo_metadata_sha256": "0bd8ada7a937654671c35a01e51075aa7cc5400c9739dc3bbd0cb61c284d4b35",
+        "fingerprint": "948d1175bbc8ae80aa863167876f1b492ccb02ce21b067a679149709fb77583d"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-21T15:23:35Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOSOQ9xw",
+      "category": "developer-tools",
+      "tags": [
+        "ai-agents",
+        "code-generation",
+        "frontend",
+        "theme"
+      ],
+      "summary": "A design skill for AI coding agents such as Claude Code, Cursor, and Codex that aims to produce user interfaces which do not look AI-generated. It selects a macrostructure and one of twenty themes per brief, runs slop-test gates plus a self-critique, and can audit, redesign, or extract the design DNA of existing work.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "a615a8007804ee0912c2a94a4d987acdd75c3cbe",
+        "repo_metadata_sha256": "77d05a74b5fbdb8847eed0b666db5674700236680c059d997d0f5efb246507ea",
+        "fingerprint": "1a56226c4af1d8fd46995591e3c4af1481652f18d078e1d2097568a4c261bd43"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-21T15:23:35Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOSOgY8g",
+      "category": "media-creative",
+      "tags": [
+        "ai-agents",
+        "desktop-app",
+        "no-code"
+      ],
+      "summary": "An open-source, local-first desktop application that turns a coding agent into a design engine, generating prototypes, landing pages, dashboards, slides, images, and video as real files with HTML, PDF, PPTX, and MP4 export. It works with Claude Code, Codex, Cursor, Gemini, and other command-line agents via bring-your-own-key.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "b6f5dbeae16f9e9d7bf862d0b2529ec7b12937be",
+        "repo_metadata_sha256": "75986e4330f6b6c66029d4d69c79e807a16dddc87946a7b1d4ba8990cee86444",
+        "fingerprint": "73be4b8de9040e26750ef9d927c27ff3c576c73387a982cb5bd839fd2fd55768"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-21T15:23:35Z"
+      }
     }
   ]
 }
