@@ -13188,6 +13188,130 @@
         "prompt_version": "classify-v1",
         "generated_at": "2026-07-21T06:22:20Z"
       }
+    },
+    {
+      "node_id": "R_kgDOS2H58g",
+      "category": "media-creative",
+      "tags": [
+        "automation",
+        "cli",
+        "desktop-app",
+        "gui"
+      ],
+      "summary": "DroneTrim is a Python batch tool that rough-cuts drone footage by detecting shaky takeoff and landing plus overlong static hover at each clip’s head and tail with optical flow, then exporting clean copies losslessly or via hardware encoding. It offers both a drag-and-drop GUI and a CLI.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "974423025b5809681b50275d6de777707e652c03",
+        "repo_metadata_sha256": "c4637c5ec986038ea8ab8f6011fd5fab0d451761b8ab7618ea4a5875eaa9f39a",
+        "fingerprint": "294f684626d1dbd92edb49771e17b4b83aca1ee089b198d2e43f2455ad4704be"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-21T07:30:39Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOS2SYLQ",
+      "category": "productivity-automation",
+      "tags": [
+        "desktop-app",
+        "real-time",
+        "self-hosted"
+      ],
+      "summary": "OpenDisplay is a free, open-source alternative to Apple Sidecar and Duet that turns an iPhone or iPad into a true extended second monitor for a Mac over USB or WiFi. It uses a low-latency hardware H.264 pipeline with Retina HiDPI output and adds tap, drag, and two-finger scroll touch input.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "f0be3c80ecb5317c4094eb1cbf42b1b97c61be0b",
+        "repo_metadata_sha256": "3a1f8263920a3969be000bda064bc3023d3143c06e3a50a003a71c62a71457ff",
+        "fingerprint": "746d04c9bc6fa018a0bad14c061c4dad80bbcfb0c0dc5f2c6552257fe588ec05"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-21T07:30:39Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOS4HNrw",
+      "category": "developer-tools",
+      "tags": [
+        "ai-agents",
+        "code-generation",
+        "llm",
+        "plugin"
+      ],
+      "summary": "Ponytail is a plugin and ruleset for AI coding agents such as Claude Code, Codex, and Copilot that steers them toward minimal, necessary code through a YAGNI-style decision ladder, while keeping trust-boundary validation, error handling, security, and accessibility intact. It ships review and audit commands.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "c2e9b0e2ad83b64744db1648300bcdc20a800cc8",
+        "repo_metadata_sha256": "40335260575245064d4d5090f60898ee6f3a93d4386ba2a0350fddefbcdfbfd6",
+        "fingerprint": "9aa8df1933d35e697bd24e8323a9d83559c7b87b09f1fdac6e8bb6583cc9f5e8"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-21T07:30:39Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOS4YVMA",
+      "category": "developer-tools",
+      "tags": [
+        "cli",
+        "configuration",
+        "terminal",
+        "theme"
+      ],
+      "summary": "coralline is a Powerlevel10k-inspired statusline for Claude Code, written in bash, that renders segments for directory, git state, active model, context and rate-limit gauges, session cost, and more. It ships multiple themes and styles, a guided setup wizard, and an optional themed subagent panel renderer.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "8c64ec814c99bf41f6a45c3a7c48a43145b4b9e6",
+        "repo_metadata_sha256": "95c76fb26d30c6cd7889bc75e28b28cdb9253a030276b622c65e335a8af41c07",
+        "fingerprint": "5666149b18a971a5afc221988cca8bbf74be9641c29b82764b55be754b2d6a70"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-21T07:30:39Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOS4aBIA",
+      "category": "developer-tools",
+      "tags": [
+        "automation",
+        "cli",
+        "dashboard",
+        "plugin"
+      ],
+      "summary": "Workout Gate is a Claude Code and Codex hook that blocks your prompt until you finish webcam-counted push-ups or squats, detected with MediaPipe pose estimation. It adds randomized reps, session-persistent debt, streak stats, three trigger modes, fail-open escape hatches, and a local web and terminal dashboard.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "c8784ca1a158d6c461429a8d7fd43cc045294a82",
+        "repo_metadata_sha256": "01f43fe75fe7645c5d588db3de6951822521f25e70717b99d304e87d723b531f",
+        "fingerprint": "edc2b0cc33777632328b9d7e6259a42bb4b6cf973f8f27d758e87e5109d0733b"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-21T07:30:39Z"
+      }
     }
   ]
 }
