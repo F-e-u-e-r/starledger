@@ -195,8 +195,8 @@ RSS/Atom is XML; the parser is an untrusted-input surface of its own:
 Every untrusted dimension has a **hard maximum** (not merely a default): feed count, per-feed
 **compressed (wire) and decompressed** bytes, HTTP response-header size, per-feed item count,
 XML nesting depth, extracted URLs per item, total candidates per run, `sources[]` entries per
-candidate, and every string length (`raw_ref`, `source_id`). Exceeding a **per-feed** bound
-quarantines that feed (§Quarantine).
+candidate, and every string length (`raw_ref`, `source_id`, feed URL / `source_url`). Exceeding a
+**per-feed** bound quarantines that feed (§Quarantine).
 
 The **admission / overflow rule is decided here**, not deferred:
 
@@ -213,15 +213,20 @@ is **surfaced in the PR summary** — never a silent truncation.
 
 Overflow direction per ceiling (the _direction_ is decided here; numeric values deferred to PR C):
 
-| Ceiling                                                                | Over-limit direction                                                                                                          |
-| ---------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------- |
-| non-`https` / userinfo / private-IP-literal feed URL                   | config **fail-closed**                                                                                                        |
-| feed count                                                             | config **fail-closed**                                                                                                        |
-| per-feed wire/decompressed bytes, item count, XML depth, URLs-per-item | **per-feed quarantine**                                                                                                       |
-| `raw_ref` / `source_id` string length                                  | reject/truncate at ingestion, **per-item** (surfaced)                                                                         |
-| `sources[]` per candidate                                              | first-seen sources first (incl. legacy `future-web`); new in canonical order; **retained-source overflow fails closed** (AC1) |
-| total candidates per run                                               | retained-first deterministic admit-and-surface; **retained-alone-over-ceiling fails closed**                                  |
-| intermediate cross-job artifact size                                   | **fail-closed** (reject the artifact)                                                                                         |
+| Ceiling                                                 | Over-limit direction                                                                                                          |
+| ------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------- |
+| non-`https` / userinfo / private-IP-literal feed URL    | config **fail-closed**                                                                                                        |
+| feed count                                              | config **fail-closed**                                                                                                        |
+| per-feed wire/decompressed bytes, item count, XML depth | **per-feed quarantine**                                                                                                       |
+| extracted URLs per item                                 | deterministic truncate + fixed reason code                                                                                    |
+| `source_id` string length                               | **config fail-closed** (never truncate — it is identity)                                                                      |
+| feed URL / `source_url` string length                   | **config fail-closed** (never truncate — identity/provenance)                                                                 |
+| `raw_ref` string length                                 | **per-item quarantine/reject** (never truncate — it is provenance)                                                            |
+| `sources[]` per candidate                               | first-seen sources first (incl. legacy `future-web`); new in canonical order; **retained-source overflow fails closed** (AC1) |
+| total candidates per run                                | retained-first deterministic admit-and-surface; **retained-alone-over-ceiling fails closed**                                  |
+| intermediate cross-job artifact size                    | **fail-closed** (reject the artifact)                                                                                         |
+
+**Cap-consistency invariant.** The maximum legal output of the upstream field / `sources[]` / candidate caps must be compatible with the expanded cross-job-artifact cap, the resolve budget, and the total-run wall-clock. Where they are not, the **outer** cap (artifact size / budget / wall-clock) is the earlier **fail-closed** ceiling with a fixed reason code — never a silent truncation. An implementer must not assume every per-field maximum can hold simultaneously.
 
 ### C5 — Resolver amplification is bounded, with defined failure outcomes
 
@@ -251,6 +256,13 @@ schemes, Markdown, control characters, or bulk content. Therefore:
   `https`/`http` scheme allowlist. **Human review is not an XSS mitigation** — the escaping is
   the mitigation. The same rule binds any quarantine/error string that crosses into the publish
   job (see C1's enumerated reason codes).
+- **GitHub write templates are trusted-only.** A PR title / body / comment, and any commit message
+  the publish job writes, are composed **only** of trusted static templates, normalized
+  `owner/repo`, trusted-side-derived provenance, fixed enumerated reason codes, and bounded numeric
+  fields. They **never** include or quote a feed title, description, HTML, free text, a
+  producer-supplied message, or any other raw feed bytes — the GitHub write action must not become
+  an amplifier for untrusted feed text. (The dashboard may still display sourced info; this rule
+  governs the `main`-facing write surface.)
 
 ### C7 — Public-only resolution is an explicit, tested gate
 
@@ -519,6 +531,9 @@ For `starledger-template`, P6 ships:
 11. The workflow is `workflow_dispatch`, PR-gated, and never pushes `main`; P6 is stateless (no
     state branch/cursor); the template ships examples only — no real feeds, no personal data, no
     new secret, no central custody.
+12. GitHub write templates (PR title / body / comment, commit messages) are composed only of
+    trusted static text, normalized `owner/repo`, trusted-derived provenance, fixed reason codes,
+    and bounded numbers — never raw feed title / description / HTML / free-text / producer messages.
 
 ## Open questions / decisions deferred to implementation (PR C)
 
