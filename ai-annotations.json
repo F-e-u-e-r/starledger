@@ -13938,6 +13938,132 @@
         "prompt_version": "classify-v1",
         "generated_at": "2026-07-21T12:25:27Z"
       }
+    },
+    {
+      "node_id": "R_kgDOSApr6Q",
+      "category": "developer-tools",
+      "tags": [
+        "ai-agents",
+        "cli",
+        "scraping",
+        "sdk",
+        "search",
+        "self-hosted"
+      ],
+      "summary": "wigolo is a local-first web intelligence layer for AI agents, exposed as an MCP server, a REST endpoint, and TypeScript and Python SDKs. It provides search, fetch, crawl, extract, cache, find-similar, and research tools that run on-device with no API keys, keeping queries and cache under a local directory.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "1b9928b771c8ed5a4695b1d5253010a78e226711",
+        "repo_metadata_sha256": "41ab1acc39c9adcb6eb887e4a7f8b034fa79f249d816153c432b679df57838a1",
+        "fingerprint": "b8364fdbef8ba499ee853b1fc60bd0ad6aa1b3c9dcd0bd047854b99804fb3634"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-21T13:23:21Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOSBMRrA",
+      "category": "web-applications",
+      "tags": [
+        "dashboard",
+        "frontend",
+        "gui",
+        "visualization"
+      ],
+      "summary": "A React and Vite web dashboard that reframes family trip planning as a command-center operation. It tracks multiple families arriving from different cities, simulates convoy routes and departures with day-by-day timeline playback, and organizes itinerary, stay, meals, activities, expenses, and family views over a Google Maps layer.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "80fee2bcb5e2c12cc3ddc6b438e251dbc0d4e6c5",
+        "repo_metadata_sha256": "38f3c0e421deff7c1a7d43a67fa0e940f3b2f81d660b04c0028a879a85f47eff",
+        "fingerprint": "5e9453c3f61e61a541f13df570ea13448dc2e8679ac4d2ce273b4b6446a69f37"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-21T13:23:21Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOSBUdsQ",
+      "category": "developer-tools",
+      "tags": [
+        "ai-agents",
+        "automation",
+        "cli",
+        "scraping"
+      ],
+      "summary": "Obscura is a headless browser engine written in Rust for web scraping and AI agent automation. It runs JavaScript via V8, speaks the Chrome DevTools Protocol as a drop-in replacement for headless Chrome with Puppeteer and Playwright, and offers a CLI, parallel scraping, an optional stealth anti-detection mode, and an MCP server.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "b69e1a6e012cc660e7a73b3ddae9c86daa9c91e9",
+        "repo_metadata_sha256": "fa56c9e57079aa0cc2d5803fcb26a1791349ae34362b630660a4a78feef32a87",
+        "fingerprint": "2459627dc08d7b028921ab91eb095a8b46e1ffb8764066cb964d25edae2f6883"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-21T13:23:21Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOSDCHbQ",
+      "category": "developer-tools",
+      "tags": [
+        "ai-agents",
+        "cli",
+        "documentation",
+        "visualization"
+      ],
+      "summary": "Archify is an agent skill for Claude, Codex CLI, and opencode that turns plain-English descriptions into architecture, workflow, sequence, data-flow, and lifecycle diagrams. It produces a self-contained HTML file with dark and light themes, a typed JSON source, schema validation, and PNG, JPEG, WebP, and SVG export.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "c97cd5a5f888d5bc646e75bd892b18a06b7c0a2e",
+        "repo_metadata_sha256": "90547d7fe551ed9c060425d1bc89ce0d0900459afefd59fe361bb762740e7e76",
+        "fingerprint": "48d35cff2345a85a36ea91e1dcdb6ac30e5ea95db78646a968371ce6983807cc"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-21T13:23:21Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOSDnhmQ",
+      "category": "ai-ml",
+      "tags": [
+        "benchmark",
+        "machine-learning",
+        "visualization"
+      ],
+      "summary": "LingBot-Map is a feed-forward 3D foundation model for streaming 3D reconstruction from image or video sequences. Its Geometric Context Transformer unifies coordinate grounding, dense geometric cues, and long-range drift correction, using paged KV cache attention for stable inference at around 20 FPS over sequences exceeding 10,000 frames.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "2d412e33905d1a58032c7dd9165c2fcd55478bc6",
+        "repo_metadata_sha256": "1c6320d213bf84d9e54345ddcc1dc9126a301582464b2f288e266cc366a983cc",
+        "fingerprint": "51374b2b493eb2dd19ba74bf0a246aa6a2e145ce84647ad0dea39d052bede8d8"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-21T13:23:21Z"
+      }
     }
   ]
 }
