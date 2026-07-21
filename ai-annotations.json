@@ -12438,6 +12438,126 @@
         "prompt_version": "classify-v1",
         "generated_at": "2026-07-21T00:22:51Z"
       }
+    },
+    {
+      "node_id": "R_kgDORrBL4g",
+      "category": "developer-tools",
+      "tags": [
+        "ai-agents",
+        "automation",
+        "cli"
+      ],
+      "summary": "An AI agent skill that runs pre-submission checks on iOS and macOS projects, scanning the Xcode project, source code, metadata, and configuration files to flag common App Store Review guideline violations before submission. It integrates with the asc command-line tool to pull and inspect App Store metadata, then reports findings by severity with resolution steps.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "4310fa06967c79236f489648b48cff7b887d5f71",
+        "repo_metadata_sha256": "291dcd12a63d07cb382bb3d0a5e201541a3cfa27d67a54102d85ccfe123cc543",
+        "fingerprint": "72bfa2dc5c1bec3f75b017c51b8273d7ec04107843d548a76c75d9f5d63aef06"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-21T01:22:28Z"
+      }
+    },
+    {
+      "node_id": "R_kgDORrQESg",
+      "category": "media-creative",
+      "tags": [
+        "ai-agents",
+        "automation",
+        "cli"
+      ],
+      "summary": "A machine-readable agent skill file that teaches AI agents such as Claude Code, Cursor, and Windsurf to drive the narrator-ai-cli tool for automated movie narration video production. From a natural-language request it searches a film, selects a template, BGM, and voice, generates a script, and composes the finished video end to end.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "c3901545dcb1a8650713f01908bf99ed69c28493",
+        "repo_metadata_sha256": "616912bb32cab140d7a6cb97b7c2e17fe53f4ef1b1ef24d9d70bed474e43321c",
+        "fingerprint": "2b88b4b59b9de3f36bd7d7922d093763f7e2e0b8f2400677a93f094cfdfc554b"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-21T01:22:28Z"
+      }
+    },
+    {
+      "node_id": "R_kgDORrasTQ",
+      "category": "productivity-automation",
+      "tags": [
+        "automation",
+        "workflow"
+      ],
+      "summary": "A monorepo of two related presentation-generation skills: ppt-workflow plans slide content and exports HTML or PNG previews, and html-slide-to-pptx converts structured HTML slides into natively editable PowerPoint (.pptx) files. The recommended flow previews layout and content first, then converts the confirmed HTML into an editable deck.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "eba43c8d97c3e5e3e34db7ec54e17b66816baed6",
+        "repo_metadata_sha256": "c6e58060fc60b99b5f4d25e43cc023b20bdbb2cb903e2f9ce3c71ab23200a5d2",
+        "fingerprint": "d26e9cd39a1b777485b092fdd6b458d9e49849457d708daa6135cd042e0b7429"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-21T01:22:28Z"
+      }
+    },
+    {
+      "node_id": "R_kgDORs6aog",
+      "category": "productivity-automation",
+      "tags": [
+        "ai-agents",
+        "automation",
+        "llm",
+        "workflow"
+      ],
+      "summary": "A multi-agent presentation-generation workflow that runs across platforms and models. It pairs LLM slide generation with Gemini-driven quality review to produce SVG slides in a 1280x720 Bento Grid layout, moving through research, outline planning, drafting, design, and review stages and delivering final SVG files with an interactive HTML preview.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "2cbfa61e58cf9c668dffb57815f742ecb132ea17",
+        "repo_metadata_sha256": "71487b2c81c20ceccd92f86823fae7bd5717563efb048174de48dff59de270e9",
+        "fingerprint": "11b5b7f1afa5c6d27d5338233475febdcebabe7bbac41162c0dc408f4b40ef90"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-21T01:22:28Z"
+      }
+    },
+    {
+      "node_id": "R_kgDORsnMJw",
+      "category": "security-privacy",
+      "tags": [
+        "ai-agents",
+        "cli",
+        "security-scanner"
+      ],
+      "summary": "A security scanner for AI agent skills that detects vulnerabilities, malicious patterns, and security risks before installation. It scans Git repos, URLs, zip files, directories, or single files against 68 vulnerability patterns across 17 categories, combining fast static analysis with optional LLM semantic evaluation and emitting terminal, JSON, Markdown, or SARIF reports.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "8ecc75dc3b28def3934eb2b48da89dfd4288bedb",
+        "repo_metadata_sha256": "3614571e7221a34a611cae35f2b28667b2fb25a7b46ee81694c7db4448eab5da",
+        "fingerprint": "303bbaed34c22f30609fcbfb7d4aefe6443fdc416b44748a199c650065810cf5"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-21T01:22:28Z"
+      }
     }
   ]
 }
