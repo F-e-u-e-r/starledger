@@ -14683,6 +14683,130 @@
         "prompt_version": "classify-v1",
         "generated_at": "2026-07-21T19:22:47Z"
       }
+    },
+    {
+      "node_id": "R_kgDOSi9aBg",
+      "category": "developer-tools",
+      "tags": [
+        "benchmark",
+        "cli",
+        "llm",
+        "proxy"
+      ],
+      "summary": "A local proxy that cuts LLM input-token costs by rendering bulky request context, such as the system prompt, tool docs, and older history, into compact PNG images that vision models read, while leaving recent turns and the model's output as text. It ships a dashboard, an offline export command, and a library API.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "e9b7678e916d43a9cf4ec8d52ff383eba0ba7dee",
+        "repo_metadata_sha256": "2570ccd32bb8734db8e885ef398d4acfce576cc0362a6c6b15f62b5a9917a55d",
+        "fingerprint": "275efbd178716e8f560bbe1a2633da5dc011164382c1f541b48616657267f6fe"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-21T20:23:53Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOSiD2Vw",
+      "category": "productivity-automation",
+      "tags": [
+        "ai-agents",
+        "desktop-app",
+        "documentation",
+        "llm",
+        "markdown"
+      ],
+      "summary": "A local-first, Git-based macOS desktop workspace where teams and their agents compile files and URLs into a portable, reviewable knowledge wiki in the Open Knowledge Format. Markdown and Git are the source of truth, every agent edit is reviewed as a diff, and each Space is an ordinary offline folder.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "eca066f5b926662137eb347abc1771851157a38f",
+        "repo_metadata_sha256": "5bf0b61df2c9ce0072ddb6ea273d16d84065b52e03fa650ce405a6b44e8d2e76",
+        "fingerprint": "ce13d78b18f60ddfc1983576a89403a54182c063e96c71124026e87c1dd8a7bf"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-21T20:23:53Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOSiVyBw",
+      "category": "developer-tools",
+      "tags": [
+        "automation",
+        "cli",
+        "llm",
+        "productivity"
+      ],
+      "summary": "A tool that turns AI coding-assistant token usage into a monospace thermal-paper receipt you can paste, print, or save as a PNG. It reads local logs from Claude Code, Codex, and OpenCode, estimates cost from a bundled pricing table, and marks unknown models as unmapped instead of inventing a number.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "1beeee112e658e2614fabdc0fbc60e3293265a73",
+        "repo_metadata_sha256": "f17e3e24cfeb3601e641ddffa227136607f5fc0c0d7ac343ffec389b326cd711",
+        "fingerprint": "97f475cf0c7842998b754495a3da7acc689467abf3d266eca1db5cc9bb11891b"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-21T20:23:53Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOSjCshg",
+      "category": "libraries-frameworks",
+      "tags": [
+        "desktop-app",
+        "gui",
+        "library"
+      ],
+      "summary": "An open-source Swift framework and Swift Package for building macOS notch apps. It provides a menu-bar notch window that expands and collapses on hover, a frosted backdrop, a settings shell, and a global hotkey, with optional add-on components for a file shelf, a live-activity queue, and a volume glyph.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "7b4a90a27860617c4684b16548b7ae83e0a3c421",
+        "repo_metadata_sha256": "2988a5646992d372ed6c2484b7e87d812f50a458b5571e208722df62da6c9190",
+        "fingerprint": "c37e7f475858aad6fc1c4029019d157124f08218956d69d640cc736256c0301e"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-21T20:23:53Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOSjPY2g",
+      "category": "security-privacy",
+      "tags": [
+        "cli",
+        "package-manager",
+        "security-scanner"
+      ],
+      "summary": "A read-only inventory scanner for package, extension, and developer-tool metadata on macOS and Linux developer endpoints. It turns scattered lockfiles, package-manager metadata, and extension manifests into structured NDJSON records and, given an exposure catalog, flags exact matches to known supply-chain advisories.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "98327ec7d83320b98cc6e79dea0b1b1d10680974",
+        "repo_metadata_sha256": "9e7fcd1b75bf2206168d6b0d4d77384808aaa4494e5851093b3b166c242d53cd",
+        "fingerprint": "264fafcecba32d29ce15bf402a27b725e2468b053f86420442144df632eb92f9"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-21T20:23:53Z"
+      }
     }
   ]
 }
