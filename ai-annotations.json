@@ -13814,6 +13814,130 @@
         "prompt_version": "classify-v1",
         "generated_at": "2026-07-21T11:22:43Z"
       }
+    },
+    {
+      "node_id": "R_kgDOS6lvgw",
+      "category": "developer-tools",
+      "tags": [
+        "ai-agents",
+        "cli",
+        "llm",
+        "self-hosted"
+      ],
+      "summary": "A self-hosted Model Context Protocol server that lets ChatGPT or Claude read, edit, search, and run code in your local project folders through a tunnel you control, approved with an owner password, without uploading your files to a third party.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "16c8817d06190ef546988d4561ca74c36c936a90",
+        "repo_metadata_sha256": "f9cfb0328487de51391f1ec7a6794f92f1802b676fb979083770b98f8b299bc1",
+        "fingerprint": "17bd267e970053487ef4f4c00f63c0ee39e3448e0613f0380f1e86fa8ce3904e"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-21T12:25:27Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOS76sdw",
+      "category": "productivity-automation",
+      "tags": [
+        "ai-agents",
+        "llm",
+        "markdown",
+        "productivity",
+        "workflow"
+      ],
+      "summary": "An installable registry of reusable AI agent skills for Chinese knowledge workers, packaging repeatable workflows for weekly review, iMandalArt cards, FIRE semantic analysis, note-making, writing, and publishing so Claude Code, Codex, and other LLM agents can run them consistently.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "66874b566f6ba468c0662b9735d779dcde59be00",
+        "repo_metadata_sha256": "98494f2ddbfdb5d757f2363355101de0f21d5faa58b250db3cc1bfc86f8fb8a7",
+        "fingerprint": "1097a4d4e3cc271d304754f8a8d38f8a7fe6fedce4efe68b3f150b904a7e4bd3"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-21T12:25:27Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOS9nssw",
+      "category": "developer-tools",
+      "tags": [
+        "ai-agents",
+        "api",
+        "llm"
+      ],
+      "summary": "A Model Context Protocol server that gives AI agents deterministic Bazi and Four Pillars calculations, covering True Solar Time, longitude and timezone correction, solar-term boundaries, and Earthly Branch interactions, so the model calls a reliable engine instead of computing calendrical math itself.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "1586f6570c8dcf08ca6289331cc89b3409acc5e2",
+        "repo_metadata_sha256": "4c7e7ee430e2db366e3578b013ec96054b122e552252578a31db8049033e6c91",
+        "fingerprint": "47969838dbd884b747f7f68fb18c8120b98052dbffc041a1d8f22872cc598df7"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-21T12:25:27Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOSAP_Zw",
+      "category": "media-creative",
+      "tags": [
+        "ai-agents",
+        "automation",
+        "cli",
+        "llm"
+      ],
+      "summary": "An open-source agent skill for editing videos with coding agents such as Claude Code: it transcribes footage, cuts filler words and dead space, color grades segments, adds short audio fades and styled subtitles through ffmpeg, generates animation overlays, and renders a final cut.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "0f7b264913faf30f4744162c0ae45edc99de424d",
+        "repo_metadata_sha256": "30302e327515873c0a82a0d4cc18cbd76108773901150c153069fff9549cdd5b",
+        "fingerprint": "bf8602534646d5215f7f89e8d7ae1f1f63105cbecde6c15cceca2ab63c00e88a"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-21T12:25:27Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOSAaQsg",
+      "category": "mobile",
+      "tags": [
+        "desktop-app",
+        "gui",
+        "networking"
+      ],
+      "summary": "A Windows desktop tool that simulates the GPS location of a connected iPhone over USB or WiFi, offering teleport, navigation, looping routes, multi-stop paths, random walking, and joystick control, with synchronized control of up to three iOS devices at once.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "d3fd5a5a2dfaa5543f71ac0c2931467102514a3f",
+        "repo_metadata_sha256": "fe1b1ae41ecde37fe5806eb98d86db18fa22f2da06f8929861a241dd1fd57514",
+        "fingerprint": "5bfb43edffb41150b4afc7187acf0b9e71196d312a7c528b70f569fdac42f24f"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-21T12:25:27Z"
+      }
     }
   ]
 }
