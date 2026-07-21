@@ -15059,6 +15059,127 @@
         "prompt_version": "classify-v1",
         "generated_at": "2026-07-21T22:22:19Z"
       }
+    },
+    {
+      "node_id": "R_kgDOTGqE9Q",
+      "category": "developer-tools",
+      "tags": [
+        "ai-agents",
+        "api",
+        "search"
+      ],
+      "summary": "openings-mcp is a Go MCP server that lets MCP clients such as Claude Code, Codex, and Gemini CLI search job listings across job boards and thousands of company career sites. It queries each site's public endpoints on demand and stores or redistributes no scraped job data.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "da485fec642fe05c10f62b7f20664f18c56188d3",
+        "repo_metadata_sha256": "37d89da588f607dd25380b8f5b4f3643dae8ca742fd48236206f4496ba1f5d3c",
+        "fingerprint": "41c7b0dfa3c77c1ed578ba15784c21dac2662a1d2a6ab16bfb6b227eb653e6fa"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-21T23:22:46Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOTHT3ug",
+      "category": "developer-tools",
+      "tags": [
+        "ai-agents",
+        "documentation",
+        "llm"
+      ],
+      "summary": "OpenWiki is a Next.js application backed by an AI agent that generates living, source-grounded documentation wikis for any GitHub repository. It plans a docs-style outline, writes source-cited pages, publishes a navigable wiki, and refreshes published repositories on a daily schedule as the source changes.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "2e89c22c8db8e4d9854203b3c6b91856b9a69222",
+        "repo_metadata_sha256": "c75cd2a6d5282146d4eb27c8f7996f4a793f6c0e5a43e606ac03b32b3087449d",
+        "fingerprint": "9d036764219b4cb9d24b8388dd410dfba63b1d8ddbb31b851a3dc67d8479129d"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-21T23:22:46Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOTIPnIw",
+      "category": "developer-tools",
+      "tags": [
+        "cli",
+        "monitoring",
+        "terminal"
+      ],
+      "summary": "codex-reset-checker is a Node.js command-line tool that reads the local Codex/ChatGPT auth.json access token to query and display current usage limits and manual reset credits, including per-window used and remaining percentages and reset countdowns. It only reads data, modifies no local files, and never prints the access token.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "187c1d298260e5e4efdfd41d63ac5503ef1c87a4",
+        "repo_metadata_sha256": "68bd07d77cbe2d2e37a834f538276cf7df1db858c2e493286223af35f3f18575",
+        "fingerprint": "1e4b28ca3fee6482b2345f1e8ce8681b72eafdb5fb8ad6a246840942ca7c423e"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-21T23:22:46Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOTIlAlQ",
+      "category": "developer-tools",
+      "tags": [
+        "dashboard",
+        "monitoring",
+        "self-hosted"
+      ],
+      "summary": "An unofficial local dashboard that serves Claude Code and Codex usage limits over the local network so they can be viewed on a phone, tablet, or e-ink device. The Node.js server reads local usage data, shows 5-hour and weekly windows as used or remaining percentages, and turns red at a configurable alert threshold. Data stays on the machine.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "add437470a387be20f6082448914bc32375a9823",
+        "repo_metadata_sha256": "501169a5597da305f5bd2ae9db65d8059acc36b64dc55932229c8a9f24453e02",
+        "fingerprint": "eb6f58109235573da927dc58dcc667d2e66b385f04eb20a4f16a4312b4e4e2f5"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-21T23:22:46Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOTJbtfA",
+      "category": "ai-ml",
+      "tags": [
+        "ai-agents",
+        "cli",
+        "llm",
+        "machine-learning"
+      ],
+      "summary": "claude-real-video (crv) is a local Python command-line tool that turns a video from a URL or local file into scene-aware, deduplicated keyframes plus a Whisper transcript so an LLM can effectively watch it. It runs scene-change detection with sliding-window dedup, transcribes the audio, and writes frames, per-frame timestamps, and a manifest any model can read.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "ab565b94220ef9bb038789d8b34d71bc0685f576",
+        "repo_metadata_sha256": "07e80ee37799323e632ddfd4acca7be094802d8c403f7a2b4c89a36cbab744e1",
+        "fingerprint": "0d91e38f45a122bcebeaa190810406e4194f886d62c70c92ee8410afd14cff34"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-21T23:22:46Z"
+      }
     }
   ]
 }
