@@ -12805,6 +12805,138 @@
         "prompt_version": "classify-v1",
         "generated_at": "2026-07-21T03:25:24Z"
       }
+    },
+    {
+      "node_id": "R_kgDORyFzVQ",
+      "category": "productivity-automation",
+      "tags": [
+        "ai-agents",
+        "automation",
+        "cli",
+        "llm",
+        "plugin",
+        "workflow"
+      ],
+      "summary": "Open-source marketing toolkit pairing a local goal-loop web app with a Claude Code plugin of SEO, GEO, Google Ads, and Meta Ads skills. You state a goal and an agent turns it into a measured metric, then runs improvement loops, connecting to ad platforms and Search Console via hosted MCP servers.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "88e804721e9a3090dafeca4d6fc864ee5e3f1a54",
+        "repo_metadata_sha256": "71af0e839eacb39441c887234f8353eefd82cfe6caf1391b1633d07a9e861918",
+        "fingerprint": "d02553e14fd7329b66fd1e78209e6b5c5606655e7e528f2c086b1cda407d96ac"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-21T04:22:49Z"
+      }
+    },
+    {
+      "node_id": "R_kgDORyLoLA",
+      "category": "ai-ml",
+      "tags": [
+        "ai-agents",
+        "benchmark",
+        "cli",
+        "dashboard",
+        "llm"
+      ],
+      "summary": "A structured disagreement engine that sends the same question to three different LLMs, which vote, debate, and critique each other across multiple rounds to produce a decision dossier with a ruling, confidence, and minority report. Ships a CLI with code review, answer judging, benchmarking, and a web dashboard.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "2405dd19cb82b203093662d613fe929903c88310",
+        "repo_metadata_sha256": "1a0ce314f7cb7a419cf8ff8b59e2e2c28cd69529fa4c05c35ca463020b6ee12a",
+        "fingerprint": "46fbd9f439830ca12c892ce5cf6ab00d3879573d68351ce79feefe9839707a7c"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-21T04:22:49Z"
+      }
+    },
+    {
+      "node_id": "R_kgDORyuuaA",
+      "category": "ai-ml",
+      "tags": [
+        "ai-agents",
+        "api",
+        "automation",
+        "boilerplate",
+        "scraping",
+        "sdk"
+      ],
+      "summary": "Open-source foundation for building autonomous web-research agents, built on LangChain Deep Agents. It combines Firecrawl search, scrape, and browser-interaction tools with an agent loop, parallel subagents, on-demand skills, and structured output, and ships Next.js and Express templates alongside a reusable agent core.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "9523309934f7e585664d7bb270abc795d2600592",
+        "repo_metadata_sha256": "6c7685dc4bf79aa1d14539e09703a042bddf9518e30d142dd49ce8ecffae63eb",
+        "fingerprint": "0e7557fcd4566a133361daa5feac0c8c0a278526f42c16c77a611f0fc7b9db73"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-21T04:22:49Z"
+      }
+    },
+    {
+      "node_id": "R_kgDORz9IfA",
+      "category": "developer-tools",
+      "tags": [
+        "ai-agents",
+        "api",
+        "automation",
+        "cli",
+        "desktop-app",
+        "real-time"
+      ],
+      "summary": "An MCP server and companion CLI that connects Claude Code to a locally running TradingView Desktop app through Chrome DevTools Protocol. It exposes 78 tools for chart navigation, reading indicator data, Pine Script development, drawing, price alerts, replay practice, and streaming, with all data processed locally.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "1c9155d2201d9f03bc66a4f5ecc626256f05b644",
+        "repo_metadata_sha256": "01f0e1b768b657064ede28c3388eebb1ca2642db981eeea6898d97e6c26a78aa",
+        "fingerprint": "1ab616e0a89ae49d66347402ebbdea2e90277777ca8e35cb46d8316d348a97d3"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-21T04:22:49Z"
+      }
+    },
+    {
+      "node_id": "R_kgDORz_BDQ",
+      "category": "media-creative",
+      "tags": [
+        "ai-agents",
+        "automation",
+        "orchestration",
+        "workflow"
+      ],
+      "summary": "An open-source, agent-driven video production system that turns an AI coding assistant into the orchestrator of a full pipeline: research, scripting, asset generation, editing, and rendering. It offers 12 production pipelines and 52 tools spanning image, video, text-to-speech, and music providers, with free local and paid cloud options.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "3355e890d6fc5710ba8903df0406d634ca74fed8",
+        "repo_metadata_sha256": "bb288b5589affc3cad677624e3ac88839592adfad7361f7a23b41409c62cdf50",
+        "fingerprint": "7eab75fdbf2762d663abaa83f484936badd8d3612c10a6a486b1f71ab19ede77"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-21T04:22:49Z"
+      }
     }
   ]
 }
