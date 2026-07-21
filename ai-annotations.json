@@ -12313,6 +12313,131 @@
         "prompt_version": "classify-v1",
         "generated_at": "2026-07-20T23:22:28Z"
       }
+    },
+    {
+      "node_id": "R_kgDORogeyA",
+      "category": "developer-tools",
+      "tags": [
+        "ai-agents",
+        "documentation",
+        "frontend"
+      ],
+      "summary": "A collection of installable skills that help AI coding agents make better animation and interface-design decisions, distilled from the author's design-engineering experience. It bundles skills for reviewing animations, auditing a codebase for animation issues, finding motion opportunities, and applying Apple-style design principles.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "6e5c84b0ea2ef3d70f7c68ffd27d615c8defeaee",
+        "repo_metadata_sha256": "4d16fb43a97905f861d9b70682deda9f54cddd08f0863e7fc4901a02f1d71912",
+        "fingerprint": "2d62dddfdc7035d25b1db35fe7b1086e4720aa20ba4b56a175bccb89baea59d8"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-21T00:22:51Z"
+      }
+    },
+    {
+      "node_id": "R_kgDORpCz1g",
+      "category": "developer-tools",
+      "tags": [
+        "ai-agents",
+        "desktop-app",
+        "editor",
+        "orchestration",
+        "terminal"
+      ],
+      "summary": "A desktop and mobile agentic development environment for running multiple CLI coding agents in parallel, each in its own isolated git worktree. It bundles WebGL terminals, a VS Code-based editor, native GitHub and Linear integration, SSH worktrees, diff annotation, and a CLI to script agent workflows, plus a phone companion to monitor and steer agents.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "1a434350bd04506d88b1e335c1e20c1020a1dd27",
+        "repo_metadata_sha256": "0b44e7f3dd8312065e773a367914b2353933b0302d3255e0c43470c922e5f29d",
+        "fingerprint": "b434eadfac007233a58cad779b7daca0d3ade8cde67681600be3bc05a7c3c0ae"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-21T00:22:51Z"
+      }
+    },
+    {
+      "node_id": "R_kgDORq3qbg",
+      "category": "developer-tools",
+      "tags": [
+        "ai-agents",
+        "editor",
+        "sdk",
+        "serverless",
+        "terminal"
+      ],
+      "summary": "A serverless, browser-based runtime for running AI agents entirely client-side via WebContainers (WASM), with OS-level sandbox isolation. It ships a Monaco editor, an xterm.js terminal, a YAML policy engine, complete audit logging, GitHub integration, and a plugin system, and supports multiple AI providers through a pluggable SDK.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "d829147e4fe8c145d8bc5a127b23b2eac29e6b63",
+        "repo_metadata_sha256": "dba9f314419215bd48262e973c7b7793fa8a3f8166c5684e8c76f26e3798f60b",
+        "fingerprint": "7b353a9a59b7d9b551af6334535a98f6d6a22ea881568b69bb7803346d5a3529"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-21T00:22:51Z"
+      }
+    },
+    {
+      "node_id": "R_kgDORqAE2g",
+      "category": "education-reference",
+      "tags": [
+        "database",
+        "documentation",
+        "search"
+      ],
+      "summary": "A ready-to-use fitness reference dataset of 1,324 exercises, each with an animation GIF, a thumbnail, muscle-group and equipment metadata, and step-by-step instructions in ten languages. It ships a JSON Schema, a client-side browser for exploring and filtering the data, and a developer guide for database import and API integration.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "55b1f0b8fa58fc3645b0334f854aa49107c3818c",
+        "repo_metadata_sha256": "d371c0b90651b405d31138ef8c0f8fb856435a010a3d0316deece27123dd3487",
+        "fingerprint": "46cc4e45656891f20745428c12e8307ae7dffa3f25b17453a97c6f62ceba8041"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-21T00:22:51Z"
+      }
+    },
+    {
+      "node_id": "R_kgDORqec6w",
+      "category": "productivity-automation",
+      "tags": [
+        "ai-agents",
+        "automation",
+        "cli",
+        "workflow"
+      ],
+      "summary": "An AI-powered job-application framework built on Claude Code that turns an agent into a job-search assistant. It scrapes job portals, evaluates fit, drafts tailored LaTeX CVs and cover letters through a drafter-reviewer workflow, verifies the compiled PDFs for layout and ATS readability, and preps for interviews, with extra commands for ranking, outcome tracking, and skill-gap analysis.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "3ebed4d8db8d8f162d9054bb20870648f2de847b",
+        "repo_metadata_sha256": "6aebf6e386d33f34c9afe8ea44d66fcb622db7d3aa30f4d2faeef8610cb42378",
+        "fingerprint": "d8cdda49e6976a274170af6ee9dd6c6e9006d2324a78d8aaa5191056d67cd827"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-21T00:22:51Z"
+      }
     }
   ]
 }
