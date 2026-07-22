@@ -15180,6 +15180,125 @@
         "prompt_version": "classify-v1",
         "generated_at": "2026-07-21T23:22:46Z"
       }
+    },
+    {
+      "node_id": "R_kgDOTJdDEg",
+      "category": "mobile",
+      "tags": [
+        "networking",
+        "proxy"
+      ],
+      "summary": "An iOS location-spoofing tool that ports an existing GPS-spoofing project into JavaScript modules for the Shadowrocket, Surge, Loon, Quantumult X, and Stash proxy apps. It uses each proxy's HTTPS decryption to intercept Apple's location responses and rewrite the returned coordinates, requiring no jailbreak.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "bfd2aa2bfa187938d36ac75a5660a2aa195ecc31",
+        "repo_metadata_sha256": "7920b15019b5f1c7e9b835775ac04dc5bf81da870444f8be49c70fce1348b52d",
+        "fingerprint": "4c6c8f46a02d6468c8bb802df16e4b5ca6c66aac947045b020d142c998a51ff8"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-22T00:23:02Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOTKgHjQ",
+      "category": "ai-ml",
+      "tags": [
+        "cli",
+        "llm",
+        "machine-learning"
+      ],
+      "summary": "Colibri is a lightweight, dependency-free inference runtime written in pure C that runs the 744-billion-parameter GLM-5.2 Mixture-of-Experts model on consumer hardware with around 25 GB of RAM by streaming experts from disk. It treats VRAM, RAM, and storage as one memory hierarchy and ships a chat CLI and a web dashboard with live token metrics.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "d4fe52170f7d1fef0c02e903c30df50e6c69a8f4",
+        "repo_metadata_sha256": "4c282bc765cc12ec79d717978f88be4084bb0b4fa91c636745009dcf0fbd9cd1",
+        "fingerprint": "8dd4757d6785cc5da92a152e8cdb492404384b9f08241574645c858f5f9c2560"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-22T00:23:02Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOTLRo5A",
+      "category": "media-creative",
+      "tags": [
+        "automation",
+        "workflow"
+      ],
+      "summary": "An open-source pipeline that turns a single sentence into a publish-grade Chinese short video, automating the script, storyboard, voiceover, visuals, music, subtitles, and sound effects. Each stage stops at a local director console where the user reviews candidate outputs and approves them before continuing, keeping the workflow re-runnable and auditable at every gate.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "0c983d175297ed6534da27ad0eeb613ac5669b08",
+        "repo_metadata_sha256": "33a00eabbda754a318de3a45f81d9a002bcffdefd5cee8a19ce2808aa40da8c5",
+        "fingerprint": "a912933810d4756a4c281b5caf8ba33b204a11ac1b71ff2a6a7633b349af3a55"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-22T00:23:02Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOTLvW0A",
+      "category": "media-creative",
+      "tags": [
+        "frontend",
+        "visualization"
+      ],
+      "summary": "A procedural Hong Kong building generator for Three.js, ported from a Blender geometry-nodes setup. The original 592-node build system was reverse-engineered into a TypeScript placement algorithm, and roughly 190 building parts are exported into a single instanced GLB asset kit. All 18 generator parameters, such as floor count, footprint, and window type, are exposed as live sliders.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "14d187586aed632be8734f4a0a411f842df4bacc",
+        "repo_metadata_sha256": "00f91ca3bb18efb99bd674692e397679e9a502c85fad3830b9c3d792161a7fbe",
+        "fingerprint": "8308b9559b0e285448cd2285d2632f9ec597deffb747b81e2b2766236efb22a6"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-22T00:23:02Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOTOH1mw",
+      "category": "developer-tools",
+      "tags": [
+        "dashboard",
+        "monitoring",
+        "self-hosted",
+        "serverless",
+        "terminal"
+      ],
+      "summary": "ternssh is a web-based SSH workbench that can be deployed on Cloudflare Workers or self-hosted with Docker. It provides a draggable dashboard, an in-browser terminal, SFTP file transfer, and server status monitoring, and can optionally require Cloudflare Access authentication configured through environment variables.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "5c3f16d4d95a515d79dbc0f814cadc6f67a88d32",
+        "repo_metadata_sha256": "6f0ce28ccf27f8b9a14376056ef90e98aea84d04af6a517c4d9d596db654b79e",
+        "fingerprint": "0a70ee5cc28f18b5212e64916baf831a0d83d8f9fdfbd5b8d9df9022aaee559a"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-22T00:23:02Z"
+      }
     }
   ]
 }
