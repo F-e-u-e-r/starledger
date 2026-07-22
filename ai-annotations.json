@@ -15549,6 +15549,129 @@
         "prompt_version": "classify-v1",
         "generated_at": "2026-07-22T02:22:30Z"
       }
+    },
+    {
+      "node_id": "R_kgDOTUafwA",
+      "category": "web-applications",
+      "tags": [
+        "frontend",
+        "game"
+      ],
+      "summary": "A browser-based hidden-detail game that walks the player through the 53 Stations of the Tokaido using Hiroshige's public-domain woodblock prints rendered as 14-color dithered pixel art. Built as a single HTML file with vanilla JavaScript, no build step and no dependencies, and playable offline once loaded.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "4c3694cf3acc80a1eac367e6466f478b2fe992f3",
+        "repo_metadata_sha256": "583cb8d25f327aa0a6b15dbc44ab641e9e1d1d1d42d7c6aad754c87a6afee5d7",
+        "fingerprint": "c412542d6a0fcdc683d22d07657fe4292c600d9250a60dafadc007f1dfe71c5c"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-22T03:22:33Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOTVN61A",
+      "category": "productivity-automation",
+      "tags": [
+        "ai-agents",
+        "automation",
+        "llm",
+        "workflow"
+      ],
+      "summary": "A collection of standalone research-workflow skills for AI coding agents such as Codex and Claude, breaking academic research into verifiable steps: forming research questions, literature discovery, evidence mapping, study design, statistics and citation auditing, writing, and journal submission.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "c9da46936a4c1a6102d2063a73941e1bac9a974d",
+        "repo_metadata_sha256": "a209b049fd6b6d627120d2b3c973f48eece4e7be8399bb5a5e81027cc34347bd",
+        "fingerprint": "d4e92aecabb217605c16b2f40e0ea91895acbf14ef4ff630024028dc595008a8"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-22T03:22:33Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOTVUz0g",
+      "category": "developer-tools",
+      "tags": [
+        "ai-agents",
+        "cli",
+        "llm",
+        "workflow"
+      ],
+      "summary": "A Codex-native edition of the Superpowers skill bundle tailored for the GPT-5.6 model family. It ships thirteen runtime skills that enforce a lightweight plan, implement and verify loop for coding agents, reducing runtime instruction size by roughly 85 percent versus the upstream project.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "2e562e6bd7be43cabcfbda9e243281e7dac96061",
+        "repo_metadata_sha256": "e17b38e181274178351755165d4469e3c2f8344e3a3ebea863e8293aec114551",
+        "fingerprint": "d199fa524001d8bdaa0367880d89f828b597b24b11936e3a96be45f58f954ece"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-22T03:22:33Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOTW1IXw",
+      "category": "libraries-frameworks",
+      "tags": [
+        "build-tool",
+        "frontend",
+        "library"
+      ],
+      "summary": "An open-source web format and runtime for short prerendered motion with continuous loops, named application states, authored triggers, bounded transitions, and packed-alpha transparency. It publishes one animation as a multi-codec bundle across AV1, VP9, H.265 and H.264, and ships a compiler plus a markup-first browser element.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "15bd65c1ccc02064c364bec4acc02a93240062f9",
+        "repo_metadata_sha256": "c210665262d7ac67ae9c8633af7e45c60b219fd8e7794633859596a75033ea8f",
+        "fingerprint": "5a2eb04ca73cd36c8f334b7af97aabf41d02c5bb25050de3f4e4f9beb96a3aee"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-22T03:22:33Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOTWF34w",
+      "category": "developer-tools",
+      "tags": [
+        "containers",
+        "observability",
+        "real-time",
+        "search",
+        "self-hosted"
+      ],
+      "summary": "A self-hosted web viewer for Claude Code session transcripts that indexes the raw JSONL into a local SQLite database and serves a three-pane reader with full-text search, edit diffs, per-session cost stats, subagent auditing, and live updates. Runs locally via Docker and keeps transcripts on your machine.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "184e982b445ffc0ad9ee443bcb263f0e0295d7c1",
+        "repo_metadata_sha256": "be23ed162e2a0f08bc447bcd7e0ef436c4842cc3f3696b3356ef1d6013dd21cf",
+        "fingerprint": "e1df7a1bbb55955bb0756db1888df362bae41451c404e54ca1feb45dcf429472"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-22T03:22:33Z"
+      }
     }
   ]
 }
