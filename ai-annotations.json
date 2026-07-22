@@ -15421,6 +15421,134 @@
         "prompt_version": "classify-v1",
         "generated_at": "2026-07-22T01:24:58Z"
       }
+    },
+    {
+      "node_id": "R_kgDOTRyQUw",
+      "category": "developer-tools",
+      "tags": [
+        "dashboard",
+        "llm",
+        "monitoring",
+        "self-hosted",
+        "serverless"
+      ],
+      "summary": "A low-power e-ink dashboard that displays Claude Code and Codex subscription quota windows on a jailbroken Kindle. A Vercel function renders an opaque grayscale PNG from sanitized local usage snapshots, while collectors for Windows and macOS upload only quota percentages and reset timestamps, keeping provider credentials inside the official local clients.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "2eb3ffe2e06d0c423c08f773350c8ff9889cfc31",
+        "repo_metadata_sha256": "9b59d3acbff660c29a8b79c5a5c4d9340d9a2da715688728fb5999ee2095dd9a",
+        "fingerprint": "2fdf1b4cd27ab4a0acfcb7495b22bf842284f4b2f3d9bd6cbd1c880749c62262"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-22T02:22:30Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOTSj-4A",
+      "category": "productivity-automation",
+      "tags": [
+        "dashboard",
+        "database",
+        "desktop-app",
+        "gui",
+        "monitoring"
+      ],
+      "summary": "A local-first macOS utility that inspects application usage, storage, health, updates, and uninstall impact from a native SwiftUI dashboard. It tracks foreground usage, scans app-related storage, offers quarantine-first cleanup, checks Mac App Store and Homebrew updates, and stores data in a local SQLite database with no telemetry or hosted backend.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "9314ef9ac94a439121c53818c1268f5de20a6724",
+        "repo_metadata_sha256": "428231b0c40ea133acbf850c8bdb915dabc226ebdf91d4106eecae90006900e4",
+        "fingerprint": "63e5a83c66cf28bc730a589957bb124c5249d7dc513337736a8ccda332a4316d"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-22T02:22:30Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOTTg89g",
+      "category": "media-creative",
+      "tags": [
+        "ai-agents",
+        "code-generation",
+        "plugin",
+        "visualization"
+      ],
+      "summary": "A Codex plugin that rebuilds the object in an attached image as a code-only, animation-ready procedural Three.js model. It guides the agent through image validation, spec authoring, staged geometry and material construction, and browser-render comparison with AI vision review, producing a reusable procedural object factory rather than a scanned mesh.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "8b3d34694969c53795476f41e142f8c0616ed55a",
+        "repo_metadata_sha256": "b214e4a0d51a552b596341a4e5275568d818f6eac3dc2d96bff53bd6d6fa0365",
+        "fingerprint": "c6152924a51cc4be37b0b2f384ff9dc67509bd888d2375b5dcb3f702a1d5eb7f"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-22T02:22:30Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOTUEWWA",
+      "category": "developer-tools",
+      "tags": [
+        "ai-agents",
+        "database",
+        "desktop-app",
+        "monitoring",
+        "networking",
+        "terminal"
+      ],
+      "summary": "A native Rust and GPUI desktop workspace that unifies database management, SSH, SFTP, port forwarding, serial and local terminals, and RDP/VNC remote desktop. It supports many SQL and NoSQL databases through built-in and extension drivers, adds Markdown notes and monitoring, and includes an AI assistant for natural-language SQL, analysis, and agent workflows.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "24931a56fca42923d8834a09abf178fae9deee97",
+        "repo_metadata_sha256": "824b12e3bfbd1d7e3cc01e2b1616f8bb02b10308248f8427802b9533dd2b9d34",
+        "fingerprint": "1056517876a700b221bef7ef5da9b290262801bd886b6473e645e3293cb6733b"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-22T02:22:30Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOTUY2tA",
+      "category": "media-creative",
+      "tags": [
+        "desktop-app",
+        "gui",
+        "machine-learning"
+      ],
+      "summary": "A native macOS and Windows media player that uses deep-learning models to detect and restore mosaic regions in images and videos, with manual region selection and Real-ESRGAN super-resolution enhancement. It supports images, video, and live streaming previews, offers Apple Silicon GPU acceleration, and ships free and paid tiers.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "d10a0a7acdb3776e4e0d53b525646c0ef930b8d7",
+        "repo_metadata_sha256": "2a7c012b44a96053460ac6f4d91957df0866987a3540f60f8cc34945bd36a9d8",
+        "fingerprint": "5952094413d34b3cedbd47f23e6fcde11ecb5471e6119a11d375f5ce99c20270"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-22T02:22:30Z"
+      }
     }
   ]
 }
