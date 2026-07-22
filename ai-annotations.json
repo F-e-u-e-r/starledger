@@ -15802,6 +15802,129 @@
         "prompt_version": "classify-v1",
         "generated_at": "2026-07-22T04:27:23Z"
       }
+    },
+    {
+      "node_id": "R_kgDOTX_8wg",
+      "category": "developer-tools",
+      "tags": [
+        "ai-agents",
+        "api",
+        "scraping"
+      ],
+      "summary": "A Model Context Protocol (MCP) server for LinkedIn that lets MCP-compatible AI clients search people, companies, and jobs, scrape profiles, and retrieve structured JSON data. Written in Python with FastMCP and Patchright using a hexagonal architecture, with an optional confirm-gated profile-update tool.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "14e79744241ef9180bc0a52c6bf9bff62fdfaf50",
+        "repo_metadata_sha256": "8f013c38a61ffd2dbe11c66be51e1aa317407a2777b46cdb604dfeee9e9e2873",
+        "fingerprint": "b0c253d54ac9850f6c4218a66fc56f30f417e9740bc585a491472f926ed9c441"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-22T05:22:24Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOTXt1YQ",
+      "category": "data-analytics",
+      "tags": [
+        "ai-agents",
+        "automation",
+        "plugin"
+      ],
+      "summary": "An AI agent skill for in-depth equity research that produces nine-chapter stock reports and earnings analyses with source discipline and industry-specific appendices. Valuations such as DCF, reverse DCF, scenario DCF, EPV, and SOTP are run through Python scripts, covering US, Hong Kong, and A-share markets.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "d88c2362391ca7c511bbbf07fd7d354a3c419e2e",
+        "repo_metadata_sha256": "d45ea9c7df6aca5ca391e21e29f5288cab876b6901329bed142e64a7e857a087",
+        "fingerprint": "01194a6f8bbe4f9fbf79be47da463ded49a629e19f6dc0091d38621e3c26293c"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-22T05:22:24Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOTXuyaQ",
+      "category": "ai-ml",
+      "tags": [
+        "ai-agents",
+        "desktop-app",
+        "llm",
+        "machine-learning"
+      ],
+      "summary": "An open-source desktop workspace for running private local AI models, tools, files, and agents on your own hardware. It manages GGUF models and compatible runtimes with hardware-aware recommendations, uses llama.cpp for inference, and offers an optional QEMU-based sandbox for agent commands.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "c9b64b8fc359e3596e57728ab493ea1e25192945",
+        "repo_metadata_sha256": "c29cafc75de14a3415e75ee8dc1d966a712a3f8c034d0c011eed5e3fcd2287af",
+        "fingerprint": "c5cf6547f337be7be9013786240c7c2f46a623620b275abe8f6a7be08455b173"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-22T05:22:24Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOTY-FuQ",
+      "category": "devops-infrastructure",
+      "tags": [
+        "caching",
+        "containers",
+        "package-manager",
+        "proxy",
+        "self-hosted"
+      ],
+      "summary": "A self-hosted mirror proxy platform written in Rust with an adapter-based core and an embedded web console. It proxies and caches GitHub, Docker/OCI, npm, PyPI, Cargo, Go modules, and many other language and operating-system package repositories, backed by SQLite settings, quotas, and rate limiting.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "7378e57c0000d1f4f26ce94e6639e436bb985f74",
+        "repo_metadata_sha256": "1dfab2d9916e9ad1116772f828e85e5c4cd7b213a66aa60df943d222d0ddc20a",
+        "fingerprint": "158b10a54588735e193f78f12b3a45d222153ade1ad8ab282c27ef0644e1f371"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-22T05:22:24Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOTY3ACg",
+      "category": "media-creative",
+      "tags": [
+        "ai-agents",
+        "desktop-app",
+        "editor"
+      ],
+      "summary": "An open-source, local-first AI video editor that combines conversational agents with a professional multitrack timeline. Codex, Claude Code, and a built-in agent can read, edit, and export real, fully editable video projects, with Agent Skills, MCP integration, and Remotion-powered rendering via Electron.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "a7a8b325778ffa4c52a723b123257b8f6c8ad2b1",
+        "repo_metadata_sha256": "9f582d822fa692b78fb06e0d836054bf5f100b08236578c2e63b23a49e6a7ec0",
+        "fingerprint": "fddd5ee31788d263cd08856448a5645b6c566a37e28b52c4cd442947e6a695b9"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-22T05:22:24Z"
+      }
     }
   ]
 }
