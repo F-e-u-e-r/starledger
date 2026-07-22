@@ -15925,6 +15925,130 @@
         "prompt_version": "classify-v1",
         "generated_at": "2026-07-22T05:22:24Z"
       }
+    },
+    {
+      "node_id": "R_kgDOTYoztg",
+      "category": "developer-tools",
+      "tags": [
+        "ai-agents",
+        "cli",
+        "code-generation",
+        "llm",
+        "terminal",
+        "tui"
+      ],
+      "summary": "A terminal-based AI coding agent from xAI, written in Rust. It runs as a full-screen, mouse-interactive TUI that understands a codebase, edits files, executes shell commands, searches the web, and manages long-running tasks. It can also run headlessly for scripting and CI, or embed in editors through the Agent Client Protocol.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "4569db83fe4fee02ba656f8eaa52db22e43e8e63",
+        "repo_metadata_sha256": "a28643152a7dfccd1c9e447fdedda5a2c01b3ac2ddd155509647c7e06462d4bd",
+        "fingerprint": "316ae650c438e6ea801100bad35604b183f283154691686466250e1fe3ecacef"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-22T06:23:19Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOTZTMrA",
+      "category": "developer-tools",
+      "tags": [
+        "desktop-app",
+        "gui",
+        "theme"
+      ],
+      "summary": "An external theming and skinning tool for the Codex desktop application on macOS and Windows. It uses local loopback CDP injection to apply full-window background wallpapers and switchable saved themes without modifying the official app binary or installer, and can restore the default appearance at any time. It is not an official OpenAI product.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "1a00c17148783b6dbad0ab3407cd9847531dfb96",
+        "repo_metadata_sha256": "c70a3d537e9d80d18398a2f95c71c4f750c1adfe3df03c7d0a9126527f3651fe",
+        "fingerprint": "503da893d21a558f44b7ec9ad149da6513d55b2b5fd7683dc570f060431a5178"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-22T06:23:19Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOTZXzDw",
+      "category": "productivity-automation",
+      "tags": [
+        "ai-agents",
+        "automation",
+        "productivity"
+      ],
+      "summary": "A locally run AI skill that reviews drafts before publishing to Chinese social platforms such as Douyin, Xiaohongshu, and WeChat Channels. It pairs script-based keyword pre-screening with AI semantic judgement to flag compliance risks, cite official rules, and suggest compliant rewrites, keeping a local rule library that improves with use. It does not promise approval or teach evasion.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "1f32ac62be04160cac9e4e2303b8f6451d1d05bd",
+        "repo_metadata_sha256": "9c5f681fca75b0d6eb354f00129ecea1fb7903a19b27e86cf5949634353a69f9",
+        "fingerprint": "6f6861e0b5adf0ed6d9b853c85fc419d7416e03495c9c9f7960fe09a9ee449ea"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-22T06:23:19Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOTaHAxw",
+      "category": "media-creative",
+      "tags": [
+        "cli",
+        "scraping",
+        "terminal",
+        "tui"
+      ],
+      "summary": "A terminal-based video and audio downloader that fetches media from YouTube, X/Twitter, Instagram, Threads, TikTok, and over 1,800 other sites. Built as a full-screen interactive TUI with Ink and powered by yt-dlp, it lets you paste a URL, pick a resolution or audio-only MP3, and saves files to your Downloads folder.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "5b8dfbfd99f3ab325db8a6f203f98c752ce0fd86",
+        "repo_metadata_sha256": "d0d4f56cddd81f618c2dea329c38676aa180b7bb43a6c74d98943d90b01b580f",
+        "fingerprint": "b0ff9161b394eb20f49500da42596f093f8cd1dd308990206e4104d3ad4b816c"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-22T06:23:19Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOTbHnTQ",
+      "category": "developer-tools",
+      "tags": [
+        "ai-agents",
+        "orchestration",
+        "workflow"
+      ],
+      "summary": "A Codex skill for coordinating focused subagents across development, research, analysis, planning, document, data, and content work. It defines four roles — Explorer, Executor, Complex Executor, and Reviewer — and acts as a routing guide that delegates to subagents only when parallelism, context isolation, lower-cost execution, or independent review clearly outweighs the coordination cost.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "f60adc5d24ed00743ebcfb8133dcdb079e92b8a3",
+        "repo_metadata_sha256": "546d9d613752c0ec55f1190d9b8153dd17951263642a5ae375f48e5786568804",
+        "fingerprint": "5bbae462dcce99a3745df2f1438e804a852f8f64386e417acca6079a8085e14d"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-22T06:23:19Z"
+      }
     }
   ]
 }
