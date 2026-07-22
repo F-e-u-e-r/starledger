@@ -16049,6 +16049,133 @@
         "prompt_version": "classify-v1",
         "generated_at": "2026-07-22T06:23:19Z"
       }
+    },
+    {
+      "node_id": "R_kgDOTc8lsw",
+      "category": "productivity-automation",
+      "tags": [
+        "ai-agents",
+        "automation",
+        "documentation",
+        "markdown",
+        "productivity",
+        "workflow"
+      ],
+      "summary": "An AI workflow skill pack for creating original Xiaohongshu virtual products, covering a seven-step process from product selection and benchmarking to production, listing, content, and review. It ships reusable Markdown templates, checklists, and formulas, and installs into AI coding tools such as Claude Code, Cursor, and Codex.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "cac0321c67ba7ff789498e2b3fa662f6b1ba2250",
+        "repo_metadata_sha256": "e3440b81fe7750d74b691335ca3ba317a909ed69dd682d021ef9fbd068434cfa",
+        "fingerprint": "2bd251a860d96ffe80673f066b4d264711f2937af322899096ba737f87cb7ef9"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-22T07:23:24Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOTcMYNA",
+      "category": "productivity-automation",
+      "tags": [
+        "ai-agents",
+        "documentation",
+        "markdown",
+        "productivity",
+        "workflow"
+      ],
+      "summary": "An AI-first, model-agnostic Obsidian vault framework that separates captured sources, human-reviewed knowledge, and generated wiki pages into a connected multi-topic Markdown graph. Governed agents may draft synthesis while humans approve canonical notes, and the plain-Markdown vault stays usable without any plugin, database, or hosted service.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "e5359736fd385a7c90f74a27ca7924ed4bcd6be2",
+        "repo_metadata_sha256": "68dc2d01bb37270d8815a4f1667d34a62ec54885115fcaf6a88b55e16d4c87d5",
+        "fingerprint": "da0af63fa5691c49cd30e01e7e4f4f2b7c76a99b0d75316c31d1b42d58eb653b"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-22T07:23:24Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOTcO-BA",
+      "category": "media-creative",
+      "tags": [
+        "automation",
+        "cli",
+        "workflow"
+      ],
+      "summary": "A pipeline that turns hand-drawn story master images into 35-45 second vertical videos, first revealing black-and-white line art from left to right, then filling low-saturation color in the same direction with HyperFrames. It includes story-config validation, local line-art extraction, and an installable Codex skill, and requires Python, Node.js, FFmpeg, and GSAP.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "396d98540ba21ef4f084dae1d1eff6dce9d3f329",
+        "repo_metadata_sha256": "4450be67af4d631663574dc7c91d5d399be732447f1d6bcdd2022cfb698a5450",
+        "fingerprint": "56fab89e680122b524505cd8b34e5b4c3181ebdb46a6a5a7af3852e2b3a58f07"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-22T07:23:24Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOTcWa1w",
+      "category": "developer-tools",
+      "tags": [
+        "game",
+        "plugin"
+      ],
+      "summary": "A Codex++ tweak that brings the Google Dino Run game into the Codex environment. It installs by cloning into the Codex++ tweaks directory, running an npm build, and reloading tweaks, and is validated with the codexplusplus validate-tweak command. The project is written in JavaScript.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "1e561441934f506ce75d2163225048194822a5e7",
+        "repo_metadata_sha256": "52b0b14a58f4404ab6e8e216314e31065712a33eb180a203778f96399e328ef6",
+        "fingerprint": "b601b64e489fec6ff36158cb03e11c37ed57141aa500a789037a80d4a2354d8e"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-22T07:23:24Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOTcY-sQ",
+      "category": "productivity-automation",
+      "tags": [
+        "ai-agents",
+        "automation",
+        "linter",
+        "markdown",
+        "theme",
+        "workflow"
+      ],
+      "summary": "A WeChat Official Account content toolkit for AI coding agents that converts Markdown into fully inline-styled HTML that pastes into the WeChat editor without losing formatting. It offers multiple typography themes and a theme generator, automatic section numbering and keyword marking, dual quality-lint checks, cover generation, and a multi-account drafting pipeline.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "ed9650699650427afd760ffbda0f15264bc6a964",
+        "repo_metadata_sha256": "8891f73b37ac7f601810f454eba8207c0112227c6ad1da7510cd387d39c821c9",
+        "fingerprint": "340e9fab24c93735e88229bd8bf842430b41175c99847140ddf7c08737353746"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-22T07:23:24Z"
+      }
     }
   ]
 }
