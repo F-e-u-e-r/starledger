@@ -15672,6 +15672,136 @@
         "prompt_version": "classify-v1",
         "generated_at": "2026-07-22T03:22:33Z"
       }
+    },
+    {
+      "node_id": "R_kgDOTWQBdw",
+      "category": "developer-tools",
+      "tags": [
+        "ai-agents",
+        "automation",
+        "cli",
+        "documentation",
+        "plugin"
+      ],
+      "summary": "A Claude Code plugin that grades and iteratively improves a repository's documentation as an AI-agent context source. It scores five dimensions with a token-economy report, loops through fixes until targets are met, and then suggests folding the checks into CI.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "4146b164ca0b31f119f6e367a7d57459321b347f",
+        "repo_metadata_sha256": "243b2f9ec84b08e456deb015bd111a860a7187f1856e4992d94d38f88a2b5709",
+        "fingerprint": "f04935429cbfeeb2cb2f40ae4eb079687a92e847e868029753fc30d63edc3719"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-22T04:27:23Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOTWt_NQ",
+      "category": "developer-tools",
+      "tags": [
+        "api",
+        "authentication",
+        "cli",
+        "code-generation",
+        "proxy"
+      ],
+      "summary": "A Python tool that captures your own app or API traffic through mitmproxy, HAR files, or copied cURL, extracts the reusable authentication values, and uses AI to generate a plain Python client with named methods for replaying calls to that API.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "985b5d632d461912af012acfa03db3f7b1e5de27",
+        "repo_metadata_sha256": "d57612c4d5f337168371a4ab5022f1be5f945cebbf6013b9d75b2abd42e81164",
+        "fingerprint": "5ad2ffd896a03000cd474cb7f47c32d7ce5cf027a1d59b186e5fb327817848a0"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-22T04:27:23Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOTWuuLw",
+      "category": "ai-ml",
+      "tags": [
+        "automation",
+        "cli",
+        "machine-learning",
+        "real-time",
+        "self-hosted"
+      ],
+      "summary": "A local-first command-line tool for meeting transcription and summarization, optimized for Taiwanese Mandarin and English code-switching. It offers four selectable ASR backends, real-time subtitles, and speaker diarization, running fully on-device with an optional remote summary endpoint.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "002d625d2fd7a8933c2bcceadb7926690c1101af",
+        "repo_metadata_sha256": "db0f6ec5ee7333a659d7139efca199c07243e5e4d7061e4ca88cf0581f15d6e9",
+        "fingerprint": "cc99a71b1393b1992ac971656ff1128b3b80ed398fe58da677edb225616566b7"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-22T04:27:23Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOTX0I3w",
+      "category": "mobile",
+      "tags": [
+        "configuration",
+        "networking",
+        "proxy",
+        "self-hosted",
+        "serverless"
+      ],
+      "summary": "An iOS GPS location spoofer that works without jailbreak by using proxy apps such as Shadowrocket, Surge, Loon, and Stash to intercept Apple's location responses and rewrite the coordinates. It ships client modules and a deployable point-selection page.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "98c866d066951ea61e6eddb9299a16cdc7d60dca",
+        "repo_metadata_sha256": "53ddb1e7ac2808c78cee98de3c80db4eb7a0274267a33b82606eade49ee47a45",
+        "fingerprint": "f9fdcb345d213a990b69d33edeabbf42b6b8e5c7ca7a5c907214851cba5b8e61"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-22T04:27:23Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOTXY60w",
+      "category": "media-creative",
+      "tags": [
+        "ai-agents",
+        "api",
+        "automation",
+        "frontend",
+        "theme"
+      ],
+      "summary": "An agent-native framework for building social cards as React components. Each card renders to a fixed 1080 by 1350 canvas with reusable brand kits, exports high-quality PNG carousels, and publishes directly to Facebook, Instagram, and Threads through the Meta Graph API.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "d72f9028a049ccec64cb5cbd566df5c26820a547",
+        "repo_metadata_sha256": "bd7b214914525022e89d5fb65e4467d8845bd294df4c022c06a657aaf9d87925",
+        "fingerprint": "f6727760bf0a6ec0ff82a3aa3853ac83ede63045756a7102dcf0f352d6a9557f"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-22T04:27:23Z"
+      }
     }
   ]
 }
