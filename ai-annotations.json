@@ -16176,6 +16176,57 @@
         "prompt_version": "classify-v1",
         "generated_at": "2026-07-22T07:23:24Z"
       }
+    },
+    {
+      "node_id": "R_kgDOTcunuA",
+      "category": "media-creative",
+      "tags": [
+        "ai-agents",
+        "automation",
+        "cli",
+        "plugin",
+        "workflow"
+      ],
+      "summary": "An agent-native video director skill and Node.js CLI that turns a short brief into a reproducible video project. It handles governed asset sourcing, shot planning, three-layer bilingual ASS subtitles, brand intro and outro templates, narration routing, and ffmpeg rendering across preview, standard, and final quality profiles.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "1ca6759a66dc9b97023b559f53862d5ea5283eb9",
+        "repo_metadata_sha256": "67aa255f86c5e5ba3d1db35e4125cab39d66f1709acbe5666d611f8e7055ebef",
+        "fingerprint": "68aa7a408c0d8d25747aa9d84d5a9cdab5e163f34bef00e176c2c887e2628c08"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-22T08:24:40Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOTdBSFA",
+      "category": "developer-tools",
+      "tags": [
+        "automation",
+        "cli",
+        "configuration",
+        "documentation"
+      ],
+      "summary": "A guide and toolkit for replacing Claude Code default system prompt and compact templates with custom ones. A wrapper script assembles ordered Markdown files into the launch-time system prompt, while documented fail-closed binary patches customize the bundled tool, agent, and compact-template fragments and are reapplied after each upgrade.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "082efe7b58fd00da96f4b46ffb1dbb98165cedda",
+        "repo_metadata_sha256": "e886f1dcd55a66887e69f8199c8a102ea87f515dedbb145c9e785e494c1b8c0a",
+        "fingerprint": "8576c806941431f71380867ede9dab7c6b3e2ff6ed4f3c209c89f742c8469197"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-22T08:24:40Z"
+      }
     }
   ]
 }
