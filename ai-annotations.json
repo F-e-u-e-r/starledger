@@ -15299,6 +15299,128 @@
         "prompt_version": "classify-v1",
         "generated_at": "2026-07-22T00:23:02Z"
       }
+    },
+    {
+      "node_id": "R_kgDOTPq93w",
+      "category": "media-creative",
+      "tags": [
+        "ai-agents",
+        "frontend",
+        "plugin"
+      ],
+      "summary": "An agent skill for Claude Code, Codex, and other SKILL.md-compatible agents that builds scroll-scrubbed landing pages where a camera flies continuously through generated 3D diorama scenes. It uses the Higgsfield pipeline for stills and camera-flight video plus a portable vanilla-JS scrub engine.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "31ed6340e6bdbb31867f586618d9dc0f4bd2036b",
+        "repo_metadata_sha256": "3d9a2ecb039b1e0e4aeb24af9cdb7a328957409fe2703f4384b4c389871507c1",
+        "fingerprint": "1481dd9877b225d609725615d05b43b1559d7e95d11094643a4baf89c2bb303a"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-22T01:24:58Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOTPtmHA",
+      "category": "developer-tools",
+      "tags": [
+        "ai-agents",
+        "benchmark",
+        "llm",
+        "plugin"
+      ],
+      "summary": "The Fable Method is a set of four Claude Code agent skills - think, act, prove, and grow - that distill a structured workflow for coding agents into literal, ordered rules. It ships an adversarial evaluation suite of judge-verified trap scenarios, tying each rule to a documented test failure.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "c19d24bf7fc063ea8b54705852302184628d6999",
+        "repo_metadata_sha256": "8b18a154c9c3f4b0c95d21e1807ee4b605472981b7fec3f381c71977d822092f",
+        "fingerprint": "2ba8818a54811782bab143ff6978e906e3ad84f9c9f9470ceb78f5d7ae013c06"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-22T01:24:58Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOTQahuQ",
+      "category": "devops-infrastructure",
+      "tags": [
+        "ai-agents",
+        "cli",
+        "containers",
+        "orchestration",
+        "self-hosted",
+        "workflow"
+      ],
+      "summary": "HomeRail is a TypeScript runtime that turns one-off agent chats into auditable, reusable DAG workflows for self-hosting on a homelab or NAS. It provides a DAG orchestration engine, an hr CLI, a voice surface, and Docker-based workers, with per-run workspace isolation, replay, and scorecards.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "f6608a7ca0cc2d54de925b19ea047ca313be9723",
+        "repo_metadata_sha256": "7f112aaa4b7e7a9573117c6e6f84ef8b030b06a43c8dfa5a51af4d7f34042cf6",
+        "fingerprint": "41c284ee92575b32874e910e196efdc8264d4c0923941e4d1391a42131ea0897"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-22T01:24:58Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOTRN5lg",
+      "category": "media-creative",
+      "tags": [
+        "ai-agents",
+        "plugin"
+      ],
+      "summary": "An open-source AI agent skill for Codex and Cursor that turns Chinese article text into whimsical hand-drawn illustrations. It plans an illustration strategy, assembles prompts, and calls the host platform's built-in image generation, defaulting to 16:9 images with optional custom character IP.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "bb9a85ebc30ae14f4a2d3386414199cbe9bed2ea",
+        "repo_metadata_sha256": "a493b825f0835d3fc80b5a5ad17c366addb6923140f7d592ca65c1d557b27222",
+        "fingerprint": "c73d07a57b2ce5d647b3a1d3abef4ee9612674d29421fe69dca35b29b0f96814"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-22T01:24:58Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOTRdWXA",
+      "category": "education-reference",
+      "tags": [
+        "database",
+        "visualization"
+      ],
+      "summary": "Marble Skill Taxonomy is an open, structured dataset of what children learn across the primary years, decomposing 1,590 micro-topics into a prerequisite graph of 3,221 edges across 8 subjects and aligning them to national curriculum standards. It ships as pure JSON with schemas and an interactive visualization.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "93a935752a3f85fe457a5ab055f069325a14843a",
+        "repo_metadata_sha256": "d63ddd2a7c5bbca7655d5f338a7530c1ef7d847b2f2d65179d70dbf022b029f4",
+        "fingerprint": "5bb887a41f841c29156301fa2238be1fe4662050ab4b65c11469026e15268eb4"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-22T01:24:58Z"
+      }
     }
   ]
 }
