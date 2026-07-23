@@ -11064,6 +11064,30 @@
       }
     },
     {
+      "node_id": "R_kgDORRJdTQ",
+      "category": "media-creative",
+      "tags": [
+        "desktop-app",
+        "gui",
+        "productivity"
+      ],
+      "summary": "Native macOS menu bar utility that displays a teleprompter overlay beside the MacBook notch for presentations and recordings, with transport controls, adjustable speed, font size and overlay dimensions, an optional countdown, plain-text script import/export, and a best-effort privacy mode.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "1765b85d0c086d698bdc83669ef2883fda716c5c",
+        "repo_metadata_sha256": "56d0cd40a33330978e533c52ab8c22e26cf9df2f328d2e3b25ecf475c56d1da1",
+        "fingerprint": "046ff2bf4ac82f4bc71ac174dac118016acfcd77d0fc38415b561f38df96b6c6"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-23T10:23:41Z"
+      }
+    },
+    {
       "node_id": "R_kgDORRgHdw",
       "category": "developer-tools",
       "tags": [
@@ -13637,6 +13661,33 @@
         "model_label": null,
         "prompt_version": "classify-v1",
         "generated_at": "2026-07-21T04:22:49Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOS-0Giw",
+      "category": "developer-tools",
+      "tags": [
+        "ai-agents",
+        "api",
+        "cli",
+        "dashboard",
+        "llm",
+        "proxy"
+      ],
+      "summary": "A local, OpenAI-compatible proxy that lets the Codex CLI, app and SDK and Claude Code run against any LLM provider, translating streaming, tool calls, reasoning and images in both directions across dozens of providers, with a web dashboard and a pooled ChatGPT account manager.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "4269bbc708a70e7347bab20db84a058679888c62",
+        "repo_metadata_sha256": "c70cbe0e492f6acb2bbd44256591462b0dd9b2a71d0d55546f3cc1b1f73fc94f",
+        "fingerprint": "7a79e371790775a3913d0d3da542f5b512b71463061211617592b120060e2979"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-23T10:23:41Z"
       }
     },
     {
@@ -16453,6 +16504,30 @@
       }
     },
     {
+      "node_id": "R_kgDOTd7AaA",
+      "category": "media-creative",
+      "tags": [
+        "ai-agents",
+        "frontend",
+        "real-time"
+      ],
+      "summary": "An open-source, backend-free AI video editor for talking-head video that runs entirely in the browser: storyboarding, designed graphics, kinetic captions, themes, live preview, timeline and WebCodecs export, with drafts and media kept locally, and it can be driven by an external AI agent over MCP.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "5de87ee93f4d2242d5c2befe9e2855a68bbc3884",
+        "repo_metadata_sha256": "e5806b1333f42f1c29591796b9c73d7bb39f689ec9896cd46cd51ff77057107e",
+        "fingerprint": "d93d05fab338af3a370fb41acdcdf1b21583e0e2ae5395cf2de8c1efbf5a4db1"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-23T10:23:41Z"
+      }
+    },
+    {
       "node_id": "R_kgDOTdBSFA",
       "category": "developer-tools",
       "tags": [
@@ -16475,6 +16550,30 @@
         "model_label": null,
         "prompt_version": "classify-v1",
         "generated_at": "2026-07-22T08:24:40Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOTeMsuQ",
+      "category": "developer-tools",
+      "tags": [
+        "ai-agents",
+        "documentation",
+        "plugin"
+      ],
+      "summary": "A Claude Code skill that rewrites dense, ambiguous English into ASD-STE100 Simplified Technical English so AI agents can parse tool descriptions, error messages and inter-agent instructions with less ambiguity, flagging rule violations and returning a before/after table without dropping facts.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "bf7aff19f38f93ea87d4c343bf96102fa82790ab",
+        "repo_metadata_sha256": "09d7224c4bf67a3ca08d729379823f88dfa4881c7d221c77bab1103268792ed3",
+        "fingerprint": "f85637983935156925a0e50f484e2873eed9073d256420c0025384640bea69e4"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-23T10:23:41Z"
       }
     }
   ]
