@@ -1056,6 +1056,28 @@
       }
     },
     {
+      "node_id": "MDEwOlJlcG9zaXRvcnkzMzI2MzExOA==",
+      "category": "security-privacy",
+      "tags": [
+        "plugin"
+      ],
+      "summary": "uBlock Origin is an efficient, open-source content blocker for Chromium- and Firefox-based browsers. It blocks ads, trackers, and other unwanted network requests using filter lists, and is designed to be fast and lean while giving users fine-grained control over what a page is allowed to load.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "08d2311634d724e278b016104773a12f0eb2b8d3",
+        "repo_metadata_sha256": "122ee5bf839ff0d6b6a30413cec08014bb06410b25e3f68d8eee9cccc1976d42",
+        "fingerprint": "29bc3e46f24a6975325cb8ca0f7f39caf1e6daa920f1334316fe71548e8e5d88"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-23T08:25:13Z"
+      }
+    },
+    {
       "node_id": "MDEwOlJlcG9zaXRvcnkzNDIzODg3NDU=",
       "category": "data-analytics",
       "tags": [
@@ -1956,6 +1978,31 @@
         "model_label": null,
         "prompt_version": "classify-v1",
         "generated_at": "2026-07-19T08:22:28Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOJQ_29Q",
+      "category": "ai-ml",
+      "tags": [
+        "ai-agents",
+        "llm",
+        "no-code",
+        "workflow"
+      ],
+      "summary": "Flowise is an open-source, low-code platform for building LLM applications and AI agents through a visual drag-and-drop interface. It lets users assemble chatbots, retrieval-augmented workflows, and multi-agent systems, and can be installed via npm or run with Docker and self-hosted.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "72e4081c6b6f41c45916f42cde52fdd9e4695391",
+        "repo_metadata_sha256": "01b5064a2efc99de297281e9020be1ebdf045921d374411d0688a29e1c6dbfe0",
+        "fingerprint": "95f4d36964ddfd2e8ffdc6e2595e99ba1c559d113e90f819bbfb200ec77c84e3"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-23T08:25:13Z"
       }
     },
     {
@@ -3041,6 +3088,31 @@
       }
     },
     {
+      "node_id": "R_kgDOLfkiww",
+      "category": "developer-tools",
+      "tags": [
+        "ai-agents",
+        "automation",
+        "cli",
+        "self-hosted"
+      ],
+      "summary": "OpenHands Agent Canvas is a self-hosted developer control center for coding agents and automations. It lets users start conversations with and orchestrate agents such as OpenHands, Claude Code, Codex, Gemini, or any ACP-compatible agent across local, remote, and cloud backends from a single interface.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "91552c24a330662ac4b8c77e4bd3f20453b046b7",
+        "repo_metadata_sha256": "0dfc5f1ec20ed907c262e896714ee85d0fa0c566ae16bf275763b5c6cab3bce3",
+        "fingerprint": "14054d9d1fbaa97fb4324fa54e769354cb9dde5b1583877b18e33837985aecb6"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-23T08:25:13Z"
+      }
+    },
+    {
       "node_id": "R_kgDOLk7NSQ",
       "category": "self-hosted-homelab",
       "tags": [
@@ -3561,6 +3633,30 @@
       }
     },
     {
+      "node_id": "R_kgDOMbcWiA",
+      "category": "developer-tools",
+      "tags": [
+        "ai-agents",
+        "automation",
+        "scraping"
+      ],
+      "summary": "Camoufox is an open-source anti-detect browser built for web scraping and AI agents. Based on Firefox, it focuses on masking browser fingerprints and integrates with automation tooling such as Playwright, letting developers drive a stealth browser from Python. The project notes it is still under active development.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "d112270cb07bc08bb04d4d0ca92d4fc7c6686e3b",
+        "repo_metadata_sha256": "649eadd5377be69e627ba3172caaa8be70b0273e8d35279f31a63d1b015ec4ef",
+        "fingerprint": "80cf2c633a2e9ff1c977febdb2ba891761ea7f3a73f7dc5be4107b31aacf8846"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-23T08:25:13Z"
+      }
+    },
+    {
       "node_id": "R_kgDOMbt5gA",
       "category": "ai-ml",
       "tags": [
@@ -3735,6 +3831,31 @@
         "model_label": "informational-only",
         "prompt_version": "classify-v1",
         "generated_at": "2026-07-16T15:23:19Z"
+      }
+    },
+    {
+      "node_id": "R_kgDON1UFjg",
+      "category": "ai-ml",
+      "tags": [
+        "ai-agents",
+        "automation",
+        "llm",
+        "no-code"
+      ],
+      "summary": "AutoAgent is a fully-automated, zero-code framework for creating and deploying LLM agents using natural language alone. It automatically constructs and orchestrates collaborative agent systems, tools, and workflows without manual coding, aiming to make AI agent development accessible to people without programming experience.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "735657a589ce837e7b32416d06dfcc40144b3ea2",
+        "repo_metadata_sha256": "a8d1efdeb86546dc324d4d9b3087e66b911cb8c0f5facf48121ed11ae2d78848",
+        "fingerprint": "3a62a424690046e9661f9805ec4c5e1e3993a5ddcb1779e90f002da956075897"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-23T08:25:13Z"
       }
     },
     {
