@@ -6803,6 +6803,32 @@
       }
     },
     {
+      "node_id": "R_kgDOQ--jJQ",
+      "category": "data-analytics",
+      "tags": [
+        "ai-agents",
+        "cli",
+        "code-generation",
+        "library",
+        "visualization"
+      ],
+      "summary": "A collection of AI agent skills with an accompanying CLI and library for data visualization, offering chart generation across 26+ chart types, infographic creation, icon retrieval, narrative text visualization, and G2 and G6 code generators for statistical and graph-based charts.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "2b5236f8e623fd9da1106038e4de50e140803c38",
+        "repo_metadata_sha256": "82d842b9cdb756003ba02ae153d6b429fe4cbc4669aea26d3d39589041a67f12",
+        "fingerprint": "a0bfbc09c2e2947e30de36e9424fb6a10587b73886e1704b7a852ab4a1c3b574"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-23T09:24:09Z"
+      }
+    },
+    {
       "node_id": "R_kgDOQ--z2w",
       "category": "media-creative",
       "tags": [
@@ -7971,6 +7997,30 @@
       }
     },
     {
+      "node_id": "R_kgDOQZtKLw",
+      "category": "developer-tools",
+      "tags": [
+        "ai-agents",
+        "automation",
+        "plugin"
+      ],
+      "summary": "A Claude Code plugin marketplace distributing a collection of plugins that extend the coding agent through commands, skills, agents, and hooks, including tools to consult an external model for second opinions, query Langfuse traces for debugging, and schedule Slack reminders.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "80f2bb82d5e181fa9608020470a0887eb40df91f",
+        "repo_metadata_sha256": "019bbdd1340e510abfdc697be94cffcf7b6cf88f72983464df35532481e7c077",
+        "fingerprint": "302cc4deefcc70e30f53b7df4c9e4fdc15a16d70140b5d67cff06ee217df5a64"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-23T09:24:09Z"
+      }
+    },
+    {
       "node_id": "R_kgDOQ_-q4g",
       "category": "productivity-automation",
       "tags": [
@@ -8019,6 +8069,32 @@
         "model_label": "informational-only",
         "prompt_version": "classify-v1",
         "generated_at": "2026-07-18T17:24:26Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOQ__jdA",
+      "category": "ai-ml",
+      "tags": [
+        "ai-agents",
+        "cli",
+        "llm",
+        "scraping",
+        "search"
+      ],
+      "summary": "An AI agent skill that searches sources such as Reddit, X, YouTube, TikTok, Hacker News, and Polymarket in parallel, scores results by engagement signals like upvotes and likes, and uses a model to synthesize a grounded, source-cited summary of the last 30 days on any topic.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "555a64d005684c08538bab961f370e590e4cfcc7",
+        "repo_metadata_sha256": "408a400a7d24664a280be20a8c4a6dab17b77b2fb6aec0c5982f647d8097b64f",
+        "fingerprint": "56506fa578a003f43136ab5a9bd10ce173a804b706ed204382a1993691088381"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-23T09:24:09Z"
       }
     },
     {
@@ -9536,6 +9612,31 @@
       }
     },
     {
+      "node_id": "R_kgDOR6UM2w",
+      "category": "productivity-automation",
+      "tags": [
+        "ai-agents",
+        "documentation",
+        "markdown",
+        "productivity"
+      ],
+      "summary": "A framework and template collection for founders to build a personal AI knowledge base using Obsidian and Git, structuring identity, company context, and past decisions as version-controlled Markdown files so an AI agent can read them as long-term memory across tools and sessions.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "Readme.md",
+        "readme_oid": "eb3ba32ed42475adaddac628118b7214bc64afb7",
+        "repo_metadata_sha256": "173ba170b15cdab8e92317a414119d8a6f0c7ac31be3beb6b2b276a4afe90125",
+        "fingerprint": "cd08cdedbfcbb82f626fb95b5157fa8540e631b0d697ac3f728c646c214051b7"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-23T09:24:09Z"
+      }
+    },
+    {
       "node_id": "R_kgDOR6Xyow",
       "category": "ai-ml",
       "tags": [
@@ -10881,6 +10982,33 @@
         "model_label": null,
         "prompt_version": "classify-v1",
         "generated_at": "2026-07-19T17:24:13Z"
+      }
+    },
+    {
+      "node_id": "R_kgDORQeRgg",
+      "category": "data-analytics",
+      "tags": [
+        "ai-agents",
+        "api",
+        "cli",
+        "monitoring",
+        "real-time",
+        "tui"
+      ],
+      "summary": "A local-first TypeScript command-line tool for X (Twitter) intelligence built on official X and xAI APIs, providing recent and full-archive search, filtered streams and watch loops, account and follower analysis, OAuth-backed actions, Grok-assisted synthesis, structured exports, and an MCP interface for agents.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "67a705d0638a58e6bc3d8e4e25d908699c7ea23d",
+        "repo_metadata_sha256": "626bca6d608bbc77bd0892df800335ee1ecafd1a831972c6ea54c606677f8fa4",
+        "fingerprint": "71ab0896946358823d730b4dab88c8f75cf9922a2ec86e4f06bf2cb18e5f502b"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-23T09:24:09Z"
       }
     },
     {
