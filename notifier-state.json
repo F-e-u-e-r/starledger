@@ -8,7 +8,7 @@
     "paths": [
       "README.md"
     ],
-    "last_commit_sha": "7155ee6420f6276dd65283132d4593ce2fd1f573"
+    "last_commit_sha": "30f02510ea525693cb20604b477bc6961151259e"
   },
   "pending": [],
   "deliveries": [
@@ -190,6 +190,18 @@
       "notification_key": "awesome_stars:ratatui/ratatui:R_kgDOI9DLBw",
       "status": "sent",
       "completed_at": "2026-07-20T07:32:27.580Z",
+      "detail": null
+    },
+    {
+      "notification_key": "awesome_stars:astaxie/tokenhub:R_kgDOS2nzLQ",
+      "status": "sent",
+      "completed_at": "2026-07-24T06:41:01.918Z",
+      "detail": null
+    },
+    {
+      "notification_key": "awesome_stars:yetone/kill-ai-slop:R_kgDOTUP9AQ",
+      "status": "sent",
+      "completed_at": "2026-07-24T06:41:01.918Z",
       "detail": null
     }
   ]
