@@ -13991,6 +13991,33 @@
       }
     },
     {
+      "node_id": "R_kgDOS2nzLQ",
+      "category": "ai-ml",
+      "tags": [
+        "api",
+        "authentication",
+        "dashboard",
+        "llm",
+        "proxy",
+        "self-hosted"
+      ],
+      "summary": "TokenHub is a self-hosted enterprise AI gateway that exposes OpenAI-compatible endpoints and routes requests across providers such as OpenAI, Azure, Anthropic, Gemini, DeepSeek and local models. It adds role-based workspaces, project-scoped API keys, quotas, usage analytics, RBAC and audit trails, deployable via Docker with SQLite or PostgreSQL.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "cb4011eb90f31207a27fc89595b60a7907852453",
+        "repo_metadata_sha256": "bb52f36dfcfcf53b81b8142e68cdcf74f8de7037bc537b7d0d3abaecd969536e",
+        "fingerprint": "c0856403f9c949aab46878eb94b033cb15c61a74d96bac8817644bd53642eed6"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-24T08:22:13Z"
+      }
+    },
+    {
       "node_id": "R_kgDOS4HNrw",
       "category": "developer-tools",
       "tags": [
@@ -15824,6 +15851,32 @@
         "model_label": null,
         "prompt_version": "classify-v1",
         "generated_at": "2026-07-22T02:22:30Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOTUP9AQ",
+      "category": "developer-tools",
+      "tags": [
+        "ai-agents",
+        "cli",
+        "documentation",
+        "linter",
+        "static-site-generator"
+      ],
+      "summary": "Kill AI Slop is a multilingual field-guide website that catalogues 33 visual and copy patterns common to AI-generated web products, each with a before-and-after demo. It also ships an agent skill and a command-line scanner that detect these tells in a web project and propose or apply cleaner fixes.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "9c56b9eefe4fde6c4d850e3ea339de24a46aa79f",
+        "repo_metadata_sha256": "b8ca7a6fe33274f8cb8e635f291801c930cb78ed310283f4f94718702977a762",
+        "fingerprint": "f9f745af2b6b40d88ad47bc2492f2fb50ef49ac6c469a4af30c780ef5f6d45e6"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-24T08:22:13Z"
       }
     },
     {
