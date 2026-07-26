@@ -117,10 +117,75 @@ Deterministic CLI sequence (from the runbook):
 3. Read ONLY .ai-runs/manifest.json as the job source. Do not invent jobs; do not
    change taxonomy, constraints, job IDs, fingerprints, executor kind, prompt
    version, or execution profile.
-   If the manifest has zero jobs, open no PR: report "empty manifest" and the
-   likely cause (ai.enabled not true / executor_kind mismatch / zero budget, or the
-   backlog is fully classified — in which case tell the operator to disable this
-   routine). Exit 0.
+   If the manifest has zero jobs, open no PR. Run this zero-job protocol in order
+   and stop at the FIRST step that fails — that step's report is this run's ONLY
+   conclusion. Never skip 3a.
+   3a. Input-freshness gate, MANDATORY before any zero-job diagnosis:
+       git fetch --no-tags origin main
+       git diff --quiet "$BASE_SHA" origin/main -- \
+         stars.json dataset-meta.json ai-annotations.json ai-annotations-meta.json
+       (the same four files as step 10a; BASE_SHA is from run start — until step 11
+       it equals git rev-parse HEAD). Outcomes:
+       - fetch fails: report "zero jobs; base freshness unverifiable (fetch
+         failed); no conclusion", then exit 0.
+       - diff exits 1 (one of those four files changed on main after BASE_SHA):
+         report exactly
+         "empty manifest on stale base; base advanced during run; re-run"
+         plus BASE_SHA and the current origin/main SHA (git rev-parse origin/main),
+         then exit 0. On this path any statement about the backlog, completion, or
+         disabling is FORBIDDEN.
+       - diff exits with any status other than 0 or 1: report "zero jobs; base
+         freshness unverifiable (git diff failed); no conclusion" plus the diff
+         exit status, then exit 0.
+       - diff exits 0: the four corpus/artifact inputs are unchanged since
+         BASE_SHA (this gate checks exactly those paths, not the whole base).
+         Continue to 3b.
+   3b. Config health (only after 3a passed). Read config/ai.yaml and require all
+       of: ai.enabled is true; ai.executor_kind is claude-routine;
+       ai.budget.max_total_per_run > 0. If any check fails, report that specific
+       cause and exit 0 — do NOT say the backlog or manifest is empty. Cross-check:
+       when disabled, the step-2 plan output prints "AI classification disabled".
+   3c. Backlog set equality (only after 3a and 3b passed). Equal counts are NOT
+       evidence — compare node_id SETS (the planner's join key), the same
+       semantics as scripts/p3-completion-check.mjs:
+       node -e "
+       const stars=require('./stars.json').repos;
+       const anns=require('./ai-annotations.json').annotations;
+       const S=new Set(stars.map(r=>r.node_id));
+       const seen=new Map();
+       for(const a of anns) seen.set(a.node_id,(seen.get(a.node_id)||0)+1);
+       const A=new Set(seen.keys());
+       console.log('stars='+S.size,'annotations='+anns.length);
+       console.log('missing='+[...S].filter(id=>!A.has(id)).length,
+         'extra='+[...A].filter(id=>!S.has(id)).length,
+         'duplicates='+[...seen.values()].reduce((n,c)=>n+(c-1),0));
+       "
+       If missing, extra, or duplicates is non-zero, FAIL CLOSED: report the five
+       numbers, exit 0, and never say "fully classified". ALSO require zero
+       omitted-unfetchable jobs: if the step-2 plan output has an
+       "omitted N probe-ok job(s)" line with N > 0, FAIL CLOSED the same way —
+       that zero-job manifest is masking un-drained work. If the step-2 plan
+       stdout is unavailable, report exactly
+       "zero jobs; omitted-unfetchable status unavailable; no conclusion"
+       and exit 0. Do not re-run plan in place and do not report the manifest,
+       backlog, or completion as empty.
+   3d. Only if 3a, 3b, and 3c ALL passed, report
+       "snapshot-local manifest is empty under this base and config"
+       with this evidence block and nothing stronger, then exit 0: BASE_SHA;
+       dataset_sha256 from .ai-runs/manifest.json; the 3c counts (stars,
+       annotations, missing, extra, duplicates); the configured budget ceilings
+       from config/ai.yaml (max_new_per_run, max_retry_per_run,
+       max_refresh_per_run, max_total_per_run); omitted count (0); planned job
+       count (0). With retry/refresh ceilings at 0, a zero-job manifest does NOT
+       prove every annotation is at its current fingerprint — never claim that.
+   In EVERY zero-job outcome: never recommend disabling this routine — the star
+   corpus keeps growing; at most note that the operator MAY relax the cadence
+   toward daily while protocol-passing zero-job runs persist. Never declare P3 or
+   any milestone complete, and never state the backlog is drained as a standing
+   fact: completion is decided only by the operator-dispatched read-only
+   p3-completion-check workflow per docs/P3-completion-runbook.md. A zero-job run
+   is evidence that one budget-limited manifest was empty at one base commit
+   under one recorded config, nothing more.
 
 4. For each planned job, produce a ClassificationCandidate matching the schema:
    - exactly one category from constraints.allowed_categories;
@@ -241,8 +306,14 @@ command and stop.
   above; act per the stuck-PR rule. Dispatch it with `dry_run=true` to preview.
 - **Watch the omit rate.** A repo omitted every run starves a batch slot; classify or
   remove it manually until terminal quarantine (below) exists.
-- **Definition of done:** when runs consistently report an empty manifest, disable
-  the routine (or drop to a weekly heartbeat).
+- **Steady state, not "done":** this routine has no terminal completion; the star
+  corpus keeps growing, so the routine stays enabled. Persistent protocol-passing
+  zero-job runs (prompt step 3d) justify at most relaxing the cadence toward
+  daily — an operator action, per the Identity schedule row — never disabling.
+  Completion authority for P3 (or any milestone) rests exclusively with the
+  operator-dispatched read-only `p3-completion-check` workflow per
+  `docs/P3-completion-runbook.md`; an executor zero-job report is snapshot-local,
+  budget-limited evidence, never a completion or disable signal.
 - **Branch hygiene:** repo has `delete_branch_on_merge` enabled.
 
 ## Deferred follow-ups (tracked, not in this iteration)
@@ -252,7 +323,8 @@ command and stop.
 - Cross-run hard lock (git-orphan-ref CAS + TTL) — see Concurrency posture.
 - Terminal quarantine for a repeatedly un-classifiable ("poison") repo via the
   classifier state machine, so it stops being re-offered (and starving a slot) every
-  run; and a circuit breaker to auto-disable after N failed/empty runs.
+  run; and a circuit breaker to auto-disable after N failed runs (failed runs
+  only — an empty manifest is healthy steady state, not a failure).
 - **knownPath residuals** (2026-07-17, follow-up to the PRs #91/#92 fix): a README
   larger than 1 MB comes back from the REST readme endpoint with
   `encoding:"none"` and no bytes; the source seam now reports it as "no usable
