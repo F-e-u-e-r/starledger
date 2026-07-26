@@ -15567,6 +15567,30 @@
       }
     },
     {
+      "node_id": "R_kgDOSpyU9Q",
+      "category": "media-creative",
+      "tags": [
+        "ai-agents",
+        "automation",
+        "plugin"
+      ],
+      "summary": "A Codex Skill that guides an AI agent to generate 16:9 hand-drawn, white-background illustrations for Chinese articles. It analyzes the text, builds a shot list of key ideas, and renders one concept per image around the black 'Xiaohei' character, saving final PNGs.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "227eb6ff4d3be98ac19a6f08811849542f5ecf93",
+        "repo_metadata_sha256": "9026d4306223c40e0ce07d445d77c68a24c85edfaef03266742d21b336f0b025",
+        "fingerprint": "2d3f3d904df08d0542be866fac83b3ba6a018dc5f7873d4c1e16d1500bf35002"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-26T11:27:05Z"
+      }
+    },
+    {
       "node_id": "R_kgDOSq3Pmw",
       "category": "media-creative",
       "tags": [
@@ -16759,6 +16783,31 @@
         "model_label": "informational-only",
         "prompt_version": "classify-v1",
         "generated_at": "2026-07-22T06:23:19Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOTbAgJg",
+      "category": "developer-tools",
+      "tags": [
+        "ai-agents",
+        "cli",
+        "package-manager",
+        "plugin"
+      ],
+      "summary": "The canonical source and governance toolkit for thirteen focused AI Agent Skills spanning Codex operations, workflow orchestration, research, information design, and publishing. Each Skill installs through an npx command and carries its own version, changelog, tests, and complete payload.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "0a3c076d4efdf9ebe14d13ac6d7e940175ecb7e3",
+        "repo_metadata_sha256": "14f33a00175bb05294e5b40c772553c5a43a79345a1d9da9140a9da1dd74153d",
+        "fingerprint": "3bd2bdee5e77f9fec7a4eec482cec4ada4c86f44c3fa8459b9845954e92c5908"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-26T11:27:05Z"
       }
     },
     {
