@@ -10309,6 +10309,33 @@
       }
     },
     {
+      "node_id": "R_kgDORFDp_w",
+      "category": "ai-ml",
+      "tags": [
+        "ai-agents",
+        "automation",
+        "bot",
+        "desktop-app",
+        "llm",
+        "plugin"
+      ],
+      "summary": "OpenAkita is an open-source, multi-agent AI assistant framework where specialized agents collaborate to run tasks autonomously across desktop, web, and mobile. It supports 30+ LLM providers, six chat platforms, a plugin system with lifecycle hooks, dual-mode memory, and a layered sandbox security model.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "2809868618e4d61cd0e2c30c7f5644124a739f7d",
+        "repo_metadata_sha256": "cae28691ca36cfcd76e6ab8cdd9aedb2ed957784d85c3c492d4cf4d904bc9277",
+        "fingerprint": "c38f8185cccde78ae29592dee79266af99164e1715db0f593f2e6b94cf01297a"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-26T09:22:47Z"
+      }
+    },
+    {
       "node_id": "R_kgDORFTiAw",
       "category": "developer-tools",
       "tags": [
@@ -10456,6 +10483,32 @@
         "model_label": null,
         "prompt_version": "classify-v1",
         "generated_at": "2026-07-19T12:24:17Z"
+      }
+    },
+    {
+      "node_id": "R_kgDORHhxQA",
+      "category": "education-reference",
+      "tags": [
+        "ai-agents",
+        "awesome-list",
+        "documentation",
+        "frontend",
+        "workflow"
+      ],
+      "summary": "A curated collection of portable agent skills for AI coding agents such as Codex, Claude, and Cursor. The Markdown SKILL.md folders cover web design, UI prompting, Three.js games, media sourcing, and reusable implementation workflows for designers and builders, packaged as versioned files an agent can load and follow.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "55b0459d263ecfb29a8bde7031910669b9f1e16d",
+        "repo_metadata_sha256": "be495701dff8706f54d63f20da212b997396568ebae4c8a7174a00c72f9bbe9d",
+        "fingerprint": "ba56e6dff99169002e0e44f912406bb3b2ca39014a7860a33ee616180169b882"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-26T09:22:47Z"
       }
     },
     {
@@ -10799,6 +10852,32 @@
         "model_label": null,
         "prompt_version": "classify-v1",
         "generated_at": "2026-07-19T15:21:59Z"
+      }
+    },
+    {
+      "node_id": "R_kgDORPEC4Q",
+      "category": "ai-ml",
+      "tags": [
+        "ai-agents",
+        "automation",
+        "cli",
+        "orchestration",
+        "workflow"
+      ],
+      "summary": "Auto-Company runs a fully autonomous AI company that orchestrates 14 role-based agents modeled on domain experts. A continuous loop over Claude Code or Codex CLI has the agents share consensus memory to ideate, code, deploy, and market on macOS and Windows/WSL without human intervention, with a local dashboard.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "7169217b5cb0e8e3a88db8d6cb69f17e448e82d5",
+        "repo_metadata_sha256": "4dad8ffd83661050ce2e18adbfda8811a75cdbdce130faec7b77eb9c073873bd",
+        "fingerprint": "f133a7f27398e2fc8332f7b30284ea1cb4ef8d4d0d85d7e8cc3ec866aae88682"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-26T09:22:47Z"
       }
     },
     {
@@ -12184,6 +12263,32 @@
       }
     },
     {
+      "node_id": "R_kgDORd87hg",
+      "category": "productivity-automation",
+      "tags": [
+        "llm",
+        "productivity",
+        "search",
+        "self-hosted",
+        "visualization"
+      ],
+      "summary": "Siftly is a self-hosted Twitter/X bookmark manager that runs locally and organizes bookmarks through a four-stage AI pipeline: entity extraction, vision analysis, semantic tagging, and categorization. It provides AI-powered search, an interactive mindmap, filtered browsing, and CSV, JSON, and ZIP export.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "66bed3abb6d1852a6a8c49eeb39253ce7a78a730",
+        "repo_metadata_sha256": "009eab83f16595ebca976dbf9dabe241fdc6548c267afcbd52dd32d38bc80f6a",
+        "fingerprint": "3679e9050f245dff12e6fc0d6736e29b9e40e9de0b69c5a4503989e7849d6fbe"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-26T09:22:47Z"
+      }
+    },
+    {
       "node_id": "R_kgDORe9Fcg",
       "category": "developer-tools",
       "tags": [
@@ -12984,6 +13089,32 @@
         "model_label": null,
         "prompt_version": "classify-v1",
         "generated_at": "2026-07-20T22:22:30Z"
+      }
+    },
+    {
+      "node_id": "R_kgDORmbjJA",
+      "category": "developer-tools",
+      "tags": [
+        "ai-agents",
+        "api",
+        "automation",
+        "cli",
+        "workflow"
+      ],
+      "summary": "notebooklm-skill gives terminals and AI agents one consistent interface to Google NotebookLM. Built on notebooklm-py, it provides a JSON-first CLI, five research pipelines, and a 13-tool MCP server to create notebooks, ask grounded questions with citations, run web research, and generate or download artifacts.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "d8ba77aa37a1cad17d79a94295a2c57dd12fb151",
+        "repo_metadata_sha256": "7612239a8019568631f255e0577742cdd9606709507860eda51cf5acce78fe52",
+        "fingerprint": "37051ddeb2d9683d0996934ce550a8562b42d586da09001b478ff7234e0e9b23"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-26T09:22:47Z"
       }
     },
     {
