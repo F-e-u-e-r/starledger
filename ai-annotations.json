@@ -823,6 +823,31 @@
       }
     },
     {
+      "node_id": "MDEwOlJlcG9zaXRvcnkyNzI1MTQ2Mw==",
+      "category": "libraries-frameworks",
+      "tags": [
+        "automation",
+        "backend",
+        "cli",
+        "containers"
+      ],
+      "summary": "LEAN is an open-source, event-driven algorithmic trading engine from QuantConnect for backtesting and live-trading strategies across multiple financial markets. Its modular design exposes pluggable models, supports C# and Python, and ships a command-line tool to create projects, run backtests, optimize, and deploy live algorithms with Docker.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "readme.md",
+        "readme_oid": "b352780b83e4da76837cdac623d3d36597639852",
+        "repo_metadata_sha256": "685ccf3897ee75fd0b353e899e0243715efadc587408fab41ed1ef6a4d02c9c1",
+        "fingerprint": "2c4247c3c375dbd8e0910a76d0d1fc51d9ed94d1ad26677ac8b34b9a664dbad6"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-26T08:26:43Z"
+      }
+    },
+    {
       "node_id": "MDEwOlJlcG9zaXRvcnkyNzM4NzE4NTk=",
       "category": "self-hosted-homelab",
       "tags": [
@@ -7205,6 +7230,32 @@
       }
     },
     {
+      "node_id": "R_kgDOQ4teag",
+      "category": "media-creative",
+      "tags": [
+        "ai-agents",
+        "automation",
+        "markdown",
+        "plugin",
+        "visualization"
+      ],
+      "summary": "A marketplace collection of 20+ Agent Skills for AI coding tools such as Claude Code and Codex, focused on generating and publishing content. The included skills produce infographics, diagrams, cover images, slide decks, comics, and article illustrations, and can post finished content to platforms like X, WeChat, and Weibo.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "eb7cdd139af53d040fb3cc047fb1e2ffa586a6b6",
+        "repo_metadata_sha256": "8000886dffedf736e4a91a3a2d48d9e7d0b4ffcc5923387553ae22464d4152e5",
+        "fingerprint": "8930d6b69616de0edc03e4858466065ae895f57ab7938692bdc75f592498e169"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-26T08:26:43Z"
+      }
+    },
+    {
       "node_id": "R_kgDOQ536sA",
       "category": "developer-tools",
       "tags": [
@@ -7918,6 +7969,30 @@
         "model_label": null,
         "prompt_version": "classify-v1",
         "generated_at": "2026-07-18T16:23:03Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOQMt7BQ",
+      "category": "other",
+      "tags": [
+        "configuration",
+        "desktop-app",
+        "gui"
+      ],
+      "summary": "optimizerDuck is a free, open-source Windows desktop utility for optimizing performance, privacy, and system behavior. It offers over 30 tweaks across six categories, each with a description and risk rating, and lets users debloat preinstalled apps, disable telemetry and background services, and revert changes without editing the Registry or Group Policy directly.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "9e189201ccab81e6f6205618344774d7cfef0783",
+        "repo_metadata_sha256": "5a137d98ba34245b59b414d9d55fb49663bf543c03b85efed06de8929d73e622",
+        "fingerprint": "f70fc4d7e2e0db9b07de904a15ec5d9376e247dc5a2dd42f3ce66f089c01e140"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-26T08:26:43Z"
       }
     },
     {
@@ -9563,6 +9638,31 @@
       }
     },
     {
+      "node_id": "R_kgDOR643pQ",
+      "category": "developer-tools",
+      "tags": [
+        "ai-agents",
+        "automation",
+        "documentation",
+        "llm"
+      ],
+      "summary": "An open-source collection of AI Agent Skills following the Agent Skills open standard, installable in Claude Code, Codex, Cursor, and 40+ compatible agents. It bundles utilities for scanning and cleaning disk storage, querying daily AI news, aligning project docs and agent memory after a task, generating long-form research reports, and writing in the author style.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "3d3a02f223b21743eae167df9f79b9af02f496fe",
+        "repo_metadata_sha256": "b0c5615b60397b4053bd0fb2fea2ceedabd5147c0cf35c65cc60dcabf71d26a2",
+        "fingerprint": "452c6210b79a19f50e2fd205525561efca4ace0c337734ade3be2ca914d26459"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-26T08:26:43Z"
+      }
+    },
+    {
       "node_id": "R_kgDOR66oiw",
       "category": "developer-tools",
       "tags": [
@@ -9709,6 +9809,31 @@
         "model_label": null,
         "prompt_version": "classify-v1",
         "generated_at": "2026-07-19T05:22:08Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOR8AxgA",
+      "category": "ai-ml",
+      "tags": [
+        "ai-agents",
+        "automation",
+        "llm",
+        "workflow"
+      ],
+      "summary": "AI Berkshire is a value-investing research framework packaged as Skills for Claude Code and Codex. It structures the methodologies of four value investors into a multi-agent process that debates a company from opposing viewpoints, enforces anti-bias checklists, and verifies financial calculations with Python decimal math to produce structured, reproducible investment research reports.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "7e2571b1870260133f503ba35e68a1976e832c14",
+        "repo_metadata_sha256": "4f8569cd23c1b7c2a010f2a26f1cc476d77921f247c9d2de0d56aeae971315de",
+        "fingerprint": "6e44b0e3dddd4d2ae0778d17fa4cf77c4d5d68870f9410c4e8e5c2455d475f22"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-26T08:26:43Z"
       }
     },
     {
