@@ -13517,6 +13517,31 @@
       }
     },
     {
+      "node_id": "R_kgDORsXw8g",
+      "category": "ai-ml",
+      "tags": [
+        "ai-agents",
+        "llm",
+        "productivity",
+        "workflow"
+      ],
+      "summary": "A Chinese-language toolbox of AI agent Skills for entrepreneurs and content creators, packaging methodologies distilled from thousands of public posts into 29 callable skills for business diagnosis, content direction, copywriting, decision logging, and folder-based knowledge bases. It works with agents such as Doubao, WorkBuddy, Claude Code, and Codex.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "5e2e23ef8f9b1a4697bb43b0f64684039d1331d5",
+        "repo_metadata_sha256": "8782c591901ecaf039a0430a9297b379761ef079a1cd7e2d7e1fe40423ce9685",
+        "fingerprint": "e0a03b0c0ddafbd7ca2068bed5f219dea79ef6855c6bd21f71de7e7a64cf5144"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-26T10:22:35Z"
+      }
+    },
+    {
       "node_id": "R_kgDORsnMJw",
       "category": "security-privacy",
       "tags": [
@@ -14649,6 +14674,31 @@
       }
     },
     {
+      "node_id": "R_kgDOSEAmSg",
+      "category": "ai-ml",
+      "tags": [
+        "ai-agents",
+        "automation",
+        "llm",
+        "workflow"
+      ],
+      "summary": "A skill toolkit that distills high-value content such as books, long videos, podcasts, and interviews into callable AI agent Skills. Its seven-stage RIA-TV++ pipeline extracts, triple-verifies, and structures methodologies into stress-tested skill packages installable into Claude Code or Cursor, rather than producing plain summaries.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "c2e574cc6ef626fd4870d2c27f800fae2ec2ff72",
+        "repo_metadata_sha256": "a42790d981e3f068887efebf7fe7d0335209f24aff5b5cea79f948c20b61f8a1",
+        "fingerprint": "b8d4e951823e0d27e54f04899a7a00b60092fbef323a028da7ca23f794b571be"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-26T10:22:35Z"
+      }
+    },
+    {
       "node_id": "R_kgDOSGF1zA",
       "category": "ai-ml",
       "tags": [
@@ -14742,6 +14792,31 @@
         "model_label": null,
         "prompt_version": "classify-v1",
         "generated_at": "2026-07-21T14:24:09Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOSKkbmA",
+      "category": "media-creative",
+      "tags": [
+        "ai-agents",
+        "frontend",
+        "llm",
+        "theme"
+      ],
+      "summary": "An AI-agent Skill for Claude Code and Codex that generates single-file HTML slide decks with horizontal page turns. It offers two visual systems, an editorial magazine style and a Swiss international style with locked layouts, plus theme presets, optional image generation, multi-platform cover images, and a low-power static mode.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "3dc48786f3383902496e6132a26c19e85a7af669",
+        "repo_metadata_sha256": "420c6b093fe9dc6e401e7eeff7ad86eae287eb1eb51f550e210d51d5edd726ad",
+        "fingerprint": "841443a78fa79328dbdaa4434287ffd84a7077d6e24e913ca476a0cc4e0c2d1b"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-26T10:22:35Z"
       }
     },
     {
@@ -15095,6 +15170,32 @@
       }
     },
     {
+      "node_id": "R_kgDOSYf9ug",
+      "category": "media-creative",
+      "tags": [
+        "ai-agents",
+        "dashboard",
+        "frontend",
+        "llm",
+        "visualization"
+      ],
+      "summary": "An agent skill for Codex and Claude Code that turns files, folders, URLs, and messy service exports such as PDFs, CSVs, chat logs, and personal-data takeouts into verified single-file HTML pages. It uses source-aware parsing, automatic style routing, 60 source prompts, and 17 style systems, then checks the result in a browser before returning it.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "0632d38dd101788e41241b8bbf4701cd19528c94",
+        "repo_metadata_sha256": "522ac1b7fd93683cc1cbcac9d5f6cb4bf9cf729205b4b8606d1a87cfa50c348b",
+        "fingerprint": "1555defa24acc8131d08129fbcb9400b0ef76cfed5639e3750f7789606d3c973"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-26T10:22:35Z"
+      }
+    },
+    {
       "node_id": "R_kgDOSZ4a8Q",
       "category": "ai-ml",
       "tags": [
@@ -15438,6 +15539,31 @@
         "model_label": "informational-only",
         "prompt_version": "classify-v1",
         "generated_at": "2026-07-21T21:22:29Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOSpTEOg",
+      "category": "media-creative",
+      "tags": [
+        "ai-agents",
+        "frontend",
+        "llm",
+        "theme"
+      ],
+      "summary": "An AI-agent Skill for Claude Code and Codex that turns articles, notes, screenshots, photos, or videos into Xiaohongshu image carousels, Live Photo cards, and paired WeChat 21:9 and 1:1 covers. It shares editorial and Swiss visual systems with 28 layouts, 10 themes, image-source workflows, and single-file HTML rendered to PNG via Playwright.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "d7cad77c0f63c037a3101305b5c6df649a3bafca",
+        "repo_metadata_sha256": "dff4ed925b8d66ed820c0cab129b7df4b2a44c8985b9cdd76ec52eb1468632ab",
+        "fingerprint": "4138048c7c9a9fea071e238bed81016d0ef6224a97f966a9732841582a38050f"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-26T10:22:35Z"
       }
     },
     {
