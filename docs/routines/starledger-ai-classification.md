@@ -146,14 +146,17 @@ Deterministic CLI sequence (from the runbook):
        - diff exits 0: the four corpus/artifact inputs are unchanged since
          BASE_SHA (this gate checks exactly those paths, not the whole base).
          Continue to 3b.
-   3b. Config health (only after 3a passed). Read config/ai.yaml and require all
-       of: ai.enabled is true; ai.executor_kind is claude-routine;
-       ai.budget.max_total_per_run > 0. If any check fails, report that specific
-       cause and exit 0 — do NOT say the backlog or manifest is empty. If
-       config/ai.yaml is missing, unreadable, or any of those keys is absent or
-       not of the required type, report "zero jobs; config unverifiable; no
-       conclusion" and exit 0. Cross-check: when disabled, the step-2 plan
-       output prints "AI classification disabled".
+   3b. Config health (only after 3a passed). Read config/ai.yaml. Structural
+       check FIRST: if the file is missing or unreadable, or any of these keys
+       is absent or non-conforming in type — ai.enabled (boolean),
+       ai.executor_kind (string), and the four numeric budget ceilings
+       max_new_per_run, max_retry_per_run, max_refresh_per_run,
+       max_total_per_run — report "zero jobs; config unverifiable; no
+       conclusion" and exit 0. Value checks SECOND: ai.enabled is true;
+       ai.executor_kind is claude-routine; max_total_per_run > 0. If a value
+       check fails, report that specific cause and exit 0 — do NOT say the
+       backlog or manifest is empty. Cross-check: when disabled, the step-2
+       plan output prints "AI classification disabled".
    3c. Backlog set equality (only after 3a and 3b passed). Equal counts are NOT
        evidence — compare node_id SETS (the planner's join key), the same
        semantics as scripts/p3-completion-check.mjs:
