@@ -8,7 +8,7 @@
     "paths": [
       "README.md"
     ],
-    "last_commit_sha": "8ecde430d4952201fec4b73e3e7025a36481107b"
+    "last_commit_sha": "969bb0517659d38fa8f3827c289efbb24000bf3e"
   },
   "pending": [],
   "deliveries": [
@@ -232,6 +232,12 @@
       "notification_key": "awesome_stars:openminis/openminis:R_kgDOSMYBbw",
       "status": "sent",
       "completed_at": "2026-07-27T07:54:54.099Z",
+      "detail": null
+    },
+    {
+      "notification_key": "awesome_stars:ytwsy/opensurge-for-mac:R_kgDOTIr0gw",
+      "status": "sent",
+      "completed_at": "2026-07-28T06:42:55.342Z",
       "detail": null
     }
   ]
