@@ -12587,6 +12587,33 @@
       }
     },
     {
+      "node_id": "R_kgDORgXb2g",
+      "category": "communication-collaboration",
+      "tags": [
+        "ai-agents",
+        "cli",
+        "desktop-app",
+        "real-time",
+        "self-hosted",
+        "workflow"
+      ],
+      "summary": "A self-hostable team workspace built on a Nostr relay where humans and AI agents share the same channels, DMs, canvases, and git events as signed entries in one auditable event log. Written in Rust, it ships a desktop app, an agent-first CLI, and YAML workflow automation.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "72af92ce1385201e7d2d53c3e4f0b1bcb858d956",
+        "repo_metadata_sha256": "51c3df7e11b4764bb69c567b09bad3f07f41de08a9ed4ed78285b5970accb913",
+        "fingerprint": "6004c27b32cae5b6f27f99b4942259ebf271ab91bc3073df2cabd7a83b670013"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-28T22:22:45Z"
+      }
+    },
+    {
       "node_id": "R_kgDORgZCPA",
       "category": "self-hosted-homelab",
       "tags": [
@@ -14892,6 +14919,30 @@
       }
     },
     {
+      "node_id": "R_kgDOSMYBbw",
+      "category": "ai-ml",
+      "tags": [
+        "ai-agents",
+        "automation",
+        "llm"
+      ],
+      "summary": "A native, on-device AI agent app for iOS and Android that runs leading models such as Claude, GPT, and Gemini against a sandboxed Alpine Linux shell, browser automation, extensible skills, persistent memory, and deep device integrations like Health, Calendar, Reminders, and HomeKit.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "ac504123259398ffe7998e2402e16b4c7affe4a5",
+        "repo_metadata_sha256": "3815cac3ae4235778e21aa77fbd309dad24b6eea85556396f002e61b7f289f98",
+        "fingerprint": "e3c4127c8732851357f249d3d467876b2103976767abe339b20b9986f8e7b07d"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-28T22:22:45Z"
+      }
+    },
+    {
       "node_id": "R_kgDOSNDlSg",
       "category": "self-hosted-homelab",
       "tags": [
@@ -15246,6 +15297,31 @@
       }
     },
     {
+      "node_id": "R_kgDOS_5izw",
+      "category": "self-hosted-homelab",
+      "tags": [
+        "dashboard",
+        "frontend",
+        "gui",
+        "self-hosted"
+      ],
+      "summary": "An open-source, self-hosted web file browser for S3, R2, and other object-storage backends. It offers icon, list, column, and gallery views, search and filtering, previews for PDF, DOCX, XLSX, images, text, and code, multiple storage connections, per-bucket read-only mode, a responsive layout, and dark mode.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "7080327463d66e0194b12686b525b210ee154c71",
+        "repo_metadata_sha256": "fd7929211aac8b1e917d9836b2b7017df91d482b22e6506e26d48ead735ec6b8",
+        "fingerprint": "bba6c6a8d68e350640e27758d9e112f7208da383f81e7c8f141191e2b1fd4138"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-28T22:22:45Z"
+      }
+    },
+    {
       "node_id": "R_kgDOSbtU7Q",
       "category": "developer-tools",
       "tags": [
@@ -15292,6 +15368,30 @@
         "model_label": null,
         "prompt_version": "classify-v1",
         "generated_at": "2026-07-21T19:22:47Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOScw2eQ",
+      "category": "developer-tools",
+      "tags": [
+        "ai-agents",
+        "plugin",
+        "productivity"
+      ],
+      "summary": "A plugin and skill for coding agents such as Claude Code and Codex that reshapes their output to lead with the next action, number multi-step tasks, cap list length, and drop preamble and closers. It installs through each agent's plugin marketplace and applies a set of ten concise-response rules.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "0ead265db6f30a33ba4bf9aca178b1173d99ac49",
+        "repo_metadata_sha256": "5bf52be32b4297b49ba0671e382e80517e5f882ba3c7dd41501a58657f2fa93c",
+        "fingerprint": "26a94424af414b1a795de430021be85ba4c2e2cbe00c3c70350d0a18fdd773f5"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-28T22:22:45Z"
       }
     },
     {
@@ -16179,6 +16279,32 @@
         "model_label": null,
         "prompt_version": "classify-v1",
         "generated_at": "2026-07-22T02:22:30Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOTS-Vqw",
+      "category": "developer-tools",
+      "tags": [
+        "cli",
+        "documentation",
+        "frontend",
+        "markdown",
+        "static-site-generator"
+      ],
+      "summary": "A scaffolder that generates a complete Astro documentation site into your repository as editable files, with the underlying plumbing shipped as an npm package. It produces an agent-readable surface such as Markdown twins, llms.txt, JSON-LD, sitemap, and OG images alongside full-text search, theming, and prose linting.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "9658e0868fe632089e601ee83e503a4dd13418f9",
+        "repo_metadata_sha256": "6a75d7cda7f8b95f96d7f35963b8c66576c0cce2545c2d548c7bd365199644e7",
+        "fingerprint": "97b782be6ad3c64fd98eb5ac2c4baf068397b82f07ade9e131cda58db9847a09"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-28T22:22:45Z"
       }
     },
     {
