@@ -16812,6 +16812,29 @@
       }
     },
     {
+      "node_id": "R_kgDOTY3VSA",
+      "category": "ai-ml",
+      "tags": [
+        "ai-agents",
+        "code-generation"
+      ],
+      "summary": "img2threejs is a Python agent skill that reconstructs an object from a single reference image as a code-only, procedural Three.js model. A staged pipeline classifies the subject, inventories identity-defining details, generates a TypeScript geometry factory, and vision-reviews each build pass against deterministic quality gates until the render matches.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "3868911c45aecbc22f7f23c115b22b892e3913dc",
+        "repo_metadata_sha256": "6f618f075d355ad7179e8867765e19e24a118c5ab9caa0f4c54ce0fd7e6e547a",
+        "fingerprint": "cac4d8be84d3bee4cbd13305a8d0cda66e499aee269dbebecffff0e25a7c0081"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-28T23:22:22Z"
+      }
+    },
+    {
       "node_id": "R_kgDOTYoztg",
       "category": "developer-tools",
       "tags": [
@@ -16961,6 +16984,31 @@
       }
     },
     {
+      "node_id": "R_kgDOTbyhBg",
+      "category": "productivity-automation",
+      "tags": [
+        "editor",
+        "encryption",
+        "real-time",
+        "self-hosted"
+      ],
+      "summary": "Bento is an office suite that ships each document as a single self-contained HTML file carrying its own viewer, editor, and presenter. The first app is a PowerPoint alternative with morph transitions, a built-in chart engine, and end-to-end-encrypted live collaboration whose keys live only in the file, and its plain-JSON document lets agents edit decks in place.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "9ba920619dc569c858aa35961518f721e177eb08",
+        "repo_metadata_sha256": "86666e30111a4af7eb963874a89c6af35b24fab8048312a769d10f4425b26119",
+        "fingerprint": "2126559acee702dffbf69da0f6c176e58d466b48ba19eb50721f0a8c4c84da42"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-28T23:22:22Z"
+      }
+    },
+    {
       "node_id": "R_kgDOTc8lsw",
       "category": "productivity-automation",
       "tags": [
@@ -17035,6 +17083,30 @@
         "model_label": "informational-only",
         "prompt_version": "classify-v1",
         "generated_at": "2026-07-22T07:23:24Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOTcVBSQ",
+      "category": "developer-tools",
+      "tags": [
+        "desktop-app",
+        "gui",
+        "terminal"
+      ],
+      "summary": "Kero is a native macOS terminal workspace built in Swift on libghostty, with an optional Alacritty backend. It adds split panes, a file tree, git integration, and project-based grouping, and installs via a direct download from its site or through Homebrew.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "e1f0ba938349cd9f3c86f576d5dd8c753a465166",
+        "repo_metadata_sha256": "e95f835e727054a096a17c061e1215c16e81be0cb8e2594b1c46f3acae473165",
+        "fingerprint": "63cfa03bcc01811edc4f9a0603fa260d9168105d75f6cb0d74a13adb70ba02ab"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-28T23:22:22Z"
       }
     },
     {
