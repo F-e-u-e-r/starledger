@@ -16718,6 +16718,32 @@
       }
     },
     {
+      "node_id": "R_kgDOTXjnhA",
+      "category": "security-privacy",
+      "tags": [
+        "automation",
+        "cli",
+        "llm",
+        "sdk",
+        "security-scanner"
+      ],
+      "summary": "A CLI and TypeScript SDK from OpenAI for finding, validating, and fixing security vulnerabilities in code. It scans projects using configurable AI models, supports ChatGPT sign-in or API-key authentication, runs in CI pipelines, and exposes an SDK for programmatic scans with report output.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "517aaa4d159198da99ce97545baecaadf613636e",
+        "repo_metadata_sha256": "4fb67241ef281424456a78c22f29fb285f6bd1a58c20f09b144cd90c0c8aca67",
+        "fingerprint": "df50d075274742867edd20b7bb6ab11915183161849120c772effd9f4999077e"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-29T23:45:08Z"
+      }
+    },
+    {
       "node_id": "R_kgDOTXt1YQ",
       "category": "data-analytics",
       "tags": [
@@ -17287,6 +17313,31 @@
         "model_label": null,
         "prompt_version": "classify-v1",
         "generated_at": "2026-07-23T10:23:41Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOTl_qdg",
+      "category": "media-creative",
+      "tags": [
+        "ai-agents",
+        "desktop-app",
+        "gui",
+        "real-time"
+      ],
+      "summary": "A cross-platform desktop application that displays an expressive VRM character alongside voice conversations. It captures an application's audio output to animate the character, lets users import custom models and animation clips, and exposes a local MCP server so connected agents can trigger animations and report status.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "c456731dd604902ce86c986d61258f76bd0d1e67",
+        "repo_metadata_sha256": "764e1803d6fe531b6efa9ca3ae6ef4a0701204593a477692674e79d16eb6e6c1",
+        "fingerprint": "96682d1bc863ab566ce97fe2057cc4b377b4d8cafe168d8145b91c9f131288d5"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-29T23:45:08Z"
       }
     },
     {
