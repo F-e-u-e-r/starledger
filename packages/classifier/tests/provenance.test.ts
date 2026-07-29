@@ -341,6 +341,7 @@ describe('annotation provenance gate', () => {
     const result = assembleAiArtifacts({
       currentAnnotations: [ann],
       validatedCandidates: [],
+      canonicalNodeIds: new Set([a.node_id]),
       datasetSha256: 'd'.repeat(64),
       generatedAt: '2026-06-21T00:00:00Z',
     });
