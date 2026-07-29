@@ -59,7 +59,7 @@ export function runPruneOrphans(input: PruneOrphansInput): PruneOrphansReceipt {
   if (result.changed !== result.prunedNodeIds.length > 0) {
     // With zero candidates the ONLY legitimate change is a prune; anything else
     // means the inputs (or this tool) are broken — never write in that state.
-    throw new Error('prune-orphans invariant violated: artifact change without a prune');
+    throw new Error('prune-orphans invariant violated: changed flag and prunedNodeIds disagree');
   }
   const receipt: PruneOrphansReceipt = {
     datasetSha256: dataset.datasetSha256,

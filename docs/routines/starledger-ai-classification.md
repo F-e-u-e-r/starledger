@@ -211,10 +211,14 @@ Deterministic CLI sequence (from the runbook):
        GENERATED_AT="$(date -u +%Y-%m-%dT%H:%M:%SZ)"
        pnpm classifier prune-orphans --current ai-annotations.json \
          --generated-at "$GENERATED_AT" --out-dir .
-       FAIL CLOSED — report the command output, revert any artifact changes,
-       and exit 0 — if the command exits nonzero, or reports pruned: 0, or its
-       pruned count does not equal the 3c extra count. Otherwise verify with
-       the step-8 command and continue from step 9 exactly as after an apply
+       Accept the prune ONLY with a complete, parseable receipt: the command
+       exited 0 AND its output contains a readable "pruned: N" count with
+       N > 0 AND N equal to the 3c extra count. Anything else — a nonzero
+       exit, pruned: 0, a count mismatch, or a truncated, partial, or
+       unparseable receipt — is FAIL CLOSED: report the command output,
+       revert any artifact changes, and exit 0. Then run the step-8
+       verification; if it fails, FAIL CLOSED the same way. On success
+       continue from step 9 exactly as after an apply
        (nothing-to-ship guard, step-10 pre-flight, unique branch, commit ONLY
        the artifact pair), with two differences:
        - PR title: chore(ai): prune orphan annotations (<K> repos, <TS>), same
@@ -223,8 +227,9 @@ Deterministic CLI sequence (from the runbook):
          classification performed) and include the prune-orphans receipt
          (canonical count, before, pruned node_ids, after).
        A 3e outcome is a maintenance action, never a 3d conclusion: do not
-       report "snapshot-local manifest is empty", never declare any milestone
-       complete, never suggest disabling this routine.
+       report "snapshot-local manifest is empty", never say "fully
+       classified" (retry/refresh ceilings still apply), never declare any
+       milestone complete, never suggest disabling this routine.
    In EVERY zero-job outcome: never recommend disabling this routine — the star
    corpus keeps growing, and the cadence note above is 3d-exclusive. Never
    declare P3 or any other milestone complete, and never state the backlog is
