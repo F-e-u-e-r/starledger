@@ -15990,6 +15990,33 @@
       }
     },
     {
+      "node_id": "R_kgDOTIr0gw",
+      "category": "self-hosted-homelab",
+      "tags": [
+        "dashboard",
+        "gui",
+        "monitoring",
+        "networking",
+        "proxy",
+        "self-hosted"
+      ],
+      "summary": "An open-source, Surge-style network gateway and control plane for macOS that turns a Mac into a whole-home transparent proxy for phones, TVs, consoles and other LAN devices. It uses mihomo as the proxy engine with dnsmasq-based DHCP/DNS, supports importing existing mihomo configs, per-device routing policies, and a Web GUI plus menu-bar app for monitoring traffic.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "389545590ba259144047fecc9a36563cc3c4b85d",
+        "repo_metadata_sha256": "6609c815ee156c02add58142b643a56854943caf6540e877cb38ff6e767a081d",
+        "fingerprint": "88820df52e48e702c836472f13642bec1d2084a55b1efff1d234314cc3fea7de"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-29T08:26:58Z"
+      }
+    },
+    {
       "node_id": "R_kgDOTJbtfA",
       "category": "ai-ml",
       "tags": [
@@ -16984,6 +17011,32 @@
       }
     },
     {
+      "node_id": "R_kgDOTbngXg",
+      "category": "productivity-automation",
+      "tags": [
+        "automation",
+        "desktop-app",
+        "machine-learning",
+        "productivity",
+        "real-time"
+      ],
+      "summary": "A macOS desktop app for AI voice input: hold a key to speak and the transcribed text is typed at the cursor in any application. It automatically removes filler words and fixes punctuation, adds Taiwanese support via the Breeze-ASR-26 model, offers real-time translation and automatic language detection, and can run fully offline for privacy.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "bca93dbee5d5a8c561075e30318eb7285eb9000e",
+        "repo_metadata_sha256": "68c27e1a3b79c1b96096878b63986ca3497584ece59bd9c612e8bed824dd7981",
+        "fingerprint": "6f9e193b10b6eed5a9afbec464a06fd8e3a294094e1824e565e66c5e797e4193"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-29T08:26:58Z"
+      }
+    },
+    {
       "node_id": "R_kgDOTbyhBg",
       "category": "productivity-automation",
       "tags": [
@@ -17256,6 +17309,29 @@
         "model_label": null,
         "prompt_version": "classify-v1",
         "generated_at": "2026-07-23T10:23:41Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOTles_Q",
+      "category": "ai-ml",
+      "tags": [
+        "llm",
+        "machine-learning"
+      ],
+      "summary": "An MLX port for Apple Silicon of Moonshot's Kimi-K3, a 2.78-trillion-parameter native-multimodal mixture-of-experts model. It supplies stock mlx-lm-compatible text and vision tower definitions, an mlx-vlm wrapper, a streaming weight converter for the multi-terabyte checkpoint, REAP expert pruning, and per-language expert-overlap analysis.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "594a4723980ae648c9473452189d734624a09dc0",
+        "repo_metadata_sha256": "b650fa5d46b80cd4ff8c473ba5f41f51d4aadc70ba33658cc77868a0834a79b4",
+        "fingerprint": "c092a91dd5bee005a50bf2e303787b1e2e36ea8ff90d8c509f86a8112d8b69d1"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-07-29T08:26:58Z"
       }
     }
   ]
