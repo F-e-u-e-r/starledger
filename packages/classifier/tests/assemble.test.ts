@@ -1,8 +1,8 @@
 import { describe, expect, it } from 'vitest';
-import { sha256 } from '@starred/ai-schema';
+import { serializeAnnotations, sha256 } from '@starred/ai-schema';
 import { assembleAiArtifacts, verifyAiArtifacts } from '../src/assemble';
 import { candidateToAnnotation, validateCandidate } from '../src/validate-candidate';
-import { makeCandidate, makeJob } from '../../ai-schema/tests/helpers';
+import { makeAnnotation, makeCandidate, makeJob } from '../../ai-schema/tests/helpers';
 
 const DATASET_SHA = 'e'.repeat(64);
 
@@ -24,6 +24,7 @@ describe('deterministic AI artifact assembly', () => {
     const result = assembleAiArtifacts({
       currentAnnotations: [],
       validatedCandidates: [validated],
+      canonicalNodeIds: new Set([job.node_id]),
       datasetSha256: DATASET_SHA,
       generatedAt: '2026-06-20T00:00:00Z',
     });
@@ -42,6 +43,7 @@ describe('deterministic AI artifact assembly', () => {
     const result = assembleAiArtifacts({
       currentAnnotations: [existing],
       validatedCandidates: [validated],
+      canonicalNodeIds: new Set([job.node_id]),
       datasetSha256: DATASET_SHA,
       generatedAt: '2026-06-21T00:00:00Z',
     });
@@ -55,6 +57,7 @@ describe('deterministic AI artifact assembly', () => {
     const result = assembleAiArtifacts({
       currentAnnotations: [],
       validatedCandidates: [validated],
+      canonicalNodeIds: new Set([job.node_id]),
       datasetSha256: DATASET_SHA,
       generatedAt: '2026-06-20T00:00:00Z',
     });
@@ -66,5 +69,72 @@ describe('deterministic AI artifact assembly', () => {
     expect(() => verifyAiArtifacts(nonCanonical, meta ?? '')).toThrow(
       'ai-annotations.json is not deterministically serialized',
     );
+  });
+});
+
+describe('removed-star prune (issue #212)', () => {
+  it('PRUNE-1: an annotation whose repository left the canonical dataset is pruned', () => {
+    const keep = makeAnnotation();
+    const orphan = makeAnnotation({ node_id: 'R_zz' });
+    const result = assembleAiArtifacts({
+      currentAnnotations: [keep, orphan],
+      validatedCandidates: [],
+      canonicalNodeIds: new Set([keep.node_id]),
+      datasetSha256: DATASET_SHA,
+      generatedAt: '2026-06-21T00:00:00Z',
+    });
+    expect(result.changed).toBe(true);
+    expect(result.prunedNodeIds).toEqual(['R_zz']);
+    expect(result.annotations.map((a) => a.node_id)).toEqual([keep.node_id]);
+    // the surviving record keeps its original timestamp (no churn)
+    expect(result.annotations[0]?.generation.generated_at).toBe(keep.generation.generated_at);
+    expect(result.meta?.annotation_count).toBe(1);
+    expect(result.meta?.dataset_sha256).toBe(DATASET_SHA);
+    verifyAiArtifacts(result.annotationsBytes, result.metaBytes ?? '');
+  });
+
+  it('PRUNE-2: no orphans and zero candidates are a byte-identical no-op', () => {
+    const keep = makeAnnotation();
+    const result = assembleAiArtifacts({
+      currentAnnotations: [keep],
+      validatedCandidates: [],
+      canonicalNodeIds: new Set([keep.node_id]),
+      datasetSha256: DATASET_SHA,
+      generatedAt: '2026-06-21T00:00:00Z',
+    });
+    expect(result.changed).toBe(false);
+    expect(result.prunedNodeIds).toEqual([]);
+    expect(result.meta).toBeNull();
+    expect(result.annotationsBytes).toBe(serializeAnnotations([keep]));
+  });
+
+  it('PRUNE-3: one assembly prunes the orphan and applies a valid candidate', () => {
+    const job = makeJob();
+    const validated = validateCandidate(makeCandidate(job), job);
+    const orphan = makeAnnotation({ node_id: 'R_zz' });
+    const result = assembleAiArtifacts({
+      currentAnnotations: [orphan],
+      validatedCandidates: [validated],
+      canonicalNodeIds: new Set([job.node_id]),
+      datasetSha256: DATASET_SHA,
+      generatedAt: '2026-06-21T00:00:00Z',
+    });
+    expect(result.changed).toBe(true);
+    expect(result.prunedNodeIds).toEqual(['R_zz']);
+    expect(result.annotations.map((a) => a.node_id)).toEqual([job.node_id]);
+  });
+
+  it('PRUNE-4: a validated candidate outside the canonical dataset is a hard failure', () => {
+    const job = makeJob();
+    const validated = validateCandidate(makeCandidate(job), job);
+    expect(() =>
+      assembleAiArtifacts({
+        currentAnnotations: [],
+        validatedCandidates: [validated],
+        canonicalNodeIds: new Set(['R_other']),
+        datasetSha256: DATASET_SHA,
+        generatedAt: '2026-06-20T00:00:00Z',
+      }),
+    ).toThrow(/not in the canonical dataset/);
   });
 });

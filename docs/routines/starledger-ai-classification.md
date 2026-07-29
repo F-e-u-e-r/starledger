@@ -175,7 +175,11 @@ Deterministic CLI sequence (from the runbook):
        If the node command exits nonzero or its output lacks any of the five
        counts, report "zero jobs; set verification unavailable; no conclusion"
        and exit 0. If missing, extra, or duplicates is non-zero, FAIL CLOSED:
-       report the five numbers, exit 0, and never say "fully classified". ALSO
+       report the five numbers, exit 0, and never say "fully classified" —
+       UNLESS the mismatch is exactly missing=0, duplicates=0, extra>0: hold
+       that case, continue through the omitted check below, and if omitted is 0
+       go to step 3e (removed-star prune) instead of exiting; if omitted is
+       non-zero or unavailable, FAIL CLOSED here as usual. ALSO
        require zero omitted-unfetchable jobs, judged ONLY from the complete
        captured stdout of the step-2 plan run: if it contains an
        "omitted N probe-ok job(s)" line with N > 0, FAIL CLOSED likewise —
@@ -201,6 +205,26 @@ Deterministic CLI sequence (from the runbook):
        base commit under one recorded config, nothing more. Only a 3d outcome
        may add that the operator COULD relax the cadence toward daily if
        protocol-passing zero-job runs persist.
+   3e. Prune maintenance — reached ONLY from 3c's extra-only case (missing=0,
+       duplicates=0, extra>0, omitted 0, planned jobs 0). This is the
+       removed-star lifecycle, not an empty backlog. Run:
+       GENERATED_AT="$(date -u +%Y-%m-%dT%H:%M:%SZ)"
+       pnpm classifier prune-orphans --current ai-annotations.json \
+         --generated-at "$GENERATED_AT" --out-dir .
+       FAIL CLOSED — report the command output, revert any artifact changes,
+       and exit 0 — if the command exits nonzero, or reports pruned: 0, or its
+       pruned count does not equal the 3c extra count. Otherwise verify with
+       the step-8 command and continue from step 9 exactly as after an apply
+       (nothing-to-ship guard, step-10 pre-flight, unique branch, commit ONLY
+       the artifact pair), with two differences:
+       - PR title: chore(ai): prune orphan annotations (<K> repos, <TS>), same
+         TS rule as step 13;
+       - PR body: state it is a maintenance run (removed-star prune, no
+         classification performed) and include the prune-orphans receipt
+         (canonical count, before, pruned node_ids, after).
+       A 3e outcome is a maintenance action, never a 3d conclusion: do not
+       report "snapshot-local manifest is empty", never declare any milestone
+       complete, never suggest disabling this routine.
    In EVERY zero-job outcome: never recommend disabling this routine — the star
    corpus keeps growing, and the cadence note above is 3d-exclusive. Never
    declare P3 or any other milestone complete, and never state the backlog is
@@ -337,6 +361,11 @@ command and stop.
   workflow per `docs/P3-completion-runbook.md`. An executor zero-job report is at
   most snapshot-local, budget-limited evidence — never a completion or disable
   signal.
+- **Removed-star prune is routine maintenance:** the executor prunes orphan
+  annotations via `prune-orphans` (prompt step 3e) and ships them as a normal
+  artifact-pair PR; `verify-ai-provenance` (PROV-6) rejects any prune of a
+  repository still in the canonical dataset, and prunes do not count against the
+  changed-annotation budget.
 - **Branch hygiene:** repo has `delete_branch_on_merge` enabled.
 
 ## Deferred follow-ups (tracked, not in this iteration)

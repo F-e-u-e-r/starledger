@@ -16,6 +16,7 @@ import { loadCanonicalDataset } from './dataset';
 import { reconcileRun } from './executor';
 import { fatal } from './fatal';
 import { planClassification } from './planner';
+import { runPruneOrphans } from './prune-orphans';
 import { verifyAiProvenanceFromGit } from './provenance';
 import { OctokitReadmeSource } from './readme-source';
 import { runMetaRebaseCommand } from './meta-rebase-cli';
@@ -203,6 +204,8 @@ export function buildProgram(): Command {
     .requiredOption('--generated-at <iso-date>', 'timestamp for changed annotation records')
     .requiredOption('--out-dir <path>', 'directory for ai-annotations artifacts')
     .option('--current <path>', 'existing ai-annotations.json')
+    .option('--stars <path>', 'canonical stars.json', 'stars.json')
+    .option('--meta <path>', 'dataset-meta.json', 'dataset-meta.json')
     .action(
       (opts: {
         manifest: string;
@@ -210,9 +213,24 @@ export function buildProgram(): Command {
         generatedAt: string;
         outDir: string;
         current?: string;
+        stars: string;
+        meta: string;
       }) => {
         try {
           const manifest = ClassificationManifestSchema.parse(readJson(opts.manifest));
+          const dataset = loadCanonicalDataset(
+            readFileSync(opts.stars, 'utf8'),
+            readFileSync(opts.meta, 'utf8'),
+          );
+          if (dataset.datasetSha256 !== manifest.dataset_sha256) {
+            // Never run a (potentially pruning) apply with a manifest computed
+            // against a different canonical snapshot.
+            throw new Error(
+              `manifest dataset_sha256 (${manifest.dataset_sha256.slice(0, 12)}…) does not ` +
+                `match the verified canonical dataset ` +
+                `(${dataset.datasetSha256.slice(0, 12)}…) — refusing to apply`,
+            );
+          }
           const candidates = ClassificationCandidatesSchema.parse(readJson(opts.candidates));
           const { applied, pendingRetry, rejected } = reconcileRun(manifest, candidates);
           if (rejected.length > 0) {
@@ -229,9 +247,15 @@ export function buildProgram(): Command {
           const result = assembleAiArtifacts({
             currentAnnotations,
             validatedCandidates: applied,
+            canonicalNodeIds: new Set(dataset.repos.map((repo) => repo.node_id)),
             datasetSha256: manifest.dataset_sha256,
             generatedAt: opts.generatedAt,
           });
+          const pruned =
+            result.prunedNodeIds.length > 0
+              ? `; pruned ${result.prunedNodeIds.length} orphan(s): ` +
+                result.prunedNodeIds.join(', ')
+              : '';
           const pending = `${pendingRetry.length} job(s) pending retry`;
           if (!result.changed || result.metaBytes === null) {
             process.stdout.write(`AI artifacts unchanged; no files written. ${pending}.\n`);
@@ -239,9 +263,57 @@ export function buildProgram(): Command {
             writeText(join(opts.outDir, 'ai-annotations.json'), result.annotationsBytes);
             writeText(join(opts.outDir, 'ai-annotations-meta.json'), result.metaBytes);
             process.stdout.write(
-              `wrote ${result.annotations.length} annotation(s) to ${opts.outDir}; ${pending}.\n`,
+              `wrote ${result.annotations.length} annotation(s) to ${opts.outDir}` +
+                `${pruned}; ${pending}.\n`,
             );
           }
+        } catch (error) {
+          fatal(error);
+        }
+      },
+    );
+
+  program
+    .command('prune-orphans')
+    .description(
+      'Deterministically remove annotations whose repository left the canonical dataset ' +
+        '(Merge rules: a removed star prunes its annotation). Zero-candidate maintenance ' +
+        'path for an extra-only set mismatch; performs no classification.',
+    )
+    .option('--stars <path>', 'canonical stars.json', 'stars.json')
+    .option('--meta <path>', 'dataset-meta.json', 'dataset-meta.json')
+    .requiredOption('--current <path>', 'existing ai-annotations.json')
+    .requiredOption('--generated-at <iso-date>', 'timestamp for the rebuilt meta')
+    .requiredOption('--out-dir <path>', 'directory for ai-annotations artifacts')
+    .action(
+      (opts: {
+        stars: string;
+        meta: string;
+        current: string;
+        generatedAt: string;
+        outDir: string;
+      }) => {
+        try {
+          const receipt = runPruneOrphans({
+            starsPath: opts.stars,
+            datasetMetaPath: opts.meta,
+            currentPath: opts.current,
+            generatedAt: opts.generatedAt,
+            outDir: opts.outDir,
+          });
+          process.stdout.write(
+            `canonical repositories: ${receipt.canonicalCount} ` +
+              `(dataset ${receipt.datasetSha256.slice(0, 12)}…)\n` +
+              `annotations before: ${receipt.beforeCount}\n` +
+              `pruned: ${receipt.prunedNodeIds.length}` +
+              (receipt.prunedNodeIds.length > 0 ? ` (${receipt.prunedNodeIds.join(', ')})` : '') +
+              `\nannotations after: ${receipt.afterCount}\n`,
+          );
+          process.stdout.write(
+            receipt.changed
+              ? `wrote pruned artifact pair to ${opts.outDir}\n`
+              : 'no orphan annotations; artifacts unchanged, no files written.\n',
+          );
         } catch (error) {
           fatal(error);
         }
