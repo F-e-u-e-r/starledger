@@ -10066,28 +10066,6 @@
       }
     },
     {
-      "node_id": "R_kgDORCrvwg",
-      "category": "data-analytics",
-      "tags": [
-        "library"
-      ],
-      "summary": "Polars-native Python platform for quantitative alpha research and systematic trading. It provides 72 Rust-backed factor operators for time-series and cross-sectional computation, using a column-based panel model that keeps every symbol on a shared timestamp index, prevents look-ahead bias by construction, and normalizes missing values to a single null type.",
-      "source": {
-        "kind": "readme",
-        "readme_path": "README.md",
-        "readme_oid": "8b83a005290e9c8d9db668c2fe6600fb54f66533",
-        "repo_metadata_sha256": "4f85b3cb167456a85b952fc81f57ec66b7b7a1418d37c96eaeb82d60bc724c9e",
-        "fingerprint": "fc945d39239aaec15c161838c903cd1dcc55d5b07be224b4adf59a68c06a15a7"
-      },
-      "generation": {
-        "executor_kind": "claude-routine",
-        "execution_profile_version": "agent-v1",
-        "model_label": "informational-only",
-        "prompt_version": "classify-v1",
-        "generated_at": "2026-07-19T07:24:18Z"
-      }
-    },
-    {
       "node_id": "R_kgDORD4i-A",
       "category": "developer-tools",
       "tags": [
