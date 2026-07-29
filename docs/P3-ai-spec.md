@@ -482,30 +482,24 @@ bounded, manual backfill with exactly one executor enabled.
   and a whole already-annotated corpus at current fingerprints plans zero jobs
   and fetches zero READMEs (`planner.test.ts` NOCHURN-1). These fixtures stand in
   for, but do not replace, the credentialed live replay below.
-- ⏳ **No-churn replay, live half — PENDING · OWNER VALIDATION REQUIRED.**
-  Running `classifier plan --current ai-annotations.json` against live README
-  OIDs at the current base needs a `STAR_SYNC_TOKEN` and can only be run by the
-  owner; the offline checks above support but do not replace it. Scope caveat:
-  "the planner emits zero jobs" holds only once every canonical repo is already
-  annotated at its current fingerprint. While the classification backlog is
-  draining (see the dated note below), a live `plan --current` run legitimately
-  emits jobs for the still-unannotated repos. Two distinct checkpoints follow,
-  and they must not be conflated:
-  - **Interim (allowed while draining):** a replay explicitly scoped to the
-    already-annotated subset may be recorded as intermediate evidence that
-    unchanged, annotated repos generate no work. It does **not** close P3.
-  - **Completion gate (required to mark P3 ✅ complete):** after the backlog
-    reaches zero, a full-corpus `plan --current ai-annotations.json` run must
-    emit **zero jobs**. Record that run's URL and its (zero) job count here —
-    that, together with a drained backlog, is what marks P3 complete.
+- ✅ **No-churn replay, live half — DONE (credentialed, full-corpus).** On
+  2026-07-29 a full-corpus `pnpm classifier plan --current ai-annotations.json`
+  run against live README OIDs emitted **0 jobs** and **0 omitted-unfetchable**
+  with the backlog drained (node_id set equality: missing/extra/duplicates all
+  0; 697 of 697 annotated). Hosted run:
+  https://github.com/F-e-u-e-r/starledger/actions/runs/30500689860 at base
+  `b5afa9d0134143e3126cbdd6b89872b8a5cb388a`, dataset
+  `dd071ea9da3c4970187af54b68f163ee47750e0e5489cbe502859e1e8015e935`. P3 is
+  therefore **✅ complete**.
 
-**Backlog drain — status (updated 2026-07-20).** Classification is incremental
-and still draining: 155 of 589 canonical repositories are annotated, so ~434
-remain. The daily `ai-state` executor continues to produce bounded artifact PRs
-(each ≤5 repos) until the backlog reaches zero; this is expected work, not
-churn. P3 status is therefore "implementation, publication, and visual UI
-complete; backlog draining; final owner-run credentialed no-churn replay
-pending" — **not yet ✅ complete**.
+**Backlog drain — status (updated 2026-07-29).** The backlog is drained: 697 of
+697 canonical repositories are annotated (node_id set equality, missing/extra/
+duplicates all 0 at base `b5afa9d`), and the removed-star lifecycle is
+implemented and production-proven (PR #213; first live prune PR #214). The
+hourly executor stays enabled as steady-state operation — new stars are
+classified within a run, removed stars are pruned, and an empty manifest is
+healthy steady state, never a disable signal (routine spec prompt step 3). P3
+is **✅ complete** per the completion gate recorded above.
 
 `pnpm p3-gate` is the aggregate gate: typecheck, lint, format, the full test suite
 (AI schema drift, fingerprint/planner, injection fixtures, structural + provenance
