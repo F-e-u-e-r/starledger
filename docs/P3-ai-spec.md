@@ -248,8 +248,9 @@ blocking, and the agent diff allowlist.
   discovery, and rejects any changed annotation that does not match a current job
   — stale fingerprint/OID/metadata, invented node, wrong `dataset_sha256`, wrong
   executor/profile, or an over-budget delta.
-- **P3.3 publication (delivered):** validated artifacts publish through a reviewed
-  merge; the Pages workflow stages them fail-soft and deploys the merged commit.
+- **P3.3 publication (delivered):** validated artifacts publish through GitHub
+  auto-merge after the required trusted checks pass against current `main`; the
+  Pages workflow stages them fail-soft and deploys the merged commit.
   Operational state on `starledger-ai-state` is written only by the trusted
   `ai-state` workflow, never by an executor.
 
