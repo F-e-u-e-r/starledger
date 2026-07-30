@@ -447,7 +447,7 @@ remains valid when they are absent (DEPLOY-2).
 ## P3.5 — closeout and the semantic-search decision
 
 P3.5 delivers the semantic-search ADR and validates live artifact publication;
-the final operational closeout remains pending.
+the final operational closeout is complete (2026-07-29, recorded below).
 Required P3 search is lexical over name, GitHub description, topics, language, and
 the AI category/tags/summary. True vector search is DEFERRED
 to a future hosted phase unless a client-side experiment proves it adds relevance
@@ -459,8 +459,9 @@ runs produced and merged PRs #17, #18, and #20. Each changed only the public
 artifact pair, passed CI plus the structural and provenance gates, and deployed
 through Pages. The public artifact bytes and metadata hashes were verified against
 `main`; the published coverage was five annotations out of the 492 canonical
-repositories present at the time — still five today, now against 550, as no
-executor has run since. The third run exercised the configured
+repositories present at the time (an early snapshot — the scheduled executor
+later drained the backlog to 697 of 697; see the closeout record below). The
+third run exercised the configured
 `max_total_per_run: 3` budget without exceeding it.
 
 **Operational closeout — status (updated 2026-07-08).** `verify-ai-provenance`
@@ -471,7 +472,7 @@ bounded, manual backfill with exactly one executor enabled.
   `https://f-e-u-e-r.github.io/starledger/` under the new strict CSP: React
   mounts and the stylesheet applies (the CSP does not break the app), and the
   category/tag facets, AI badge, secondary summary, AI tags, the "N of M
-  enriched" counter (`5 of 550`), and AI-aware search all render.
+  enriched" counter (then `5 of 550`), and AI-aware search all render.
 - ✅ **No-churn replay, deterministic half — DONE (offline).**
   `classifier verify-artifacts` passes on the committed pair, re-serializing the
   committed annotations is byte-identical, and the meta `annotations_sha256` +
@@ -511,7 +512,7 @@ build, and generated-schema drift.
 The contract, gate, and implementation conditions below are met and tested. Live
 artifact publication is verified, and (2026-07-08) the visible-dashboard check is
 DONE and the deterministic no-churn replay is verified offline; the backlog
-drain and the live credentialed planner replay remain pending per the
+drain and the live credentialed planner replay completed 2026-07-29 per the
 operational closeout above.
 
 - canonical stars remain untouched by AI;
@@ -526,8 +527,8 @@ operational closeout above.
 - live AI facets, secondary summaries, and AI-aware search are visually confirmed
   on the public dashboard (2026-07-08);
 - an unchanged run produces no artifact churn: proven offline via the
-  deterministic assembler replay; the live credentialed planner replay is still
-  pending;
+  deterministic assembler replay and live via the credentialed full-corpus
+  zero-job replay (run 30500689860, 2026-07-29);
 - semantic search is explicitly deferred by ADR-001 (lexical search shipped).
 
 ## Subsequent milestones
@@ -544,9 +545,10 @@ operational closeout above.
 - **P3.4 (implementation delivered):** fail-soft AI loading with strict contract
   validation, node-id join, category/AI-tag facets with URL state, AI-aware lexical
   search, secondary labelled card summaries, and a coverage count.
-- **P3.5 (ADR and live artifact publication delivered; final closeout pending):**
-  vector search is deferred and lexical search shipped. Three validated Claude
-  Routine artifact PRs have merged and deployed five annotations under bounded
-  budgets. Public dashboard visual confirmation is DONE (2026-07-08) and the
-  deterministic no-churn replay is verified offline; only the live credentialed
-  planner replay remains pending.
+- **P3.5 (delivered; closeout complete 2026-07-29):** vector search is deferred
+  and lexical search shipped. Three validated Claude Routine artifact PRs merged
+  and deployed the first five annotations under bounded budgets. Public
+  dashboard visual confirmation is DONE (2026-07-08), the deterministic no-churn
+  replay is verified offline, and the live credentialed planner replay passed
+  full-corpus with zero jobs (run 30500689860 at base `b5afa9d`) — P3 is
+  ✅ complete.
