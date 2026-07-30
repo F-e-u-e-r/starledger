@@ -8,7 +8,7 @@
     "paths": [
       "README.md"
     ],
-    "last_commit_sha": "3080d7888740aba32b0b5aa6cd93608d9e8e741a"
+    "last_commit_sha": "fc545c768eccc6e82d9e282dc9069ff5d09e7073"
   },
   "pending": [],
   "deliveries": [
@@ -244,6 +244,12 @@
       "notification_key": "awesome_stars:openai/codex-security:R_kgDOTXjnhA",
       "status": "sent",
       "completed_at": "2026-07-29T06:46:52.504Z",
+      "detail": null
+    },
+    {
+      "notification_key": "awesome_stars:herdrdev/herdr:R_kgDORymbOg",
+      "status": "sent",
+      "completed_at": "2026-07-30T06:43:53.979Z",
       "detail": null
     }
   ]
