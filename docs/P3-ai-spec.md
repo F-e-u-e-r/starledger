@@ -206,7 +206,8 @@ hash, artifact order,
 publication decision, executor binding, or files outside the path allowlist.
 
 For a Claude Routine, preserve the default restricted `claude/` branch policy;
-do not enable unrestricted pushes or auto-merge. For Codex App Automation, use a
+do not enable unrestricted pushes, and merge only via GitHub auto-merge gated by
+the required trusted checks. For Codex App Automation, use a
 new worktree so an automation cannot alter an active local working tree. The
 Codex machine must remain available for project-scoped scheduled runs, so it is
 a fallback rather than a second simultaneous writer.
@@ -253,8 +254,10 @@ blocking, and the agent diff allowlist.
   `ai-state` workflow, never by an executor.
 
 With the P3.3 provenance gate in place an executor may run, but keep BOTH
-`verify-agent-artifacts` and `verify-ai-provenance` required on `main`, and do not
-auto-merge agent PRs — every AI artifact still publishes through human review.
+`verify-agent-artifacts` and `verify-ai-provenance` required on `main`; executor
+PRs merge only via GitHub auto-merge after those required checks pass against
+current `main`, with a periodic human sample audit covering the semantics the
+gates cannot.
 
 ## P3.0 exit conditions
 
@@ -398,11 +401,14 @@ gate reject timestamp-only or metadata-only artifact updates, so an unchanged ru
 produces no churn.
 
 **Publication.** Remote Git remains the publication boundary: valid PR → structural
-gate → provenance gate → human review → merge. The Pages workflow stages the AI
+gate → provenance gate → merge (GitHub auto-merge once the required checks are
+green; a periodic human sample audit covers semantics). The Pages workflow stages the AI
 artifacts into the deployed site FAIL-SOFT — a missing, malformed, or
 hash-mismatched pair is skipped, never blocking the canonical deployment — and a
 merge that changes the artifacts triggers a Pages deploy of the merged commit.
-Auto-merge stays disabled in v1.
+Executor artifact PRs may use GitHub auto-merge after all required trusted
+checks pass against current `main`; the executor cannot bypass checks or merge
+directly.
 
 **Operational state.** The `starledger-ai-state` branch (`classifier-state.json`)
 is written ONLY by the trusted `ai-state.yml` workflow, never by an executor: it
@@ -464,9 +470,10 @@ later drained the backlog to 697 of 697; see the closeout record below). The
 third run exercised the configured
 `max_total_per_run: 3` budget without exceeding it.
 
-**Operational closeout — status (updated 2026-07-08).** `verify-ai-provenance`
-remains required alongside `verify-agent-artifacts` and CI on `main`. Continue
-bounded, manual backfill with exactly one executor enabled.
+**Operational closeout — complete (2026-07-29).** `verify-ai-provenance`
+remains required alongside `verify-agent-artifacts` and CI on `main`. The hourly
+scheduled executor remains enabled for steady-state enrichment of newly starred
+repositories and pruning of removed repositories.
 
 - ✅ **Public-dashboard visual confirmation — DONE.** Verified live at
   `https://f-e-u-e-r.github.io/starledger/` under the new strict CSP: React
