@@ -8,7 +8,7 @@
     "paths": [
       "README.md"
     ],
-    "last_commit_sha": "fc545c768eccc6e82d9e282dc9069ff5d09e7073"
+    "last_commit_sha": "562d724b71c5ae44750555894cd6820e9dc7a1e5"
   },
   "pending": [],
   "deliveries": [
@@ -250,6 +250,24 @@
       "notification_key": "awesome_stars:herdrdev/herdr:R_kgDORymbOg",
       "status": "sent",
       "completed_at": "2026-07-30T06:43:53.979Z",
+      "detail": null
+    },
+    {
+      "notification_key": "awesome_stars:demiaochen/caffeinate-disablesleep:R_kgDOTgP3KA",
+      "status": "sent",
+      "completed_at": "2026-07-31T07:15:58.062Z",
+      "detail": null
+    },
+    {
+      "notification_key": "awesome_stars:huggingface/speech-to-speech:R_kgDOMgio7Q",
+      "status": "sent",
+      "completed_at": "2026-07-31T07:15:58.062Z",
+      "detail": null
+    },
+    {
+      "notification_key": "awesome_stars:qwenaudio/qwen-audio-agent:R_kgDOTkluyw",
+      "status": "sent",
+      "completed_at": "2026-07-31T07:15:58.062Z",
       "detail": null
     }
   ]
