@@ -1315,6 +1315,32 @@
       }
     },
     {
+      "node_id": "R_kgDOGRBhiw",
+      "category": "communication-collaboration",
+      "tags": [
+        "cli",
+        "notifications",
+        "real-time",
+        "rest-api",
+        "self-hosted"
+      ],
+      "summary": "ntfy is an open-source HTTP-based pub-sub notification service for sending push notifications to phones or desktops using simple PUT/POST requests. It offers a free hosted instance and can be self-hosted, with Android, iOS, and web apps plus a documented REST API.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "1eb6414ac4240aa889575b5083b555a75711a390",
+        "repo_metadata_sha256": "11f2c7cea58fa2f3b989011b989712b646a67f3b7ab9f3ec38ad4090ca50967c",
+        "fingerprint": "4cba45a692f30ab67a3cdcf82bd832bd9ebbad221b5adcfc1cdc1e4e2a2d89ad"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-08-01T08:24:14Z"
+      }
+    },
+    {
       "node_id": "R_kgDOGfQZkg",
       "category": "security-privacy",
       "tags": [
@@ -1556,6 +1582,32 @@
         "model_label": null,
         "prompt_version": "classify-v1",
         "generated_at": "2026-07-15T22:23:03Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOI2oX4A",
+      "category": "self-hosted-homelab",
+      "tags": [
+        "automation",
+        "containers",
+        "no-code",
+        "rest-api",
+        "self-hosted"
+      ],
+      "summary": "Stirling PDF is an open-source, self-hosted platform offering 50+ tools to edit, merge, split, sign, redact, convert, OCR, and compress PDFs. It runs as a desktop app, browser UI, or on-premise server with REST APIs and no-code automation pipelines, keeping documents local.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "c6777f103259cd4e07a2b045bcc7013c69615642",
+        "repo_metadata_sha256": "2721e500bcda66bb79c6b72038c6141dcd4e48ba28bd3ee22f9b793355bd8410",
+        "fingerprint": "87cf8546f7b2ad3274725de2e3d81c856ac470feb219353cc0c64b0b74c86e2c"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-08-01T08:24:14Z"
       }
     },
     {
@@ -3728,6 +3780,32 @@
         "model_label": null,
         "prompt_version": "classify-v1",
         "generated_at": "2026-07-16T14:23:54Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOMgio7Q",
+      "category": "ai-ml",
+      "tags": [
+        "ai-agents",
+        "api",
+        "llm",
+        "machine-learning",
+        "real-time"
+      ],
+      "summary": "A low-latency, modular open-source voice-agent pipeline chaining voice activity detection, speech-to-text, an LLM, and text-to-speech, exposed through an OpenAI Realtime-compatible WebSocket API. Every component is swappable, supporting local or hosted models for a fully open voice stack.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "dd84793363daec7e6107bc184a9cf11229c2e557",
+        "repo_metadata_sha256": "4d2bdc95b8355715ce5c8bf410789deebc58c209e4b2bd5976a90033922f54cd",
+        "fingerprint": "80ea217bed6559d6b901f2cbad614529c49ae34a9b65ec280e832e2725d54af6"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-08-01T08:24:14Z"
       }
     },
     {
@@ -16188,6 +16266,31 @@
       }
     },
     {
+      "node_id": "R_kgDOTQXVFQ",
+      "category": "developer-tools",
+      "tags": [
+        "ai-agents",
+        "cli",
+        "monitoring",
+        "notifications"
+      ],
+      "summary": "Claude Mate is a DIY desk device (Arduino Nano over USB or a cordless ESP32-S3 with a colour screen and LED) that monitors many AI coding-agent sessions and signals which one needs attention, letting you jump to it with a button. It is fed by Claude Code hooks or a PTY wrapper as an ambient triage display.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "e28de64f8d49972e2df7f830427d66f502ed49f0",
+        "repo_metadata_sha256": "3432979996363ed88513144a4913083b2b6b62de049af38a2c491af6f2d0758b",
+        "fingerprint": "b3801035eb3704e817ec04d88ed98b18eded1788fcbf7c05f1c5366adadf82b2"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-08-01T08:24:14Z"
+      }
+    },
+    {
       "node_id": "R_kgDOTQahuQ",
       "category": "devops-infrastructure",
       "tags": [
@@ -16461,6 +16564,31 @@
         "model_label": null,
         "prompt_version": "classify-v1",
         "generated_at": "2026-07-22T03:22:33Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOTUfIlw",
+      "category": "developer-tools",
+      "tags": [
+        "dashboard",
+        "desktop-app",
+        "gui",
+        "monitoring"
+      ],
+      "summary": "OpenQuota is a cross-platform desktop app built with Tauri and Rust that tracks AI coding subscription usage, session and weekly quota limits, reset times, token usage, and estimated spend from the system tray. It supports many providers and runs locally with no cloud backend or telemetry.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "1e0cbc831d2cfe894d4e49e42f6734217e425d67",
+        "repo_metadata_sha256": "641b2132c49a769ab910571abd09dd7e996e2b93f3d76a3d7209de7870ffaf1b",
+        "fingerprint": "6657efbc032b581d914802e9c7ddba50cc58fd4111705049a2a265ce4f37e4ed"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-08-01T08:24:14Z"
       }
     },
     {
