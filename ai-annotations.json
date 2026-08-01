@@ -17444,6 +17444,56 @@
       }
     },
     {
+      "node_id": "R_kgDOTgP3KA",
+      "category": "productivity-automation",
+      "tags": [
+        "desktop-app",
+        "gui",
+        "productivity"
+      ],
+      "summary": "A tiny macOS menu bar app that keeps a Mac awake, replacing the caffeinate and pmset disablesleep commands with one-click controls. It can hold the screen on, run timed or indefinite sessions, and keep the machine working with the lid closed through a restricted sudoers rule.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "cfe28f4042946128defa8cf458625e4285f6b72a",
+        "repo_metadata_sha256": "7a815a6b2cef1cefd82c573e00756a6f8c1fc83efb5d35637918083a87b690e8",
+        "fingerprint": "abfae160216b0c042020ea30c6bd5346f9517d655e8f99d825e004611f852184"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-08-01T09:22:38Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOTkluyw",
+      "category": "ai-ml",
+      "tags": [
+        "ai-agents",
+        "cli",
+        "desktop-app",
+        "real-time",
+        "tui"
+      ],
+      "summary": "A real-time voice runtime for AI agents built on Qwen Audio Realtime models. It provides full-duplex speech with natural interruption and continuous multi-turn conversation, runs foreground chat alongside asynchronous background agent tasks over the ACP protocol, and ships a WebUI, a terminal TUI, and a macOS desktop client.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "f0e91352858e351cb392b960012c4853186bdfe7",
+        "repo_metadata_sha256": "96d1390fc0dc9d7fdbed615a39012b98eddd2147aaf9d3e6489b47611d2ab979",
+        "fingerprint": "e580c0727797254d595d21aac746e85ef5fba8a0e1b0a9e832f7c95433fe63dc"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-08-01T09:22:38Z"
+      }
+    },
+    {
       "node_id": "R_kgDOTl_qdg",
       "category": "media-creative",
       "tags": [
@@ -17489,6 +17539,29 @@
         "model_label": null,
         "prompt_version": "classify-v1",
         "generated_at": "2026-07-29T08:26:58Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOTohuRw",
+      "category": "web-applications",
+      "tags": [
+        "frontend",
+        "real-time"
+      ],
+      "summary": "A proof-of-concept web app that transfers a file from one device screen to another device camera using an animated stream of fountain-coded QR codes, with no network path, pairing, or app install. The receiver reconstructs the file from any sufficient subset of frames using Luby transform coding and a WASM QR decoder.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "53b8624f00441d1eff20a2108cbf03fd81fabb21",
+        "repo_metadata_sha256": "de881dff84cdb476c3787e56bf14985b91ed1aca2681862d07a0180c2ea15e6b",
+        "fingerprint": "6be2008f32969dd45b45e67ad2a30cfed6afc5b74d30f537340f18616f235c05"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-08-01T09:22:38Z"
       }
     }
   ]
