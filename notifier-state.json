@@ -8,7 +8,7 @@
     "paths": [
       "README.md"
     ],
-    "last_commit_sha": "8e05baee2908ab4b3f4af2630f66f6ad1ab80e45"
+    "last_commit_sha": "8f636f06da1559a90d438093d2fde4000e62cfbd"
   },
   "pending": [],
   "deliveries": [
@@ -268,6 +268,12 @@
       "notification_key": "awesome_stars:qwenaudio/qwen-audio-agent:R_kgDOTkluyw",
       "status": "sent",
       "completed_at": "2026-07-31T07:15:58.062Z",
+      "detail": null
+    },
+    {
+      "notification_key": "awesome_stars:maguowei/code-manager:R_kgDORDTOog",
+      "status": "sent",
+      "completed_at": "2026-08-02T06:47:14.610Z",
       "detail": null
     }
   ]
