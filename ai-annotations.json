@@ -17542,6 +17542,58 @@
       }
     },
     {
+      "node_id": "R_kgDOTm5ZXg",
+      "category": "data-analytics",
+      "tags": [
+        "dashboard",
+        "real-time",
+        "self-hosted",
+        "visualization"
+      ],
+      "summary": "Talivia is an open-source, self-hosted, revenue-first analytics platform for founders. It combines core web analytics, session replay, shared analytics, and revenue attribution, integrating customer revenue from providers such as Stripe, LemonSqueezy, Polar, and Dodo. It runs on Node.js with a PostgreSQL database and offers Docker-based deployment.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "bd6b742a6ac9010ebe17917032a7344c27b6f83a",
+        "repo_metadata_sha256": "5c7f4d33f1310d19629da2ac76001d4431b541e9978929f45641c3fe16448196",
+        "fingerprint": "ba02a17a6d239cb5ab451ba835e7a0e7bd7c7dfeb8f7a6835fdfec8ce0b062b2"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-08-02T08:22:03Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOTnic1g",
+      "category": "ai-ml",
+      "tags": [
+        "ai-agents",
+        "automation",
+        "bot",
+        "llm",
+        "self-hosted",
+        "workflow"
+      ],
+      "summary": "QM is a multiplayer AI agent harness for startups, available in Slack and on the web. Each person and room gets an isolated workspace with its own scoped memory, files, permissions, crons, and durable sandbox. It supports multiple agent harnesses and models, running on a headless TypeScript core backed by PostgreSQL, and is deployed into each organization's own cloud.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "fee08758db89825ef0e0623ac6612971a08118d2",
+        "repo_metadata_sha256": "b8c54b0af04b6fe89996409560ecc999c51b1a92145d6cd1060c4b52e88b8be1",
+        "fingerprint": "ea9938397cbb1e328eb1e0dce11df5c993e7cb1e5588ae877cef9591c5154dae"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-08-02T08:22:03Z"
+      }
+    },
+    {
       "node_id": "R_kgDOTohuRw",
       "category": "web-applications",
       "tags": [
