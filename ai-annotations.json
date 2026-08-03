@@ -1389,6 +1389,29 @@
       }
     },
     {
+      "node_id": "R_kgDOGy28ew",
+      "category": "education-reference",
+      "tags": [
+        "awesome-list",
+        "documentation"
+      ],
+      "summary": "A curated awesome-list of libraries, packages, strategies, books, videos, blogs, and courses for systematic and quantitative trading, spanning backtesting frameworks, indicators, portfolio optimization, broker APIs, data sources, and machine learning across Python and other languages.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "6f11f119e6db02190abaadf693855090be036281",
+        "repo_metadata_sha256": "9d38b2ae4b38d1d34c2cb1e1094b9654b38d58892ef50558698ebdafb587a9be",
+        "fingerprint": "6242748632387d10618a4099d2c8adaef3c41dc714b4b639a62780fce5973427"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-08-03T09:24:56Z"
+      }
+    },
+    {
       "node_id": "R_kgDOGyI-8A",
       "category": "self-hosted-homelab",
       "tags": [
@@ -15674,6 +15697,30 @@
       }
     },
     {
+      "node_id": "R_kgDOSnWVDQ",
+      "category": "education-reference",
+      "tags": [
+        "awesome-list",
+        "documentation",
+        "machine-learning"
+      ],
+      "summary": "A curated awesome-list of quantitative research, systematic trading, and market-microstructure resources, organized into sections such as backtesting, alpha research, portfolio optimization, risk modeling, execution and HFT, machine learning for trading, and crypto quant.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "35ca3f05283e83845547b3e3097b8cbd8ab9609d",
+        "repo_metadata_sha256": "433bb60ef99e1dcfed6f66bcb34db8431ed5e1c64efe0de256d97ca1dfd76cdf",
+        "fingerprint": "2d6f71b9b50b6f76537c8df7c03b1e129e0c9fa3ac8205339cd693d49c14a774"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-08-03T09:24:56Z"
+      }
+    },
+    {
       "node_id": "R_kgDOSo4KbQ",
       "category": "media-creative",
       "tags": [
@@ -16413,6 +16460,32 @@
         "model_label": "informational-only",
         "prompt_version": "classify-v1",
         "generated_at": "2026-07-28T22:22:45Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOTS_2kw",
+      "category": "developer-tools",
+      "tags": [
+        "ai-agents",
+        "cli",
+        "code-generation",
+        "llm",
+        "terminal"
+      ],
+      "summary": "A Go reimplementation of the \"pi\" AI coding agent, offering both a headless scripting mode and an interactive REPL. It reads and edits files, runs commands, searches code, and fetches pages through OpenAI- and Anthropic-compatible providers, with session resume, skills, plugins, and package management.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "95d1521032b0f1b0891cd28922ee7999b75538f5",
+        "repo_metadata_sha256": "2f1de460c3b4f1a2d8a5c81e6072a6d71679818424a98b13fdcddaa7d8aff556",
+        "fingerprint": "f7f05c99a4a7fe19e45154cc7f0fa57a94ca4c9bb97b8264bf07979f1a6c4538"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-08-03T09:24:56Z"
       }
     },
     {
@@ -17420,6 +17493,31 @@
       }
     },
     {
+      "node_id": "R_kgDOTdCUPA",
+      "category": "other",
+      "tags": [
+        "cli",
+        "desktop-app",
+        "gui",
+        "networking"
+      ],
+      "summary": "A third-party native macOS management tool for DJI first-generation 4G modules. Communicating over USB, it handles SMS sending and receiving, eSIM profile management, AT-command debugging, and USB 4G tethering through a local web interface that binds only to 127.0.0.1.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "944ba66986e1bf9504be065693dd043e236a0183",
+        "repo_metadata_sha256": "93e5d4bc94ce3b351cf57a867bf677a22e602fa43cd610495b540a4a1311f873",
+        "fingerprint": "0b7d8b49e2e1a9e3baa2b9ab31f12bb79e12eeaa6f42197e3450b2af83d373fe"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-08-03T09:24:56Z"
+      }
+    },
+    {
       "node_id": "R_kgDOTeMsuQ",
       "category": "developer-tools",
       "tags": [
@@ -17564,6 +17662,32 @@
         "model_label": "informational-only",
         "prompt_version": "classify-v1",
         "generated_at": "2026-08-02T08:22:03Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOTndUqw",
+      "category": "productivity-automation",
+      "tags": [
+        "ai-agents",
+        "automation",
+        "desktop-app",
+        "llm",
+        "workflow"
+      ],
+      "summary": "An Electron desktop app that records an on-screen work session — clicks, app and window switches, visited pages, and optional narration — then uses the GitHub Copilot CLI to reconstruct it as an intent plus ordered steps and generate a reusable Skill or scheduled Automation.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "b9835ec6eb888273718f5ba35e6c87a9bfe6b3b8",
+        "repo_metadata_sha256": "3739c983fea2d73cec90fdc145e60bc82fe2c20580fa2ef3126030d1bb86d7ad",
+        "fingerprint": "fe99ea6f9432ac450d9525428ddf187e4c64045e68af90def43e8effc5563b64"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-08-03T09:24:56Z"
       }
     },
     {
