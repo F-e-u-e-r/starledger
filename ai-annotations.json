@@ -17665,6 +17665,31 @@
       }
     },
     {
+      "node_id": "R_kgDOTmaIkA",
+      "category": "media-creative",
+      "tags": [
+        "frontend",
+        "game",
+        "real-time",
+        "visualization"
+      ],
+      "summary": "A real-time procedural snow rendering tech demo built with WebGPU, Babylon.js and hand-written WGSL. Terrain, snow deformation, a fully procedural character with cloth simulation, snow-surf wakes, five water spells, atmosphere and a post-processing chain are all generated on the GPU at load time, with no textures, meshes, HDRIs or animation assets shipped.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "e4af46b00e191c44184ad6b588c6612b7b8c9eb3",
+        "repo_metadata_sha256": "b4cb6e1ee43efde0563fef0cb2db213614a8fc719f4cedb3fb92cbb0d3aaae64",
+        "fingerprint": "48af7c9a43ba08cf1b42e4eeaa2fdfb23b2a91442f5a07ccedeebe21180a5b78"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-08-04T08:24:39Z"
+      }
+    },
+    {
       "node_id": "R_kgDOTndUqw",
       "category": "productivity-automation",
       "tags": [
