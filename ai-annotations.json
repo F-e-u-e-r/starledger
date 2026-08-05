@@ -15945,6 +15945,33 @@
       }
     },
     {
+      "node_id": "R_kgDOSx57rA",
+      "category": "developer-tools",
+      "tags": [
+        "ai-agents",
+        "backend",
+        "containers",
+        "library",
+        "sdk",
+        "serverless"
+      ],
+      "summary": "Cloudflare Computer is a virtual filesystem backed by SQLite inside a Durable Object, paired with a pluggable execution surface for AI agents. It ships container FUSE-mount, isolate-shell, and isolate-JavaScript backends reached through a single runtime.exec entry point. Provided as an unstable preview.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "d34b0984f35526d7be9c6389ee1a922648606eb5",
+        "repo_metadata_sha256": "5c4f96c57f6dd1569022572a9c84590abf56bb669db8f834e41bff076ff67d89",
+        "fingerprint": "e304762db8df7474771b305325cfd97315ef15125a0e0d89e4e305b9170023d3"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-08-05T08:23:04Z"
+      }
+    },
+    {
       "node_id": "R_kgDOTA4V3A",
       "category": "data-analytics",
       "tags": [
@@ -17465,6 +17492,31 @@
         "model_label": null,
         "prompt_version": "classify-v1",
         "generated_at": "2026-07-23T10:23:41Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOTd7Okg",
+      "category": "media-creative",
+      "tags": [
+        "ai-agents",
+        "automation",
+        "cli",
+        "workflow"
+      ],
+      "summary": "A set of Traditional Chinese agent skills for AI assistants with local file and terminal access, split into an environment setup skill (FFmpeg, ffprobe, subtitle fonts, ElevenLabs credentials) and a short-video editor that transcribes, cuts, subtitles, previews, and exports vertical 9:16 reels through an eight-step, approval-gated workflow.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "e4f155e432b4604cba61e8bb663c869d2f1a9c84",
+        "repo_metadata_sha256": "cb8804e50bf2eb1fca54501091d1af9b63de16a6a151e0de6a4e20ccd8441738",
+        "fingerprint": "0c87a68606037a58a7d78281aa7c603661484d0aec80b8e5748cf7dac77c9abb"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-08-05T08:23:04Z"
       }
     },
     {
