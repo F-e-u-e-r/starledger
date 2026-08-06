@@ -17930,6 +17930,31 @@
         "prompt_version": "classify-v1",
         "generated_at": "2026-08-01T09:22:38Z"
       }
+    },
+    {
+      "node_id": "R_kgDOTsxOiw",
+      "category": "libraries-frameworks",
+      "tags": [
+        "cli",
+        "library",
+        "markdown",
+        "sdk"
+      ],
+      "summary": "anydoc is a Rust library that converts Word, PowerPoint, Excel, OpenDocument, RTF, EPUB, CSV, and PDF documents into clean GitHub-Flavored Markdown. Every format is parsed into one shared document model and rendered through a single serializer, and it ships a CLI plus Node.js, Python, and WebAssembly bindings.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "21738c85ec14165136b78815644b1817a10fa53c",
+        "repo_metadata_sha256": "1ace018f77b0a18b4944b9ffcb388d406b11743f971b54beeb710b8a3d62b6ed",
+        "fingerprint": "c8affcc5dad421b38e07fda566865105b91aa09c02b00d18115007b8beb2209b"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-08-06T09:22:51Z"
+      }
     }
   ]
 }
