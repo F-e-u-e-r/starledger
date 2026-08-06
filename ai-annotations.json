@@ -216,6 +216,30 @@
       }
     },
     {
+      "node_id": "MDEwOlJlcG9zaXRvcnk3MjM0MzY1Nw==",
+      "category": "media-creative",
+      "tags": [
+        "desktop-app",
+        "editor",
+        "gui"
+      ],
+      "summary": "LosslessCut is a cross-platform FFmpeg-based desktop GUI for fast, lossless trimming, cutting, merging, and remuxing of video and audio files. It edits tracks, metadata, and containers without re-encoding, so quality is preserved, and can convert unsupported formats via FFmpeg-assisted playback.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "7a7b94af2a0ce8145c23d1d4dc02372d378140ad",
+        "repo_metadata_sha256": "68c446686678545871655f10656197228e9e031c44282424a939eb8308cf6561",
+        "fingerprint": "dbc6821128c8430b65a8f8237bbf5d45720d7f013e79054f3ee6fd2fd0b14cef"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-08-06T08:27:27Z"
+      }
+    },
+    {
       "node_id": "MDEwOlJlcG9zaXRvcnk3Mzk2NDg5NQ==",
       "category": "ai-ml",
       "tags": [
@@ -1241,6 +1265,26 @@
         "model_label": null,
         "prompt_version": "classify-v1",
         "generated_at": "2026-07-15T20:22:36Z"
+      }
+    },
+    {
+      "node_id": "MDEwOlJlcG9zaXRvcnkzODIxODU4MDE=",
+      "category": "other",
+      "tags": [],
+      "summary": "A single-document, consolidated collection of the humorous 'Jeff Dean facts' - Chuck Norris-style jokes about the Google engineer's programming prowess - compiled and de-duplicated from Quora, Reddit, and other sources to preserve this programmer humor in one Markdown list.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "504c8e07dc3d299cffa5d5937ae1280fde507315",
+        "repo_metadata_sha256": "044922da751752e42ed301a4b81520d47f2bb4a6bdcd44c6d829ac607f0d1557",
+        "fingerprint": "b7fe96623a64328bf095ceeae61c3c28625fa58cf151a828af742fd1b11e47de"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-08-06T08:27:27Z"
       }
     },
     {
@@ -6806,6 +6850,31 @@
         "model_label": null,
         "prompt_version": "classify-v1",
         "generated_at": "2026-07-18T07:22:46Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOPsHLyg",
+      "category": "developer-tools",
+      "tags": [
+        "ai-agents",
+        "cli",
+        "llm",
+        "workflow"
+      ],
+      "summary": "sdd-mcp is a Model Context Protocol server and native installer for governed Spec-Driven Development in Claude Code, Codex, and Oh My Pi. Skills own requirements, design, task-planning, and TDD, while the MCP runtime handles feature identity, artifact writes, deterministic validation, revision-bound approvals, and restart-safe progress.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "0cef1142aecf76bdd98728ea9eeae135500b29d9",
+        "repo_metadata_sha256": "a50f52d20b340df61b486b0279a75881120c315724077ea9915737c20979edd2",
+        "fingerprint": "297e1d70794e128fffa8a433128852e39697f61657aabd9693985e0f1adccfdc"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-08-06T08:27:27Z"
       }
     },
     {
@@ -16024,6 +16093,29 @@
       }
     },
     {
+      "node_id": "R_kgDOTDloIA",
+      "category": "security-privacy",
+      "tags": [
+        "networking",
+        "proxy"
+      ],
+      "summary": "wloc is a set of proxy modules and iOS Shortcuts for Surge, Quantumult X, Loon, and Stash that intercept Apple's network-location (gs-loc) responses and patch the returned WiFi and cell-tower coordinates, letting users spoof iOS network-based location by choosing a point on a map instead of entering coordinates manually.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "1cd3ddba26efef526b7dbb6c2c86456cce808fda",
+        "repo_metadata_sha256": "3ae51c2f50364bd728920804ec323d027352646db53022eb4290cc025a666db1",
+        "fingerprint": "036055939dc847bd07ef38cd6f20e3afdb1cff21e1f85ffce9deb2bfcab416e6"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-08-06T08:27:27Z"
+      }
+    },
+    {
       "node_id": "R_kgDOTGqE9Q",
       "category": "developer-tools",
       "tags": [
@@ -16763,6 +16855,28 @@
         "model_label": null,
         "prompt_version": "classify-v1",
         "generated_at": "2026-07-22T03:22:33Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOTWBpog",
+      "category": "media-creative",
+      "tags": [
+        "plugin"
+      ],
+      "summary": "A Codex skill that turns a theme, sentence, object, mood, or brief into a quiet, minimal zine-style editorial poster prompt and a generated raster image. It targets sparse aged-paper layouts with heavy negative space, serif or monospaced type, and print-style defects.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "53f21e8efafa9b4243905134fe0fd26ed365d8d7",
+        "repo_metadata_sha256": "646c0d1c6600006edc491b7801f935d49413fc816705d90bd34cf28e277fad5f",
+        "fingerprint": "be92047c355271c0a253cd7f6fd06d063015f9514d1b127a71453c1f5bab5056"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-08-06T08:27:27Z"
       }
     },
     {
