@@ -8,7 +8,7 @@
     "paths": [
       "README.md"
     ],
-    "last_commit_sha": "e508e865fbbe92e817bce2c3c543ff6d8403c61f"
+    "last_commit_sha": "43f348e571236dc56e0f529f05e7e2488bffff2c"
   },
   "pending": [],
   "deliveries": [
@@ -298,6 +298,12 @@
       "notification_key": "awesome_stars:firecrawl/anydoc:R_kgDOTsxOiw",
       "status": "sent",
       "completed_at": "2026-08-05T06:44:08.440Z",
+      "detail": null
+    },
+    {
+      "notification_key": "awesome_stars:cloudflare/cloudflare-os:R_kgDOSDyFow",
+      "status": "sent",
+      "completed_at": "2026-08-06T06:48:15.673Z",
       "detail": null
     }
   ]
