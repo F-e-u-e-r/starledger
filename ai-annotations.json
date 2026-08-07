@@ -449,6 +449,32 @@
       }
     },
     {
+      "node_id": "MDEwOlJlcG9zaXRvcnkxNDcxMjg1MA==",
+      "category": "self-hosted-homelab",
+      "tags": [
+        "backup",
+        "encryption",
+        "networking",
+        "real-time",
+        "self-hosted"
+      ],
+      "summary": "Syncthing is an open-source continuous file synchronization program written in Go. It synchronizes files between two or more computers, prioritizing protection from data loss, security against unauthorized access, and ease of use, and it runs without relying on a central server.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "3167b1b4d3a85927d7dc4cd6d1fb98e22cd12a66",
+        "repo_metadata_sha256": "83260baa98854efd973b4b25206a98dc2e411eb442b6c1d9b2198b1911f92c6e",
+        "fingerprint": "3e5ef93614bebd5645aa00ffae77828b1a3ea970225fdee1fff3b383d635c00c"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-08-07T07:26:53Z"
+      }
+    },
+    {
       "node_id": "MDEwOlJlcG9zaXRvcnkxNTIzMTIxMg==",
       "category": "web-applications",
       "tags": [
@@ -3665,31 +3691,6 @@
         "readme_oid": "ed586f0622b6dd26ceae01010c0cf32bff12561f",
         "repo_metadata_sha256": "9236de04f86cb23ee89b2827b168360ee046150c512c4a9bbdebc6153210a564",
         "fingerprint": "17b4e432d50f61374b484d34c18340dde48587cfd7e5d52d9e834c3376515c69"
-      },
-      "generation": {
-        "executor_kind": "claude-routine",
-        "execution_profile_version": "agent-v1",
-        "model_label": null,
-        "prompt_version": "classify-v1",
-        "generated_at": "2026-07-16T13:22:26Z"
-      }
-    },
-    {
-      "node_id": "R_kgDOMSHYTA",
-      "category": "education-reference",
-      "tags": [
-        "api",
-        "awesome-list",
-        "documentation",
-        "llm"
-      ],
-      "summary": "A curated reference list of services that provide free access or trial credits toward API-based LLM usage. It catalogs free providers such as OpenRouter, Google AI Studio, Groq, Cohere, and others, along with providers offering trial credits, helping developers find legitimate ways to access language models via API.",
-      "source": {
-        "kind": "readme",
-        "readme_path": "README.md",
-        "readme_oid": "d0e3cdf7fb7ddd261d980e451ff6614d3fb6ac29",
-        "repo_metadata_sha256": "d266b946edb8ffaccde9bb2d77dc80914b7e4a7226fa0f74a5ee244ccbd2c470",
-        "fingerprint": "cbead8b9c9639f50dc70c19898e6f8e42ed3eaf788f974300127b1b9f8ec4021"
       },
       "generation": {
         "executor_kind": "claude-routine",
@@ -7909,6 +7910,31 @@
       }
     },
     {
+      "node_id": "R_kgDOQDn1Iw",
+      "category": "data-analytics",
+      "tags": [
+        "ai-agents",
+        "api",
+        "backend",
+        "llm"
+      ],
+      "summary": "FinanceMCP-DCTHS is a Model Context Protocol server written in TypeScript that integrates the Tushare API to expose Chinese financial market data. It provides six tools for querying sector index lists, quotes, and constituent stocks from the Tonghuashun and Eastmoney data sources, and can run in either stdio or HTTP deployment mode.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "60b92e4064a0ac6833b138f2dda125c982df09df",
+        "repo_metadata_sha256": "b59fd799310e70d9a33b7425e5b5de3c485ba81d998fdd80c170ba7c7ec8efad",
+        "fingerprint": "c51df371b27e4ed6dd7472339a9562dc41983fb90c83481edfa713c2ef016c3a"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-08-07T07:26:53Z"
+      }
+    },
+    {
       "node_id": "R_kgDOQFGGXQ",
       "category": "developer-tools",
       "tags": [
@@ -9731,6 +9757,30 @@
         "model_label": null,
         "prompt_version": "classify-v1",
         "generated_at": "2026-07-19T03:22:48Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOR4eh-A",
+      "category": "developer-tools",
+      "tags": [
+        "ai-agents",
+        "documentation",
+        "plugin"
+      ],
+      "summary": "Agent Plugins is an open, vendor-neutral specification that defines a portable package format for bundling Agent Skills and MCP servers into distributable plugins that extend AI agents. Version 1.0.0 is the current published release, documented with a plugin manifest and accompanying JSON schemas.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "23cbb482afd9cd0ad5b30a18a2454c98b7b262bd",
+        "repo_metadata_sha256": "9ee8836701a59d7e7381f1f20643807ebbf8cef4dea02c27f2d5dd189e3d87bc",
+        "fingerprint": "e02e75b11d1a6b6cfb0fbfb08aa5aad29eef863907a2cf3398e7055ee2bb4090"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-08-07T07:26:53Z"
       }
     },
     {
@@ -14849,6 +14899,32 @@
       }
     },
     {
+      "node_id": "R_kgDOSDyFow",
+      "category": "ai-ml",
+      "tags": [
+        "ai-agents",
+        "code-generation",
+        "llm",
+        "real-time",
+        "serverless"
+      ],
+      "summary": "Cloudflare OS is an open-source AI productivity environment built on Cloudflare Workers. It offers an agent chat UI, sandboxed personal apps called gadgets that users build and modify with AI, and a capability-based security layer named Gatekeepers that mediates and logs each agent's access to external services.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "967344201ece8f3ed65f5b1f4b1c019a18e2d9ab",
+        "repo_metadata_sha256": "8cb5e7762a249e34d097356d977cd97183b0c6708a9cd80db49c686447e4ccce",
+        "fingerprint": "b47750e5aabf10378d49f8bfe21644b7bfaec2f073306d7ee02fba1b521e5f05"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-08-07T07:26:53Z"
+      }
+    },
+    {
       "node_id": "R_kgDOSEAmSg",
       "category": "ai-ml",
       "tags": [
@@ -15763,6 +15839,31 @@
         "model_label": "informational-only",
         "prompt_version": "classify-v1",
         "generated_at": "2026-07-21T21:22:29Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOSl2fiA",
+      "category": "developer-tools",
+      "tags": [
+        "ai-agents",
+        "api",
+        "automation",
+        "cli"
+      ],
+      "summary": "RHTHS is a local gateway that connects Tonghuashun (THS) PC trading clients to AI agents and quantitative scripts. It calls the native in-process ths_api and exposes it over a local HTTP endpoint, providing an MCP interface for AI-driven account queries and order placement and a CLI for automation, with simulated dry-run orders by default.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "4ac5a49a32f34a2749e656ffb4152d922c59b3b3",
+        "repo_metadata_sha256": "e05cf4fc8815c69c64807fdcb063a83aeffb70c76a94abce6e45bd1c382170c5",
+        "fingerprint": "9de0d2d0bab31725c585832e6c3fed6737ce4c6f5271fe32473c906b4b1c7776"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-08-07T07:26:53Z"
       }
     },
     {
