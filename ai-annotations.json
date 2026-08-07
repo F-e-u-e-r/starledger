@@ -16194,6 +16194,31 @@
       }
     },
     {
+      "node_id": "R_kgDOTChkaw",
+      "category": "education-reference",
+      "tags": [
+        "ai-agents",
+        "awesome-list",
+        "documentation",
+        "llm"
+      ],
+      "summary": "An educational repository that explains how modern AI agents are built around the LLM, breaking the agent harness into layered sections covering the loop, tools, permissions, memory, scheduling, and multi-agent coordination, with runnable Python demos and real systems studied as worked examples.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "469224590d0e282f5f866fe1057deb90052fe1ed",
+        "repo_metadata_sha256": "8775a82d561f8f3dd6666933e6de373c95914e91e8ea8023ddd3036c9489c617",
+        "fingerprint": "879e4a2ac8c5c9d8e16d9c96fab0fcb235306e910ccc4627623336702b919fd0"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-08-07T08:24:40Z"
+      }
+    },
+    {
       "node_id": "R_kgDOTDloIA",
       "category": "security-privacy",
       "tags": [
