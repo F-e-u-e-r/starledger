@@ -18058,6 +18058,30 @@
       }
     },
     {
+      "node_id": "R_kgDOTqC0Rw",
+      "category": "ai-ml",
+      "tags": [
+        "cli",
+        "llm",
+        "machine-learning"
+      ],
+      "summary": "A portable C99 engine that runs inference for the 2.78-trillion-parameter Kimi K3 language model on a single CPU, with no GPU, BLAS, or framework. It streams the mixture-of-experts weights from disk so the same model runs in as little as 8 GB of RAM, producing byte-identical output across memory budgets.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "902d6030ec12febaf5962351bd32d2f44311032b",
+        "repo_metadata_sha256": "681ba8e24d14ff4140d89af11f9abe419c229b5ccc4263e56ac3688d8bc0d93c",
+        "fingerprint": "2601aeef04db62a38bb076e710d3bc5f9ab76fd9a99862a2cb7d21b71eb0cd02"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-08-08T06:24:03Z"
+      }
+    },
+    {
       "node_id": "R_kgDOTsxOiw",
       "category": "libraries-frameworks",
       "tags": [
