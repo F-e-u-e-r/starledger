@@ -13694,6 +13694,32 @@
       }
     },
     {
+      "node_id": "R_kgDORrRGBw",
+      "category": "self-hosted-homelab",
+      "tags": [
+        "authentication",
+        "containers",
+        "productivity",
+        "real-time",
+        "self-hosted"
+      ],
+      "summary": "A self-hosted, real-time collaborative travel and trip planner. It offers drag-and-drop day planning, interactive maps, expense and budget tracking, packing lists, reservations, and a travel journal, with PWA and mobile support, SSO via OIDC, 2FA, passkeys, and deployment through Docker or Helm.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "65477543f8d1675a85a7214413bb2f37ea8549aa",
+        "repo_metadata_sha256": "122b50246626ef94e32a9216fe7de030807d8d0a654c17470792833260ace5f8",
+        "fingerprint": "512490274458c41b13d365530bb8efcf4030f843c8296c4cf25c8c54309dfd06"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-08-09T06:24:42Z"
+      }
+    },
+    {
       "node_id": "R_kgDORrasTQ",
       "category": "productivity-automation",
       "tags": [
@@ -15839,31 +15865,6 @@
         "model_label": "informational-only",
         "prompt_version": "classify-v1",
         "generated_at": "2026-07-21T21:22:29Z"
-      }
-    },
-    {
-      "node_id": "R_kgDOSl2fiA",
-      "category": "developer-tools",
-      "tags": [
-        "ai-agents",
-        "api",
-        "automation",
-        "cli"
-      ],
-      "summary": "RHTHS is a local gateway that connects Tonghuashun (THS) PC trading clients to AI agents and quantitative scripts. It calls the native in-process ths_api and exposes it over a local HTTP endpoint, providing an MCP interface for AI-driven account queries and order placement and a CLI for automation, with simulated dry-run orders by default.",
-      "source": {
-        "kind": "readme",
-        "readme_path": "README.md",
-        "readme_oid": "4ac5a49a32f34a2749e656ffb4152d922c59b3b3",
-        "repo_metadata_sha256": "e05cf4fc8815c69c64807fdcb063a83aeffb70c76a94abce6e45bd1c382170c5",
-        "fingerprint": "9de0d2d0bab31725c585832e6c3fed6737ce4c6f5271fe32473c906b4b1c7776"
-      },
-      "generation": {
-        "executor_kind": "claude-routine",
-        "execution_profile_version": "agent-v1",
-        "model_label": null,
-        "prompt_version": "classify-v1",
-        "generated_at": "2026-08-07T07:26:53Z"
       }
     },
     {
