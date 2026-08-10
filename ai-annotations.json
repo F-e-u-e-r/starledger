@@ -3206,6 +3206,33 @@
       }
     },
     {
+      "node_id": "R_kgDOLZipwA",
+      "category": "devops-infrastructure",
+      "tags": [
+        "automation",
+        "containers",
+        "monitoring",
+        "networking",
+        "proxy",
+        "self-hosted"
+      ],
+      "summary": "GoDoxy is a lightweight reverse proxy and container orchestrator aimed at self-hosters. It auto-discovers Docker and Podman containers, hot-reloads routes, manages Let’s Encrypt certificates, forwards TCP and UDP traffic, and provides a WebUI for routes, config, logs, metrics, and Proxmox node and LXC lifecycle control.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "02014753ef8dc066cfab38921001b0e7dac8c318",
+        "repo_metadata_sha256": "b801660564d83fdc33db760e4eea5be62fd95a05599dd3b84a6e5cbf5d7c0700",
+        "fingerprint": "94e28136e098bf18737d2599f52d30ef19ffb181c49aecb91f71602725e49bdd"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-08-10T07:35:30Z"
+      }
+    },
+    {
       "node_id": "R_kgDOLZpAvQ",
       "category": "ai-ml",
       "tags": [
@@ -14625,6 +14652,32 @@
       }
     },
     {
+      "node_id": "R_kgDOS4cbDA",
+      "category": "ai-ml",
+      "tags": [
+        "ai-agents",
+        "automation",
+        "cli",
+        "llm",
+        "machine-learning"
+      ],
+      "summary": "Magnitude is an open-source AI agent that runs entirely on local models through its own Rust inference engine built on llama.cpp, keeping work private and offline with no API keys or token costs. Its CLI can use the shell, edit files, run scripts, and load reusable skills for documents, spreadsheets, and browser tasks.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "6a5b9c272b022e17d9260e595911b25c306e79d7",
+        "repo_metadata_sha256": "a6602096f2144ee87a9af5ace964c16edd657d65ea8f9df1b0d86a7d150a93f1",
+        "fingerprint": "382698622406d02baa741370d9abc440e5a54a639d60cde4d994c8d764d7dd73"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-08-10T07:35:30Z"
+      }
+    },
+    {
       "node_id": "R_kgDOS5qzYw",
       "category": "other",
       "tags": [
@@ -15442,6 +15495,32 @@
         "model_label": null,
         "prompt_version": "classify-v1",
         "generated_at": "2026-07-21T18:23:19Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOSX4F9A",
+      "category": "data-analytics",
+      "tags": [
+        "api",
+        "caching",
+        "database",
+        "etl",
+        "sdk"
+      ],
+      "summary": "free-stockdb is a local-first quantitative data engine for China A-share and ETF markets that stores daily, minute, and tick K-line data on disk. It handles incremental sync, cleaning, and price adjustment, and offers batch queries, 39 built-in indicators, backtesting, and Python, HTTP, Excel, and MCP interfaces over local data.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "aa40fc5b6f7b557bc51781f6d6455fe7cab57125",
+        "repo_metadata_sha256": "ac103f6173ada6d2f798f1c6c040361b2b223199949a0225815fb8be4946ed82",
+        "fingerprint": "63555b32d90714573ecd2f8f04b97e5261c58dce313ec14f8888e5f6f2b7c696"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-08-10T07:35:30Z"
       }
     },
     {
@@ -17983,6 +18062,31 @@
       }
     },
     {
+      "node_id": "R_kgDOTnF1Sw",
+      "category": "productivity-automation",
+      "tags": [
+        "ai-agents",
+        "automation",
+        "documentation",
+        "workflow"
+      ],
+      "summary": "A pack of six AI agent skills for Claude Code and other Agent Skills hosts that runs a digital advertising workflow: scanning a product URL, drafting positioning, choosing platforms and budgets, producing ad creative, checking tracking health, and making stop-loss campaign judgments, with Taiwan-localized modules.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "a21ea22d8f37a1eeb306a9ed3a86adc1fc8dad2e",
+        "repo_metadata_sha256": "487fe0fde1e7cee6bd8fa699981ecb18a764e91c512899e85381a1f751377ab2",
+        "fingerprint": "96cd25f901764a709500aa297ca83cc464c52e4176b48a180162b7686b179bc6"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-08-10T07:35:30Z"
+      }
+    },
+    {
       "node_id": "R_kgDOTndUqw",
       "category": "productivity-automation",
       "tags": [
@@ -18033,6 +18137,31 @@
         "model_label": "informational-only",
         "prompt_version": "classify-v1",
         "generated_at": "2026-08-02T08:22:03Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOToBzhw",
+      "category": "ai-ml",
+      "tags": [
+        "ai-agents",
+        "api",
+        "machine-learning",
+        "sdk"
+      ],
+      "summary": "MiniMax H3 is a general-purpose, omni-modal generative model that produces video with native stereo audio at resolutions up to 2K and durations of 4 to 15 seconds. It supports text-to-video, first-and-last-frame, and multi-modal reference inputs, and is available through downloadable weights, an online API, and web and desktop apps.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "9789aa4a840c0a3c5c47eec084a117d5e8a6cb1b",
+        "repo_metadata_sha256": "9647b1383e7a5ba352d987c745ea9c8b3ecc4a97365f0c415290a80ffc05d80b",
+        "fingerprint": "d8046047a1276f5abeb3c521269ed5a667c367ea5fe8bba84525db6267a74e17"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-08-10T07:35:30Z"
       }
     },
     {
