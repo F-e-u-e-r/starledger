@@ -8,7 +8,7 @@
     "paths": [
       "README.md"
     ],
-    "last_commit_sha": "4880d4fe67c811c5b7755be4f84eb3bc619006af"
+    "last_commit_sha": "7e0e66a070e112ddabd0962004f6c6a60ca44a8a"
   },
   "pending": [],
   "deliveries": [
@@ -316,6 +316,12 @@
       "notification_key": "awesome_stars:yusing/godoxy:R_kgDOLZipwA",
       "status": "sent",
       "completed_at": "2026-08-08T04:30:49.218Z",
+      "detail": null
+    },
+    {
+      "notification_key": "awesome_stars:getpaseo/paseo:R_kgDOQBkEfw",
+      "status": "sent",
+      "completed_at": "2026-08-10T04:56:56.629Z",
       "detail": null
     }
   ]
