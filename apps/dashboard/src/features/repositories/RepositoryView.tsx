@@ -1,12 +1,12 @@
 import { useCallback, useId, useMemo, useRef, useState } from 'react';
 import type { CanonicalRepo } from '@starred/schema';
 import { NoResults } from '../../components/states';
-import type { LoadedAnnotations } from '../../data/load-annotations';
+import type { AnnotationStatus, LoadedAnnotations } from '../../data/load-annotations';
 import { useDashboardState } from '../../state/use-dashboard-state';
 import { activeFilterCount, FilterChips } from '../filters/FilterChips';
 import { FilterControls } from '../filters/FilterControls';
 import { FilterDrawer } from '../filters/FilterDrawer';
-import { SORT_FIELDS, type SortField } from '../sorting/sorting';
+import { defaultDirection, SORT_FIELDS, type SortField } from '../sorting/sorting';
 import { RepositoryCard } from './RepositoryCard';
 import {
   dashboardToView,
@@ -67,11 +67,14 @@ export function RepositoryView({
   datasetGeneratedAt,
   initialNow,
   annotations,
+  annotationStatus,
 }: {
   repos: CanonicalRepo[];
   datasetGeneratedAt?: string;
   initialNow?: Date;
   annotations?: LoadedAnnotations | null;
+  /** Lifecycle of the optional AI layer (P7 §2.2). Defaults from `annotations`. */
+  annotationStatus?: AnnotationStatus;
 }) {
   const { state, update, reset } = useDashboardState();
   const [sessionNow] = useState(() => initialNow ?? new Date());
@@ -80,6 +83,9 @@ export function RepositoryView({
   const searchId = useId();
 
   const annotationsByNodeId = annotations?.byNodeId;
+  // The optional AI layer is usable only when `ready`; a missing status falls
+  // back to "ready iff annotations are present" so existing callers/tests behave.
+  const aiReady = annotationStatus ? annotationStatus === 'ready' : annotations != null;
   const prepared = useMemo(
     () => prepareRepositories(repos, sessionNow, annotationsByNodeId),
     [repos, sessionNow, annotationsByNodeId],
@@ -87,9 +93,11 @@ export function RepositoryView({
   const facets = useMemo(() => deriveFacetOptions(prepared), [prepared]);
   const aiCount = useMemo(() => prepared.reduce((n, r) => (r.ai ? n + 1 : n), 0), [prepared]);
   const hasDegraded = useMemo(() => repos.some((repo) => repo.hydration_status !== 'ok'), [repos]);
+  // AI-dependent filters are applied only when the layer is ready (P7 §2.2): when
+  // it is not, they are neutralized so base repos are never suppressed.
   const results = useMemo(
-    () => selectFromPrepared(prepared, dashboardToView(state)),
-    [prepared, state],
+    () => selectFromPrepared(prepared, dashboardToView(state, aiReady)),
+    [prepared, state, aiReady],
   );
 
   // Stable focus target so chip removal / clear-all never drop focus to <body>.
@@ -98,6 +106,12 @@ export function RepositoryView({
   // Drawer close restores focus here, never to <body> (A11Y-5).
   const filtersToggleRef = useRef<HTMLButtonElement>(null);
   const filterCount = activeFilterCount(state);
+  // AI facets present in state but inert because the layer isn't ready: still
+  // shown as removable chips (recoverability) with a degraded notice, but NOT
+  // counted as effective filters in the result summary (P7 §2.2).
+  const suppressedAiFilterCount = aiReady ? 0 : state.categories.length + state.aiTags.length;
+  const aiFilterSuppressed = suppressedAiFilterCount > 0;
+  const effectiveFilterCount = filterCount - suppressedAiFilterCount;
 
   return (
     <main className="dashboard">
@@ -148,7 +162,12 @@ export function RepositoryView({
             <span>Sort</span>
             <select
               value={state.sort}
-              onChange={(e) => update({ sort: e.target.value as SortField })}
+              onChange={(e) => {
+                // Changing the field resets direction to that field's natural
+                // default (Name → A→Z), instead of inheriting a stale desc.
+                const sort = e.target.value as SortField;
+                update({ sort, direction: defaultDirection(sort) });
+              }}
             >
               {SORT_FIELDS.map((field) => (
                 <option key={field} value={field}>
@@ -190,8 +209,16 @@ export function RepositoryView({
           />
 
           <p className="result-count" role="status">
-            {resultSummary(results.length, repos.length, state.query, filterCount > 0)}
+            {resultSummary(results.length, repos.length, state.query, effectiveFilterCount > 0)}
           </p>
+
+          {aiFilterSuppressed ? (
+            <p className="degraded-notice" role="status">
+              {annotationStatus === 'loading'
+                ? 'AI classification is still loading — its category and tag filters will apply once it’s ready.'
+                : 'AI classification is unavailable, so its category and tag filters aren’t being applied. They stay in your link and re-apply once enrichment loads.'}
+            </p>
+          ) : null}
 
           {results.length === 0 ? (
             <NoResults

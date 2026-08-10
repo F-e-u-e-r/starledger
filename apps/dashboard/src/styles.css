@@ -315,6 +315,20 @@ a {
   margin: 0.5rem 0;
 }
 
+/* Degraded-state notice: an optional layer is unavailable, so a dependent filter
+   is inactive (P7 §2.2). Caution border + explicit text carry the meaning; color
+   is only reinforcement, per the badge rule. */
+.degraded-notice {
+  margin: 0.25rem 0 0.6rem;
+  padding: 0.5rem 0.7rem;
+  border: 1px solid var(--caution);
+  border-left-width: 3px;
+  border-radius: 6px;
+  background: var(--surface);
+  color: var(--fg);
+  font-size: 0.86rem;
+}
+
 /* Chips */
 .chips {
   display: flex;

@@ -201,4 +201,49 @@ describe('RepositoryView', () => {
     fireEvent.click(staleYes());
     expect(titles().sort()).toEqual(['a/new', 'a/old']); // both are stale relative to 2030
   });
+
+  it('M0-FS-4: a bookmarked AI filter is inactive when AI is unavailable — base preserved + degraded surfaced', () => {
+    window.history.replaceState(null, '', '/?category=security');
+    renderView(); // no annotations → AI layer unavailable
+    // base entities preserved (never blanked to zero)
+    expect(titles().sort()).toEqual(['acme/go-tool', 'acme/ts-tool']);
+    // not counted as an effective filter (no "· filtered")
+    expect(screen.getByText('2 of 2 repositories')).toBeTruthy();
+    // degraded state explicitly surfaced
+    expect(screen.getByText(/AI classification is unavailable/)).toBeTruthy();
+    // and the filter is retained in the URL for recoverability
+    expect(window.location.search).toBe('?category=security');
+  });
+
+  it('M0-SORT-2: selecting Name resets direction to ascending (A→Z), not an inherited desc', () => {
+    renderView();
+    fireEvent.change(screen.getByRole('combobox', { name: 'Sort' }), {
+      target: { value: 'name_with_owner' },
+    });
+    expect(titles()).toEqual(['acme/go-tool', 'acme/ts-tool']); // A→Z
+    expect(window.location.search).toBe('?sort=name_with_owner&direction=asc');
+  });
+
+  it('M0-FS-5: AI unavailable suppresses only the AI filter — a canonical filter still applies, base preserved, degraded surfaced', () => {
+    window.history.replaceState(null, '', '/?language=Go&category=security');
+    renderView(); // no annotations → AI layer unavailable
+    // the canonical (language) filter STILL applies — neutralization is scoped to AI-dependent filters only
+    expect(titles()).toEqual(['acme/go-tool']);
+    // language is an effective filter, so the summary reflects filtering (1 of 2)
+    expect(screen.getByText('1 of 2 · filtered')).toBeTruthy();
+    // the AI category filter is suppressed, and its degraded state is surfaced
+    expect(screen.getByText(/AI classification is unavailable/)).toBeTruthy();
+    // both requested filters are retained in the URL (intent preserved for recovery)
+    expect(window.location.search).toBe('?language=Go&category=security');
+  });
+
+  it('M0-FS-6: while AI is LOADING, the AI filter is held inactive with loading-specific wording (not "unavailable")', () => {
+    window.history.replaceState(null, '', '/?category=security');
+    render(<RepositoryView repos={sampleRepos()} initialNow={NOW} annotationStatus="loading" />);
+    // base repos preserved during the load window (filter held, not applied)
+    expect(titles().sort()).toEqual(['acme/go-tool', 'acme/ts-tool']);
+    // loading is distinct from terminal failure: "still loading" copy, NOT "unavailable"
+    expect(screen.getByText(/still loading/)).toBeTruthy();
+    expect(screen.queryByText(/AI classification is unavailable/)).toBeNull();
+  });
 });
