@@ -18235,6 +18235,53 @@
         "prompt_version": "classify-v1",
         "generated_at": "2026-08-06T09:22:51Z"
       }
+    },
+    {
+      "node_id": "R_kgDOTucICA",
+      "category": "productivity-automation",
+      "tags": [
+        "ai-agents",
+        "automation",
+        "editor"
+      ],
+      "summary": "Unofficial \"Kimi Slides\" skill that lets AI agents generate editable PPTD and PPTX presentations, bundled with a local browser-based editor. According to its README, the repository contents have since been cleared for copyright reasons.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "68a9f61661a454fcb0a32df60f0b5c8312553268",
+        "repo_metadata_sha256": "5f46606f17dffe9bf824fef96f150862681d2a022b5bef00189631d415a9da77",
+        "fingerprint": "ad8f2237b22e1df7ead8f1eb5ef953c2d1a23e389444f11b0fcbaccc01df3a09"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-08-10T08:27:09Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOTvtcxA",
+      "category": "developer-tools",
+      "tags": [
+        "ai-agents",
+        "automation"
+      ],
+      "summary": "A collection of skills for AI coding agents that run in both Claude Code and codex, installed by symlinking each skill. Its novel-characters skill turns a novel into a character bible with profiles, cartoon-design prompts, voice prompts, and turnaround sheets, using the current session's model with no API key.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "3e05a614d558c43d861af8a753ce1d7cf244c4b1",
+        "repo_metadata_sha256": "fdfc8ae6887bcc8b250e4825487cf8a57a1541c8afa40fdc86533e8165ff99d6",
+        "fingerprint": "1d8917f96c1670b5e56b78bf3b1472b63a8510a65ace869a747238827a30da73"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-08-10T08:27:09Z"
+      }
     }
   ]
 }
