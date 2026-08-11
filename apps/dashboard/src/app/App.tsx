@@ -14,13 +14,12 @@ import {
 } from '../data/load-stars';
 import { DiscoveryInbox } from '../features/discovery/DiscoveryInbox';
 import { RepositoryView } from '../features/repositories/RepositoryView';
+import { useDashboardState } from '../state/use-dashboard-state';
 
 type State =
   | { status: 'loading' }
   | { status: 'error'; kind: DataLoadKind | 'unknown'; message: string }
   | { status: 'loaded'; data: LoadedDataset };
-
-type ActiveView = 'stars' | 'discovery';
 
 export interface AppProps {
   /** Injectable for tests; defaults to loading from the Pages base path. */
@@ -32,11 +31,11 @@ export interface AppProps {
 }
 
 export function App({ loader, annotationsLoader, discoveryLoader }: AppProps = {}) {
+  const controls = useDashboardState();
   const [state, setState] = useState<State>({ status: 'loading' });
   const [annotations, setAnnotations] = useState<LoadedAnnotations | null>(null);
   const [annotationStatus, setAnnotationStatus] = useState<AnnotationStatus>('loading');
   const [discovery, setDiscovery] = useState<LoadedDiscovery | null>(null);
-  const [activeView, setActiveView] = useState<ActiveView>('stars');
 
   useEffect(() => {
     const load = loader ?? (() => loadStars({ base: import.meta.env.BASE_URL }));
@@ -86,9 +85,37 @@ export function App({ loader, annotationsLoader, discoveryLoader }: AppProps = {
     };
   }, [loader, annotationsLoader, discoveryLoader]);
 
+  // `page` is meaningful only on a populated stars list. When the effective view
+  // is discovery, or the stars dataset is empty, RepositoryView is not mounted to
+  // reconcile the URL (§6.2), so canonicalize a stale page to 1 here. Guarded, so
+  // it is a no-op once the URL is already canonical.
+  useEffect(() => {
+    if (state.status !== 'loaded') return;
+    const available = discovery != null && discovery.candidates.length > 0;
+    const hasStarsSurface =
+      !(controls.state.view === 'discovery' && available) && state.data.stars.repos.length > 0;
+    if (!hasStarsSurface && controls.state.page !== 1) {
+      controls.update({ page: 1 }, 'replace');
+    }
+  }, [state, discovery, controls]);
+
   if (state.status === 'loading') return <Loading />;
   if (state.status === 'error') return <ErrorState kind={state.kind} message={state.message} />;
-  if (state.data.stars.repos.length === 0) return <EmptyState />;
+  // `view` is fail-soft (§6.4): honor `discovery` only when it is actually
+  // available; otherwise fall back to `stars` while the requested value stays in
+  // the URL (it re-applies once discovery loads). Unlike `page`, it is not
+  // rewritten — an unavailable substrate may become valid later.
+  const discoveryAvailable = discovery != null && discovery.candidates.length > 0;
+  const effectiveView =
+    controls.state.view === 'discovery' && discoveryAvailable ? 'discovery' : 'stars';
+  const starsEmpty = state.data.stars.repos.length === 0;
+
+  // Full-screen empty state ONLY when there is genuinely nothing to show. When
+  // discovery is available it stays reachable via the tabs even with zero stars
+  // (the empty state then renders inside the stars pane), so a bookmarked
+  // `?view=discovery` never dead-ends on EmptyState. The early return therefore
+  // runs AFTER view resolution, not before (§6.4).
+  if (starsEmpty && !discoveryAvailable) return <EmptyState />;
 
   return (
     <>
@@ -96,17 +123,17 @@ export function App({ loader, annotationsLoader, discoveryLoader }: AppProps = {
         <nav className="view-tabs" aria-label="Dashboard views">
           <button
             type="button"
-            className={`view-tab${activeView === 'stars' ? ' view-tab--active' : ''}`}
-            onClick={() => setActiveView('stars')}
-            aria-current={activeView === 'stars' ? 'page' : undefined}
+            className={`view-tab${effectiveView === 'stars' ? ' view-tab--active' : ''}`}
+            onClick={() => controls.update({ view: 'stars' })}
+            aria-current={effectiveView === 'stars' ? 'page' : undefined}
           >
             Starred
           </button>
           <button
             type="button"
-            className={`view-tab${activeView === 'discovery' ? ' view-tab--active' : ''}`}
-            onClick={() => setActiveView('discovery')}
-            aria-current={activeView === 'discovery' ? 'page' : undefined}
+            className={`view-tab${effectiveView === 'discovery' ? ' view-tab--active' : ''}`}
+            onClick={() => controls.update({ view: 'discovery' })}
+            aria-current={effectiveView === 'discovery' ? 'page' : undefined}
           >
             Discovery Inbox
             <span className="view-tab-count">{discovery.candidateCount}</span>
@@ -114,16 +141,19 @@ export function App({ loader, annotationsLoader, discoveryLoader }: AppProps = {
         </nav>
       ) : null}
 
-      {activeView === 'stars' ? (
+      {effectiveView === 'discovery' && discovery ? (
+        <DiscoveryInbox discovery={discovery} />
+      ) : starsEmpty ? (
+        <EmptyState />
+      ) : (
         <RepositoryView
           repos={state.data.stars.repos}
+          controls={controls}
           datasetGeneratedAt={state.data.meta.dataset_generated_at}
           annotations={annotations}
           annotationStatus={annotationStatus}
         />
-      ) : discovery ? (
-        <DiscoveryInbox discovery={discovery} />
-      ) : null}
+      )}
     </>
   );
 }

@@ -1,8 +1,8 @@
-import { useCallback, useId, useMemo, useRef, useState } from 'react';
+import { useCallback, useEffect, useId, useMemo, useRef, useState } from 'react';
 import type { CanonicalRepo } from '@starred/schema';
 import { NoResults } from '../../components/states';
 import type { AnnotationStatus, LoadedAnnotations } from '../../data/load-annotations';
-import { useDashboardState } from '../../state/use-dashboard-state';
+import type { DashboardStateControls } from '../../state/use-dashboard-state';
 import { activeFilterCount, FilterChips } from '../filters/FilterChips';
 import { FilterControls } from '../filters/FilterControls';
 import { FilterDrawer } from '../filters/FilterDrawer';
@@ -22,6 +22,9 @@ const SORT_LABELS: Record<SortField, string> = {
   latest_stable_release: 'Latest stable release',
   name_with_owner: 'Name',
 };
+
+/** Fixed page size for the results list (P7 §6, M1). */
+const PAGE_SIZE = 48;
 
 function formatLastSynced(iso: string | undefined, now: Date): string {
   if (!iso) return 'Last synced unavailable';
@@ -64,19 +67,22 @@ function resultSummary(count: number, total: number, query: string, filtered: bo
  */
 export function RepositoryView({
   repos,
+  controls,
   datasetGeneratedAt,
   initialNow,
   annotations,
   annotationStatus,
 }: {
   repos: CanonicalRepo[];
+  /** Canonical state controls, owned by App (single source of truth, §6.4). */
+  controls: DashboardStateControls;
   datasetGeneratedAt?: string;
   initialNow?: Date;
   annotations?: LoadedAnnotations | null;
   /** Lifecycle of the optional AI layer (P7 §2.2). Defaults from `annotations`. */
   annotationStatus?: AnnotationStatus;
 }) {
-  const { state, update, reset } = useDashboardState();
+  const { state, update, reset } = controls;
   const [sessionNow] = useState(() => initialNow ?? new Date());
   const [filtersOpen, setFiltersOpen] = useState(false);
   const closeFilters = useCallback(() => setFiltersOpen(false), []);
@@ -99,6 +105,17 @@ export function RepositoryView({
     () => selectFromPrepared(prepared, dashboardToView(state, aiReady)),
     [prepared, state, aiReady],
   );
+
+  // Pagination (§6.2): `state.page` is the REQUESTED page; the EFFECTIVE page is
+  // clamped against the current result count. When they differ (e.g. a stale
+  // bookmark `?page=999`), reconcile by rewriting the URL with the effective page
+  // — `replace`, so no history entry is added — converging in a single step.
+  const lastPage = Math.max(1, Math.ceil(results.length / PAGE_SIZE));
+  const effectivePage = Math.min(Math.max(1, state.page), lastPage);
+  useEffect(() => {
+    if (state.page !== effectivePage) update({ page: effectivePage }, 'replace');
+  }, [state.page, effectivePage, update]);
+  const pageItems = results.slice((effectivePage - 1) * PAGE_SIZE, effectivePage * PAGE_SIZE);
 
   // Stable focus target so chip removal / clear-all never drop focus to <body>.
   const resultsHeadingRef = useRef<HTMLHeadingElement>(null);
@@ -228,11 +245,44 @@ export function RepositoryView({
               }}
             />
           ) : (
-            <ul className="card-list">
-              {results.map((repo) => (
-                <RepositoryCard key={repo.node_id} repo={repo} now={sessionNow} />
-              ))}
-            </ul>
+            <>
+              <ul className="card-list">
+                {pageItems.map((repo) => (
+                  <RepositoryCard key={repo.node_id} repo={repo} now={sessionNow} />
+                ))}
+              </ul>
+              {lastPage > 1 ? (
+                <nav className="pager" aria-label="Pagination">
+                  {/* aria-disabled (not `disabled`) at the boundaries: the button
+                      stays focusable so activating Prev/Next onto the first/last
+                      page never strands keyboard focus on a now-disabled control.
+                      The handler guards the no-op. */}
+                  <button
+                    type="button"
+                    className="pager-prev"
+                    aria-disabled={effectivePage <= 1}
+                    onClick={() => {
+                      if (effectivePage > 1) update({ page: effectivePage - 1 });
+                    }}
+                  >
+                    ← Previous
+                  </button>
+                  <span className="pager-status" role="status">
+                    Page {effectivePage} of {lastPage}
+                  </span>
+                  <button
+                    type="button"
+                    className="pager-next"
+                    aria-disabled={effectivePage >= lastPage}
+                    onClick={() => {
+                      if (effectivePage < lastPage) update({ page: effectivePage + 1 });
+                    }}
+                  >
+                    Next →
+                  </button>
+                </nav>
+              ) : null}
+            </>
           )}
         </section>
       </div>

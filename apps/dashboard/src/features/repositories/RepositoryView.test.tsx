@@ -1,6 +1,8 @@
 // @vitest-environment jsdom
 import { cleanup, fireEvent, render, screen, within } from '@testing-library/react';
+import type { ComponentProps } from 'react';
 import { afterEach, beforeEach, describe, expect, it } from 'vitest';
+import { useDashboardState } from '../../state/use-dashboard-state';
 import { makeRepo } from '../../test-utils';
 import { RepositoryView } from './RepositoryView';
 
@@ -9,9 +11,19 @@ const NOW = new Date('2026-06-19T00:00:00Z');
 beforeEach(() => window.history.replaceState(null, '', '/'));
 afterEach(cleanup);
 
-function renderView(repos = sampleRepos()) {
+/** Provides the App-owned canonical-state controls so the view can be tested
+ *  standalone (App lifts the single `useDashboardState` instance in production). */
+function Harness(props: Omit<ComponentProps<typeof RepositoryView>, 'controls'>) {
+  const controls = useDashboardState();
+  return <RepositoryView {...props} controls={controls} />;
+}
+
+function renderView(
+  repos = sampleRepos(),
+  extra: Partial<Omit<ComponentProps<typeof RepositoryView>, 'controls' | 'repos'>> = {},
+) {
   return render(
-    <RepositoryView repos={repos} datasetGeneratedAt="2026-06-18T00:00:00Z" initialNow={NOW} />,
+    <Harness repos={repos} datasetGeneratedAt="2026-06-18T00:00:00Z" initialNow={NOW} {...extra} />,
   );
 }
 
@@ -153,7 +165,7 @@ describe('RepositoryView', () => {
     expect(screen.queryByRole('button', { name: /Data status/ })).toBeNull();
 
     rerender(
-      <RepositoryView
+      <Harness
         repos={[
           makeRepo({
             node_id: 'R_partial',
@@ -189,7 +201,7 @@ describe('RepositoryView', () => {
     within(screen.getByRole('group', { name: 'Stale' })).getByRole('radio', { name: 'Yes' });
 
   it('TIME-1: stale membership uses the mounted clock and is stable across other changes', () => {
-    render(<RepositoryView repos={staleRepos()} initialNow={NOW} />); // 2026-06-19
+    renderView(staleRepos()); // 2026-06-19
     fireEvent.click(staleYes());
     expect(titles()).toEqual(['a/old']); // only the >12-months-old repo is stale at NOW
     fireEvent.click(screen.getByRole('button', { name: /sort direction/i }));
@@ -197,7 +209,7 @@ describe('RepositoryView', () => {
   });
 
   it('TIME-2: a newer mount clock re-evaluates staleness', () => {
-    render(<RepositoryView repos={staleRepos()} initialNow={new Date('2030-01-01T00:00:00Z')} />);
+    renderView(staleRepos(), { initialNow: new Date('2030-01-01T00:00:00Z') });
     fireEvent.click(staleYes());
     expect(titles().sort()).toEqual(['a/new', 'a/old']); // both are stale relative to 2030
   });
@@ -221,7 +233,9 @@ describe('RepositoryView', () => {
       target: { value: 'name_with_owner' },
     });
     expect(titles()).toEqual(['acme/go-tool', 'acme/ts-tool']); // A→Z
-    expect(window.location.search).toBe('?sort=name_with_owner&direction=asc');
+    // R1 (§6.1): asc IS defaultDirection('name_with_owner'), so `direction` is
+    // omitted from the canonical URL as redundant; it decodes back to asc.
+    expect(window.location.search).toBe('?sort=name_with_owner');
   });
 
   it('M0-FS-5: AI unavailable suppresses only the AI filter — a canonical filter still applies, base preserved, degraded surfaced', () => {
@@ -239,11 +253,79 @@ describe('RepositoryView', () => {
 
   it('M0-FS-6: while AI is LOADING, the AI filter is held inactive with loading-specific wording (not "unavailable")', () => {
     window.history.replaceState(null, '', '/?category=security');
-    render(<RepositoryView repos={sampleRepos()} initialNow={NOW} annotationStatus="loading" />);
+    renderView(sampleRepos(), { annotationStatus: 'loading' });
     // base repos preserved during the load window (filter held, not applied)
     expect(titles().sort()).toEqual(['acme/go-tool', 'acme/ts-tool']);
     // loading is distinct from terminal failure: "still loading" copy, NOT "unavailable"
     expect(screen.getByText(/still loading/)).toBeTruthy();
     expect(screen.queryByText(/AI classification is unavailable/)).toBeNull();
+  });
+});
+
+function manyRepos(n: number) {
+  return Array.from({ length: n }, (_, i) =>
+    makeRepo({
+      node_id: `R_${i}`,
+      name_with_owner: `acme/tool-${String(i).padStart(3, '0')}`,
+      url: `https://github.com/acme/tool-${i}`,
+      stargazer_count: n - i,
+    }),
+  );
+}
+
+const pager = () => screen.getByRole('navigation', { name: 'Pagination' });
+
+describe('RepositoryView — pagination (§6.2)', () => {
+  it('PAGE-1: slices at 48/page with a working Prev/Next pager', () => {
+    renderView(manyRepos(50));
+    expect(screen.getAllByRole('link')).toHaveLength(48);
+    expect(within(pager()).getByText('Page 1 of 2')).toBeTruthy();
+    expect(
+      within(pager())
+        .getByRole('button', { name: /Previous/ })
+        .getAttribute('aria-disabled'),
+    ).toBe('true');
+
+    fireEvent.click(within(pager()).getByRole('button', { name: /Next/ }));
+    expect(screen.getAllByRole('link')).toHaveLength(2); // 50 − 48
+    expect(within(pager()).getByText('Page 2 of 2')).toBeTruthy();
+    expect(window.location.search).toBe('?page=2');
+    expect(
+      within(pager()).getByRole('button', { name: /Next/ }).getAttribute('aria-disabled'),
+    ).toBe('true');
+  });
+
+  it('PAGE-2: no pager when results fit a single page', () => {
+    renderView(manyRepos(10));
+    expect(screen.getAllByRole('link')).toHaveLength(10);
+    expect(screen.queryByRole('navigation', { name: 'Pagination' })).toBeNull();
+  });
+
+  it('PAGE-3: an out-of-range ?page reconciles to the last page via replaceState (no history push)', () => {
+    window.history.replaceState(null, '', '/?page=999');
+    const lenBefore = window.history.length;
+    renderView(manyRepos(50));
+    expect(within(pager()).getByText('Page 2 of 2')).toBeTruthy(); // clamped to the last page
+    expect(window.location.search).toBe('?page=2'); // URL canonicalized to the effective page
+    expect(window.history.length).toBe(lenBefore); // replace, not push
+  });
+
+  it('PAGE-4: a search (semantic change) resets pagination to page 1', () => {
+    renderView(manyRepos(50));
+    fireEvent.click(within(pager()).getByRole('button', { name: /Next/ }));
+    expect(window.location.search).toBe('?page=2');
+    fireEvent.change(search(), { target: { value: 'tool' } }); // matches all 50
+    expect(window.location.search).toBe('?q=tool'); // page dropped by the reset
+    expect(within(pager()).getByText('Page 1 of 2')).toBeTruthy();
+  });
+
+  it('PAGE-5 (F3): a boundary control uses aria-disabled (not `disabled`) and is a no-op, so focus is never stranded', () => {
+    renderView(manyRepos(50));
+    fireEvent.click(within(pager()).getByRole('button', { name: /Next/ })); // → page 2 (last)
+    const next = within(pager()).getByRole('button', { name: /Next/ });
+    expect((next as HTMLButtonElement).disabled).toBe(false); // still focusable (not natively disabled)
+    expect(next.getAttribute('aria-disabled')).toBe('true'); // state conveyed to AT
+    fireEvent.click(next); // guarded no-op at the boundary
+    expect(window.location.search).toBe('?page=2'); // unchanged — no phantom page 3
   });
 });
