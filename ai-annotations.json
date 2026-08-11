@@ -13819,6 +13819,33 @@
       }
     },
     {
+      "node_id": "R_kgDORrBmkA",
+      "category": "developer-tools",
+      "tags": [
+        "automation",
+        "backup",
+        "cli",
+        "configuration",
+        "database",
+        "desktop-app"
+      ],
+      "summary": "A C# and Node.js command-line and desktop GUI tool that restores OpenAI Codex session visibility after switching model providers, repairing rollout metadata, SQLite thread records, and project paths. It backs up before each run and offers restore, prune, and a watch mode across Windows, macOS, and WSL.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "5c740c001219157cad0fbe7e91f7cf686014e208",
+        "repo_metadata_sha256": "9dd4470226fd5fd22d45a806f1a49d4df4b5ec62877bf0bdb047097e428f94e3",
+        "fingerprint": "ee8410f14db9f982d6a6438816e602e1ff1d04dfda6cbd54201e68320fa28793"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-08-11T07:30:28Z"
+      }
+    },
+    {
       "node_id": "R_kgDORrQESg",
       "category": "media-creative",
       "tags": [
@@ -15442,6 +15469,33 @@
       }
     },
     {
+      "node_id": "R_kgDOSRUoTw",
+      "category": "ai-ml",
+      "tags": [
+        "ai-agents",
+        "automation",
+        "cli",
+        "documentation",
+        "llm",
+        "markdown"
+      ],
+      "summary": "A Python tool that distills technical books, document folders, or source collections into structured on-demand agent skills in the open SKILL.md format used by Claude Code, GitHub Copilot CLI, and Amp. It extracts PDF, EPUB, DOCX, and more into per-chapter files, glossaries, and cheatsheets to cut query tokens.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "70c4ce540d6a451f4e4eaed3d12969c02fb7834f",
+        "repo_metadata_sha256": "00a034e56e87e247eb793c2a0cfe31bdf24d562265c0219cb6de57a1f8742450",
+        "fingerprint": "277c2247955f3f0fea5f5a4fe0a78a279aa35c695a1efb37f1a1bedbcf2c9bce"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-08-11T07:30:28Z"
+      }
+    },
+    {
       "node_id": "R_kgDOSRWXyw",
       "category": "developer-tools",
       "tags": [
@@ -16237,6 +16291,31 @@
         "model_label": "informational-only",
         "prompt_version": "classify-v1",
         "generated_at": "2026-07-21T21:22:29Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOSt-bQg",
+      "category": "mobile",
+      "tags": [
+        "ai-agents",
+        "automation",
+        "documentation",
+        "sdk"
+      ],
+      "summary": "A compact Markdown harness of portable operating instructions that lets AI agents control Android, iOS, and cloud phones through the Python mobilerun_core API. It exposes helpers for tapping, scrolling, typing, screenshots, and app lifecycle across local ADB, Portal HTTP, and cloud backends.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "5699328ef9c99ec4d4ae46b07b074f047f5493bf",
+        "repo_metadata_sha256": "2c809133d73b9e5df39cee03af10eeb76a5fafc293b5662d5d5c49a7681178f8",
+        "fingerprint": "51591da52448277e09ccdacefb0ac8da6555f2ebc6f70783b0e1e723a8fb6018"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-08-11T07:30:28Z"
       }
     },
     {
