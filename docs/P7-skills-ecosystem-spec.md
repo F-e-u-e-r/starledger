@@ -1,6 +1,6 @@
 # P7 — Skills Ecosystem Spec (classification as an optional layer of the Starred view)
 
-> Status: **M0 implemented + cross-model reviewed (3/3 PROCEED, no blocker); awaiting owner commit. M1–M3 pending.**
+> Status: **M0 merged (PR #234, 2026-08-11). M1.1 (canonical state contract + minimal pagination proof) implemented + 3-round cross-model reviewed (§12), awaiting owner commit + PR. M1.2–M3 pending.**
 > Stack: same as P1 (Vite · React · TypeScript · GitHub Pages, no backend). Adds one optional, fail-soft data layer and reuses the P1 dashboard surface.
 
 Surfaces the curated task-oriented classification of the coding-agent / skills-ecosystem subset of the starred repos (source: `skills-classified.md`, 171 entries, 24 categories) **inside the existing Starred view** as optional metadata — not as a second browser and not as rendered Markdown.
@@ -63,7 +63,11 @@ Extract the fail-soft correctness fix into **M0**, landed and green as ground tr
 - `defaultDirection(field)`: `name_with_owner → asc`, all dates/counts → `desc`. Switching the sort field resets direction to the field default (Name shows A→Z, not an inherited Z→A). (`content-visibility` is an M1 enhancement, not here.)
 - Regression tests pin **three** things, not just `results.length`: (a) base repos preserved; (b) dependent facet not effective (no "· filtered"); (c) degraded state surfaced.
 
-**M1 — browser substrate** — canonical URL-state contract (§6), 48/page pagination, density (compact default), sticky toolbar, active view/tab in URL, facet-scroll max-height fix, topic expand/**collapse** toggle. `content-visibility:auto` as enhancement only.
+**M1 — browser substrate** (split into owner-reviewed sub-milestones).
+
+**M1.1 — canonical state contract + minimal pagination proof** (this change) — the full §6 canonical state/codec: three new canonical fields (`view`, `density`, `page`); the decode→normalize→encode→decode round-trip extended to cover them; R1 convergence (§6.1); requested→effective page reconciliation (§6.2); page-reset on a **semantic** change to filter/search/sort/view, density exempt, explicit `page` wins (§6.3); `activeView` consolidated out of `App.tsx` into `state.view` (§6.4); and the smallest observable pagination proof — fixed **48/page**, real result slicing, minimal Prev/Next controls. Behavioral tests cover the codec, the reset matrix, reconciliation + `replace` semantics, 48/page slicing boundaries, and view fail-soft. **Not** in M1.1: any UX polish (below).
+
+**M1.2+ — browser UX** (deferred) — density toggle UI + compact visual treatment, sticky toolbar, facet-scroll max-height fix, topic expand/**collapse** toggle, toolbar/layout polish, broader responsive work; `content-visibility:auto` as an enhancement only. R3 (Filters badge counts suppressed AI filters) lands here.
 
 **M2 — classification layer** — vendor the `.md` into the repo; build-time generator (§4/§5) → `skills-classification.json` + `-meta.json`; fail-soft loader + staging mirroring AI/discovery; Skills-ecosystem scope + Skill-category facet + card badges + search enrichment + `.md` download + 3-number coverage line. Later: group-by-primary view mode.
 
@@ -149,13 +153,35 @@ Observed against the checked-in 697-repo `stars.json`: **169/171 exact-name matc
 
 ## 6. Canonical URL-state contract (M1)
 
-One canonical state → URL projection. Params conceptually: `view`, `scope`, `skill` (category), `q`, filters, `sort`, `dir`, `density`, `page`, later `group`.
+One canonical state → URL projection. Params conceptually: `view`, `scope`, `skill` (category), `q`, filters, `sort`, `direction`, `density`, `page`, later `group`. **M1.1** lands the mechanics for the fields that exist today — `view`, `density`, `page` plus the M0 sort/direction codec — and the reconciliation model; `scope`/`skill`/`group` arrive with M2.
 
-- Unspecified → default; **defaults are omitted from the URL** (deterministic canonical serialization; equivalent states serialize byte-identically — the existing P1 property).
-- Invalid enum → default. `page < 1 → 1`; `page > lastPage → lastPage`. Malformed URL never crashes the app.
-- **Reset `page → 1`** when query/search/filter/sort/scope changes; `density` change does **not** reset page.
-- Direction is modeled as `defaultDirection(sortKey)` (M0), not a global `desc` guessed for every field. (M1 extends the codec to omit `dir` when it equals `defaultDirection(sort)`.)
+- Unspecified → default; **defaults are omitted from the URL** (deterministic canonical serialization; equivalent states serialize byte-identically — the existing P1 property). The default state serializes to `''`.
+- Invalid enum → default. Malformed URL never crashes the app.
+- Canonical emit order is fixed: `view`, then the existing P1 order (`q`, `sort`, `direction`, array facets, booleans, release/hydration), then `density`, then `page`.
 - Back/Forward fully restores state (existing `popstate` path).
+
+### 6.1 Sort/direction codec — R1 convergence (M1.1)
+
+- **Decode:** `direction = <valid direction param> ?? defaultDirection(sort)` — a _missing_ `direction` resolves to the sort field's natural default (M0's `defaultDirection`), **not** a global `desc`. This is the R1 fix (previously M1-deferred).
+- **Encode:** emit `sort` iff it differs from the default sort; emit `direction` iff `direction !== defaultDirection(sort)`. The two params are now **independent** — a non-default sort at its natural direction emits `sort` alone (this supersedes the P1 "sort+direction always travel together" rule; test `URL-5` is updated with rationale).
+- **Backward-compat:** a legacy URL carrying a _redundant_ default `direction` (e.g. `sort=name_with_owner&direction=asc`) still decodes correctly; the redundancy is simply dropped on the next canonical re-serialization.
+
+### 6.2 Page — requested vs. effective (M1.1)
+
+- **Decode accepts the requested page** (`page >= 1`; `< 1`, non-integer, or absent → `1`). It is **not** clamped against the dataset at decode time — `normalizeDashboardState` has no result count and stays pure.
+- **Effective page** is derived where the filtered result count is known (`RepositoryView`): `lastPage = max(1, ceil(resultCount / 48))`; `effectivePage = clamp(requestedPage, 1, lastPage)`. Rendering slices by `effectivePage`.
+- **Reconciliation:** when `requestedPage !== effectivePage`, the canonical URL is **`replace`-written** with `effectivePage` (no history push). This is how "serialize writes the effective/canonical value" is realized without a data-aware codec, and it converges in one step (the rewritten `effectivePage` is a fixed point).
+
+### 6.3 Page-reset semantics (M1.1)
+
+- **Reset `page → 1`** on a **semantic value change** to query/search/filter/sort/**view** (`scope` joins this set in M2) — compare normalized before/after values; a no-op write (re-setting a field to its current value) does **not** reset. `density` change does **not** reset page.
+- An **explicit `page`** supplied in the same update **wins** and is never overwritten by the implicit reset. (Rationale: key-presence resets fire on no-op writes and on future refactors that pass through unchanged fields.)
+
+### 6.4 View — capability fail-soft (M1.1)
+
+- `view` (active tab: `stars` | `discovery`) is **canonical state**, consolidated out of `App.tsx`'s local `activeView` so there is a single source of truth; the state hook is lifted to `App` and its controls are passed down (no second hook instance writing the URL).
+- **Asymmetry with `page` (deliberate):** a bookmarked `view=discovery` while the optional discovery substrate is unavailable is a _recoverable_ request — the **requested value is retained in the URL** and the **effective render falls back to `stars`** (mirrors the M0 AI-facet fail-soft, §2.2), re-applying once discovery loads. Unlike `page`, it is **not** reconciled/rewritten, because it may become valid later; an out-of-range `page` never becomes valid for the current dataset, so it is canonicalized.
+- **Empty stars must not dead-end an available discovery view:** the full-screen empty state renders only when there is genuinely nothing to show (`stars` empty **and** `discovery` unavailable). When discovery is available the tabs remain and a bookmarked `view=discovery` reaches the inbox even with zero stars (the stars pane shows the empty state in place). The `repos.length === 0` early return is therefore evaluated **after** `view` resolution, not before.
 
 ---
 
@@ -207,4 +233,29 @@ Cross-model pre-commit review (Luna@max · Luna@ultra · Sol@max, foreground sin
 | No test pinned the `loading` wording branch                                                                                                                                 | luna-max, sol-max | **Fixed** — added `M0-FS-6`.                                                                                                                                                                                                                           |
 | Loader-prop swap after load doesn't reset status → stale annotations could apply to a replacement dataset                                                                   | sol-max           | **Rejected-with-reason (logged):** production `App()` takes no loader props (effect deps stable, runs once) — no shipped trigger; a reset-on-swap guard would be complexity for a test-only path. Revisit only if a runtime loader-swap path is added. |
 | Provenance naming drift: existing `ai-annotations-meta.json` uses `dataset_sha256`; a P7 artifact using `generated_against_stars_sha256` would be rejected by the AI loader | luna-ultra        | **M2 action item:** the M2 generator/loader owns its own meta schema; do not reuse the AI loader's gate. Current AI layer unaffected.                                                                                                                  |
-| R1 (missing URL direction → global `desc`), R3 (Filters badge counts suppressed AI filters)                                                                                 | all three         | **M1-deferred** (owner-accepted).                                                                                                                                                                                                                      |
+| R1 (missing URL direction → global `desc`), R3 (Filters badge counts suppressed AI filters)                                                                                 | all three         | **M1-deferred** (owner-accepted).<br>Update 2026-08-10: R1 (missing `direction`) → **implemented in M1.1** (§6.1); R3 (Filters badge counts) → **M1.2+**.                                                                                              |
+
+---
+
+## 12. M1.1 acceptance & review outcome
+
+Implemented on `feat/m1.1-state-contract` (base = M0 `2987e92`).
+
+### Acceptance (all green)
+
+- **Codec** — `view`/`density`/`page` round-trip; defaults omitted; canonical emit order fixed; `normalize`/`parse`/`serialize` idempotent and closed (incl. huge/`Infinity` pages → `MAX_SAFE_INTEGER`).
+- **R1** — decode a missing `direction` → `defaultDirection(sort)`; encode omits `direction` when it equals the field default; a legacy redundant `direction` still decodes (dropped on re-serialize). Old test `URL-5`/`M0-SORT-2` updated with rationale.
+- **Page** — requested accepted (junk/0/neg/decimal → 1; repeated → last valid); effective clamped in `RepositoryView`; out-of-range reconciled via `replace` (no history push); stale page canonicalized by App when no populated stars surface exists.
+- **Reset** — `page → 1` on a semantic change to query/search/filter/sort/view; `density` exempt; no-op update does not reset; explicit `page` wins; clear-all preserves `view` + `density`.
+- **View** — consolidated out of `App` local state into canonical `state.view` (single hook lifted to `App`); fail-soft (requested retained, effective falls back to `stars`); empty stars never dead-ends an available discovery view.
+- **Pagination proof** — 48/page slicing + minimal Prev/Next; boundary controls use `aria-disabled` (focus-safe) + guarded no-op.
+
+Verified: `vitest` **784/784**, `pnpm -r typecheck`, `eslint .`, `prettier --check` (changed) — all green.
+
+### Cross-model review (Luna@max · Luna@ultra · Sol@max, 3 rounds)
+
+- **R1:** F1 (codec not closed for huge pages), F2 (empty-stars early return hid an available discovery view — Sol + Luna), F3 (pager disabled the focused control). All fixed.
+- **R2:** A (clear-all also wiped `view`/`density` — real regression), B (overlong digit page → `Infinity` → 1), C (page not reconciled when `RepositoryView` unmounted). All fixed. D (tab-visibility vs `effectiveView` divergence, Luna-max) dismissed.
+- **R3:** Sol-max **PROCEED**, Luna-ultra **PROCEED** (all fixes confirmed; D independently verified non-existent). Luna-max re-raised **D**; **confirmed false positive** — `App.tsx` tab visibility is `discovery && discovery.candidates.length > 0`, byte-identical to `discoveryAvailable`, so an empty-`candidates` payload hides the tab and its failure scenario cannot occur (ground-truth verified).
+
+Outcome: every real finding across three rounds fixed with a pinned regression test; the sole outstanding BLOCK is a verified misread. Ready for owner commit.
