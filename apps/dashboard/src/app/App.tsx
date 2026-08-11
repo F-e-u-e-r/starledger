@@ -1,6 +1,10 @@
 import { useEffect, useState } from 'react';
 import { EmptyState, ErrorState, Loading } from '../components/states';
-import { type LoadedAnnotations, loadAnnotations } from '../data/load-annotations';
+import {
+  type AnnotationStatus,
+  type LoadedAnnotations,
+  loadAnnotations,
+} from '../data/load-annotations';
 import { type LoadedDiscovery, loadDiscovery } from '../data/load-discovery';
 import {
   type DataLoadKind,
@@ -30,6 +34,7 @@ export interface AppProps {
 export function App({ loader, annotationsLoader, discoveryLoader }: AppProps = {}) {
   const [state, setState] = useState<State>({ status: 'loading' });
   const [annotations, setAnnotations] = useState<LoadedAnnotations | null>(null);
+  const [annotationStatus, setAnnotationStatus] = useState<AnnotationStatus>('loading');
   const [discovery, setDiscovery] = useState<LoadedDiscovery | null>(null);
   const [activeView, setActiveView] = useState<ActiveView>('stars');
 
@@ -47,10 +52,16 @@ export function App({ loader, annotationsLoader, discoveryLoader }: AppProps = {
         // any problem resolves to `null` and never blocks or errors the dashboard.
         loadAnn().then(
           (ann) => {
-            if (active) setAnnotations(ann);
+            if (active) {
+              setAnnotations(ann);
+              setAnnotationStatus(ann ? 'ready' : 'unavailable');
+            }
           },
           () => {
-            if (active) setAnnotations(null);
+            if (active) {
+              setAnnotations(null);
+              setAnnotationStatus('unavailable');
+            }
           },
         );
         // Optional discovery inbox — same fail-soft pattern as AI enrichment.
@@ -108,6 +119,7 @@ export function App({ loader, annotationsLoader, discoveryLoader }: AppProps = {
           repos={state.data.stars.repos}
           datasetGeneratedAt={state.data.meta.dataset_generated_at}
           annotations={annotations}
+          annotationStatus={annotationStatus}
         />
       ) : discovery ? (
         <DiscoveryInbox discovery={discovery} />

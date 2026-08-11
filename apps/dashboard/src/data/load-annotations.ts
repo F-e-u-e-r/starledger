@@ -29,6 +29,14 @@ export interface LoadedAnnotations {
   generatedAt: string;
 }
 
+/**
+ * Lifecycle of the optional AI layer, modeled as three states rather than
+ * `Data | null` (P7 §2.2). Filters that depend on this layer are applied ONLY in
+ * `ready`; `loading` and `unavailable` deactivate them (never suppressing base
+ * repos) and the UI surfaces the degraded state.
+ */
+export type AnnotationStatus = 'loading' | 'ready' | 'unavailable';
+
 export interface AnnotationLoadOptions {
   base?: string;
   fetchImpl?: typeof fetch;

@@ -56,8 +56,18 @@ export function selectRepositories(
   return selectFromPrepared(prepareRepositories(repos, now), view);
 }
 
-/** Map the canonical DashboardState onto the pipeline's ViewState. */
-export function dashboardToView(s: DashboardState): ViewState {
+/**
+ * Map the canonical DashboardState onto the pipeline's ViewState.
+ *
+ * `aiReady` gates the AI-derived facets (P7 §2.2): when the optional AI layer is
+ * not `ready`, `categories`/`aiTags` are neutralized here so an unavailable layer
+ * can never suppress base repos (the shipped fail-soft bug — a bookmarked
+ * `?category=…` with no annotations would otherwise match nothing and blank the
+ * dashboard). The URL value is untouched (it lives in `DashboardState`), so it is
+ * retained for recoverability and re-applies once the layer loads. Defaults to
+ * `true` so non-AI callers (tests, `selectRepositories`) are unaffected.
+ */
+export function dashboardToView(s: DashboardState, aiReady = true): ViewState {
   return {
     query: s.query,
     sort: { field: s.sort, direction: s.direction },
@@ -65,8 +75,8 @@ export function dashboardToView(s: DashboardState): ViewState {
       languages: s.languages,
       topics: s.topics,
       licenses: s.licenses,
-      categories: s.categories,
-      aiTags: s.aiTags,
+      categories: aiReady ? s.categories : [],
+      aiTags: aiReady ? s.aiTags : [],
       archived: s.archived,
       fork: s.fork,
       stale: s.stale,
