@@ -2418,6 +2418,30 @@
       }
     },
     {
+      "node_id": "R_kgDOKCevwg",
+      "category": "data-analytics",
+      "tags": [
+        "api",
+        "library",
+        "scraping"
+      ],
+      "summary": "A Python library for querying TradingView's screener data across stocks, crypto, forex, bonds, futures, and coins. It offers a fluent select/where API over 13,000+ fields, field discovery, presets, streaming updates, and returns results as pandas DataFrames.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "2512b916265abea838b6e89e23aefd42872eb666",
+        "repo_metadata_sha256": "2d5cb2add7cf03bc2ed64bca824e199deb75611ba1dfb6d37413bc3dad6a1b95",
+        "fingerprint": "83bb6f1d0eb3a54997f91e3a98692e81c95c69fa1678ab182156b6f64a19c3cd"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-08-11T06:33:31Z"
+      }
+    },
+    {
       "node_id": "R_kgDOKCmt-A",
       "category": "media-creative",
       "tags": [
@@ -2939,6 +2963,30 @@
         "model_label": "informational-only",
         "prompt_version": "classify-v1",
         "generated_at": "2026-07-16T07:22:54Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOL6iBjQ",
+      "category": "libraries-frameworks",
+      "tags": [
+        "api",
+        "library",
+        "scraping"
+      ],
+      "summary": "A fast, strongly-typed Python library that scrapes Google Flights data by building Base64-encoded Protobuf queries. It supports per-leg filters for dates, airports, stops, airlines, layovers, and price, one-way/round-trip/multi-city trips, and optional proxy and search-API integrations.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "b98ed31c3ae3a82f8590220833248c2297bd3b4c",
+        "repo_metadata_sha256": "d0a4aadb1b6cf808267283718e25f39def515edbe1eee8053c2fbbf7a0ef4989",
+        "fingerprint": "0f0bb5382c59a0c3ecc8ae212d30b98aa9f63a7c1cd7e379489c11769ae7a040"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-08-11T06:33:31Z"
       }
     },
     {
@@ -4403,6 +4451,29 @@
         "model_label": "informational-only",
         "prompt_version": "classify-v1",
         "generated_at": "2026-07-16T17:23:44Z"
+      }
+    },
+    {
+      "node_id": "R_kgDONQY6EA",
+      "category": "mobile",
+      "tags": [
+        "networking",
+        "proxy"
+      ],
+      "summary": "A SOCKS5 proxy app for iPhone and Android that lets a tethered device route traffic through the phone, so packets leave the radio as the phone's own. iOS uses Swift and Network.framework; the Android Kotlin build binds every upstream socket to cellular. It accepts NO-AUTH connections.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "696fccb5dda50292cd4d83489eecb56062bb6824",
+        "repo_metadata_sha256": "8e5b937b8a5952f0aab7f019ee1c65b947d146be7b0c4a2f7ee3256091fd72e4",
+        "fingerprint": "2b028afea1ede40d082a5173d056112dde9a676f87bdb1cfe4d75f2d682e6644"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-08-11T06:33:31Z"
       }
     },
     {
@@ -7860,6 +7931,33 @@
       }
     },
     {
+      "node_id": "R_kgDOQBkEfw",
+      "category": "developer-tools",
+      "tags": [
+        "ai-agents",
+        "cli",
+        "desktop-app",
+        "orchestration",
+        "sdk",
+        "self-hosted"
+      ],
+      "summary": "A self-hosted tool to run and orchestrate multiple coding agents—Claude Code, Codex, Copilot, OpenCode, and Pi—through one interface. A local daemon serves desktop, mobile, web, and CLI clients plus a TypeScript SDK, with parallel agents, voice control, and cross-device pairing.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "1b26f318005af87a861da206e351382f595a652b",
+        "repo_metadata_sha256": "4d7bd6eda11f8738d4e81dc55c12e16a78141ffd2e8455e378bf9266f384536d",
+        "fingerprint": "a1a53cb80fa741d5b197bd95c974d3edeecd61c4e78bf59d4d46be4dc620aab8"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-08-11T06:33:31Z"
+      }
+    },
+    {
       "node_id": "R_kgDOQCiLYA",
       "category": "ai-ml",
       "tags": [
@@ -10909,6 +11007,30 @@
         "model_label": null,
         "prompt_version": "classify-v1",
         "generated_at": "2026-07-19T13:27:05Z"
+      }
+    },
+    {
+      "node_id": "R_kgDORMVM4g",
+      "category": "media-creative",
+      "tags": [
+        "automation",
+        "desktop-app",
+        "workflow"
+      ],
+      "summary": "An Electron desktop tool for AI-assisted film and video production that runs a script-to-finished-video pipeline: script parsing, character consistency, scene and storyboard generation, and batch image and video generation. It supports Seedance 2.0 and schedules multiple AI providers with queued retries.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "6a9e15ef80c21d4594e7a7dc43e19e0337129956",
+        "repo_metadata_sha256": "970d8bb9fbc1f7d7cd9da4dcc9d15eb430bfc2a51548eb4904f8aa4a1e4003a2",
+        "fingerprint": "5ab28d98521128eb3101eab5eae5c4c552e6003d0e599f056caa6bca5784a989"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-08-11T06:33:31Z"
       }
     },
     {
