@@ -9323,6 +9323,32 @@
       }
     },
     {
+      "node_id": "R_kgDOQyvZCA",
+      "category": "productivity-automation",
+      "tags": [
+        "ai-agents",
+        "automation",
+        "cli",
+        "markdown",
+        "plugin"
+      ],
+      "summary": "A collection of agent skills that teach AI coding agents such as Claude Code, Codex, and OpenCode to work with Obsidian, covering Obsidian-flavored Markdown, Bases, JSON Canvas, the Obsidian CLI, and clean web-to-Markdown extraction. Installable through a plugin marketplace, npx, or manual setup.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "0303cbf40de6a1b6131f51cb49f5020d20f36c70",
+        "repo_metadata_sha256": "78f93134c197b9ee607d91f2cf53228210f2802c5c6bf97d631652643fb63b88",
+        "fingerprint": "3fd4d2852b06edd2a93bdacbb8197caadf06c64c7d4ba7c978476c8e6502b072"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-08-12T07:30:30Z"
+      }
+    },
+    {
       "node_id": "R_kgDOQyyvQQ",
       "category": "web-applications",
       "tags": [
@@ -15799,6 +15825,32 @@
         "model_label": null,
         "prompt_version": "classify-v1",
         "generated_at": "2026-07-21T18:23:19Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOS_2deA",
+      "category": "ai-ml",
+      "tags": [
+        "ai-agents",
+        "cli",
+        "database",
+        "search",
+        "vector-database"
+      ],
+      "summary": "A local-first, Git-backed long-term memory system that Claude Code and Codex can share, keeping Markdown as the source of truth while SQLite provides full-text retrieval and an optional EmbeddingGemma and Zvec layer adds local semantic search. A memoryctl CLI manages writes, session claims, closeout, and audit.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "5338d3ee886636879af71fba64701658a8bb6681",
+        "repo_metadata_sha256": "a7ee1b618c57cf41e20eddb4d4cbf88d891cdb113295e88eaeb4dae69cd782fe",
+        "fingerprint": "a0ee07bf3663bd0e5191b6530e5853813cd09f5e5046d28ea2dcf8fb1cc5e1a3"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-08-12T07:30:30Z"
       }
     },
     {
