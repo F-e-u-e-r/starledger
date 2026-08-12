@@ -300,9 +300,22 @@ a {
   gap: 0.35rem;
 }
 
+/* Bounded facet scrolling (M1.2d, P7 §13): a long facet list scrolls inside
+   its own box instead of turning the sidebar/drawer into one giant tunnel
+   (the sidebar and drawer are viewport-capped, so the PAGE never overgrew —
+   the fix restores per-group reachability of the sections below a long one).
+   22rem keeps the topics facet's default 12 rows (measured ≈332px) visible
+   without scrolling, with headroom for font variance; a scrollbar appears
+   only when a list actually exceeds the budget — expansion ("Show N more")
+   or a collapsed list inflated past 22rem by selected-overflow rows.
+   Selected values stay reachable via the active-filter chips and the
+   selected-overflow rows. */
 .facet-options--scroll {
-  max-height: none;
-  overflow: visible;
+  max-height: 22rem;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding-right: 0.2rem;
+  scrollbar-width: thin;
 }
 
 .facet-option {

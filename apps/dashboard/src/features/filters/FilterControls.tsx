@@ -64,7 +64,19 @@ function CheckboxFacet<T extends string>({
           {help}
         </p>
       ) : null}
-      <div className="facet-options">
+      {/* Any list longer than the collapsed budget gets the bounded-scroll
+          treatment (M1.2d) — keyed on rendered LENGTH, not on `showAll`: a
+          collapsed facet can also exceed the budget via selected-overflow rows
+          (URL-preselected values, selections made in the drawer instance, or a
+          section collapse/reopen resetting `showAll`), and those must be
+          bounded too (R1 xcheck finding). The collapsed default never scrolls. */}
+      <div
+        className={
+          initialLimit && visible.length > initialLimit
+            ? 'facet-options facet-options--scroll'
+            : 'facet-options'
+        }
+      >
         {visible.map((opt) => (
           <label key={opt.value} className="facet-option">
             <input

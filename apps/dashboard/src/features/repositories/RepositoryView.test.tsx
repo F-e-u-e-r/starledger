@@ -454,3 +454,66 @@ describe('RepositoryView — sticky toolbar (§13, M1.2c)', () => {
     expect(toolbar().className).toBe('toolbar is-scrolled');
   });
 });
+
+describe('RepositoryView — facet scroll (§13, M1.2d)', () => {
+  const langRepos = () =>
+    Array.from({ length: 15 }, (_, i) =>
+      makeRepo({
+        node_id: `R_lang${i}`,
+        name_with_owner: `acme/lang-${i}`,
+        url: `https://github.com/acme/lang-${i}`,
+        primary_language: `Alpha${String(i + 1).padStart(2, '0')}`,
+        topics: [
+          `topic-${String(i + 1).padStart(2, '0')}`,
+          `extra-${String(i + 1).padStart(2, '0')}`,
+        ],
+      }),
+    );
+
+  const languageGroup = () => screen.getByRole('group', { name: 'Language' });
+  const optionsBox = (group: HTMLElement) => group.querySelector('.facet-options') as HTMLElement;
+
+  it('FSCROLL-1: expanding a long facet applies the bounded-scroll class; the collapsed default is unbounded', () => {
+    renderView(langRepos());
+    const group = languageGroup();
+    expect(within(group).getAllByRole('checkbox')).toHaveLength(10);
+    expect(optionsBox(group).className).toBe('facet-options');
+    fireEvent.click(within(group).getByRole('button', { name: 'Show 5 more' }));
+    expect(within(group).getAllByRole('checkbox')).toHaveLength(15);
+    // the bound rides on this class (max-height + overflow-y in CSS; the
+    // actual scrolling is browser-verified — jsdom does no layout)
+    expect(optionsBox(group).className).toBe('facet-options facet-options--scroll');
+  });
+
+  it('FSCROLL-2: the searchable topics facet always carries the bounded-scroll class', () => {
+    renderView(langRepos());
+    fireEvent.click(screen.getByRole('button', { name: /Topics/ })); // section is collapsed by default
+    const topicsGroup = screen.getByRole('group', { name: 'Topics' });
+    expect(optionsBox(topicsGroup).className).toBe('facet-options facet-options--scroll');
+  });
+
+  it('FSCROLL-3: a selected value beyond the collapsed limit stays visible (selected-overflow reachability)', () => {
+    window.history.replaceState(null, '', '/?language=Alpha15');
+    renderView(langRepos());
+    const group = languageGroup();
+    expect(within(group).getByRole('button', { name: /Show \d+ more/ })).toBeTruthy(); // still collapsed
+    const box = within(group).getByRole('checkbox', { name: 'Alpha15' }) as HTMLInputElement;
+    expect(box.checked).toBe(true);
+  });
+
+  it('FSCROLL-4: a COLLAPSED facet inflated past the budget by selected-overflow rows is bounded too', () => {
+    // R1 xcheck finding (sol): bounding keyed on `showAll` alone missed lists
+    // grown long while collapsed — reachable via URL preselection (this test),
+    // drawer-instance selections, or a section collapse/reopen resetting
+    // `showAll`. The bound must ride on rendered length.
+    window.history.replaceState(
+      null,
+      '',
+      '/?language=Alpha11&language=Alpha12&language=Alpha13&language=Alpha14&language=Alpha15',
+    );
+    renderView(langRepos());
+    const group = languageGroup();
+    expect(within(group).getAllByRole('checkbox')).toHaveLength(15); // 10 default + 5 overflow
+    expect(optionsBox(group).className).toBe('facet-options facet-options--scroll');
+  });
+});
