@@ -3,7 +3,7 @@ import { cleanup, fireEvent, render, screen, within } from '@testing-library/rea
 import type { ComponentProps } from 'react';
 import { afterEach, beforeEach, describe, expect, it } from 'vitest';
 import { useDashboardState } from '../../state/use-dashboard-state';
-import { makeRepo } from '../../test-utils';
+import { makeAnnotation, makeAnnotations, makeRepo } from '../../test-utils';
 import { RepositoryView } from './RepositoryView';
 
 const NOW = new Date('2026-06-19T00:00:00Z');
@@ -327,5 +327,40 @@ describe('RepositoryView — pagination (§6.2)', () => {
     expect(next.getAttribute('aria-disabled')).toBe('true'); // state conveyed to AT
     fireEvent.click(next); // guarded no-op at the boundary
     expect(window.location.search).toBe('?page=2'); // unchanged — no phantom page 3
+  });
+});
+
+describe('RepositoryView — R3 effective-filter badge (§13, M1.2a)', () => {
+  it('R3-unavailable: an AI-only filter with the AI layer unavailable does not inflate the badge', () => {
+    window.history.replaceState(null, '', '/?category=security');
+    renderView(); // no annotations → AI unavailable
+    // badge shows NO count (the requested-but-inactive AI filter is not counted)
+    expect(screen.getByRole('button', { name: 'Filters' })).toBeTruthy();
+    expect(screen.queryByRole('button', { name: /Filters \d/ })).toBeNull();
+    // still surfaced as a degraded notice (recoverability preserved)
+    expect(screen.getByText(/AI classification is unavailable/)).toBeTruthy();
+  });
+
+  it('R3-mixed: with AI unavailable, the badge counts only the effective (canonical) filter', () => {
+    window.history.replaceState(null, '', '/?language=Go&category=security');
+    renderView(); // AI unavailable
+    // language is effective (1); the suppressed AI category is not added → "Filters 1", not 2
+    expect(screen.getByRole('button', { name: 'Filters 1' })).toBeTruthy();
+  });
+
+  it('R3-ready: once the AI layer is ready, the activated AI filter is counted', () => {
+    window.history.replaceState(null, '', '/?category=security');
+    renderView(sampleRepos(), {
+      annotations: makeAnnotations({ R_ts: makeAnnotation({ category: 'security' }) }),
+    });
+    // AI ready → the category filter activates → counted
+    expect(screen.getByRole('button', { name: 'Filters 1' })).toBeTruthy();
+  });
+
+  it('R3-loading: while the AI layer is loading, its requested filter is not counted', () => {
+    window.history.replaceState(null, '', '/?category=security');
+    renderView(sampleRepos(), { annotationStatus: 'loading' });
+    expect(screen.getByRole('button', { name: 'Filters' })).toBeTruthy();
+    expect(screen.queryByRole('button', { name: /Filters \d/ })).toBeNull();
   });
 });

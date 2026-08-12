@@ -1,6 +1,6 @@
 # P7 — Skills Ecosystem Spec (classification as an optional layer of the Starred view)
 
-> Status: **M0 merged (PR #234, 2026-08-11). M1.1 (canonical state contract + minimal pagination proof) implemented + 3-round cross-model reviewed (§12), awaiting owner commit + PR. M1.2–M3 pending.**
+> Status: **M0 merged (#234); M1.1 merged (#237). M1.2 (browser interaction + compact-density UX, §13) in progress — M1.2a (R3 effective-filter-count) first. M2–M3 pending.**
 > Stack: same as P1 (Vite · React · TypeScript · GitHub Pages, no backend). Adds one optional, fail-soft data layer and reuses the P1 dashboard surface.
 
 Surfaces the curated task-oriented classification of the coding-agent / skills-ecosystem subset of the starred repos (source: `skills-classified.md`, 171 entries, 24 categories) **inside the existing Starred view** as optional metadata — not as a second browser and not as rendered Markdown.
@@ -67,7 +67,7 @@ Extract the fail-soft correctness fix into **M0**, landed and green as ground tr
 
 **M1.1 — canonical state contract + minimal pagination proof** (this change) — the full §6 canonical state/codec: three new canonical fields (`view`, `density`, `page`); the decode→normalize→encode→decode round-trip extended to cover them; R1 convergence (§6.1); requested→effective page reconciliation (§6.2); page-reset on a **semantic** change to filter/search/sort/view, density exempt, explicit `page` wins (§6.3); `activeView` consolidated out of `App.tsx` into `state.view` (§6.4); and the smallest observable pagination proof — fixed **48/page**, real result slicing, minimal Prev/Next controls. Behavioral tests cover the codec, the reset matrix, reconciliation + `replace` semantics, 48/page slicing boundaries, and view fail-soft. **Not** in M1.1: any UX polish (below).
 
-**M1.2+ — browser UX** (deferred) — density toggle UI + compact visual treatment, sticky toolbar, facet-scroll max-height fix, topic expand/**collapse** toggle, toolbar/layout polish, broader responsive work; `content-visibility:auto` as an enhancement only. R3 (Filters badge counts suppressed AI filters) lands here.
+**M1.2 — browser interaction + compact-density UX** (active — acceptance boundary in §13) — density toggle UI + compact visual treatment, sticky toolbar, facet-scroll max-height fix, topic expand/**collapse** toggle, and R3 (effective-filter-count) convergence; `content-visibility:auto` as an enhancement only. Ordered R3 → density → sticky → facet-scroll → topic collapse → integrated regression.
 
 **M2 — classification layer** — vendor the `.md` into the repo; build-time generator (§4/§5) → `skills-classification.json` + `-meta.json`; fail-soft loader + staging mirroring AI/discovery; Skills-ecosystem scope + Skill-category facet + card badges + search enrichment + `.md` download + 3-number coverage line. Later: group-by-primary view mode.
 
@@ -259,3 +259,52 @@ Verified: `vitest` **784/784**, `pnpm -r typecheck`, `eslint .`, `prettier --che
 - **R3:** Sol-max **PROCEED**, Luna-ultra **PROCEED** (all fixes confirmed; D independently verified non-existent). Luna-max re-raised **D**; **confirmed false positive** — `App.tsx` tab visibility is `discovery && discovery.candidates.length > 0`, byte-identical to `discoveryAvailable`, so an empty-`candidates` payload hides the tab and its failure scenario cannot occur (ground-truth verified).
 
 Outcome: every real finding across three rounds fixed with a pinned regression test; the sole outstanding BLOCK is a verified misread. Ready for owner commit.
+
+---
+
+## 13. M1.2 acceptance boundary — browser interaction + compact-density UX
+
+M1.1 built the correctness substrate; M1.2 is a pure interaction/presentation slice and does
+NOT reopen the canonical-state architecture. Implement in order (each owner-reviewed; xcheck
+before each commit). R3 leads because it still carries semantic correctness, so it is not
+buried under the later CSS/layout diffs.
+
+**M1.2a — R3 effective-filter-count convergence.** The Filters toggle badge/count reflects the
+**effective** (active) filter count. Requested-but-inactive optional-AI filters
+(`categories`/`aiTags` while the AI layer is not `ready`) do **not** inflate the badge; they
+remain visible as removable chips + a degraded notice (§2.2), consistent with the result
+summary's existing `effectiveFilterCount`. Once the AI layer becomes `ready` and the requested
+filter activates, the badge updates.
+
+**M1.2b — density control + compact/comfortable presentation.** A control writes ONLY canonical
+`density`; `compact` is the §6 default. Density change preserves the current page;
+reload/back/forward reproduce the density. `compact` materially raises information density with
+no content/action removed to achieve it; `comfortable` stays usable and visually distinct; both
+preserve repository actions/links.
+
+**M1.2c — sticky toolbar.** Search/filter/sort/view/density controls stay reachable while
+browsing; must not obscure content; narrow-viewport behavior explicitly tested; no second local
+owner for canonical controls (an ephemeral `is-scrolled` presentation flag is fine).
+
+**M1.2d — facet-scroll.** Long facet groups get bounded scrolling; the page itself must not
+overgrow because one facet is large; keyboard/mouse scrolling stays usable; selected values
+remain reachable (the active-filter chips already surface selections).
+
+**M1.2e — topic expand/collapse.** Deterministic collapsed default/threshold; selected topics
+never hidden behind a collapsed section without indication. This is **LOCAL presentation state,
+NOT canonical URL state** — §6 is not extended for it.
+
+**M1.2f — integrated behavioral/regression pass.** density→URL, density-does-not-reset-page,
+sticky presence/continuity, facet overflow, topic collapse, and the R3
+loading/unavailable/ready matrix — all green together.
+
+### Per-slice acceptance
+
+**M1.2a (2026-08-13)** — gates: `pnpm -r typecheck` · `eslint .` · `prettier --check` (slice files) · `vitest run` **788/788** (+4 R3). Cross-model review (per-slice policy: one round of Luna@max · Luna@ultra · Sol@max, escalate only on a real correctness/spec finding): **3/3 PROCEED, zero findings** — all six M1.2a checks PASS from all three lenses. Reviewed diff = this commit minus this note (doc-only, added post-verdict).
+
+### Out of scope (→ later / M2)
+
+- URL codec architecture; requested/effective page semantics; the 48/page constant.
+- Any second view-state owner.
+- M2 discovery/classification generation + provenance.
+- Broad visual redesign; unrelated responsive cleanup.

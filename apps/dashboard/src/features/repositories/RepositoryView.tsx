@@ -173,7 +173,7 @@ export function RepositoryView({
             ref={filtersToggleRef}
             onClick={() => setFiltersOpen(true)}
           >
-            Filters{filterCount > 0 ? ` ${filterCount}` : ''}
+            Filters{effectiveFilterCount > 0 ? ` ${effectiveFilterCount}` : ''}
           </button>
           <label className="sort">
             <span>Sort</span>
