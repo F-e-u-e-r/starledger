@@ -364,3 +364,54 @@ describe('RepositoryView — R3 effective-filter badge (§13, M1.2a)', () => {
     expect(screen.queryByRole('button', { name: /Filters \d/ })).toBeNull();
   });
 });
+
+describe('RepositoryView — density control (§13, M1.2b)', () => {
+  const densitySelect = () => screen.getByRole('combobox', { name: 'Density' });
+  const dashboardMain = () => screen.getByRole('main');
+
+  it('DENS-1: compact is the default — control reflects it, presentation class applied, URL stays canonical-empty', () => {
+    renderView();
+    expect((densitySelect() as HTMLSelectElement).value).toBe('compact');
+    expect(dashboardMain().className).toBe('dashboard density-compact');
+    expect(window.location.search).toBe('');
+  });
+
+  it('DENS-2: the control writes only canonical density — comfortable enters the URL, the compact default is omitted', () => {
+    renderView();
+    fireEvent.change(densitySelect(), { target: { value: 'comfortable' } });
+    expect(window.location.search).toBe('?density=comfortable');
+    expect(dashboardMain().className).toBe('dashboard density-comfortable');
+
+    fireEvent.change(densitySelect(), { target: { value: 'compact' } });
+    expect(window.location.search).toBe(''); // default omitted — canonical round-trip
+    expect(dashboardMain().className).toBe('dashboard density-compact');
+  });
+
+  it('DENS-3: a density change preserves the current page (§6.3 density exemption at the UI level)', () => {
+    renderView(manyRepos(50));
+    fireEvent.click(within(pager()).getByRole('button', { name: /Next/ }));
+    expect(window.location.search).toBe('?page=2');
+
+    fireEvent.change(densitySelect(), { target: { value: 'comfortable' } });
+    expect(window.location.search).toBe('?density=comfortable&page=2'); // page NOT reset
+    expect(within(pager()).getByText('Page 2 of 2')).toBeTruthy();
+  });
+
+  it('DENS-4: a bookmarked/reloaded ?density=comfortable reproduces the comfortable presentation', () => {
+    window.history.replaceState(null, '', '/?density=comfortable');
+    renderView();
+    expect((densitySelect() as HTMLSelectElement).value).toBe('comfortable');
+    expect(dashboardMain().className).toBe('dashboard density-comfortable');
+  });
+
+  it('DENS-5: repository links and toolbar actions survive both densities', () => {
+    renderView();
+    for (const density of ['comfortable', 'compact'] as const) {
+      fireEvent.change(densitySelect(), { target: { value: density } });
+      const link = screen.getByRole('link', { name: 'acme/ts-tool' });
+      expect(link.getAttribute('href')).toBe('https://github.com/acme/ts-tool');
+      expect(screen.getByRole('button', { name: 'Filters' })).toBeTruthy();
+      expect(screen.getByRole('combobox', { name: 'Sort' })).toBeTruthy();
+    }
+  });
+});

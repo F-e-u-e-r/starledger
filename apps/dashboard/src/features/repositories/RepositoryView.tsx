@@ -2,6 +2,7 @@ import { useCallback, useEffect, useId, useMemo, useRef, useState } from 'react'
 import type { CanonicalRepo } from '@starred/schema';
 import { NoResults } from '../../components/states';
 import type { AnnotationStatus, LoadedAnnotations } from '../../data/load-annotations';
+import type { Density } from '../../state/dashboard-state';
 import type { DashboardStateControls } from '../../state/use-dashboard-state';
 import { activeFilterCount, FilterChips } from '../filters/FilterChips';
 import { FilterControls } from '../filters/FilterControls';
@@ -131,7 +132,7 @@ export function RepositoryView({
   const effectiveFilterCount = filterCount - suppressedAiFilterCount;
 
   return (
-    <main className="dashboard">
+    <main className={`dashboard density-${state.density}`}>
       <header className="dashboard-head">
         <div className="brand-row">
           <div>
@@ -200,6 +201,16 @@ export function RepositoryView({
           >
             {state.direction === 'asc' ? '↑ Ascending' : '↓ Descending'}
           </button>
+          <label className="density">
+            <span>Density</span>
+            <select
+              value={state.density}
+              onChange={(e) => update({ density: e.target.value as Density })}
+            >
+              <option value="compact">Compact</option>
+              <option value="comfortable">Comfortable</option>
+            </select>
+          </label>
         </div>
       </header>
 

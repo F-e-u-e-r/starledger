@@ -302,6 +302,8 @@ loading/unavailable/ready matrix — all green together.
 
 **M1.2a (2026-08-13)** — gates: `pnpm -r typecheck` · `eslint .` · `prettier --check` (slice files) · `vitest run` **788/788** (+4 R3). Cross-model review (per-slice policy: one round of Luna@max · Luna@ultra · Sol@max, escalate only on a real correctness/spec finding): **3/3 PROCEED, zero findings** — all six M1.2a checks PASS from all three lenses. Reviewed diff = this commit minus this note (doc-only, added post-verdict).
 
+**M1.2b (2026-08-13)** — gates: `pnpm -r typecheck` · `eslint .` · `prettier --check` (slice files) · `vitest run` **793/793** (+5 DENS). Cross-model review (per-slice policy, one round of Luna@max · Luna@ultra · Sol@max): **3/3 PROCEED, zero findings** — all eight M1.2b checks PASS from all three lenses. Reviewed diff = this commit minus this note (doc-only, added post-verdict).
+
 ### Out of scope (→ later / M2)
 
 - URL codec architecture; requested/effective page semantics; the 48/page constant.

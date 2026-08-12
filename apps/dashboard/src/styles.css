@@ -160,7 +160,8 @@ a {
   cursor: pointer;
 }
 
-.toolbar .sort {
+.toolbar .sort,
+.toolbar .density {
   display: flex;
   align-items: center;
   gap: 0.35rem;
@@ -619,11 +620,13 @@ a {
     grid-template-columns: 1fr;
   }
 
-  .toolbar .sort {
+  .toolbar .sort,
+  .toolbar .density {
     width: 100%;
   }
 
   .toolbar .sort select,
+  .toolbar .density select,
   .toolbar button {
     width: 100%;
   }
@@ -835,4 +838,46 @@ a {
 .ai-meta {
   margin: 0;
   font-size: 0.72rem;
+}
+
+/* --- Density (M1.2b, P7 §13) --- */
+/* `compact` (the §6 default) raises information density via spacing/typography/
+   grid ONLY; every content element and action — including the 3-line
+   description clamp — is identical in both densities (nothing is removed to
+   achieve density). `comfortable` is the untouched baseline above.
+   `min(19rem, 100%)` keeps narrow viewports at one column, so this override
+   never fights the responsive single-column rules. */
+.density-compact .card-list {
+  grid-template-columns: repeat(auto-fill, minmax(min(19rem, 100%), 1fr));
+  gap: 0.5rem;
+}
+
+.density-compact .card {
+  padding: 0.55rem 0.7rem;
+  gap: 0.35rem;
+}
+
+.density-compact .card-title {
+  font-size: 1rem;
+}
+
+.density-compact .card-identity {
+  gap: 0.2rem;
+}
+
+.density-compact .card-desc {
+  font-size: 0.88rem;
+}
+
+.density-compact .repo-highlights {
+  font-size: 0.8rem;
+}
+
+.density-compact .card-ai {
+  gap: 0.3rem;
+  padding: 0.35rem 0.5rem;
+}
+
+.density-compact .ai-summary {
+  font-size: 0.82rem;
 }
