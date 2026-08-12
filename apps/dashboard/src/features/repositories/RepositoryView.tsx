@@ -123,6 +123,15 @@ export function RepositoryView({
   const focusResults = () => resultsHeadingRef.current?.focus();
   // Drawer close restores focus here, never to <body> (A11Y-5).
   const filtersToggleRef = useRef<HTMLButtonElement>(null);
+  // Ephemeral is-scrolled presentation flag (§13 M1.2c): drives the stuck-state
+  // elevation shadow only — never a second owner of any canonical control.
+  const [scrolled, setScrolled] = useState(false);
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 0);
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
   const filterCount = activeFilterCount(state);
   // AI facets present in state but inert because the layer isn't ready: still
   // shown as removable chips (recoverability) with a degraded notice, but NOT
@@ -144,75 +153,79 @@ export function RepositoryView({
             {annotations ? ` · ${aiCount} of ${repos.length} AI-enriched` : ''}
           </p>
         </div>
-        <div className="toolbar">
-          <div className="search">
-            <label className="visually-hidden" htmlFor={searchId}>
-              Search repositories
-            </label>
-            <input
-              id={searchId}
-              type="search"
-              value={state.query}
-              onChange={(e) => update({ query: e.target.value }, 'replace')}
-              placeholder="Search by repository, description, topic, or language..."
-            />
-            {state.query ? (
-              <button
-                type="button"
-                className="search-clear"
-                aria-label="Clear search"
-                onClick={() => update({ query: '' }, 'replace')}
-              >
-                ×
-              </button>
-            ) : null}
-          </div>
-          <button
-            type="button"
-            className="filters-toggle"
-            aria-expanded={filtersOpen}
-            ref={filtersToggleRef}
-            onClick={() => setFiltersOpen(true)}
-          >
-            Filters{effectiveFilterCount > 0 ? ` ${effectiveFilterCount}` : ''}
-          </button>
-          <label className="sort">
-            <span>Sort</span>
-            <select
-              value={state.sort}
-              onChange={(e) => {
-                // Changing the field resets direction to that field's natural
-                // default (Name → A→Z), instead of inheriting a stale desc.
-                const sort = e.target.value as SortField;
-                update({ sort, direction: defaultDirection(sort) });
-              }}
-            >
-              {SORT_FIELDS.map((field) => (
-                <option key={field} value={field}>
-                  {SORT_LABELS[field]}
-                </option>
-              ))}
-            </select>
-          </label>
-          <button
-            type="button"
-            onClick={() => update({ direction: state.direction === 'asc' ? 'desc' : 'asc' })}
-            aria-label={`Sort direction: ${state.direction === 'asc' ? 'ascending' : 'descending'}. Activate to toggle.`}
-          >
-            {state.direction === 'asc' ? '↑ Ascending' : '↓ Descending'}
-          </button>
-          <label className="density">
-            <span>Density</span>
-            <select
-              value={state.density}
-              onChange={(e) => update({ density: e.target.value as Density })}
-            >
-              <option value="compact">Compact</option>
-              <option value="comfortable">Comfortable</option>
-            </select>
-          </label>
-        </div>
       </header>
+
+      {/* Direct child of .dashboard on purpose: position:sticky is constrained
+          to its parent's box, so nesting this back inside the (short)
+          .dashboard-head would silently un-stick it (STICK-1 pins this). */}
+      <div className={`toolbar${scrolled ? ' is-scrolled' : ''}`}>
+        <div className="search">
+          <label className="visually-hidden" htmlFor={searchId}>
+            Search repositories
+          </label>
+          <input
+            id={searchId}
+            type="search"
+            value={state.query}
+            onChange={(e) => update({ query: e.target.value }, 'replace')}
+            placeholder="Search by repository, description, topic, or language..."
+          />
+          {state.query ? (
+            <button
+              type="button"
+              className="search-clear"
+              aria-label="Clear search"
+              onClick={() => update({ query: '' }, 'replace')}
+            >
+              ×
+            </button>
+          ) : null}
+        </div>
+        <button
+          type="button"
+          className="filters-toggle"
+          aria-expanded={filtersOpen}
+          ref={filtersToggleRef}
+          onClick={() => setFiltersOpen(true)}
+        >
+          Filters{effectiveFilterCount > 0 ? ` ${effectiveFilterCount}` : ''}
+        </button>
+        <label className="sort">
+          <span>Sort</span>
+          <select
+            value={state.sort}
+            onChange={(e) => {
+              // Changing the field resets direction to that field's natural
+              // default (Name → A→Z), instead of inheriting a stale desc.
+              const sort = e.target.value as SortField;
+              update({ sort, direction: defaultDirection(sort) });
+            }}
+          >
+            {SORT_FIELDS.map((field) => (
+              <option key={field} value={field}>
+                {SORT_LABELS[field]}
+              </option>
+            ))}
+          </select>
+        </label>
+        <button
+          type="button"
+          onClick={() => update({ direction: state.direction === 'asc' ? 'desc' : 'asc' })}
+          aria-label={`Sort direction: ${state.direction === 'asc' ? 'ascending' : 'descending'}. Activate to toggle.`}
+        >
+          {state.direction === 'asc' ? '↑ Ascending' : '↓ Descending'}
+        </button>
+        <label className="density">
+          <span>Density</span>
+          <select
+            value={state.density}
+            onChange={(e) => update({ density: e.target.value as Density })}
+          >
+            <option value="compact">Compact</option>
+            <option value="comfortable">Comfortable</option>
+          </select>
+        </label>
+      </div>
 
       <div className="layout">
         <aside className="sidebar" aria-label="Filters">

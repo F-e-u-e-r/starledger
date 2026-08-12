@@ -415,3 +415,42 @@ describe('RepositoryView — density control (§13, M1.2b)', () => {
     }
   });
 });
+
+describe('RepositoryView — sticky toolbar (§13, M1.2c)', () => {
+  const toolbar = () => document.querySelector('.toolbar') as HTMLElement;
+  const setScrollY = (value: number) =>
+    Object.defineProperty(window, 'scrollY', { value, configurable: true, writable: true });
+
+  afterEach(() => setScrollY(0));
+
+  it('STICK-1: the toolbar is a direct child of the dashboard main and starts without is-scrolled', () => {
+    renderView();
+    const main = screen.getByRole('main');
+    // position:sticky is constrained to the parent's box — re-nesting the
+    // toolbar into the short .dashboard-head would silently un-stick it, which
+    // jsdom cannot observe; this structural pin makes that regression visible.
+    expect(main.querySelector(':scope > .toolbar')).toBe(toolbar());
+    expect(toolbar().className).toBe('toolbar');
+  });
+
+  it('STICK-2: scrolling toggles the ephemeral is-scrolled presentation flag', () => {
+    renderView();
+    setScrollY(120);
+    fireEvent.scroll(window);
+    expect(toolbar().className).toBe('toolbar is-scrolled');
+    setScrollY(0);
+    fireEvent.scroll(window);
+    expect(toolbar().className).toBe('toolbar');
+  });
+
+  it('STICK-3: while stuck, toolbar controls still write canonical state (no second owner)', () => {
+    renderView();
+    setScrollY(120);
+    fireEvent.scroll(window);
+    fireEvent.change(screen.getByRole('combobox', { name: 'Density' }), {
+      target: { value: 'comfortable' },
+    });
+    expect(window.location.search).toBe('?density=comfortable');
+    expect(toolbar().className).toBe('toolbar is-scrolled');
+  });
+});

@@ -8,6 +8,9 @@
   --chip-bg: #eaeef2;
   --focus: #0969da;
   --caution: #9a6700;
+  /* Fixed view-tabs height (M1.2c): the tabs bar is given this exact height so
+     the sticky toolbar's `top` offset below it is correct by construction. */
+  --view-tabs-h: 3rem;
   color-scheme: light dark;
 }
 
@@ -101,11 +104,33 @@ a {
   font-size: 0.9rem;
 }
 
+/* Sticky toolbar (M1.2c, P7 §13): search/filter/sort/density stay reachable
+   while browsing. The toolbar is a DIRECT child of .dashboard — sticky is
+   constrained to the parent's box, so inside the short .dashboard-head it
+   would un-stick after a few pixels. z-index stays below the drawer (20). */
 .toolbar {
   display: flex;
   flex-wrap: wrap;
   gap: 0.5rem;
   align-items: center;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background: var(--bg);
+  padding: 0.6rem 0;
+  margin-bottom: 1rem;
+}
+
+/* Stuck-state elevation only — shadow, no border, so the box height never
+   jumps when the flag toggles. */
+.toolbar.is-scrolled {
+  box-shadow: 0 2px 6px rgb(31 35 40 / 0.12);
+}
+
+/* When the view tabs render (discovery available), they stick above the
+   toolbar; the toolbar offsets below them by the tabs' fixed height. */
+:root:has(.view-tabs) .toolbar {
+  top: var(--view-tabs-h);
 }
 
 .search {
@@ -616,7 +641,15 @@ a {
 }
 
 @media (max-width: 520px) {
+  /* Narrow viewports stack the toolbar controls full-width, so a stuck
+     toolbar would cover a large share of the screen — sticky is disabled
+     here on purpose (M1.2c: must not obscure content; verified in the
+     visual smoke, since jsdom cannot exercise media queries). The matching
+     .view-tabs override lives AFTER the view-tabs section below: this block
+     precedes the base `.view-tabs { position: sticky }` rule in source
+     order, so an override here would silently lose at equal specificity. */
   .toolbar {
+    position: static;
     grid-template-columns: 1fr;
   }
 
@@ -641,6 +674,8 @@ a {
 }
 
 /* --- View tabs (P5): switch between Starred and Discovery Inbox. --- */
+/* Sticky above the toolbar (M1.2c): the explicit --view-tabs-h height makes
+   the toolbar's top offset below the tabs correct by construction. */
 .view-tabs {
   display: flex;
   gap: 0;
@@ -648,6 +683,13 @@ a {
   margin: 0 auto;
   padding: 0.75rem 1.25rem 0;
   border-bottom: 1px solid var(--border);
+  position: sticky;
+  top: 0;
+  z-index: 11;
+  background: var(--bg);
+  height: var(--view-tabs-h);
+  box-sizing: border-box;
+  align-items: flex-end;
 }
 
 .view-tab {
@@ -687,6 +729,17 @@ a {
 .view-tab--active .view-tab-count {
   background: var(--accent);
   color: #fff;
+}
+
+/* Narrow override for the tabs' stickiness (M1.2c). MUST come after the base
+   `.view-tabs { position: sticky }` rule above: equal specificity, and a media
+   query adds none, so source order decides — placed inside the earlier ≤520px
+   block this override silently loses and tabs stay stuck (round-1 xcheck
+   finding, confirmed). Same rationale as the toolbar's narrow static rule. */
+@media (max-width: 520px) {
+  .view-tabs {
+    position: static;
+  }
 }
 
 /* --- Discovery Inbox (P5): candidate review queue. --- */
