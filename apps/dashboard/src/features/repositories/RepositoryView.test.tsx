@@ -501,6 +501,21 @@ describe('RepositoryView — facet scroll (§13, M1.2d)', () => {
     expect(box.checked).toBe(true);
   });
 
+  it('TCOL-4: toggling a card topics affordance is LOCAL presentation state — the URL never changes (§13 M1.2e)', () => {
+    renderView([
+      makeRepo({
+        node_id: 'R_many',
+        name_with_owner: 'acme/many-topics',
+        url: 'https://github.com/acme/many-topics',
+        topics: ['one', 'two', 'three', 'four', 'five', 'six'],
+      }),
+    ]);
+    fireEvent.click(screen.getByRole('button', { name: '+2' }));
+    expect(window.location.search).toBe('');
+    fireEvent.click(screen.getByRole('button', { name: 'Show fewer' }));
+    expect(window.location.search).toBe('');
+  });
+
   it('FSCROLL-4: a COLLAPSED facet inflated past the budget by selected-overflow rows is bounded too', () => {
     // R1 xcheck finding (sol): bounding keyed on `showAll` alone missed lists
     // grown long while collapsed — reachable via URL preselection (this test),

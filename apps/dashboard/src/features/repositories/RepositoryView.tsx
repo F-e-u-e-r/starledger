@@ -272,7 +272,12 @@ export function RepositoryView({
             <>
               <ul className="card-list">
                 {pageItems.map((repo) => (
-                  <RepositoryCard key={repo.node_id} repo={repo} now={sessionNow} />
+                  <RepositoryCard
+                    key={repo.node_id}
+                    repo={repo}
+                    now={sessionNow}
+                    selectedTopics={state.topics}
+                  />
                 ))}
               </ul>
               {lastPage > 1 ? (

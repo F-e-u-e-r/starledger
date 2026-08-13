@@ -72,7 +72,18 @@ function ReleaseValue({
  * field listed as unavailable renders as "Information unavailable" — the two are
  * never conflated (DATA-4 / CARD-1).
  */
-export function RepositoryCard({ repo, now = new Date() }: { repo: DerivedRepo; now?: Date }) {
+export function RepositoryCard({
+  repo,
+  now = new Date(),
+  selectedTopics = [],
+}: {
+  repo: DerivedRepo;
+  now?: Date;
+  /** Topic filters currently active (§13 M1.2e): these are never hidden behind
+   *  the collapsed topics state. Presentation input only — the card never
+   *  writes canonical state. */
+  selectedTopics?: readonly string[];
+}) {
   const [topicsExpanded, setTopicsExpanded] = useState(false);
   const starred = fmtMonthYear(repo.starred_at);
   const pushed = unavailable(repo, 'pushed_at')
@@ -94,7 +105,18 @@ export function RepositoryCard({ repo, now = new Date() }: { repo: DerivedRepo; 
   const latestDate = fmtDate(repo.latest_any_release?.published_at ?? null);
   const showLatest =
     repo.anyRelease === 'has' && (repo.stableRelease !== 'has' || latestTag !== stableTag);
-  const visibleTopics = topicsExpanded ? repo.topics : repo.topics.slice(0, TOPIC_LIMIT);
+  // Topic collapse (§13 M1.2e): deterministic threshold (TOPIC_LIMIT), LOCAL
+  // presentation state only. Selected (actively filtering) topics are NEVER
+  // hidden behind the collapsed state: they render first, and the unselected
+  // fill takes whatever room remains. Ordering is selected-first in BOTH
+  // states so toggling never reshuffles the list.
+  const selectedSet = new Set(selectedTopics);
+  const selectedInRepo = repo.topics.filter((t) => selectedSet.has(t));
+  const unselectedInRepo = repo.topics.filter((t) => !selectedSet.has(t));
+  const orderedTopics = [...selectedInRepo, ...unselectedInRepo];
+  const visibleTopics = topicsExpanded
+    ? orderedTopics
+    : orderedTopics.slice(0, Math.max(TOPIC_LIMIT, selectedInRepo.length));
   const hiddenTopicCount = Math.max(0, repo.topics.length - visibleTopics.length);
   const aiGenerated = repo.ai ? fmtDate(repo.ai.generatedAt) : null;
 
@@ -185,15 +207,15 @@ export function RepositoryCard({ repo, now = new Date() }: { repo: DerivedRepo; 
               {t}
             </li>
           ))}
-          {hiddenTopicCount > 0 ? (
+          {topicsExpanded || hiddenTopicCount > 0 ? (
             <li>
               <button
                 type="button"
                 className="topic topic-more"
                 aria-expanded={topicsExpanded}
-                onClick={() => setTopicsExpanded(true)}
+                onClick={() => setTopicsExpanded((v) => !v)}
               >
-                +{hiddenTopicCount}
+                {topicsExpanded ? 'Show fewer' : `+${hiddenTopicCount}`}
               </button>
             </li>
           ) : null}
