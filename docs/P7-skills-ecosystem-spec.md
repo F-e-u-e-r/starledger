@@ -1,6 +1,6 @@
 # P7 — Skills Ecosystem Spec (classification as an optional layer of the Starred view)
 
-> Status: **M0 merged (PR #234, 2026-08-11). M1.1 (canonical state contract + minimal pagination proof) implemented + 3-round cross-model reviewed (§12), awaiting owner commit + PR. M1.2–M3 pending.**
+> Status: **M0 merged (#234); M1.1 merged (#237). M1.2 complete (a–f, per-slice acceptance records in §13) — local commits on `feat/m1.2-browser-ux`, PR pending. M2–M3 pending.**
 > Stack: same as P1 (Vite · React · TypeScript · GitHub Pages, no backend). Adds one optional, fail-soft data layer and reuses the P1 dashboard surface.
 
 Surfaces the curated task-oriented classification of the coding-agent / skills-ecosystem subset of the starred repos (source: `skills-classified.md`, 171 entries, 24 categories) **inside the existing Starred view** as optional metadata — not as a second browser and not as rendered Markdown.
@@ -57,7 +57,7 @@ Extract the fail-soft correctness fix into **M0**, landed and green as ground tr
 
 ## 3. Milestones (author implements; owner reviews + commits)
 
-**M0 — correctness hotfix** (this change)
+**M0 — correctness hotfix** (merged #234)
 
 - Optional AI-annotation layer modeled as `loading | ready | unavailable`; AI-dependent filters (`categories`, `aiTags`) applied only when `ready`; base repos always preserved; degraded notice surfaced; URL retained.
 - `defaultDirection(field)`: `name_with_owner → asc`, all dates/counts → `desc`. Switching the sort field resets direction to the field default (Name shows A→Z, not an inherited Z→A). (`content-visibility` is an M1 enhancement, not here.)
@@ -65,9 +65,9 @@ Extract the fail-soft correctness fix into **M0**, landed and green as ground tr
 
 **M1 — browser substrate** (split into owner-reviewed sub-milestones).
 
-**M1.1 — canonical state contract + minimal pagination proof** (this change) — the full §6 canonical state/codec: three new canonical fields (`view`, `density`, `page`); the decode→normalize→encode→decode round-trip extended to cover them; R1 convergence (§6.1); requested→effective page reconciliation (§6.2); page-reset on a **semantic** change to filter/search/sort/view, density exempt, explicit `page` wins (§6.3); `activeView` consolidated out of `App.tsx` into `state.view` (§6.4); and the smallest observable pagination proof — fixed **48/page**, real result slicing, minimal Prev/Next controls. Behavioral tests cover the codec, the reset matrix, reconciliation + `replace` semantics, 48/page slicing boundaries, and view fail-soft. **Not** in M1.1: any UX polish (below).
+**M1.1 — canonical state contract + minimal pagination proof** (merged #237) — the full §6 canonical state/codec: three new canonical fields (`view`, `density`, `page`); the decode→normalize→encode→decode round-trip extended to cover them; R1 convergence (§6.1); requested→effective page reconciliation (§6.2); page-reset on a **semantic** change to filter/search/sort/view, density exempt, explicit `page` wins (§6.3); `activeView` consolidated out of `App.tsx` into `state.view` (§6.4); and the smallest observable pagination proof — fixed **48/page**, real result slicing, minimal Prev/Next controls. Behavioral tests cover the codec, the reset matrix, reconciliation + `replace` semantics, 48/page slicing boundaries, and view fail-soft. **Not** in M1.1: any UX polish (below).
 
-**M1.2+ — browser UX** (deferred) — density toggle UI + compact visual treatment, sticky toolbar, facet-scroll max-height fix, topic expand/**collapse** toggle, toolbar/layout polish, broader responsive work; `content-visibility:auto` as an enhancement only. R3 (Filters badge counts suppressed AI filters) lands here.
+**M1.2 — browser interaction + compact-density UX** (complete — per-slice acceptance records in §13) — density toggle UI + compact visual treatment, sticky toolbar, facet-scroll max-height fix, topic expand/**collapse** toggle, and R3 (effective-filter-count) convergence; `content-visibility:auto` as an enhancement only. Ordered R3 → density → sticky → facet-scroll → topic collapse → integrated regression.
 
 **M2 — classification layer** — vendor the `.md` into the repo; build-time generator (§4/§5) → `skills-classification.json` + `-meta.json`; fail-soft loader + staging mirroring AI/discovery; Skills-ecosystem scope + Skill-category facet + card badges + search enrichment + `.md` download + 3-number coverage line. Later: group-by-primary view mode.
 
@@ -142,7 +142,7 @@ Entries never carry stars/url/language/description — those come exclusively fr
 
 ## 5. Join & drift rules (verified 2026-08-10)
 
-Observed against the checked-in 697-repo `stars.json`: **169/171 exact-name matches**; the 2 unresolved are `jacob-bd/notebooklm-mcp-cli` and `AgentWrapper/agent-orchestrator` (both absent — `grep` count 0). Current stars contain similarly-named `jacob-bd/gemini-notebook-mcp-cli` and `Untrivial-ai/agent-orchestrator` — **plausible renames, NOT proof of identity.** So `697 − 169 = 528` unclassified.
+Observed against a **697-repo `stars.json`** — per git history that count corresponds to the **2026-07-30 dataset snapshot (`55ae7b2`)**, the state the 169/171 analysis ran against; by the spec's own landing commit (`2987e92`, 2026-08-10) the daily-synced dataset was already 734, and 742 at M1.2's close. These coverage figures are historical to the `55ae7b2` snapshot; M2 recomputes them at generation time: **169/171 exact-name matches**; the 2 unresolved are `jacob-bd/notebooklm-mcp-cli` and `AgentWrapper/agent-orchestrator` (both absent — `grep` count 0). Stars at that snapshot contain similarly-named `jacob-bd/gemini-notebook-mcp-cli` and `Untrivial-ai/agent-orchestrator` — **plausible renames, NOT proof of identity.** So `697 − 169 = 528` unclassified at that snapshot.
 
 - The join is **build-time** (`name_with_owner → node_id`); runtime joins `node_id → live repo` only, and **never** trusts the `.md`'s name/stars/url/language.
 - **No fuzzy remapping, ever.** Allowed resolution order: (1) case-insensitive exact `name_with_owner`; (2) a **human-reviewed durable alias map** (`old_owner/old_repo → node_id`), added only after manual confirmation; (3) a prior generated record's stored `node_id`. Otherwise the entry stays `unresolved` and is retained + surfaced.
@@ -208,17 +208,17 @@ Concept **B (accepted)**: a ledger page whose first ruled entry is a star (encod
 
 ## 10. Acceptance criteria (M0)
 
-| ID           | Test                                                                                                              | Status |
-| ------------ | ----------------------------------------------------------------------------------------------------------------- | ------ |
-| M0-FS-1      | `dashboardToView(state, false)` neutralizes `categories`/`aiTags`, preserves other filters                        | ✅     |
-| M0-FS-2      | AI category filter + AI unavailable → base repos preserved (2 of 2), not 0                                        | ✅     |
-| M0-FS-3      | AI category filter + AI ready-but-unannotated → correctly narrows to 0 (behavior intact)                          | ✅     |
-| M0-FS-4      | View: bookmarked `?category=…` + no annotations → all repos, no "· filtered", degraded notice shown, URL retained | ✅     |
-| M0-FS-5      | AI unavailable + a canonical filter → AI suppressed, canonical still applies, degraded shown                      | ✅     |
-| M0-FS-6      | AI `loading` → filter held inactive with loading-specific wording (not "unavailable")                             | ✅     |
-| M0-SORT-1    | `defaultDirection`: name→asc, dates/counts→desc                                                                   | ✅     |
-| M0-SORT-2    | Selecting "Name" in the sort control yields A→Z and `?sort=name_with_owner&direction=asc`                         | ✅     |
-| (regression) | full dashboard suite green (121/121)                                                                              | ✅     |
+| ID           | Test                                                                                                                                                                                      | Status |
+| ------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------ |
+| M0-FS-1      | `dashboardToView(state, false)` neutralizes `categories`/`aiTags`, preserves other filters                                                                                                | ✅     |
+| M0-FS-2      | AI category filter + AI unavailable → base repos preserved (2 of 2), not 0                                                                                                                | ✅     |
+| M0-FS-3      | AI category filter + AI ready-but-unannotated → correctly narrows to 0 (behavior intact)                                                                                                  | ✅     |
+| M0-FS-4      | View: bookmarked `?category=…` + no annotations → all repos, no "· filtered", degraded notice shown, URL retained                                                                         | ✅     |
+| M0-FS-5      | AI unavailable + a canonical filter → AI suppressed, canonical still applies, degraded shown                                                                                              | ✅     |
+| M0-FS-6      | AI `loading` → filter held inactive with loading-specific wording (not "unavailable")                                                                                                     | ✅     |
+| M0-SORT-1    | `defaultDirection`: name→asc, dates/counts→desc                                                                                                                                           | ✅     |
+| M0-SORT-2    | Selecting "Name" in the sort control yields A→Z and `?sort=name_with_owner` (asc = Name's field default, omitted since M1.1's canonical serializer; the row's test was updated with M1.1) | ✅     |
+| (regression) | full dashboard suite green (121/121)                                                                                                                                                      | ✅     |
 
 Verified: `vitest` 121/121, `pnpm -r typecheck`, eslint + prettier (changed files), Vite production build, and `@starred/deploy` verify + Pages static smoke — all green. (`pnpm format:check` is red only on pre-existing untracked `skills-staging/`, outside this change.)
 
@@ -259,3 +259,76 @@ Verified: `vitest` **784/784**, `pnpm -r typecheck`, `eslint .`, `prettier --che
 - **R3:** Sol-max **PROCEED**, Luna-ultra **PROCEED** (all fixes confirmed; D independently verified non-existent). Luna-max re-raised **D**; **confirmed false positive** — `App.tsx` tab visibility is `discovery && discovery.candidates.length > 0`, byte-identical to `discoveryAvailable`, so an empty-`candidates` payload hides the tab and its failure scenario cannot occur (ground-truth verified).
 
 Outcome: every real finding across three rounds fixed with a pinned regression test; the sole outstanding BLOCK is a verified misread. Ready for owner commit.
+
+---
+
+## 13. M1.2 acceptance boundary — browser interaction + compact-density UX
+
+M1.1 built the correctness substrate; M1.2 is a pure interaction/presentation slice and does
+NOT reopen the canonical-state architecture. Implement in order (each owner-reviewed; xcheck
+before each commit). R3 leads because it still carries semantic correctness, so it is not
+buried under the later CSS/layout diffs.
+
+**M1.2a — R3 effective-filter-count convergence.** The Filters toggle badge/count reflects the
+**effective** (active) filter count. Requested-but-inactive optional-AI filters
+(`categories`/`aiTags` while the AI layer is not `ready`) do **not** inflate the badge; they
+remain visible as removable chips + a degraded notice (§2.2), consistent with the result
+summary's existing `effectiveFilterCount`. Once the AI layer becomes `ready` and the requested
+filter activates, the badge updates.
+
+**M1.2b — density control + compact/comfortable presentation.** A control writes ONLY canonical
+`density`; `compact` is the §6 default. Density change preserves the current page;
+reload/back/forward reproduce the density. `compact` materially raises information density with
+no content/action removed to achieve it; `comfortable` stays usable and visually distinct; both
+preserve repository actions/links.
+
+**M1.2c — sticky toolbar.** Search/filter/sort/view/density controls stay reachable while
+browsing; must not obscure content; narrow-viewport behavior explicitly tested; no second local
+owner for canonical controls (an ephemeral `is-scrolled` presentation flag is fine).
+
+**M1.2d — facet-scroll.** Long facet groups get bounded scrolling; the page itself must not
+overgrow because one facet is large; keyboard/mouse scrolling stays usable; selected values
+remain reachable (the active-filter chips already surface selections).
+
+**M1.2e — topic expand/collapse.** Deterministic collapsed default/threshold; selected topics
+never hidden behind a collapsed section without indication. This is **LOCAL presentation state,
+NOT canonical URL state** — §6 is not extended for it.
+
+**M1.2f — integrated behavioral/regression pass.** density→URL, density-does-not-reset-page,
+sticky presence/continuity, facet overflow, topic collapse, and the R3
+loading/unavailable/ready matrix — all green together.
+
+### Per-slice acceptance
+
+**M1.2a (2026-08-13)** — gates: `pnpm -r typecheck` · `eslint .` · `prettier --check` (slice files) · `vitest run` **788/788** (+4 R3). Cross-model review (per-slice policy: one round of Luna@max · Luna@ultra · Sol@max, escalate only on a real correctness/spec finding): **3/3 PROCEED, zero findings** — all six M1.2a checks PASS from all three lenses. Reviewed diff = this commit minus this note (doc-only, added post-verdict).
+
+**M1.2b (2026-08-13)** — gates: `pnpm -r typecheck` · `eslint .` · `prettier --check` (slice files) · `vitest run` **793/793** (+5 DENS). Cross-model review (per-slice policy, one round of Luna@max · Luna@ultra · Sol@max): **3/3 PROCEED, zero findings** — all eight M1.2b checks PASS from all three lenses. Reviewed diff = this commit minus this note (doc-only, added post-verdict). Owner visual smoke (Chromium): compact 3 columns vs comfortable 2 (+50% cards/row, 309px vs 465px tracks) under the pre-existing 1280px dashboard cap — widening the cap for 4 columns is explicitly NOT required and NOT folded into later slices; narrow 390px single-column, no horizontal overflow.
+
+**M1.2c (2026-08-13)** — gates: `pnpm -r typecheck` · `eslint .` · `prettier --check` (slice files) · `vitest run` **796/796** (+3 STICK). Cross-model review (adaptive, 2 rounds): R1 Luna@max + Luna@ultra **FIX** — one confirmed defect (the ≤520px `.view-tabs { position: static }` override preceded the base sticky rule in source order and silently lost at equal specificity), Sol@max PROCEED (missed it); fixed by relocating the override after the view-tabs section with rationale comments at both sites, re-verified in-browser (390px + tabs: static, scrolls away; desktop 48px stacking intact). R2 on the amended diff: **3/3 PROCEED, zero findings**. Browser smoke: desktop stuck toolbar top=0 (55px, opaque, z below drawer); tabs-stacked offset by `--view-tabs-h` with zero overlap; narrow static, no overflow. Reviewed diff = this commit minus this note (doc-only, added post-verdict).
+
+**M1.2d (2026-08-13)** — gates: `pnpm -r typecheck` · `eslint .` · `prettier --check` (slice files) · `vitest run` **800/800** (+4 FSCROLL). Cross-model review (adaptive): R1 full lineup — Luna@max + Luna@ultra PROCEED; Sol@max **FIX**, a real defect class: bounding keyed on `showAll` missed collapsed lists inflated past the budget by selected-overflow rows (Sol's cited "Show fewer" trigger does not exist, but three real paths do — URL preselection, drawer-instance selections, section collapse/reopen resetting `showAll`); fixed by keying the bound on rendered length, pinned by FSCROLL-4. R2 on the amended diff: Luna@max **PROCEED** (3/3) — then both external providers died mid-round (Codex usage limit, reset 2026-08-18 11:46; Grok 402 balance exhausted): Luna@ultra + Sol R2 legs are **recorded missing lenses**, not claimed. §6 fallback: fresh-context same-model critic (packet-vs-tree byte-identity, source verification of all three paths, fourth-path hunt empty, vitest re-run 38/38) **PROCEED** with one comment-only nit, fixed post-verdict and disclosed. Browser smoke: 2236-topic expansion contained in a 352px box; page height 8449px unchanged; collapsed default 332px no-scroll; focused deep option auto-scrolls into view; drawer facet bounded (352 vs 809). **Backfill pending** (owner ruling): Sol + Luna@ultra re-run on this slice **once external review capacity returns** — at ruling time the provider's stated quota reset was 2026-08-18 11:46, the then-earliest expected date — as **assurance backfill**; the recorded gap stays in history (never retroactively rewritten to "3/3 complete"); AGREE closes the residual, a new verified correctness finding reopens M1.2d as a normal amendment, a nit changes nothing. _(Timeline precision, PR #239 review round 2: the owner restored account capacity the SAME day — ahead of the provider's stated reset — and the restoration was verified by dry-run pings before any leg ran; the backfill precondition was restored capacity, not the calendar date, so the same-day completion below is consistent, not premature.)_ _(Provenance precision, added in the PR #239 review: the `showAll`-keyed intermediate that R1 reviewed existed only in the working tree between R1 and its same-session fix and was never separately committed — `f48ac8e^` predates any bound and `f48ac8e` carries the final length-keyed bound; the R1 packet/verdict artifacts are session-side, not in-repo, so this record is the surviving account of that intermediate.)_ **Backfill completed (2026-08-13 — capacity restored same-day, verified by dry-run pings at the exact invocation shapes):** Sol@max + Luna@ultra ran as retrospective assurance on the committed snapshot `f48ac8e` — **2/2 PROCEED, 5/5 checks PASS each, zero findings, zero nits**; Sol confirmed its own R1 finding resolved by the length-keyed bound + FSCROLL-4; both confirmed this §13 record preserves the gap accurately. **Residual closed**; the historical record of the incomplete R2 lineup stands unchanged. Reviewed diff = this commit minus this note and minus the disclosed comment correction. This acceptance is a **one-off recorded-gap exception** — the §6 fallback critic is NOT generalized into the standing pre-commit gate.
+
+**M1.2e / M1.2f (2026-08-13)** — `PAUSED_FOR_REVIEW_CAPACITY` (owner ruling): production implementation deferred until the standard external lineup (Luna@max · Luna@ultra · Sol@max) is available again; planning / read-only orientation / fixture & acceptance-criteria design may proceed if the production tree stays untouched. Rationale: M1.2f is the integration regression pass — cross-slice interaction deserves the full lineup, and stacking unreviewed implementations in one tree destroys per-slice review identity. M1.2d backfill runs first when capacity returns, then M1.2e resumes under the normal gate.
+
+**M1.2e (2026-08-13, post-backfill — normal gate restored)** — gates: `pnpm -r typecheck` · `eslint .` · `prettier --check` (slice files) · `vitest run` **804/804** (+TCOL-1..4). Cross-model review (standard lineup, one round): **Luna@max · Luna@ultra · Sol@max — 3/3 PROCEED, zero findings**, all seven charter checks PASS from all three lenses. Implementation: the `+N` affordance becomes a real toggle (expanded label `Show fewer`, `aria-expanded` both ways, collapsed accessible name `+N` preserved); new presentation-only `selectedTopics` prop (View passes canonical `state.topics`): selected topics order first in BOTH states and the collapsed budget is `max(TOPIC_LIMIT, selected)` — a selected topic can never be hidden by the collapsed state; toggle stays LOCAL `useState`, §6 untouched (TCOL-4 pins the URL through a full cycle). Browser smoke: 10-topic card 4→10→4 cycle with URL unchanged; `?topic=travel` (9th topic in repo order) renders `[travel, …]` first while collapsed with `+6` correct. Reviewed diff = this commit minus this note (doc-only, added post-verdict).
+
+**M1.2f (2026-08-13) — integrated closure, verification-only.** Production delta **ZERO**; the diff adds only integration regression tests (INT-1..6) + this record. Gates: `pnpm -r typecheck` · `eslint .` · `prettier --check` · `vitest run` **810/810**. Integrated browser smoke (one live Chromium session, desktop 1280 + narrow 390): stuck toolbar survives facet expansion, density switch and pagination; 2236-topic facet bounded at 352px in sidebar AND drawer under the combined state; tabs stacking correct under non-default density; card topic toggle inert to a fully populated URL; no horizontal overflow (one drawer probe misfired against a stale node/wrong facet, re-probed correctly — probe artifact, disclosed). Cross-model review (standard lineup, adaptive): R1 Luna@max **FIX** + Sol@max **FIX** (six confirmed TEST-STRENGTH findings — stale-DOM-reference false-passes, a tautological ordering, unproven ready result set, an unexercised expansion, and TopicFacet's untested selected-overflow path; NO production defect, all three legs confirmed zero production delta remains correct), Luna@ultra PROCEED with the same INT-4 nit; all six fixed (re-query semantics, live-page ordering, result-set proof, real 17-topic expansion, INT-6 added). R2 on the amended tests-only diff: **3/3 PROCEED, 4/4 focused checks** — all three lenses conclude the seven-point closure matrix is established and **the milestone can close**. Reviewed diff = this commit minus this note and the status-line update (doc-only, added post-verdict).
+
+**M1.2 milestone closure (2026-08-13):** a–f all owner-accepted under the per-slice gate (`ce91617` · `e3f30db` · `6469a62` · `f48ac8e`+`3d0f95d` · `2992f68` · this commit). The §13 charter is fully discharged: R3 effective-filter-count, density compact/comfortable, sticky toolbar (+tabs stacking), bounded facet scrolling, topic expand/collapse with selected-first pinning, and the integrated regression pass — 810 tests green, canonical §6 state untouched by any presentation feature.
+
+### PR #239 review rounds (post-closure, pre-merge)
+
+**Round 1 (2026-08-13, Codex xhigh on the seven-commit PR):** three findings, all confirmed by reproduction and accepted. **R1-1 (correctness, M1.2c amendment):** the stuck toolbar (bottom ≈55px, opaque, z 10) permanently covered the sticky sidebar's top 39px (`top: 1rem`) — the Language section header hit-tested to TOOLBAR; missed because jsdom tests pin structure/classes, not geometry, and the slice smoke never probed the sidebar's own sticky offset. Fixed: RepositoryView publishes the layout-dependent toolbar height as `--toolbar-h` (ResizeObserver; jsdom-guarded), the sidebar's `top`/`max-height` consume it (tabs variant mirrored); STICK-4 pins the wiring; browser re-smoke measures the clearance. **R1-2 (correctness, M1.2b amendment):** `.density-compact .card-list` silently defeated the pre-existing ≤900px single-column media rule (equal-or-higher specificity, later in source) — at 800px compact rendered 2 columns while comfortable honored 1; the CSS comment's "never fights the responsive rules" claim was false. Fixed: the column override now lives inside `@media (min-width: 901px)` (spacing stays densified at all widths), comment corrected, browser re-smoke at 800px. **R1-3 (provenance):** the M1.2d record described a `showAll`-keyed intermediate that no committed snapshot carries (working-tree-only between R1 and its fix) — a precision note now states this explicitly in the record. Gates after amendments: `vitest run` **811/811**, typecheck/eslint/prettier ✓; amendment diff reviewed by the standard three-lens lineup before commit (see the round-2 entry below once the Codex loop re-runs).
+
+**Round 2 (2026-08-13, Codex xhigh on the amended PR):** confirmed all three round-1 fixes resolved; **one new finding (Medium, provenance):** the M1.2d record read as chronologically contradictory — "backfill pending until the 2026-08-18 quota reset" followed by "completed 2026-08-13" left an auditor unable to tell early-capacity from a jumped gate. Accepted as a wording-precision defect (the substance was correct: the owner restored capacity same-day, ping-verified, before any leg ran): the pending clause now states the precondition as **restored capacity** (the 2026-08-18 date recorded as the then-stated provider reset, not a hard gate) with an explicit timeline-precision note. No production/test change; doc-only correction per the evidence-only rule.
+
+**Round 3 (2026-08-13, Codex xhigh):** rounds 1-2 fixes stand; **one new finding (non-blocking, doc staleness):** §5's coverage observation ("checked-in 697-repo `stars.json`", `697 − 169 = 528`) was written against the spec-authoring snapshot while the live dataset had grown to 742 via the daily sync — the figures read as current and were not reproducible from the PR snapshot. Fixed: the observation is now explicitly marked as the 2026-08-10 authoring snapshot (742 noted at M1.2 close; M2 recomputes coverage at generation time); all four `697` occurrences swept and adjudicated — one factual claim marked historical, two illustrative examples and one sample-JSON value left as illustrations. Operational note, recorded for audit honesty: this round's dispatch produced two orphan duplicate queue tasks (a late-submitting hung round-2 dispatch and a duplicate round-3), both cancelled via the companion CLI before they could return divergent verdicts; the adjudicated round-2/round-3 results are task-msr67j82 and task-msr71b3z.
+
+**Round 4 (2026-08-13, Codex xhigh):** three findings, all doc-precision, all reproduced and fixed. **R4-1 (Medium — a defect in the round-3 fix itself, honestly attributed):** the round-3 correction labeled the 697 figure "snapshot at spec authoring, 2026-08-10", but git history shows 697 corresponds to the **2026-07-30 dataset (`55ae7b2`)** while the spec's landing commit (`2987e92`, 2026-08-10) already carried **734** (742 at HEAD) — the date was asserted from memory, not verified; §5 now cites the commit-anchored snapshot chain (697@`55ae7b2` → 734@`2987e92` → 742 at close). **R4-2 (Low):** §3's M1.2 entry still read "(active …)" against the closed status elsewhere — now "(complete — per-slice acceptance records in §13)"; same-class sweep also fixed the stale "(this change)" labels on M0/M1.1 (pre-existing, now "(merged #234)"/"(merged #237)"). **R4-3 (Low):** the M0-SORT-2 acceptance row still showed `?sort=name_with_owner&direction=asc`, stale since M1.1's default-direction omission (M1.1's own §-note says the TEST was updated; the table row was missed) — row now matches the shipped serializer; the §6.1 backward-compat note about redundant legacy URLs is intentional and unchanged. Doc-only round; no production/test change.
+
+### Out of scope (→ later / M2)
+
+- URL codec architecture; requested/effective page semantics; the 48/page constant.
+- Any second view-state owner.
+- M2 discovery/classification generation + provenance.
+- Broad visual redesign; unrelated responsive cleanup.

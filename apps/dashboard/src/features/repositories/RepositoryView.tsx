@@ -2,6 +2,7 @@ import { useCallback, useEffect, useId, useMemo, useRef, useState } from 'react'
 import type { CanonicalRepo } from '@starred/schema';
 import { NoResults } from '../../components/states';
 import type { AnnotationStatus, LoadedAnnotations } from '../../data/load-annotations';
+import type { Density } from '../../state/dashboard-state';
 import type { DashboardStateControls } from '../../state/use-dashboard-state';
 import { activeFilterCount, FilterChips } from '../filters/FilterChips';
 import { FilterControls } from '../filters/FilterControls';
@@ -122,6 +123,32 @@ export function RepositoryView({
   const focusResults = () => resultsHeadingRef.current?.focus();
   // Drawer close restores focus here, never to <body> (A11Y-5).
   const filtersToggleRef = useRef<HTMLButtonElement>(null);
+  // Ephemeral is-scrolled presentation flag (§13 M1.2c): drives the stuck-state
+  // elevation shadow only — never a second owner of any canonical control.
+  const [scrolled, setScrolled] = useState(false);
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 0);
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
+  // The sticky sidebar must stick BELOW the sticky toolbar or the opaque
+  // toolbar covers the sidebar's top ~39px (PR #239 review, finding 1). The
+  // toolbar's height is layout-dependent (flex-wrap), so publish it as a CSS
+  // variable the sidebar's `top`/`max-height` consume (presentation only).
+  const mainRef = useRef<HTMLElement>(null);
+  const toolbarRef = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    const main = mainRef.current;
+    const toolbar = toolbarRef.current;
+    if (!main || !toolbar) return;
+    const publish = () => main.style.setProperty('--toolbar-h', `${toolbar.offsetHeight}px`);
+    publish();
+    if (typeof ResizeObserver === 'undefined') return; // jsdom: geometry is browser-verified
+    const ro = new ResizeObserver(publish);
+    ro.observe(toolbar);
+    return () => ro.disconnect();
+  }, []);
   const filterCount = activeFilterCount(state);
   // AI facets present in state but inert because the layer isn't ready: still
   // shown as removable chips (recoverability) with a degraded notice, but NOT
@@ -131,7 +158,7 @@ export function RepositoryView({
   const effectiveFilterCount = filterCount - suppressedAiFilterCount;
 
   return (
-    <main className="dashboard">
+    <main ref={mainRef} className={`dashboard density-${state.density}`}>
       <header className="dashboard-head">
         <div className="brand-row">
           <div>
@@ -143,65 +170,79 @@ export function RepositoryView({
             {annotations ? ` · ${aiCount} of ${repos.length} AI-enriched` : ''}
           </p>
         </div>
-        <div className="toolbar">
-          <div className="search">
-            <label className="visually-hidden" htmlFor={searchId}>
-              Search repositories
-            </label>
-            <input
-              id={searchId}
-              type="search"
-              value={state.query}
-              onChange={(e) => update({ query: e.target.value }, 'replace')}
-              placeholder="Search by repository, description, topic, or language..."
-            />
-            {state.query ? (
-              <button
-                type="button"
-                className="search-clear"
-                aria-label="Clear search"
-                onClick={() => update({ query: '' }, 'replace')}
-              >
-                ×
-              </button>
-            ) : null}
-          </div>
-          <button
-            type="button"
-            className="filters-toggle"
-            aria-expanded={filtersOpen}
-            ref={filtersToggleRef}
-            onClick={() => setFiltersOpen(true)}
-          >
-            Filters{filterCount > 0 ? ` ${filterCount}` : ''}
-          </button>
-          <label className="sort">
-            <span>Sort</span>
-            <select
-              value={state.sort}
-              onChange={(e) => {
-                // Changing the field resets direction to that field's natural
-                // default (Name → A→Z), instead of inheriting a stale desc.
-                const sort = e.target.value as SortField;
-                update({ sort, direction: defaultDirection(sort) });
-              }}
-            >
-              {SORT_FIELDS.map((field) => (
-                <option key={field} value={field}>
-                  {SORT_LABELS[field]}
-                </option>
-              ))}
-            </select>
-          </label>
-          <button
-            type="button"
-            onClick={() => update({ direction: state.direction === 'asc' ? 'desc' : 'asc' })}
-            aria-label={`Sort direction: ${state.direction === 'asc' ? 'ascending' : 'descending'}. Activate to toggle.`}
-          >
-            {state.direction === 'asc' ? '↑ Ascending' : '↓ Descending'}
-          </button>
-        </div>
       </header>
+
+      {/* Direct child of .dashboard on purpose: position:sticky is constrained
+          to its parent's box, so nesting this back inside the (short)
+          .dashboard-head would silently un-stick it (STICK-1 pins this). */}
+      <div ref={toolbarRef} className={`toolbar${scrolled ? ' is-scrolled' : ''}`}>
+        <div className="search">
+          <label className="visually-hidden" htmlFor={searchId}>
+            Search repositories
+          </label>
+          <input
+            id={searchId}
+            type="search"
+            value={state.query}
+            onChange={(e) => update({ query: e.target.value }, 'replace')}
+            placeholder="Search by repository, description, topic, or language..."
+          />
+          {state.query ? (
+            <button
+              type="button"
+              className="search-clear"
+              aria-label="Clear search"
+              onClick={() => update({ query: '' }, 'replace')}
+            >
+              ×
+            </button>
+          ) : null}
+        </div>
+        <button
+          type="button"
+          className="filters-toggle"
+          aria-expanded={filtersOpen}
+          ref={filtersToggleRef}
+          onClick={() => setFiltersOpen(true)}
+        >
+          Filters{effectiveFilterCount > 0 ? ` ${effectiveFilterCount}` : ''}
+        </button>
+        <label className="sort">
+          <span>Sort</span>
+          <select
+            value={state.sort}
+            onChange={(e) => {
+              // Changing the field resets direction to that field's natural
+              // default (Name → A→Z), instead of inheriting a stale desc.
+              const sort = e.target.value as SortField;
+              update({ sort, direction: defaultDirection(sort) });
+            }}
+          >
+            {SORT_FIELDS.map((field) => (
+              <option key={field} value={field}>
+                {SORT_LABELS[field]}
+              </option>
+            ))}
+          </select>
+        </label>
+        <button
+          type="button"
+          onClick={() => update({ direction: state.direction === 'asc' ? 'desc' : 'asc' })}
+          aria-label={`Sort direction: ${state.direction === 'asc' ? 'ascending' : 'descending'}. Activate to toggle.`}
+        >
+          {state.direction === 'asc' ? '↑ Ascending' : '↓ Descending'}
+        </button>
+        <label className="density">
+          <span>Density</span>
+          <select
+            value={state.density}
+            onChange={(e) => update({ density: e.target.value as Density })}
+          >
+            <option value="compact">Compact</option>
+            <option value="comfortable">Comfortable</option>
+          </select>
+        </label>
+      </div>
 
       <div className="layout">
         <aside className="sidebar" aria-label="Filters">
@@ -248,7 +289,12 @@ export function RepositoryView({
             <>
               <ul className="card-list">
                 {pageItems.map((repo) => (
-                  <RepositoryCard key={repo.node_id} repo={repo} now={sessionNow} />
+                  <RepositoryCard
+                    key={repo.node_id}
+                    repo={repo}
+                    now={sessionNow}
+                    selectedTopics={state.topics}
+                  />
                 ))}
               </ul>
               {lastPage > 1 ? (

@@ -8,6 +8,9 @@
   --chip-bg: #eaeef2;
   --focus: #0969da;
   --caution: #9a6700;
+  /* Fixed view-tabs height (M1.2c): the tabs bar is given this exact height so
+     the sticky toolbar's `top` offset below it is correct by construction. */
+  --view-tabs-h: 3rem;
   color-scheme: light dark;
 }
 
@@ -101,11 +104,33 @@ a {
   font-size: 0.9rem;
 }
 
+/* Sticky toolbar (M1.2c, P7 §13): search/filter/sort/density stay reachable
+   while browsing. The toolbar is a DIRECT child of .dashboard — sticky is
+   constrained to the parent's box, so inside the short .dashboard-head it
+   would un-stick after a few pixels. z-index stays below the drawer (20). */
 .toolbar {
   display: flex;
   flex-wrap: wrap;
   gap: 0.5rem;
   align-items: center;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background: var(--bg);
+  padding: 0.6rem 0;
+  margin-bottom: 1rem;
+}
+
+/* Stuck-state elevation only — shadow, no border, so the box height never
+   jumps when the flag toggles. */
+.toolbar.is-scrolled {
+  box-shadow: 0 2px 6px rgb(31 35 40 / 0.12);
+}
+
+/* When the view tabs render (discovery available), they stick above the
+   toolbar; the toolbar offsets below them by the tabs' fixed height. */
+:root:has(.view-tabs) .toolbar {
+  top: var(--view-tabs-h);
 }
 
 .search {
@@ -160,7 +185,8 @@ a {
   cursor: pointer;
 }
 
-.toolbar .sort {
+.toolbar .sort,
+.toolbar .density {
   display: flex;
   align-items: center;
   gap: 0.35rem;
@@ -193,13 +219,26 @@ a {
   align-items: start;
 }
 
+/* Sticks BELOW the sticky toolbar (PR #239 review, finding 1): with a plain
+   `top: 1rem` the opaque toolbar (bottom ≈55px) permanently covered the
+   sidebar's top ~39px — the Language section header hit-tested to TOOLBAR.
+   --toolbar-h is published by RepositoryView from a ResizeObserver because
+   the toolbar's height is layout-dependent (flex-wrap); 3.5rem is the
+   single-row fallback. */
 .sidebar {
   position: sticky;
-  top: 1rem;
-  max-height: calc(100vh - 2rem);
+  top: calc(var(--toolbar-h, 3.5rem) + 0.5rem);
+  max-height: calc(100vh - var(--toolbar-h, 3.5rem) - 1rem);
   overflow-y: auto;
   padding-right: 0.2rem;
   scrollbar-width: thin;
+}
+
+/* With the view tabs present the whole sticky stack is taller (tabs sit above
+   the toolbar) — mirror the toolbar's own tabs offset. */
+:root:has(.view-tabs) .sidebar {
+  top: calc(var(--view-tabs-h) + var(--toolbar-h, 3.5rem) + 0.5rem);
+  max-height: calc(100vh - var(--view-tabs-h) - var(--toolbar-h, 3.5rem) - 1rem);
 }
 
 .filters {
@@ -274,9 +313,22 @@ a {
   gap: 0.35rem;
 }
 
+/* Bounded facet scrolling (M1.2d, P7 §13): a long facet list scrolls inside
+   its own box instead of turning the sidebar/drawer into one giant tunnel
+   (the sidebar and drawer are viewport-capped, so the PAGE never overgrew —
+   the fix restores per-group reachability of the sections below a long one).
+   22rem keeps the topics facet's default 12 rows (measured ≈332px) visible
+   without scrolling, with headroom for font variance; a scrollbar appears
+   only when a list actually exceeds the budget — expansion ("Show N more")
+   or a collapsed list inflated past 22rem by selected-overflow rows.
+   Selected values stay reachable via the active-filter chips and the
+   selected-overflow rows. */
 .facet-options--scroll {
-  max-height: none;
-  overflow: visible;
+  max-height: 22rem;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding-right: 0.2rem;
+  scrollbar-width: thin;
 }
 
 .facet-option {
@@ -615,15 +667,25 @@ a {
 }
 
 @media (max-width: 520px) {
+  /* Narrow viewports stack the toolbar controls full-width, so a stuck
+     toolbar would cover a large share of the screen — sticky is disabled
+     here on purpose (M1.2c: must not obscure content; verified in the
+     visual smoke, since jsdom cannot exercise media queries). The matching
+     .view-tabs override lives AFTER the view-tabs section below: this block
+     precedes the base `.view-tabs { position: sticky }` rule in source
+     order, so an override here would silently lose at equal specificity. */
   .toolbar {
+    position: static;
     grid-template-columns: 1fr;
   }
 
-  .toolbar .sort {
+  .toolbar .sort,
+  .toolbar .density {
     width: 100%;
   }
 
   .toolbar .sort select,
+  .toolbar .density select,
   .toolbar button {
     width: 100%;
   }
@@ -638,6 +700,8 @@ a {
 }
 
 /* --- View tabs (P5): switch between Starred and Discovery Inbox. --- */
+/* Sticky above the toolbar (M1.2c): the explicit --view-tabs-h height makes
+   the toolbar's top offset below the tabs correct by construction. */
 .view-tabs {
   display: flex;
   gap: 0;
@@ -645,6 +709,13 @@ a {
   margin: 0 auto;
   padding: 0.75rem 1.25rem 0;
   border-bottom: 1px solid var(--border);
+  position: sticky;
+  top: 0;
+  z-index: 11;
+  background: var(--bg);
+  height: var(--view-tabs-h);
+  box-sizing: border-box;
+  align-items: flex-end;
 }
 
 .view-tab {
@@ -684,6 +755,17 @@ a {
 .view-tab--active .view-tab-count {
   background: var(--accent);
   color: #fff;
+}
+
+/* Narrow override for the tabs' stickiness (M1.2c). MUST come after the base
+   `.view-tabs { position: sticky }` rule above: equal specificity, and a media
+   query adds none, so source order decides — placed inside the earlier ≤520px
+   block this override silently loses and tabs stay stuck (round-1 xcheck
+   finding, confirmed). Same rationale as the toolbar's narrow static rule. */
+@media (max-width: 520px) {
+  .view-tabs {
+    position: static;
+  }
 }
 
 /* --- Discovery Inbox (P5): candidate review queue. --- */
@@ -835,4 +917,54 @@ a {
 .ai-meta {
   margin: 0;
   font-size: 0.72rem;
+}
+
+/* --- Density (M1.2b, P7 §13) --- */
+/* `compact` (the §6 default) raises information density via spacing/typography/
+   grid ONLY; every content element and action — including the 3-line
+   description clamp — is identical in both densities (nothing is removed to
+   achieve density). `comfortable` is the untouched baseline above. */
+/* The COLUMN override applies only above the pre-existing ≤900px single-column
+   breakpoint: at equal-or-higher specificity a global rule here would silently
+   defeat that earlier media rule (PR #239 review, finding 2 — at 800px compact
+   rendered 2 columns while comfortable honored the 1-column decision). Spacing
+   (`gap`) stays densified at every width. */
+.density-compact .card-list {
+  gap: 0.5rem;
+}
+
+@media (min-width: 901px) {
+  .density-compact .card-list {
+    grid-template-columns: repeat(auto-fill, minmax(min(19rem, 100%), 1fr));
+  }
+}
+
+.density-compact .card {
+  padding: 0.55rem 0.7rem;
+  gap: 0.35rem;
+}
+
+.density-compact .card-title {
+  font-size: 1rem;
+}
+
+.density-compact .card-identity {
+  gap: 0.2rem;
+}
+
+.density-compact .card-desc {
+  font-size: 0.88rem;
+}
+
+.density-compact .repo-highlights {
+  font-size: 0.8rem;
+}
+
+.density-compact .card-ai {
+  gap: 0.3rem;
+  padding: 0.35rem 0.5rem;
+}
+
+.density-compact .ai-summary {
+  font-size: 0.82rem;
 }
