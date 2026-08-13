@@ -57,7 +57,7 @@ Extract the fail-soft correctness fix into **M0**, landed and green as ground tr
 
 ## 3. Milestones (author implements; owner reviews + commits)
 
-**M0 — correctness hotfix** (this change)
+**M0 — correctness hotfix** (merged #234)
 
 - Optional AI-annotation layer modeled as `loading | ready | unavailable`; AI-dependent filters (`categories`, `aiTags`) applied only when `ready`; base repos always preserved; degraded notice surfaced; URL retained.
 - `defaultDirection(field)`: `name_with_owner → asc`, all dates/counts → `desc`. Switching the sort field resets direction to the field default (Name shows A→Z, not an inherited Z→A). (`content-visibility` is an M1 enhancement, not here.)
@@ -65,9 +65,9 @@ Extract the fail-soft correctness fix into **M0**, landed and green as ground tr
 
 **M1 — browser substrate** (split into owner-reviewed sub-milestones).
 
-**M1.1 — canonical state contract + minimal pagination proof** (this change) — the full §6 canonical state/codec: three new canonical fields (`view`, `density`, `page`); the decode→normalize→encode→decode round-trip extended to cover them; R1 convergence (§6.1); requested→effective page reconciliation (§6.2); page-reset on a **semantic** change to filter/search/sort/view, density exempt, explicit `page` wins (§6.3); `activeView` consolidated out of `App.tsx` into `state.view` (§6.4); and the smallest observable pagination proof — fixed **48/page**, real result slicing, minimal Prev/Next controls. Behavioral tests cover the codec, the reset matrix, reconciliation + `replace` semantics, 48/page slicing boundaries, and view fail-soft. **Not** in M1.1: any UX polish (below).
+**M1.1 — canonical state contract + minimal pagination proof** (merged #237) — the full §6 canonical state/codec: three new canonical fields (`view`, `density`, `page`); the decode→normalize→encode→decode round-trip extended to cover them; R1 convergence (§6.1); requested→effective page reconciliation (§6.2); page-reset on a **semantic** change to filter/search/sort/view, density exempt, explicit `page` wins (§6.3); `activeView` consolidated out of `App.tsx` into `state.view` (§6.4); and the smallest observable pagination proof — fixed **48/page**, real result slicing, minimal Prev/Next controls. Behavioral tests cover the codec, the reset matrix, reconciliation + `replace` semantics, 48/page slicing boundaries, and view fail-soft. **Not** in M1.1: any UX polish (below).
 
-**M1.2 — browser interaction + compact-density UX** (active — acceptance boundary in §13) — density toggle UI + compact visual treatment, sticky toolbar, facet-scroll max-height fix, topic expand/**collapse** toggle, and R3 (effective-filter-count) convergence; `content-visibility:auto` as an enhancement only. Ordered R3 → density → sticky → facet-scroll → topic collapse → integrated regression.
+**M1.2 — browser interaction + compact-density UX** (complete — per-slice acceptance records in §13) — density toggle UI + compact visual treatment, sticky toolbar, facet-scroll max-height fix, topic expand/**collapse** toggle, and R3 (effective-filter-count) convergence; `content-visibility:auto` as an enhancement only. Ordered R3 → density → sticky → facet-scroll → topic collapse → integrated regression.
 
 **M2 — classification layer** — vendor the `.md` into the repo; build-time generator (§4/§5) → `skills-classification.json` + `-meta.json`; fail-soft loader + staging mirroring AI/discovery; Skills-ecosystem scope + Skill-category facet + card badges + search enrichment + `.md` download + 3-number coverage line. Later: group-by-primary view mode.
 
@@ -142,7 +142,7 @@ Entries never carry stars/url/language/description — those come exclusively fr
 
 ## 5. Join & drift rules (verified 2026-08-10)
 
-Observed against the **then-checked-in 697-repo `stars.json`** (snapshot at spec authoring, 2026-08-10 — the live dataset grows via the daily sync and was 742 at M1.2's close; these coverage figures are historical, and M2 recomputes them at generation time): **169/171 exact-name matches**; the 2 unresolved are `jacob-bd/notebooklm-mcp-cli` and `AgentWrapper/agent-orchestrator` (both absent — `grep` count 0). Stars at that snapshot contain similarly-named `jacob-bd/gemini-notebook-mcp-cli` and `Untrivial-ai/agent-orchestrator` — **plausible renames, NOT proof of identity.** So `697 − 169 = 528` unclassified at that snapshot.
+Observed against a **697-repo `stars.json`** — per git history that count corresponds to the **2026-07-30 dataset snapshot (`55ae7b2`)**, the state the 169/171 analysis ran against; by the spec's own landing commit (`2987e92`, 2026-08-10) the daily-synced dataset was already 734, and 742 at M1.2's close. These coverage figures are historical to the `55ae7b2` snapshot; M2 recomputes them at generation time: **169/171 exact-name matches**; the 2 unresolved are `jacob-bd/notebooklm-mcp-cli` and `AgentWrapper/agent-orchestrator` (both absent — `grep` count 0). Stars at that snapshot contain similarly-named `jacob-bd/gemini-notebook-mcp-cli` and `Untrivial-ai/agent-orchestrator` — **plausible renames, NOT proof of identity.** So `697 − 169 = 528` unclassified at that snapshot.
 
 - The join is **build-time** (`name_with_owner → node_id`); runtime joins `node_id → live repo` only, and **never** trusts the `.md`'s name/stars/url/language.
 - **No fuzzy remapping, ever.** Allowed resolution order: (1) case-insensitive exact `name_with_owner`; (2) a **human-reviewed durable alias map** (`old_owner/old_repo → node_id`), added only after manual confirmation; (3) a prior generated record's stored `node_id`. Otherwise the entry stays `unresolved` and is retained + surfaced.
@@ -208,17 +208,17 @@ Concept **B (accepted)**: a ledger page whose first ruled entry is a star (encod
 
 ## 10. Acceptance criteria (M0)
 
-| ID           | Test                                                                                                              | Status |
-| ------------ | ----------------------------------------------------------------------------------------------------------------- | ------ |
-| M0-FS-1      | `dashboardToView(state, false)` neutralizes `categories`/`aiTags`, preserves other filters                        | ✅     |
-| M0-FS-2      | AI category filter + AI unavailable → base repos preserved (2 of 2), not 0                                        | ✅     |
-| M0-FS-3      | AI category filter + AI ready-but-unannotated → correctly narrows to 0 (behavior intact)                          | ✅     |
-| M0-FS-4      | View: bookmarked `?category=…` + no annotations → all repos, no "· filtered", degraded notice shown, URL retained | ✅     |
-| M0-FS-5      | AI unavailable + a canonical filter → AI suppressed, canonical still applies, degraded shown                      | ✅     |
-| M0-FS-6      | AI `loading` → filter held inactive with loading-specific wording (not "unavailable")                             | ✅     |
-| M0-SORT-1    | `defaultDirection`: name→asc, dates/counts→desc                                                                   | ✅     |
-| M0-SORT-2    | Selecting "Name" in the sort control yields A→Z and `?sort=name_with_owner&direction=asc`                         | ✅     |
-| (regression) | full dashboard suite green (121/121)                                                                              | ✅     |
+| ID           | Test                                                                                                                                                                                      | Status |
+| ------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------ |
+| M0-FS-1      | `dashboardToView(state, false)` neutralizes `categories`/`aiTags`, preserves other filters                                                                                                | ✅     |
+| M0-FS-2      | AI category filter + AI unavailable → base repos preserved (2 of 2), not 0                                                                                                                | ✅     |
+| M0-FS-3      | AI category filter + AI ready-but-unannotated → correctly narrows to 0 (behavior intact)                                                                                                  | ✅     |
+| M0-FS-4      | View: bookmarked `?category=…` + no annotations → all repos, no "· filtered", degraded notice shown, URL retained                                                                         | ✅     |
+| M0-FS-5      | AI unavailable + a canonical filter → AI suppressed, canonical still applies, degraded shown                                                                                              | ✅     |
+| M0-FS-6      | AI `loading` → filter held inactive with loading-specific wording (not "unavailable")                                                                                                     | ✅     |
+| M0-SORT-1    | `defaultDirection`: name→asc, dates/counts→desc                                                                                                                                           | ✅     |
+| M0-SORT-2    | Selecting "Name" in the sort control yields A→Z and `?sort=name_with_owner` (asc = Name's field default, omitted since M1.1's canonical serializer; the row's test was updated with M1.1) | ✅     |
+| (regression) | full dashboard suite green (121/121)                                                                                                                                                      | ✅     |
 
 Verified: `vitest` 121/121, `pnpm -r typecheck`, eslint + prettier (changed files), Vite production build, and `@starred/deploy` verify + Pages static smoke — all green. (`pnpm format:check` is red only on pre-existing untracked `skills-staging/`, outside this change.)
 
@@ -323,6 +323,8 @@ loading/unavailable/ready matrix — all green together.
 **Round 2 (2026-08-13, Codex xhigh on the amended PR):** confirmed all three round-1 fixes resolved; **one new finding (Medium, provenance):** the M1.2d record read as chronologically contradictory — "backfill pending until the 2026-08-18 quota reset" followed by "completed 2026-08-13" left an auditor unable to tell early-capacity from a jumped gate. Accepted as a wording-precision defect (the substance was correct: the owner restored capacity same-day, ping-verified, before any leg ran): the pending clause now states the precondition as **restored capacity** (the 2026-08-18 date recorded as the then-stated provider reset, not a hard gate) with an explicit timeline-precision note. No production/test change; doc-only correction per the evidence-only rule.
 
 **Round 3 (2026-08-13, Codex xhigh):** rounds 1-2 fixes stand; **one new finding (non-blocking, doc staleness):** §5's coverage observation ("checked-in 697-repo `stars.json`", `697 − 169 = 528`) was written against the spec-authoring snapshot while the live dataset had grown to 742 via the daily sync — the figures read as current and were not reproducible from the PR snapshot. Fixed: the observation is now explicitly marked as the 2026-08-10 authoring snapshot (742 noted at M1.2 close; M2 recomputes coverage at generation time); all four `697` occurrences swept and adjudicated — one factual claim marked historical, two illustrative examples and one sample-JSON value left as illustrations. Operational note, recorded for audit honesty: this round's dispatch produced two orphan duplicate queue tasks (a late-submitting hung round-2 dispatch and a duplicate round-3), both cancelled via the companion CLI before they could return divergent verdicts; the adjudicated round-2/round-3 results are task-msr67j82 and task-msr71b3z.
+
+**Round 4 (2026-08-13, Codex xhigh):** three findings, all doc-precision, all reproduced and fixed. **R4-1 (Medium — a defect in the round-3 fix itself, honestly attributed):** the round-3 correction labeled the 697 figure "snapshot at spec authoring, 2026-08-10", but git history shows 697 corresponds to the **2026-07-30 dataset (`55ae7b2`)** while the spec's landing commit (`2987e92`, 2026-08-10) already carried **734** (742 at HEAD) — the date was asserted from memory, not verified; §5 now cites the commit-anchored snapshot chain (697@`55ae7b2` → 734@`2987e92` → 742 at close). **R4-2 (Low):** §3's M1.2 entry still read "(active …)" against the closed status elsewhere — now "(complete — per-slice acceptance records in §13)"; same-class sweep also fixed the stale "(this change)" labels on M0/M1.1 (pre-existing, now "(merged #234)"/"(merged #237)"). **R4-3 (Low):** the M0-SORT-2 acceptance row still showed `?sort=name_with_owner&direction=asc`, stale since M1.1's default-direction omission (M1.1's own §-note says the TEST was updated; the table row was missed) — row now matches the shipped serializer; the §6.1 backward-compat note about redundant legacy URLs is intentional and unchanged. Doc-only round; no production/test change.
 
 ### Out of scope (→ later / M2)
 
