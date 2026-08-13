@@ -1,6 +1,6 @@
 # P7 — Skills Ecosystem Spec (classification as an optional layer of the Starred view)
 
-> Status: **M0 merged (#234); M1.1 merged (#237). M1.2 complete (a–f, per-slice acceptance records in §13) — local commits on `feat/m1.2-browser-ux`, PR pending. M2–M3 pending.**
+> Status: **M0 merged (#234); M1.1 merged (#237); M1.2 merged (#239). M2 in progress — M2.1 (data/provenance contract, §4) ACCEPTED by owner 2026-08-13 (D1/D2 ratified), landing as the slice commit on `feat/m2.1-classification-contract`; M2.2 (generator-only — loader stays M2.3) next; M2.3–M2.5 and M3 pending.**
 > Stack: same as P1 (Vite · React · TypeScript · GitHub Pages, no backend). Adds one optional, fail-soft data layer and reuses the P1 dashboard surface.
 
 Surfaces the curated task-oriented classification of the coding-agent / skills-ecosystem subset of the starred repos (source: `skills-classified.md`, 171 entries, 24 categories) **inside the existing Starred view** as optional metadata — not as a second browser and not as rendered Markdown.
@@ -67,17 +67,42 @@ Extract the fail-soft correctness fix into **M0**, landed and green as ground tr
 
 **M1.1 — canonical state contract + minimal pagination proof** (merged #237) — the full §6 canonical state/codec: three new canonical fields (`view`, `density`, `page`); the decode→normalize→encode→decode round-trip extended to cover them; R1 convergence (§6.1); requested→effective page reconciliation (§6.2); page-reset on a **semantic** change to filter/search/sort/view, density exempt, explicit `page` wins (§6.3); `activeView` consolidated out of `App.tsx` into `state.view` (§6.4); and the smallest observable pagination proof — fixed **48/page**, real result slicing, minimal Prev/Next controls. Behavioral tests cover the codec, the reset matrix, reconciliation + `replace` semantics, 48/page slicing boundaries, and view fail-soft. **Not** in M1.1: any UX polish (below).
 
-**M1.2 — browser interaction + compact-density UX** (complete — per-slice acceptance records in §13) — density toggle UI + compact visual treatment, sticky toolbar, facet-scroll max-height fix, topic expand/**collapse** toggle, and R3 (effective-filter-count) convergence; `content-visibility:auto` as an enhancement only. Ordered R3 → density → sticky → facet-scroll → topic collapse → integrated regression.
+**M1.2 — browser interaction + compact-density UX** (merged #239 — per-slice acceptance records in §13) — density toggle UI + compact visual treatment, sticky toolbar, facet-scroll max-height fix, topic expand/**collapse** toggle, and R3 (effective-filter-count) convergence; `content-visibility:auto` as an enhancement only. Ordered R3 → density → sticky → facet-scroll → topic collapse → integrated regression.
 
-**M2 — classification layer** — vendor the `.md` into the repo; build-time generator (§4/§5) → `skills-classification.json` + `-meta.json`; fail-soft loader + staging mirroring AI/discovery; Skills-ecosystem scope + Skill-category facet + card badges + search enrichment + `.md` download + 3-number coverage line. Later: group-by-primary view mode.
+**M2 — classification layer** (owner-ordered slices, 2026-08-13; each owner-reviewed like M1.2):
+**M2.1** data + provenance contract (§4 normative + `@starred/skills-schema` + contract tests — no generator/loader/UI code) → **M2.2** build-time fail-closed generator (vendor the `.md`, §4/§5 → `skills-classification.json` + `-meta.json`) → **M2.3** runtime fail-soft loader + deploy staging mirroring AI/discovery → **M2.4** UI projection (Skills-ecosystem scope + Skill-category facet + card badges + search enrichment + `.md` download + 3-number coverage line) → **M2.5** integrated closure (verification-only target, production delta 0 ideal — the M1.2f pattern). Later: group-by-primary view mode.
 
 **M3 — identity** — ledger+star mark in the header, `--accent`/`currentColor`; `/favicon.svg` asset (owner prefers a real asset over a `data:` URI — inspectable, cacheable, PWA-ready; NIT, non-blocking).
 
 ---
 
-## 4. Data contract (M2)
+## 4. Data contract (M2 — formalized as the M2.1 slice)
 
-`data/skills-classified.md` (vendored source) → generator → `data/skills-classification.json` + `data/skills-classification-meta.json`.
+> **M2.1 (2026-08-13, `feat/m2.1-classification-contract`):** this section was expanded from the design-consult draft into the normative contract, with an executable form — `@starred/skills-schema` (Zod schemas + invariants + canonical serializers) → generated JSON Schemas + contract tests — landed BEFORE any generator/loader/UI code. M2.2 (generator), M2.3 (loader), M2.4 (UI projection) implement against this section and change it only by amendment.
+
+### 4.0 Files, naming, ownership
+
+| File                                                                                                                                  | Role                                                                                                                                                                                                                                              | Location                      |
+| ------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------- |
+| `skills-classified.md`                                                                                                                | vendored curated source (owner-authored)                                                                                                                                                                                                          | repo root (vendored in M2.2)  |
+| `skills-aliases.json`                                                                                                                 | human-reviewed durable alias map (§4.7, §5)                                                                                                                                                                                                       | repo root; absent ⇒ empty map |
+| `skills-classification.json`                                                                                                          | generated classification artifact                                                                                                                                                                                                                 | repo root                     |
+| `skills-classification-meta.json`                                                                                                     | generated provenance/integrity metadata                                                                                                                                                                                                           | repo root                     |
+| `schemas/skills-classification.schema.json` · `schemas/skills-classification-meta.schema.json` · `schemas/skills-aliases.schema.json` | **structural projections** generated from the Zod source of truth — `.refine`/`.superRefine` rules do not translate, so these are NOT complete validators (each carries a `$comment` saying so); the Zod schemas are the only complete validators | `schemas/`                    |
+
+- **Location — D1 RATIFIED (owner, 2026-08-13):** M2 classification artifacts live at repository root, alongside the existing canonical generated artifacts; the earlier `data/` prefix in the design draft is superseded by this section. Rationale (owner): the root artifact path is the repository's actual integration contract (existing canonical artifacts, deploy staging, filename constants all root-based); a classification-only directory-aware deploy/loader path would smuggle a product-value-free deployment migration into a contract slice; artifact location is operational packaging, not classification semantics. **A future move under `data/` is an explicit artifact-layout migration** (deploy + loader + compatibility together), never an incidental M2 generator change.
+- **Naming:** every M2 identifier carries a `skills-` / `Skills` prefix — never bare "classification", which P3's executor artifacts already occupy (`classification-{candidate,job,manifest}.schema.json`). Zero collision by construction.
+- **Ownership:** the contract lives in `@starred/skills-schema`, deliberately SEPARATE from `@starred/ai-schema` with zero imports in either direction (§11 M2 action item). Meta field names deliberately differ from `ai-annotations-meta.json` — `classification_sha256` (not `annotations_sha256`), `generated_against_stars_sha256` (not `dataset_sha256`) — so the AI loader's hard dataset gate can never be cargo-culted onto this layer: the names themselves encode the §2.1 semantics.
+
+### 4.1 Identity model (three identities, not one)
+
+1. **Record identity** = `source_name_with_owner` — the name the `.md` classified, case-insensitively unique across entries (I-1). Historical/diagnostic only; never displayed as live repo data.
+2. **Join identity** = `node_id` — unique across the entries that carry one (I-2); the ONLY key the runtime join uses (§5).
+3. **Category identity** = category `id` slug — unique (I-5 domain); entries reference categories by id only (I-4).
+
+`resolution` binds 1↔2 (I-3): `"resolved"` ⟺ `node_id` non-null; `"missing_from_stars"` ⟺ `node_id: null` (the entry is retained + surfaced, §5 — an unresolved entry keeps record identity while having no join identity).
+
+### 4.2 Artifact contract — `skills-classification.json`
 
 ```jsonc
 // skills-classification.json
@@ -113,7 +138,36 @@ Extract the fail-soft correctness fix into **M0**, landed and green as ground tr
 }
 ```
 
-Entries never carry stars/url/language/description — those come exclusively from the live `node_id` join.
+_(The jsonc above is schematic — e.g. the sample entry references a category the truncated `categories` array does not show; it is not a complete I-4-valid instance. The contract tests carry the canonical valid fixtures.)_
+
+**Field rules** (every object `.strict()` — an unknown field is a schema violation; the closed field set IS the contract):
+
+- **root:** `schema_version` literal `"1.0"` · `taxonomy_version` literal `"skills-1"` · `scope` · `categories` · `entries`. **No timestamp anywhere in the artifact** — wall-clock is quarantined in meta `generated_at` (mirrors the stars dataset's determinism invariant).
+- **scope:** `id` slug 1–64 · `label` 1–120 · `description` 1–400.
+- **category:** `id` slug (`^[a-z0-9]+(-[a-z0-9]+)*$`, 1–64) · `label` 1–120 · `kind` ∈ `domain | infrastructure` · `definition` 1–600 · `order` int ≥ 0 · `target_pack` ∈ `opus-pack | design-pack | null` (**D2 RATIFIED** — a controlled classification vocabulary, not a user-generated label: a free slug would defer typo/unknown-pack/consumer-miss failures downstream, against the build-time fail-closed direction; the expansion path is §4.6).
+- **entry:** `source_name_with_owner` — exactly one `/`, no whitespace, 3–140 · `node_id` string 1–256 or null (control-character-free; NO format regex — GitHub ships both legacy `MDEw…` and `R_…` ids, same policy as `CanonicalRepoSchema`) · `resolution` ∈ `resolved | missing_from_stars` · `primary_category_id` · `secondary_category_ids` · `summary` 1–400.
+- **free text** (`label`/`definition`/`summary`/scope fields): NFC-normalized, single-space collapsed, no C0/C1/DEL controls, no Unicode format characters (the full `Cf` category — bidi controls, zero-width chars, soft hyphen, invisible operators, tag block) **except U+200C/U+200D (ZWNJ/ZWJ)** — legitimate in Arabic/Persian shaping and emoji sequences, the same deliberate exception as the AI scalars. **Identity scalars (`node_id`, `source_name_with_owner`) get NO exception**: every format character is rejected there, so a joiner-disguised near-duplicate identity fails loudly. **URLs are NOT rejected** (deliberate difference from the AI scalars: this source is owner-curated, not attacker-influenceable, and every consumer renders it as plain React text children; any consumer that linkifies or embeds in href/src MUST re-open this control).
+- entries never carry stars/url/language/description — those come exclusively from the live `node_id` join (the strict schema makes carrying them a violation, not a convention).
+- **`resolution` IS the machine-readable unresolved reason.** §5's "unresolved names + reasons" is satisfied by: the name (`source_name_with_owner`, always retained), the machine reason (`resolution: "missing_from_stars"` — the only unresolved cause v1 has), and human context where an id was manually recovered (`skills-aliases.json` `reason`, §4.7). The artifact carries no free-text per-entry note field; richer narrative (rename hypotheses, investigation notes) lives in the spec/alias map, not the generated artifact.
+
+**Structural invariants** (in the Zod schema via `superRefine`, so generator output AND loader input are both held to them):
+
+| ID  | Invariant                                                                                                                                         |
+| --- | ------------------------------------------------------------------------------------------------------------------------------------------------- |
+| I-1 | `source_name_with_owner` unique case-insensitively                                                                                                |
+| I-2 | non-null `node_id` unique                                                                                                                         |
+| I-3 | `resolution === "resolved"` ⟺ `node_id !== null` (both directions)                                                                                |
+| I-4 | every `primary_category_id` / `secondary_category_ids[i]` references an existing category; secondaries: ≤ 1 (v1), each ≠ primary, sorted + unique |
+| I-5 | `categories` sorted by `order`; the `order` values are exactly `0..n-1` (a permutation — no gaps, no duplicates); category `id`s unique           |
+| I-6 | `entries` sorted by `source_name_with_owner.toLowerCase()`, codepoint order (total order because of I-1; no locale collation)                     |
+
+### 4.3 Determinism & canonical serialization
+
+- The generator is a **pure function**: `(skills-classified.md bytes, skills-aliases.json bytes | absent, prior skills-classification.json bytes | absent, stars.json bytes) → (artifact bytes, meta minus generated_at)`. Determinism is stated PER ARTIFACT so no test author over- or under-reads it: the **classification data artifact** is deterministic and canonical-byte stable for identical inputs; the **meta artifact** is deterministic in every field EXCEPT `generated_at` — the sole intentionally non-deterministic field (wall clock, meta-only) — so meta JSON is NOT required to be byte-identical across runs, while all of its provenance-bearing input fingerprints are. **Every input that can determine a `node_id` is fingerprinted in meta** (`source_sha256`, `aliases_sha256`, `prior_classification_sha256`, `generated_against_stars_sha256` — §4.4), so an alias- or prior-recovered id has an auditable lineage.
+- Canonical bytes: fixed key order (schema declaration order, explicit canonicalizers — never object-construction order), I-5/I-6 ordering, 2-space indent, single trailing newline (`JSON.stringify(canonical, null, 2) + '\n'` — the same recipe as every other canonical artifact in this repo).
+- Because the ordering invariants live in the schema (not just the serializer), a hand-edited artifact that drifts from canonical form fails schema validation and therefore **fails soft at runtime** — it never renders shuffled.
+
+### 4.4 Meta contract — `skills-classification-meta.json` (generator-owned)
 
 ```jsonc
 // skills-classification-meta.json
@@ -122,6 +176,8 @@ Entries never carry stars/url/language/description — those come exclusively fr
   "taxonomy_version": "skills-1",
   "classification_sha256": "<sha256 of the exact JSON bytes>", // integrity gate (runtime verifies)
   "source_sha256": "<sha256 of the .md>", // provenance
+  "aliases_sha256": "<sha256 of skills-aliases.json>", // provenance; null ⟺ file absent (empty map)
+  "prior_classification_sha256": "<sha256 of the prior artifact>", // provenance; null ⟺ no prior consumed (first generation, or an explicit regenerate-without-prior run — §4.6)
   "generated_against_stars_sha256": "<stars_sha256>", // PROVENANCE ONLY (see §2.1) — not a validity gate
   "generated_at": "…",
   "category_count": 24,
@@ -135,8 +191,94 @@ Entries never carry stars/url/language/description — those come exclusively fr
 }
 ```
 
-**Generator invariants (Zod + build assertions):** exactly one primary; every secondary exists & ≠ primary; unique `source_name_with_owner`; unique resolved `node_id`s; deterministic sort; bounded plaintext summaries; and the arithmetic:
-`source_entry_count = resolved + unresolved`; `resolved = present + absent`; `present + unclassified = canonical_repo_count`.
+_(Count values above are illustrative, carried from the §5 authoring-snapshot analysis; M2.2 computes real values at generation time.)_
+
+| Field                            | Semantics                                                                                                                                             | Runtime role                                                                      |
+| -------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------- |
+| `classification_sha256`          | sha256 of the exact artifact bytes                                                                                                                    | **integrity gate** — loader verifies bytes before parsing                         |
+| `source_sha256`                  | sha256 of the vendored `.md` bytes                                                                                                                    | provenance only                                                                   |
+| `aliases_sha256`                 | sha256 of `skills-aliases.json`; null ⟺ file absent (empty map)                                                                                       | provenance only — input lineage for alias-recovered ids                           |
+| `prior_classification_sha256`    | sha256 of the prior artifact consumed for sticky resolution; null ⟺ NO prior consumed (first generation, or the §4.6 regenerate-without-prior escape) | provenance only — input lineage for prior-recovered ids                           |
+| `generated_against_stars_sha256` | stars snapshot the generation ran against                                                                                                             | **provenance only** (§2.1) — soft "older snapshot" note when ≠ live, never a gate |
+| `generated_at`                   | UTC wall clock of generation                                                                                                                          | display/provenance                                                                |
+| 8 count fields                   | generation-time snapshot statistics                                                                                                                   | diagnostics; internal consistency is verified, live re-check is forbidden         |
+
+**Count semantics** (four disjoint entry states): _resolved_ = has `node_id`; _unresolved_ = `missing_from_stars`; among resolved, _present_ = `node_id` existed in the generation-snapshot stars, _absent_ = it did not (a resolved-but-unstarred repo — e.g. an alias-recovered id whose repo was later unstarred). `unclassified_repo_count` = snapshot repos with no classification.
+
+**Cross-invariants:**
+
+| ID  | Invariant                                                              | Build (generator)             | Runtime (loader)                                             |
+| --- | ---------------------------------------------------------------------- | ----------------------------- | ------------------------------------------------------------ |
+| C-1 | `category_count == categories.length`                                  | assert                        | verify                                                       |
+| C-2 | `source_entry_count == entries.length`                                 | assert                        | verify                                                       |
+| C-3 | `resolved_entry_count == count(resolution == "resolved")`              | assert                        | verify                                                       |
+| C-4 | `unresolved_entry_count == count(resolution == "missing_from_stars")`  | assert                        | verify                                                       |
+| A-1 | `source_entry_count == resolved_entry_count + unresolved_entry_count`  | assert                        | verify (meta-internal arithmetic)                            |
+| A-2 | `resolved_entry_count == present_repo_count + absent_repo_count`       | assert                        | verify (meta-internal arithmetic)                            |
+| A-3 | `present_repo_count + unclassified_repo_count == canonical_repo_count` | assert against snapshot stars | verify arithmetic only — **never against live stars** (§2.1) |
+
+### 4.5 Failure-mode boundary — build fail-closed, runtime fail-soft
+
+The generator (M2.2) is **fail-closed**: it refuses to emit an artifact from a defective source. The loader (M2.3) is **fail-soft**: nothing in this layer may degrade the base Starred browser (§2.2 contract, same `loading | ready | unavailable` model as the AI layer).
+
+| Condition                                                                      | Build-time (generator)                                                              | Runtime (loader)                                                            |
+| ------------------------------------------------------------------------------ | ----------------------------------------------------------------------------------- | --------------------------------------------------------------------------- |
+| source `.md` unparsable / malformed entry                                      | **FAIL** (named line/entry)                                                         | n/a — runtime never reads the `.md`                                         |
+| `stars.json` missing / unreadable / schema-invalid (build input)               | **FAIL** — no resolution basis                                                      | n/a — see the loading row below for the live dataset                        |
+| `skills-aliases.json` present but unreadable / schema-invalid                  | **FAIL** (absent is NOT a failure — empty map, `aliases_sha256: null`)              | n/a — runtime never reads the alias map                                     |
+| prior artifact present but unreadable / fails the CURRENT schema               | **FAIL** — see §4.6 (named regenerate-without-prior escape; never silently dropped) | n/a                                                                         |
+| fetch failure / non-2xx / invalid JSON on `skills-classification{,-meta}.json` | n/a                                                                                 | layer `unavailable` (while in flight: `loading`); base browser unaffected   |
+| schema violation (unknown field, bounds, enum)                                 | **FAIL**                                                                            | layer `unavailable`; base browser unaffected                                |
+| duplicate record identity (I-1) / join identity (I-2)                          | **FAIL**                                                                            | schema-invalid ⇒ `unavailable`                                              |
+| resolution conflict (§5 — distinct candidate `node_id`s for one entry)         | **FAIL** (named conflict)                                                           | n/a — resolution is build-time only                                         |
+| count/cross-invariant mismatch (C-1..4, A-1..3)                                | **FAIL**                                                                            | `unavailable`                                                               |
+| meta missing / malformed / hash length invalid                                 | **FAIL** (never emit artifact without meta)                                         | `unavailable`                                                               |
+| `classification_sha256` ≠ fetched artifact bytes                               | n/a (generator computes it)                                                         | `unavailable` (integrity gate)                                              |
+| `generated_against_stars_sha256` ≠ live `stars_sha256`                         | n/a                                                                                 | **still `ready`** + soft provenance note (§2.1 — never a gate)              |
+| entry `node_id` not in the **generation-snapshot** stars                       | counted `absent` (not a failure)                                                    | n/a — a build-time statistic (§4.4)                                         |
+| entry `node_id` not in the **live** stars (orphan classification)              | n/a — build never sees the future dataset                                           | join miss ⇒ that classification simply doesn't surface; layer stays `ready` |
+| live repo with no classification                                               | counted `unclassified` (against its snapshot)                                       | renders fully, no badges — "absence is not a classification"                |
+| unresolved entries present                                                     | retained + counted (not a failure)                                                  | no effect on the layer; surfaced in coverage diagnostics only               |
+| `schema_version` / `taxonomy_version` ≠ the literals this build knows          | **FAIL**                                                                            | `unavailable` (see §4.6)                                                    |
+
+The M0 requested/effective distinction applies unchanged: a URL carrying a skill facet while the layer is not `ready` keeps the requested value, deactivates the filter, and surfaces the degraded notice (§2.2) — M2.4 wires this; the contract here only fixes which conditions produce which layer state.
+
+### 4.6 Versioning
+
+- `schema_version` (artifact + meta move together) governs **shape**: `MAJOR.MINOR`; additive/compatible → MINOR, breaking → MAJOR. `taxonomy_version` (`skills-1`) governs **meaning**: bump when the category vocabulary is re-cut such that old and new category ids are not comparable.
+- **Controlled-vocabulary expansion (D2 rollout, owner-accepted friction):** adding a `target_pack` value is an **explicit rollout event**, never data drift — `schema vocabulary change → schema MINOR bump → generator/tests update → compatible loader/consumer update`. The cost is paid once per genuine taxonomy expansion instead of on every record; under the literal-match loader policy above, a new enum value could never be half-adopted silently anyway.
+- **v1 loader policy: literal match** — any `schema_version` or `taxonomy_version` the loader does not know ⇒ `unavailable` (fail-soft), never a crash, never a partial parse. Rationale: artifact and dashboard bundle deploy from the same repo in the same publish, so version skew exists only at CDN-cache edges for minutes; literal match buys zero-ambiguity at near-zero cost. Revisit (minor-tolerant decode) only if artifacts ever deploy independently of the bundle.
+- **Prior artifact across a schema bump:** the generator reads the prior artifact under the CURRENT schema (§5 step 3). A prior that fails it — including one written under an older `schema_version` — is a **build FAILURE**, never a silent `null`: silently dropping the prior would silently lose sticky resolutions (a renamed repo's entry quietly degrades to `unresolved` and the counts drift). The named escape is an explicit operator action — regenerate without prior via a dedicated flag, or migrate the prior first. M2.2 implements the flag. In the §4.3 determinism model the flag simply selects the prior-absent input case (`prior_classification_sha256: null` — the same "no prior consumed" meaning §4.4 defines), so bypass runs stay deterministic and honestly fingerprinted.
+
+### 4.7 Alias map contract — `skills-aliases.json`
+
+The §5 resolution step (2) needs a durable, human-reviewed shape:
+
+```jsonc
+// skills-aliases.json (hand-maintained, human-reviewed — never generator-written)
+{
+  "schema_version": "1.0",
+  "aliases": [
+    {
+      "source_name_with_owner": "jacob-bd/notebooklm-mcp-cli", // as written in the .md
+      "node_id": "R_…", // the manually confirmed live repo id
+      "reason": "renamed to jacob-bd/gemini-notebook-mcp-cli; confirmed by owner 2026-08-…",
+    },
+  ],
+}
+```
+
+- `.strict()`; `source_name_with_owner` unique case-insensitively; `node_id` unique, same scalar rules as entries; `reason` required, 1–400, same free-text discipline. File absent ⇒ empty map (not an error). The generator READS this file; only a human writes it (§5: added only after manual confirmation).
+
+### 4.8 M2.1 acceptance (contract slice)
+
+- **Deliverable:** this §4 as the normative contract; `@starred/skills-schema` implementing it 1:1 (schemas, invariants I-1..I-6 + C-1..4/A-1..3, canonical serializers, version literals); `pnpm schemas` emitting the three JSON Schemas; contract tests exercising every invariant from both directions (accept the canonical form, reject each named violation) plus byte-determinism of both serializers.
+- **Explicitly NOT in M2.1** (deferred to M2.2+): the `.md` parser, resolution engine, count computation against stars, any CLI, any loader/fetch code, any dashboard/UI change, vendoring `skills-classified.md` itself.
+- Gates: `pnpm -r typecheck` · `eslint .` · `prettier --check` (changed files) · `vitest run` (suite green incl. new contract tests) · generated schemas committed in the same change as the Zod source.
+
+**M2.1 record (2026-08-13)** — final gates: `pnpm -r typecheck` · `eslint .` · `prettier --check` (changed files) · `vitest run` **935/935** (+124 contract tests over the 811 baseline; suite trajectory 913 at authoring → 931 after round-1 fixes → 935 after round-2 fixes: artifact ACC/strict/enums/I-1..I-6/DET incl. golden canonical bytes and a codepoint-vs-code-unit ordering pin, meta schema/A-in-schema/C-C-A/serializer incl. fail-closed negatives and golden bytes, scalars incl. C1/Cf/joiner boundary cases, aliases) · coverage above the global floors 80/75/78/80 · `pnpm schemas` emits the three `skills-*` structural projections byte-stably. Production dashboard delta: **zero** (contract package + spec + generated schemas + workspace wiring only). Owner decision points recorded at authoring — **both RATIFIED (owner ruling 2026-08-13):** D1 root location (§4.0, with the future-move-is-a-migration clause), D2 `target_pack` closed enum (§4.2, expansion path §4.6). **M2.1 ACCEPTED (owner, 2026-08-13)** — the accepted-state deltas beyond R3 are the two ratification texts, the §4.3 per-artifact determinism wording split (owner precision request: meta JSON is NOT byte-identical across runs, only its fingerprints are), and this acceptance note — doc-only, author-side diff-checked per the evidence-only rule. Bounds stay a recorded residual: M2.2's first real-corpus ingestion adjusts them on corpus evidence + tests if legitimate content exceeds them — never by silent parser truncation.
+
+Cross-model review (standard lineup Luna@max · Luna@ultra · Sol@max, adaptive): **R1 3/3 FIX — 13 deduplicated findings, all reproduced and fixed** (input-lineage hashes `aliases_sha256`/`prior_classification_sha256` added to §4.4; §5 rewritten to the executable evaluate-all resolution rule with auxiliary-input edges pinned; §4.5 completed with runtime transport/parse and build-side input rows + the snapshot-vs-live orphan split; character policy reconciled — full-`Cf`+C1 rejection, ZWNJ/ZWJ exception scoped to free text only, identity scalars exception-free; I-6 comparator moved to true codepoint order with a supplementary-plane regression pin; generated JSON Schemas declared structural projections with an embedded `$comment`; meta serializer made parse-first fail-closed; "unresolved reasons" closed by contract precision — `resolution` is the machine reason, alias-map `reason` carries human context, no new artifact field; plus three test-strength repairs — a doubly-invalid strictness fixture, golden exact-byte serializer pins, out-of-enum negatives). **R2 3/3 FIX — convergent small round:** two real residuals fixed (`prior_classification_sha256: null` semantics unified to "no prior consumed" across §4.4/§4.6/code, per Sol+Luna@ultra; A-1..A-3 moved INTO the meta schema so the serializer is fail-closed against impossible counts, per Sol — pinned by new negatives), this record's staleness fixed (all three legs), and one finding **rejected-with-reason**: "pnpm-lock importer missing" — the lockfile importer delta exists in the working tree (+9 lines, zod deps at already-resolved versions); both packets excluded the lockfile from the inlined diff and only R1's context note said so — a packet-framing artifact, not a tree defect. **R3 (round cap) 3/3: every R1/R2 fix confirmed present, the lockfile disposition accepted; sole residual = this record's own suite figure lagging the R2 fixes' +4 tests (931 → 935) — refreshed above as an evidence-only doc delta with an author-side diff check, no re-run (the M1.2 evidence-only rule).**
 
 ---
 
@@ -145,9 +287,11 @@ Entries never carry stars/url/language/description — those come exclusively fr
 Observed against a **697-repo `stars.json`** — per git history that count corresponds to the **2026-07-30 dataset snapshot (`55ae7b2`)**, the state the 169/171 analysis ran against; by the spec's own landing commit (`2987e92`, 2026-08-10) the daily-synced dataset was already 734, and 742 at M1.2's close. These coverage figures are historical to the `55ae7b2` snapshot; M2 recomputes them at generation time: **169/171 exact-name matches**; the 2 unresolved are `jacob-bd/notebooklm-mcp-cli` and `AgentWrapper/agent-orchestrator` (both absent — `grep` count 0). Stars at that snapshot contain similarly-named `jacob-bd/gemini-notebook-mcp-cli` and `Untrivial-ai/agent-orchestrator` — **plausible renames, NOT proof of identity.** So `697 − 169 = 528` unclassified at that snapshot.
 
 - The join is **build-time** (`name_with_owner → node_id`); runtime joins `node_id → live repo` only, and **never** trusts the `.md`'s name/stars/url/language.
-- **No fuzzy remapping, ever.** Allowed resolution order: (1) case-insensitive exact `name_with_owner`; (2) a **human-reviewed durable alias map** (`old_owner/old_repo → node_id`), added only after manual confirmation; (3) a prior generated record's stored `node_id`. Otherwise the entry stays `unresolved` and is retained + surfaced.
+- **No fuzzy remapping, ever.** The only admissible resolution sources: (1) case-insensitive exact `name_with_owner` match against the generation-snapshot stars; (2) a **human-reviewed durable alias map** (`old_owner/old_repo → node_id`, shape in §4.7), added only after manual confirmation; (3) a prior generated record's stored `node_id`. Otherwise the entry stays `unresolved` and is retained + surfaced.
+- **Executable resolution rule (M2.1 — evaluate-all, not first-hit).** For EVERY entry the generator evaluates all three sources (each lookup case-insensitive on `source_name_with_owner`; a prior record with `node_id: null` contributes no candidate) and collects the distinct non-null candidate `node_id`s: **zero** → `unresolved` (retained, `resolution: "missing_from_stars"`); **exactly one** → resolved to it; **more than one** → **build FAILURE with the entry and every candidate id named**. A first-hit/short-circuit walk is explicitly wrong — it cannot even see the exact-vs-alias conflict (a recycled name: alias says A, a live exact match now says B) or the exact-vs-prior conflict (same-name different-repo swap) that this rule exists to surface. Silently preferring any source would paper over exactly that drift; the fix is human (update the `.md` or the alias map).
+- **Auxiliary-input edge semantics (M2.1):** a **stale alias row** (its `source_name_with_owner` matches no current `.md` entry) is NOT a build failure — it resolves nothing, so it can corrupt nothing; the generator surfaces it in diagnostics so the map gets pruned (requiring atomic `.md`+map edits for every entry removal would be friction without integrity gain). A **present-but-invalid prior artifact** is a build failure with a named escape (§4.6). Alias/prior lineage is fingerprinted in meta (§4.4).
 - **`node_id` is stable across renames** — so once the 2 missing ids are recovered into the source (one-time, human-confirmed), a later owner rename resolves automatically to the repo's new name.
-- **Three distinct coverage numbers** (never conflate): `169 matched · 528 unclassified · 2 unresolved source entries`. The downloadable metadata / coverage diagnostics MUST retain the unresolved names + reasons.
+- **Three distinct coverage numbers** (never conflate): `169 matched · 528 unclassified · 2 unresolved source entries`. The downloadable metadata / coverage diagnostics MUST retain the unresolved names + reasons — satisfied by the artifact itself (§4.2: the retained `source_name_with_owner` + `resolution` as the machine reason) plus the alias map's human `reason` for recovered ids; no separate per-entry note field exists.
 
 ---
 
