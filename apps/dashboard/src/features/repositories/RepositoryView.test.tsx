@@ -453,6 +453,15 @@ describe('RepositoryView — sticky toolbar (§13, M1.2c)', () => {
     expect(window.location.search).toBe('?density=comfortable');
     expect(toolbar().className).toBe('toolbar is-scrolled');
   });
+
+  it('STICK-4: the toolbar height is published as --toolbar-h for the sidebar clearance (PR #239 R1-1)', () => {
+    renderView();
+    const main = screen.getByRole('main') as HTMLElement;
+    // jsdom has no layout (offsetHeight = 0) and no ResizeObserver — the pin is
+    // the WIRING (the variable is published on mount); the actual clearance
+    // geometry is browser-verified in the review-round smoke.
+    expect(main.style.getPropertyValue('--toolbar-h')).toBe('0px');
+  });
 });
 
 describe('RepositoryView — facet scroll (§13, M1.2d)', () => {

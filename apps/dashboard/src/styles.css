@@ -219,13 +219,26 @@ a {
   align-items: start;
 }
 
+/* Sticks BELOW the sticky toolbar (PR #239 review, finding 1): with a plain
+   `top: 1rem` the opaque toolbar (bottom ≈55px) permanently covered the
+   sidebar's top ~39px — the Language section header hit-tested to TOOLBAR.
+   --toolbar-h is published by RepositoryView from a ResizeObserver because
+   the toolbar's height is layout-dependent (flex-wrap); 3.5rem is the
+   single-row fallback. */
 .sidebar {
   position: sticky;
-  top: 1rem;
-  max-height: calc(100vh - 2rem);
+  top: calc(var(--toolbar-h, 3.5rem) + 0.5rem);
+  max-height: calc(100vh - var(--toolbar-h, 3.5rem) - 1rem);
   overflow-y: auto;
   padding-right: 0.2rem;
   scrollbar-width: thin;
+}
+
+/* With the view tabs present the whole sticky stack is taller (tabs sit above
+   the toolbar) — mirror the toolbar's own tabs offset. */
+:root:has(.view-tabs) .sidebar {
+  top: calc(var(--view-tabs-h) + var(--toolbar-h, 3.5rem) + 0.5rem);
+  max-height: calc(100vh - var(--view-tabs-h) - var(--toolbar-h, 3.5rem) - 1rem);
 }
 
 .filters {
@@ -910,12 +923,20 @@ a {
 /* `compact` (the §6 default) raises information density via spacing/typography/
    grid ONLY; every content element and action — including the 3-line
    description clamp — is identical in both densities (nothing is removed to
-   achieve density). `comfortable` is the untouched baseline above.
-   `min(19rem, 100%)` keeps narrow viewports at one column, so this override
-   never fights the responsive single-column rules. */
+   achieve density). `comfortable` is the untouched baseline above. */
+/* The COLUMN override applies only above the pre-existing ≤900px single-column
+   breakpoint: at equal-or-higher specificity a global rule here would silently
+   defeat that earlier media rule (PR #239 review, finding 2 — at 800px compact
+   rendered 2 columns while comfortable honored the 1-column decision). Spacing
+   (`gap`) stays densified at every width. */
 .density-compact .card-list {
-  grid-template-columns: repeat(auto-fill, minmax(min(19rem, 100%), 1fr));
   gap: 0.5rem;
+}
+
+@media (min-width: 901px) {
+  .density-compact .card-list {
+    grid-template-columns: repeat(auto-fill, minmax(min(19rem, 100%), 1fr));
+  }
 }
 
 .density-compact .card {

@@ -132,6 +132,23 @@ export function RepositoryView({
     window.addEventListener('scroll', onScroll, { passive: true });
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
+  // The sticky sidebar must stick BELOW the sticky toolbar or the opaque
+  // toolbar covers the sidebar's top ~39px (PR #239 review, finding 1). The
+  // toolbar's height is layout-dependent (flex-wrap), so publish it as a CSS
+  // variable the sidebar's `top`/`max-height` consume (presentation only).
+  const mainRef = useRef<HTMLElement>(null);
+  const toolbarRef = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    const main = mainRef.current;
+    const toolbar = toolbarRef.current;
+    if (!main || !toolbar) return;
+    const publish = () => main.style.setProperty('--toolbar-h', `${toolbar.offsetHeight}px`);
+    publish();
+    if (typeof ResizeObserver === 'undefined') return; // jsdom: geometry is browser-verified
+    const ro = new ResizeObserver(publish);
+    ro.observe(toolbar);
+    return () => ro.disconnect();
+  }, []);
   const filterCount = activeFilterCount(state);
   // AI facets present in state but inert because the layer isn't ready: still
   // shown as removable chips (recoverability) with a degraded notice, but NOT
@@ -141,7 +158,7 @@ export function RepositoryView({
   const effectiveFilterCount = filterCount - suppressedAiFilterCount;
 
   return (
-    <main className={`dashboard density-${state.density}`}>
+    <main ref={mainRef} className={`dashboard density-${state.density}`}>
       <header className="dashboard-head">
         <div className="brand-row">
           <div>
@@ -158,7 +175,7 @@ export function RepositoryView({
       {/* Direct child of .dashboard on purpose: position:sticky is constrained
           to its parent's box, so nesting this back inside the (short)
           .dashboard-head would silently un-stick it (STICK-1 pins this). */}
-      <div className={`toolbar${scrolled ? ' is-scrolled' : ''}`}>
+      <div ref={toolbarRef} className={`toolbar${scrolled ? ' is-scrolled' : ''}`}>
         <div className="search">
           <label className="visually-hidden" htmlFor={searchId}>
             Search repositories
