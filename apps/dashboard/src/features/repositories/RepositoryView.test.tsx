@@ -532,3 +532,166 @@ describe('RepositoryView — facet scroll (§13, M1.2d)', () => {
     expect(optionsBox(group).className).toBe('facet-options facet-options--scroll');
   });
 });
+
+describe('RepositoryView — M1.2f integrated closure (§13)', () => {
+  // 120 repos, two languages (Go = 60 → two 48-pages when filtered), six shared
+  // topics — enough surface to combine filters, pagination, density, R3 and
+  // topic collapse in one canonical state.
+  const intRepos = (n = 120) =>
+    Array.from({ length: n }, (_, i) =>
+      makeRepo({
+        node_id: `R_int${i}`,
+        name_with_owner: `acme/int-${String(i).padStart(3, '0')}`,
+        url: `https://github.com/acme/int-${i}`,
+        primary_language: i % 2 === 0 ? 'Go' : 'Rust',
+        topics: ['alpha', 'beta', 'gamma', 'delta', 'epsilon', 'zeta'],
+        stargazer_count: n - i,
+      }),
+    );
+
+  const densitySelect = () => screen.getByRole('combobox', { name: 'Density' });
+
+  it('INT-1: a fully combined bookmark reproduces every axis at once (R3 × density × filter × page)', () => {
+    window.history.replaceState(
+      null,
+      '',
+      '/?language=Go&category=security&density=comfortable&page=2',
+    );
+    renderView(intRepos()); // AI unavailable → the category filter is suppressed
+    expect(screen.getByRole('button', { name: 'Filters 1' })).toBeTruthy(); // language only (R3)
+    expect(screen.getByText(/AI classification is unavailable/)).toBeTruthy();
+    expect((densitySelect() as HTMLSelectElement).value).toBe('comfortable');
+    expect(screen.getByRole('main').className).toBe('dashboard density-comfortable');
+    expect(within(pager()).getByText('Page 2 of 2')).toBeTruthy(); // 60 Go → 48 + 12
+    expect(window.location.search).toBe(
+      '?language=Go&category=security&density=comfortable&page=2',
+    );
+  });
+
+  it('INT-2: AI becoming ready activates the filter, re-counts the badge, and reconciles the page — density survives', () => {
+    window.history.replaceState(
+      null,
+      '',
+      '/?language=Go&category=security&density=comfortable&page=2',
+    );
+    const repos = intRepos();
+    const { rerender } = renderView(repos, { annotationStatus: 'loading' });
+    // loading suppresses ONLY the AI facet — the language filter still counts,
+    // and the requested page SURVIVES the loading phase (60 Go results → 2 pages):
+    expect(screen.getByRole('button', { name: 'Filters 1' })).toBeTruthy();
+    expect(within(pager()).getByText('Page 2 of 2')).toBeTruthy();
+    expect(window.location.search).toBe(
+      '?language=Go&category=security&density=comfortable&page=2',
+    );
+
+    rerender(
+      <Harness
+        repos={repos}
+        datasetGeneratedAt="2026-06-18T00:00:00Z"
+        initialNow={NOW}
+        annotations={makeAnnotations({ R_int0: makeAnnotation({ category: 'security' }) })}
+      />,
+    );
+    // ready: the category filter activates → exactly the annotated Go repo
+    // remains (the join is proven by the result set, not just the badge) → the
+    // requested page 2 reconciles to 1 (dropped from the URL as the default),
+    // density persists.
+    expect(screen.getByRole('button', { name: 'Filters 2' })).toBeTruthy();
+    expect(screen.getByText('1 of 120 · filtered')).toBeTruthy();
+    expect(screen.getByRole('link', { name: 'acme/int-000' })).toBeTruthy();
+    expect(window.location.search).toBe('?language=Go&category=security&density=comfortable');
+    expect(screen.getByRole('main').className).toBe('dashboard density-comfortable');
+  });
+
+  it('INT-3: while the toolbar is stuck, density preserves the LIVE page and a sort change resets it (§6.3)', () => {
+    renderView(intRepos());
+    // Re-query on every assertion: a rerender may replace the node, and a
+    // detached reference would false-pass (R1 xcheck finding).
+    const toolbar = () => document.querySelector('.toolbar') as HTMLElement;
+    fireEvent.click(within(pager()).getByRole('button', { name: /Next/ }));
+    expect(window.location.search).toBe('?page=2');
+
+    Object.defineProperty(window, 'scrollY', { value: 200, configurable: true, writable: true });
+    fireEvent.scroll(window);
+    expect(toolbar().className).toBe('toolbar is-scrolled');
+
+    // density FIRST, while page=2 is live — the §6.3 exemption is proven, not
+    // asserted after the page was already reset (R1 xcheck finding):
+    fireEvent.change(densitySelect(), { target: { value: 'comfortable' } });
+    expect(window.location.search).toBe('?density=comfortable&page=2');
+    expect(toolbar().className).toBe('toolbar is-scrolled');
+
+    // then a semantic change resets the page and keeps density:
+    fireEvent.change(screen.getByRole('combobox', { name: 'Sort' }), {
+      target: { value: 'stargazer_count' },
+    });
+    expect(window.location.search).toBe('?sort=stargazer_count&density=comfortable');
+    expect(within(pager()).getByText(/Page 1 of/)).toBeTruthy();
+    expect(toolbar().className).toBe('toolbar is-scrolled'); // presentation flag undisturbed
+    Object.defineProperty(window, 'scrollY', { value: 0, configurable: true, writable: true });
+  });
+
+  // 17 distinct topics across the dataset (common + top00..top15) → the topics
+  // facet offers Show-more; shared by INT-4 and INT-6.
+  const topicPoolRepos = () =>
+    Array.from({ length: 16 }, (_, i) =>
+      makeRepo({
+        node_id: `R_t${i}`,
+        name_with_owner: `acme/t-${String(i).padStart(2, '0')}`,
+        url: `https://github.com/acme/t-${i}`,
+        topics: ['common', `top${String(i).padStart(2, '0')}`],
+      }),
+    );
+
+  it('INT-4: a fully EXPANDED bounded facet keeps its class and its expansion across a density switch', () => {
+    renderView(topicPoolRepos());
+    fireEvent.click(screen.getByRole('button', { name: /Topics/ }));
+    // Re-query past rerenders — a stale fieldset reference would false-pass
+    // against a detached node (R1 xcheck finding).
+    const topicsGroup = () => screen.getByRole('group', { name: 'Topics' });
+    const box = () => topicsGroup().querySelector('.facet-options') as HTMLElement;
+    fireEvent.click(within(topicsGroup()).getByRole('button', { name: /Show \d+ more/ }));
+    expect(within(topicsGroup()).getAllByRole('checkbox')).toHaveLength(17); // truly expanded
+    expect(box().className).toBe('facet-options facet-options--scroll');
+
+    fireEvent.change(densitySelect(), { target: { value: 'comfortable' } });
+    expect(within(topicsGroup()).getAllByRole('checkbox')).toHaveLength(17); // expansion survives
+    expect(box().className).toBe('facet-options facet-options--scroll');
+    expect(window.location.search).toBe('?density=comfortable');
+  });
+
+  it('INT-5: a card topic toggle is inert to a fully populated canonical URL', () => {
+    window.history.replaceState(null, '', '/?topic=zeta&density=comfortable&page=2');
+    renderView(intRepos()); // zeta matches all 120 → 3 pages; page 2 valid
+    const canonical = '?topic=zeta&density=comfortable&page=2';
+    expect(window.location.search).toBe(canonical);
+
+    // selected-first: zeta visible on a collapsed card
+    const firstCard = document.querySelector('.card') as HTMLElement;
+    const topics = Array.from(firstCard.querySelectorAll('.topic:not(.topic-more)')).map(
+      (t) => t.textContent,
+    );
+    expect(topics[0]).toBe('zeta');
+
+    fireEvent.click(within(firstCard).getByRole('button', { name: '+2' }));
+    expect(window.location.search).toBe(canonical); // local toggle leaks nothing
+    fireEvent.click(within(firstCard).getByRole('button', { name: 'Show fewer' }));
+    expect(window.location.search).toBe(canonical);
+  });
+
+  it('INT-6: the topics facet keeps a bookmarked beyond-limit selection visible while collapsed (its own selected-overflow path)', () => {
+    window.history.replaceState(null, '', '/?topic=top15');
+    renderView(topicPoolRepos());
+    fireEvent.click(screen.getByRole('button', { name: /Topics/ }));
+    const topicsGroup = screen.getByRole('group', { name: 'Topics' });
+    // Lexicographic facet order: 'common', top00..top15 → top15 is 17th, well
+    // beyond the 12-row collapsed budget; TopicFacet's OWN selected-overflow
+    // path (distinct from the generic CheckboxFacet's) must keep it visible.
+    const selected = within(topicsGroup).getByRole('checkbox', {
+      name: 'top15',
+    }) as HTMLInputElement;
+    expect(selected.checked).toBe(true);
+    expect(within(topicsGroup).getByRole('button', { name: /Show \d+ more/ })).toBeTruthy(); // still collapsed
+    expect(within(topicsGroup).getAllByRole('checkbox')).toHaveLength(13); // 12 + the selected overflow row
+  });
+});
