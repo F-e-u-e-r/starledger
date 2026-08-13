@@ -1,13 +1,16 @@
-import { readFileSync } from 'node:fs';
+import { existsSync, readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { describe, expect, it } from 'vitest';
 import { deriveCategoryId, parseSkillsClassifiedSource } from '../src/parse-source';
 import { makeSourceText } from './helpers';
 
-const REAL_SOURCE = readFileSync(
-  resolve(import.meta.dirname, '../../../skills-classified.md'),
-  'utf8',
-);
+// The vendored corpus is OWNER DATA: present in the real repo, absent in the
+// P4 template scratch build. The evidence tests below run only where it
+// exists — a labelled skip, never a silent failure; every synthetic-grammar
+// test still runs everywhere.
+const REAL_SOURCE_PATH = resolve(import.meta.dirname, '../../../skills-classified.md');
+const HAS_REAL_SOURCE = existsSync(REAL_SOURCE_PATH);
+const REAL_SOURCE = HAS_REAL_SOURCE ? readFileSync(REAL_SOURCE_PATH, 'utf8') : '';
 
 function expectIssues(text: string, needle: string): void {
   const result = parseSkillsClassifiedSource(text);
@@ -30,7 +33,7 @@ describe('deriveCategoryId (§4.9 slug rule)', () => {
   });
 });
 
-describe('real vendored corpus (byte-verbatim source evidence)', () => {
+describe.skipIf(!HAS_REAL_SOURCE)('real vendored corpus (byte-verbatim source evidence)', () => {
   const result = parseSkillsClassifiedSource(REAL_SOURCE);
 
   it('parses clean: 171 entries, 24 categories, zero issues', () => {
@@ -390,6 +393,28 @@ describe('round-3 strictness — reserved markers cannot degrade to prose; table
       '**Total: 3 + 0 = 3 repos.**\n\n| Sneaky | Row. | 0 |',
     );
     expectIssues(text, 'table row after the total line');
+  });
+});
+
+describe('hosted-review strictness — horizontal rules are boundary-only', () => {
+  it('rejects an hr between entries inside a section', () => {
+    const text = makeSourceText().replace(
+      '- alpha/one (★10) — First fixture entry.',
+      '- alpha/one (★10) — First fixture entry.\n\n---',
+    );
+    expectIssues(text, 'horizontal rule in a non-boundary position');
+  });
+
+  it('rejects an hr inside a scheme table', () => {
+    const text = makeSourceText().replace(
+      '| Verification & QA | Correctness-checking skills. | 2 | opus-pack |',
+      '| Verification & QA | Correctness-checking skills. | 2 | opus-pack |\n\n---',
+    );
+    expectIssues(text, 'horizontal rule in a non-boundary position');
+  });
+
+  it('keeps the three legitimate boundary hrs accepted (baseline still clean)', () => {
+    expect(parseSkillsClassifiedSource(makeSourceText()).ok).toBe(true);
   });
 });
 

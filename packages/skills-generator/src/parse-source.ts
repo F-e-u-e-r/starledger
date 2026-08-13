@@ -171,6 +171,7 @@ export function parseSkillsClassifiedSource(text: string): ParseSourceResult {
   let titleSeen = false;
   let verificationSeen = false;
   const seenOnce = new Map<string, number>();
+  const hrIndices: number[] = [];
 
   const requireOnce = (marker: string, lineNo: number): boolean => {
     const prior = seenOnce.get(marker);
@@ -193,6 +194,8 @@ export function parseSkillsClassifiedSource(text: string): ParseSourceResult {
     if (line === '---') {
       if (zone === 'tail') {
         issues.push(`line ${lineNo}: unexpected content after the verification line: ${line}`);
+      } else {
+        hrIndices.push(index);
       }
       continue;
     }
@@ -552,6 +555,32 @@ export function parseSkillsClassifiedSource(text: string): ParseSourceResult {
 
     // tail: nothing but blank lines/hr after the verification line.
     issues.push(`line ${lineNo}: unexpected content after the verification line: ${line}`);
+  }
+
+  // Horizontal rules are zone separators ONLY: each must immediately precede
+  // a zone-boundary line (a section h1, the multi-fit heading, or the closing
+  // verification line). An hr inside a table or between entries is a
+  // misplaced separator, not decoration (hosted review finding).
+  for (const hrIndex of hrIndices) {
+    let next = '';
+    for (let j = hrIndex + 1; j < lines.length; j += 1) {
+      const candidate = lines[j] ?? '';
+      if (candidate !== '') {
+        next = candidate;
+        break;
+      }
+    }
+    const allowed =
+      next === '' ||
+      next === DOMAIN_H1 ||
+      next === INFRA_H1 ||
+      next === MULTI_FIT_HEADING ||
+      /^\*\*Verification: .+\*\*$/.test(next);
+    if (!allowed) {
+      issues.push(
+        `line ${hrIndex + 1}: horizontal rule in a non-boundary position (next content: ${next})`,
+      );
+    }
   }
 
   // ---- required structure present exactly once ----
