@@ -205,6 +205,21 @@ importers:
         specifier: ^2.6.1
         version: 2.9.0
 
+  packages/skills-generator:
+    dependencies:
+      '@starred/schema':
+        specifier: workspace:*
+        version: link:../schema
+      '@starred/skills-schema':
+        specifier: workspace:*
+        version: link:../skills-schema
+      commander:
+        specifier: ^12.1.0
+        version: 12.1.0
+      zod:
+        specifier: ^3.24.1
+        version: 3.25.76
+
   packages/skills-schema:
     dependencies:
       zod:

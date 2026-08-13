@@ -1,0 +1,18 @@
+{
+  "schema_version": "1.0",
+  "taxonomy_version": "skills-1",
+  "classification_sha256": "5ca8fca69bb518235a0d459f44c2b25e72fcd353f31b5c4ff165835a0ada6d16",
+  "source_sha256": "495da0c023b02aecfd27276fe9196a62098f7a6031f2c50e3e17402b9709ea7b",
+  "aliases_sha256": null,
+  "prior_classification_sha256": null,
+  "generated_against_stars_sha256": "18586a489a823e632d6601c5dca7f4e6cb4981b2c194899ae28329ef84d1be5c",
+  "generated_at": "2026-08-13T17:08:53.917Z",
+  "category_count": 24,
+  "source_entry_count": 171,
+  "resolved_entry_count": 166,
+  "present_repo_count": 166,
+  "absent_repo_count": 0,
+  "unresolved_entry_count": 5,
+  "canonical_repo_count": 744,
+  "unclassified_repo_count": 578
+}
