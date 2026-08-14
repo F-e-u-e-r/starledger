@@ -4080,6 +4080,28 @@
       }
     },
     {
+      "node_id": "R_kgDON1G5Sg",
+      "category": "ai-ml",
+      "tags": [
+        "machine-learning"
+      ],
+      "summary": "IndexTTS is a zero-shot text-to-speech system that clones a voice from a single reference audio clip. It supports Chinese, English, Japanese, Spanish, and Arabic with fine-grained emotion control, speaking-speed control, and pronunciation control, and provides both a web demo and a Python API for inference.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "11b719c9e21f68685967e6b5b77681d2e15c709e",
+        "repo_metadata_sha256": "50f96b59a1861af18a6f2d2d5454cdfc48a5eb477106e749583f5255650ecace",
+        "fingerprint": "749d789805b0df950152b3edf879540eac22ae50abafd51521ccce9788e91a06"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-08-14T07:07:31Z"
+      }
+    },
+    {
       "node_id": "R_kgDON1UFjg",
       "category": "ai-ml",
       "tags": [
@@ -6476,6 +6498,28 @@
         "model_label": "informational-only",
         "prompt_version": "classify-v1",
         "generated_at": "2026-07-19T09:23:11Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOPT-eoA",
+      "category": "ai-ml",
+      "tags": [
+        "machine-learning"
+      ],
+      "summary": "Wan2.2 is a suite of open large-scale video generation models built on a Mixture-of-Experts diffusion architecture. It supports text-to-video, image-to-video, text-image-to-video, speech-to-video, and character animation, and includes a high-compression 5B model that can run 720p generation on consumer GPUs.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "3aa29f544c058a1ac2d9300ff89568b4d0c4a4c5",
+        "repo_metadata_sha256": "6c3108f9a577544e6738bfd6cf079ba301d53eb2e5e33041b722288c37d245af",
+        "fingerprint": "d0365f4e14ad5742512dfb1b1be37e8473763e783e035a08e21cb50ba7afc977"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-08-14T07:07:31Z"
       }
     },
     {
@@ -9397,6 +9441,28 @@
         "model_label": null,
         "prompt_version": "classify-v1",
         "generated_at": "2026-07-18T23:25:40Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOQzA71Q",
+      "category": "ai-ml",
+      "tags": [
+        "machine-learning"
+      ],
+      "summary": "LTX-2 is a DiT-based audio-video foundation model that generates synchronized audio and video from text or images. It ships multiple inference pipelines, distilled and full model variants, LoRA training tools, and optimizations such as FP8 quantization, packaged as a Python monorepo of core, pipeline, and trainer components.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "b0a82d3940205ef20de24d113da9dd2eb2ca375d",
+        "repo_metadata_sha256": "e6407f4e8254a6270ef0b7e35364a1fcac0d03067a931e21ab389c575afe2747",
+        "fingerprint": "4e1e7008ba86f45c24a0ebfe2412a953cd3d9f30a0d302582d3c565578102464"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-08-14T07:07:31Z"
       }
     },
     {
@@ -13746,6 +13812,31 @@
       }
     },
     {
+      "node_id": "R_kgDORpsWiQ",
+      "category": "media-creative",
+      "tags": [
+        "cli",
+        "desktop-app",
+        "machine-learning",
+        "self-hosted"
+      ],
+      "summary": "Modly is a desktop application for Windows, Linux, and Apple Silicon macOS that generates 3D meshes from images using open-source AI models running locally on the user GPU. It offers a node-based workflow editor, an extension system for additional models, and a command-line interface for scripted automation.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "11184ddc44ee6360bb5bb9bffb3731e690ca4bdd",
+        "repo_metadata_sha256": "e31557e43f2867ea1b0c93f470e9f0fae4823f171af658a582b03239781fe5b0",
+        "fingerprint": "307aed258ee4db1f8b498dfd59d4a76a65f229524a34a9df371948791518b9ff"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-08-14T07:07:31Z"
+      }
+    },
+    {
       "node_id": "R_kgDORq3qbg",
       "category": "developer-tools",
       "tags": [
@@ -15201,6 +15292,29 @@
         "model_label": "informational-only",
         "prompt_version": "classify-v1",
         "generated_at": "2026-07-26T10:22:35Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOSEljpA",
+      "category": "developer-tools",
+      "tags": [
+        "plugin",
+        "visualization"
+      ],
+      "summary": "Diagram Design is an agent skill and plugin for Claude Code, Codex, and Pi that generates editorial-quality diagrams as self-contained HTML and SVG. It provides 27 visual types, brand onboarding that maps a website palette and fonts to diagram tokens, and redrawing of draw.io or Mermaid sources.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "3212c08f56b1478df3d455c3cfa324b9249944aa",
+        "repo_metadata_sha256": "d8fcd433afe52b3f33cbe6ef3ae36bfa5667e554d26618a3b5acdf797b1ac6dc",
+        "fingerprint": "c46f4cbda41ee7f8767d3246fc482228e2589186baa250e315ee36b1a5626efb"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-08-14T07:07:31Z"
       }
     },
     {
