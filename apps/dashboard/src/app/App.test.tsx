@@ -132,3 +132,89 @@ describe('App state machine', () => {
     await waitFor(() => expect(window.location.search).toBe('?view=discovery'));
   });
 });
+
+describe('M2.3 skills-classification non-propagation (P7 §4.10)', () => {
+  const skillsReady = async () => ({
+    byNodeId: new Map([
+      [
+        'R_1',
+        { primaryCategoryId: 'verification-qa', secondaryCategoryIds: [], summary: 'Fixture.' },
+      ],
+    ]),
+    categories: [],
+    scope: { id: 'coding-agent-skills-ecosystem', label: 'x', description: 'y' },
+    taxonomyVersion: 'skills-1',
+    generatedAt: '2026-08-14T00:00:00Z',
+    generatedAgainstStarsSha256: 'c'.repeat(64),
+    coverage: { matched: 1, unclassified: 0, unresolved: 0 },
+  });
+
+  async function renderWithSkills(
+    skillsLoader: NonNullable<Parameters<typeof App>[0]>['skillsClassificationLoader'],
+  ): Promise<string> {
+    const view = render(
+      <App
+        loader={async () => makeDataset([makeRepo({ node_id: 'R_1', name_with_owner: 'a/one' })])}
+        annotationsLoader={async () => null}
+        discoveryLoader={async () => null}
+        skillsClassificationLoader={skillsLoader}
+      />,
+    );
+    await waitFor(() => expect(screen.getByText('a/one')).toBeTruthy());
+    // Let the optional layer settle so the captured DOM is the steady state.
+    await new Promise((resolve) => setTimeout(resolve, 0));
+    // React's useId counter is process-global, so auto-generated aria ids
+    // (:r1f: etc.) differ between renders; normalize them — everything ELSE
+    // must be byte-identical for the delta-0 invariant.
+    const html = view.container.innerHTML.replace(/:r[0-9a-z]+:/g, ':rID:');
+    view.unmount();
+    return html;
+  }
+
+  it('SKILLS-1: the loader IS invoked (wiring pin) and a rejection never affects the base browser', async () => {
+    let invoked = 0;
+    const rejecting = () => {
+      invoked += 1;
+      return Promise.reject(new Error('classification exploded'));
+    };
+    await renderWithSkills(rejecting);
+    // Deleting App's useSkillsClassification call makes this fail.
+    expect(invoked).toBeGreaterThan(0);
+  });
+
+  it('SKILLS-3 (matrix row 10): a READY layer whose map lacks the base repo renders it as a normal repo — no error, no synthetic classification', async () => {
+    const readyWithoutThisRepo = async () => ({
+      ...(await skillsReady()),
+      byNodeId: new Map([
+        [
+          'R_other',
+          { primaryCategoryId: 'verification-qa', secondaryCategoryIds: [], summary: 'Other.' },
+        ],
+      ]),
+    });
+    const baseline = await renderWithSkills(async () => null);
+    const unclassified = await renderWithSkills(readyWithoutThisRepo);
+    expect(unclassified).toBe(baseline);
+    expect(unclassified).toContain('a/one');
+  });
+
+  it('SKILLS-2: ready, unavailable, pending, and rejecting layers render IDENTICAL base DOM (delta = 0)', async () => {
+    const baseline = await renderWithSkills(async () => null);
+    const ready = await renderWithSkills(skillsReady);
+    // The pending promise must SETTLE after the capture, or it dangles on the
+    // event loop and stalls the worker's teardown.
+    let releasePending: (value: null) => void = () => {};
+    const pending = await renderWithSkills(
+      () =>
+        new Promise<Awaited<ReturnType<typeof skillsReady>> | null>((resolve) => {
+          releasePending = resolve;
+        }),
+    );
+    releasePending(null);
+    const rejecting = await renderWithSkills(() => Promise.reject(new Error('boom')));
+    expect(ready).toBe(baseline);
+    expect(pending).toBe(baseline);
+    expect(rejecting).toBe(baseline);
+    expect(baseline).toContain('a/one');
+  });
+});

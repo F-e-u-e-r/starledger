@@ -10,6 +10,7 @@ import {
   stageAiArtifacts,
   stageDashboardData,
   stageDiscoveryArtifacts,
+  stageSkillsArtifacts,
 } from './stage';
 import { staticSmoke, verifyBuiltArtifact } from './verify';
 
@@ -54,6 +55,12 @@ async function main(): Promise<void> {
       console.log(
         `[deploy] Discovery artifacts: ${
           discovery.staged ? 'staged' : `skipped (${discovery.reason})`
+        }`,
+      );
+      const skills = stageSkillsArtifacts({ dataDir: data, distDir: dist });
+      console.log(
+        `[deploy] Skills-classification artifacts: ${
+          skills.staged ? 'staged' : `skipped (${skills.reason})`
         }`,
       );
       break;
