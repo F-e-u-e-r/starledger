@@ -18523,6 +18523,32 @@
       }
     },
     {
+      "node_id": "R_kgDOTm9-Lw",
+      "category": "ai-ml",
+      "tags": [
+        "ai-agents",
+        "api",
+        "cli",
+        "llm",
+        "plugin"
+      ],
+      "summary": "Native multimodal plugins for Qwen models that make agent harnesses like Claude Code, Codex, Qwen Code, and Gemini CLI multimodal-native. Each capability installs as a Skill plus an optional MCP server, covering image and video reading, Qwen VL and Omni vision, OCR, grounding and ASR APIs, web and reverse-image search, long-video memory, media generation, and Blender and FreeCAD workflows.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "618ba12ecb1b591276cc66e0659815ee7391d57f",
+        "repo_metadata_sha256": "b569592525dea08d02ea55b0893c04d88209b7c53bb4d5de76d2d9c2152ff143",
+        "fingerprint": "e29e0bb865afd53460c3720ce38dd3c519a1338658d6bbbaca170b293758d063"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-08-14T09:38:38Z"
+      }
+    },
+    {
       "node_id": "R_kgDOTmaIkA",
       "category": "media-creative",
       "tags": [
