@@ -1,0 +1,1649 @@
+{
+  "schema_version": "1.0",
+  "taxonomy_version": "skills-1",
+  "scope": {
+    "id": "coding-agent-skills-ecosystem",
+    "label": "Coding-agent skills ecosystem",
+    "description": "A curated subset; absence is not a classification."
+  },
+  "categories": [
+    {
+      "id": "verification-qa",
+      "label": "Verification & QA",
+      "kind": "domain",
+      "definition": "Testing, validation, code review, spec-compliance, and correctness-checking skills.",
+      "order": 0,
+      "target_pack": "opus-pack"
+    },
+    {
+      "id": "security",
+      "label": "Security",
+      "kind": "domain",
+      "definition": "Security audit, pentest, recon, and vulnerability-scanning skills.",
+      "order": 1,
+      "target_pack": "opus-pack"
+    },
+    {
+      "id": "roadmap-spec-driven-planning",
+      "label": "Roadmap & Spec-Driven Planning",
+      "kind": "domain",
+      "definition": "Planning, spec-driven dev, task/project management, and roadmapping skills/methodologies.",
+      "order": 2,
+      "target_pack": "opus-pack"
+    },
+    {
+      "id": "design-ui-ux-visual-motion",
+      "label": "Design (UI/UX & Visual/Motion)",
+      "kind": "domain",
+      "definition": "UI/UX, visual, motion, and graphic design skills.",
+      "order": 3,
+      "target_pack": "design-pack"
+    },
+    {
+      "id": "marketing-seo-social-content",
+      "label": "Marketing, SEO & Social Content",
+      "kind": "domain",
+      "definition": "Marketing, SEO, ads, growth, and social-content creation/ops skills.",
+      "order": 4,
+      "target_pack": null
+    },
+    {
+      "id": "video-editing-generation",
+      "label": "Video Editing & Generation",
+      "kind": "domain",
+      "definition": "Video and media editing, production, and generation skills.",
+      "order": 5,
+      "target_pack": null
+    },
+    {
+      "id": "research-web-intelligence",
+      "label": "Research & Web Intelligence",
+      "kind": "domain",
+      "definition": "Open-web/topic research, multi-source search, and synthesis skills.",
+      "order": 6,
+      "target_pack": null
+    },
+    {
+      "id": "writing-content",
+      "label": "Writing & Content",
+      "kind": "domain",
+      "definition": "Long-form writing, editing, and content-authoring skills (non-marketing).",
+      "order": 7,
+      "target_pack": null
+    },
+    {
+      "id": "finance-trading",
+      "label": "Finance & Trading",
+      "kind": "domain",
+      "definition": "Investing, trading, equity research, and market-analysis skills.",
+      "order": 8,
+      "target_pack": null
+    },
+    {
+      "id": "docs-knowledge-base",
+      "label": "Docs & Knowledge Base",
+      "kind": "domain",
+      "definition": "Documentation, knowledge-base, and notebook/knowledge-graph authoring skills.",
+      "order": 9,
+      "target_pack": null
+    },
+    {
+      "id": "presentations-slide-decks",
+      "label": "Presentations & Slide Decks",
+      "kind": "domain",
+      "definition": "Slide-deck and presentation generation skills.",
+      "order": 10,
+      "target_pack": null
+    },
+    {
+      "id": "data-viz-diagramming",
+      "label": "Data Viz & Diagramming",
+      "kind": "domain",
+      "definition": "Chart, infographic, and diagram generation skills.",
+      "order": 11,
+      "target_pack": null
+    },
+    {
+      "id": "codebase-understanding-context-engineering",
+      "label": "Codebase Understanding & Context Engineering",
+      "kind": "domain",
+      "definition": "Skill-level (non-MCP) tools for mapping and explaining a codebase.",
+      "order": 12,
+      "target_pack": null
+    },
+    {
+      "id": "localization-translation",
+      "label": "Localization & Translation",
+      "kind": "domain",
+      "definition": "Cross-language translation and localization skills.",
+      "order": 13,
+      "target_pack": null
+    },
+    {
+      "id": "career-job-search",
+      "label": "Career & Job Search",
+      "kind": "domain",
+      "definition": "Job search, CV tailoring, and application-tracking skills.",
+      "order": 14,
+      "target_pack": null
+    },
+    {
+      "id": "personal-productivity-lifestyle",
+      "label": "Personal Productivity & Lifestyle",
+      "kind": "domain",
+      "definition": "Persona distillation, personal knowledge work, and lifestyle skills.",
+      "order": 15,
+      "target_pack": null
+    },
+    {
+      "id": "game-development",
+      "label": "Game Development",
+      "kind": "domain",
+      "definition": "Skills for building and producing games.",
+      "order": 16,
+      "target_pack": null
+    },
+    {
+      "id": "browser-scraping-automation",
+      "label": "Browser & Scraping Automation",
+      "kind": "domain",
+      "definition": "Skill/CLI-packaged (non-MCP) browser automation and web scraping.",
+      "order": 17,
+      "target_pack": null
+    },
+    {
+      "id": "mcp-integrations",
+      "label": "MCP Integrations",
+      "kind": "infrastructure",
+      "definition": "MCP servers connecting agents to external data/tools/APIs, any domain.",
+      "order": 18,
+      "target_pack": null
+    },
+    {
+      "id": "agent-harnesses-orchestration",
+      "label": "Agent Harnesses & Orchestration",
+      "kind": "infrastructure",
+      "definition": "Harnesses, multi-agent coordination, fleets, and autonomous execution loops.",
+      "order": 19,
+      "target_pack": null
+    },
+    {
+      "id": "routers-proxies",
+      "label": "Routers & Proxies",
+      "kind": "infrastructure",
+      "definition": "LLM/model request routing and API-compatibility proxy layers.",
+      "order": 20,
+      "target_pack": null
+    },
+    {
+      "id": "memory-context-infra",
+      "label": "Memory & Context Infra",
+      "kind": "infrastructure",
+      "definition": "Cross-session memory, context compression, and persistence layers.",
+      "order": 21,
+      "target_pack": null
+    },
+    {
+      "id": "agent-ux-config-hooks",
+      "label": "Agent UX, Config & Hooks",
+      "kind": "infrastructure",
+      "definition": "Statuslines, hooks, behavior configs, and agent-interface tweaks.",
+      "order": 22,
+      "target_pack": null
+    },
+    {
+      "id": "skill-plugin-collections-meta-frameworks",
+      "label": "Skill/Plugin Collections & Meta-Frameworks",
+      "kind": "infrastructure",
+      "definition": "Multi-domain skill catalogs, marketplaces, and skill-management tooling.",
+      "order": 23,
+      "target_pack": null
+    }
+  ],
+  "entries": [
+    {
+      "source_name_with_owner": "843645440/wechat-skill",
+      "node_id": "R_kgDOTcY-sQ",
+      "resolution": "resolved",
+      "primary_category_id": "marketing-seo-social-content",
+      "secondary_category_ids": [],
+      "summary": "WeChat content toolkit: hot-topic discovery, writing, formatting, drafting."
+    },
+    {
+      "source_name_with_owner": "abhigyanpatwari/GitNexus",
+      "node_id": "R_kgDOPXS5wQ",
+      "resolution": "resolved",
+      "primary_category_id": "mcp-integrations",
+      "secondary_category_ids": [
+        "codebase-understanding-context-engineering"
+      ],
+      "summary": "Client-side code knowledge graph exposed to agents via MCP tools."
+    },
+    {
+      "source_name_with_owner": "activeloopai/hivemind",
+      "node_id": "R_kgDOR5LKog",
+      "resolution": "resolved",
+      "primary_category_id": "memory-context-infra",
+      "secondary_category_ids": [],
+      "summary": "Mines session traces into reusable skills shared across a team."
+    },
+    {
+      "source_name_with_owner": "addyosmani/agent-skills",
+      "node_id": "R_kgDORRCyRw",
+      "resolution": "resolved",
+      "primary_category_id": "roadmap-spec-driven-planning",
+      "secondary_category_ids": [
+        "verification-qa"
+      ],
+      "summary": "Spec/plan/build/test/review/ship lifecycle skills with quality gates."
+    },
+    {
+      "source_name_with_owner": "affaan-m/ECC",
+      "node_id": "R_kgDOQ77-1A",
+      "resolution": "resolved",
+      "primary_category_id": "agent-harnesses-orchestration",
+      "secondary_category_ids": [],
+      "summary": "Cross-harness operator packaging skills, hooks, memory, and security scanning."
+    },
+    {
+      "source_name_with_owner": "agent-next/polymarket-paper-trader",
+      "node_id": "R_kgDORbdrFg",
+      "resolution": "resolved",
+      "primary_category_id": "mcp-integrations",
+      "secondary_category_ids": [
+        "finance-trading"
+      ],
+      "summary": "Paper-trading simulator against live Polymarket order books via MCP."
+    },
+    {
+      "source_name_with_owner": "AgentWrapper/agent-orchestrator",
+      "node_id": null,
+      "resolution": "missing_from_stars",
+      "primary_category_id": "agent-harnesses-orchestration",
+      "secondary_category_ids": [],
+      "summary": "IDE/daemon supervising fleets of agents across CI, PRs, worktrees."
+    },
+    {
+      "source_name_with_owner": "AgriciDaniel/claude-ads",
+      "node_id": "R_kgDORN3Amw",
+      "resolution": "resolved",
+      "primary_category_id": "marketing-seo-social-content",
+      "secondary_category_ids": [],
+      "summary": "Paid-media audits, scoring, and campaign plans across 12 ad platforms."
+    },
+    {
+      "source_name_with_owner": "alberduris/skills",
+      "node_id": "R_kgDOQZtKLw",
+      "resolution": "resolved",
+      "primary_category_id": "skill-plugin-collections-meta-frameworks",
+      "secondary_category_ids": [],
+      "summary": "Marketplace grab-bag: second opinions, trace queries, Slack reminders."
+    },
+    {
+      "source_name_with_owner": "alchaincyf/nuwa-skill",
+      "node_id": "R_kgDOR6DzSw",
+      "resolution": "resolved",
+      "primary_category_id": "personal-productivity-lifestyle",
+      "secondary_category_ids": [
+        "writing-content"
+      ],
+      "summary": "Distills a person's mental models and expression style into a skill."
+    },
+    {
+      "source_name_with_owner": "alirezarezvani/claude-skills",
+      "node_id": "R_kgDOQFGGXQ",
+      "resolution": "resolved",
+      "primary_category_id": "skill-plugin-collections-meta-frameworks",
+      "secondary_category_ids": [],
+      "summary": "345 skills spanning engineering, marketing, compliance, advisory — no single domain."
+    },
+    {
+      "source_name_with_owner": "amikai/openings-mcp",
+      "node_id": "R_kgDOTGqE9Q",
+      "resolution": "resolved",
+      "primary_category_id": "mcp-integrations",
+      "secondary_category_ids": [
+        "career-job-search"
+      ],
+      "summary": "Searches job boards and company career sites via MCP, no storage."
+    },
+    {
+      "source_name_with_owner": "anthropics/financial-services",
+      "node_id": "R_kgDORXFZgQ",
+      "resolution": "resolved",
+      "primary_category_id": "finance-trading",
+      "secondary_category_ids": [],
+      "summary": "Reference agents/skills/MCP connectors for banking, equity research, wealth mgmt."
+    },
+    {
+      "source_name_with_owner": "anthropics/knowledge-work-plugins",
+      "node_id": "R_kgDOQ_-q4g",
+      "resolution": "resolved",
+      "primary_category_id": "skill-plugin-collections-meta-frameworks",
+      "secondary_category_ids": [],
+      "summary": "11 role-based plugins (sales, finance, legal, marketing, data) — multi-domain."
+    },
+    {
+      "source_name_with_owner": "antvis/chart-visualization-skills",
+      "node_id": "R_kgDOQ--jJQ",
+      "resolution": "resolved",
+      "primary_category_id": "data-viz-diagramming",
+      "secondary_category_ids": [],
+      "summary": "Chart generation across 26+ types plus G2/G6 code generators."
+    },
+    {
+      "source_name_with_owner": "apify/agent-skills",
+      "node_id": "R_kgDOQ1Ybwg",
+      "resolution": "resolved",
+      "primary_category_id": "browser-scraping-automation",
+      "secondary_category_ids": [],
+      "summary": "Web-scraping/automation skills backed by Apify serverless Actors."
+    },
+    {
+      "source_name_with_owner": "atilaahmettaner/tradingview-mcp",
+      "node_id": "R_kgDOPazVLw",
+      "resolution": "resolved",
+      "primary_category_id": "mcp-integrations",
+      "secondary_category_ids": [],
+      "summary": "Real-time market data, TA, screeners, backtesting via MCP server."
+    },
+    {
+      "source_name_with_owner": "backtrue/sbir-grants",
+      "node_id": "R_kgDOQ1CDsA",
+      "resolution": "resolved",
+      "primary_category_id": "writing-content",
+      "secondary_category_ids": [],
+      "summary": "Interactive proposal generator for Taiwan SBIR grant applications."
+    },
+    {
+      "source_name_with_owner": "BotchetDig/workout-gate",
+      "node_id": "R_kgDOS4aBIA",
+      "resolution": "resolved",
+      "primary_category_id": "agent-ux-config-hooks",
+      "secondary_category_ids": [],
+      "summary": "Hook blocking prompts until webcam-tracked push-ups/squats are done."
+    },
+    {
+      "source_name_with_owner": "bradautomates/claude-video",
+      "node_id": "R_kgDOSLJK_w",
+      "resolution": "resolved",
+      "primary_category_id": "video-editing-generation",
+      "secondary_category_ids": [],
+      "summary": "/watch skill: downloads, extracts frames, transcribes video for Claude."
+    },
+    {
+      "source_name_with_owner": "browser-use/video-use",
+      "node_id": "R_kgDOSAP_Zw",
+      "resolution": "resolved",
+      "primary_category_id": "video-editing-generation",
+      "secondary_category_ids": [],
+      "summary": "Transcribes, cuts, color-grades, subtitles, and renders video via ffmpeg."
+    },
+    {
+      "source_name_with_owner": "browserbase/skills",
+      "node_id": "R_kgDOQA4mPQ",
+      "resolution": "resolved",
+      "primary_category_id": "browser-scraping-automation",
+      "secondary_category_ids": [],
+      "summary": "Official browser-automation skills: sessions, tracing, scraping, UI testing."
+    },
+    {
+      "source_name_with_owner": "cablate/mcp-google-map",
+      "node_id": "R_kgDON9sc-Q",
+      "resolution": "resolved",
+      "primary_category_id": "mcp-integrations",
+      "secondary_category_ids": [],
+      "summary": "Geocoding, routing, places, weather, and timezone tools via MCP."
+    },
+    {
+      "source_name_with_owner": "chainbase-labs/Agentkey",
+      "node_id": "R_kgDOSKO1KA",
+      "resolution": "resolved",
+      "primary_category_id": "mcp-integrations",
+      "secondary_category_ids": [],
+      "summary": "Unified web/social/crypto/on-chain data access plugin and MCP server."
+    },
+    {
+      "source_name_with_owner": "chenhg5/cc-connect",
+      "node_id": "R_kgDORa0x3w",
+      "resolution": "resolved",
+      "primary_category_id": "agent-harnesses-orchestration",
+      "secondary_category_ids": [],
+      "summary": "Bridges local coding agents to chat platforms for remote control."
+    },
+    {
+      "source_name_with_owner": "chenjin-cmd/xhs-virtual-product",
+      "node_id": "R_kgDOTc8lsw",
+      "resolution": "resolved",
+      "primary_category_id": "marketing-seo-social-content",
+      "secondary_category_ids": [],
+      "summary": "Seven-step workflow for creating Xiaohongshu virtual products end to end."
+    },
+    {
+      "source_name_with_owner": "chrishutchinson/claude-receipts",
+      "node_id": "R_kgDORD4i-A",
+      "resolution": "resolved",
+      "primary_category_id": "agent-ux-config-hooks",
+      "secondary_category_ids": [],
+      "summary": "SessionEnd hook generating a spend/token receipt per session."
+    },
+    {
+      "source_name_with_owner": "ChrisWiles/claude-code-showcase",
+      "node_id": "R_kgDOQ05ExA",
+      "resolution": "resolved",
+      "primary_category_id": "agent-harnesses-orchestration",
+      "secondary_category_ids": [],
+      "summary": "Reference config: hooks, skills, agents, commands, GH Actions workflows."
+    },
+    {
+      "source_name_with_owner": "cline/prompts",
+      "node_id": "R_kgDOOigsTg",
+      "resolution": "resolved",
+      "primary_category_id": "skill-plugin-collections-meta-frameworks",
+      "secondary_category_ids": [],
+      "summary": "Community rules/workflows library browsable inside Cline — generic catalog."
+    },
+    {
+      "source_name_with_owner": "cloudflare/security-audit-skill",
+      "node_id": "R_kgDOS-b1TA",
+      "resolution": "resolved",
+      "primary_category_id": "security",
+      "secondary_category_ids": [],
+      "summary": "Six-phase security-audit pipeline with independently verified findings."
+    },
+    {
+      "source_name_with_owner": "coleam00/excalidraw-diagram-skill",
+      "node_id": "R_kgDORbuSxw",
+      "resolution": "resolved",
+      "primary_category_id": "data-viz-diagramming",
+      "secondary_category_ids": [],
+      "summary": "Generates Excalidraw diagrams with Playwright-based visual validation."
+    },
+    {
+      "source_name_with_owner": "coreyhaines31/marketingskills",
+      "node_id": "R_kgDOQ6n2Jw",
+      "resolution": "resolved",
+      "primary_category_id": "marketing-seo-social-content",
+      "secondary_category_ids": [],
+      "summary": "CRO, copywriting, SEO, analytics, and growth-engineering skill set."
+    },
+    {
+      "source_name_with_owner": "czlonkowski/n8n-mcp",
+      "node_id": "R_kgDOO3qbaQ",
+      "resolution": "resolved",
+      "primary_category_id": "mcp-integrations",
+      "secondary_category_ids": [],
+      "summary": "Structured access to 2,000+ n8n workflow-automation nodes via MCP."
+    },
+    {
+      "source_name_with_owner": "danyuchn/asd-ste100-skill",
+      "node_id": "R_kgDOTeMsuQ",
+      "resolution": "resolved",
+      "primary_category_id": "writing-content",
+      "secondary_category_ids": [
+        "docs-knowledge-base"
+      ],
+      "summary": "Rewrites ambiguous English into Simplified Technical English for agents."
+    },
+    {
+      "source_name_with_owner": "decolua/9router",
+      "node_id": "R_kgDOQzxPKw",
+      "resolution": "resolved",
+      "primary_category_id": "routers-proxies",
+      "secondary_category_ids": [],
+      "summary": "Local router connecting coding tools to 40+ free/cheap model providers."
+    },
+    {
+      "source_name_with_owner": "destinyfrancis/openclaw-knowledge-distiller",
+      "node_id": "R_kgDORi2MdA",
+      "resolution": "resolved",
+      "primary_category_id": "docs-knowledge-base",
+      "secondary_category_ids": [
+        "mcp-integrations"
+      ],
+      "summary": "Converts videos into structured knowledge articles via local ASR."
+    },
+    {
+      "source_name_with_owner": "DeusData/codebase-memory-mcp",
+      "node_id": "R_kgDORYFOhA",
+      "resolution": "resolved",
+      "primary_category_id": "mcp-integrations",
+      "secondary_category_ids": [
+        "codebase-understanding-context-engineering"
+      ],
+      "summary": "Tree-sitter code knowledge graph served as sub-ms MCP queries."
+    },
+    {
+      "source_name_with_owner": "diet103/claude-code-infrastructure-showcase",
+      "node_id": "R_kgDOQL2EBg",
+      "resolution": "resolved",
+      "primary_category_id": "agent-harnesses-orchestration",
+      "secondary_category_ids": [],
+      "summary": "Reference infra: auto-activating skills via hooks, agents, commands."
+    },
+    {
+      "source_name_with_owner": "DietrichGebert/ponytail",
+      "node_id": "R_kgDOS4HNrw",
+      "resolution": "resolved",
+      "primary_category_id": "verification-qa",
+      "secondary_category_ids": [],
+      "summary": "YAGNI ruleset plus security/accessibility-aware review and audit commands."
+    },
+    {
+      "source_name_with_owner": "Dimillian/CodexSkillManager",
+      "node_id": "R_kgDOQ1Ugwg",
+      "resolution": "resolved",
+      "primary_category_id": "skill-plugin-collections-meta-frameworks",
+      "secondary_category_ids": [],
+      "summary": "macOS app to browse, import, and manage local skills — tooling."
+    },
+    {
+      "source_name_with_owner": "doggy8088/mcp-cli",
+      "node_id": "R_kgDOS0aklQ",
+      "resolution": "resolved",
+      "primary_category_id": "mcp-integrations",
+      "secondary_category_ids": [],
+      "summary": "Lightweight Rust CLI/library for calling MCP servers from shell scripts."
+    },
+    {
+      "source_name_with_owner": "Donchitos/Claude-Code-Game-Studios",
+      "node_id": "R_kgDOROahWg",
+      "resolution": "resolved",
+      "primary_category_id": "game-development",
+      "secondary_category_ids": [],
+      "summary": "49 agents/72 skills structuring a full game-dev studio hierarchy."
+    },
+    {
+      "source_name_with_owner": "dzcmemory-web/bazi-ziwei-skill",
+      "node_id": "R_kgDOS5qzYw",
+      "resolution": "resolved",
+      "primary_category_id": "personal-productivity-lifestyle",
+      "secondary_category_ids": [],
+      "summary": "Deterministic BaZi/Zi Wei astrology chart generator, cultural/entertainment use."
+    },
+    {
+      "source_name_with_owner": "eagleagentic/superpowers-gpt-5.6",
+      "node_id": "R_kgDOTVUz0g",
+      "resolution": "resolved",
+      "primary_category_id": "roadmap-spec-driven-planning",
+      "secondary_category_ids": [
+        "verification-qa"
+      ],
+      "summary": "GPT-5.6 port of Superpowers' plan/implement/verify skill loop."
+    },
+    {
+      "source_name_with_owner": "ECPay/ECPay-API-Skill",
+      "node_id": "R_kgDORkwSqw",
+      "resolution": "resolved",
+      "primary_category_id": "docs-knowledge-base",
+      "secondary_category_ids": [],
+      "summary": "Generates ECPay payment-integration code and diagnostics without reading docs."
+    },
+    {
+      "source_name_with_owner": "Egonex-AI/Understand-Anything",
+      "node_id": "R_kgDORnUjiw",
+      "resolution": "resolved",
+      "primary_category_id": "codebase-understanding-context-engineering",
+      "secondary_category_ids": [],
+      "summary": "Multi-agent pipeline builds an interactive knowledge graph of a codebase."
+    },
+    {
+      "source_name_with_owner": "emilkowalski/skills",
+      "node_id": "R_kgDORogeyA",
+      "resolution": "resolved",
+      "primary_category_id": "design-ui-ux-visual-motion",
+      "secondary_category_ids": [],
+      "summary": "Reviews and audits animation/interface-design decisions for agents."
+    },
+    {
+      "source_name_with_owner": "epiral/bb-browser",
+      "node_id": "R_kgDORFTiAw",
+      "resolution": "resolved",
+      "primary_category_id": "mcp-integrations",
+      "secondary_category_ids": [
+        "browser-scraping-automation"
+      ],
+      "summary": "CLI+MCP server controlling real Chrome with your login state."
+    },
+    {
+      "source_name_with_owner": "ericosiu/ai-marketing-skills",
+      "node_id": "R_kgDORy4B9g",
+      "resolution": "resolved",
+      "primary_category_id": "marketing-seo-social-content",
+      "secondary_category_ids": [],
+      "summary": "Growth experiments, sales pipeline, content ops, outbound, and SEO skills."
+    },
+    {
+      "source_name_with_owner": "eyaltoledano/claude-task-master",
+      "node_id": "R_kgDOODKOXw",
+      "resolution": "resolved",
+      "primary_category_id": "roadmap-spec-driven-planning",
+      "secondary_category_ids": [],
+      "summary": "Task-management system with CLI+MCP to plan and track dev work."
+    },
+    {
+      "source_name_with_owner": "fagemx/edda",
+      "node_id": "R_kgDORT1v6Q",
+      "resolution": "resolved",
+      "primary_category_id": "memory-context-infra",
+      "secondary_category_ids": [],
+      "summary": "Hash-chained memory ledger capturing decisions across coding sessions."
+    },
+    {
+      "source_name_with_owner": "fengshao1227/ccg-workflow",
+      "node_id": "R_kgDOQzjEXA",
+      "resolution": "resolved",
+      "primary_category_id": "agent-harnesses-orchestration",
+      "secondary_category_ids": [],
+      "summary": "Go-bridged workflow engine dispatching work across Codex/Gemini/Claude."
+    },
+    {
+      "source_name_with_owner": "FootprintAI/Containarium",
+      "node_id": "R_kgDOQwTVbg",
+      "resolution": "resolved",
+      "primary_category_id": "agent-harnesses-orchestration",
+      "secondary_category_ids": [
+        "mcp-integrations"
+      ],
+      "summary": "Per-agent isolated Linux runtime with SSH, eBPF egress, GPU passthrough."
+    },
+    {
+      "source_name_with_owner": "frankbria/ralph-claude-code",
+      "node_id": "R_kgDOPlRzQQ",
+      "resolution": "resolved",
+      "primary_category_id": "agent-harnesses-orchestration",
+      "secondary_category_ids": [],
+      "summary": "Autonomous shell loop re-invoking Claude Code with exit detection."
+    },
+    {
+      "source_name_with_owner": "garrytan/gstack",
+      "node_id": "R_kgDORkolAw",
+      "resolution": "resolved",
+      "primary_category_id": "skill-plugin-collections-meta-frameworks",
+      "secondary_category_ids": [],
+      "summary": "23 role-based tools (CEO, Designer, QA) — team-in-a-box, not one domain."
+    },
+    {
+      "source_name_with_owner": "GiMi-Xiaomi/gimi-illustration-skill",
+      "node_id": "R_kgDOTRN5lg",
+      "resolution": "resolved",
+      "primary_category_id": "design-ui-ux-visual-motion",
+      "secondary_category_ids": [],
+      "summary": "Turns article text into whimsical hand-drawn illustration prompts/images."
+    },
+    {
+      "source_name_with_owner": "GLips/Figma-Context-MCP",
+      "node_id": "R_kgDON4uODQ",
+      "resolution": "resolved",
+      "primary_category_id": "mcp-integrations",
+      "secondary_category_ids": [
+        "design-ui-ux-visual-motion"
+      ],
+      "summary": "Serves Figma layout/styling data to coding agents via MCP."
+    },
+    {
+      "source_name_with_owner": "google-labs-code/stitch-skills",
+      "node_id": "R_kgDOQ7Opvg",
+      "resolution": "resolved",
+      "primary_category_id": "design-ui-ux-visual-motion",
+      "secondary_category_ids": [],
+      "summary": "Skills to generate/edit UI designs and extract design systems via Stitch."
+    },
+    {
+      "source_name_with_owner": "google/skills",
+      "node_id": "R_kgDOR2K4PA",
+      "resolution": "resolved",
+      "primary_category_id": "skill-plugin-collections-meta-frameworks",
+      "secondary_category_ids": [],
+      "summary": "Catalog of Google product skills (GKE, BigQuery, ads) spanning many domains."
+    },
+    {
+      "source_name_with_owner": "googleapis/mcp-toolbox",
+      "node_id": "R_kgDOMGbPlg",
+      "resolution": "resolved",
+      "primary_category_id": "mcp-integrations",
+      "secondary_category_ids": [],
+      "summary": "Open source MCP server connecting agents to SQL/BigQuery/Spanner databases."
+    },
+    {
+      "source_name_with_owner": "Graphify-Labs/graphify",
+      "node_id": "R_kgDOR4-pDw",
+      "resolution": "resolved",
+      "primary_category_id": "codebase-understanding-context-engineering",
+      "secondary_category_ids": [],
+      "summary": "Turns codebase/docs/schemas into a queryable knowledge graph skill."
+    },
+    {
+      "source_name_with_owner": "Gratia2533/linkedin-mcp-server",
+      "node_id": "R_kgDOTX_8wg",
+      "resolution": "resolved",
+      "primary_category_id": "mcp-integrations",
+      "secondary_category_ids": [
+        "career-job-search"
+      ],
+      "summary": "Searches/scrapes LinkedIn people, companies, and jobs via MCP."
+    },
+    {
+      "source_name_with_owner": "greensock/gsap-skills",
+      "node_id": "R_kgDORec43Q",
+      "resolution": "resolved",
+      "primary_category_id": "design-ui-ux-visual-motion",
+      "secondary_category_ids": [],
+      "summary": "Teaches agents correct GSAP animation API, timelines, and ScrollTrigger use."
+    },
+    {
+      "source_name_with_owner": "gsd-build/get-shit-done",
+      "node_id": "R_kgDOQojJXw",
+      "resolution": "resolved",
+      "primary_category_id": "roadmap-spec-driven-planning",
+      "secondary_category_ids": [],
+      "summary": "Meta-prompting, context-engineering, spec-driven development system."
+    },
+    {
+      "source_name_with_owner": "h30190/SearchProcurementTenders-crawler.Ver",
+      "node_id": "R_kgDORG50zw",
+      "resolution": "resolved",
+      "primary_category_id": "mcp-integrations",
+      "secondary_category_ids": [],
+      "summary": "Scrapes Taiwan government tender listings for agents via MCP."
+    },
+    {
+      "source_name_with_owner": "hanamizuki/solopreneur",
+      "node_id": "R_kgDOR66oiw",
+      "resolution": "resolved",
+      "primary_category_id": "skill-plugin-collections-meta-frameworks",
+      "secondary_category_ids": [
+        "roadmap-spec-driven-planning"
+      ],
+      "summary": "Plugin family spanning eng process, marketing, design agents a la carte."
+    },
+    {
+      "source_name_with_owner": "happycapy-ai/Happycapy-skills",
+      "node_id": "R_kgDORIQzlw",
+      "resolution": "resolved",
+      "primary_category_id": "skill-plugin-collections-meta-frameworks",
+      "secondary_category_ids": [],
+      "summary": "Curated drop-in skills across coding, design, docs, media, research."
+    },
+    {
+      "source_name_with_owner": "headroomlabs-ai/headroom",
+      "node_id": "R_kgDOQ1mH3Q",
+      "resolution": "resolved",
+      "primary_category_id": "memory-context-infra",
+      "secondary_category_ids": [],
+      "summary": "Context-compression layer shrinking tool output before it reaches the model."
+    },
+    {
+      "source_name_with_owner": "HKUDS/CLI-Anything",
+      "node_id": "R_kgDORhiEjA",
+      "resolution": "resolved",
+      "primary_category_id": "agent-harnesses-orchestration",
+      "secondary_category_ids": [],
+      "summary": "Generates agent-native CLI harnesses and a shared community tool hub."
+    },
+    {
+      "source_name_with_owner": "iannuttall/dotagents",
+      "node_id": "R_kgDOQ0yzMQ",
+      "resolution": "resolved",
+      "primary_category_id": "skill-plugin-collections-meta-frameworks",
+      "secondary_category_ids": [],
+      "summary": "Symlinks a canonical .agents folder into multiple AI clients — tooling."
+    },
+    {
+      "source_name_with_owner": "iFurySt/RedNote-MCP",
+      "node_id": "R_kgDOOXRIQw",
+      "resolution": "resolved",
+      "primary_category_id": "mcp-integrations",
+      "secondary_category_ids": [],
+      "summary": "MCP server for keyword search and note retrieval on Xiaohongshu."
+    },
+    {
+      "source_name_with_owner": "iOfficeAI/AionUi",
+      "node_id": "R_kgDOPZ417g",
+      "resolution": "resolved",
+      "primary_category_id": "agent-harnesses-orchestration",
+      "secondary_category_ids": [],
+      "summary": "Unified desktop GUI orchestrating 20+ agent CLIs with scheduling."
+    },
+    {
+      "source_name_with_owner": "jacob-bd/notebooklm-mcp-cli",
+      "node_id": null,
+      "resolution": "missing_from_stars",
+      "primary_category_id": "mcp-integrations",
+      "secondary_category_ids": [
+        "docs-knowledge-base"
+      ],
+      "summary": "CLI+MCP+skill for programmatic NotebookLM notebook/source management."
+    },
+    {
+      "source_name_with_owner": "jgraph/drawio-mcp",
+      "node_id": "R_kgDORHBdKQ",
+      "resolution": "resolved",
+      "primary_category_id": "mcp-integrations",
+      "secondary_category_ids": [
+        "data-viz-diagramming"
+      ],
+      "summary": "Lets LLMs create/open diagrams in the draw.io editor via MCP."
+    },
+    {
+      "source_name_with_owner": "joeseesun/qiaomu-anything-to-notebooklm",
+      "node_id": "R_kgDORA9Mpw",
+      "resolution": "resolved",
+      "primary_category_id": "docs-knowledge-base",
+      "secondary_category_ids": [
+        "presentations-slide-decks"
+      ],
+      "summary": "Turns many content sources into NotebookLM podcasts/slides/mindmaps."
+    },
+    {
+      "source_name_with_owner": "joeseesun/qiaomu-cut-skill",
+      "node_id": "R_kgDOTcunuA",
+      "resolution": "resolved",
+      "primary_category_id": "video-editing-generation",
+      "secondary_category_ids": [],
+      "summary": "Agent-native video director: sourcing, bilingual subtitles, branding, ffmpeg render."
+    },
+    {
+      "source_name_with_owner": "joeseesun/qiaomu-knowledge-site-creator",
+      "node_id": "R_kgDORYpFTw",
+      "resolution": "resolved",
+      "primary_category_id": "docs-knowledge-base",
+      "secondary_category_ids": [],
+      "summary": "Generates and deploys a full knowledge-learning website from one sentence."
+    },
+    {
+      "source_name_with_owner": "joshhu/makeownsrt",
+      "node_id": "R_kgDORclJ2Q",
+      "resolution": "resolved",
+      "primary_category_id": "localization-translation",
+      "secondary_category_ids": [],
+      "summary": "Extracts/transcribes and translates video subtitles into bilingual SRT."
+    },
+    {
+      "source_name_with_owner": "JudyaiLab/ai-night-shift",
+      "node_id": "R_kgDORk0YLg",
+      "resolution": "resolved",
+      "primary_category_id": "agent-harnesses-orchestration",
+      "secondary_category_ids": [],
+      "summary": "Coordinates multiple agents overnight via file-queue and cron scheduling."
+    },
+    {
+      "source_name_with_owner": "KnockOutEZ/wigolo",
+      "node_id": "R_kgDOSApr6Q",
+      "resolution": "resolved",
+      "primary_category_id": "mcp-integrations",
+      "secondary_category_ids": [
+        "research-web-intelligence"
+      ],
+      "summary": "Local-first web search/fetch/crawl/research layer exposed over MCP."
+    },
+    {
+      "source_name_with_owner": "lawchat-oss/mcp-taiwan-legal-db",
+      "node_id": "R_kgDOR-__Qg",
+      "resolution": "resolved",
+      "primary_category_id": "mcp-integrations",
+      "secondary_category_ids": [],
+      "summary": "Read-only access to Taiwan court judgments and statutes via MCP."
+    },
+    {
+      "source_name_with_owner": "Leonxlnx/taste-skill",
+      "node_id": "R_kgDORUQ5bw",
+      "resolution": "resolved",
+      "primary_category_id": "design-ui-ux-visual-motion",
+      "secondary_category_ids": [],
+      "summary": "Improves frontend layout, typography, motion, and spacing decisions."
+    },
+    {
+      "source_name_with_owner": "lidge-jun/opencodex",
+      "node_id": "R_kgDOS-0Giw",
+      "resolution": "resolved",
+      "primary_category_id": "routers-proxies",
+      "secondary_category_ids": [],
+      "summary": "Universal provider proxy letting Codex/Claude Code run on any LLM."
+    },
+    {
+      "source_name_with_owner": "lingfengQAQ/webnovel-writer",
+      "node_id": "R_kgDOQyldew",
+      "resolution": "resolved",
+      "primary_category_id": "writing-content",
+      "secondary_category_ids": [],
+      "summary": "Keeps characters/foreshadowing/timelines consistent across long-form web-novel writing."
+    },
+    {
+      "source_name_with_owner": "LottieFiles/motion-design-skill",
+      "node_id": "R_kgDORlCGJw",
+      "resolution": "resolved",
+      "primary_category_id": "design-ui-ux-visual-motion",
+      "secondary_category_ids": [],
+      "summary": "Timing/easing/choreography motion-design principles for UI animation."
+    },
+    {
+      "source_name_with_owner": "louislva/claude-peers-mcp",
+      "node_id": "R_kgDORstWcA",
+      "resolution": "resolved",
+      "primary_category_id": "mcp-integrations",
+      "secondary_category_ids": [
+        "agent-harnesses-orchestration"
+      ],
+      "summary": "Local broker letting multiple Claude Code instances message each other."
+    },
+    {
+      "source_name_with_owner": "madebypan/threads-api-skill",
+      "node_id": "R_kgDOS6hSLg",
+      "resolution": "resolved",
+      "primary_category_id": "marketing-seo-social-content",
+      "secondary_category_ids": [],
+      "summary": "Full-flow toolkit for publishing multi-post Threads content via API."
+    },
+    {
+      "source_name_with_owner": "MadsLorentzen/ai-job-search",
+      "node_id": "R_kgDORqec6w",
+      "resolution": "resolved",
+      "primary_category_id": "career-job-search",
+      "secondary_category_ids": [],
+      "summary": "Scrapes postings, drafts tailored CVs/cover letters, preps interviews."
+    },
+    {
+      "source_name_with_owner": "Martian-Engineering/lossless-claw",
+      "node_id": "R_kgDORTexcw",
+      "resolution": "resolved",
+      "primary_category_id": "memory-context-infra",
+      "secondary_category_ids": [],
+      "summary": "DAG-based lossless context/summarization plugin replacing sliding-window compaction."
+    },
+    {
+      "source_name_with_owner": "mathruffian-dot/claude-code-video-kit",
+      "node_id": "R_kgDOSq3Pmw",
+      "resolution": "resolved",
+      "primary_category_id": "video-editing-generation",
+      "secondary_category_ids": [],
+      "summary": "Five-stage workflow producing recap/tutorial/social videos via Playwright+FFmpeg."
+    },
+    {
+      "source_name_with_owner": "matlab/matlab-agentic-toolkit",
+      "node_id": "R_kgDOR5LBqw",
+      "resolution": "resolved",
+      "primary_category_id": "verification-qa",
+      "secondary_category_ids": [],
+      "summary": "Helps agents write, test, and diagnose MATLAB code correctly."
+    },
+    {
+      "source_name_with_owner": "mattpocock/skills",
+      "node_id": "R_kgDORHkddg",
+      "resolution": "resolved",
+      "primary_category_id": "roadmap-spec-driven-planning",
+      "secondary_category_ids": [],
+      "summary": "Composable eng skills wired to GitHub/Linear issue-tracking workflows."
+    },
+    {
+      "source_name_with_owner": "mediar-ai/terminator",
+      "node_id": "R_kgDOOXpEPw",
+      "resolution": "resolved",
+      "primary_category_id": "mcp-integrations",
+      "secondary_category_ids": [],
+      "summary": "Windows desktop-automation computer-use MCP server with AI recovery."
+    },
+    {
+      "source_name_with_owner": "mindfold-ai/Trellis",
+      "node_id": "R_kgDORBf_rw",
+      "resolution": "resolved",
+      "primary_category_id": "roadmap-spec-driven-planning",
+      "secondary_category_ids": [
+        "verification-qa"
+      ],
+      "summary": "Persists specs/tasks/memory through a plan-implement-verify-finish workflow."
+    },
+    {
+      "source_name_with_owner": "mksglu/context-mode",
+      "node_id": "R_kgDORWiFDA",
+      "resolution": "resolved",
+      "primary_category_id": "memory-context-infra",
+      "secondary_category_ids": [],
+      "summary": "Sandboxes tool output and persists session memory via MCP+hooks."
+    },
+    {
+      "source_name_with_owner": "msitarzewski/agency-agents",
+      "node_id": "R_kgDOQBjiAQ",
+      "resolution": "resolved",
+      "primary_category_id": "skill-plugin-collections-meta-frameworks",
+      "secondary_category_ids": [],
+      "summary": "Multi-role persona collection (frontend, social, QA) spanning unrelated domains."
+    },
+    {
+      "source_name_with_owner": "mucsbr/ppt-agent-workflow-san",
+      "node_id": "R_kgDORrasTQ",
+      "resolution": "resolved",
+      "primary_category_id": "presentations-slide-decks",
+      "secondary_category_ids": [],
+      "summary": "Plans slide content and converts HTML slides into editable PPTX."
+    },
+    {
+      "source_name_with_owner": "multica-ai/andrej-karpathy-skills",
+      "node_id": "R_kgDORCCMkQ",
+      "resolution": "resolved",
+      "primary_category_id": "agent-ux-config-hooks",
+      "secondary_category_ids": [],
+      "summary": "Single CLAUDE.md behavior config distilling coding-pitfall principles, not a task skill."
+    },
+    {
+      "source_name_with_owner": "multica-ai/multica",
+      "node_id": "R_kgDOQ5MB9g",
+      "resolution": "resolved",
+      "primary_category_id": "agent-harnesses-orchestration",
+      "secondary_category_ids": [],
+      "summary": "Platform assigning tasks to agent teammates, tracked from a dashboard."
+    },
+    {
+      "source_name_with_owner": "muratcankoylan/Agent-Skills-for-Context-Engineering",
+      "node_id": "R_kgDOQscuUA",
+      "resolution": "resolved",
+      "primary_category_id": "codebase-understanding-context-engineering",
+      "secondary_category_ids": [],
+      "summary": "Teaches context curation, multi-agent architecture, and memory/tool design."
+    },
+    {
+      "source_name_with_owner": "musistudio/claude-code-router",
+      "node_id": "R_kgDON-_mZQ",
+      "resolution": "resolved",
+      "primary_category_id": "routers-proxies",
+      "secondary_category_ids": [],
+      "summary": "Local control plane routing agent requests across models."
+    },
+    {
+      "source_name_with_owner": "mvanhorn/last30days-skill",
+      "node_id": "R_kgDOQ__jdA",
+      "resolution": "resolved",
+      "primary_category_id": "research-web-intelligence",
+      "secondary_category_ids": [],
+      "summary": "Multi-source topic research synthesized into a grounded, cited summary."
+    },
+    {
+      "source_name_with_owner": "Nanako0129/coralline",
+      "node_id": "R_kgDOS4YVMA",
+      "resolution": "resolved",
+      "primary_category_id": "agent-ux-config-hooks",
+      "secondary_category_ids": [],
+      "summary": "Powerlevel10k-inspired statusline with git/model/cost/context segments."
+    },
+    {
+      "source_name_with_owner": "NarratorAI-Studio/narrator-ai-cli-skill",
+      "node_id": "R_kgDORrQESg",
+      "resolution": "resolved",
+      "primary_category_id": "video-editing-generation",
+      "secondary_category_ids": [],
+      "summary": "Drives automated movie-narration video production end to end."
+    },
+    {
+      "source_name_with_owner": "nashsu/Viral_Writer_Skill",
+      "node_id": "R_kgDORlraMw",
+      "resolution": "resolved",
+      "primary_category_id": "marketing-seo-social-content",
+      "secondary_category_ids": [],
+      "summary": "Turns a topic into a full social-media article plus image prompts."
+    },
+    {
+      "source_name_with_owner": "newtype-01/obsidian-mcp",
+      "node_id": "R_kgDOOH7hgA",
+      "resolution": "resolved",
+      "primary_category_id": "mcp-integrations",
+      "secondary_category_ids": [
+        "docs-knowledge-base"
+      ],
+      "summary": "Read/create/search Obsidian notes via MCP using the REST API."
+    },
+    {
+      "source_name_with_owner": "nextlevelbuilder/ui-ux-pro-max-skill",
+      "node_id": "R_kgDOQfttOw",
+      "resolution": "resolved",
+      "primary_category_id": "design-ui-ux-visual-motion",
+      "secondary_category_ids": [],
+      "summary": "Design-intelligence CLI generating tailored UI/UX design systems."
+    },
+    {
+      "source_name_with_owner": "nilbuild/claude-statusline",
+      "node_id": "R_kgDORhpNIg",
+      "resolution": "resolved",
+      "primary_category_id": "agent-ux-config-hooks",
+      "secondary_category_ids": [],
+      "summary": "Installer configuring a usage/git-branch Claude Code statusline."
+    },
+    {
+      "source_name_with_owner": "nowork-studio/NotFair",
+      "node_id": null,
+      "resolution": "missing_from_stars",
+      "primary_category_id": "marketing-seo-social-content",
+      "secondary_category_ids": [],
+      "summary": "Goal-driven loop running SEO/GEO/Google Ads/Meta Ads improvement cycles."
+    },
+    {
+      "source_name_with_owner": "Nutlope/hallmark",
+      "node_id": "R_kgDOSOQ9xw",
+      "resolution": "resolved",
+      "primary_category_id": "design-ui-ux-visual-motion",
+      "secondary_category_ids": [],
+      "summary": "Anti-AI-slop UI design skill with theme selection and slop-test gates."
+    },
+    {
+      "source_name_with_owner": "NYCU-Chung/my-claude-devteam",
+      "node_id": "R_kgDOR_rxKg",
+      "resolution": "resolved",
+      "primary_category_id": "roadmap-spec-driven-planning",
+      "secondary_category_ids": [
+        "verification-qa"
+      ],
+      "summary": "12-subagent simulated engineering team coordinating planning through code review."
+    },
+    {
+      "source_name_with_owner": "obra/superpowers",
+      "node_id": "R_kgDOP_gcWw",
+      "resolution": "resolved",
+      "primary_category_id": "roadmap-spec-driven-planning",
+      "secondary_category_ids": [
+        "verification-qa"
+      ],
+      "summary": "Spec-first design, planning, and subagent-driven TDD methodology for coding agents."
+    },
+    {
+      "source_name_with_owner": "oil-oil/codex-team-mode",
+      "node_id": "R_kgDOTbHnTQ",
+      "resolution": "resolved",
+      "primary_category_id": "agent-harnesses-orchestration",
+      "secondary_category_ids": [],
+      "summary": "Routes work to Explorer/Executor/Reviewer subagent roles by task type."
+    },
+    {
+      "source_name_with_owner": "op7418/Humanizer-zh",
+      "node_id": "R_kgDOQ8h7kg",
+      "resolution": "resolved",
+      "primary_category_id": "writing-content",
+      "secondary_category_ids": [],
+      "summary": "Rewrites text to remove AI-generated writing patterns (Chinese localization)."
+    },
+    {
+      "source_name_with_owner": "openabdev/openab",
+      "node_id": "R_kgDOR40_SQ",
+      "resolution": "resolved",
+      "primary_category_id": "agent-harnesses-orchestration",
+      "secondary_category_ids": [],
+      "summary": "Broker bridging Discord/Slack to any ACP-compatible coding CLI."
+    },
+    {
+      "source_name_with_owner": "openai/codex-plugin-cc",
+      "node_id": "R_kgDOR05pig",
+      "resolution": "resolved",
+      "primary_category_id": "verification-qa",
+      "secondary_category_ids": [
+        "agent-harnesses-orchestration"
+      ],
+      "summary": "Slash commands for read-only and adversarial code review via Codex."
+    },
+    {
+      "source_name_with_owner": "openai/skills",
+      "node_id": "R_kgDOQchDtQ",
+      "resolution": "resolved",
+      "primary_category_id": "skill-plugin-collections-meta-frameworks",
+      "secondary_category_ids": [],
+      "summary": "Deprecated catalog of Agent Skills for distribution, not a task skill."
+    },
+    {
+      "source_name_with_owner": "openclaw/mcporter",
+      "node_id": "R_kgDOQPd19g",
+      "resolution": "resolved",
+      "primary_category_id": "mcp-integrations",
+      "secondary_category_ids": [],
+      "summary": "TypeScript runtime/CLI/codegen for calling and packaging MCP servers."
+    },
+    {
+      "source_name_with_owner": "openfate-ai/openfate-mcp",
+      "node_id": "R_kgDOS9nssw",
+      "resolution": "resolved",
+      "primary_category_id": "mcp-integrations",
+      "secondary_category_ids": [],
+      "summary": "Deterministic Bazi/Four Pillars calendrical calculation engine via MCP."
+    },
+    {
+      "source_name_with_owner": "oso95/scroll-world",
+      "node_id": "R_kgDOTPq93w",
+      "resolution": "resolved",
+      "primary_category_id": "design-ui-ux-visual-motion",
+      "secondary_category_ids": [
+        "video-editing-generation"
+      ],
+      "summary": "Builds scroll-scrubbed 3D brand worlds with generated camera-flight video."
+    },
+    {
+      "source_name_with_owner": "Panniantong/Agent-Reach",
+      "node_id": "R_kgDORXS4VA",
+      "resolution": "resolved",
+      "primary_category_id": "research-web-intelligence",
+      "secondary_category_ids": [],
+      "summary": "Gives agents read/search access across Twitter, Reddit, YouTube, GitHub."
+    },
+    {
+      "source_name_with_owner": "paperclipai/paperclip",
+      "node_id": "R_kgDORclPyA",
+      "resolution": "resolved",
+      "primary_category_id": "agent-harnesses-orchestration",
+      "secondary_category_ids": [],
+      "summary": "Dashboard orchestrating org-chart teams of coding agents."
+    },
+    {
+      "source_name_with_owner": "PleasePrompto/google-ai-mode-skill",
+      "node_id": "R_kgDOQzKY7g",
+      "resolution": "resolved",
+      "primary_category_id": "research-web-intelligence",
+      "secondary_category_ids": [
+        "browser-scraping-automation"
+      ],
+      "summary": "Token-efficient web research via Google AI Mode with citations."
+    },
+    {
+      "source_name_with_owner": "PublicDotCom/publicdotcom-mcp-server",
+      "node_id": "R_kgDORiwWpA",
+      "resolution": "resolved",
+      "primary_category_id": "mcp-integrations",
+      "secondary_category_ids": [
+        "finance-trading"
+      ],
+      "summary": "Connects assistants to a Public.com brokerage account via MCP."
+    },
+    {
+      "source_name_with_owner": "pwno-io/pwno-mcp",
+      "node_id": "R_kgDOPOwl0g",
+      "resolution": "resolved",
+      "primary_category_id": "mcp-integrations",
+      "secondary_category_ids": [
+        "security"
+      ],
+      "summary": "Containerized GDB/pwndbg exploitation and binary-debugging tooling via MCP."
+    },
+    {
+      "source_name_with_owner": "PyPtt/ptt_mcp_server",
+      "node_id": "R_kgDOPFfoKA",
+      "resolution": "resolved",
+      "primary_category_id": "mcp-integrations",
+      "secondary_category_ids": [],
+      "summary": "MCP server automating PTT bulletin-board account/board operations."
+    },
+    {
+      "source_name_with_owner": "redtear1115/docgrad",
+      "node_id": "R_kgDOTWQBdw",
+      "resolution": "resolved",
+      "primary_category_id": "docs-knowledge-base",
+      "secondary_category_ids": [
+        "verification-qa"
+      ],
+      "summary": "Grades and iteratively fixes repo documentation across five dimensions."
+    },
+    {
+      "source_name_with_owner": "refreshdotdev/web-eval-agent",
+      "node_id": "R_kgDOOSd7kw",
+      "resolution": "resolved",
+      "primary_category_id": "mcp-integrations",
+      "secondary_category_ids": [
+        "verification-qa"
+      ],
+      "summary": "Browser-automation MCP server autonomously testing/debugging web apps."
+    },
+    {
+      "source_name_with_owner": "repoprompt/repoprompt-ce",
+      "node_id": "R_kgDOSbtU7Q",
+      "resolution": "resolved",
+      "primary_category_id": "codebase-understanding-context-engineering",
+      "secondary_category_ids": [
+        "mcp-integrations"
+      ],
+      "summary": "macOS app assembling reviewable codebase context, with an MCP CLI."
+    },
+    {
+      "source_name_with_owner": "rolandwonglonam/rw-research-skill",
+      "node_id": null,
+      "resolution": "missing_from_stars",
+      "primary_category_id": "research-web-intelligence",
+      "secondary_category_ids": [],
+      "summary": "Twelve skills breaking academic research into verifiable workflow steps."
+    },
+    {
+      "source_name_with_owner": "rollingSirius/equity-research-skill",
+      "node_id": "R_kgDOTXt1YQ",
+      "resolution": "resolved",
+      "primary_category_id": "finance-trading",
+      "secondary_category_ids": [],
+      "summary": "Nine-chapter equity reports with scripted DCF/EPV valuation models."
+    },
+    {
+      "source_name_with_owner": "rossignol6712/claude-code-custom-prompt",
+      "node_id": "R_kgDOTdBSFA",
+      "resolution": "resolved",
+      "primary_category_id": "agent-ux-config-hooks",
+      "secondary_category_ids": [],
+      "summary": "Toolkit replacing Claude Code's default system prompt and templates."
+    },
+    {
+      "source_name_with_owner": "router-for-me/CLIProxyAPI",
+      "node_id": "R_kgDOPFM7Ew",
+      "resolution": "resolved",
+      "primary_category_id": "routers-proxies",
+      "secondary_category_ids": [],
+      "summary": "Proxy exposing OpenAI/Gemini/Claude/Codex-compatible endpoints for multiple providers."
+    },
+    {
+      "source_name_with_owner": "ruvnet/ruflo",
+      "node_id": "R_kgDOO07yiQ",
+      "resolution": "resolved",
+      "primary_category_id": "agent-harnesses-orchestration",
+      "secondary_category_ids": [],
+      "summary": "Meta-harness coordinating multi-agent swarms with memory and routing."
+    },
+    {
+      "source_name_with_owner": "s0912758806p/agentic-sop-to-work",
+      "node_id": "R_kgDOS1RfLg",
+      "resolution": "resolved",
+      "primary_category_id": "roadmap-spec-driven-planning",
+      "secondary_category_ids": [
+        "verification-qa"
+      ],
+      "summary": "Converts human SOPs into gated, deterministic agentic workflows."
+    },
+    {
+      "source_name_with_owner": "Sahir619/fable-method",
+      "node_id": "R_kgDOTPtmHA",
+      "resolution": "resolved",
+      "primary_category_id": "roadmap-spec-driven-planning",
+      "secondary_category_ids": [
+        "verification-qa"
+      ],
+      "summary": "Think/act/prove/grow workflow with an adversarial judge-verified eval suite."
+    },
+    {
+      "source_name_with_owner": "santifer/career-ops",
+      "node_id": "R_kgDOR50T8g",
+      "resolution": "resolved",
+      "primary_category_id": "career-job-search",
+      "secondary_category_ids": [],
+      "summary": "Job-search command center: scan, score, tailor CV, track applications."
+    },
+    {
+      "source_name_with_owner": "shareAI-lab/learn-claude-code",
+      "node_id": "R_kgDOPD3GSw",
+      "resolution": "resolved",
+      "primary_category_id": "agent-harnesses-orchestration",
+      "secondary_category_ids": [],
+      "summary": "Educational walkthrough building a minimal agent harness from scratch."
+    },
+    {
+      "source_name_with_owner": "sickn33/agentic-awesome-skills",
+      "node_id": "R_kgDOQ536sA",
+      "resolution": "resolved",
+      "primary_category_id": "skill-plugin-collections-meta-frameworks",
+      "secondary_category_ids": [],
+      "summary": "Installer/catalog/control-plane for 1,900+ skills — distribution tooling."
+    },
+    {
+      "source_name_with_owner": "songguoxs/seedance-prompt-skill",
+      "node_id": "R_kgDORO04Rg",
+      "resolution": "resolved",
+      "primary_category_id": "video-editing-generation",
+      "secondary_category_ids": [],
+      "summary": "Generates structured video-generation prompts for ByteDance Seedance 2.0."
+    },
+    {
+      "source_name_with_owner": "stablyai/orca",
+      "node_id": "R_kgDORpCz1g",
+      "resolution": "resolved",
+      "primary_category_id": "agent-harnesses-orchestration",
+      "secondary_category_ids": [],
+      "summary": "ADE running many parallel agents in isolated worktrees."
+    },
+    {
+      "source_name_with_owner": "star23/Day1Global-Skills",
+      "node_id": "R_kgDORa2upQ",
+      "resolution": "resolved",
+      "primary_category_id": "finance-trading",
+      "secondary_category_ids": [],
+      "summary": "Earnings, value-investing, sentiment, and macro-liquidity investment-analysis skills."
+    },
+    {
+      "source_name_with_owner": "symgraph/GhidrAssistMCP",
+      "node_id": "R_kgDOPJUN0Q",
+      "resolution": "resolved",
+      "primary_category_id": "mcp-integrations",
+      "secondary_category_ids": [
+        "security"
+      ],
+      "summary": "Exposes Ghidra reverse-engineering analysis to assistants via MCP."
+    },
+    {
+      "source_name_with_owner": "tanweai/pua",
+      "node_id": "R_kgDORhpRZQ",
+      "resolution": "resolved",
+      "primary_category_id": "agent-ux-config-hooks",
+      "secondary_category_ids": [],
+      "summary": "Scripted proactivity/debugging-persistence ruleset, not a task-domain skill."
+    },
+    {
+      "source_name_with_owner": "teng-lin/notebooklm-py",
+      "node_id": "R_kgDOQ1cstg",
+      "resolution": "resolved",
+      "primary_category_id": "docs-knowledge-base",
+      "secondary_category_ids": [],
+      "summary": "Programmatic NotebookLM access for notebook and podcast generation."
+    },
+    {
+      "source_name_with_owner": "TheCraigHewitt/seomachine",
+      "node_id": "R_kgDOQLtlug",
+      "resolution": "resolved",
+      "primary_category_id": "marketing-seo-social-content",
+      "secondary_category_ids": [],
+      "summary": "Workspace for researching, writing, and SEO-optimizing long-form blog content."
+    },
+    {
+      "source_name_with_owner": "thedotmack/claude-mem",
+      "node_id": "R_kgDOPng1Jw",
+      "resolution": "resolved",
+      "primary_category_id": "memory-context-infra",
+      "secondary_category_ids": [],
+      "summary": "Compresses and persists session history as long-term agent memory."
+    },
+    {
+      "source_name_with_owner": "tirth8205/code-review-graph",
+      "node_id": "R_kgDORZsJNQ",
+      "resolution": "resolved",
+      "primary_category_id": "mcp-integrations",
+      "secondary_category_ids": [
+        "verification-qa"
+      ],
+      "summary": "Structural code graph over MCP/CLI with risk-scored PR reviews."
+    },
+    {
+      "source_name_with_owner": "titanwings/colleague-skill",
+      "node_id": "R_kgDOR0bkcQ",
+      "resolution": "resolved",
+      "primary_category_id": "personal-productivity-lifestyle",
+      "secondary_category_ids": [],
+      "summary": "Distills a person into a reusable persona skill from chat logs."
+    },
+    {
+      "source_name_with_owner": "Toolsai/GPT-Relay-Codex-Plugin-",
+      "node_id": "R_kgDOS1O5tg",
+      "resolution": "resolved",
+      "primary_category_id": "routers-proxies",
+      "secondary_category_ids": [],
+      "summary": "Relays Codex prompts to ChatGPT through a browser session."
+    },
+    {
+      "source_name_with_owner": "Toolsai/notebooklm-studio-Skill",
+      "node_id": "R_kgDOSf4wmw",
+      "resolution": "resolved",
+      "primary_category_id": "docs-knowledge-base",
+      "secondary_category_ids": [],
+      "summary": "Turns Codex into a NotebookLM operator producing reports/mindmaps/decks."
+    },
+    {
+      "source_name_with_owner": "tradermonty/claude-trading-skills",
+      "node_id": "R_kgDOQFWqwg",
+      "resolution": "resolved",
+      "primary_category_id": "finance-trading",
+      "secondary_category_ids": [],
+      "summary": "Structured market review, risk management, and trade-planning checklists."
+    },
+    {
+      "source_name_with_owner": "tradesdontlie/tradingview-mcp",
+      "node_id": "R_kgDORz9IfA",
+      "resolution": "resolved",
+      "primary_category_id": "mcp-integrations",
+      "secondary_category_ids": [],
+      "summary": "Connects Claude to TradingView Desktop for chart analysis via MCP."
+    },
+    {
+      "source_name_with_owner": "truongduy2611/app-store-preflight-skills",
+      "node_id": "R_kgDORrBL4g",
+      "resolution": "resolved",
+      "primary_category_id": "verification-qa",
+      "secondary_category_ids": [],
+      "summary": "Scans iOS/macOS projects for App Store rejection patterns pre-submission."
+    },
+    {
+      "source_name_with_owner": "tt-a1i/archify",
+      "node_id": "R_kgDOSDCHbQ",
+      "resolution": "resolved",
+      "primary_category_id": "data-viz-diagramming",
+      "secondary_category_ids": [],
+      "summary": "Generates architecture/sequence/data-flow diagrams as self-contained HTML."
+    },
+    {
+      "source_name_with_owner": "twhsi/skills",
+      "node_id": "R_kgDOS76sdw",
+      "resolution": "resolved",
+      "primary_category_id": "personal-productivity-lifestyle",
+      "secondary_category_ids": [],
+      "summary": "Weekly-review, FIRE analysis, and publishing workflows for knowledge workers."
+    },
+    {
+      "source_name_with_owner": "ultraworkers/claw-code",
+      "node_id": "R_kgDOR1kXog",
+      "resolution": "resolved",
+      "primary_category_id": "agent-harnesses-orchestration",
+      "secondary_category_ids": [],
+      "summary": "Rust terminal-first agent harness connecting to multiple model backends."
+    },
+    {
+      "source_name_with_owner": "unixzii/codex-dino-run",
+      "node_id": "R_kgDOTcWa1w",
+      "resolution": "resolved",
+      "primary_category_id": "agent-ux-config-hooks",
+      "secondary_category_ids": [],
+      "summary": "Novelty tweak adding a playable Dino Run game inside Codex."
+    },
+    {
+      "source_name_with_owner": "vercel-labs/agent-skills",
+      "node_id": "R_kgDOQlAGiA",
+      "resolution": "resolved",
+      "primary_category_id": "verification-qa",
+      "secondary_category_ids": [],
+      "summary": "Audits cost/perf/best-practices/accessibility and reviews docs for Vercel projects."
+    },
+    {
+      "source_name_with_owner": "vinhhien112/Three.js-Object-Sculptor-Codex-Plugin",
+      "node_id": null,
+      "resolution": "missing_from_stars",
+      "primary_category_id": "design-ui-ux-visual-motion",
+      "secondary_category_ids": [],
+      "summary": "Rebuilds images as procedural, animation-ready Three.js 3D models."
+    },
+    {
+      "source_name_with_owner": "voidful/hung-yi-lee-skill",
+      "node_id": "R_kgDOR887hg",
+      "resolution": "resolved",
+      "primary_category_id": "docs-knowledge-base",
+      "secondary_category_ids": [
+        "personal-productivity-lifestyle"
+      ],
+      "summary": "Distills ML lectures into a knowledge graph and teaching-style guide."
+    },
+    {
+      "source_name_with_owner": "Waishnav/devspace",
+      "node_id": "R_kgDOS6lvgw",
+      "resolution": "resolved",
+      "primary_category_id": "mcp-integrations",
+      "secondary_category_ids": [],
+      "summary": "Self-hosted MCP letting ChatGPT/Claude edit local project files via tunnel."
+    },
+    {
+      "source_name_with_owner": "white0dew/XiaohongshuSkills",
+      "node_id": "R_kgDORMH_tg",
+      "resolution": "resolved",
+      "primary_category_id": "marketing-seo-social-content",
+      "secondary_category_ids": [
+        "browser-scraping-automation"
+      ],
+      "summary": "Automates Xiaohongshu publishing, commenting, and search via CDP."
+    },
+    {
+      "source_name_with_owner": "win4r/openclaw-a2a-gateway",
+      "node_id": "R_kgDORUgjXg",
+      "resolution": "resolved",
+      "primary_category_id": "agent-harnesses-orchestration",
+      "secondary_category_ids": [],
+      "summary": "Gateway implementing the Agent-to-Agent protocol for bidirectional agent comms."
+    },
+    {
+      "source_name_with_owner": "wshuyi/remotion-video-skill",
+      "node_id": "R_kgDORAq_-Q",
+      "resolution": "resolved",
+      "primary_category_id": "video-editing-generation",
+      "secondary_category_ids": [],
+      "summary": "Programmatic video creation with Remotion, TTS, and music visualization."
+    },
+    {
+      "source_name_with_owner": "Yeachan-Heo/oh-my-claudecode",
+      "node_id": "R_kgDOQ2bIeQ",
+      "resolution": "resolved",
+      "primary_category_id": "agent-harnesses-orchestration",
+      "secondary_category_ids": [],
+      "summary": "Multi-agent orchestration for parallel coding tasks."
+    },
+    {
+      "source_name_with_owner": "Yeachan-Heo/oh-my-codex",
+      "node_id": "R_kgDORG3jag",
+      "resolution": "resolved",
+      "primary_category_id": "agent-harnesses-orchestration",
+      "secondary_category_ids": [],
+      "summary": "Extends Codex with hooks, agent teams, and HUDs."
+    },
+    {
+      "source_name_with_owner": "ykdojo/claude-code-tips",
+      "node_id": "R_kgDOQeb_KQ",
+      "resolution": "resolved",
+      "primary_category_id": "agent-ux-config-hooks",
+      "secondary_category_ids": [],
+      "summary": "Usage tips plus a statusline script and everyday-workflow dx plugin."
+    },
+    {
+      "source_name_with_owner": "yuwen-cool/yuwen-publish-precheck",
+      "node_id": "R_kgDOTZXzDw",
+      "resolution": "resolved",
+      "primary_category_id": "marketing-seo-social-content",
+      "secondary_category_ids": [
+        "verification-qa"
+      ],
+      "summary": "Flags compliance risks and suggests rewrites before social-platform publishing."
+    },
+    {
+      "source_name_with_owner": "zeuikli/claude-pilot-suite",
+      "node_id": "R_kgDOSUBmOQ",
+      "resolution": "resolved",
+      "primary_category_id": "routers-proxies",
+      "secondary_category_ids": [],
+      "summary": "Cost/quality/ceiling model-tier pilot modes with escalation gates."
+    },
+    {
+      "source_name_with_owner": "zhaoxuya520/reverse-skill",
+      "node_id": "R_kgDOScehDA",
+      "resolution": "resolved",
+      "primary_category_id": "security",
+      "secondary_category_ids": [],
+      "summary": "Routes tasks to reverse-engineering/pentest/security-research playbooks and toolchains."
+    }
+  ]
+}

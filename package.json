@@ -17,6 +17,7 @@
     "test:coverage": "vitest run --coverage",
     "schemas": "pnpm --filter @starred/schema generate:schemas && pnpm --filter @starred/ai-schema generate:schemas && pnpm --filter @starred/discovery generate:schemas && pnpm --filter @starred/skills-schema generate:schemas",
     "discover": "node --import tsx packages/discovery/src/cli.ts",
+    "skills-classify": "node --import tsx packages/skills-generator/src/cli.ts",
     "lint": "eslint .",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
