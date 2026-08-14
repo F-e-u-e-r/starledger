@@ -373,17 +373,41 @@ Classification: operational hygiene NIT, not M2.3 correctness.
 
 **Boundary carried with that acceptance (owner, load-bearing — do not "tidy").** This NIT is never to be closed later by a broad glob/sweep cleanup of the staging directory: a pattern-matching sweep is exactly how the R4 foreign-file ownership defect re-enters, and an inert uniquely-named temp is cheaper than a cleaner that can delete a file it does not own. If debris accumulation is ever actually OBSERVED (not hypothesized), the remedy is an ownership-provable cleanup mechanism designed and reviewed as its own change. The rejected alternative stays rejected on the recorded reasoning: a manual file-descriptor rewrite adds close/fsync/error-unwind correctness surface disproportionate to a residue with no correctness consequence.
 
-**Sibling defect disposition (owner ruling 2026-08-14) — scheduled, NOT folded into M2.4.** The AI loader (`apps/dashboard/src/data/load-annotations.ts`) carries the same pre-existing public `verifyBytes` integrity bypass this slice removed from the classification loader. **Inventory correction at commit time (author, searched — the ruling above was made against a one-sibling report):** the named search `grep -rn "verifyBytes" apps/dashboard/src packages` returns **three** instances of the defect class, not one — `load-stars.ts:31`, `load-annotations.ts:44`, `load-discovery.ts:17`, each declaring `verifyBytes?: boolean` and guarding with the same `opts.verifyBytes !== false` form (default verify-ON), the third of which is the BASE dataset loader. `load-skills-classification.ts` carries none (R1 fix confirmed by observation). Materially bounding the exposure: **no non-test caller passes `verifyBytes` anywhere** in the repo — today this is a public-API-surface defect, not a live integrity hole; the only opt-outs are in `load-annotations.test.ts` and `load-discovery.test.ts`. The hotfix scope list below was written for the AI loader alone and is therefore **owner-re-decidable**: whether the one hotfix hardens all three surfaces (with the per-loader parallel of each acceptance line) or the AI loader only is a scope call the owner makes with this corrected inventory, not one the author widens unilaterally. Leaving all of them untouched in this slice was correct — it is not an M2.3 contract defect, so §4.10's OUT clause governs — and it is equally not M2.4 material: M2.4 is classification projection (scope / facets / badges), so folding artifact-integrity hardening into it destroys that slice's review identity and lets a finding on the bypass fix needlessly block classification UI. Sequence: **M2.3 merge → an independent narrow `fix(ai-loader)` hotfix → M2.4.** The hotfix's scope is closed:
+**Sibling defect disposition (owner ruling 2026-08-14) — scheduled, NOT folded into M2.4.** The AI loader (`apps/dashboard/src/data/load-annotations.ts`) carries the same pre-existing public `verifyBytes` integrity bypass this slice removed from the classification loader. **Inventory correction at commit time (author, searched — the ruling above was made against a one-sibling report):** the named search `grep -rn "verifyBytes" apps/dashboard/src packages` returns **three** instances of the defect class, not one — `load-stars.ts:31`, `load-annotations.ts:44`, `load-discovery.ts:17`, each declaring `verifyBytes?: boolean` and guarding with the same `opts.verifyBytes !== false` form (default verify-ON), the third of which is the BASE dataset loader. `load-skills-classification.ts` carries none (R1 fix confirmed by observation). Materially bounding the exposure: **no non-test caller passes `verifyBytes` anywhere** in the repo — today this is a public-API-surface defect, not a live integrity hole; the only opt-outs are in `load-annotations.test.ts` and `load-discovery.test.ts`. **Scope re-ruled by the owner on that corrected inventory (2026-08-14) — the original ruling was EXPANDED after the twin search discovered the complete three-loader class; it was not made against a three-loader inventory in the first place, and this record deliberately preserves that sequence rather than rewriting it.** The hotfix now closes all three surfaces in one change, because the three are structurally identical and no production caller uses the opt-out — fixing only the AI loader would knowingly leave two catalogued twins standing. The re-ruling explicitly does **not** change #245's merge gate: all three opt-outs are latent public API surface with no non-test caller passing `false`, so none of them is an M2.3 runtime correctness blocker; #245 proceeds through hosted review → convergence → merge on its own identity, and the hotfix follows the merge as its own PR (it never amends M2.3). Leaving all of them untouched in this slice was correct — it is not an M2.3 contract defect, so §4.10's OUT clause governs — and it is equally not M2.4 material: M2.4 is classification projection (scope / facets / badges), so folding artifact-integrity hardening into it destroys that slice's review identity and lets a finding on the bypass fix needlessly block classification UI. Sequence: **M2.3 merge → an independent three-loader integrity-bypass hotfix → M2.4.** Owner-locked hotfix scope, verbatim:
 
-- reproduce existing public-bypass behavior first
-- remove bypass
-- pin mandatory `verifyBytes` behavior
-- preserve M0 `loading | ready | unavailable` fail-soft semantics
-- malformed / integrity-failed AI artifact → `unavailable`
-- base Starred browser remains usable
-- no provenance/freshness policy change
+```text
+Integrity-bypass hotfix — three-loader closure
 
-Explicitly **not** a mechanical copy of this slice's fix: if investigation shows the AI bypass carries a different historical contract or deployment reason, it returns for adjudication rather than being changed because it "looks the same". The last scope line is a hard boundary — fix the byte-integrity bypass only; do not redesign the AI provenance/freshness gate while there.
+IN
+- load-stars.ts
+- load-annotations.ts
+- load-discovery.ts
+- their directly affected tests/types
+
+Change
+- remove verifyBytes?: boolean from the public loader API
+- remove every production-path integrity opt-out
+- update tests so they no longer depend on a production bypass
+- add regressions proving corrupted bytes cannot be accepted through any of
+  the three loaders
+
+Preserve
+- each loader's EXISTING failure semantics
+  - do not make Stars fail-soft merely because optional loaders are fail-soft
+  - do not change annotations/discovery availability wording/state semantics
+- existing provenance/freshness policy
+- fetch/deploy behavior
+- artifact schemas
+
+FORBIDDEN
+- replacement bypass under a different flag/name
+- test-only behavior exposed through production API
+- broad loader refactor
+- heuristic recovery from integrity failure
+- folding this work into M2.4
+```
+
+**The load-bearing distinction inside that scope (owner):** fixing all three at once is NOT a mandate to unify the three loaders' behavior. Only the shared integrity escape hatch is eliminated. `load-stars.ts` is the canonical base dataset; `load-annotations.ts` and `load-discovery.ts` are optional fail-soft layers. Each keeps its own pre-existing failure contract exactly as it stands — a hotfix that "harmonizes" Stars into fail-soft, or that rewords annotations/discovery availability states, has exceeded its scope. Equally, it is **not** a mechanical copy of this slice's fix: if investigation shows one of the three bypasses carries a different historical contract or deployment reason, it returns for adjudication rather than being changed because it "looks the same". The Preserve block is a hard boundary — remove the byte-integrity opt-out only; do not redesign any provenance/freshness gate while there.
 
 ---
 
