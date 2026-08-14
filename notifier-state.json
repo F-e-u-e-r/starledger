@@ -8,7 +8,7 @@
     "paths": [
       "README.md"
     ],
-    "last_commit_sha": "9bd1eb571778596f9a11498cba4421fc94cb291a"
+    "last_commit_sha": "c5571e9ac74226aa46257073c655a4e07be9d980"
   },
   "pending": [],
   "deliveries": [
@@ -334,6 +334,24 @@
       "notification_key": "awesome_stars:qwenlm/qwen-mm-plugins:R_kgDOTm9-Lw",
       "status": "sent",
       "completed_at": "2026-08-12T05:06:29.882Z",
+      "detail": null
+    },
+    {
+      "notification_key": "awesome_stars:cloudflare/ci:R_kgDOTodt0g",
+      "status": "sent",
+      "completed_at": "2026-08-14T05:06:11.075Z",
+      "detail": null
+    },
+    {
+      "notification_key": "awesome_stars:deepseek-ai/deepseek-harness:R_kgDOT3T1gw",
+      "status": "sent",
+      "completed_at": "2026-08-14T05:06:11.075Z",
+      "detail": null
+    },
+    {
+      "notification_key": "awesome_stars:rockxyapp/rockxy:R_kgDORxf66w",
+      "status": "sent",
+      "completed_at": "2026-08-14T05:06:11.075Z",
       "detail": null
     }
   ]
