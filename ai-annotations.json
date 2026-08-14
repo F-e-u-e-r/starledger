@@ -16313,6 +16313,29 @@
       }
     },
     {
+      "node_id": "R_kgDOSnlbjQ",
+      "category": "ai-ml",
+      "tags": [
+        "gui",
+        "machine-learning"
+      ],
+      "summary": "Official code release for NAVA, a 6.3B-parameter native audio-visual alignment framework that jointly generates synchronized 720p video and stereo audio from text or image prompts. It ships an end-to-end inference pipeline, a Gradio demo, training code, and multi-timbre voice control.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "8bcb56f033b4e250f5f250830362cb2b3f49e644",
+        "repo_metadata_sha256": "d8c9497a099164df3388d565b835134c3b2e728345030fc574ae84881ffd9bf3",
+        "fingerprint": "9f60f40c5be8a71bff789f359bde9dc8ef7e6920c7877a6facff6e31a7bea49d"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-08-14T08:04:54Z"
+      }
+    },
+    {
       "node_id": "R_kgDOSo4KbQ",
       "category": "media-creative",
       "tags": [
@@ -16586,6 +16609,102 @@
         "model_label": null,
         "prompt_version": "classify-v1",
         "generated_at": "2026-08-05T08:23:04Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOT1eE0w",
+      "category": "security-privacy",
+      "tags": [
+        "cli",
+        "plugin",
+        "security-scanner"
+      ],
+      "summary": "An agent skill and Python command-line scripts that strip multi-vendor AI provenance marks: invisible Unicode carriers, statistical text watermarks, and C2PA, EXIF, and XMP metadata, from text and from PNG, JPEG, SVG, PDF, DOCX, HTML, and Markdown files, for privacy on content you own.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "099435fd42be5e4471ec2b6dc88dd79bb3fdf0c7",
+        "repo_metadata_sha256": "3dc2f727d823e394006fc5ee733d66ae5a541ccbc16ade818e889a7431e842b7",
+        "fingerprint": "8079129aff67c91e1c1e9b4d84d5f65521d7014f3ff8466837fe163ad983bfda"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-08-14T08:04:54Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOT367kw",
+      "category": "productivity-automation",
+      "tags": [
+        "cli",
+        "plugin",
+        "productivity"
+      ],
+      "summary": "A skill for Claude Code, claude.ai, and ChatGPT Codex that makes AI assistants write in natural Taiwanese Traditional Chinese and native English, and strips AI-flavored patterns from existing text without changing the facts. It also ships an offline audit script that needs no API key.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "c8e8dcee1e84dda395e1a653a8ca37d3a30030c1",
+        "repo_metadata_sha256": "547e6c7695ae273b064bb56dd9dc0952190bb19f86320e6d77bccaaff8f453f5",
+        "fingerprint": "d9134d09e1d75ce30a35878649062ad4d3afd93c0256349a03defa929dc9b883"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-08-14T08:04:54Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOT3T1gw",
+      "category": "developer-tools",
+      "tags": [
+        "ai-agents",
+        "cli",
+        "plugin"
+      ],
+      "summary": "DeepSeek Harness (dsh) is an open-source, plugin-based agent harness from DeepSeek AI, built on the Cordis framework where everything is a plugin. It runs via npx or from source and serves a local Web UI, and is currently a rapidly iterating developer preview with breaking changes expected.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "8a4bd01332a23ce4144c661784bc549e0ba72d21",
+        "repo_metadata_sha256": "92875cb94747eb6a7bb905121cf5afd33a246f6eb721bf3cd8717892d897f05b",
+        "fingerprint": "ad0213874688f81f6751f92e3fb1cec34b365b47d553f0c62d43e2cc6c98769b"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-08-14T08:04:54Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOT3gJcA",
+      "category": "productivity-automation",
+      "tags": [
+        "documentation",
+        "plugin",
+        "productivity"
+      ],
+      "summary": "A Claude Code skill that rewrites text into plain language following ISO 24495-1, structured around the standard's four principles: relevant, findable, understandable, and usable. It ships original technique layers for both English and Traditional Chinese and can show a per-change diff.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "d8e7688cf46862c4981bc06efb65461e00d56cfb",
+        "repo_metadata_sha256": "20960970e03662979f41d10a253c599955333f1274d820880a4d8302a4256ac0",
+        "fingerprint": "12d9f932398c9f0ef45cf59c357162f956acbe7eec86014db909d3d2891f675f"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-08-14T08:04:54Z"
       }
     },
     {
