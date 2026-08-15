@@ -21,7 +21,7 @@ import {
   SkillsClassificationSchema,
   checkSkillsMetaConsistency,
 } from '@starred/skills-schema/contracts';
-import { sha256Hex, verifyDatasetIntegrity } from './dataset';
+import { verifyDatasetIntegrity } from './dataset';
 
 export const STARS_FILE = 'stars.json';
 export const DATASET_META_FILE = 'dataset-meta.json';
@@ -105,11 +105,15 @@ export function stageAiArtifacts(opts: StageOptions): AiStageResult {
     return { staged: false, reason: 'no AI artifacts present' };
   }
   try {
-    const annText = readFileSync(annPath, 'utf8');
-    const metaText = readFileSync(metaPath, 'utf8');
-    const annotations = AiAnnotationsSchema.parse(JSON.parse(annText));
-    const meta = AiAnnotationsMetaSchema.parse(JSON.parse(metaText));
-    if (meta.annotations_sha256 !== sha256Hex(annText)) {
+    // BYTES, read once. Build-side acceptance must agree with the runtime
+    // loader's, which verifies the exact received bytes: hashing decoded text
+    // here would accept an artifact the runtime then rejects, and the layer
+    // would go unavailable after a deploy the build called sound.
+    const annBytes = readFileSync(annPath);
+    const metaBytes = readFileSync(metaPath);
+    const annotations = AiAnnotationsSchema.parse(JSON.parse(annBytes.toString('utf8')));
+    const meta = AiAnnotationsMetaSchema.parse(JSON.parse(metaBytes.toString('utf8')));
+    if (meta.annotations_sha256 !== createHash('sha256').update(annBytes).digest('hex')) {
       return { staged: false, reason: 'AI artifact hash mismatch — skipped' };
     }
     if (meta.annotation_count !== annotations.annotations.length) {
@@ -118,8 +122,11 @@ export function stageAiArtifacts(opts: StageOptions): AiStageResult {
     if (meta.taxonomy_version !== annotations.taxonomy_version) {
       return { staged: false, reason: 'AI artifact taxonomy mismatch — skipped' };
     }
-    copyFileSync(annPath, resolve(opts.distDir, AI_ANNOTATIONS_FILE));
-    copyFileSync(metaPath, resolve(opts.distDir, AI_ANNOTATIONS_META_FILE));
+    // Publish the VALIDATED buffers, not a re-read of the sources: re-opening
+    // them would let a generator rewrite between validation and publication
+    // land unvalidated.
+    writeFileSync(resolve(opts.distDir, AI_ANNOTATIONS_FILE), annBytes);
+    writeFileSync(resolve(opts.distDir, AI_ANNOTATIONS_META_FILE), metaBytes);
     return { staged: true };
   } catch (error) {
     return { staged: false, reason: error instanceof Error ? error.message : 'AI staging skipped' };
@@ -518,18 +525,23 @@ export function stageDiscoveryArtifacts(opts: StageOptions): DiscoveryStageResul
   }
 
   try {
-    const candidatesText = readFileSync(candidatesPath, 'utf8');
-    const metaText = readFileSync(metaPath, 'utf8');
-    const candidates = DiscoveryCandidatesFileSchema.parse(JSON.parse(candidatesText));
-    const meta = DiscoveryCandidatesMetaSchema.parse(JSON.parse(metaText));
-    if (meta.dataset_sha !== sha256Hex(candidatesText)) {
+    // BYTES, read once — same reasoning as the AI pair above: build-side
+    // acceptance must agree with the runtime loader's byte-exact check.
+    const candidatesBytes = readFileSync(candidatesPath);
+    const metaBytes = readFileSync(metaPath);
+    const candidates = DiscoveryCandidatesFileSchema.parse(
+      JSON.parse(candidatesBytes.toString('utf8')),
+    );
+    const meta = DiscoveryCandidatesMetaSchema.parse(JSON.parse(metaBytes.toString('utf8')));
+    if (meta.dataset_sha !== createHash('sha256').update(candidatesBytes).digest('hex')) {
       return { staged: false, reason: 'discovery artifact hash mismatch — skipped' };
     }
     if (meta.candidate_count !== candidates.candidates.length) {
       return { staged: false, reason: 'discovery artifact count mismatch — skipped' };
     }
-    copyFileSync(candidatesPath, resolve(opts.distDir, DISCOVERY_CANDIDATES_FILE));
-    copyFileSync(metaPath, resolve(opts.distDir, DISCOVERY_CANDIDATES_META_FILE));
+    // Publish the VALIDATED buffers, not a re-read of the sources.
+    writeFileSync(resolve(opts.distDir, DISCOVERY_CANDIDATES_FILE), candidatesBytes);
+    writeFileSync(resolve(opts.distDir, DISCOVERY_CANDIDATES_META_FILE), metaBytes);
     return { staged: true };
   } catch (error) {
     return {

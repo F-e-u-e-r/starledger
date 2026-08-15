@@ -75,3 +75,79 @@ describe('AI artifact staging (fail-soft publication)', () => {
     expect(existsSync(join(distDir, AI_ANNOTATIONS_FILE))).toBe(false);
   });
 });
+
+/**
+ * BUILD/RUNTIME BYTE AGREEMENT (owner ruling, round-5 class closure).
+ *
+ * Same contract as the discovery pair: the runtime loader verifies the exact
+ * received bytes, so the build must too. The trap is deliberately NOT a BOM —
+ * a literal U+FFFD's three UTF-8 bytes become a bare 0xFF, which decodes back
+ * to U+FFFD. That kills the whole `hash(decode(bytes))` mutant rather than one
+ * prefix special case.
+ */
+describe('AI build-side integrity is a BYTE contract', () => {
+  function pairWithReplacementChar(): { annotationsBytes: Buffer; meta: string } {
+    const annotationsText = serializeAnnotations([
+      {
+        node_id: 'R_1',
+        category: 'developer-tools',
+        tags: ['automation', 'cli'],
+        summary:
+          'A concise, factual description \uFFFD of what this repository does, who it is for, and why it is useful to developers.',
+        source: {
+          kind: 'metadata',
+          readme_path: null,
+          readme_oid: null,
+          repo_metadata_sha256: 'b'.repeat(64),
+          fingerprint: 'c'.repeat(64),
+        },
+        generation: {
+          executor_kind: 'claude-routine',
+          execution_profile_version: 'agent-v1',
+          model_label: 'informational-only',
+          prompt_version: 'classify-v1',
+          generated_at: '2026-06-20T00:00:00Z',
+        },
+      },
+    ]);
+    const annotationsBytes = Buffer.from(annotationsText, 'utf8');
+    const meta = serializeAiAnnotationsMeta(
+      buildAiAnnotationsMeta({
+        annotationsBytes: annotationsText,
+        annotationCount: 1,
+        datasetSha256: 'd'.repeat(64),
+        generatedAt: '2026-06-21T00:00:00Z',
+      }),
+    );
+    return { annotationsBytes, meta };
+  }
+
+  it('CONTROL: the unmutated bytes stage', () => {
+    const { dataDir, distDir } = dirs();
+    const { annotationsBytes, meta } = pairWithReplacementChar();
+    writeFileSync(join(dataDir, AI_ANNOTATIONS_FILE), annotationsBytes);
+    writeFileSync(join(dataDir, AI_ANNOTATIONS_META_FILE), meta);
+    expect(stageAiArtifacts({ dataDir, distDir }).staged).toBe(true);
+  });
+
+  it('skips a byte mutation that decodes to identical text', () => {
+    const { dataDir, distDir } = dirs();
+    const { annotationsBytes, meta } = pairWithReplacementChar();
+    const at = annotationsBytes.indexOf(Buffer.from([0xef, 0xbf, 0xbd]));
+    expect(at).toBeGreaterThan(-1);
+    const mutated = Buffer.concat([
+      annotationsBytes.subarray(0, at),
+      Buffer.from([0xff]),
+      annotationsBytes.subarray(at + 3),
+    ]);
+    expect(mutated.equals(annotationsBytes)).toBe(false);
+    expect(mutated.toString('utf8')).toBe(annotationsBytes.toString('utf8'));
+
+    writeFileSync(join(dataDir, AI_ANNOTATIONS_FILE), mutated);
+    writeFileSync(join(dataDir, AI_ANNOTATIONS_META_FILE), meta);
+    const result = stageAiArtifacts({ dataDir, distDir });
+    expect(result.staged).toBe(false);
+    expect(result.reason).toContain('hash mismatch');
+    expect(existsSync(join(distDir, AI_ANNOTATIONS_FILE))).toBe(false);
+  });
+});

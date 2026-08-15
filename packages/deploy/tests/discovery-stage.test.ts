@@ -134,3 +134,61 @@ describe('Discovery artifact staging (fail-soft publication)', () => {
     expect(existsSync(join(distDir, DISCOVERY_CANDIDATES_FILE))).toBe(false);
   });
 });
+
+/**
+ * BUILD/RUNTIME BYTE AGREEMENT (owner ruling, round-5 class closure).
+ *
+ * The runtime loader verifies the exact received bytes. If the build hashed
+ * DECODED text instead, an artifact whose bytes differ but decode identically
+ * would pass staging and then be rejected at runtime — the layer going
+ * unavailable after a deploy the build called sound.
+ *
+ * The trap is deliberately NOT a BOM: a literal U+FFFD's three UTF-8 bytes are
+ * replaced by a bare 0xFF, which a decoder maps straight back to U+FFFD. This
+ * kills the whole `hash(decode(bytes))` mutant, not just one prefix special
+ * case — a "string hash plus a BOM check" fix still fails here.
+ */
+describe('discovery build-side integrity is a BYTE contract', () => {
+  function pairWithReplacementChar(): { candidatesBytes: Buffer; meta: string } {
+    const pair = validArtifactPair();
+    const doc = JSON.parse(pair.candidates) as {
+      candidates: { description: string }[];
+    };
+    doc.candidates[0]!.description = 'A test repo \uFFFD here';
+    const candidatesText = JSON.stringify(doc, null, 2) + '\n';
+    const candidatesBytes = Buffer.from(candidatesText, 'utf8');
+    const metaDoc = JSON.parse(pair.meta) as Record<string, unknown>;
+    metaDoc.dataset_sha = createHash('sha256').update(candidatesBytes).digest('hex');
+    return { candidatesBytes, meta: JSON.stringify(metaDoc, null, 2) + '\n' };
+  }
+
+  it('CONTROL: the unmutated bytes stage', () => {
+    const { dataDir, distDir } = dirs();
+    const { candidatesBytes, meta } = pairWithReplacementChar();
+    writeFileSync(join(dataDir, DISCOVERY_CANDIDATES_FILE), candidatesBytes);
+    writeFileSync(join(dataDir, DISCOVERY_CANDIDATES_META_FILE), meta);
+    expect(stageDiscoveryArtifacts({ dataDir, distDir }).staged).toBe(true);
+  });
+
+  it('skips a byte mutation that decodes to identical text', () => {
+    const { dataDir, distDir } = dirs();
+    const { candidatesBytes, meta } = pairWithReplacementChar();
+    const at = candidatesBytes.indexOf(Buffer.from([0xef, 0xbf, 0xbd]));
+    expect(at).toBeGreaterThan(-1);
+    const mutated = Buffer.concat([
+      candidatesBytes.subarray(0, at),
+      Buffer.from([0xff]),
+      candidatesBytes.subarray(at + 3),
+    ]);
+    // Preconditions of the trap: bytes differ, decoded text does not.
+    expect(mutated.equals(candidatesBytes)).toBe(false);
+    expect(mutated.toString('utf8')).toBe(candidatesBytes.toString('utf8'));
+
+    writeFileSync(join(dataDir, DISCOVERY_CANDIDATES_FILE), mutated);
+    writeFileSync(join(dataDir, DISCOVERY_CANDIDATES_META_FILE), meta);
+    const result = stageDiscoveryArtifacts({ dataDir, distDir });
+    expect(result.staged).toBe(false);
+    expect(result.reason).toContain('hash mismatch');
+    expect(existsSync(join(distDir, DISCOVERY_CANDIDATES_FILE))).toBe(false);
+  });
+});
