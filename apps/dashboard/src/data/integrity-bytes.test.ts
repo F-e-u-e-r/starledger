@@ -165,7 +165,15 @@ describe('INTEG-BYTES: stars integrity is verified over received bytes', () => {
     // The digest MATCHES these bytes, so this is not an integrity rejection —
     // it must fail because the BOM is not silently eaten.
     expect(sha256OfBytes(bomBytes)).toBe(JSON.parse(bomMeta).stars_sha256);
-    await expect(loadStars({ fetchImpl })).rejects.toBeInstanceOf(DataLoadError);
+    // Assert the KIND, not just that it threw. A digest-over-decoded-text
+    // implementation also rejects this fixture — but as an INTEGRITY mismatch,
+    // the right answer for the wrong reason (review finding). Only a
+    // byte-digest + BOM-preserving decode reaches the parse stage, so `schema`
+    // is what proves the decoder is the thing being pinned.
+    await expect(loadStars({ fetchImpl })).rejects.toMatchObject({
+      name: 'DataLoadError',
+      kind: 'schema',
+    });
   });
 
   it('TYPED: a SYNCHRONOUS transport throw is typed too', async () => {

@@ -43,6 +43,22 @@ describe('verifyDatasetIntegrity (BUILD-DATA-1/2)', () => {
     );
   });
 
+  it('rejects a duplicated node_id (build side of the shared invariant)', () => {
+    // The runtime pins this at its own boundary; without a BUILD-side pin a
+    // call-site mutation consuming only the count problem would pass the whole
+    // deploy suite (review finding).
+    const { starsText, metaText } = fixtureTexts();
+    const stars = JSON.parse(starsText) as { repos: Record<string, unknown>[] };
+    stars.repos.push({ ...stars.repos[0] });
+    const dupText = JSON.stringify(stars, null, 2) + '\n';
+    const meta = JSON.parse(metaText) as Record<string, unknown>;
+    meta.stars_sha256 = createHash('sha256').update(Buffer.from(dupText, 'utf8')).digest('hex');
+    meta.repo_count = stars.repos.length; // count is CORRECT — only the id repeats
+    expect(() => verifyDatasetIntegrity(utf8(dupText), JSON.stringify(meta))).toThrow(
+      /duplicate node_id/,
+    );
+  });
+
   it('rejects malformed JSON and schema-invalid data', () => {
     expect(() => verifyDatasetIntegrity(utf8('{not json'), '{}')).toThrow(DatasetIntegrityError);
     const { starsText } = fixtureTexts();
