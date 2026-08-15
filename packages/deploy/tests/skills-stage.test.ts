@@ -1,10 +1,13 @@
 import { createHash } from 'node:crypto';
 import {
   existsSync,
+  lstatSync,
   mkdirSync,
   mkdtempSync,
   readdirSync,
   readFileSync,
+  rmSync,
+  symlinkSync,
   writeFileSync,
 } from 'node:fs';
 import { tmpdir } from 'node:os';
@@ -325,6 +328,77 @@ describe('skills-classification staging (fail-soft publication, P7 §4.10)', () 
   });
 
   /**
+   * Round-3 finding: `existsSync` resolves symlink targets, so a DANGLING
+   * symlink at a destination reported "absent" and was left out of the rollback
+   * ledger — the commit then replaced it and the undo could not put it back,
+   * while the reason still claimed a restore. The ledger keys on the directory
+   * ENTRY (lstat) instead.
+   */
+  it('F1-DANGLING: a dangling symlink destination is restored, not silently destroyed', () => {
+    const { dataDir, distDir } = dirs();
+    const oldMeta = validPair('Old meta entry.');
+    writeFileSync(join(distDir, SKILLS_CLASSIFICATION_META_FILE), oldMeta.meta);
+    // A destination whose entry exists but whose target does not.
+    symlinkSync(join(distDir, 'NO_SUCH_TARGET'), join(distDir, SKILLS_CLASSIFICATION_FILE));
+    expect(existsSync(join(distDir, SKILLS_CLASSIFICATION_FILE))).toBe(false);
+    expect(lstatSync(join(distDir, SKILLS_CLASSIFICATION_FILE)).isSymbolicLink()).toBe(true);
+
+    const newPair = validPair('New candidate entry.');
+    writeFileSync(join(dataDir, SKILLS_CLASSIFICATION_FILE), newPair.artifact);
+    writeFileSync(join(dataDir, SKILLS_CLASSIFICATION_META_FILE), newPair.meta);
+
+    const result = stageSkillsArtifacts(
+      { dataDir, distDir },
+      {
+        beforeCommitStep: (step) => {
+          if (step === 'meta') throw new Error('injected commit failure');
+        },
+      },
+    );
+
+    expect(result.staged).toBe(false);
+    // The pre-existing ENTRY must be back, still a symlink — not replaced by
+    // the candidate artifact and not deleted.
+    expect(lstatSync(join(distDir, SKILLS_CLASSIFICATION_FILE)).isSymbolicLink()).toBe(true);
+    expect(result.reason).not.toContain('could NOT be fully restored');
+  });
+
+  /**
+   * Round-3 finding: the honest-failure branch was claimed but never pinned —
+   * deleting `restoreFailed = true` left the suite green. Making the dist
+   * read-only mid-commit forces both the undo and the restore to fail.
+   */
+  it('F1-HONEST: a restore that cannot complete says so instead of claiming success', () => {
+    const { dataDir, distDir } = dirs();
+    const oldPair = validPair('Old published entry.');
+    writeFileSync(join(distDir, SKILLS_CLASSIFICATION_FILE), oldPair.artifact);
+    writeFileSync(join(distDir, SKILLS_CLASSIFICATION_META_FILE), oldPair.meta);
+    const newPair = validPair('New candidate entry.');
+    writeFileSync(join(dataDir, SKILLS_CLASSIFICATION_FILE), newPair.artifact);
+    writeFileSync(join(dataDir, SKILLS_CLASSIFICATION_META_FILE), newPair.meta);
+
+    const result = stageSkillsArtifacts(
+      { dataDir, distDir },
+      {
+        beforeCommitStep: (step) => {
+          if (step !== 'meta') return;
+          // Destroy the artifact's backup, then fail the commit. The undo can
+          // no longer put the old artifact back, so the result MUST say so.
+          // Deterministic and portable — unlike a permissions trick, which
+          // root would ignore.
+          const backup = readdirSync(distDir).find((name) => name.includes('.staging-bak'));
+          expect(backup, 'a backup must exist for this injection to mean anything').toBeDefined();
+          rmSync(join(distDir, backup!));
+          throw new Error('injected commit failure');
+        },
+      },
+    );
+
+    expect(result.staged).toBe(false);
+    expect(result.reason).toContain('could NOT be fully restored');
+  });
+
+  /**
    * F1 — publication is serialized. Driving a second stage from INSIDE the
    * first one's commit section is the interleaving the reviewers described
    * (A-artifact → B-artifact → B-meta → A-meta, both reporting success). The
@@ -360,6 +434,12 @@ describe('skills-classification staging (fail-soft publication, P7 §4.10)', () 
     expect(inner).not.toBeNull();
     expect(inner!.staged).toBe(false);
     expect(inner!.reason).toContain('another stage');
+    // Pin the stale-lock diagnostic itself: a contended skip must tell an
+    // operator which file to remove if no stage is actually running. Without
+    // this the wording could regress to a bare "another stage" and the
+    // recovery hint would vanish unnoticed (round-3 evidence finding).
+    expect(inner!.reason).toContain('stale');
+    expect(inner!.reason).toContain('.stage-lock');
 
     // The decisive assertion: the published pair is wholly A, never A/B or B/A.
     const publishedArtifact = readFileSync(join(distDir, SKILLS_CLASSIFICATION_FILE), 'utf8');

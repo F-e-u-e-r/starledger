@@ -49,7 +49,15 @@ function pushPaths(yaml: string): string[] {
   const lines = yaml.split('\n');
   const pushAt = lines.findIndex((l) => /^\s{2}push:\s*$/.test(l));
   if (pushAt < 0) throw new Error('pages.yml has no `push:` trigger');
-  const pathsAt = lines.findIndex((l, i) => i > pushAt && /^\s{4}paths:\s*$/.test(l));
+  // The `paths:` must belong to `push:` — stop at the next top-level trigger
+  // key, or a `pull_request.paths` block elsewhere in the file could satisfy
+  // this contract while the push trigger has no filter at all (evidence
+  // finding from the round-3 review).
+  const pushBlockEnd = lines.findIndex((l, i) => i > pushAt && /^\s{2}\S/.test(l));
+  const searchLimit = pushBlockEnd < 0 ? lines.length : pushBlockEnd;
+  const pathsAt = lines.findIndex(
+    (l, i) => i > pushAt && i < searchLimit && /^\s{4}paths:\s*$/.test(l),
+  );
   if (pathsAt < 0) throw new Error('pages.yml `push:` trigger has no `paths:` filter');
 
   const collected: string[] = [];

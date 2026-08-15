@@ -70,8 +70,29 @@ function bytesResponse(bytes: Uint8Array): Response {
 // stars — the canonical base dataset (failure semantics: typed throw)
 // --------------------------------------------------------------------------
 
+/**
+ * Assert that a loader rejects a NON-BOM byte mutation which decodes to
+ * identical text. Without this, every loader could regress to hashing decoded
+ * text plus a BOM special case and keep the suite green (evidence finding from
+ * the round-3 review, which observed that only discovery carried this trap).
+ */
+async function expectRejectsDecodeInvariantMutation(
+  canonicalText: string,
+  load: (body: Uint8Array) => Promise<unknown>,
+  isRejected: (result: unknown) => boolean,
+): Promise<void> {
+  const mutated = collapseReplacementChar(canonicalText);
+  expect(mutated, 'fixture must contain U+FFFD for this trap to exist').not.toBeNull();
+  // Preconditions of the trap: the BYTES differ, the decoded TEXT does not.
+  expect(Buffer.from(mutated!).equals(Buffer.from(utf8(canonicalText)))).toBe(false);
+  expect(new TextDecoder().decode(mutated!)).toBe(canonicalText);
+  expect(isRejected(await load(mutated!))).toBe(true);
+}
+
 describe('INTEG-BYTES: stars integrity is verified over received bytes', () => {
-  const starsText = JSON.stringify(makeStarsFile([makeRepo({ node_id: 'R_1' })]));
+  const starsText = JSON.stringify(
+    makeStarsFile([makeRepo({ node_id: 'R_1', description: 'replacement � inside' })]),
+  );
   const metaJson = JSON.stringify({
     schema_version: '1.0',
     dataset_generated_at: '2026-06-18T00:00:00Z',
@@ -93,6 +114,21 @@ describe('INTEG-BYTES: stars integrity is verified over received bytes', () => {
       DataLoadError,
     );
   });
+
+  it('rejects a NON-BOM byte mutation that decodes to identical text', async () => {
+    await expectRejectsDecodeInvariantMutation(
+      starsText,
+      async (body) => {
+        try {
+          await loadStars({ fetchImpl: starsFetch(body) });
+          return 'loaded';
+        } catch (error) {
+          return error;
+        }
+      },
+      (result) => result instanceof DataLoadError,
+    );
+  });
 });
 
 // --------------------------------------------------------------------------
@@ -103,12 +139,35 @@ describe('INTEG-BYTES: annotations integrity is verified over received bytes', (
   const annText = JSON.stringify({
     schema_version: '1.0',
     taxonomy_version: '1',
-    annotations: [],
+    annotations: [
+      {
+        node_id: 'R_1',
+        category: 'developer-tools',
+        tags: ['automation', 'cli'],
+        // U+FFFD in free text is what makes the non-BOM trap below possible.
+        summary:
+          'A concise, factual description � of what this repository does, who it is for, and why it is useful.',
+        source: {
+          kind: 'metadata',
+          readme_path: null,
+          readme_oid: null,
+          repo_metadata_sha256: 'b'.repeat(64),
+          fingerprint: 'c'.repeat(64),
+        },
+        generation: {
+          executor_kind: 'claude-routine',
+          execution_profile_version: 'agent-v1',
+          model_label: 'informational-only',
+          prompt_version: 'classify-v1',
+          generated_at: '2026-06-20T00:00:00Z',
+        },
+      },
+    ],
   });
   const metaDoc = {
     schema_version: '1.0',
     annotations_sha256: sha256OfBytes(utf8(annText)),
-    annotation_count: 0,
+    annotation_count: 1,
     taxonomy_version: '1',
     dataset_sha256: '0'.repeat(64),
     generated_at: '2026-06-20T00:00:00Z',
@@ -125,6 +184,14 @@ describe('INTEG-BYTES: annotations integrity is verified over received bytes', (
 
   it('rejects a BOM-prefixed body carrying the unmodified digest', async () => {
     await expect(loadAnnotations({ fetchImpl: annFetch(withBom(annText)) })).resolves.toBeNull();
+  });
+
+  it('rejects a NON-BOM byte mutation that decodes to identical text', async () => {
+    await expectRejectsDecodeInvariantMutation(
+      annText,
+      (body) => loadAnnotations({ fetchImpl: annFetch(body) }),
+      (result) => result === null,
+    );
   });
 });
 
@@ -246,7 +313,8 @@ function skillsInput(): SkillsClassificationInput {
         resolution: 'resolved',
         primary_category_id: 'verification-qa',
         secondary_category_ids: [],
-        summary: 'Loader fixture entry.',
+        // U+FFFD in free text is what makes the non-BOM trap possible.
+        summary: 'Loader fixture � entry.',
       },
     ],
   };
@@ -290,5 +358,11 @@ describe('INTEG-BYTES: skills-classification integrity is verified over received
     await expect(
       loadSkillsClassification({ fetchImpl: skillsFetch(withBom(artifactText)) }),
     ).resolves.toBeNull();
+
+    await expectRejectsDecodeInvariantMutation(
+      artifactText,
+      (body) => loadSkillsClassification({ fetchImpl: skillsFetch(body) }),
+      (result) => result === null,
+    );
   });
 });

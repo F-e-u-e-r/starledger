@@ -132,6 +132,14 @@ export interface DiscoveryStageResult {
 export interface SkillsStageResult {
   staged: boolean;
   reason?: string;
+  /**
+   * Set when the publication itself is sound but the dist was left in a state
+   * a later run must know about — currently only an unremovable lock file,
+   * which would make every subsequent stage skip. Surfaced by the CLI: a
+   * cleanup failure that silently disables future staging is exactly the kind
+   * of degradation that must be visible.
+   */
+  warning?: string;
 }
 
 /** Seams for the F1/F4 regressions to inject failures and races at exact points. */
@@ -182,6 +190,18 @@ export interface SkillsStageHooks {
  *
  * `staged: true` therefore means BOTH files of this invocation's validated
  * snapshot are in place — never a mixed pair.
+ *
+ * BOUNDED, NOT CLOSED — crash atomicity. The guarantees above are
+ * exception-safe, not crash-safe: POSIX offers no atomic rename of two
+ * independent files, so a process killed between the two commit renames leaves
+ * a new artifact beside no meta (plus the lock and backups), and no `finally`
+ * can run to report or undo it. What bounds the consequence is the layer's own
+ * design rather than this function: the runtime loader verifies the pair's
+ * digest, so a torn pair fails soft to `unavailable` and the base browser is
+ * unaffected, and the next stage skips with a NAMED stale-lock reason instead
+ * of silently doing nothing. Closing it properly would mean publishing the pair
+ * as one unit (a single file, or a directory swapped atomically) — an artifact
+ * layout change, not a staging change, and out of this slice's scope.
  *
  * Residual, deliberately not closed (review finding F2, owner-accepted): the
  * temporaries are exclusive-CREATED and their contents verified before use, but
@@ -243,11 +263,35 @@ export function stageSkillsArtifacts(
     const created: string[] = [];
     /** Set when a rollback could not put the pre-existing pair back. */
     let restoreFailed = false;
-    const discard = (path: string): void => {
+    /** Set when the lock survives cleanup — every later stage would then skip. */
+    let lockStuck = false;
+    let result: SkillsStageResult;
+    /** Removal that REPORTS its outcome; the caller decides whether it matters. */
+    const discardOk = (path: string): boolean => {
       try {
         rmSync(path, { force: true });
+        return true;
       } catch {
-        /* cleanup must never escalate an abort */
+        return false;
+      }
+    };
+    const discard = (path: string): void => {
+      discardOk(path); // best-effort; used only where failure is truly inert
+    };
+    /**
+     * True when a directory ENTRY exists at `path`, symlinks included.
+     * `existsSync` resolves the target, so it reports FALSE for a dangling
+     * symlink even though the entry is really there — which would leave that
+     * entry out of the rollback ledger and let the commit destroy it
+     * unrecorded (re-review finding; probed: existsSync false, lstat succeeds,
+     * rename over it succeeds).
+     */
+    const entryExists = (path: string): boolean => {
+      try {
+        lstatSync(path);
+        return true;
+      } catch {
+        return false;
       }
     };
 
@@ -263,7 +307,7 @@ export function stageSkillsArtifacts(
       // Destination shape is re-checked INSIDE the lock: a plan-time check
       // would already be stale by the time the commit section runs.
       for (const destination of [distArtifact, distMeta]) {
-        if (existsSync(destination) && lstatSync(destination).isDirectory()) {
+        if (entryExists(destination) && lstatSync(destination).isDirectory()) {
           throw new Error(`destination is a directory: ${destination}`);
         }
       }
@@ -297,12 +341,12 @@ export function stageSkillsArtifacts(
       let committed = false;
       try {
         hooks.beforeMoveAside?.('artifact');
-        if (existsSync(distArtifact)) {
+        if (entryExists(distArtifact)) {
           renameSync(distArtifact, bakArtifact);
           movedAside.push([bakArtifact, distArtifact]);
         }
         hooks.beforeMoveAside?.('meta');
-        if (existsSync(distMeta)) {
+        if (entryExists(distMeta)) {
           renameSync(distMeta, bakMeta);
           movedAside.push([bakMeta, distMeta]);
         }
@@ -315,7 +359,12 @@ export function stageSkillsArtifacts(
         committed = true;
       } finally {
         if (!committed) {
-          for (const destination of published) discard(destination);
+          // Removing what WE published is part of the undo, not inert cleanup:
+          // a failure here leaves a partial canonical artifact behind, so it
+          // must reach the reason rather than be swallowed.
+          for (const destination of published) {
+            if (!discardOk(destination)) restoreFailed = true;
+          }
           for (const [backup, destination] of movedAside.reverse()) {
             try {
               renameSync(backup, destination);
@@ -332,12 +381,12 @@ export function stageSkillsArtifacts(
       // out of the `finally` to the abort handler below.
       discard(bakArtifact);
       discard(bakMeta);
-      return { staged: true };
+      result = { staged: true };
     } catch (stageError) {
       for (const path of created) discard(path);
       const detail = stageError instanceof Error ? stageError.message : 'staging failed';
       // Never claim a restore that did not happen (acceptance item D).
-      return {
+      result = {
         staged: false,
         reason: restoreFailed
           ? `skills-classification staging aborted AND the pre-existing pair could NOT be fully restored — inspect the .staging-bak files in the dist (${detail})`
@@ -347,10 +396,16 @@ export function stageSkillsArtifacts(
       try {
         closeSync(lockFd);
       } catch {
-        /* the lock file is removed regardless */
+        /* the descriptor is irrelevant once the file is gone */
       }
-      discard(lockPath);
+      // A lock that cannot be removed makes EVERY later stage skip. That is a
+      // silent disable if it is only swallowed, so it rides out on the result.
+      lockStuck = !discardOk(lockPath);
     }
+    if (lockStuck) {
+      result.warning = `the staging lock ${lockPath} could not be removed — later stages will skip until it is deleted`;
+    }
+    return result;
   } catch (error) {
     return {
       staged: false,

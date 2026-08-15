@@ -63,6 +63,11 @@ async function main(): Promise<void> {
           skills.staged ? 'staged' : `skipped (${skills.reason})`
         }`,
       );
+      // A warning means the publication is fine but the dist was left in a
+      // state a later run must know about — never swallow it.
+      if (skills.warning) {
+        console.warn(`[deploy] WARNING skills-classification: ${skills.warning}`);
+      }
       break;
     }
     case 'verify': {
