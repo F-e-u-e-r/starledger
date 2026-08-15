@@ -84,6 +84,30 @@ describe('useSkillsClassification — availability state machine (§4.10, locked
     expect(result.current.data).not.toBeNull();
   });
 
+  /**
+   * PRODUCTION DEFAULT PATH (review finding). Every other hook and App test
+   * INJECTS a loader, so the branch production actually takes — no loader, fall
+   * through to the real `loadSkillsClassification` — was never executed. A
+   * broken default would leave classification permanently unloaded in
+   * production while the entire suite stayed green.
+   */
+  it('DEFAULT-PATH: with no loader injected, the real loader is driven against the artifacts', async () => {
+    const requested: string[] = [];
+    const original = globalThis.fetch;
+    globalThis.fetch = (async (input: RequestInfo | URL) => {
+      requested.push(String(input));
+      return new Response('', { status: 404 });
+    }) as typeof fetch;
+    try {
+      const { result } = renderHook(() => useSkillsClassification());
+      await waitFor(() => expect(result.current.status).toBe('unavailable'));
+    } finally {
+      globalThis.fetch = original;
+    }
+    // The default branch must reach the real artifact, not silently no-op.
+    expect(requested.some((url) => url.includes('skills-classification-meta.json'))).toBe(true);
+  });
+
   it('F3-LOOP: an unstable inline loader does not scale load count with rerender count', async () => {
     let calls = 0;
     // An inline arrow: a NEW function identity on every single render.

@@ -13,7 +13,7 @@
  * uses the browser `crypto.subtle`.
  */
 import { AiAnnotationsMetaSchema, AiAnnotationsSchema } from '@starred/ai-schema/contracts';
-import { readBytesVerified } from './integrity';
+import { readBytesVerified, readMetaJson } from './integrity';
 
 export interface RepoAnnotation {
   category: string;
@@ -84,7 +84,7 @@ export async function loadAnnotations(
   try {
     const metaRes = await doFetch(`${base}ai-annotations-meta.json`, { cache: 'no-cache' });
     if (!metaRes.ok) return null;
-    const metaParsed = AiAnnotationsMetaSchema.safeParse(await metaRes.json());
+    const metaParsed = AiAnnotationsMetaSchema.safeParse(await readMetaJson(metaRes));
     if (!metaParsed.success) return null;
     const meta = metaParsed.data;
 

@@ -210,7 +210,13 @@ export async function staticSmoke(opts: VerifyOptions): Promise<VerifyResult> {
   try {
     const metaRes = await fetch(`${origin}${base}${DATASET_META_FILE}`);
     if (!metaRes.ok) throw new Error(`${DATASET_META_FILE} → HTTP ${metaRes.status}`);
-    const metaText = await metaRes.text();
+    // Decoded WITHOUT swallowing a BOM, matching both the build's
+    // `Buffer.toString('utf8')` and the runtime's decoder. `Response.text()`
+    // strips one, so a BOM-prefixed meta would pass this live smoke while the
+    // build and the browser both refuse it (review finding).
+    const metaText = new TextDecoder('utf-8', { ignoreBOM: true }).decode(
+      new Uint8Array(await metaRes.arrayBuffer()),
+    );
     const sha = (JSON.parse(metaText) as { stars_sha256: string }).stars_sha256;
 
     const starsRes = await fetch(`${origin}${base}${STARS_FILE}?sha=${sha}`);

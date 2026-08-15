@@ -44,3 +44,21 @@ export async function readBytesVerified(
   // this flag both refuse a BOM instead of disagreeing about it.
   return new TextDecoder('utf-8', { ignoreBOM: true }).decode(bytes);
 }
+
+/**
+ * Read a META document verbatim.
+ *
+ * `Response.json()` decodes with a BOM-STRIPPING decoder, so a BOM-prefixed
+ * meta parses at runtime while the build's `Buffer.toString('utf8')` keeps
+ * U+FEFF and `JSON.parse` rejects it — the two ends accepting different
+ * artifacts. Fixing that for the artifact body alone left the META half of
+ * every pair diverging (review finding). Both halves now decode the same way:
+ * a BOM is an ordinary character and JSON parsing refuses it on both sides.
+ *
+ * Throws whatever `JSON.parse` throws; callers map it onto their own failure
+ * semantics.
+ */
+export async function readMetaJson(res: Response): Promise<unknown> {
+  const bytes = await res.arrayBuffer();
+  return JSON.parse(new TextDecoder('utf-8', { ignoreBOM: true }).decode(bytes));
+}

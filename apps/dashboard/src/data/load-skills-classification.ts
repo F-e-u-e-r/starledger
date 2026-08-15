@@ -29,7 +29,7 @@ import {
   type SkillsCategory,
   type SkillsScope,
 } from '@starred/skills-schema/contracts';
-import { readBytesVerified } from './integrity';
+import { readBytesVerified, readMetaJson } from './integrity';
 
 /** Runtime classification for one starred repo (joined by node_id only). */
 export interface RepoSkillsClassification {
@@ -82,7 +82,7 @@ export async function loadSkillsClassification(
       cache: 'no-cache',
     });
     if (!metaRes.ok) return null;
-    const metaParsed = SkillsClassificationMetaSchema.safeParse(await metaRes.json());
+    const metaParsed = SkillsClassificationMetaSchema.safeParse(await readMetaJson(metaRes));
     if (!metaParsed.success) return null;
     const meta = metaParsed.data;
 

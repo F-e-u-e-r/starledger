@@ -455,8 +455,12 @@ describe('skills-classification staging (fail-soft publication, P7 §4.10)', () 
     const result = stageSkillsArtifacts(
       { dataDir, distDir },
       {
+        // Scoped to the DIST path only. Throwing for every path would abort at
+        // the SOURCE probe long before the destination ledger is consulted, so
+        // the test would pass with destination handling reverted to a catch-all
+        // — it would pin the wrong step entirely (review finding).
         lstatImpl: ((path: string) => {
-          if (String(path).endsWith(SKILLS_CLASSIFICATION_FILE)) {
+          if (String(path).startsWith(distDir)) {
             const error = new Error('simulated device failure') as NodeJS.ErrnoException;
             error.code = 'EIO';
             throw error;
@@ -714,6 +718,22 @@ describe('skills staging — round-6 closure pins', () => {
     const result = stageSkillsArtifacts({ dataDir, distDir });
     expect(result.staged).toBe(false);
     expect(result.reason).toContain('hash mismatch');
+  });
+
+  it('GUARD: the post-publish digest check actually fires on a mismatch', () => {
+    const { dataDir, distDir } = dirs();
+    const pair = validPair();
+    writeFileSync(join(dataDir, SKILLS_CLASSIFICATION_FILE), pair.artifact);
+    writeFileSync(join(dataDir, SKILLS_CLASSIFICATION_META_FILE), pair.meta);
+    const result = stageSkillsArtifacts(
+      { dataDir, distDir },
+      {
+        afterCommit: () =>
+          writeFileSync(join(distDir, SKILLS_CLASSIFICATION_FILE), 'CORRUPTED AFTER COMMIT'),
+      },
+    );
+    expect(result.staged).toBe(false);
+    expect(result.reason).toContain('does not match the verified digest');
   });
 
   it('BUILD-BYTES CONTROL: the unmutated fixture stages', () => {

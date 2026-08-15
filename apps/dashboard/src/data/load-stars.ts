@@ -5,7 +5,7 @@ import {
   StarsFileSchema,
   checkCanonicalDatasetInvariants,
 } from '@starred/schema';
-import { readBytesVerified } from './integrity';
+import { readBytesVerified, readMetaJson } from './integrity';
 
 export type DataLoadKind = 'fetch' | 'schema' | 'integrity';
 
@@ -53,9 +53,16 @@ async function fetchSnapshot(base: string, doFetch: typeof fetch): Promise<Snaps
     'dataset-meta.json unreachable',
   );
   if (!metaRes.ok) throw new DataLoadError(`dataset-meta.json HTTP ${metaRes.status}`, 'fetch');
-  const metaJson = await metaRes.json().catch((error: unknown) => {
-    throw new DataLoadError(`dataset-meta.json is not readable JSON: ${describe(error)}`, 'schema');
-  });
+  // Through the thunk boundary for the same reason as the fetch above: calling
+  // it first and attaching `.catch` afterwards leaves a SYNCHRONOUS throw
+  // untyped. `readMetaJson` also decodes without swallowing a BOM, so meta
+  // acceptance matches the build's instead of diverging on the pair's other
+  // half (review findings).
+  const metaJson = await typedStep(
+    () => readMetaJson(metaRes),
+    'dataset-meta.json is not readable JSON',
+    'schema',
+  );
   const metaParsed = DatasetMetaSchema.safeParse(metaJson);
   if (!metaParsed.success) throw new DataLoadError('dataset-meta.json failed validation', 'schema');
   const meta = metaParsed.data;
@@ -83,12 +90,16 @@ function describe(error: unknown): string {
  * escapes untyped and the UI falls back to its unknown-error path. Invoking
  * through a thunk puts both the call and its rejection inside the boundary.
  */
-async function typedFetch(call: () => Promise<Response>, label: string): Promise<Response> {
+async function typedStep<T>(call: () => Promise<T>, label: string, kind: DataLoadKind): Promise<T> {
   try {
     return await call();
   } catch (error) {
-    throw new DataLoadError(`${label}: ${describe(error)}`, 'fetch');
+    throw new DataLoadError(`${label}: ${describe(error)}`, kind);
   }
+}
+
+async function typedFetch(call: () => Promise<Response>, label: string): Promise<Response> {
+  return typedStep(call, label, 'fetch');
 }
 
 /**

@@ -70,6 +70,12 @@ export interface DashboardStageHooks {
    * not. Injecting later would pass against both and pin nothing.
    */
   beforePublish?: () => void;
+  /**
+   * Invoked after the buffers are written and BEFORE the published bytes are
+   * re-hashed. The guard is a DETECTOR, and a detector nobody has seen fire is
+   * not evidence — this is the only point from which its firing can be driven.
+   */
+  afterPublish?: () => void;
 }
 
 export function stageDashboardData(
@@ -100,8 +106,31 @@ export function stageDashboardData(
   // bytes nobody checked — a generator rewriting stars.json between validation
   // and publication would ship unvalidated data under the verified hash, and
   // for the CANONICAL dataset that is the base dashboard's ground truth.
-  writeFileSync(resolve(distDir, STARS_FILE), starsBytes);
+  const distStars = resolve(distDir, STARS_FILE);
+  writeFileSync(distStars, starsBytes);
   writeFileSync(resolve(distDir, DATASET_META_FILE), Buffer.from(metaText, 'utf8'));
+
+  // STRUCTURAL guard, not a test seam. Review showed that ANY injection point
+  // the implementation itself invokes can be defeated by re-reading the source
+  // just before it — including re-assigning the validated buffer, which also
+  // defeats a read-back comparing against that buffer. So compare what actually
+  // LANDED against the digest recorded in META, which no rewrite of the source
+  // can influence. "Published == verified" is now enforced, not asserted.
+  hooks.afterPublish?.();
+  const distMeta = resolve(distDir, DATASET_META_FILE);
+  if (!readFileSync(distMeta).equals(Buffer.from(metaText, 'utf8'))) {
+    // Meta carries no self-digest, so this is a read-back rather than a digest
+    // guard — weaker, and named as such: it catches a re-read regression on the
+    // meta half, which the stars digest guard cannot see.
+    throw new Error(`published ${DATASET_META_FILE} does not match the validated bytes`);
+  }
+  const publishedSha = createHash('sha256').update(readFileSync(distStars)).digest('hex');
+  if (publishedSha !== verified.meta.stars_sha256) {
+    throw new Error(
+      `published ${STARS_FILE} does not match the verified digest ` +
+        `(published ${publishedSha.slice(0, 12)}…, expected ${verified.meta.stars_sha256.slice(0, 12)}…)`,
+    );
+  }
 
   return { repoCount: verified.meta.repo_count, sha256: verified.sha256 };
 }
@@ -116,7 +145,12 @@ export interface AiStageResult {
  * or hash-mismatched pair is skipped (never throws), so an AI problem can never
  * block the canonical Pages deployment. The dashboard validates again at runtime.
  */
-export function stageAiArtifacts(opts: StageOptions): AiStageResult {
+/** Minimal seam so the post-publish guard below can be shown to FIRE. */
+export interface OptionalPairHooks {
+  afterPublish?: () => void;
+}
+
+export function stageAiArtifacts(opts: StageOptions, hooks: OptionalPairHooks = {}): AiStageResult {
   const annPath = resolve(opts.dataDir, AI_ANNOTATIONS_FILE);
   const metaPath = resolve(opts.dataDir, AI_ANNOTATIONS_META_FILE);
   if (!existsSync(annPath) || !existsSync(metaPath)) {
@@ -143,8 +177,21 @@ export function stageAiArtifacts(opts: StageOptions): AiStageResult {
     // Publish the VALIDATED buffers, not a re-read of the sources: re-opening
     // them would let a generator rewrite between validation and publication
     // land unvalidated.
-    writeFileSync(resolve(opts.distDir, AI_ANNOTATIONS_FILE), annBytes);
+    const distAnn = resolve(opts.distDir, AI_ANNOTATIONS_FILE);
+    writeFileSync(distAnn, annBytes);
     writeFileSync(resolve(opts.distDir, AI_ANNOTATIONS_META_FILE), metaBytes);
+    hooks.afterPublish?.();
+    // STRUCTURAL guard: what LANDED must match the digest recorded in meta.
+    // This ENFORCES "published == validated" rather than asserting it, and no
+    // source rewrite or buffer re-assignment can influence the comparison.
+    if (
+      createHash('sha256').update(readFileSync(distAnn)).digest('hex') !== meta.annotations_sha256
+    ) {
+      return {
+        staged: false,
+        reason: 'AI artifact published bytes do not match the verified digest',
+      };
+    }
     return { staged: true };
   } catch (error) {
     return { staged: false, reason: error instanceof Error ? error.message : 'AI staging skipped' };
@@ -217,6 +264,11 @@ export interface SkillsStageHooks {
   beforeMoveAside?: (step: 'artifact' | 'meta') => void;
   /** Invoked immediately before each `rename` of the commit section. */
   beforeCommitStep?: (step: 'artifact' | 'meta') => void;
+  /**
+   * Invoked after both commit renames and BEFORE the published digest check.
+   * The guard is a DETECTOR; a detector nobody has seen fire is not evidence.
+   */
+  afterCommit?: () => void;
   /**
    * Injectable `lstat`, following the precedent set when the generator's
    * prior-artifact read needed an errno seam: a real filesystem cannot be made
@@ -497,6 +549,15 @@ export function stageSkillsArtifacts(
       // derived `.staging-bak` paths unconditionally deletes a foreign file
       // that merely happens to sit at one of them — the very ownership defect
       // the ledger exists to prevent, reintroduced on the success path.
+      // STRUCTURAL guard (see stageDashboardData): compare what LANDED against
+      // the digest recorded in meta, which no source rewrite — and no buffer
+      // re-assignment — can influence.
+      hooks.afterCommit?.();
+      const publishedSha = createHash('sha256').update(readFileSync(distArtifact)).digest('hex');
+      if (publishedSha !== meta.classification_sha256) {
+        throw new Error('published skills-classification does not match the verified digest');
+      }
+
       for (const [backup] of movedAside) discard(backup);
       result = { staged: true };
     } catch (stageError) {
@@ -550,7 +611,10 @@ export function stageSkillsArtifacts(
  * artifacts. The dashboard performs the same schema/hash/count checks at
  * runtime, but Pages should only publish artifacts that are internally coherent.
  */
-export function stageDiscoveryArtifacts(opts: StageOptions): DiscoveryStageResult {
+export function stageDiscoveryArtifacts(
+  opts: StageOptions,
+  hooks: OptionalPairHooks = {},
+): DiscoveryStageResult {
   const candidatesPath = resolve(opts.dataDir, DISCOVERY_CANDIDATES_FILE);
   const metaPath = resolve(opts.dataDir, DISCOVERY_CANDIDATES_META_FILE);
   if (!existsSync(candidatesPath) && !existsSync(metaPath)) {
@@ -576,8 +640,19 @@ export function stageDiscoveryArtifacts(opts: StageOptions): DiscoveryStageResul
       return { staged: false, reason: 'discovery artifact count mismatch — skipped' };
     }
     // Publish the VALIDATED buffers, not a re-read of the sources.
-    writeFileSync(resolve(opts.distDir, DISCOVERY_CANDIDATES_FILE), candidatesBytes);
+    const distCandidates = resolve(opts.distDir, DISCOVERY_CANDIDATES_FILE);
+    writeFileSync(distCandidates, candidatesBytes);
     writeFileSync(resolve(opts.distDir, DISCOVERY_CANDIDATES_META_FILE), metaBytes);
+    hooks.afterPublish?.();
+    // STRUCTURAL guard, as for the AI pair above.
+    if (
+      createHash('sha256').update(readFileSync(distCandidates)).digest('hex') !== meta.dataset_sha
+    ) {
+      return {
+        staged: false,
+        reason: 'discovery artifact published bytes do not match the verified digest',
+      };
+    }
     return { staged: true };
   } catch (error) {
     return {

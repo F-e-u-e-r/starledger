@@ -192,3 +192,20 @@ describe('discovery build-side integrity is a BYTE contract', () => {
     expect(existsSync(join(distDir, DISCOVERY_CANDIDATES_FILE))).toBe(false);
   });
 });
+
+describe('stageDiscoveryArtifacts — the post-publish guard fires', () => {
+  it('GUARD: corrupted published bytes are refused, not reported as staged', () => {
+    const { dataDir, distDir } = dirs();
+    const pair = validArtifactPair();
+    const artifact = pair.candidates;
+    const meta = pair.meta;
+    writeFileSync(join(dataDir, DISCOVERY_CANDIDATES_FILE), artifact);
+    writeFileSync(join(dataDir, DISCOVERY_CANDIDATES_FILE.replace('.json', '-meta.json')), meta);
+    const result = stageDiscoveryArtifacts(
+      { dataDir, distDir },
+      { afterPublish: () => writeFileSync(join(distDir, DISCOVERY_CANDIDATES_FILE), 'CORRUPTED') },
+    );
+    expect(result.staged).toBe(false);
+    expect(result.reason).toContain('discovery artifact published bytes');
+  });
+});

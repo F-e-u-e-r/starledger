@@ -91,11 +91,8 @@ function fetchOf(
 ): typeof fetch {
   return ((input: RequestInfo | URL) => {
     if (String(input).includes('skills-classification-meta.json')) {
-      return Promise.resolve({
-        ok: meta.ok,
-        status: meta.ok ? 200 : 404,
-        json: () => Promise.resolve(JSON.parse(meta.text ?? 'null')),
-      } as unknown as Response);
+      // A REAL Response for meta too — the loader reads it as BYTES now.
+      return Promise.resolve(new Response(meta.text ?? '', { status: meta.ok ? 200 : 404 }));
     }
     // A REAL Response for the artifact body: integrity is a byte contract, and
     // a double exposing only `text()` cannot express the bytes-vs-decoded-text
@@ -157,11 +154,7 @@ describe('loadSkillsClassification — §4.10 acceptance matrix, loader rows', (
     const { metaText } = await validPair();
     const readRejectingFetch = ((input: RequestInfo | URL) => {
       if (String(input).includes('skills-classification-meta.json')) {
-        return Promise.resolve({
-          ok: true,
-          status: 200,
-          json: () => Promise.resolve(JSON.parse(metaText)),
-        } as unknown as Response);
+        return Promise.resolve(new Response(metaText, { status: 200 }));
       }
       // The double must reject on the method the loader ACTUALLY calls. An
       // earlier version only implemented a rejecting `text()`, so it passed

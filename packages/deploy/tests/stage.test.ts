@@ -98,6 +98,22 @@ describe('stageDashboardData enforces the BYTE contract at its own call site', (
     expect(readFileSync(join(distDir, STARS_FILE)).equals(canonical)).toBe(true);
   });
 
+  it('GUARD: the post-publish digest check actually fires on a mismatch', () => {
+    // The structural guard exists because any implementation-invoked seam can
+    // be defeated by re-reading just before it. A detector nobody has watched
+    // fire is not evidence, so drive it: corrupt what landed, and staging must
+    // refuse rather than report success.
+    const { dataDir, distDir } = setup();
+    const { canonical } = fixtureWithReplacementChar(dataDir);
+    writeFileSync(join(dataDir, STARS_FILE), canonical);
+    expect(() =>
+      stageDashboardData(
+        { dataDir, distDir },
+        { afterPublish: () => writeFileSync(join(distDir, STARS_FILE), 'CORRUPTED AFTER WRITE') },
+      ),
+    ).toThrow(/does not match the verified digest/);
+  });
+
   it('CONTROL: the unmutated bytes stage, and the PUBLISHED bytes are the validated ones', () => {
     const { dataDir, distDir } = setup();
     const { canonical } = fixtureWithReplacementChar(dataDir);

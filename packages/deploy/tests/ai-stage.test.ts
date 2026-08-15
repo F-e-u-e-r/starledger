@@ -151,3 +151,20 @@ describe('AI build-side integrity is a BYTE contract', () => {
     expect(existsSync(join(distDir, AI_ANNOTATIONS_FILE))).toBe(false);
   });
 });
+
+describe('stageAiArtifacts — the post-publish guard fires', () => {
+  it('GUARD: corrupted published bytes are refused, not reported as staged', () => {
+    const { dataDir, distDir } = dirs();
+    const pair = validArtifactPair();
+    const artifact = pair.annotations;
+    const meta = pair.meta;
+    writeFileSync(join(dataDir, AI_ANNOTATIONS_FILE), artifact);
+    writeFileSync(join(dataDir, AI_ANNOTATIONS_FILE.replace('.json', '-meta.json')), meta);
+    const result = stageAiArtifacts(
+      { dataDir, distDir },
+      { afterPublish: () => writeFileSync(join(distDir, AI_ANNOTATIONS_FILE), 'CORRUPTED') },
+    );
+    expect(result.staged).toBe(false);
+    expect(result.reason).toContain('AI artifact published bytes');
+  });
+});

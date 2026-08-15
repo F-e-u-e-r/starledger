@@ -3,7 +3,7 @@ import {
   DiscoveryCandidatesFileSchema,
   DiscoveryCandidatesMetaSchema,
 } from '@starred/discovery/contracts';
-import { readBytesVerified } from './integrity';
+import { readBytesVerified, readMetaJson } from './integrity';
 
 export interface LoadedDiscovery {
   candidates: DiscoveryCandidate[];
@@ -25,7 +25,7 @@ export async function loadDiscovery(
   try {
     const metaRes = await doFetch(`${base}discovery-candidates-meta.json`, { cache: 'no-cache' });
     if (!metaRes.ok) return null;
-    const metaParsed = DiscoveryCandidatesMetaSchema.safeParse(await metaRes.json());
+    const metaParsed = DiscoveryCandidatesMetaSchema.safeParse(await readMetaJson(metaRes));
     if (!metaParsed.success) return null;
     const meta = metaParsed.data;
 

@@ -32,6 +32,20 @@ const LOADER_OPTIONS = [
 const ALLOWED_OPTIONS = new Set(['base', 'fetchImpl']);
 
 function optionNames(source: string, interfaceName: string): string[] {
+  // Exactly ONE declaration, and no intersection/extends: TypeScript MERGES
+  // repeated interface declarations, so a second `interface LoadOptions {
+  // skipIntegrity?: boolean }` elsewhere in the file would add a bypass this
+  // parser never sees (review finding). Same for `extends`/`&`, which can pull
+  // options in from another type.
+  const declarations = [...source.matchAll(new RegExp(`interface\\s+${interfaceName}\\b`, 'g'))];
+  if (declarations.length !== 1) {
+    throw new Error(
+      `${interfaceName} is declared ${declarations.length} times — merged declarations can hide an option`,
+    );
+  }
+  const header = new RegExp(`interface\\s+${interfaceName}\\s+extends\\b`).test(source);
+  if (header)
+    throw new Error(`${interfaceName} extends another type — options must be declared inline`);
   const start = source.indexOf(`interface ${interfaceName} {`);
   if (start < 0) throw new Error(`${interfaceName} not found — rename it here too`);
   const open = source.indexOf('{', start);
@@ -54,6 +68,15 @@ describe('INTEG-SURFACE: loader options are an allowlist, so no opt-out can appe
         true,
       );
     }
+  });
+
+  it('CONTROL: a MERGED second declaration is rejected, not silently ignored', () => {
+    const merged = [
+      'export interface LoadOptions { base?: string; }',
+      'interface LoadOptions { skipIntegrity?: boolean }',
+      '',
+    ].join('\n');
+    expect(() => optionNames(merged, 'LoadOptions')).toThrow(/declared 2 times/);
   });
 
   it('CONTROL: the extractor sees a newly added option', () => {

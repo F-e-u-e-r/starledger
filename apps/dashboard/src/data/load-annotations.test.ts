@@ -50,11 +50,14 @@ function fetchOf(
 ): typeof fetch {
   return ((input: RequestInfo | URL) => {
     if (String(input).includes('ai-annotations-meta.json')) {
-      return Promise.resolve({
-        ok: meta.ok,
-        status: meta.ok ? 200 : 404,
-        json: () => Promise.resolve(meta.body),
-      } as unknown as Response);
+      // A REAL Response for meta too: the loader now reads meta as BYTES so a
+      // BOM cannot be silently swallowed, and a double exposing only `json()`
+      // cannot express that.
+      return Promise.resolve(
+        new Response(meta.body === undefined ? '' : JSON.stringify(meta.body), {
+          status: meta.ok ? 200 : 404,
+        }),
+      );
     }
     // A REAL Response for the artifact body: integrity is a byte contract, and
     // a double exposing only `text()` cannot express the bytes-vs-decoded-text
