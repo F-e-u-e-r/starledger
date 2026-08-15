@@ -144,6 +144,13 @@ export interface SkillsStageHooks {
    * pass against both, and pin nothing.
    */
   beforeStageWrite?: () => void;
+  /**
+   * Invoked immediately before each move-aside of a pre-existing destination.
+   * Moving the old pair aside is a MULTI-STEP mutation of its own, so it needs
+   * its own injection point: a failure between the two moves must still leave
+   * the old pair intact.
+   */
+  beforeMoveAside?: (step: 'artifact' | 'meta') => void;
   /** Invoked immediately before each `rename` of the commit section. */
   beforeCommitStep?: (step: 'artifact' | 'meta') => void;
 }
@@ -228,17 +235,14 @@ export function stageSkillsArtifacts(
     } catch {
       return {
         staged: false,
-        reason: 'skills-classification pair is being published by another stage — skipped',
+        reason: `skills-classification pair is locked by another stage — skipped (if no stage is running, ${lockPath} is stale and can be removed)`,
       };
     }
 
-    const token = randomUUID();
-    const tmpArtifact = `${distArtifact}.${token}.staging-tmp`;
-    const tmpMeta = `${distMeta}.${token}.staging-tmp`;
-    const bakArtifact = `${distArtifact}.${token}.staging-bak`;
-    const bakMeta = `${distMeta}.${token}.staging-bak`;
     /** Only paths THIS invocation created are ever removed. */
     const created: string[] = [];
+    /** Set when a rollback could not put the pre-existing pair back. */
+    let restoreFailed = false;
     const discard = (path: string): void => {
       try {
         rmSync(path, { force: true });
@@ -248,6 +252,14 @@ export function stageSkillsArtifacts(
     };
 
     try {
+      // Named INSIDE the try so that nothing between acquiring the lock and
+      // installing its `finally` can throw and leak the lock file.
+      const token = randomUUID();
+      const tmpArtifact = `${distArtifact}.${token}.staging-tmp`;
+      const tmpMeta = `${distMeta}.${token}.staging-tmp`;
+      const bakArtifact = `${distArtifact}.${token}.staging-bak`;
+      const bakMeta = `${distMeta}.${token}.staging-bak`;
+
       // Destination shape is re-checked INSIDE the lock: a plan-time check
       // would already be stale by the time the commit section runs.
       for (const destination of [distArtifact, distMeta]) {
@@ -270,36 +282,66 @@ export function stageSkillsArtifacts(
         throw new Error('staged temporary does not match the validated snapshot');
       }
 
-      // C. Move any pre-existing pair aside so it can be restored intact.
-      const hadArtifact = existsSync(distArtifact);
-      const hadMeta = existsSync(distMeta);
-      if (hadArtifact) renameSync(distArtifact, bakArtifact);
-      if (hadMeta) renameSync(distMeta, bakMeta);
-
+      // C. PUBLISH UNDER ROLLBACK. Moving the old pair aside is itself part of
+      //    the protected region: an earlier version left those two renames
+      //    outside it, so a failure BETWEEN them stranded the old artifact
+      //    under its backup name while the reason still claimed a restore.
+      //
+      //    Two ledgers make the undo exact. `movedAside` records what to put
+      //    back; `published` records the destinations THIS invocation actually
+      //    wrote — and only those are ever removed. Discarding destinations
+      //    unconditionally would delete a pre-existing file that is still in
+      //    place when the FIRST move-aside is what failed.
+      const movedAside: Array<[backup: string, destination: string]> = [];
+      const published: string[] = [];
+      let committed = false;
       try {
+        hooks.beforeMoveAside?.('artifact');
+        if (existsSync(distArtifact)) {
+          renameSync(distArtifact, bakArtifact);
+          movedAside.push([bakArtifact, distArtifact]);
+        }
+        hooks.beforeMoveAside?.('meta');
+        if (existsSync(distMeta)) {
+          renameSync(distMeta, bakMeta);
+          movedAside.push([bakMeta, distMeta]);
+        }
         hooks.beforeCommitStep?.('artifact');
         renameSync(tmpArtifact, distArtifact);
+        published.push(distArtifact);
         hooks.beforeCommitStep?.('meta');
         renameSync(tmpMeta, distMeta);
-      } catch (commitError) {
-        // Undo this invocation's partial commit, then restore the old pair.
-        discard(distArtifact);
-        discard(distMeta);
-        if (hadArtifact) renameSync(bakArtifact, distArtifact);
-        if (hadMeta) renameSync(bakMeta, distMeta);
-        throw commitError;
+        published.push(distMeta);
+        committed = true;
+      } finally {
+        if (!committed) {
+          for (const destination of published) discard(destination);
+          for (const [backup, destination] of movedAside.reverse()) {
+            try {
+              renameSync(backup, destination);
+            } catch {
+              // Report it rather than pretend; the reason below stops claiming
+              // a restore that did not happen.
+              restoreFailed = true;
+            }
+          }
+        }
       }
 
+      // Only reached on a committed publication — a failure above propagates
+      // out of the `finally` to the abort handler below.
       discard(bakArtifact);
       discard(bakMeta);
       return { staged: true };
     } catch (stageError) {
       for (const path of created) discard(path);
+      const detail = stageError instanceof Error ? stageError.message : 'staging failed';
+      // Never claim a restore that did not happen (acceptance item D).
       return {
         staged: false,
-        reason: `skills-classification staging aborted, any pre-existing pair restored — ${
-          stageError instanceof Error ? stageError.message : 'staging failed'
-        }`,
+        reason: restoreFailed
+          ? `skills-classification staging aborted AND the pre-existing pair could NOT be fully restored — inspect the .staging-bak files in the dist (${detail})`
+          : `skills-classification staging aborted, any pre-existing pair restored — ${detail}`,
       };
     } finally {
       try {

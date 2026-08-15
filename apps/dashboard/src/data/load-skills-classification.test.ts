@@ -163,9 +163,15 @@ describe('loadSkillsClassification — §4.10 acceptance matrix, loader rows', (
           json: () => Promise.resolve(JSON.parse(metaText)),
         } as unknown as Response);
       }
+      // The double must reject on the method the loader ACTUALLY calls. An
+      // earlier version only implemented a rejecting `text()`, so it passed
+      // against both implementations for the wrong reason — the byte-reading
+      // loader merely tripped over a missing `arrayBuffer`, which is a broken
+      // double, not a body-read failure.
       return Promise.resolve({
         ok: true,
         status: 200,
+        arrayBuffer: () => Promise.reject(new Error('stream reset')),
         text: () => Promise.reject(new Error('stream reset')),
       } as unknown as Response);
     }) as typeof fetch;

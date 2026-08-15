@@ -169,8 +169,16 @@ describe('skills-classification staging (fail-soft publication, P7 §4.10)', () 
     // The round-2 destructive implementation copies the new artifact STRAIGHT
     // over the old one before its meta copy fails (EISDIR on the directory),
     // then rmSync-deletes it — either way the old bytes are gone and this
-    // test fails on it. The temp-file implementation aborts with every
-    // destination untouched.
+    // test fails on it.
+    //
+    // SCOPE OF THIS PIN, stated honestly (re-review finding): it discriminates
+    // the ROUND-2 destructive implementation, and nothing newer. Every
+    // temp-file-based version — including the one that later proved to lose the
+    // old artifact when a MOVE-ASIDE failed — passes this scenario, because the
+    // directory destination is rejected before anything is moved. Do not read a
+    // green L1 as evidence that rollback works; that guarantee belongs to
+    // F1-ROLLBACK and F1-MOVEASIDE, each proven by deleting the mechanism it
+    // guards.
     writeFileSync(join(dataDir, SKILLS_CLASSIFICATION_FILE), newPair.artifact);
     writeFileSync(join(dataDir, SKILLS_CLASSIFICATION_META_FILE), newPair.meta);
     const result = stageSkillsArtifacts({ dataDir, distDir });
@@ -276,6 +284,47 @@ describe('skills-classification staging (fail-soft publication, P7 §4.10)', () 
   });
 
   /**
+   * F1 (re-review) — moving the old pair aside is itself a multi-step mutation.
+   * An earlier amendment performed those two renames OUTSIDE the rollback
+   * region, so a failure between them stranded the old artifact under its
+   * backup name while the reason still claimed the pair had been restored.
+   */
+  it('F1-MOVEASIDE: a failure while moving the old pair aside leaves it byte-identical', () => {
+    const { dataDir, distDir } = dirs();
+    const oldPair = validPair('Old published entry.');
+    writeFileSync(join(distDir, SKILLS_CLASSIFICATION_FILE), oldPair.artifact);
+    writeFileSync(join(distDir, SKILLS_CLASSIFICATION_META_FILE), oldPair.meta);
+
+    const newPair = validPair('New candidate entry.');
+    writeFileSync(join(dataDir, SKILLS_CLASSIFICATION_FILE), newPair.artifact);
+    writeFileSync(join(dataDir, SKILLS_CLASSIFICATION_META_FILE), newPair.meta);
+    expect(newPair.artifact).not.toBe(oldPair.artifact);
+
+    const result = stageSkillsArtifacts(
+      { dataDir, distDir },
+      {
+        beforeMoveAside: (step) => {
+          // Fail AFTER the artifact has been moved aside, BEFORE the meta is.
+          if (step === 'meta') throw new Error('injected move-aside failure');
+        },
+      },
+    );
+
+    expect(result.staged).toBe(false);
+    expect(result.reason).not.toContain('could NOT be fully restored');
+    expect(readFileSync(join(distDir, SKILLS_CLASSIFICATION_FILE), 'utf8')).toBe(oldPair.artifact);
+    expect(readFileSync(join(distDir, SKILLS_CLASSIFICATION_META_FILE), 'utf8')).toBe(oldPair.meta);
+    expect(
+      readdirSync(distDir).filter(
+        (name) =>
+          name.includes('.staging-tmp') ||
+          name.includes('.staging-bak') ||
+          name.includes('.stage-lock'),
+      ),
+    ).toEqual([]);
+  });
+
+  /**
    * F1 — publication is serialized. Driving a second stage from INSIDE the
    * first one's commit section is the interleaving the reviewers described
    * (A-artifact → B-artifact → B-meta → A-meta, both reporting success). The
@@ -322,6 +371,18 @@ describe('skills-classification staging (fail-soft publication, P7 §4.10)', () 
   /**
    * F4 — the bytes published are the bytes validated. The source is read once;
    * re-opening it at copy time let a generator rewrite land unvalidated.
+   *
+   * WHAT THIS PIN DOES AND DOES NOT PROVE (re-review finding, recorded rather
+   * than papered over). The injection point is a seam the implementation itself
+   * invokes, so this test cannot bind an arbitrary implementation: one that
+   * re-read both sources immediately BEFORE calling the seam would still pass,
+   * and the pre-amendment code ignores the hooks argument entirely, so against
+   * that exact predecessor this test passes vacuously. Its real evidentiary
+   * weight comes from the mutation proof — replacing the validated-buffer write
+   * with `copyFileSync` from the source turns it red — plus the seam-independent
+   * read-back check in the implementation, which compares the staged temporary
+   * against the validated buffer and so fails any path that publishes different
+   * bytes. Treat those two as the guarantee; treat this test as the scenario.
    */
   it('F4-SNAPSHOT: a source rewritten mid-stage cannot reach the dist', () => {
     const { dataDir, distDir } = dirs();
