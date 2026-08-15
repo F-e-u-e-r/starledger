@@ -3926,6 +3926,29 @@
       }
     },
     {
+      "node_id": "R_kgDOMfskyA",
+      "category": "ai-ml",
+      "tags": [
+        "ai-agents",
+        "llm"
+      ],
+      "summary": "HumanLayer is TypeScript tooling aimed at helping AI coding agents solve hard problems in complex codebases using a human-in-the-loop approach. This repository now serves as a public issues tracker, and its code is largely deprecated in favor of a rebuilt version.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "d0548cfe2fae178f9cce8df7793dd969f4e0ed81",
+        "repo_metadata_sha256": "22ea0a166fcbcc93495acf04ad9a828b6ab957b0c6f14c792801ca9b6d1f2e86",
+        "fingerprint": "9131ccf00f3005c2716b8f9f23bab4f080057c939be72c0bd11c7108c18cc943"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-08-15T06:27:07Z"
+      }
+    },
+    {
       "node_id": "R_kgDOMgio7Q",
       "category": "ai-ml",
       "tags": [
@@ -16636,6 +16659,33 @@
       }
     },
     {
+      "node_id": "R_kgDOT2RUUg",
+      "category": "productivity-automation",
+      "tags": [
+        "api",
+        "authentication",
+        "automation",
+        "bot",
+        "cli",
+        "proxy"
+      ],
+      "summary": "An automation toolkit that scripts account registration for x.ai's Grok, mints and refreshes OAuth tokens via Device Flow, solves Turnstile CAPTCHAs, rotates proxies, and runs an auto-replenish daemon that maintains an account pool and pushes credentials to an API gateway.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "ee409e63cc11b2bfdb4a2a508e3d74f082ffddc5",
+        "repo_metadata_sha256": "2662f91f1dd43c0d944bf3e14cf584562fc989febe87087d20a0aa011d68f7fa",
+        "fingerprint": "be607776922178a4b9d2103c95a1efd5d21eeffb7cd4c17abbddbc8c15cb08dd"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-08-15T06:27:07Z"
+      }
+    },
+    {
       "node_id": "R_kgDOT367kw",
       "category": "productivity-automation",
       "tags": [
@@ -18649,6 +18699,31 @@
         "model_label": "informational-only",
         "prompt_version": "classify-v1",
         "generated_at": "2026-08-02T08:22:03Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOTnyDtQ",
+      "category": "education-reference",
+      "tags": [
+        "frontend",
+        "game",
+        "llm",
+        "visualization"
+      ],
+      "summary": "Promptasy is a browser game for learning prompt engineering by playing: players explore a procedurally generated 3D world and solve challenges by constructing prompts. Scoring runs entirely offline with no backend or model calls, and each teaching shrine cites official vendor documentation.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "7e582c09e0f15a58c10af3aff69590a690bc3f0b",
+        "repo_metadata_sha256": "ebae93793d47d9674163a74336e36e9f1397099bf9f94b6090b46d1b8b1d2d34",
+        "fingerprint": "4aa1fa3837097c213e6d8a790bdb9cb7bc9379457bd1efcdb5beda987ddd2432"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-08-15T06:27:07Z"
       }
     },
     {
