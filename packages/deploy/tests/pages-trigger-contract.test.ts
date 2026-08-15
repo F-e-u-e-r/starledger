@@ -86,4 +86,31 @@ describe('Pages deployment trigger covers every staged root artifact (F5)', () =
       expect(paths).toContain(artifact);
     },
   );
+
+  /**
+   * The parser must read `push:`'s OWN filter. Against the healthy production
+   * workflow an unbounded search happens to land on the right block, so the
+   * bounding is invisible there — this synthetic workflow is what actually
+   * pins it (round-4 evidence finding). Without the bound, a `push:` with NO
+   * paths filter (i.e. every push deploys, or none, depending on the rest of
+   * the file) would be scored using `pull_request`'s list.
+   */
+  it('does not accept a pull_request paths block as the push filter', () => {
+    const synthetic = [
+      'name: Pages',
+      'on:',
+      '  push:',
+      '    branches: [main]',
+      '  pull_request:',
+      '    paths:',
+      "      - 'stars.json'",
+      "      - 'skills-classification.json'",
+      'jobs:',
+      '  build:',
+      '    runs-on: ubuntu-latest',
+      '',
+    ].join('\n');
+
+    expect(() => pushPaths(synthetic)).toThrow(/has no .*paths.* filter/);
+  });
 });

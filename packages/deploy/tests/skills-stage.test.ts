@@ -21,6 +21,7 @@ import { describe, expect, it } from 'vitest';
 import {
   SKILLS_CLASSIFICATION_FILE,
   SKILLS_CLASSIFICATION_META_FILE,
+  formatSkillsStageReport,
   stageSkillsArtifacts,
 } from '../src/stage';
 
@@ -396,6 +397,121 @@ describe('skills-classification staging (fail-soft publication, P7 §4.10)', () 
 
     expect(result.staged).toBe(false);
     expect(result.reason).toContain('could NOT be fully restored');
+  });
+
+  /**
+   * Round-4 finding: F1-HONEST proves the RESTORE branch sets the flag, but not
+   * the other branch — failing to remove a destination this invocation
+   * published. On an initially EMPTY dist there is nothing to restore, so only
+   * that branch can report. Reverting it to a swallowed removal must redden
+   * here even though F1-HONEST stays green.
+   */
+  it('F1-DISCARD-HONEST: a published destination that cannot be removed is reported, not swallowed', () => {
+    const { dataDir, distDir } = dirs();
+    const pair = validPair();
+    writeFileSync(join(dataDir, SKILLS_CLASSIFICATION_FILE), pair.artifact);
+    writeFileSync(join(dataDir, SKILLS_CLASSIFICATION_META_FILE), pair.meta);
+
+    const result = stageSkillsArtifacts(
+      { dataDir, distDir },
+      {
+        beforeCommitStep: (step) => {
+          if (step !== 'meta') return;
+          // The artifact is already published. Turn it into a DIRECTORY so the
+          // undo's `rmSync` (non-recursive) fails — deterministic, and unlike a
+          // permissions trick root cannot bypass it.
+          rmSync(join(distDir, SKILLS_CLASSIFICATION_FILE));
+          mkdirSync(join(distDir, SKILLS_CLASSIFICATION_FILE));
+          throw new Error('injected commit failure');
+        },
+      },
+    );
+
+    expect(result.staged).toBe(false);
+    expect(result.reason).toContain('could NOT be fully restored');
+  });
+
+  /**
+   * Round-4 finding: `entryExists` originally read EVERY `lstat` failure as
+   * absence. Only ENOENT proves absence — a transient EIO/ESTALE would drop a
+   * real pre-existing file from the rollback ledger, let the commit replace it,
+   * and then lose it while still reporting a restore. A real filesystem cannot
+   * be made to return EIO on demand, so the errno is injected (the seam
+   * precedent from the generator's prior-artifact read).
+   */
+  it('F1-ENOENT-ONLY: a non-ENOENT lstat error aborts staging instead of assuming absence', () => {
+    const { dataDir, distDir } = dirs();
+    const oldPair = validPair('Old published entry.');
+    writeFileSync(join(distDir, SKILLS_CLASSIFICATION_FILE), oldPair.artifact);
+    writeFileSync(join(distDir, SKILLS_CLASSIFICATION_META_FILE), oldPair.meta);
+    const newPair = validPair('New candidate entry.');
+    writeFileSync(join(dataDir, SKILLS_CLASSIFICATION_FILE), newPair.artifact);
+    writeFileSync(join(dataDir, SKILLS_CLASSIFICATION_META_FILE), newPair.meta);
+
+    const result = stageSkillsArtifacts(
+      { dataDir, distDir },
+      {
+        lstatImpl: ((path: string) => {
+          if (String(path).endsWith(SKILLS_CLASSIFICATION_FILE)) {
+            const error = new Error('simulated device failure') as NodeJS.ErrnoException;
+            error.code = 'EIO';
+            throw error;
+          }
+          return lstatSync(path);
+        }) as typeof lstatSync,
+      },
+    );
+
+    expect(result.staged).toBe(false);
+    // The decisive part: the OLD pair is still there, byte-identical. Treating
+    // EIO as absence would have let the candidate replace it unrecorded.
+    expect(readFileSync(join(distDir, SKILLS_CLASSIFICATION_FILE), 'utf8')).toBe(oldPair.artifact);
+    expect(readFileSync(join(distDir, SKILLS_CLASSIFICATION_META_FILE), 'utf8')).toBe(oldPair.meta);
+  });
+
+  /**
+   * Round-4 finding: the unremovable-lock warning was produced and printed but
+   * never pinned, so deleting either side left the suite green — and a stuck
+   * lock silently disables every later stage in that dist.
+   */
+  it('LOCK-WARN: a lock that cannot be removed is surfaced on an otherwise successful stage', () => {
+    const { dataDir, distDir } = dirs();
+    const pair = validPair();
+    writeFileSync(join(dataDir, SKILLS_CLASSIFICATION_FILE), pair.artifact);
+    writeFileSync(join(dataDir, SKILLS_CLASSIFICATION_META_FILE), pair.meta);
+
+    const result = stageSkillsArtifacts(
+      { dataDir, distDir },
+      {
+        beforeCommitStep: (step) => {
+          if (step !== 'meta') return;
+          // Replace the lock FILE with a directory and let the commit finish:
+          // publication succeeds, only its cleanup fails.
+          const lock = readdirSync(distDir).find((name) => name.includes('.stage-lock'));
+          expect(lock, 'the lock must exist during the commit section').toBeDefined();
+          rmSync(join(distDir, lock!));
+          mkdirSync(join(distDir, lock!));
+        },
+      },
+    );
+
+    expect(result.staged).toBe(true);
+    expect(result.warning).toBeDefined();
+    expect(result.warning).toContain('.stage-lock');
+    expect(result.warning).toContain('could not be removed');
+
+    // A warning nobody prints is invisible, so pin the operator-facing lines
+    // too — deleting the reporting branch must redden something.
+    const lines = formatSkillsStageReport(result);
+    expect(lines[0]).toContain('staged');
+    expect(lines).toHaveLength(2);
+    expect(lines[1]).toContain('WARNING skills-classification');
+  });
+
+  it('LOCK-WARN: a clean stage reports no warning line', () => {
+    // The negative half: without this, a formatter that ALWAYS emits a warning
+    // line would satisfy the assertions above.
+    expect(formatSkillsStageReport({ staged: true })).toHaveLength(1);
   });
 
   /**

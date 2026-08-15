@@ -142,6 +142,26 @@ export interface SkillsStageResult {
   warning?: string;
 }
 
+/**
+ * The operator-facing lines for a skills staging result.
+ *
+ * Extracted as a pure function so the WARNING path is pinnable: a warning that
+ * is produced but never printed is invisible, and a subprocess CLI test cannot
+ * force a lock-removal failure from the outside. Returning the lines instead of
+ * printing them lets a test assert exactly what an operator would see.
+ */
+export function formatSkillsStageReport(result: SkillsStageResult): string[] {
+  const lines = [
+    `[deploy] Skills-classification artifacts: ${
+      result.staged ? 'staged' : `skipped (${result.reason})`
+    }`,
+  ];
+  if (result.warning) {
+    lines.push(`[deploy] WARNING skills-classification: ${result.warning}`);
+  }
+  return lines;
+}
+
 /** Seams for the F1/F4 regressions to inject failures and races at exact points. */
 export interface SkillsStageHooks {
   /**
@@ -161,6 +181,13 @@ export interface SkillsStageHooks {
   beforeMoveAside?: (step: 'artifact' | 'meta') => void;
   /** Invoked immediately before each `rename` of the commit section. */
   beforeCommitStep?: (step: 'artifact' | 'meta') => void;
+  /**
+   * Injectable `lstat`, following the precedent set when the generator's
+   * prior-artifact read needed an errno seam: a real filesystem cannot be made
+   * to return `EIO`/`ESTALE` on demand, so the only way to pin "any errno other
+   * than ENOENT aborts" is to inject it.
+   */
+  lstatImpl?: typeof lstatSync;
 }
 
 /**
@@ -280,18 +307,27 @@ export function stageSkillsArtifacts(
     };
     /**
      * True when a directory ENTRY exists at `path`, symlinks included.
+     *
      * `existsSync` resolves the target, so it reports FALSE for a dangling
      * symlink even though the entry is really there — which would leave that
      * entry out of the rollback ledger and let the commit destroy it
-     * unrecorded (re-review finding; probed: existsSync false, lstat succeeds,
-     * rename over it succeeds).
+     * unrecorded (probed: existsSync false, lstat succeeds, rename over it
+     * succeeds).
+     *
+     * ONLY `ENOENT` proves absence. A catch-all would read a transient `EIO`
+     * or `ESTALE` as "nothing there", drop a real file from the ledger and lose
+     * it on rollback while still reporting a restore — the same fail-open shape
+     * this repo already fixed once in the generator's prior-artifact read. Any
+     * other errno therefore aborts staging before anything is touched.
      */
+    const lstat = hooks.lstatImpl ?? lstatSync;
     const entryExists = (path: string): boolean => {
       try {
-        lstatSync(path);
+        lstat(path);
         return true;
-      } catch {
-        return false;
+      } catch (error) {
+        if ((error as NodeJS.ErrnoException)?.code === 'ENOENT') return false;
+        throw error;
       }
     };
 

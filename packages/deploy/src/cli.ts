@@ -11,6 +11,7 @@ import {
   stageDashboardData,
   stageDiscoveryArtifacts,
   stageSkillsArtifacts,
+  formatSkillsStageReport,
 } from './stage';
 import { staticSmoke, verifyBuiltArtifact } from './verify';
 
@@ -57,16 +58,12 @@ async function main(): Promise<void> {
           discovery.staged ? 'staged' : `skipped (${discovery.reason})`
         }`,
       );
-      const skills = stageSkillsArtifacts({ dataDir: data, distDir: dist });
-      console.log(
-        `[deploy] Skills-classification artifacts: ${
-          skills.staged ? 'staged' : `skipped (${skills.reason})`
-        }`,
-      );
-      // A warning means the publication is fine but the dist was left in a
-      // state a later run must know about — never swallow it.
-      if (skills.warning) {
-        console.warn(`[deploy] WARNING skills-classification: ${skills.warning}`);
+      // Lines come from a pure formatter so the warning path is pinnable —
+      // a warning produced but never printed would be invisible to an operator.
+      for (const line of formatSkillsStageReport(
+        stageSkillsArtifacts({ dataDir: data, distDir: dist }),
+      )) {
+        console.log(line);
       }
       break;
     }
