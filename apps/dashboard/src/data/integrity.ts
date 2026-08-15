@@ -17,7 +17,14 @@
  * behaviour cannot regress into special-casing one prefix).
  */
 export async function sha256HexOfBytes(bytes: ArrayBuffer): Promise<string> {
-  const digest = await crypto.subtle.digest('SHA-256', bytes);
+  // Wrap in a view rather than passing the ArrayBuffer straight through. A
+  // buffer produced by `Response.arrayBuffer()` can come from a different
+  // realm than the SubtleCrypto implementation, and the identity check then
+  // rejects it — observed as `2nd argument is not instance of ArrayBuffer`,
+  // which the loaders' fail-soft catch turned into a SILENT "unavailable".
+  // That is how the production default path stayed unexercised: every test
+  // injected its own loader, so nothing ever ran this line for real.
+  const digest = await crypto.subtle.digest('SHA-256', new Uint8Array(bytes));
   return Array.from(new Uint8Array(digest), (b) => b.toString(16).padStart(2, '0')).join('');
 }
 
@@ -59,6 +66,15 @@ export async function readBytesVerified(
  * semantics.
  */
 export async function readMetaJson(res: Response): Promise<unknown> {
-  const bytes = await res.arrayBuffer();
+  return parseMetaJson(await readMetaBytes(res));
+}
+
+/** The transport half — separated so a stream failure can be typed as `fetch`. */
+export async function readMetaBytes(res: Response): Promise<ArrayBuffer> {
+  return res.arrayBuffer();
+}
+
+/** The parse half — separated so malformed JSON can be typed as `schema`. */
+export function parseMetaJson(bytes: ArrayBuffer): unknown {
   return JSON.parse(new TextDecoder('utf-8', { ignoreBOM: true }).decode(bytes));
 }

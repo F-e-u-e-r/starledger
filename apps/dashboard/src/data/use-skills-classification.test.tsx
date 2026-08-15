@@ -1,4 +1,9 @@
 // @vitest-environment jsdom
+import { createHash, webcrypto } from 'node:crypto';
+import {
+  serializeSkillsClassification,
+  serializeSkillsClassificationMeta,
+} from '@starred/skills-schema/contracts';
 import { renderHook, waitFor } from '@testing-library/react';
 import { describe, expect, it } from 'vitest';
 import type { LoadedSkillsClassification } from './load-skills-classification';
@@ -91,21 +96,88 @@ describe('useSkillsClassification — availability state machine (§4.10, locked
    * broken default would leave classification permanently unloaded in
    * production while the entire suite stayed green.
    */
-  it('DEFAULT-PATH: with no loader injected, the real loader is driven against the artifacts', async () => {
+  it('DEFAULT-PATH: with no loader injected, the real loader RESULT reaches the state', async () => {
+    // Asserting only that a request went out is not enough: an implementation
+    // that called the real loader and DISCARDED its result, or that dropped the
+    // base path, passed that weaker check (review finding). Serve a genuinely
+    // valid pair and require the hook to reach `ready` with the data.
+    const artifactText = serializeSkillsClassification({
+      scope: { id: 'coding-agent-skills-ecosystem', label: 'x', description: 'y' },
+      categories: [
+        {
+          id: 'verification-qa',
+          label: 'V',
+          kind: 'domain',
+          definition: 'd',
+          order: 0,
+          target_pack: 'opus-pack',
+        },
+      ],
+      entries: [
+        {
+          source_name_with_owner: 'alpha/one',
+          node_id: 'R_kgDOdefault01',
+          resolution: 'resolved',
+          primary_category_id: 'verification-qa',
+          secondary_category_ids: [],
+          summary: 'Default-path fixture entry.',
+        },
+      ],
+    });
+    const digest = createHash('sha256').update(artifactText, 'utf8').digest('hex');
+    const metaText = serializeSkillsClassificationMeta({
+      schema_version: '1.0',
+      taxonomy_version: 'skills-1',
+      classification_sha256: digest,
+      source_sha256: 'b'.repeat(64),
+      aliases_sha256: null,
+      prior_classification_sha256: null,
+      generated_against_stars_sha256: 'c'.repeat(64),
+      generated_at: '2026-08-14T00:00:00Z',
+      category_count: 1,
+      source_entry_count: 1,
+      resolved_entry_count: 1,
+      present_repo_count: 1,
+      absent_repo_count: 0,
+      unresolved_entry_count: 0,
+      canonical_repo_count: 700,
+      unclassified_repo_count: 699,
+    });
+
+    // jsdom's `crypto` has no `subtle`, so the real loader's digest step would
+    // fail-soft and this test would assert nothing about the default path.
+    const originalCrypto = globalThis.crypto;
+    if (!globalThis.crypto?.subtle) {
+      Object.defineProperty(globalThis, 'crypto', {
+        value: webcrypto,
+        configurable: true,
+      });
+    }
     const requested: string[] = [];
     const original = globalThis.fetch;
     globalThis.fetch = (async (input: RequestInfo | URL) => {
-      requested.push(String(input));
-      return new Response('', { status: 404 });
+      const url = String(input);
+      requested.push(url);
+      return url.includes('skills-classification-meta.json')
+        ? new Response(metaText, { status: 200 })
+        : new Response(artifactText, { status: 200 });
     }) as typeof fetch;
     try {
       const { result } = renderHook(() => useSkillsClassification());
-      await waitFor(() => expect(result.current.status).toBe('unavailable'));
+      await waitFor(() => expect(result.current.status).toBe('ready'));
+      expect(result.current.data?.byNodeId.get('R_kgDOdefault01')?.summary).toBe(
+        'Default-path fixture entry.',
+      );
     } finally {
       globalThis.fetch = original;
+      Object.defineProperty(globalThis, 'crypto', {
+        value: originalCrypto,
+        configurable: true,
+      });
     }
-    // The default branch must reach the real artifact, not silently no-op.
+    // ...and it must have asked for the real artifact under the app's base path.
     expect(requested.some((url) => url.includes('skills-classification-meta.json'))).toBe(true);
+    expect(requested.some((url) => url.includes(`sha=${digest}`))).toBe(true);
   });
 
   it('F3-LOOP: an unstable inline loader does not scale load count with rerender count', async () => {

@@ -58,6 +58,47 @@ function optionNames(source: string, interfaceName: string): string[] {
   return [...body.matchAll(/^\s*([A-Za-z_$][\w$]*)\s*\??\s*:/gm)].map((m) => m[1]!);
 }
 
+/**
+ * Strip comments before matching. Otherwise these contracts assert on PROSE —
+ * the loaders' own comments explain that the opt-out was removed, and matching
+ * those would make the contract unsatisfiable while proving nothing about the
+ * API.
+ */
+function code(source: string): string {
+  return source.replace(/\/\*[\s\S]*?\*\//g, '').replace(/\/\/[^\n]*/g, '');
+}
+
+/**
+ * The options TYPE is only half the surface. A bypass can also arrive at the
+ * PARAMETER — `loadStars(opts: LoadOptions & { bypassIntegrity?: boolean })` —
+ * which leaves the interface untouched and every byte test green (reproduced in
+ * review). So the exported entry point must name the bare options type.
+ */
+function parameterType(source: string, fn: string): string {
+  const m = new RegExp(`export async function ${fn}\\s*\\(\\s*opts\\s*:\\s*([^=)]+)`).exec(source);
+  if (!m?.[1]) throw new Error(`${fn}: could not read its options parameter type`);
+  return m[1].trim();
+}
+
+const LOADER_ENTRIES = [
+  ['load-stars.ts', 'loadStars', 'LoadOptions'],
+  ['load-annotations.ts', 'loadAnnotations', 'AnnotationLoadOptions'],
+  ['load-discovery.ts', 'loadDiscovery', 'DiscoveryLoadOptions'],
+  ['load-skills-classification.ts', 'loadSkillsClassification', 'SkillsClassificationLoadOptions'],
+] as const;
+
+describe('INTEG-SURFACE: the entry points take the bare options type', () => {
+  it.each(LOADER_ENTRIES)('%s › %s(opts: %s) — no intersection', (file, fn, type) => {
+    const declared = parameterType(code(readFileSync(join(DATA_DIR, file), 'utf8')), fn);
+    expect(declared, `${fn} must take ${type} exactly, with no intersection`).toBe(type);
+  });
+
+  it('CONTROL: an intersection parameter is detected', () => {
+    const sample = 'export async function loadStars(opts: LoadOptions & Unsafe = {}) {}';
+    expect(parameterType(sample, 'loadStars')).not.toBe('LoadOptions');
+  });
+});
+
 describe('INTEG-SURFACE: loader options are an allowlist, so no opt-out can appear', () => {
   it.each(LOADER_OPTIONS)('%s › %s declares only allowed options', (file, name) => {
     const declared = optionNames(readFileSync(join(DATA_DIR, file), 'utf8'), name);

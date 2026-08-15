@@ -133,14 +133,32 @@ describe('INTEG-BYTES: stars integrity is verified over received bytes', () => {
     await expect(loadStars({ fetchImpl: brokenBody })).rejects.toBeInstanceOf(DataLoadError);
   });
 
-  it('TYPED: an unreadable meta body surfaces as DataLoadError', async () => {
+  it('TYPED: an unreadable meta STREAM is a fetch failure, not a schema failure', async () => {
+    // The double must reject on the method actually called. An earlier version
+    // supplied only `json()`, which the loader no longer calls, so it passed by
+    // throwing on a missing method — and the kind was wrong besides: a stream
+    // reset rendered as "Data failed validation" (review finding).
     const brokenMeta = (async () =>
       ({
         ok: true,
         status: 200,
-        json: () => Promise.reject(new Error('malformed')),
+        arrayBuffer: () => Promise.reject(new Error('stream reset')),
       }) as unknown as Response) as typeof fetch;
-    await expect(loadStars({ fetchImpl: brokenMeta })).rejects.toBeInstanceOf(DataLoadError);
+    await expect(loadStars({ fetchImpl: brokenMeta })).rejects.toMatchObject({
+      name: 'DataLoadError',
+      kind: 'fetch',
+    });
+  });
+
+  it('TYPED: malformed meta JSON is a schema failure', async () => {
+    const badJson = (async (url: string | URL) =>
+      String(url).includes('dataset-meta.json')
+        ? new Response('{not json', { status: 200 })
+        : new Response('{}', { status: 200 })) as typeof fetch;
+    await expect(loadStars({ fetchImpl: badJson })).rejects.toMatchObject({
+      name: 'DataLoadError',
+      kind: 'schema',
+    });
   });
 
   /**
@@ -434,5 +452,99 @@ describe('INTEG-BYTES: skills-classification integrity is verified over received
       (body) => loadSkillsClassification({ fetchImpl: skillsFetch(body) }),
       (result) => result === null,
     );
+  });
+});
+
+/**
+ * META BOM PARITY (review finding). The artifact half had a BOM pin; the META
+ * half had none, so replacing `readMetaJson` with the BOM-stripping
+ * `res.json()` predecessor left every loader test green. Build-side decoding
+ * keeps U+FEFF and `JSON.parse` refuses it, so the runtime must refuse it too —
+ * otherwise the two ends accept different artifacts.
+ *
+ * Each case serves a BOM-prefixed META whose CONTENT is otherwise valid, so
+ * nothing but the decode can reject it.
+ */
+describe('INTEG-META-BOM: a BOM-prefixed meta is refused by every loader', () => {
+  const bomOf = (text: string) => bytesResponse(withBom(text));
+
+  it('stars', async () => {
+    const starsText = JSON.stringify(makeStarsFile([makeRepo({ node_id: 'R_1' })]));
+    const metaText = JSON.stringify({
+      schema_version: '1.0',
+      dataset_generated_at: '2026-06-18T00:00:00Z',
+      stars_sha256: sha256OfBytes(utf8(starsText)),
+      repo_count: 1,
+    });
+    const fetchImpl = (async (url: string | URL) =>
+      String(url).includes('dataset-meta.json')
+        ? bomOf(metaText)
+        : bytesResponse(utf8(starsText))) as typeof fetch;
+    await expect(loadStars({ fetchImpl })).rejects.toBeInstanceOf(DataLoadError);
+  });
+
+  it('annotations', async () => {
+    const annText = JSON.stringify({
+      schema_version: '1.0',
+      taxonomy_version: '1',
+      annotations: [],
+    });
+    const metaText = JSON.stringify({
+      schema_version: '1.0',
+      annotations_sha256: sha256OfBytes(utf8(annText)),
+      annotation_count: 0,
+      taxonomy_version: '1',
+      dataset_sha256: '0'.repeat(64),
+      generated_at: '2026-06-20T00:00:00Z',
+    });
+    const fetchImpl = (async (url: string | URL) =>
+      String(url).includes('ai-annotations-meta.json')
+        ? bomOf(metaText)
+        : bytesResponse(utf8(annText))) as typeof fetch;
+    await expect(loadAnnotations({ fetchImpl })).resolves.toBeNull();
+  });
+
+  it('discovery', async () => {
+    const text = JSON.stringify(discoveryFile('A test repo'));
+    const metaText = JSON.stringify({
+      schema_version: 1,
+      generated_at: '2026-01-15T00:00:00.000Z',
+      dataset_sha: sha256OfBytes(utf8(text)),
+      candidate_count: 1,
+      source_count: 1,
+      generator_version: '0.1.0',
+    });
+    const fetchImpl = (async (url: string | URL) =>
+      String(url).includes('discovery-candidates-meta.json')
+        ? bomOf(metaText)
+        : bytesResponse(utf8(text))) as typeof fetch;
+    await expect(loadDiscovery({ fetchImpl })).resolves.toBeNull();
+  });
+
+  it('skills classification', async () => {
+    const artifactText = serializeSkillsClassification(skillsInput());
+    const metaText = serializeSkillsClassificationMeta({
+      schema_version: '1.0',
+      taxonomy_version: 'skills-1',
+      classification_sha256: sha256OfBytes(utf8(artifactText)),
+      source_sha256: 'b'.repeat(64),
+      aliases_sha256: null,
+      prior_classification_sha256: null,
+      generated_against_stars_sha256: 'c'.repeat(64),
+      generated_at: '2026-08-14T00:00:00Z',
+      category_count: 1,
+      source_entry_count: 1,
+      resolved_entry_count: 1,
+      present_repo_count: 1,
+      absent_repo_count: 0,
+      unresolved_entry_count: 0,
+      canonical_repo_count: 700,
+      unclassified_repo_count: 699,
+    });
+    const fetchImpl = (async (url: string | URL) =>
+      String(url).includes('skills-classification-meta.json')
+        ? bomOf(metaText)
+        : bytesResponse(utf8(artifactText))) as typeof fetch;
+    await expect(loadSkillsClassification({ fetchImpl })).resolves.toBeNull();
   });
 });

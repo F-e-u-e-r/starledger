@@ -85,15 +85,20 @@ describe('stageDashboardData enforces the BYTE contract at its own call site', (
     const sneaky = Buffer.from(canonical.toString('utf8').replace('contains', 'REWRITTEN'), 'utf8');
     expect(sneaky.equals(canonical)).toBe(false);
 
-    stageDashboardData(
-      { dataDir, distDir },
-      {
-        // A generator replacing the source after it was validated. An
-        // implementation that re-reads here would publish these bytes under
-        // the already-verified hash.
-        beforePublish: () => writeFileSync(join(dataDir, STARS_FILE), sneaky),
-      },
-    );
+    // A correct implementation neither throws NOR publishes the rewrite. Both
+    // halves are asserted: a re-opening implementation trips the structural
+    // guard and throws, so without the first assertion the mutant would kill
+    // this test by an uncaught error rather than by anything it claims to
+    // check — red for a reason the test never asserted (review finding).
+    expect(() =>
+      stageDashboardData(
+        { dataDir, distDir },
+        {
+          // A generator replacing the source after it was validated.
+          beforePublish: () => writeFileSync(join(dataDir, STARS_FILE), sneaky),
+        },
+      ),
+    ).not.toThrow();
 
     expect(readFileSync(join(distDir, STARS_FILE)).equals(canonical)).toBe(true);
   });

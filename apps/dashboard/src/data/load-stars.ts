@@ -5,7 +5,7 @@ import {
   StarsFileSchema,
   checkCanonicalDatasetInvariants,
 } from '@starred/schema';
-import { readBytesVerified, readMetaJson } from './integrity';
+import { parseMetaJson, readBytesVerified, readMetaBytes } from './integrity';
 
 export type DataLoadKind = 'fetch' | 'schema' | 'integrity';
 
@@ -58,8 +58,17 @@ async function fetchSnapshot(base: string, doFetch: typeof fetch): Promise<Snaps
   // untyped. `readMetaJson` also decodes without swallowing a BOM, so meta
   // acceptance matches the build's instead of diverging on the pair's other
   // half (review findings).
+  // Read and parse are SEPARATE steps with different kinds: a broken stream is
+  // a transport failure, not a schema failure, and the UI distinguishes them.
+  // Collapsing both under `schema` made a stream reset render as "Data failed
+  // validation" (review finding).
+  const metaBytes = await typedStep(
+    () => readMetaBytes(metaRes),
+    'dataset-meta.json body could not be read',
+    'fetch',
+  );
   const metaJson = await typedStep(
-    () => readMetaJson(metaRes),
+    async () => parseMetaJson(metaBytes),
     'dataset-meta.json is not readable JSON',
     'schema',
   );
