@@ -3,6 +3,7 @@ import {
   DiscoveryCandidatesFileSchema,
   DiscoveryCandidatesMetaSchema,
 } from '@starred/discovery/contracts';
+import { readBytesVerified } from './integrity';
 
 export interface LoadedDiscovery {
   candidates: DiscoveryCandidate[];
@@ -14,13 +15,6 @@ export interface LoadedDiscovery {
 export interface DiscoveryLoadOptions {
   base?: string;
   fetchImpl?: typeof fetch;
-  verifyBytes?: boolean;
-}
-
-async function sha256Hex(text: string): Promise<string> {
-  const data = new TextEncoder().encode(text);
-  const digest = await crypto.subtle.digest('SHA-256', data);
-  return Array.from(new Uint8Array(digest), (b) => b.toString(16).padStart(2, '0')).join('');
 }
 
 export async function loadDiscovery(
@@ -37,11 +31,11 @@ export async function loadDiscovery(
 
     const candidatesRes = await doFetch(`${base}discovery-candidates.json?sha=${meta.dataset_sha}`);
     if (!candidatesRes.ok) return null;
-    const candidatesText = await candidatesRes.text();
-
-    if (opts.verifyBytes !== false && (await sha256Hex(candidatesText)) !== meta.dataset_sha) {
-      return null;
-    }
+    // Integrity over the RECEIVED BYTES, decoding only after the digest matches
+    // (review finding F6). Mandatory — the former `verifyBytes` opt-out is gone,
+    // so no caller can disable it. Failure semantics are unchanged: fail-soft.
+    const candidatesText = await readBytesVerified(candidatesRes, meta.dataset_sha);
+    if (candidatesText === null) return null;
 
     let json: unknown;
     try {

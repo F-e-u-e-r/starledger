@@ -13,6 +13,7 @@
  * uses the browser `crypto.subtle`.
  */
 import { AiAnnotationsMetaSchema, AiAnnotationsSchema } from '@starred/ai-schema/contracts';
+import { readBytesVerified } from './integrity';
 
 export interface RepoAnnotation {
   category: string;
@@ -40,14 +41,6 @@ export type AnnotationStatus = 'loading' | 'ready' | 'unavailable';
 export interface AnnotationLoadOptions {
   base?: string;
   fetchImpl?: typeof fetch;
-  /** Verify the annotation bytes against the meta hash (default true). */
-  verifyBytes?: boolean;
-}
-
-async function sha256Hex(text: string): Promise<string> {
-  const data = new TextEncoder().encode(text);
-  const digest = await crypto.subtle.digest('SHA-256', data);
-  return Array.from(new Uint8Array(digest), (b) => b.toString(16).padStart(2, '0')).join('');
 }
 
 /**
@@ -97,9 +90,11 @@ export async function loadAnnotations(
 
     const annRes = await doFetch(`${base}ai-annotations.json?sha=${meta.annotations_sha256}`);
     if (!annRes.ok) return null;
-    const annText = await annRes.text();
-
-    if (opts.verifyBytes !== false && (await sha256Hex(annText)) !== meta.annotations_sha256) {
+    // Integrity over the RECEIVED BYTES, decoding only after the digest matches
+    // (review finding F6). Mandatory — the former `verifyBytes` opt-out is gone,
+    // so no caller can disable it. Failure semantics are unchanged: fail-soft.
+    const annText = await readBytesVerified(annRes, meta.annotations_sha256);
+    if (annText === null) {
       return null; // hash mismatch → fail-soft (no re-fetch; AI is optional)
     }
 

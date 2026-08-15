@@ -97,11 +97,10 @@ function fetchOf(
         json: () => Promise.resolve(JSON.parse(meta.text ?? 'null')),
       } as unknown as Response);
     }
-    return Promise.resolve({
-      ok: artifact.ok,
-      status: artifact.ok ? 200 : 404,
-      text: () => Promise.resolve(artifact.text ?? ''),
-    } as unknown as Response);
+    // A REAL Response for the artifact body: integrity is a byte contract, and
+    // a double exposing only `text()` cannot express the bytes-vs-decoded-text
+    // distinction the loader now enforces (review finding F6).
+    return Promise.resolve(new Response(artifact.text ?? '', { status: artifact.ok ? 200 : 404 }));
   }) as typeof fetch;
 }
 

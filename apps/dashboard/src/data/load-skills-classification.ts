@@ -29,6 +29,7 @@ import {
   type SkillsCategory,
   type SkillsScope,
 } from '@starred/skills-schema/contracts';
+import { readBytesVerified } from './integrity';
 
 /** Runtime classification for one starred repo (joined by node_id only). */
 export interface RepoSkillsClassification {
@@ -63,12 +64,6 @@ export interface SkillsClassificationLoadOptions {
   fetchImpl?: typeof fetch;
 }
 
-async function sha256Hex(text: string): Promise<string> {
-  const data = new TextEncoder().encode(text);
-  const digest = await crypto.subtle.digest('SHA-256', data);
-  return Array.from(new Uint8Array(digest), (b) => b.toString(16).padStart(2, '0')).join('');
-}
-
 /**
  * Load + verify the optional skills-classification artifacts, mirroring the
  * AI loader's meta → sha-busted content → byte-verify → parse flow, but
@@ -95,12 +90,13 @@ export async function loadSkillsClassification(
       `${base}skills-classification.json?sha=${meta.classification_sha256}`,
     );
     if (!artifactRes.ok) return null;
-    const artifactText = await artifactRes.text();
-
-    // Byte integrity is MANDATORY — no bypass exists on this surface: a
-    // schema-valid but hash-mismatched artifact must never become `ready`
-    // (review finding K1; tests hash their altered fixtures instead).
-    if ((await sha256Hex(artifactText)) !== meta.classification_sha256) {
+    // Byte integrity is MANDATORY — no bypass exists on this surface — and it
+    // is verified over the RECEIVED BYTES, decoding only afterwards. Hashing
+    // decoded text would accept a body whose bytes differ from the digest but
+    // decode alike (a leading BOM, a malformed sequence): review finding F6,
+    // pinned in `integrity-bytes.test.ts` with a BOM case AND a non-BOM case.
+    const artifactText = await readBytesVerified(artifactRes, meta.classification_sha256);
+    if (artifactText === null) {
       return null; // integrity mismatch → fail-soft (classification is optional)
     }
 

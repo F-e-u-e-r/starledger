@@ -141,9 +141,18 @@ describe('skills-classification staging (fail-soft publication, P7 §4.10)', () 
     mkdirSync(join(distDir, SKILLS_CLASSIFICATION_META_FILE));
     const result = stageSkillsArtifacts({ dataDir, distDir });
     expect(result.staged).toBe(false);
-    expect(result.reason).toContain('destinations untouched');
+    expect(result.reason).toContain('pre-existing pair restored');
     expect(existsSync(join(distDir, SKILLS_CLASSIFICATION_FILE))).toBe(false);
-    expect(readdirSync(distDir).filter((name) => name.includes('.staging-tmp'))).toEqual([]);
+    // Every residue class this invocation can create: temporaries, the
+    // rollback backups, and the publication lock.
+    expect(
+      readdirSync(distDir).filter(
+        (name) =>
+          name.includes('.staging-tmp') ||
+          name.includes('.staging-bak') ||
+          name.includes('.stage-lock'),
+      ),
+    ).toEqual([]);
   });
 
   it('L1: a valid re-stage onto a BLOCKED destination leaves the old artifact byte-identical (discriminating pin)', () => {
@@ -166,9 +175,18 @@ describe('skills-classification staging (fail-soft publication, P7 §4.10)', () 
     writeFileSync(join(dataDir, SKILLS_CLASSIFICATION_META_FILE), newPair.meta);
     const result = stageSkillsArtifacts({ dataDir, distDir });
     expect(result.staged).toBe(false);
-    expect(result.reason).toContain('destinations untouched');
+    expect(result.reason).toContain('pre-existing pair restored');
     expect(readFileSync(join(distDir, SKILLS_CLASSIFICATION_FILE), 'utf8')).toBe(oldPair.artifact);
-    expect(readdirSync(distDir).filter((name) => name.includes('.staging-tmp'))).toEqual([]);
+    // Every residue class this invocation can create: temporaries, the
+    // rollback backups, and the publication lock.
+    expect(
+      readdirSync(distDir).filter(
+        (name) =>
+          name.includes('.staging-tmp') ||
+          name.includes('.staging-bak') ||
+          name.includes('.stage-lock'),
+      ),
+    ).toEqual([]);
   });
 
   it('R4: a FOREIGN regular file at a .staging-tmp-suffixed path survives both a successful stage and an abort', () => {
@@ -214,5 +232,126 @@ describe('skills-classification staging (fail-soft publication, P7 §4.10)', () 
     expect(result.staged).toBe(false);
     expect(result.reason).toContain('meta↔artifact mismatch');
     expect(result.reason).toContain('C-1');
+  });
+
+  /**
+   * F1 — the commit section is transactional. Before the rewrite the two
+   * renames ran back to back: a failure of the SECOND one left the new artifact
+   * beside the old meta, the function returned `staged: false` while admitting
+   * "dist may hold a mixed pair", and the CLI published it anyway.
+   */
+  it('F1-ROLLBACK: a failure at the second commit step leaves the OLD pair byte-identical', () => {
+    const { dataDir, distDir } = dirs();
+    const oldPair = validPair('Old published entry.');
+    writeFileSync(join(distDir, SKILLS_CLASSIFICATION_FILE), oldPair.artifact);
+    writeFileSync(join(distDir, SKILLS_CLASSIFICATION_META_FILE), oldPair.meta);
+
+    const newPair = validPair('New candidate entry.');
+    writeFileSync(join(dataDir, SKILLS_CLASSIFICATION_FILE), newPair.artifact);
+    writeFileSync(join(dataDir, SKILLS_CLASSIFICATION_META_FILE), newPair.meta);
+    // Precondition: the two pairs really are different bytes, so "unchanged"
+    // below cannot be satisfied trivially.
+    expect(newPair.artifact).not.toBe(oldPair.artifact);
+
+    const result = stageSkillsArtifacts(
+      { dataDir, distDir },
+      {
+        beforeCommitStep: (step) => {
+          if (step === 'meta') throw new Error('injected commit failure');
+        },
+      },
+    );
+
+    expect(result.staged).toBe(false);
+    expect(readFileSync(join(distDir, SKILLS_CLASSIFICATION_FILE), 'utf8')).toBe(oldPair.artifact);
+    expect(readFileSync(join(distDir, SKILLS_CLASSIFICATION_META_FILE), 'utf8')).toBe(oldPair.meta);
+    expect(
+      readdirSync(distDir).filter(
+        (name) =>
+          name.includes('.staging-tmp') ||
+          name.includes('.staging-bak') ||
+          name.includes('.stage-lock'),
+      ),
+    ).toEqual([]);
+  });
+
+  /**
+   * F1 — publication is serialized. Driving a second stage from INSIDE the
+   * first one's commit section is the interleaving the reviewers described
+   * (A-artifact → B-artifact → B-meta → A-meta, both reporting success). The
+   * lock must turn the inner invocation away, so the dist ends as one
+   * self-consistent pair — never a mix of the two.
+   */
+  it('F1-SERIAL: a concurrent stage cannot interleave into a mixed pair', () => {
+    const { dataDir, distDir } = dirs();
+    const pairA = validPair('Stager A entry.');
+    writeFileSync(join(dataDir, SKILLS_CLASSIFICATION_FILE), pairA.artifact);
+    writeFileSync(join(dataDir, SKILLS_CLASSIFICATION_META_FILE), pairA.meta);
+
+    const otherData = mkdtempSync(join(tmpdir(), 'skills-stage-data-b-'));
+    const pairB = validPair('Stager B entry.');
+    writeFileSync(join(otherData, SKILLS_CLASSIFICATION_FILE), pairB.artifact);
+    writeFileSync(join(otherData, SKILLS_CLASSIFICATION_META_FILE), pairB.meta);
+    expect(pairB.artifact).not.toBe(pairA.artifact);
+
+    let inner: { staged: boolean; reason?: string } | null = null;
+    const outer = stageSkillsArtifacts(
+      { dataDir, distDir },
+      {
+        beforeCommitStep: (step) => {
+          // Re-enter exactly between A's two commit steps.
+          if (step === 'meta' && inner === null) {
+            inner = stageSkillsArtifacts({ dataDir: otherData, distDir });
+          }
+        },
+      },
+    );
+
+    expect(outer.staged).toBe(true);
+    expect(inner).not.toBeNull();
+    expect(inner!.staged).toBe(false);
+    expect(inner!.reason).toContain('another stage');
+
+    // The decisive assertion: the published pair is wholly A, never A/B or B/A.
+    const publishedArtifact = readFileSync(join(distDir, SKILLS_CLASSIFICATION_FILE), 'utf8');
+    const publishedMeta = readFileSync(join(distDir, SKILLS_CLASSIFICATION_META_FILE), 'utf8');
+    expect(publishedArtifact).toBe(pairA.artifact);
+    expect(publishedMeta).toBe(pairA.meta);
+  });
+
+  /**
+   * F4 — the bytes published are the bytes validated. The source is read once;
+   * re-opening it at copy time let a generator rewrite land unvalidated.
+   */
+  it('F4-SNAPSHOT: a source rewritten mid-stage cannot reach the dist', () => {
+    const { dataDir, distDir } = dirs();
+    const validated = validPair('Validated snapshot entry.');
+    writeFileSync(join(dataDir, SKILLS_CLASSIFICATION_FILE), validated.artifact);
+    writeFileSync(join(dataDir, SKILLS_CLASSIFICATION_META_FILE), validated.meta);
+
+    const sneaky = validPair('Rewritten after validation.');
+    expect(sneaky.artifact).not.toBe(validated.artifact);
+
+    const result = stageSkillsArtifacts(
+      { dataDir, distDir },
+      {
+        // Injected BEFORE the staging write — the only point that discriminates.
+        // An implementation re-opening the source here publishes the rewrite;
+        // one writing the validated buffers ignores it. Injecting after the
+        // write would pass against both and pin nothing.
+        beforeStageWrite: () => {
+          writeFileSync(join(dataDir, SKILLS_CLASSIFICATION_FILE), sneaky.artifact);
+          writeFileSync(join(dataDir, SKILLS_CLASSIFICATION_META_FILE), sneaky.meta);
+        },
+      },
+    );
+
+    expect(result.staged).toBe(true);
+    expect(readFileSync(join(distDir, SKILLS_CLASSIFICATION_FILE), 'utf8')).toBe(
+      validated.artifact,
+    );
+    expect(readFileSync(join(distDir, SKILLS_CLASSIFICATION_META_FILE), 'utf8')).toBe(
+      validated.meta,
+    );
   });
 });

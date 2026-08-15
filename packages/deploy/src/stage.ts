@@ -1,12 +1,14 @@
-import { randomUUID } from 'node:crypto';
+import { createHash, randomUUID } from 'node:crypto';
 import {
-  constants as fsConstants,
+  closeSync,
   copyFileSync,
   existsSync,
   lstatSync,
+  openSync,
   readFileSync,
   renameSync,
   rmSync,
+  writeFileSync,
 } from 'node:fs';
 import { resolve } from 'node:path';
 import { AiAnnotationsMetaSchema, AiAnnotationsSchema } from '@starred/ai-schema';
@@ -132,6 +134,20 @@ export interface SkillsStageResult {
   reason?: string;
 }
 
+/** Seams for the F1/F4 regressions to inject failures and races at exact points. */
+export interface SkillsStageHooks {
+  /**
+   * Invoked after validation, immediately BEFORE the snapshot bytes are written
+   * to temporaries. This is where a source rewrite must be injected: an
+   * implementation that re-opens the source at this point publishes the rewrite,
+   * one that writes the validated buffers does not. Injecting any later would
+   * pass against both, and pin nothing.
+   */
+  beforeStageWrite?: () => void;
+  /** Invoked immediately before each `rename` of the commit section. */
+  beforeCommitStep?: (step: 'artifact' | 'meta') => void;
+}
+
 /**
  * Stage the OPTIONAL M2 skills-classification artifacts into the dist,
  * FAIL-SOFT like AI/discovery (P7 §4.10): absent pair → skipped; incomplete
@@ -142,8 +158,35 @@ export interface SkillsStageResult {
  * contract at runtime. NOTE deliberately absent: any comparison of
  * `generated_against_stars_sha256` to the live dataset — provenance is not a
  * staging gate (§2.1).
+ *
+ * PUBLICATION IS TRANSACTIONAL (review findings F1/F4). The previous
+ * copy-then-rename version lacked all three of these:
+ *
+ *   SNAPSHOT FIDELITY — each source file is read EXACTLY ONCE and every later
+ *     step uses those same in-memory bytes. Re-opening the sources to copy them
+ *     let a generator rewriting a file mid-stage publish bytes that were never
+ *     validated, while still reporting success.
+ *   SERIALIZATION — the commit section runs under an exclusive lock, so two
+ *     concurrent stagers cannot interleave (A-artifact → B-artifact → B-meta →
+ *     A-meta) into a mixed pair that both invocations call `staged: true`.
+ *   ROLLBACK — a pre-existing pair is moved aside before the commit and put
+ *     back if any step fails, so a failed re-stage leaves it byte-identical
+ *     instead of half-replaced.
+ *
+ * `staged: true` therefore means BOTH files of this invocation's validated
+ * snapshot are in place — never a mixed pair.
+ *
+ * Residual, deliberately not closed (review finding F2, owner-accepted): the
+ * temporaries are exclusive-CREATED and their contents verified before use, but
+ * `rename` still resolves by path, so an adversary who can write into the dist
+ * directory retains a narrow window. Closing it needs fd-relative renames Node
+ * does not expose; a glob/sweep "fix" is explicitly forbidden — that is how the
+ * earlier foreign-file ownership defect entered.
  */
-export function stageSkillsArtifacts(opts: StageOptions): SkillsStageResult {
+export function stageSkillsArtifacts(
+  opts: StageOptions,
+  hooks: SkillsStageHooks = {},
+): SkillsStageResult {
   const artifactPath = resolve(opts.dataDir, SKILLS_CLASSIFICATION_FILE);
   const metaPath = resolve(opts.dataDir, SKILLS_CLASSIFICATION_META_FILE);
   if (!existsSync(artifactPath) && !existsSync(metaPath)) {
@@ -153,11 +196,15 @@ export function stageSkillsArtifacts(opts: StageOptions): SkillsStageResult {
     return { staged: false, reason: 'incomplete skills-classification artifact pair — skipped' };
   }
   try {
-    const artifactText = readFileSync(artifactPath, 'utf8');
-    const metaText = readFileSync(metaPath, 'utf8');
-    const artifact = SkillsClassificationSchema.parse(JSON.parse(artifactText));
-    const meta = SkillsClassificationMetaSchema.parse(JSON.parse(metaText));
-    if (meta.classification_sha256 !== sha256Hex(artifactText)) {
+    // A. READ ONCE. These buffers are the snapshot: validated below, published
+    //    below, never re-read from disk in between.
+    const artifactBytes = readFileSync(artifactPath);
+    const metaBytes = readFileSync(metaPath);
+
+    const artifact = SkillsClassificationSchema.parse(JSON.parse(artifactBytes.toString('utf8')));
+    const meta = SkillsClassificationMetaSchema.parse(JSON.parse(metaBytes.toString('utf8')));
+    // Hashed over the snapshot BYTES, matching how the digest was generated.
+    if (meta.classification_sha256 !== createHash('sha256').update(artifactBytes).digest('hex')) {
       return { staged: false, reason: 'skills-classification hash mismatch — skipped' };
     }
     const problems = checkSkillsMetaConsistency(meta, artifact);
@@ -167,66 +214,101 @@ export function stageSkillsArtifacts(opts: StageOptions): SkillsStageResult {
         reason: `skills-classification meta↔artifact mismatch — skipped (${problems[0]})`,
       };
     }
-    // Stage as a pair or not at all (review findings K5 + L1), WITHOUT ever
-    // damaging a pre-existing dist pair: copy both files to temporaries first
-    // (the failure-prone step — space, permissions, source — happens in
-    // isolation), pre-check that neither destination is a directory (the one
-    // realistic rename failure), then rename into place. A copy failure only
-    // cleans OUR temporaries; existing destination files are never touched.
+
     const distArtifact = resolve(opts.distDir, SKILLS_CLASSIFICATION_FILE);
     const distMeta = resolve(opts.distDir, SKILLS_CLASSIFICATION_META_FILE);
-    // Ownership-safe temporaries (R4 finding): a unique per-invocation token
-    // makes a name collision with anything foreign practically impossible,
-    // COPYFILE_EXCL makes even that collision a refusal instead of an
-    // overwrite, and cleanup touches ONLY the paths this invocation actually
-    // created — never a foreign occupant, file or directory.
-    const stagingToken = randomUUID();
-    const tmpArtifact = `${distArtifact}.${stagingToken}.staging-tmp`;
-    const tmpMeta = `${distMeta}.${stagingToken}.staging-tmp`;
-    const createdTemporaries: string[] = [];
-    const cleanupCreated = (): void => {
-      for (const temporary of createdTemporaries) {
-        try {
-          rmSync(temporary, { force: true });
-        } catch {
-          /* never let cleanup escalate an abort */
-        }
+    const lockPath = resolve(opts.distDir, `${SKILLS_CLASSIFICATION_FILE}.stage-lock`);
+
+    // B. SERIALIZE. Exclusive create IS the lock; a concurrent stager is turned
+    //    away with a named reason rather than allowed to interleave. Skipping
+    //    is the fail-soft outcome — the deploy is never blocked.
+    let lockFd: number;
+    try {
+      lockFd = openSync(lockPath, 'wx');
+    } catch {
+      return {
+        staged: false,
+        reason: 'skills-classification pair is being published by another stage — skipped',
+      };
+    }
+
+    const token = randomUUID();
+    const tmpArtifact = `${distArtifact}.${token}.staging-tmp`;
+    const tmpMeta = `${distMeta}.${token}.staging-tmp`;
+    const bakArtifact = `${distArtifact}.${token}.staging-bak`;
+    const bakMeta = `${distMeta}.${token}.staging-bak`;
+    /** Only paths THIS invocation created are ever removed. */
+    const created: string[] = [];
+    const discard = (path: string): void => {
+      try {
+        rmSync(path, { force: true });
+      } catch {
+        /* cleanup must never escalate an abort */
       }
     };
+
     try {
-      copyFileSync(artifactPath, tmpArtifact, fsConstants.COPYFILE_EXCL);
-      createdTemporaries.push(tmpArtifact);
-      copyFileSync(metaPath, tmpMeta, fsConstants.COPYFILE_EXCL);
-      createdTemporaries.push(tmpMeta);
+      // Destination shape is re-checked INSIDE the lock: a plan-time check
+      // would already be stale by the time the commit section runs.
       for (const destination of [distArtifact, distMeta]) {
         if (existsSync(destination) && lstatSync(destination).isDirectory()) {
           throw new Error(`destination is a directory: ${destination}`);
         }
       }
+
+      // Write the VALIDATED bytes (not a re-read of the source), exclusively,
+      // then read back to prove what landed is what was validated.
+      hooks.beforeStageWrite?.();
+      writeFileSync(tmpArtifact, artifactBytes, { flag: 'wx' });
+      created.push(tmpArtifact);
+      writeFileSync(tmpMeta, metaBytes, { flag: 'wx' });
+      created.push(tmpMeta);
+      if (
+        !readFileSync(tmpArtifact).equals(artifactBytes) ||
+        !readFileSync(tmpMeta).equals(metaBytes)
+      ) {
+        throw new Error('staged temporary does not match the validated snapshot');
+      }
+
+      // C. Move any pre-existing pair aside so it can be restored intact.
+      const hadArtifact = existsSync(distArtifact);
+      const hadMeta = existsSync(distMeta);
+      if (hadArtifact) renameSync(distArtifact, bakArtifact);
+      if (hadMeta) renameSync(distMeta, bakMeta);
+
+      try {
+        hooks.beforeCommitStep?.('artifact');
+        renameSync(tmpArtifact, distArtifact);
+        hooks.beforeCommitStep?.('meta');
+        renameSync(tmpMeta, distMeta);
+      } catch (commitError) {
+        // Undo this invocation's partial commit, then restore the old pair.
+        discard(distArtifact);
+        discard(distMeta);
+        if (hadArtifact) renameSync(bakArtifact, distArtifact);
+        if (hadMeta) renameSync(bakMeta, distMeta);
+        throw commitError;
+      }
+
+      discard(bakArtifact);
+      discard(bakMeta);
+      return { staged: true };
     } catch (stageError) {
-      cleanupCreated();
+      for (const path of created) discard(path);
       return {
         staged: false,
-        reason: `skills-classification staging aborted, destinations untouched — ${
-          stageError instanceof Error ? stageError.message : 'copy failed'
+        reason: `skills-classification staging aborted, any pre-existing pair restored — ${
+          stageError instanceof Error ? stageError.message : 'staging failed'
         }`,
       };
+    } finally {
+      try {
+        closeSync(lockFd);
+      } catch {
+        /* the lock file is removed regardless */
+      }
+      discard(lockPath);
     }
-    try {
-      renameSync(tmpArtifact, distArtifact);
-      renameSync(tmpMeta, distMeta);
-    } catch (renameError) {
-      // The same-directory rename window: after the pre-checks the realistic
-      // failure class is exhausted, but stay honest if the fs still objects.
-      cleanupCreated();
-      return {
-        staged: false,
-        reason: `skills-classification staging failed mid-rename — dist may hold a mixed pair; rerun stage (${
-          renameError instanceof Error ? renameError.message : 'rename failed'
-        })`,
-      };
-    }
-    return { staged: true };
   } catch (error) {
     return {
       staged: false,

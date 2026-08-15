@@ -69,12 +69,12 @@ function createFetch(
 
 describe('loadDiscovery', () => {
   it('returns null when meta is missing', async () => {
-    const result = await loadDiscovery({ fetchImpl: createFetch(null), verifyBytes: false });
+    const result = await loadDiscovery({ fetchImpl: createFetch(null) });
     expect(result).toBeNull();
   });
 
   it('loads valid discovery artifacts', async () => {
-    const result = await loadDiscovery({ fetchImpl: createFetch(), verifyBytes: false });
+    const result = await loadDiscovery({ fetchImpl: createFetch() });
     expect(result).not.toBeNull();
     expect(result!.candidates).toHaveLength(1);
     expect(result!.candidateCount).toBe(1);
@@ -83,7 +83,6 @@ describe('loadDiscovery', () => {
   it('returns null on schema mismatch', async () => {
     const result = await loadDiscovery({
       fetchImpl: createFetch({ schema_version: 99 }),
-      verifyBytes: false,
     });
     expect(result).toBeNull();
   });
@@ -91,7 +90,6 @@ describe('loadDiscovery', () => {
   it('returns null on count mismatch', async () => {
     const result = await loadDiscovery({
       fetchImpl: createFetch({ candidate_count: 5 }),
-      verifyBytes: false,
     });
     expect(result).toBeNull();
   });

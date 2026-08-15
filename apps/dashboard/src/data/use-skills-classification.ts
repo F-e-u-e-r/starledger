@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import {
   type LoadedSkillsClassification,
   type SkillsClassificationStatus,
@@ -28,23 +28,30 @@ export function useSkillsClassification(
     data: null,
   });
 
+  // The loader is read through a ref, never through the effect's dependency
+  // list. Loader IDENTITY is not a reload signal (review finding F3): an
+  // inline `useSkillsClassification(() => …)` produces a new function on every
+  // render, and keying the effect on it made each settled load re-render, mint
+  // a new identity, restart the effect and settle again — an unbounded
+  // load↔render cycle (measured: thousands of loader calls in milliseconds).
+  // An earlier idempotent `loading` reset only blocked the SYNCHRONOUS variant
+  // of that cycle; the asynchronous one ran unchecked.
+  //
+  // The lifecycle is therefore anchored to MOUNT alone. Production never
+  // replaced the loader anyway (App passes an undefined loader outside tests),
+  // so nothing observable is lost; a future explicit reload trigger would be a
+  // deliberate input, not an accident of referential identity.
+  const loaderRef = useRef(loader);
   useEffect(() => {
-    const load = loader ?? (() => loadSkillsClassification({ base: import.meta.env.BASE_URL }));
+    loaderRef.current = loader;
+  });
+
+  useEffect(() => {
+    const load =
+      loaderRef.current ?? (() => loadSkillsClassification({ base: import.meta.env.BASE_URL }));
     let active = true;
-    // A replaced loader restarts the lifecycle: back to `loading` FIRST, so a
-    // stale ready/unavailable never shows while the new load is in flight
-    // (locked decision 1; review finding K4). Promise.resolve().then(load)
-    // also routes a synchronous loader throw into the rejection path.
-    // The reset is IDEMPOTENT (functional update returning the same reference
-    // when already pristine-loading) so React bails out instead of
-    // re-rendering — a referentially unstable loader can then never drive a
-    // synchronous effect↔render loop. Callers should still pass a stable
-    // loader; that is the ordinary useEffect-dependency contract.
-    setState((previous) =>
-      previous.status === 'loading' && previous.data === null
-        ? previous
-        : { status: 'loading', data: null },
-    );
+    // Promise.resolve().then(load) routes a SYNCHRONOUS loader throw into the
+    // rejection path instead of letting it escape the effect.
     Promise.resolve()
       .then(() => load())
       .then(
@@ -59,7 +66,7 @@ export function useSkillsClassification(
     return () => {
       active = false;
     };
-  }, [loader]);
+  }, []);
 
   return state;
 }

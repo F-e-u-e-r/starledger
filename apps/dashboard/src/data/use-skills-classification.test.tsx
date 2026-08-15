@@ -53,24 +53,63 @@ describe('useSkillsClassification — availability state machine (§4.10, locked
     expect(result.current.data).toBeNull();
   });
 
-  it('K4a: a REPLACED loader resets to loading first — no stale state during the new flight', async () => {
-    let resolveSecond: (value: LoadedSkillsClassification | null) => void = () => {};
+  /**
+   * CONTRACT CHANGE (owner ruling, review finding F3). This test previously
+   * pinned the opposite behaviour — "a REPLACED loader resets to loading
+   * first" — which made loader IDENTITY an implicit reload signal. That is the
+   * mechanism behind the unbounded load↔render cycle pinned by F3-LOOP below,
+   * and production never had the feature it protected (App passes no loader
+   * outside tests). The lifecycle is now anchored to mount; a reload would be
+   * an explicit trigger, never an accident of referential identity.
+   */
+  it('K4a: a REPLACED loader does NOT restart the lifecycle — identity is not a reload signal', async () => {
+    let secondCalls = 0;
     const first: () => Promise<LoadedSkillsClassification | null> = async () => loaded();
-    const second = () =>
-      new Promise<LoadedSkillsClassification | null>((resolve) => {
-        resolveSecond = resolve;
-      });
+    const second: () => Promise<LoadedSkillsClassification | null> = async () => {
+      secondCalls += 1;
+      return null;
+    };
     const { result, rerender } = renderHook(
       ({ loader }: { loader: () => Promise<LoadedSkillsClassification | null> }) =>
         useSkillsClassification(loader),
       { initialProps: { loader: first } },
     );
     await waitFor(() => expect(result.current.status).toBe('ready'));
+
     rerender({ loader: second });
-    await waitFor(() => expect(result.current.status).toBe('loading'));
-    expect(result.current.data).toBeNull();
-    resolveSecond(null);
-    await waitFor(() => expect(result.current.status).toBe('unavailable'));
+    await new Promise((r) => setTimeout(r, 20));
+
+    expect(secondCalls).toBe(0);
+    expect(result.current.status).toBe('ready');
+    expect(result.current.data).not.toBeNull();
+  });
+
+  it('F3-LOOP: an unstable inline loader does not scale load count with rerender count', async () => {
+    let calls = 0;
+    // An inline arrow: a NEW function identity on every single render.
+    const { rerender } = renderHook(() =>
+      useSkillsClassification(() => {
+        calls += 1;
+        return Promise.resolve(null);
+      }),
+    );
+
+    await new Promise((r) => setTimeout(r, 50));
+    const afterMount = calls;
+
+    // Bounded per lifecycle rather than exactly 1 — StrictMode may double-invoke
+    // mount effects, and this contract must not be pinned to a development-mode
+    // detail. What it MUST exclude is growth.
+    expect(afterMount).toBeGreaterThan(0);
+    expect(afterMount).toBeLessThanOrEqual(2);
+
+    for (let i = 0; i < 50; i += 1) rerender();
+    await new Promise((r) => setTimeout(r, 50));
+
+    // The decisive assertion: 50 further renders add ZERO loads. Before the fix
+    // this counter reached the thousands without any rerender() calls at all,
+    // because each settled load minted a new identity and restarted the effect.
+    expect(calls).toBe(afterMount);
   });
 
   it('K4b: a synchronously THROWING loader lands in unavailable, never an unhandled escape', async () => {

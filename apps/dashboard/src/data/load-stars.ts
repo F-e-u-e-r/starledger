@@ -4,6 +4,7 @@ import {
   type StarsFile,
   StarsFileSchema,
 } from '@starred/schema';
+import { readBytesVerified } from './integrity';
 
 export type DataLoadKind = 'fetch' | 'schema' | 'integrity';
 
@@ -27,22 +28,19 @@ export interface LoadOptions {
   base?: string;
   /** Injected for tests; defaults to the global fetch. */
   fetchImpl?: typeof fetch;
-  /** Verify the stars.json bytes against dataset-meta.stars_sha256 (default true). */
-  verifyBytes?: boolean;
-}
-
-async function sha256Hex(text: string): Promise<string> {
-  const data = new TextEncoder().encode(text);
-  const digest = await crypto.subtle.digest('SHA-256', data);
-  return Array.from(new Uint8Array(digest), (b) => b.toString(16).padStart(2, '0')).join('');
 }
 
 interface Snapshot {
   meta: DatasetMeta;
-  starsText: string;
+  /**
+   * Decoded ONLY when the received bytes hashed to `meta.stars_sha256`;
+   * `null` marks an integrity mismatch. Integrity is not optional and cannot
+   * be disabled by a caller.
+   */
+  starsText: string | null;
 }
 
-/** Fetch + validate dataset-meta, then fetch the sha-busted stars bytes (unparsed). */
+/** Fetch + validate dataset-meta, then fetch and byte-verify the sha-busted stars body. */
 async function fetchSnapshot(base: string, doFetch: typeof fetch): Promise<Snapshot> {
   const metaRes = await doFetch(`${base}dataset-meta.json`, { cache: 'no-cache' });
   if (!metaRes.ok) throw new DataLoadError(`dataset-meta.json HTTP ${metaRes.status}`, 'fetch');
@@ -52,7 +50,7 @@ async function fetchSnapshot(base: string, doFetch: typeof fetch): Promise<Snaps
 
   const starsRes = await doFetch(`${base}stars.json?sha=${meta.stars_sha256}`);
   if (!starsRes.ok) throw new DataLoadError(`stars.json HTTP ${starsRes.status}`, 'fetch');
-  return { meta, starsText: await starsRes.text() };
+  return { meta, starsText: await readBytesVerified(starsRes, meta.stars_sha256) };
 }
 
 /**
@@ -75,13 +73,11 @@ export async function loadStars(opts: LoadOptions = {}): Promise<LoadedDataset> 
 
   let snapshot = await fetchSnapshot(base, doFetch);
 
-  if (opts.verifyBytes !== false) {
-    if ((await sha256Hex(snapshot.starsText)) !== snapshot.meta.stars_sha256) {
-      // Re-fetch the whole snapshot once to rule out a deployment switch race.
-      snapshot = await fetchSnapshot(base, doFetch);
-      if ((await sha256Hex(snapshot.starsText)) !== snapshot.meta.stars_sha256) {
-        throw new DataLoadError('stars.json integrity check failed (sha mismatch)', 'integrity');
-      }
+  if (snapshot.starsText === null) {
+    // Re-fetch the whole snapshot once to rule out a deployment switch race.
+    snapshot = await fetchSnapshot(base, doFetch);
+    if (snapshot.starsText === null) {
+      throw new DataLoadError('stars.json integrity check failed (sha mismatch)', 'integrity');
     }
   }
 

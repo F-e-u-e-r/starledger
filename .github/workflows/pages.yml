@@ -15,6 +15,8 @@ on:
       - 'ai-annotations-meta.json'
       - 'discovery-candidates.json'
       - 'discovery-candidates-meta.json'
+      - 'skills-classification.json'
+      - 'skills-classification-meta.json'
       - 'apps/dashboard/**'
       - 'packages/**'
       - '.github/workflows/pages.yml'
