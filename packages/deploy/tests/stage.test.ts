@@ -78,6 +78,26 @@ describe('stageDashboardData enforces the BYTE contract at its own call site', (
     return { canonical, metaText };
   }
 
+  it('SNAPSHOT: a source rewritten between validation and publication cannot reach the dist', () => {
+    const { dataDir, distDir } = setup();
+    const { canonical } = fixtureWithReplacementChar(dataDir);
+    writeFileSync(join(dataDir, STARS_FILE), canonical);
+    const sneaky = Buffer.from(canonical.toString('utf8').replace('contains', 'REWRITTEN'), 'utf8');
+    expect(sneaky.equals(canonical)).toBe(false);
+
+    stageDashboardData(
+      { dataDir, distDir },
+      {
+        // A generator replacing the source after it was validated. An
+        // implementation that re-reads here would publish these bytes under
+        // the already-verified hash.
+        beforePublish: () => writeFileSync(join(dataDir, STARS_FILE), sneaky),
+      },
+    );
+
+    expect(readFileSync(join(distDir, STARS_FILE)).equals(canonical)).toBe(true);
+  });
+
   it('CONTROL: the unmutated bytes stage, and the PUBLISHED bytes are the validated ones', () => {
     const { dataDir, distDir } = setup();
     const { canonical } = fixtureWithReplacementChar(dataDir);

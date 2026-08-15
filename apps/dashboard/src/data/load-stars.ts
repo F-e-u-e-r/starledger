@@ -3,6 +3,7 @@ import {
   DatasetMetaSchema,
   type StarsFile,
   StarsFileSchema,
+  checkCanonicalDatasetInvariants,
 } from '@starred/schema';
 import { readBytesVerified } from './integrity';
 
@@ -126,6 +127,15 @@ export async function loadStars(opts: LoadOptions = {}): Promise<LoadedDataset> 
   }
   const starsParsed = StarsFileSchema.safeParse(parsed);
   if (!starsParsed.success) throw new DataLoadError('stars.json failed validation', 'schema');
+
+  // Structural invariants, from the SAME shared primitive the build uses
+  // (owner ruling R6-S1). Byte agreement is not acceptance agreement: a
+  // correctly-hashed dataset whose `repo_count` disagrees with the repo list,
+  // or that repeats a `node_id`, is refused at build time and must be refused
+  // here too — otherwise the canonical browser renders a dataset the build
+  // would never have published.
+  const problems = checkCanonicalDatasetInvariants(starsParsed.data, snapshot.meta);
+  if (problems.length > 0) throw new DataLoadError(`stars.json ${problems[0]}`, 'schema');
 
   return { stars: starsParsed.data, meta: snapshot.meta };
 }

@@ -61,7 +61,21 @@ export function assertNoForbiddenFiles(distDir: string): void {
  * never staged. Refuses to proceed if a secret/telemetry file is in the dist
  * (BUILD-DATA-3).
  */
-export function stageDashboardData(opts: StageOptions): StageResult {
+export interface DashboardStageHooks {
+  /**
+   * Invoked after validation and immediately BEFORE the validated buffers are
+   * published. The only point from which snapshot fidelity is testable: an
+   * implementation that re-opens the sources here publishes whatever a
+   * generator has since written, one that publishes the validated buffers does
+   * not. Injecting later would pass against both and pin nothing.
+   */
+  beforePublish?: () => void;
+}
+
+export function stageDashboardData(
+  opts: StageOptions,
+  hooks: DashboardStageHooks = {},
+): StageResult {
   const { dataDir, distDir } = opts;
   if (!existsSync(distDir)) {
     throw new Error(`dist directory not found: ${distDir} (build the dashboard first)`);
@@ -81,6 +95,7 @@ export function stageDashboardData(opts: StageOptions): StageResult {
   const verified = verifyDatasetIntegrity(starsBytes, metaText); // throws BEFORE any publish
   assertNoForbiddenFiles(distDir); // never ship secrets/telemetry, even if the build emitted them
 
+  hooks.beforePublish?.();
   // Publish the VALIDATED buffers. Re-opening the sources here would re-read
   // bytes nobody checked — a generator rewriting stars.json between validation
   // and publication would ship unvalidated data under the verified hash, and

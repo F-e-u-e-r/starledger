@@ -4,6 +4,7 @@ import {
   DatasetMetaSchema,
   type StarsFile,
   StarsFileSchema,
+  checkCanonicalDatasetInvariants,
 } from '@starred/schema';
 
 export function sha256Hex(text: string): string {
@@ -57,21 +58,14 @@ export function verifyDatasetIntegrity(starsBytes: Uint8Array, metaText: string)
   const stars = StarsFileSchema.safeParse(starsJson);
   if (!stars.success) throw new DatasetIntegrityError('stars.json failed schema validation');
 
-  const seen = new Set<string>();
-  for (const repo of stars.data.repos) {
-    if (seen.has(repo.node_id)) {
-      throw new DatasetIntegrityError(`duplicate node_id ${repo.node_id}`);
-    }
-    seen.add(repo.node_id);
-  }
-
   const hash = createHash('sha256').update(Buffer.from(starsBytes)).digest('hex');
   if (meta.data.stars_sha256 !== hash) {
     throw new DatasetIntegrityError('dataset-meta.stars_sha256 does not match stars.json bytes');
   }
-  if (meta.data.repo_count !== stars.data.repos.length) {
-    throw new DatasetIntegrityError('dataset-meta.repo_count does not match stars.json');
-  }
+  // Structural invariants come from the SHARED primitive so build-time and
+  // runtime acceptance cannot drift apart (owner ruling R6-S1).
+  const problems = checkCanonicalDatasetInvariants(stars.data, meta.data);
+  if (problems.length > 0) throw new DatasetIntegrityError(problems[0]!);
 
   return { stars: stars.data, meta: meta.data, sha256: hash };
 }
