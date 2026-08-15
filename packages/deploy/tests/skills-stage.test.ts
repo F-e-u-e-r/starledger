@@ -720,9 +720,12 @@ describe('skills staging — round-6 closure pins', () => {
     expect(result.reason).toContain('hash mismatch');
   });
 
-  it('GUARD: the post-publish digest check actually fires on a mismatch', () => {
+  it('GUARD: the post-publish digest check fires AND leaves the old pair restored', () => {
     const { dataDir, distDir } = dirs();
-    const pair = validPair();
+    const oldPair = validPair('OLD published entry.');
+    writeFileSync(join(distDir, SKILLS_CLASSIFICATION_FILE), oldPair.artifact);
+    writeFileSync(join(distDir, SKILLS_CLASSIFICATION_META_FILE), oldPair.meta);
+    const pair = validPair('NEW candidate entry.');
     writeFileSync(join(dataDir, SKILLS_CLASSIFICATION_FILE), pair.artifact);
     writeFileSync(join(dataDir, SKILLS_CLASSIFICATION_META_FILE), pair.meta);
     const result = stageSkillsArtifacts(
@@ -734,6 +737,21 @@ describe('skills staging — round-6 closure pins', () => {
     );
     expect(result.staged).toBe(false);
     expect(result.reason).toContain('does not match the verified digest');
+    // CONSEQUENCE, not just detection: the pre-existing pair must be BACK, the
+    // corrupt bytes gone, no residue, and the report must be true. A guard that
+    // fires outside the rollback region detects the mismatch and still leaves
+    // the bad pair live while claiming a restore (reproduced in review).
+    expect(readFileSync(join(distDir, SKILLS_CLASSIFICATION_FILE), 'utf8')).toBe(oldPair.artifact);
+    expect(readFileSync(join(distDir, SKILLS_CLASSIFICATION_META_FILE), 'utf8')).toBe(oldPair.meta);
+    expect(result.reason).toContain('any pre-existing pair restored');
+    expect(
+      readdirSync(distDir).filter(
+        (name) =>
+          name.includes('.staging-tmp') ||
+          name.includes('.staging-bak') ||
+          name.includes('.stage-lock'),
+      ),
+    ).toEqual([]);
   });
 
   it('BUILD-BYTES CONTROL: the unmutated fixture stages', () => {

@@ -518,6 +518,19 @@ export function stageSkillsArtifacts(
         hooks.beforeCommitStep?.('meta');
         renameSync(tmpMeta, distMeta);
         published.push(distMeta);
+
+        // STRUCTURAL guard, INSIDE the protected region and BEFORE `committed`.
+        // Detecting a mismatch is only half the job: run it after the region
+        // and a detected failure still leaves the bad pair live, the old pair
+        // stranded under `.staging-bak`, and the reason claiming a restore that
+        // never happened. Here the throw takes the normal rollback path, so the
+        // pre-existing pair comes back and the report is true.
+        hooks.afterCommit?.();
+        const publishedSha = createHash('sha256').update(readFileSync(distArtifact)).digest('hex');
+        if (publishedSha !== meta.classification_sha256) {
+          throw new Error('published skills-classification does not match the verified digest');
+        }
+
         committed = true;
       } finally {
         if (!committed) {
@@ -549,14 +562,6 @@ export function stageSkillsArtifacts(
       // derived `.staging-bak` paths unconditionally deletes a foreign file
       // that merely happens to sit at one of them — the very ownership defect
       // the ledger exists to prevent, reintroduced on the success path.
-      // STRUCTURAL guard (see stageDashboardData): compare what LANDED against
-      // the digest recorded in meta, which no source rewrite — and no buffer
-      // re-assignment — can influence.
-      hooks.afterCommit?.();
-      const publishedSha = createHash('sha256').update(readFileSync(distArtifact)).digest('hex');
-      if (publishedSha !== meta.classification_sha256) {
-        throw new Error('published skills-classification does not match the verified digest');
-      }
 
       for (const [backup] of movedAside) discard(backup);
       result = { staged: true };
