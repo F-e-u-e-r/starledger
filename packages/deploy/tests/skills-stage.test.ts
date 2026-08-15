@@ -428,7 +428,10 @@ describe('skills-classification staging (fail-soft publication, P7 §4.10)', () 
     );
 
     expect(result.staged).toBe(false);
-    expect(result.reason).toContain('could NOT be fully restored');
+    // The message must name THIS run's residue, not a restore that never
+    // applied — on an empty dist there are no backups to inspect.
+    expect(result.reason).toContain('partly-published file could NOT be removed');
+    expect(result.reason).not.toContain('.staging-bak');
   });
 
   /**
@@ -500,18 +503,86 @@ describe('skills-classification staging (fail-soft publication, P7 §4.10)', () 
     expect(result.warning).toContain('.stage-lock');
     expect(result.warning).toContain('could not be removed');
 
-    // A warning nobody prints is invisible, so pin the operator-facing lines
-    // too — deleting the reporting branch must redden something.
-    const lines = formatSkillsStageReport(result);
-    expect(lines[0]).toContain('staged');
-    expect(lines).toHaveLength(2);
-    expect(lines[1]).toContain('WARNING skills-classification');
+    // A warning nobody prints is invisible, so pin the operator-facing text
+    // too. The formatter returns ONE string precisely so a caller has no index
+    // to drop — printing it is all-or-nothing, and the CLI test covers that.
+    const report = formatSkillsStageReport(result);
+    expect(report).toContain('staged');
+    expect(report).toContain('WARNING skills-classification');
+    expect(report.split('\n')).toHaveLength(2);
   });
 
   it('LOCK-WARN: a clean stage reports no warning line', () => {
     // The negative half: without this, a formatter that ALWAYS emits a warning
-    // line would satisfy the assertions above.
-    expect(formatSkillsStageReport({ staged: true })).toHaveLength(1);
+    // would satisfy the assertions above.
+    const report = formatSkillsStageReport({ staged: true });
+    expect(report).not.toContain('WARNING');
+    expect(report.split('\n')).toHaveLength(1);
+  });
+
+  /**
+   * Round-5 finding: the SUCCESS path removed both derived `.staging-bak`
+   * paths unconditionally, so a foreign file that merely happened to sit at
+   * one of them was deleted by a stage that never created it — the ownership
+   * defect the ledger exists to prevent, reintroduced on the happy path.
+   */
+  it('F1-FOREIGN-BAK: a foreign file at a derived .staging-bak path survives a successful stage', () => {
+    const { dataDir, distDir } = dirs();
+    const pair = validPair();
+    writeFileSync(join(dataDir, SKILLS_CLASSIFICATION_FILE), pair.artifact);
+    writeFileSync(join(dataDir, SKILLS_CLASSIFICATION_META_FILE), pair.meta);
+
+    let foreign = '';
+    const result = stageSkillsArtifacts(
+      { dataDir, distDir },
+      {
+        beforeMoveAside: (step) => {
+          if (step !== 'artifact' || foreign) return;
+          // Learn this invocation's token from its own temporary, then plant a
+          // foreign file at the backup path it would derive. The dist is empty,
+          // so this invocation never creates a backup of its own.
+          const tmp = readdirSync(distDir).find((name) => name.includes('.staging-tmp'));
+          expect(tmp, 'a temporary must exist by now').toBeDefined();
+          const token = tmp!.split('.').slice(-2, -1)[0];
+          foreign = join(distDir, `${SKILLS_CLASSIFICATION_FILE}.${token}.staging-bak`);
+          writeFileSync(foreign, 'FOREIGN CONTENT');
+        },
+      },
+    );
+
+    expect(result.staged).toBe(true);
+    expect(existsSync(foreign)).toBe(true);
+    expect(readFileSync(foreign, 'utf8')).toBe('FOREIGN CONTENT');
+  });
+
+  /**
+   * Round-5 finding: F4-SNAPSHOT's seam is implementation-invoked, so the thing
+   * that ACTUALLY guarantees "published bytes == validated bytes" is the
+   * read-back check — and nothing pinned it. Corrupting the temporary between
+   * the write and the read-back must abort the stage.
+   */
+  it('F4-READBACK: a temporary corrupted before the read-back never reaches the dist', () => {
+    const { dataDir, distDir } = dirs();
+    const pair = validPair();
+    writeFileSync(join(dataDir, SKILLS_CLASSIFICATION_FILE), pair.artifact);
+    writeFileSync(join(dataDir, SKILLS_CLASSIFICATION_META_FILE), pair.meta);
+
+    const result = stageSkillsArtifacts(
+      { dataDir, distDir },
+      {
+        afterStageWrite: () => {
+          const tmp = readdirSync(distDir).find(
+            (name) => name.startsWith(SKILLS_CLASSIFICATION_FILE) && name.includes('.staging-tmp'),
+          );
+          expect(tmp, 'the artifact temporary must exist by now').toBeDefined();
+          writeFileSync(join(distDir, tmp!), 'CORRUPTED AFTER WRITE');
+        },
+      },
+    );
+
+    expect(result.staged).toBe(false);
+    expect(result.reason).toContain('does not match the validated snapshot');
+    expect(existsSync(join(distDir, SKILLS_CLASSIFICATION_FILE))).toBe(false);
   });
 
   /**

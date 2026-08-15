@@ -28,8 +28,17 @@ export interface VerifiedDataset {
  * BEFORE they are shipped: both parse + schema-validate, the stars bytes hash to
  * `dataset-meta.stars_sha256`, `repo_count` matches, and node_ids are unique.
  * Throws {@link DatasetIntegrityError} on any discrepancy; never mutates input.
+ *
+ * `starsBytes` is BYTES, not text, and the parameter type says so deliberately.
+ * Hashing a decoded string re-encodes it, so two byte strings that decode alike
+ * (a BOM, a malformed sequence) hash alike — the build would pass an artifact
+ * the byte-strict runtime loader then rejects, and for the CANONICAL dataset
+ * that means the base dashboard fails closed on a file the build called sound.
+ * Requiring bytes here is what keeps build-time and runtime verification
+ * talking about the same thing.
  */
-export function verifyDatasetIntegrity(starsText: string, metaText: string): VerifiedDataset {
+export function verifyDatasetIntegrity(starsBytes: Uint8Array, metaText: string): VerifiedDataset {
+  const starsText = Buffer.from(starsBytes).toString('utf8');
   let starsJson: unknown;
   let metaJson: unknown;
   try {
@@ -56,7 +65,7 @@ export function verifyDatasetIntegrity(starsText: string, metaText: string): Ver
     seen.add(repo.node_id);
   }
 
-  const hash = sha256Hex(starsText);
+  const hash = createHash('sha256').update(Buffer.from(starsBytes)).digest('hex');
   if (meta.data.stars_sha256 !== hash) {
     throw new DatasetIntegrityError('dataset-meta.stars_sha256 does not match stars.json bytes');
   }

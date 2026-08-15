@@ -75,9 +75,11 @@ export function stageDashboardData(opts: StageOptions): StageResult {
     );
   }
 
-  const starsText = readFileSync(starsPath, 'utf8');
+  // BYTES, not decoded text: the digest is generated over the file's bytes,
+  // and the runtime loader now verifies it that way too.
+  const starsBytes = readFileSync(starsPath);
   const metaText = readFileSync(metaPath, 'utf8');
-  const verified = verifyDatasetIntegrity(starsText, metaText); // throws BEFORE any copy
+  const verified = verifyDatasetIntegrity(starsBytes, metaText); // throws BEFORE any copy
   assertNoForbiddenFiles(distDir); // never ship secrets/telemetry, even if the build emitted them
 
   copyFileSync(starsPath, resolve(distDir, STARS_FILE));
@@ -147,19 +149,21 @@ export interface SkillsStageResult {
  *
  * Extracted as a pure function so the WARNING path is pinnable: a warning that
  * is produced but never printed is invisible, and a subprocess CLI test cannot
- * force a lock-removal failure from the outside. Returning the lines instead of
- * printing them lets a test assert exactly what an operator would see.
+ * force a lock-removal failure from the outside.
+ *
+ * It returns ONE string rather than a list of lines, deliberately. A list gives
+ * a caller an index to drop — a CLI printing only `[0]` would suppress every
+ * real warning while the formatter's own tests stayed green (observed in
+ * review). With a single value the caller can print it or not, and the existing
+ * CLI test already fails if it does not.
  */
-export function formatSkillsStageReport(result: SkillsStageResult): string[] {
-  const lines = [
-    `[deploy] Skills-classification artifacts: ${
-      result.staged ? 'staged' : `skipped (${result.reason})`
-    }`,
-  ];
-  if (result.warning) {
-    lines.push(`[deploy] WARNING skills-classification: ${result.warning}`);
-  }
-  return lines;
+export function formatSkillsStageReport(result: SkillsStageResult): string {
+  const head = `[deploy] Skills-classification artifacts: ${
+    result.staged ? 'staged' : `skipped (${result.reason})`
+  }`;
+  return result.warning
+    ? `${head}\n[deploy] WARNING skills-classification: ${result.warning}`
+    : head;
 }
 
 /** Seams for the F1/F4 regressions to inject failures and races at exact points. */
@@ -172,6 +176,13 @@ export interface SkillsStageHooks {
    * pass against both, and pin nothing.
    */
   beforeStageWrite?: () => void;
+  /**
+   * Invoked after the snapshot bytes are written to temporaries and BEFORE they
+   * are read back. This is the only point from which the read-back check —
+   * which is what actually guarantees the published bytes are the validated
+   * ones, independently of any seam — can be driven and therefore pinned.
+   */
+  afterStageWrite?: () => void;
   /**
    * Invoked immediately before each move-aside of a pre-existing destination.
    * Moving the old pair aside is a MULTI-STEP mutation of its own, so it needs
@@ -243,13 +254,28 @@ export function stageSkillsArtifacts(
 ): SkillsStageResult {
   const artifactPath = resolve(opts.dataDir, SKILLS_CLASSIFICATION_FILE);
   const metaPath = resolve(opts.dataDir, SKILLS_CLASSIFICATION_META_FILE);
-  if (!existsSync(artifactPath) && !existsSync(metaPath)) {
-    return { staged: false, reason: 'no skills-classification artifacts present' };
-  }
-  if (!existsSync(artifactPath) || !existsSync(metaPath)) {
-    return { staged: false, reason: 'incomplete skills-classification artifact pair — skipped' };
-  }
   try {
+    // Only ENOENT proves a source is absent. `existsSync` reports false for an
+    // unreadable parent too, so the honest "nothing to stage" outcome and an
+    // actionable EACCES/EIO would have been indistinguishable — the failure
+    // would be reported as "no artifacts present" and quietly ignored forever.
+    const sourcePresent = (path: string): boolean => {
+      try {
+        lstatSync(path);
+        return true;
+      } catch (error) {
+        if ((error as NodeJS.ErrnoException)?.code === 'ENOENT') return false;
+        throw error;
+      }
+    };
+    const hasArtifact = sourcePresent(artifactPath);
+    const hasMeta = sourcePresent(metaPath);
+    if (!hasArtifact && !hasMeta) {
+      return { staged: false, reason: 'no skills-classification artifacts present' };
+    }
+    if (!hasArtifact || !hasMeta) {
+      return { staged: false, reason: 'incomplete skills-classification artifact pair — skipped' };
+    }
     // A. READ ONCE. These buffers are the snapshot: validated below, published
     //    below, never re-read from disk in between.
     const artifactBytes = readFileSync(artifactPath);
@@ -279,7 +305,19 @@ export function stageSkillsArtifacts(
     let lockFd: number;
     try {
       lockFd = openSync(lockPath, 'wx');
-    } catch {
+    } catch (lockError) {
+      // Only EEXIST proves contention. Anything else (EACCES on a read-only
+      // dist, ENOTDIR, EIO) is an actionable failure that must not be dressed
+      // up as "someone else is publishing" — that reading sends an operator to
+      // delete a lock file that was never the problem.
+      if ((lockError as NodeJS.ErrnoException)?.code !== 'EEXIST') {
+        return {
+          staged: false,
+          reason: `skills-classification staging could not acquire its lock — ${
+            lockError instanceof Error ? lockError.message : 'lock creation failed'
+          }`,
+        };
+      }
       return {
         staged: false,
         reason: `skills-classification pair is locked by another stage — skipped (if no stage is running, ${lockPath} is stale and can be removed)`,
@@ -290,6 +328,8 @@ export function stageSkillsArtifacts(
     const created: string[] = [];
     /** Set when a rollback could not put the pre-existing pair back. */
     let restoreFailed = false;
+    /** Set when this invocation's own published file could not be removed. */
+    let publishedResidue = false;
     /** Set when the lock survives cleanup — every later stage would then skip. */
     let lockStuck = false;
     let result: SkillsStageResult;
@@ -320,20 +360,21 @@ export function stageSkillsArtifacts(
      * this repo already fixed once in the generator's prior-artifact read. Any
      * other errno therefore aborts staging before anything is touched.
      */
-    const lstat = hooks.lstatImpl ?? lstatSync;
-    const entryExists = (path: string): boolean => {
-      try {
-        lstat(path);
-        return true;
-      } catch (error) {
-        if ((error as NodeJS.ErrnoException)?.code === 'ENOENT') return false;
-        throw error;
-      }
-    };
-
     try {
-      // Named INSIDE the try so that nothing between acquiring the lock and
-      // installing its `finally` can throw and leak the lock file.
+      // EVERYTHING between acquiring the lock and installing its `finally`
+      // lives in here, including the `hooks.lstatImpl` property READ — a
+      // throwing accessor there previously escaped and leaked the lock,
+      // reintroducing a window this function had already closed once.
+      const lstat = hooks.lstatImpl ?? lstatSync;
+      const entryExists = (path: string): boolean => {
+        try {
+          lstat(path);
+          return true;
+        } catch (error) {
+          if ((error as NodeJS.ErrnoException)?.code === 'ENOENT') return false;
+          throw error;
+        }
+      };
       const token = randomUUID();
       const tmpArtifact = `${distArtifact}.${token}.staging-tmp`;
       const tmpMeta = `${distMeta}.${token}.staging-tmp`;
@@ -355,6 +396,7 @@ export function stageSkillsArtifacts(
       created.push(tmpArtifact);
       writeFileSync(tmpMeta, metaBytes, { flag: 'wx' });
       created.push(tmpMeta);
+      hooks.afterStageWrite?.();
       if (
         !readFileSync(tmpArtifact).equals(artifactBytes) ||
         !readFileSync(tmpMeta).equals(metaBytes)
@@ -399,7 +441,10 @@ export function stageSkillsArtifacts(
           // a failure here leaves a partial canonical artifact behind, so it
           // must reach the reason rather than be swallowed.
           for (const destination of published) {
-            if (!discardOk(destination)) restoreFailed = true;
+            // Distinct from a failed RESTORE: here our own file is stuck in
+            // place. Reporting it as "could not restore the pre-existing pair"
+            // would send an operator hunting for backups that never existed.
+            if (!discardOk(destination)) publishedResidue = true;
           }
           for (const [backup, destination] of movedAside.reverse()) {
             try {
@@ -415,18 +460,25 @@ export function stageSkillsArtifacts(
 
       // Only reached on a committed publication — a failure above propagates
       // out of the `finally` to the abort handler below.
-      discard(bakArtifact);
-      discard(bakMeta);
+      //
+      // Remove ONLY the backups this invocation actually made. Discarding both
+      // derived `.staging-bak` paths unconditionally deletes a foreign file
+      // that merely happens to sit at one of them — the very ownership defect
+      // the ledger exists to prevent, reintroduced on the success path.
+      for (const [backup] of movedAside) discard(backup);
       result = { staged: true };
     } catch (stageError) {
       for (const path of created) discard(path);
       const detail = stageError instanceof Error ? stageError.message : 'staging failed';
       // Never claim a restore that did not happen (acceptance item D).
+      const trailer = restoreFailed
+        ? ' AND the pre-existing pair could NOT be fully restored — inspect the .staging-bak files in the dist'
+        : publishedResidue
+          ? " AND this run's partly-published file could NOT be removed — the dist holds an unpaired artifact"
+          : ', any pre-existing pair restored';
       result = {
         staged: false,
-        reason: restoreFailed
-          ? `skills-classification staging aborted AND the pre-existing pair could NOT be fully restored — inspect the .staging-bak files in the dist (${detail})`
-          : `skills-classification staging aborted, any pre-existing pair restored — ${detail}`,
+        reason: `skills-classification staging aborted${trailer} — ${detail}`,
       };
     } finally {
       try {

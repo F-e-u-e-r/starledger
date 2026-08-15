@@ -42,15 +42,38 @@ interface Snapshot {
 
 /** Fetch + validate dataset-meta, then fetch and byte-verify the sha-busted stars body. */
 async function fetchSnapshot(base: string, doFetch: typeof fetch): Promise<Snapshot> {
-  const metaRes = await doFetch(`${base}dataset-meta.json`, { cache: 'no-cache' });
+  // EVERY failure below is converted to a typed DataLoadError. The transport
+  // and JSON layers reject with their own error types — a rejected fetch, a
+  // malformed meta body, a broken response stream — and letting those escape
+  // untyped means the UI cannot tell a fetch problem from a schema problem and
+  // falls back to a generic "something went wrong" (review finding).
+  const metaRes = await doFetch(`${base}dataset-meta.json`, { cache: 'no-cache' }).catch(
+    (error: unknown) => {
+      throw new DataLoadError(`dataset-meta.json unreachable: ${describe(error)}`, 'fetch');
+    },
+  );
   if (!metaRes.ok) throw new DataLoadError(`dataset-meta.json HTTP ${metaRes.status}`, 'fetch');
-  const metaParsed = DatasetMetaSchema.safeParse(await metaRes.json());
+  const metaJson = await metaRes.json().catch((error: unknown) => {
+    throw new DataLoadError(`dataset-meta.json is not readable JSON: ${describe(error)}`, 'schema');
+  });
+  const metaParsed = DatasetMetaSchema.safeParse(metaJson);
   if (!metaParsed.success) throw new DataLoadError('dataset-meta.json failed validation', 'schema');
   const meta = metaParsed.data;
 
-  const starsRes = await doFetch(`${base}stars.json?sha=${meta.stars_sha256}`);
+  const starsRes = await doFetch(`${base}stars.json?sha=${meta.stars_sha256}`).catch(
+    (error: unknown) => {
+      throw new DataLoadError(`stars.json unreachable: ${describe(error)}`, 'fetch');
+    },
+  );
   if (!starsRes.ok) throw new DataLoadError(`stars.json HTTP ${starsRes.status}`, 'fetch');
-  return { meta, starsText: await readBytesVerified(starsRes, meta.stars_sha256) };
+  const starsText = await readBytesVerified(starsRes, meta.stars_sha256).catch((error: unknown) => {
+    throw new DataLoadError(`stars.json body could not be read: ${describe(error)}`, 'fetch');
+  });
+  return { meta, starsText };
+}
+
+function describe(error: unknown): string {
+  return error instanceof Error ? error.message : String(error);
 }
 
 /**

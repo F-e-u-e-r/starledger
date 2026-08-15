@@ -58,13 +58,9 @@ async function main(): Promise<void> {
           discovery.staged ? 'staged' : `skipped (${discovery.reason})`
         }`,
       );
-      // Lines come from a pure formatter so the warning path is pinnable —
-      // a warning produced but never printed would be invisible to an operator.
-      for (const line of formatSkillsStageReport(
-        stageSkillsArtifacts({ dataDir: data, distDir: dist }),
-      )) {
-        console.log(line);
-      }
+      // ONE string from a pure formatter: there is no index for a later edit
+      // to drop, so a warning cannot be silently suppressed while tests pass.
+      console.log(formatSkillsStageReport(stageSkillsArtifacts({ dataDir: data, distDir: dist })));
       break;
     }
     case 'verify': {
@@ -83,10 +79,7 @@ async function main(): Promise<void> {
       if (!existsSync(starsPath) || !existsSync(metaPath)) {
         throw new Error(`canonical data not found in ${data}`);
       }
-      const r = verifyDatasetIntegrity(
-        readFileSync(starsPath, 'utf8'),
-        readFileSync(metaPath, 'utf8'),
-      );
+      const r = verifyDatasetIntegrity(readFileSync(starsPath), readFileSync(metaPath, 'utf8'));
       console.log(`[deploy] data OK: ${r.meta.repo_count} repos (sha ${r.sha256.slice(0, 12)}…)`);
       break;
     }

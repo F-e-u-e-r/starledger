@@ -115,6 +115,34 @@ describe('INTEG-BYTES: stars integrity is verified over received bytes', () => {
     );
   });
 
+  /**
+   * The canonical loader promises TYPED failures — the UI distinguishes fetch
+   * from schema from integrity. A rejecting transport layer (broken stream,
+   * unreachable host, unreadable meta JSON) previously escaped untyped and the
+   * dashboard fell back to a generic error (round-5 finding).
+   */
+  it('TYPED: a rejecting body read surfaces as DataLoadError, not a raw Error', async () => {
+    const brokenBody = (async (url: string | URL) =>
+      String(url).includes('dataset-meta.json')
+        ? new Response(metaJson, { status: 200 })
+        : ({
+            ok: true,
+            status: 200,
+            arrayBuffer: () => Promise.reject(new Error('stream reset')),
+          } as unknown as Response)) as typeof fetch;
+    await expect(loadStars({ fetchImpl: brokenBody })).rejects.toBeInstanceOf(DataLoadError);
+  });
+
+  it('TYPED: an unreadable meta body surfaces as DataLoadError', async () => {
+    const brokenMeta = (async () =>
+      ({
+        ok: true,
+        status: 200,
+        json: () => Promise.reject(new Error('malformed')),
+      }) as unknown as Response) as typeof fetch;
+    await expect(loadStars({ fetchImpl: brokenMeta })).rejects.toBeInstanceOf(DataLoadError);
+  });
+
   it('rejects a NON-BOM byte mutation that decodes to identical text', async () => {
     await expectRejectsDecodeInvariantMutation(
       starsText,

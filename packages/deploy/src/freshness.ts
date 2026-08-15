@@ -129,7 +129,7 @@ export async function evaluateDeployFreshness(
     );
   }
   const expectedSha = verifyDatasetIntegrity(
-    readFileSync(starsPath, 'utf8'),
+    readFileSync(starsPath),
     readFileSync(metaPath, 'utf8'),
   ).sha256;
   const url = opts.url ?? deriveLiveMetaUrl(opts.repoSlug);
