@@ -36,5 +36,11 @@ export async function readBytesVerified(
 ): Promise<string | null> {
   const bytes = await res.arrayBuffer();
   if ((await sha256HexOfBytes(bytes)) !== expectedSha256) return null;
-  return new TextDecoder().decode(bytes);
+  // `ignoreBOM: true` means "do NOT strip a leading BOM" — it is treated as an
+  // ordinary character. That is deliberate: the default decoder SWALLOWS a BOM,
+  // so a BOM-prefixed artifact whose digest covers the BOM would parse here
+  // while the build-side `Buffer.toString('utf8')` keeps it and JSON.parse
+  // rejects. Build and runtime must accept exactly the same artifacts; with
+  // this flag both refuse a BOM instead of disagreeing about it.
+  return new TextDecoder('utf-8', { ignoreBOM: true }).decode(bytes);
 }

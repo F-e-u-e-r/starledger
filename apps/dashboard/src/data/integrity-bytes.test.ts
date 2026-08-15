@@ -143,6 +143,40 @@ describe('INTEG-BYTES: stars integrity is verified over received bytes', () => {
     await expect(loadStars({ fetchImpl: brokenMeta })).rejects.toBeInstanceOf(DataLoadError);
   });
 
+  /**
+   * BUILD/RUNTIME AGREEMENT ON A BOM (round-6 finding). The default
+   * `TextDecoder` SWALLOWS a leading BOM, so a BOM-prefixed artifact whose
+   * digest covers the BOM used to parse fine here — while the build's
+   * `Buffer.toString('utf8')` keeps U+FEFF and `JSON.parse` rejects it. Runtime
+   * accepted what the build refused. Both must now refuse it.
+   */
+  it('AGREE-BOM: a BOM-prefixed artifact whose digest covers the BOM is rejected', async () => {
+    const bomBytes = withBom(starsText);
+    const bomMeta = JSON.stringify({
+      schema_version: '1.0',
+      dataset_generated_at: '2026-06-18T00:00:00Z',
+      stars_sha256: sha256OfBytes(bomBytes),
+      repo_count: 1,
+    });
+    const fetchImpl = (async (url: string | URL) =>
+      String(url).includes('dataset-meta.json')
+        ? new Response(bomMeta, { status: 200 })
+        : bytesResponse(bomBytes)) as typeof fetch;
+    // The digest MATCHES these bytes, so this is not an integrity rejection —
+    // it must fail because the BOM is not silently eaten.
+    expect(sha256OfBytes(bomBytes)).toBe(JSON.parse(bomMeta).stars_sha256);
+    await expect(loadStars({ fetchImpl })).rejects.toBeInstanceOf(DataLoadError);
+  });
+
+  it('TYPED: a SYNCHRONOUS transport throw is typed too', async () => {
+    // `doFetch(...).catch(...)` does not cover this: the call runs before the
+    // handler is attached, so the error escapes untyped (round-6 finding).
+    const syncThrow = (() => {
+      throw new Error('sync boom');
+    }) as unknown as typeof fetch;
+    await expect(loadStars({ fetchImpl: syncThrow })).rejects.toBeInstanceOf(DataLoadError);
+  });
+
   it('rejects a NON-BOM byte mutation that decodes to identical text', async () => {
     await expectRejectsDecodeInvariantMutation(
       starsText,

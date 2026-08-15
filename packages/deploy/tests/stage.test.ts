@@ -1,3 +1,4 @@
+import { createHash } from 'node:crypto';
 import { existsSync, mkdirSync, mkdtempSync, readFileSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
@@ -48,5 +49,58 @@ describe('stageDashboardData (BUILD-DATA-1/3, DEPLOY-3/4)', () => {
   it('throws when the canonical data is missing', () => {
     const { dataDir, distDir } = setup();
     expect(() => stageDashboardData({ dataDir, distDir })).toThrow(/canonical data not found/);
+  });
+});
+
+/**
+ * Round-6 finding (High, evidence): the canonical byte-contract regression
+ * tested `verifyDatasetIntegrity` DIRECTLY and never its staging call site.
+ * Review reproduced the gap by making `stageDashboardData` decode and re-encode
+ * before calling the verifier — malformed raw bytes were accepted again and a
+ * body whose raw digest did not match meta was published, while every dataset
+ * test stayed green. A guarantee is only as good as the level it is pinned at.
+ */
+describe('stageDashboardData enforces the BYTE contract at its own call site', () => {
+  function fixtureWithReplacementChar(dataDir: string): { canonical: Buffer; metaText: string } {
+    writeFixtureDataset(dataDir, new Date('2026-06-19T00:00:00Z'));
+    const stars = JSON.parse(readFileSync(join(dataDir, STARS_FILE), 'utf8')) as {
+      repos: { description: string | null }[];
+    };
+    stars.repos[0]!.description = 'contains \uFFFD replacement';
+    const canonical = Buffer.from(JSON.stringify(stars, null, 2) + '\n', 'utf8');
+    const meta = JSON.parse(readFileSync(join(dataDir, DATASET_META_FILE), 'utf8')) as Record<
+      string,
+      unknown
+    >;
+    meta.stars_sha256 = createHash('sha256').update(canonical).digest('hex');
+    const metaText = JSON.stringify(meta, null, 2) + '\n';
+    writeFileSync(join(dataDir, DATASET_META_FILE), metaText);
+    return { canonical, metaText };
+  }
+
+  it('CONTROL: the unmutated bytes stage, and the PUBLISHED bytes are the validated ones', () => {
+    const { dataDir, distDir } = setup();
+    const { canonical } = fixtureWithReplacementChar(dataDir);
+    writeFileSync(join(dataDir, STARS_FILE), canonical);
+    stageDashboardData({ dataDir, distDir });
+    expect(readFileSync(join(distDir, STARS_FILE)).equals(canonical)).toBe(true);
+  });
+
+  it('throws on a byte mutation that decodes to identical text', () => {
+    const { dataDir, distDir } = setup();
+    const { canonical } = fixtureWithReplacementChar(dataDir);
+    const at = canonical.indexOf(Buffer.from([0xef, 0xbf, 0xbd]));
+    expect(at).toBeGreaterThan(-1);
+    const mutated = Buffer.concat([
+      canonical.subarray(0, at),
+      Buffer.from([0xff]),
+      canonical.subarray(at + 3),
+    ]);
+    expect(mutated.equals(canonical)).toBe(false);
+    expect(mutated.toString('utf8')).toBe(canonical.toString('utf8'));
+
+    writeFileSync(join(dataDir, STARS_FILE), mutated);
+    expect(() => stageDashboardData({ dataDir, distDir })).toThrow();
+    expect(existsSync(join(distDir, STARS_FILE))).toBe(false);
   });
 });

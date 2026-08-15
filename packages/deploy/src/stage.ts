@@ -1,7 +1,6 @@
 import { createHash, randomUUID } from 'node:crypto';
 import {
   closeSync,
-  copyFileSync,
   existsSync,
   lstatSync,
   openSync,
@@ -79,11 +78,15 @@ export function stageDashboardData(opts: StageOptions): StageResult {
   // and the runtime loader now verifies it that way too.
   const starsBytes = readFileSync(starsPath);
   const metaText = readFileSync(metaPath, 'utf8');
-  const verified = verifyDatasetIntegrity(starsBytes, metaText); // throws BEFORE any copy
+  const verified = verifyDatasetIntegrity(starsBytes, metaText); // throws BEFORE any publish
   assertNoForbiddenFiles(distDir); // never ship secrets/telemetry, even if the build emitted them
 
-  copyFileSync(starsPath, resolve(distDir, STARS_FILE));
-  copyFileSync(metaPath, resolve(distDir, DATASET_META_FILE));
+  // Publish the VALIDATED buffers. Re-opening the sources here would re-read
+  // bytes nobody checked — a generator rewriting stars.json between validation
+  // and publication would ship unvalidated data under the verified hash, and
+  // for the CANONICAL dataset that is the base dashboard's ground truth.
+  writeFileSync(resolve(distDir, STARS_FILE), starsBytes);
+  writeFileSync(resolve(distDir, DATASET_META_FILE), Buffer.from(metaText, 'utf8'));
 
   return { repoCount: verified.meta.repo_count, sha256: verified.sha256 };
 }
@@ -206,6 +209,12 @@ export interface SkillsStageHooks {
    * than ENOENT aborts" is to inject it.
    */
   lstatImpl?: typeof lstatSync;
+  /**
+   * Injectable `open`, for the same reason as `lstatImpl`: a real filesystem
+   * cannot be made to fail lock creation with `EACCES`/`ENOTDIR` on demand, so
+   * "only EEXIST proves contention" is otherwise unpinnable.
+   */
+  openImpl?: typeof openSync;
 }
 
 /**
@@ -266,9 +275,10 @@ export function stageSkillsArtifacts(
     // unreadable parent too, so the honest "nothing to stage" outcome and an
     // actionable EACCES/EIO would have been indistinguishable — the failure
     // would be reported as "no artifacts present" and quietly ignored forever.
+    const sourceLstat = hooks.lstatImpl ?? lstatSync;
     const sourcePresent = (path: string): boolean => {
       try {
-        lstatSync(path);
+        sourceLstat(path);
         return true;
       } catch (error) {
         if ((error as NodeJS.ErrnoException)?.code === 'ENOENT') return false;
@@ -311,7 +321,7 @@ export function stageSkillsArtifacts(
     //    is the fail-soft outcome — the deploy is never blocked.
     let lockFd: number;
     try {
-      lockFd = openSync(lockPath, 'wx');
+      lockFd = (hooks.openImpl ?? openSync)(lockPath, 'wx');
     } catch (lockError) {
       // Only EEXIST proves contention. Anything else (EACCES on a read-only
       // dist, ENOTDIR, EIO) is an actionable failure that must not be dressed
@@ -478,11 +488,22 @@ export function stageSkillsArtifacts(
       for (const path of created) discard(path);
       const detail = stageError instanceof Error ? stageError.message : 'staging failed';
       // Never claim a restore that did not happen (acceptance item D).
-      const trailer = restoreFailed
-        ? ' AND the pre-existing pair could NOT be fully restored — inspect the .staging-bak files in the dist'
-        : publishedResidue
-          ? " AND this run's partly-published file could NOT be removed — the dist holds an unpaired artifact"
-          : ', any pre-existing pair restored';
+      // BOTH can be true at once, and each sends an operator somewhere
+      // different. Picking one silently drops a real failure from the report.
+      const problems: string[] = [];
+      if (restoreFailed) {
+        problems.push(
+          'the pre-existing pair could NOT be fully restored — inspect the .staging-bak files in the dist',
+        );
+      }
+      if (publishedResidue) {
+        problems.push(
+          "this run's partly-published file could NOT be removed — the dist holds an unpaired artifact",
+        );
+      }
+      const trailer = problems.length
+        ? ` AND ${problems.join('; AND ')}`
+        : ', any pre-existing pair restored';
       result = {
         staged: false,
         reason: `skills-classification staging aborted${trailer} — ${detail}`,

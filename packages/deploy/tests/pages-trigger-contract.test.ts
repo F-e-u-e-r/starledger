@@ -64,7 +64,18 @@ function pushPaths(yaml: string): string[] {
   for (const line of lines.slice(pathsAt + 1)) {
     const entry = /^\s{6}-\s*'([^']+)'\s*$/.exec(line);
     if (!entry?.[1]) break; // the list ends at the first non-entry line
-    collected.push(entry[1]);
+    const pattern = entry[1];
+    // A NEGATIVE pattern subtracts from everything listed before it, so a
+    // positive entry followed by `!same-file` matches nothing. Collecting only
+    // positives would score such a filter as covering the artifact (round-6
+    // evidence finding) — record exclusions so the contract can reject them.
+    if (pattern.startsWith('!')) {
+      throw new Error(
+        `pages.yml push.paths uses a negative pattern (${pattern}); this contract ` +
+          'cannot prove coverage in its presence — state the filter positively.',
+      );
+    }
+    collected.push(pattern);
   }
   return collected;
 }
@@ -95,6 +106,24 @@ describe('Pages deployment trigger covers every staged root artifact (F5)', () =
    * paths filter (i.e. every push deploys, or none, depending on the rest of
    * the file) would be scored using `pull_request`'s list.
    */
+  it('rejects a negative pattern that would exclude a required artifact', () => {
+    const synthetic = [
+      'name: Pages',
+      'on:',
+      '  push:',
+      '    branches: [main]',
+      '    paths:',
+      "      - 'stars.json'",
+      "      - 'skills-classification.json'",
+      "      - '!skills-classification.json'",
+      'jobs: {}',
+      '',
+    ].join('\n');
+    // Positive membership alone would score this filter as covering the
+    // artifact, while a skills-only push would in fact match nothing.
+    expect(() => pushPaths(synthetic)).toThrow(/negative pattern/);
+  });
+
   it('does not accept a pull_request paths block as the push filter', () => {
     const synthetic = [
       'name: Pages',

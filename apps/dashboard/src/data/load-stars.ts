@@ -47,10 +47,9 @@ async function fetchSnapshot(base: string, doFetch: typeof fetch): Promise<Snaps
   // malformed meta body, a broken response stream — and letting those escape
   // untyped means the UI cannot tell a fetch problem from a schema problem and
   // falls back to a generic "something went wrong" (review finding).
-  const metaRes = await doFetch(`${base}dataset-meta.json`, { cache: 'no-cache' }).catch(
-    (error: unknown) => {
-      throw new DataLoadError(`dataset-meta.json unreachable: ${describe(error)}`, 'fetch');
-    },
+  const metaRes = await typedFetch(
+    () => doFetch(`${base}dataset-meta.json`, { cache: 'no-cache' }),
+    'dataset-meta.json unreachable',
   );
   if (!metaRes.ok) throw new DataLoadError(`dataset-meta.json HTTP ${metaRes.status}`, 'fetch');
   const metaJson = await metaRes.json().catch((error: unknown) => {
@@ -60,10 +59,9 @@ async function fetchSnapshot(base: string, doFetch: typeof fetch): Promise<Snaps
   if (!metaParsed.success) throw new DataLoadError('dataset-meta.json failed validation', 'schema');
   const meta = metaParsed.data;
 
-  const starsRes = await doFetch(`${base}stars.json?sha=${meta.stars_sha256}`).catch(
-    (error: unknown) => {
-      throw new DataLoadError(`stars.json unreachable: ${describe(error)}`, 'fetch');
-    },
+  const starsRes = await typedFetch(
+    () => doFetch(`${base}stars.json?sha=${meta.stars_sha256}`),
+    'stars.json unreachable',
   );
   if (!starsRes.ok) throw new DataLoadError(`stars.json HTTP ${starsRes.status}`, 'fetch');
   const starsText = await readBytesVerified(starsRes, meta.stars_sha256).catch((error: unknown) => {
@@ -74,6 +72,22 @@ async function fetchSnapshot(base: string, doFetch: typeof fetch): Promise<Snaps
 
 function describe(error: unknown): string {
   return error instanceof Error ? error.message : String(error);
+}
+
+/**
+ * Run a fetch inside the typed-error boundary.
+ *
+ * The obvious `doFetch(...).catch(...)` form does NOT cover a SYNCHRONOUS
+ * throw: the call is evaluated before `.catch` is attached, so the error
+ * escapes untyped and the UI falls back to its unknown-error path. Invoking
+ * through a thunk puts both the call and its rejection inside the boundary.
+ */
+async function typedFetch(call: () => Promise<Response>, label: string): Promise<Response> {
+  try {
+    return await call();
+  } catch (error) {
+    throw new DataLoadError(`${label}: ${describe(error)}`, 'fetch');
+  }
 }
 
 /**

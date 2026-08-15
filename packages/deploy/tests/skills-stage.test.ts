@@ -1,4 +1,5 @@
 import { createHash } from 'node:crypto';
+import type { openSync } from 'node:fs';
 import {
   existsSync,
   lstatSync,
@@ -681,5 +682,167 @@ describe('skills-classification staging (fail-soft publication, P7 §4.10)', () 
     expect(readFileSync(join(distDir, SKILLS_CLASSIFICATION_META_FILE), 'utf8')).toBe(
       validated.meta,
     );
+  });
+});
+
+/**
+ * Round-6 findings — the remediation claims that had no discriminating pin, and
+ * the build-side byte agreement for the skills pair itself (every other pair
+ * had a collision trap; this one did not).
+ */
+describe('skills staging — round-6 closure pins', () => {
+  it('BUILD-BYTES: a decode-invariant byte mutation is skipped at BUILD time', () => {
+    const { dataDir, distDir } = dirs();
+    // The fixture carries a literal U+FFFD so its three UTF-8 bytes can be
+    // replaced by a bare 0xFF, which decodes straight back to U+FFFD. Byte
+    // string differs, decoded text does not — this kills hash(decode(bytes)),
+    // not just a BOM special case.
+    const pair = validPair('Stage fixture \uFFFD entry.');
+    const canonical = Buffer.from(pair.artifact, 'utf8');
+    const at = canonical.indexOf(Buffer.from([0xef, 0xbf, 0xbd]));
+    expect(at).toBeGreaterThan(-1);
+    const mutated = Buffer.concat([
+      canonical.subarray(0, at),
+      Buffer.from([0xff]),
+      canonical.subarray(at + 3),
+    ]);
+    expect(mutated.equals(canonical)).toBe(false);
+    expect(mutated.toString('utf8')).toBe(pair.artifact);
+
+    writeFileSync(join(dataDir, SKILLS_CLASSIFICATION_FILE), mutated);
+    writeFileSync(join(dataDir, SKILLS_CLASSIFICATION_META_FILE), pair.meta);
+    const result = stageSkillsArtifacts({ dataDir, distDir });
+    expect(result.staged).toBe(false);
+    expect(result.reason).toContain('hash mismatch');
+  });
+
+  it('BUILD-BYTES CONTROL: the unmutated fixture stages', () => {
+    const { dataDir, distDir } = dirs();
+    const pair = validPair('Stage fixture \uFFFD entry.');
+    writeFileSync(join(dataDir, SKILLS_CLASSIFICATION_FILE), pair.artifact);
+    writeFileSync(join(dataDir, SKILLS_CLASSIFICATION_META_FILE), pair.meta);
+    expect(stageSkillsArtifacts({ dataDir, distDir }).staged).toBe(true);
+  });
+
+  it('SOURCE-ENOENT-ONLY: a non-ENOENT error probing the SOURCES aborts, not "no artifacts"', () => {
+    const { dataDir, distDir } = dirs();
+    const pair = validPair();
+    writeFileSync(join(dataDir, SKILLS_CLASSIFICATION_FILE), pair.artifact);
+    writeFileSync(join(dataDir, SKILLS_CLASSIFICATION_META_FILE), pair.meta);
+    const result = stageSkillsArtifacts(
+      { dataDir, distDir },
+      {
+        lstatImpl: ((_path: string) => {
+          const error = new Error('simulated device failure') as NodeJS.ErrnoException;
+          error.code = 'EIO';
+          throw error;
+        }) as typeof lstatSync,
+      },
+    );
+    expect(result.staged).toBe(false);
+    // The actionable failure must survive; reporting "no artifacts present"
+    // would hide it forever behind an expected-looking skip.
+    expect(result.reason).toContain('simulated device failure');
+    expect(result.reason).not.toContain('no skills-classification artifacts present');
+  });
+
+  it('LOCK-EEXIST-ONLY: a non-EEXIST lock failure is not reported as contention', () => {
+    const { dataDir, distDir } = dirs();
+    const pair = validPair();
+    writeFileSync(join(dataDir, SKILLS_CLASSIFICATION_FILE), pair.artifact);
+    writeFileSync(join(dataDir, SKILLS_CLASSIFICATION_META_FILE), pair.meta);
+    const result = stageSkillsArtifacts(
+      { dataDir, distDir },
+      {
+        openImpl: (() => {
+          const error = new Error('permission denied') as NodeJS.ErrnoException;
+          error.code = 'EACCES';
+          throw error;
+        }) as typeof openSync,
+      },
+    );
+    expect(result.staged).toBe(false);
+    expect(result.reason).toContain('could not acquire its lock');
+    // Advising an operator to delete a stale lock that never existed is worse
+    // than useless.
+    expect(result.reason).not.toContain('stale');
+  });
+
+  it('LOCK-LEAK: a throwing lstatImpl accessor does not leave the lock behind', () => {
+    const { dataDir, distDir } = dirs();
+    const pair = validPair();
+    writeFileSync(join(dataDir, SKILLS_CLASSIFICATION_FILE), pair.artifact);
+    writeFileSync(join(dataDir, SKILLS_CLASSIFICATION_META_FILE), pair.meta);
+    const hooks = {} as { lstatImpl?: typeof lstatSync };
+    let reads = 0;
+    Object.defineProperty(hooks, 'lstatImpl', {
+      get() {
+        // The FIRST read is the source probe; the second happens after the lock
+        // exists, which is the window this pins.
+        reads += 1;
+        if (reads > 1) throw new Error('getter exploded');
+        return undefined;
+      },
+    });
+    const result = stageSkillsArtifacts({ dataDir, distDir }, hooks);
+    expect(result.staged).toBe(false);
+    expect(readdirSync(distDir).filter((name) => name.includes('.stage-lock'))).toEqual([]);
+  });
+
+  it('BOTH-PROBLEMS: a failed restore AND a stuck published file are BOTH reported', () => {
+    const { dataDir, distDir } = dirs();
+    const oldPair = validPair('Old published entry.');
+    writeFileSync(join(distDir, SKILLS_CLASSIFICATION_FILE), oldPair.artifact);
+    writeFileSync(join(distDir, SKILLS_CLASSIFICATION_META_FILE), oldPair.meta);
+    const newPair = validPair('New candidate entry.');
+    writeFileSync(join(dataDir, SKILLS_CLASSIFICATION_FILE), newPair.artifact);
+    writeFileSync(join(dataDir, SKILLS_CLASSIFICATION_META_FILE), newPair.meta);
+
+    const result = stageSkillsArtifacts(
+      { dataDir, distDir },
+      {
+        beforeCommitStep: (step) => {
+          if (step !== 'meta') return;
+          // Make BOTH failures true at once: the published artifact becomes a
+          // directory (its removal will fail) and its backup is destroyed (its
+          // restore will fail). Reporting only one drops a real failure, and
+          // each sends an operator somewhere different.
+          rmSync(join(distDir, SKILLS_CLASSIFICATION_FILE));
+          mkdirSync(join(distDir, SKILLS_CLASSIFICATION_FILE));
+          const backup = readdirSync(distDir).find(
+            (name) => name.startsWith(SKILLS_CLASSIFICATION_FILE) && name.includes('.staging-bak'),
+          );
+          expect(backup, 'the artifact backup must exist').toBeDefined();
+          rmSync(join(distDir, backup!));
+          throw new Error('injected commit failure');
+        },
+      },
+    );
+
+    expect(result.staged).toBe(false);
+    expect(result.reason).toContain('could NOT be fully restored');
+    expect(result.reason).toContain('could NOT be removed');
+  });
+
+  it('READBACK-META: corrupting the META temporary is caught too, not just the artifact', () => {
+    const { dataDir, distDir } = dirs();
+    const pair = validPair();
+    writeFileSync(join(dataDir, SKILLS_CLASSIFICATION_FILE), pair.artifact);
+    writeFileSync(join(dataDir, SKILLS_CLASSIFICATION_META_FILE), pair.meta);
+    const result = stageSkillsArtifacts(
+      { dataDir, distDir },
+      {
+        afterStageWrite: () => {
+          const tmp = readdirSync(distDir).find(
+            (name) =>
+              name.startsWith(SKILLS_CLASSIFICATION_META_FILE) && name.includes('.staging-tmp'),
+          );
+          expect(tmp, 'the meta temporary must exist by now').toBeDefined();
+          writeFileSync(join(distDir, tmp!), 'CORRUPTED META');
+        },
+      },
+    );
+    expect(result.staged).toBe(false);
+    expect(result.reason).toContain('does not match the validated snapshot');
   });
 });
