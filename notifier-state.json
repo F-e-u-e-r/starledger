@@ -8,7 +8,7 @@
     "paths": [
       "README.md"
     ],
-    "last_commit_sha": "cfc31c710fe0ec36b661756ec77f95c94fd7abd3"
+    "last_commit_sha": "357d555233974cc9934d1c2c5e95110a0dd41631"
   },
   "pending": [],
   "deliveries": [
@@ -352,6 +352,18 @@
       "notification_key": "awesome_stars:rockxyapp/rockxy:R_kgDORxf66w",
       "status": "sent",
       "completed_at": "2026-08-14T05:06:11.075Z",
+      "detail": null
+    },
+    {
+      "notification_key": "awesome_stars:basecamp/omarchy:R_kgDOO0Cobg",
+      "status": "sent",
+      "completed_at": "2026-08-16T03:14:41.224Z",
+      "detail": null
+    },
+    {
+      "notification_key": "awesome_stars:t8y2/dbx:R_kgDOSPdiBQ",
+      "status": "sent",
+      "completed_at": "2026-08-16T03:14:41.224Z",
       "detail": null
     }
   ]
