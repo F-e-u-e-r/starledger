@@ -5133,6 +5133,31 @@
       }
     },
     {
+      "node_id": "R_kgDOO0Cobg",
+      "category": "developer-tools",
+      "tags": [
+        "cli",
+        "configuration",
+        "terminal",
+        "theme"
+      ],
+      "summary": "Omarchy is a beautiful, modern and opinionated Linux distribution by DHH that ships a preconfigured desktop with themes, hotkeys, a terminal, Neovim, shell tools, and dotfiles. It includes an extensive manual and an Omarchy CLI covering setup, configuration, and everyday development work.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "c7e541a2d59ce796e48daa38bd9d74f2cc55705d",
+        "repo_metadata_sha256": "f44f62c43d94a43c6f6b3ac58e38055e52c4de912f3459865f07f27abcdba77e",
+        "fingerprint": "b5f1b3c7acabb0e805b074395786a718381208cace4b2d97796a41b2130857dd"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-08-17T06:58:46Z"
+      }
+    },
+    {
       "node_id": "R_kgDOO1-onw",
       "category": "ai-ml",
       "tags": [
@@ -15632,6 +15657,33 @@
       }
     },
     {
+      "node_id": "R_kgDOSPdiBQ",
+      "category": "developer-tools",
+      "tags": [
+        "cli",
+        "database",
+        "desktop-app",
+        "gui",
+        "llm",
+        "self-hosted"
+      ],
+      "summary": "DBX is a lightweight, roughly 20 MB cross-platform database client written in Rust that connects to 80+ databases including MySQL, PostgreSQL, SQLite, Redis, MongoDB, and ClickHouse. It provides desktop, Docker, and CLI access, a built-in AI assistant for SQL, and an MCP server so AI coding agents can query connected databases.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "1bf08c52c0f7eef4d672cdb769a17212cb39ff85",
+        "repo_metadata_sha256": "f8e970e6b46461c214e2af85f7aa66429bed314e9f128cef08008e382feb5d98",
+        "fingerprint": "8326d42286fd187010f3eba87782aa3d272f04edbc437c6c0fb3510597073831"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-08-17T06:58:46Z"
+      }
+    },
+    {
       "node_id": "R_kgDOSRUoTw",
       "category": "ai-ml",
       "tags": [
@@ -16309,6 +16361,31 @@
         "model_label": "informational-only",
         "prompt_version": "classify-v1",
         "generated_at": "2026-07-21T21:22:29Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOSlFDzQ",
+      "category": "security-privacy",
+      "tags": [
+        "ai-agents",
+        "automation",
+        "llm",
+        "security-scanner"
+      ],
+      "summary": "A reference implementation for autonomous vulnerability discovery and remediation using Claude, based on Anthropic's security-team learnings. It provides Claude Code skills for threat modeling, scanning, triage, and patching, plus a sandboxed autonomous harness that finds and fixes C/C++ memory vulnerabilities with Docker and ASAN.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "2dc7416e818b9aa1c8134d7b4d9218f251ed88ae",
+        "repo_metadata_sha256": "8ee133c2496404f53eb39c283371299328cc3fcb751573c511dbbcfcf251ec8f",
+        "fingerprint": "e8fec7adb8f3c66c2343c3788568f70bc0b4992fb29d43adab19280d167bf550"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-08-17T06:58:46Z"
       }
     },
     {
@@ -18868,6 +18945,29 @@
         "model_label": "informational-only",
         "prompt_version": "classify-v1",
         "generated_at": "2026-08-10T08:27:09Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOTzFARw",
+      "category": "ai-ml",
+      "tags": [
+        "cli",
+        "machine-learning"
+      ],
+      "summary": "h3-metal is a native MiniMax-H3 inference engine written in C for Apple Silicon that uses Metal to run the model on M-series Macs. It supports prompt-to-video and prompt-to-audio generation, first/last-frame conditioning, and ordered reference images through an interactive CLI session with tunable steps, layers, frames, and presets.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "4750ac49a549ace77f47afd04e382fb51b404a2e",
+        "repo_metadata_sha256": "464fed417d3d636457ef05007d221b8a963148cfe122f34ffe21615326e5dcae",
+        "fingerprint": "ac31a8243b71f96fd0d8f314c7d2f6f8e7e670af797cb7dcea1acdb1ef1b2b0d"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-08-17T06:58:46Z"
       }
     }
   ]
