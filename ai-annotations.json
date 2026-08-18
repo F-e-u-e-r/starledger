@@ -6152,6 +6152,32 @@
       }
     },
     {
+      "node_id": "R_kgDOPBmB5g",
+      "category": "ai-ml",
+      "tags": [
+        "ai-agents",
+        "database",
+        "llm",
+        "search",
+        "self-hosted"
+      ],
+      "summary": "Semantica is an open-source, self-hostable graph-native infrastructure layer for LLM and AI agent systems. It ingests enterprise data into context graphs and knowledge graphs, then runs graph analytics, deterministic reasoning, and causal analysis with full decision provenance for explainable, auditable AI in regulated domains.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "8b89fd5f6151247d5d7417e2a398c7017d5e7ff6",
+        "repo_metadata_sha256": "376b368d57db7a298c7fc039620624ea26f20b92af9d57d9c75af48d810c53cc",
+        "fingerprint": "cac5ccbc4f1a82adc78b8f2f3fe42ab5e7036228dd5b18e6f7d054c69a4c3077"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-08-18T06:29:06Z"
+      }
+    },
+    {
       "node_id": "R_kgDOPCHzDw",
       "category": "ai-ml",
       "tags": [
@@ -15556,6 +15582,30 @@
         "model_label": null,
         "prompt_version": "classify-v1",
         "generated_at": "2026-07-21T15:23:35Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOSMMWEA",
+      "category": "education-reference",
+      "tags": [
+        "awesome-list",
+        "documentation",
+        "llm"
+      ],
+      "summary": "A curated, open-source library of prompt-engineering resources for the GPT-Image-2 AI image generation model. It collects hundreds of reverse-engineered prompt cases and reusable industrial templates under a 'prompt as code' approach, with a companion gallery website for browsing styles and copying full prompts.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "bf810e63472427a9a572779f2d7e056976e10efc",
+        "repo_metadata_sha256": "8cac4353075b38f6d61a700c67a0100292ca13419bba6015cc2fe053d3ad0f44",
+        "fingerprint": "c02892309bb874fbea9e4b7437fbcd0086089f5f6cfff8cad2ec84c95577feb4"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-08-18T06:29:06Z"
       }
     },
     {
