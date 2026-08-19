@@ -9696,6 +9696,31 @@
       }
     },
     {
+      "node_id": "R_kgDOR-VPxg",
+      "category": "ai-ml",
+      "tags": [
+        "ai-agents",
+        "library",
+        "llm",
+        "machine-learning"
+      ],
+      "summary": "A general-purpose Python framework that uses an LLM to give fine-grained feedback and rewards for any agent's outputs without additional training. It provides best-of-N selection, pairwise comparison, and step-by-step progress tracking to support test-time scaling, evaluation, and reinforcement learning.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "59453bcde544b563993d770c815816e1a3253893",
+        "repo_metadata_sha256": "8156c774ec4be78575110795f7a4074d8c1f856cbecd8954729dad7337ab0337",
+        "fingerprint": "de0c2ed750b60fd2926639de0b6fa14833d4c09bcb94fd420e39154ed70c3e8c"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-08-19T06:28:11Z"
+      }
+    },
+    {
       "node_id": "R_kgDOR-__Qg",
       "category": "ai-ml",
       "tags": [
