@@ -615,6 +615,30 @@
       }
     },
     {
+      "node_id": "MDEwOlJlcG9zaXRvcnkxODg3MDAyNzQ=",
+      "category": "self-hosted-homelab",
+      "tags": [
+        "networking",
+        "search",
+        "self-hosted"
+      ],
+      "summary": "copyparty is a portable, self-hosted file server distributed as a single Python file. It supports resumable uploads and downloads over HTTP, WebDAV, SFTP, FTP, TFTP, and SMB, and includes deduplication, a media indexer, thumbnails, and file search, with most dependencies optional.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "f73d7c65d536daa50caf3411ebd327907c6efa03",
+        "repo_metadata_sha256": "bc2001fbc890689f3fc4c7d7ab1834d5c7b5d63d5de9109b617fc9eb2493a0aa",
+        "fingerprint": "ba0ff6ae21b77fe65229a1a3ed1db458c6ebde715b3629c99f3ce32bbcf6b44c"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-08-20T06:24:48Z"
+      }
+    },
+    {
       "node_id": "MDEwOlJlcG9zaXRvcnkxOTcyMDY0MTA=",
       "category": "media-creative",
       "tags": [
@@ -5759,6 +5783,31 @@
       }
     },
     {
+      "node_id": "R_kgDOOfluAw",
+      "category": "devops-infrastructure",
+      "tags": [
+        "database",
+        "orchestration",
+        "self-hosted",
+        "serverless"
+      ],
+      "summary": "celld is an open-source, self-hosted daemon that runs Cloudflare Workers and Durable Objects on your own machines. Each object is a separate SQLite database replicated to an S3-compatible or Google Cloud Storage bucket, and nodes coordinate through that bucket alone, without a control plane or consensus service.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "90665e65cf77ab1db02e3e6cd04553c8d4871381",
+        "repo_metadata_sha256": "556da5551f5bde91a197b48b330fe364b5d3b2d24e87d8fb415d949460700ace",
+        "fingerprint": "1fa2ae6575bce53f1918e2084065f6b8563f065eb70d5ec7a27de08491d09410"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-08-20T06:24:48Z"
+      }
+    },
+    {
       "node_id": "R_kgDOOg1eRg",
       "category": "media-creative",
       "tags": [
@@ -8977,6 +9026,30 @@
         "model_label": null,
         "prompt_version": "classify-v1",
         "generated_at": "2026-07-21T10:23:22Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOQlLdbQ",
+      "category": "developer-tools",
+      "tags": [
+        "backup",
+        "cli",
+        "terminal"
+      ],
+      "summary": "better-rm is a safer replacement for the Unix rm command on Linux, Unix, and macOS. Instead of permanently deleting files it moves them to a trash directory that preserves the original path structure for later recovery, guards important system and project directories, and supports common rm flags.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "61c1272b840fb44ee8f6afd4cf29659c62a7601b",
+        "repo_metadata_sha256": "e4a8da689e6b3ef811df5bb0cf1498807cfe40ced66698a83c4867e6fc8d7f03",
+        "fingerprint": "45da2971a948585e9d0b26b991ae00f38193f243db7046de6e639e968d9d51ee"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-08-20T06:24:48Z"
       }
     },
     {
@@ -12494,6 +12567,30 @@
         "model_label": null,
         "prompt_version": "classify-v1",
         "generated_at": "2026-07-21T11:22:43Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOR_K_2g",
+      "category": "developer-tools",
+      "tags": [
+        "ai-agents",
+        "llm",
+        "visualization"
+      ],
+      "summary": "fireworks-tech-graph is an agent skill for Codex and Claude Code that turns natural-language descriptions into technical diagrams. It generates geometry-checked SVG and high-resolution PNG output, SVG-to-GIF motion, and offline interactive HTML, offering multiple styles and support for the standard UML diagram types.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "e3141e0e8ca8eac18b6add032a673dcf71747bf2",
+        "repo_metadata_sha256": "19fbc42ed2e015bac40257c3e2f90e0e3b6c6df9061ea0bc0f0fdef4b4434af0",
+        "fingerprint": "d8be1c81544940422363ec996fb9cb20e0478fde0a3eab07813628e835bafc87"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-08-20T06:24:48Z"
       }
     },
     {
@@ -16461,6 +16558,30 @@
         "model_label": null,
         "prompt_version": "classify-v1",
         "generated_at": "2026-08-17T06:58:46Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOSmEq8w",
+      "category": "developer-tools",
+      "tags": [
+        "ai-agents",
+        "desktop-app",
+        "terminal"
+      ],
+      "summary": "termio is a terminal-first agentic development environment for macOS, built in Swift on libghostty rather than a web view. It runs Claude Code, Codex, OpenCode, and other CLI agents side by side in a real terminal, with a menu-bar status indicator and an iPhone companion app for notifications.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "c9239b955c9301b901d8f16ea994171db1c01004",
+        "repo_metadata_sha256": "67779172e67d659db11e5347af37764e9421c660104f40905b428afdc0a569a5",
+        "fingerprint": "1f86c13070fafdf73cd49100d5a913c5341c8a61dce5270c27607e193c7a58be"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-08-20T06:24:48Z"
       }
     },
     {
