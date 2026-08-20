@@ -17031,6 +17031,58 @@
       }
     },
     {
+      "node_id": "R_kgDOT6_72Q",
+      "category": "communication-collaboration",
+      "tags": [
+        "ai-agents",
+        "desktop-app",
+        "llm",
+        "notifications",
+        "real-time",
+        "self-hosted"
+      ],
+      "summary": "Cumora is a cross-platform team chat application where AI agents are first-class participants alongside humans, sharing the same roster, direct messages, group conversations, Kanban board, and calendar. Agents run either on Cumora's managed cloud pods or on a user's own machine through a bring-your-own-agent daemon, and the stack is built with React, Express, Postgres, and Redis.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "812894208bc19996b4690a3f86722c1c85222cc8",
+        "repo_metadata_sha256": "31f36755f845d47a585b8e43a56b432792d3e33a06dedac948b8f7e9424e5cec",
+        "fingerprint": "fc698c412ab4c9f33ad8c0ace6664ea793c24f09e080720f53c11d801968f4d6"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-08-20T07:28:53Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOT7RY9A",
+      "category": "media-creative",
+      "tags": [
+        "ai-agents",
+        "automation",
+        "cli",
+        "game"
+      ],
+      "summary": "anyCreature turns a short text order into a game-ready, skinned and animated 3D creature exported as a GLB file, compiled from a single JSON spec by a zero-dependency Node engine. A quality-control harness renders silhouettes and routes them to context-free reader agents as gates, so a creature design must be clearly recognizable before it is allowed to ship.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "9f533be52327df55d4be17c17bf066b620cf8371",
+        "repo_metadata_sha256": "fd193c1b3a087c3bf0829ddd140b2b214d99f422efa5018560f6f13104cab864",
+        "fingerprint": "6e4d3b15f8ec7e7020ee87a73c9b1f12e68c7975df2456421628c0a54f02661f"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-08-20T07:28:53Z"
+      }
+    },
+    {
       "node_id": "R_kgDOTA4V3A",
       "category": "data-analytics",
       "tags": [
@@ -18447,6 +18499,33 @@
         "model_label": "informational-only",
         "prompt_version": "classify-v1",
         "generated_at": "2026-07-22T07:23:24Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOTcFgRg",
+      "category": "mobile",
+      "tags": [
+        "ai-agents",
+        "dashboard",
+        "encryption",
+        "notifications",
+        "real-time",
+        "terminal"
+      ],
+      "summary": "Heeler is a native iOS companion app for the herdr agent runtime, acting as an agent console that lists every coding agent running on your machines in a priority-sorted dashboard. It connects over SSH to read and steer each agent's live terminal through libghostty, supports QR-code device pairing, and delivers end-to-end encrypted push notifications when an agent is blocked or done.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "3175ca4c0c6d38bf0915926ffd54d4eda6f48f0d",
+        "repo_metadata_sha256": "4257ef7de6af998c5da35c162728811608ca3ab48df9f4aabfa01238c736c2f6",
+        "fingerprint": "9f9c223c6efec3132d62a70c6abfa573f010923ca71e9825d6a9a6f903608f25"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-08-20T07:28:53Z"
       }
     },
     {
