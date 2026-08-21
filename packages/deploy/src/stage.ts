@@ -145,6 +145,11 @@ export function stageDashboardData(
 export interface AiStageResult {
   staged: boolean;
   reason?: string;
+  /** Set when this run left content in the dist it tried and FAILED to
+   * remove. A truthful reason alone was not a consequence (round-11): the
+   * CLI exits non-zero on this flag so `bash -e` keeps the dist from
+   * shipping rejected bytes. */
+  residue?: boolean;
 }
 
 /**
@@ -222,7 +227,7 @@ export function stageAiArtifacts(opts: StageOptions, hooks: OptionalPairHooks = 
    * bounded for correctness by runtime pair validation but not closable
    * without the serialization question the owner holds.
    */
-  const discardOwnWrites = (): string => {
+  const discardOwnWrites = (): { suffix: string; stuck: boolean } => {
     const stuck: string[] = [];
     for (const path of [distAnn, distAnnMeta]) {
       try {
@@ -232,8 +237,11 @@ export function stageAiArtifacts(opts: StageOptions, hooks: OptionalPairHooks = 
       }
     }
     return stuck.length === 0
-      ? " — this run's dist writes were removed"
-      : " — this run's dist writes could NOT all be removed (residue remains)";
+      ? { suffix: " — this run's dist writes were removed", stuck: false }
+      : {
+          suffix: " — this run's dist writes could NOT all be removed (residue remains)",
+          stuck: true,
+        };
   };
   try {
     // BYTES, read once. Build-side acceptance must agree with the runtime
@@ -284,23 +292,30 @@ export function stageAiArtifacts(opts: StageOptions, hooks: OptionalPairHooks = 
     const landedAnn = readFileSync(distAnn);
     const landedMeta = readFileSync(distAnnMeta);
     if (!landedMeta.equals(metaBytes)) {
+      const discard = discardOwnWrites();
       return {
         staged: false,
-        reason: `AI meta published bytes do not match the validated snapshot${discardOwnWrites()}`,
+        reason: `AI meta published bytes do not match the validated snapshot${discard.suffix}`,
+        ...(discard.stuck ? { residue: true } : {}),
       };
     }
     if (createHash('sha256').update(landedAnn).digest('hex') !== meta.annotations_sha256) {
+      const discard = discardOwnWrites();
       return {
         staged: false,
-        reason: `AI artifact published bytes do not match the verified digest${discardOwnWrites()}`,
+        reason: `AI artifact published bytes do not match the verified digest${discard.suffix}`,
+        ...(discard.stuck ? { residue: true } : {}),
       };
     }
     return { staged: true };
   } catch (error) {
     const detail = error instanceof Error ? error.message : 'AI staging skipped';
+    if (!publishBegan) return { staged: false, reason: detail };
+    const discard = discardOwnWrites();
     return {
       staged: false,
-      reason: publishBegan ? `${detail}${discardOwnWrites()}` : detail,
+      reason: `${detail}${discard.suffix}`,
+      ...(discard.stuck ? { residue: true } : {}),
     };
   }
 }
@@ -308,11 +323,17 @@ export function stageAiArtifacts(opts: StageOptions, hooks: OptionalPairHooks = 
 export interface DiscoveryStageResult {
   staged: boolean;
   reason?: string;
+  /** Same round-11 contract as {@link AiStageResult.residue}. */
+  residue?: boolean;
 }
 
 export interface SkillsStageResult {
   staged: boolean;
   reason?: string;
+  /** Same round-11 contract as {@link AiStageResult.residue}: set when a
+   * failed restore or a stuck published destination leaves content this run
+   * could not expunge. The lock is NOT residue — it is never served. */
+  residue?: boolean;
   /**
    * Set when the publication itself is sound but the dist was left in a state
    * a later run must know about — currently only an unremovable lock file,
@@ -708,6 +729,7 @@ export function stageSkillsArtifacts(
       result = {
         staged: false,
         reason: `skills-classification staging aborted${trailer} — ${detail}`,
+        ...(restoreFailed || publishedResidue ? { residue: true } : {}),
       };
     } finally {
       try {
@@ -778,7 +800,7 @@ export function stageDiscoveryArtifacts(
   /** Same round-10 contract as the AI pair: set BEFORE the first write, and
    * discard this run's writes on any failure after that point. */
   let publishBegan = false;
-  const discardOwnWrites = (): string => {
+  const discardOwnWrites = (): { suffix: string; stuck: boolean } => {
     const stuck: string[] = [];
     for (const path of [distCandidates, distCandidatesMeta]) {
       try {
@@ -788,8 +810,11 @@ export function stageDiscoveryArtifacts(
       }
     }
     return stuck.length === 0
-      ? " — this run's dist writes were removed"
-      : " — this run's dist writes could NOT all be removed (residue remains)";
+      ? { suffix: " — this run's dist writes were removed", stuck: false }
+      : {
+          suffix: " — this run's dist writes could NOT all be removed (residue remains)",
+          stuck: true,
+        };
   };
   try {
     // BYTES, read once — same reasoning as the AI pair above: build-side
@@ -817,23 +842,30 @@ export function stageDiscoveryArtifacts(
     const landedCandidates = readFileSync(distCandidates);
     const landedMeta = readFileSync(distCandidatesMeta);
     if (!landedMeta.equals(metaBytes)) {
+      const discard = discardOwnWrites();
       return {
         staged: false,
-        reason: `discovery meta published bytes do not match the validated snapshot${discardOwnWrites()}`,
+        reason: `discovery meta published bytes do not match the validated snapshot${discard.suffix}`,
+        ...(discard.stuck ? { residue: true } : {}),
       };
     }
     if (createHash('sha256').update(landedCandidates).digest('hex') !== meta.dataset_sha) {
+      const discard = discardOwnWrites();
       return {
         staged: false,
-        reason: `discovery artifact published bytes do not match the verified digest${discardOwnWrites()}`,
+        reason: `discovery artifact published bytes do not match the verified digest${discard.suffix}`,
+        ...(discard.stuck ? { residue: true } : {}),
       };
     }
     return { staged: true };
   } catch (error) {
     const detail = error instanceof Error ? error.message : 'discovery staging skipped';
+    if (!publishBegan) return { staged: false, reason: detail };
+    const discard = discardOwnWrites();
     return {
       staged: false,
-      reason: publishBegan ? `${detail}${discardOwnWrites()}` : detail,
+      reason: `${detail}${discard.suffix}`,
+      ...(discard.stuck ? { residue: true } : {}),
     };
   }
 }

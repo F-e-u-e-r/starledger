@@ -398,6 +398,9 @@ describe('skills-classification staging (fail-soft publication, P7 §4.10)', () 
 
     expect(result.staged).toBe(false);
     expect(result.reason).toContain('could NOT be fully restored');
+    // Round-11: unremovable/unrestorable content in the dist is a structured
+    // RESIDUE the CLI must escalate on — a truthful reason alone still shipped.
+    expect(result.residue).toBe(true);
   });
 
   /**
@@ -433,6 +436,7 @@ describe('skills-classification staging (fail-soft publication, P7 §4.10)', () 
     // applied — on an empty dist there are no backups to inspect.
     expect(result.reason).toContain('partly-published file could NOT be removed');
     expect(result.reason).not.toContain('.staging-bak');
+    expect(result.residue).toBe(true);
   });
 
   /**

@@ -65,14 +65,33 @@ function optionNames(source: string, interfaceName: string): string[] {
     .slice(open + 1, end)
     .replace(/\/\*[\s\S]*?\*\//g, '')
     .replace(/\/\/[^\n]*/g, '');
-  // Quoted names (`'allowUnverified'?:`) and modifier-prefixed names
-  // (`readonly allowUnverified?:`) are LEGAL TypeScript and were invisible to
-  // a bare-identifier matcher (round-9 and round-10 findings) — an invisible
+  // An INDEX SIGNATURE ([key: string]: …) makes the whole surface
+  // undeclarable — reject it outright, like extends/merge (round-11 finding).
+  if (/^\s*(?:readonly\s+)?\[\s*[A-Za-z_$][\w$]*\s*:\s*/m.test(body)) {
+    throw new Error(
+      `${interfaceName} declares an index signature — the surface must be enumerable`,
+    );
+  }
+  // A COMPUTED NON-LITERAL key (`[allowUnverified]?:` over a unique symbol)
+  // is legal TypeScript and names an option no string comparison can see —
+  // reject it outright (round-11 finding, sol: a symbol-keyed option drove a
+  // working text()-instead-of-bytes bypass past both static pins).
+  if (/^\s*(?:readonly\s+)?\[\s*[A-Za-z_$][\w$.]*\s*\]/m.test(body)) {
+    throw new Error(
+      `${interfaceName} declares a computed option name — option names must be string literals`,
+    );
+  }
+  // Quoted names (`'allowUnverified'?:`), modifier-prefixed names
+  // (`readonly allowUnverified?:`), and computed literal keys
+  // (`['allowUnverified']?:`) are LEGAL TypeScript and were invisible to a
+  // bare-identifier matcher (round-9/10/11 findings) — an invisible
   // declaration never reached the allowlist comparison. Extract every form,
   // so any such declaration lands in the comparison and fails.
   return [
-    ...body.matchAll(/^\s*(?:readonly\s+)?(?:(['"])(.+?)\1|([A-Za-z_$][\w$]*))\s*\??\s*:/gm),
-  ].map((m) => (m[2] ?? m[3])!);
+    ...body.matchAll(
+      /^\s*(?:readonly\s+)?(?:\[\s*(['"])(.+?)\1\s*\]|(['"])(.+?)\3|([A-Za-z_$][\w$]*))\s*\??\s*:/gm,
+    ),
+  ].map((m) => (m[2] ?? m[4] ?? m[5])!);
 }
 
 /**
@@ -169,6 +188,37 @@ describe('INTEG-SURFACE: loader options are an allowlist, so no opt-out can appe
       'skipIntegrity',
     ]);
   });
+
+  it('CONTROL: computed literal keys are extracted; index signatures are rejected (round 11)', () => {
+    const computed = [
+      'export interface LoadOptions {',
+      '  base?: string;',
+      "  ['allowUnverified']?: boolean;",
+      '}',
+      '',
+    ].join('\n');
+    expect(optionNames(computed, 'LoadOptions')).toEqual(['base', 'allowUnverified']);
+
+    const indexed = [
+      'export interface LoadOptions {',
+      '  base?: string;',
+      '  [key: string]: unknown;',
+      '}',
+      '',
+    ].join('\n');
+    expect(() => optionNames(indexed, 'LoadOptions')).toThrow(/index signature/);
+  });
+
+  it('CONTROL: a computed (symbol-keyed) option name is rejected (round 11, sol)', () => {
+    const symbolKeyed = [
+      'export interface LoadOptions {',
+      '  base?: string;',
+      '  [allowUnverified]?: boolean;',
+      '}',
+      '',
+    ].join('\n');
+    expect(() => optionNames(symbolKeyed, 'LoadOptions')).toThrow(/computed option name/);
+  });
 });
 
 /**
@@ -190,8 +240,18 @@ describe('INTEG-SURFACE: loader options are an allowlist, so no opt-out can appe
  */
 describe('INTEG-NO-BYPASS-BEHAVIORAL: no loader probes an undeclared option on any path', () => {
   function recordingOptions<T extends object>(opts: T, probes: string[]): T {
+    // Well-known symbols are engine plumbing (logging touches toStringTag);
+    // every OTHER symbol — Symbol.for('skipIntegrity') included — is a probe
+    // (round-11 finding: symbols were invisible to a string-only note).
+    const WELL_KNOWN = new Set<symbol>(
+      Object.getOwnPropertyNames(Symbol)
+        .map((name) => (Symbol as unknown as Record<string, unknown>)[name])
+        .filter((value): value is symbol => typeof value === 'symbol'),
+    );
     const note = (property: PropertyKey) => {
       if (typeof property === 'string' && !ALLOWED_OPTIONS.has(property)) probes.push(property);
+      if (typeof property === 'symbol' && !WELL_KNOWN.has(property))
+        probes.push(`(symbol ${String(property)})`);
     };
     return new Proxy(opts, {
       get(target, property, receiver) {
@@ -211,6 +271,12 @@ describe('INTEG-NO-BYPASS-BEHAVIORAL: no loader probes an undeclared option on a
       getOwnPropertyDescriptor(target, property) {
         note(property);
         return Reflect.getOwnPropertyDescriptor(target, property);
+      },
+      getPrototypeOf(target) {
+        // A prototype walk (Object.getPrototypeOf(opts)?.skipIntegrity) is a
+        // probe of the options surface too (round-11 finding).
+        probes.push('(prototype)');
+        return Reflect.getPrototypeOf(target);
       },
     });
   }

@@ -180,9 +180,11 @@ CASES = [
         "AI meta read-back guard removed",
         "packages/deploy/src/stage.ts",
         "    if (!landedMeta.equals(metaBytes)) {\n"
+        "      const discard = discardOwnWrites();\n"
         "      return {\n"
         "        staged: false,\n"
-        "        reason: `AI meta published bytes do not match the validated snapshot${discardOwnWrites()}`,\n"
+        "        reason: `AI meta published bytes do not match the validated snapshot${discard.suffix}`,\n"
+        "        ...(discard.stuck ? { residue: true } : {}),\n"
         "      };\n"
         "    }\n"
         "    if (createHash('sha256').update(landedAnn).digest('hex') !== meta.annotations_sha256) {",
@@ -194,9 +196,11 @@ CASES = [
         "discovery meta read-back guard removed",
         "packages/deploy/src/stage.ts",
         "    if (!landedMeta.equals(metaBytes)) {\n"
+        "      const discard = discardOwnWrites();\n"
         "      return {\n"
         "        staged: false,\n"
-        "        reason: `discovery meta published bytes do not match the validated snapshot${discardOwnWrites()}`,\n"
+        "        reason: `discovery meta published bytes do not match the validated snapshot${discard.suffix}`,\n"
+        "        ...(discard.stuck ? { residue: true } : {}),\n"
         "      };\n"
         "    }\n"
         "    if (createHash('sha256').update(landedCandidates).digest('hex') !== meta.dataset_sha) {",
@@ -351,16 +355,32 @@ CASES = [
         # the disk, not the prose, so a lying reason reddens.
         "AI mismatch discard claimed but not performed",
         "packages/deploy/src/stage.ts",
-        "        reason: `AI meta published bytes do not match the validated snapshot${discardOwnWrites()}`,",
-        "        reason: \"AI meta published bytes do not match the validated snapshot — this run's dist writes were removed\",",
+        "      const discard = discardOwnWrites();\n"
+        "      return {\n"
+        "        staged: false,\n"
+        "        reason: `AI meta published bytes do not match the validated snapshot${discard.suffix}`,\n"
+        "        ...(discard.stuck ? { residue: true } : {}),\n"
+        "      };",
+        "      return {\n"
+        "        staged: false,\n"
+        "        reason: \"AI meta published bytes do not match the validated snapshot — this run's dist writes were removed\",\n"
+        "      };",
         "packages/deploy/tests/ai-stage.test.ts",
         "GUARD-META",
     ),
     (
         "discovery mismatch discard claimed but not performed",
         "packages/deploy/src/stage.ts",
-        "        reason: `discovery artifact published bytes do not match the verified digest${discardOwnWrites()}`,",
-        "        reason: \"discovery artifact published bytes do not match the verified digest — this run's dist writes were removed\",",
+        "      const discard = discardOwnWrites();\n"
+        "      return {\n"
+        "        staged: false,\n"
+        "        reason: `discovery artifact published bytes do not match the verified digest${discard.suffix}`,\n"
+        "        ...(discard.stuck ? { residue: true } : {}),\n"
+        "      };",
+        "      return {\n"
+        "        staged: false,\n"
+        "        reason: \"discovery artifact published bytes do not match the verified digest — this run's dist writes were removed\",\n"
+        "      };",
         "packages/deploy/tests/discovery-stage.test.ts",
         "GUARD:",
     ),
@@ -405,6 +425,63 @@ CASES = [
         "      loaderRef.current ?? (() => loadSkillsClassification({ base: '/wrong-base/' }));",
         "apps/dashboard/src/data/use-skills-classification.test.tsx",
         "DEFAULT-PATH",
+    ),
+    # Round-11 mutants:
+    (
+        # The stager swallows its own failed discard — flag dropped, reason
+        # still truthful. The structured-flag pin reddens.
+        "AI residue flag dropped on a stuck discard",
+        "packages/deploy/src/stage.ts",
+        "    const detail = error instanceof Error ? error.message : 'AI staging skipped';\n"
+        "    if (!publishBegan) return { staged: false, reason: detail };\n"
+        "    const discard = discardOwnWrites();\n"
+        "    return {\n"
+        "      staged: false,\n"
+        "      reason: `${detail}${discard.suffix}`,\n"
+        "      ...(discard.stuck ? { residue: true } : {}),\n"
+        "    };",
+        "    const detail = error instanceof Error ? error.message : 'AI staging skipped';\n"
+        "    if (!publishBegan) return { staged: false, reason: detail };\n"
+        "    const discard = discardOwnWrites();\n"
+        "    return {\n"
+        "      staged: false,\n"
+        "      reason: `${detail}${discard.suffix}`,\n"
+        "    };",
+        "packages/deploy/tests/ai-stage.test.ts",
+        "RESIDUE",
+    ),
+    (
+        # The CLI prints everything and still exits 0 — the round-11 defect
+        # itself. The subprocess pin reddens on the exit code.
+        "CLI ships a dist carrying unremovable rejected residue",
+        "packages/deploy/src/cli.ts",
+        "      if ([ai, discovery, skills].some((result) => result.residue)) {",
+        "      if (false) {",
+        "packages/deploy/tests/cli-stage.test.ts",
+        "RESIDUE-EXIT",
+    ),
+    (
+        # luna@max round-11 PoC: a bypass probed via the prototype walk, which
+        # the get/has traps never see — the getPrototypeOf trap records it.
+        "a loader probes a bypass through the options prototype",
+        "apps/dashboard/src/data/load-discovery.ts",
+        "  const base = opts.base ?? '/';",
+        "  const base = opts.base ?? '/';\n"
+        "  void (Object.getPrototypeOf(opts) as { skipIntegrity?: boolean } | null)?.skipIntegrity;",
+        "apps/dashboard/src/data/integrity-surface.test.ts",
+        "INTEG-NO-BYPASS",
+    ),
+    (
+        # sol's round-11 PoC shape: a SYMBOL-keyed option — invisible to any
+        # string comparison — probed in a loader body. The proxy records
+        # non-well-known symbol probes, so both proxy pins for stars redden.
+        "a loader probes a symbol-keyed bypass option",
+        "apps/dashboard/src/data/load-stars.ts",
+        "  const base = opts.base ?? '/';",
+        "  const base = opts.base ?? '/';\n"
+        "  void (opts as Record<symbol, unknown>)[Symbol.for('allowUnverified')];",
+        "apps/dashboard/src/data/integrity-surface.test.ts",
+        "INTEG-NO-BYPASS",
     ),
 ]
 

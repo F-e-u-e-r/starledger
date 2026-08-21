@@ -248,6 +248,8 @@ describe('stageDiscoveryArtifacts — the post-publish guard fires', () => {
     // and the reason says so.
     expect(result.reason).toContain('could NOT all be removed');
     expect(existsSync(join(distDir, DISCOVERY_CANDIDATES_FILE))).toBe(false);
+    // Round-11: the structured flag the CLI escalates on.
+    expect(result.residue).toBe(true);
   });
 
   it('GUARD-META: a meta rewritten after publish is refused even though the pair stays coherent', () => {

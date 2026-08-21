@@ -222,6 +222,10 @@ describe('stageAiArtifacts — the post-publish guard fires', () => {
     // says so instead of claiming a clean discard.
     expect(result.reason).toContain('could NOT all be removed');
     expect(existsSync(join(distDir, AI_ANNOTATIONS_FILE))).toBe(false);
+    // Round-11 finding (luna@ultra): a truthful reason was not a CONSEQUENCE —
+    // the CLI still exited 0 and Pages uploaded the residue. The structured
+    // flag is what the CLI escalates on.
+    expect(result.residue).toBe(true);
   });
 
   it('GUARD-META: a meta rewritten after publish is refused even though the pair stays coherent', () => {
@@ -248,5 +252,7 @@ describe('stageAiArtifacts — the post-publish guard fires', () => {
     expect(result.reason).toContain('writes were removed');
     expect(existsSync(join(distDir, AI_ANNOTATIONS_META_FILE))).toBe(false);
     expect(existsSync(join(distDir, AI_ANNOTATIONS_FILE))).toBe(false);
+    // A CLEAN discard is not residue — the deploy stays fail-soft.
+    expect(result.residue).toBeUndefined();
   });
 });

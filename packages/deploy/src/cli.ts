@@ -60,7 +60,21 @@ async function main(): Promise<void> {
       );
       // ONE string from a pure formatter: there is no index for a later edit
       // to drop, so a warning cannot be silently suppressed while tests pass.
-      console.log(formatSkillsStageReport(stageSkillsArtifacts({ dataDir: data, distDir: dist })));
+      const skills = stageSkillsArtifacts({ dataDir: data, distDir: dist });
+      console.log(formatSkillsStageReport(skills));
+      // RESIDUE ESCALATION (round 11): an ordinary optional-pair skip is
+      // fail-soft — the canonical deploy proceeds. Content this run REJECTED
+      // and then could not remove is different: exiting 0 here let Pages
+      // upload the residue, and a coherent meta rewrite was then SERVED by
+      // the runtime. That is a dist-integrity failure, not an optional-layer
+      // problem, so it fails the deploy (exit 4 → `bash -e` in pages.yml →
+      // nothing ships).
+      if ([ai, discovery, skills].some((result) => result.residue)) {
+        console.error(
+          '[deploy] FATAL: rejected optional-pair bytes could not be removed from the dist — refusing to let this dist ship',
+        );
+        exit(4);
+      }
       break;
     }
     case 'verify': {
