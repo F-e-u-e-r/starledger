@@ -556,7 +556,39 @@ Gates after the round-12 fixes: `vitest run` **1181/1181** (109 files; +3: two s
 
 **R13-4 (all three, evidence): two R12 harness mutants died for the wrong reason.** They referenced a `discard(...)` helper removed for lint, so they died by `ReferenceError` (the harness misclassified it as an assertion kill). FIXED to the faithful `void discardOk(...)` swallow. This is exactly the six-point-inspection discipline the harness demotion exists to enforce — caught and corrected.
 
-Gates after the round-13 fixes: `vitest run` **1191/1191** (110 files; +10: PARTIAL-TEMP, ZERO-WRITE ×2, STUCK-RESIDUE ×2, revised RESIDUE ×2, the residue-decision unit suite, and the method-form / second-param CONTROLs) · typecheck · eslint · prettier · `scripts/mutation-check.py` **35/35** valid RED. DO NOT MERGE remains in force. **The two owner decisions still stand (serialization scope; canonical-form deferral).** The production surface is now robust to single I/O failures across all three stagers; the trajectory (6 → 5 → 1 → 1 → 1, each latter a cleanup-precision sub-case) is deep in the long tail — a natural point for the owner to weigh the two decisions and judge whether further rounds are warranted.
+Gates after the round-13 fixes: `vitest run` **1191/1191** (110 files; +10: PARTIAL-TEMP, ZERO-WRITE ×2, STUCK-RESIDUE ×2, revised RESIDUE ×2, the residue-decision unit suite, and the method-form / second-param CONTROLs) · typecheck · eslint · prettier · `scripts/mutation-check.py` **35/35** valid RED. Frozen `5365ccc`, CI 4/4.
+
+**Owner rulings (2026-08-21), recorded on-branch as a doc-only commit BEFORE Round 14 so the reviewed head equals the merge candidate (the `22c29b9` pattern); the agent had stopped the loop and handed these up per operational-rigor §6 (productive-but-unconverging).**
+
+**RULING 1 — Optional AI/discovery concurrency: ACCEPT the bounded last-write-wins residual; do NOT expand transaction machinery into #245.** The two optional pairs stay non-transactional (no lock/backup/rollback). The known concurrency outcomes are exactly two, and both are contained: an interleave into an INCOHERENT pair is rejected by runtime integrity/pair validation and the optional layer fails soft to unavailable; a concurrent stager fully OVERWRITING the pair with its own COHERENT validated pair yields valid data, with only an attribution mismatch for the earlier invocation about whose bytes are finally on disk. The normative contract, verbatim:
+
+> Optional-pair staging is not linearizable under concurrent invocations.
+>
+> Concurrent publication is outside the guaranteed single-invocation contract:
+>
+> - a coherent later writer may win;
+> - an incoherent interleave must be rejected by runtime validation;
+> - no invalid/torn pair may silently become ready.
+>
+> `staged:true` means this invocation completed its validated publication path; it does not guarantee that no concurrent valid writer replaced it afterward.
+
+Rationale (owner): 13 rounds proved that each added filesystem-choreography step opens a new cleanup/ownership/failure window; replicating the skills transaction state machine to close a non-production-critical, already-fail-soft-contained attribution residual is a bad risk trade. Concurrent-stager linearizability, if ever wanted, is a separate publication-architecture change — never two more hand-rolled transactions grown inside #245. The skills lock/backup/rollback machinery is NOT extended to the optional pairs.
+
+**RULING 2 — R12-5 AI canonical-form divergence: VALID and DEFERRED; do NOT claim build/runtime canonical-form parity.** The finding is real and was reproduced: the AI build verifier requires the bytes to BE the canonical serialization, while AI staging/runtime accept any byte representation whose digest + meta are consistent, so a compact-but-consistent pair is accepted by runtime and refused by the build verifier. Deferred because #245's subject is BYTE INTEGRITY (now agreeing on both ends), the canonical-form check is a pre-existing build-only invariant #245 did not create, the normal PR→main path still has the build/provenance gate blocking a non-canonical artifact from shipping, and moving the canonical serializer into the browser runtime would expand the bundle/runtime contract out of proportion to M2.3. Disposition, verbatim:
+
+> R12-5 — VALID / DEFERRED
+>
+> Do not claim build/runtime canonical-form parity.
+>
+> Current guaranteed parity: exact-byte integrity + pair consistency
+>
+> Deferred: canonical serialization-form parity for AI artifacts
+
+Independent AI-artifact-contract debt, scheduled like the R8-B discovery gaps; does NOT block #245.
+
+**RULING 3 — `#245 @ 5365ccc`: DO NOT MERGE YET; run one full Round 14 on this exact frozen SHA, then converge.** `5365ccc` fixed R13's last production defect but has not itself had a full independent PROCEED round (R13 reviewed `9ce50fc`, 3/3 DO NOT PROCEED). The standing closure condition holds: the final merge candidate must have at least one full independent round that actually PROCEEDs. **Round 14 adds NO new charter** — the mature charter is frozen (remediation-created filesystem windows; ownership/cleanup precision; byte/decode/build-runtime parity; publication consequence; production default path; no-bypass surface; mutation evidence RED-for-the-claimed-reason; recorded-residual containment still holding), and Rulings 1–2 above are recorded so reviewers do not re-raise the accepted residual or the deferred divergence.
+
+**Round-14 triage rule (owner, locks the loop against perpetual motion):** a reviewer's non-correctness output does NOT auto-mutate the tree — wording polish, non-load-bearing test nice-to-haves, mutation-harness generality improvements, and purely-theoretical hardening of an already-recorded residual are acknowledged, not acted on. Only two evidence-finding classes are blockers: (1) it proves a load-bearing correctness claim was never actually verified; (2) it shows a real production regression can recur while the existing gates stay all-green. **Stopping rule:** `3/3 PROCEED with no surviving correctness finding → closure achieved → do NOT voluntarily open Round 15.\*\*
 
 ---
 
