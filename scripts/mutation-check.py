@@ -483,6 +483,60 @@ CASES = [
         "apps/dashboard/src/data/integrity-surface.test.ts",
         "INTEG-NO-BYPASS",
     ),
+    # Round-12 mutants:
+    (
+        # sol: the CLI condition only checked AI residue in the original pin.
+        # Dropping discovery from the escalation array reddens the discovery
+        # end-to-end subprocess pin.
+        "CLI escalation drops the discovery residue check",
+        "packages/deploy/src/cli.ts",
+        "      if ([ai, discovery, skills].some((result) => result.residue)) {",
+        "      if ([ai, skills].some((result) => result.residue)) {",
+        "packages/deploy/tests/cli-stage.test.ts",
+        "RESIDUE-EXIT",
+    ),
+    (
+        # sol + luna@max: a swallowed success-path backup discard. Reverting to
+        # the void discard drops the residue flag on a stale .staging-bak.
+        "skills success-path backup discard swallowed",
+        "packages/deploy/src/stage.ts",
+        "      for (const [backup] of movedAside) if (!discardOk(backup)) cleanupResidue = true;",
+        "      for (const [backup] of movedAside) discard(backup);",
+        "packages/deploy/tests/skills-stage.test.ts",
+        "CLEANUP-RESIDUE-SUCCESS",
+    ),
+    (
+        "skills abort-path temporary discard swallowed",
+        "packages/deploy/src/stage.ts",
+        "      for (const path of created) if (!discardOk(path)) cleanupResidue = true;",
+        "      for (const path of created) discard(path);",
+        "packages/deploy/tests/skills-stage.test.ts",
+        "CLEANUP-RESIDUE-ABORT",
+    ),
+    (
+        # sol round-12 PoC shape: a bypass probed via a WELL-KNOWN symbol
+        # (opts[Symbol.iterator]) — invisible to the round-11 proxy that
+        # exempted them. The all-symbols proxy records it, so both stars proxy
+        # pins redden.
+        "a loader probes a well-known-symbol bypass",
+        "apps/dashboard/src/data/load-stars.ts",
+        "  const base = opts.base ?? '/';",
+        "  const base = opts.base ?? '/';\n"
+        "  void (opts as Record<symbol, unknown>)[Symbol.iterator];",
+        "apps/dashboard/src/data/integrity-surface.test.ts",
+        "INTEG-NO-BYPASS",
+    ),
+    (
+        # sol + luna@max: the App default-path pin must exercise the optional
+        # ARTIFACT urls, not just their metas. A wrong base on the AI artifact
+        # fetch reddens DEFAULT-PATH now that the artifact request is asserted.
+        "AI loader default drops the base on the artifact fetch",
+        "apps/dashboard/src/data/load-annotations.ts",
+        "    const annRes = await doFetch(`${base}ai-annotations.json?sha=${meta.annotations_sha256}`);",
+        "    const annRes = await doFetch(`/ai-annotations.json?sha=${meta.annotations_sha256}`);",
+        "apps/dashboard/src/app/App.test.tsx",
+        "DEFAULT-PATH",
+    ),
 ]
 
 if __name__ == "__main__":

@@ -52,24 +52,32 @@ describe.skipIf(!existsSync(join(root, SKILLS_CLASSIFICATION_FILE)))(
 );
 
 /**
- * Round-11 finding (luna@ultra): a stager that DETECTED bad bytes and could
- * not remove them reported truthfully — and the CLI still exited 0, so Pages
- * uploaded the residue, and a coherent meta rewrite was then served. Absence
- * and invalid sources stay fail-soft; UNREMOVABLE REJECTED RESIDUE is a
- * dist-integrity failure and must fail the deploy (exit 4), which pages.yml's
- * `bash -e` turns into "nothing ships".
+ * Round-11 finding, hardened round 12. A stager that DETECTED bad bytes and
+ * could not remove them reported truthfully — and the CLI still exited 0, so
+ * Pages uploaded the residue and a coherent meta rewrite was served. The CLI
+ * now exits 4 on ANY stager's residue. Round-12 (sol): the original pin built
+ * ONLY AI residue, so a mutant dropping `discovery.residue` from the CLI
+ * condition passed — parametrize over EACH optional layer whose residue is
+ * black-box constructible, so dropping any one of them from the condition
+ * reddens its own case.
+ *
+ * Skills is deliberately NOT here: its transactional stager (token-randomized
+ * temps/backups, ordered commit) cleans up robustly, so an unremovable-residue
+ * state is not reachable by pre-placing a directory from outside — the residue
+ * branches are pinned directly instead (skills-stage F1-HONEST /
+ * F1-DISCARD-HONEST assert `result.residue`). Recorded, not hidden.
  */
 describe('deploy CLI stage command — residue escalation', () => {
-  it('RESIDUE-EXIT: unremovable rejected optional-pair residue fails the deploy', () => {
-    const dist = mkdtempSync(join(tmpdir(), 'deploy-cli-residue-dist-'));
-    const data = mkdtempSync(join(tmpdir(), 'deploy-cli-residue-data-'));
-    try {
-      execFileSync(
-        process.execPath,
-        ['--import', 'tsx', 'packages/deploy/src/cli.ts', 'fixture', '--out', data],
-        { cwd: root, encoding: 'utf8' },
-      );
-      // A valid AI pair in the sources…
+  interface Layer {
+    name: string;
+    metaFile: string;
+    write: (data: string) => void;
+  }
+
+  const AI: Layer = {
+    name: 'AI',
+    metaFile: 'ai-annotations-meta.json',
+    write: (data) => {
       const annotations = '{"schema_version":"1.0","taxonomy_version":"1","annotations":[]}';
       writeFileSync(join(data, 'ai-annotations.json'), annotations);
       writeFileSync(
@@ -83,38 +91,103 @@ describe('deploy CLI stage command — residue escalation', () => {
           generated_at: '2026-06-20T00:00:00Z',
         }),
       );
-      // …and a DIRECTORY squatting on the dist meta path: the meta write
-      // throws, the artifact half is discarded, the directory cannot be — an
-      // unremovable-residue result.
-      mkdirSync(join(dist, 'ai-annotations-meta.json'), { recursive: true });
-      let status = 0;
-      let output = '';
+    },
+  };
+
+  const DISCOVERY: Layer = {
+    name: 'discovery',
+    metaFile: 'discovery-candidates-meta.json',
+    write: (data) => {
+      const source = {
+        kind: 'manual',
+        source_id: 'owner/repo',
+        source_url: 'https://github.com/owner/repo',
+        observed_at: '2026-01-15T00:00:00.000Z',
+      };
+      const candidates = JSON.stringify({
+        schema_version: 1,
+        candidates: [
+          {
+            node_id: 'R_1',
+            owner: 'owner',
+            name: 'repo',
+            full_name: 'owner/repo',
+            html_url: 'https://github.com/owner/repo',
+            description: 'A test repo',
+            homepage_url: null,
+            primary_language: 'TypeScript',
+            stargazer_count: 100,
+            archived: false,
+            disabled: false,
+            fork: false,
+            pushed_at: '2026-01-01T00:00:00.000Z',
+            discovered_at: '2026-01-15T00:00:00.000Z',
+            first_seen_source: source,
+            sources: [source],
+            status: 'candidate',
+          },
+        ],
+      });
+      writeFileSync(join(data, 'discovery-candidates.json'), candidates);
+      writeFileSync(
+        join(data, 'discovery-candidates-meta.json'),
+        JSON.stringify({
+          schema_version: 1,
+          generated_at: '2026-01-15T00:00:00.000Z',
+          dataset_sha: createHash('sha256').update(candidates, 'utf8').digest('hex'),
+          candidate_count: 1,
+          source_count: 1,
+          generator_version: '0.1.0',
+        }),
+      );
+    },
+  };
+
+  it.each([AI, DISCOVERY])(
+    'RESIDUE-EXIT ($name): unremovable rejected residue fails the deploy (exit 4)',
+    (layer) => {
+      const dist = mkdtempSync(join(tmpdir(), 'deploy-cli-residue-dist-'));
+      const data = mkdtempSync(join(tmpdir(), 'deploy-cli-residue-data-'));
       try {
-        output = execFileSync(
+        execFileSync(
           process.execPath,
-          [
-            '--import',
-            'tsx',
-            'packages/deploy/src/cli.ts',
-            'stage',
-            '--dist',
-            dist,
-            '--data',
-            data,
-          ],
+          ['--import', 'tsx', 'packages/deploy/src/cli.ts', 'fixture', '--out', data],
           { cwd: root, encoding: 'utf8' },
         );
-      } catch (error) {
-        const e = error as { status?: number; stdout?: string; stderr?: string };
-        status = e.status ?? -1;
-        output = `${e.stdout ?? ''}${e.stderr ?? ''}`;
+        layer.write(data);
+        // A DIRECTORY squats on the dist meta path: the meta write throws, the
+        // artifact half is discarded, the directory cannot be (non-empty
+        // rmSync without recursive) — an unremovable-residue result.
+        mkdirSync(join(dist, layer.metaFile), { recursive: true });
+        let status = 0;
+        let output = '';
+        try {
+          output = execFileSync(
+            process.execPath,
+            [
+              '--import',
+              'tsx',
+              'packages/deploy/src/cli.ts',
+              'stage',
+              '--dist',
+              dist,
+              '--data',
+              data,
+            ],
+            { cwd: root, encoding: 'utf8' },
+          );
+        } catch (error) {
+          const e = error as { status?: number; stdout?: string; stderr?: string };
+          status = e.status ?? -1;
+          output = `${e.stdout ?? ''}${e.stderr ?? ''}`;
+        }
+        expect(output).toContain('could NOT all be removed');
+        expect(output).toContain('refusing to let this dist ship');
+        expect(status).toBe(4);
+      } finally {
+        rmSync(dist, { recursive: true, force: true });
+        rmSync(data, { recursive: true, force: true });
       }
-      expect(output).toContain('could NOT all be removed');
-      expect(output).toContain('refusing to let this dist ship');
-      expect(status).toBe(4);
-    } finally {
-      rmSync(dist, { recursive: true, force: true });
-      rmSync(data, { recursive: true, force: true });
-    }
-  });
+    },
+  );
 });

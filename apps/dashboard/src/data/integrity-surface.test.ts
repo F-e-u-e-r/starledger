@@ -240,18 +240,13 @@ describe('INTEG-SURFACE: loader options are an allowlist, so no opt-out can appe
  */
 describe('INTEG-NO-BYPASS-BEHAVIORAL: no loader probes an undeclared option on any path', () => {
   function recordingOptions<T extends object>(opts: T, probes: string[]): T {
-    // Well-known symbols are engine plumbing (logging touches toStringTag);
-    // every OTHER symbol — Symbol.for('skipIntegrity') included — is a probe
-    // (round-11 finding: symbols were invisible to a string-only note).
-    const WELL_KNOWN = new Set<symbol>(
-      Object.getOwnPropertyNames(Symbol)
-        .map((name) => (Symbol as unknown as Record<string, unknown>)[name])
-        .filter((value): value is symbol => typeof value === 'symbol'),
-    );
+    // EVERY symbol is a probe (round-12 finding, sol: exempting well-known
+    // symbols let a body-only `opts[Symbol.iterator]` select a bypass). A
+    // clean load touches NO symbol on opts — verified — so the well-known
+    // exemption was unnecessary as well as unsafe; record them all.
     const note = (property: PropertyKey) => {
       if (typeof property === 'string' && !ALLOWED_OPTIONS.has(property)) probes.push(property);
-      if (typeof property === 'symbol' && !WELL_KNOWN.has(property))
-        probes.push(`(symbol ${String(property)})`);
+      if (typeof property === 'symbol') probes.push(`(symbol ${String(property)})`);
     };
     return new Proxy(opts, {
       get(target, property, receiver) {

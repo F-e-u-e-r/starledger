@@ -758,6 +758,68 @@ describe('skills staging — round-6 closure pins', () => {
     ).toEqual([]);
   });
 
+  it('CLEANUP-RESIDUE-SUCCESS: an owned .staging-bak that cannot be removed after commit is reported as residue', () => {
+    // Round-12 finding (sol + luna@max): on the SUCCESS path a failed backup
+    // discard was swallowed — staged:true, no residue, a stale copy of the old
+    // artifact left in the public dist. Learn this run's token from its own
+    // backup and replace each .staging-bak with a NON-EMPTY directory, which
+    // the non-recursive force-rm cannot remove.
+    const { dataDir, distDir } = dirs();
+    const oldPair = validPair('OLD published entry.');
+    writeFileSync(join(distDir, SKILLS_CLASSIFICATION_FILE), oldPair.artifact);
+    writeFileSync(join(distDir, SKILLS_CLASSIFICATION_META_FILE), oldPair.meta);
+    const newPair = validPair('NEW candidate entry.');
+    writeFileSync(join(dataDir, SKILLS_CLASSIFICATION_FILE), newPair.artifact);
+    writeFileSync(join(dataDir, SKILLS_CLASSIFICATION_META_FILE), newPair.meta);
+    const result = stageSkillsArtifacts(
+      { dataDir, distDir },
+      {
+        afterCommit: () => {
+          for (const name of readdirSync(distDir).filter((n) => n.includes('.staging-bak'))) {
+            const bak = join(distDir, name);
+            rmSync(bak);
+            mkdirSync(bak);
+            writeFileSync(join(bak, 'squatter'), 'x'); // non-empty ⇒ force-rm fails
+          }
+        },
+      },
+    );
+    // Publication SUCCEEDED — the new pair is live — but the run left a backup
+    // it could not expunge, so it must report residue, not a clean staged:true.
+    expect(result.staged).toBe(true);
+    expect(result.residue).toBe(true);
+    expect(result.reason).toContain('.staging-bak backup could NOT be removed');
+    expect(readFileSync(join(distDir, SKILLS_CLASSIFICATION_FILE), 'utf8')).toBe(newPair.artifact);
+  });
+
+  it('CLEANUP-RESIDUE-ABORT: an owned .staging-tmp that cannot be removed on abort is reported as residue', () => {
+    // The abort-path twin: a temporary this run created and could not remove.
+    const { dataDir, distDir } = dirs();
+    const pair = validPair('Abort residue entry.');
+    writeFileSync(join(dataDir, SKILLS_CLASSIFICATION_FILE), pair.artifact);
+    writeFileSync(join(dataDir, SKILLS_CLASSIFICATION_META_FILE), pair.meta);
+    const result = stageSkillsArtifacts(
+      { dataDir, distDir },
+      {
+        // Replace the temporaries with non-empty directories right after they
+        // are written: the very next step (the read-back) then throws EISDIR,
+        // aborting the stage, and the abort-path discard cannot remove the
+        // directories — a cleanup-residue.
+        afterStageWrite: () => {
+          for (const name of readdirSync(distDir).filter((n) => n.includes('.staging-tmp'))) {
+            const tmp = join(distDir, name);
+            rmSync(tmp);
+            mkdirSync(tmp);
+            writeFileSync(join(tmp, 'squatter'), 'x');
+          }
+        },
+      },
+    );
+    expect(result.staged).toBe(false);
+    expect(result.residue).toBe(true);
+    expect(result.reason).toContain('.staging-tmp temporary could NOT be removed');
+  });
+
   it('GUARD-META: a meta rewritten after commit is refused AND the old pair is restored', () => {
     const { dataDir, distDir } = dirs();
     const oldPair = validPair('OLD published entry.');

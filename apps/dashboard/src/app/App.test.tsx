@@ -4,6 +4,7 @@ import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import type { LoadedDiscovery } from '../data/load-discovery';
 import { DataLoadError } from '../data/load-stars';
 import { createHash, webcrypto } from 'node:crypto';
+import { serializeSkillsClassificationMeta } from '@starred/skills-schema/contracts';
 import { makeDataset, makeRepo, makeStarsFile } from '../test-utils';
 import { App } from './App';
 
@@ -256,6 +257,49 @@ describe('App production default path', () => {
     if (!globalThis.crypto?.subtle) {
       Object.defineProperty(globalThis, 'crypto', { value: webcrypto, configurable: true });
     }
+    // Round-12 finding (sol + luna@max): serving 404 for the optional layers
+    // meant each loader fetched only its META and never its ARTIFACT, so a
+    // default that dropped BASE_URL on the artifact fetch (`${base}...` → `/...`)
+    // passed. Serve schema-valid optional METAs so each loader PROCEEDS to
+    // request its artifact (with `?sha=`); the artifact fetch may 404 and fail
+    // soft, but the request is recorded and its base is asserted.
+    const AI_SHA = 'a'.repeat(64);
+    const DISC_SHA = 'c'.repeat(64);
+    const SKILLS_SHA = 'e'.repeat(64);
+    const aiMeta = JSON.stringify({
+      schema_version: '1.0',
+      annotations_sha256: AI_SHA,
+      annotation_count: 0,
+      taxonomy_version: '1',
+      dataset_sha256: 'b'.repeat(64),
+      generated_at: '2026-06-20T00:00:00Z',
+    });
+    const discMeta = JSON.stringify({
+      schema_version: 1,
+      generated_at: '2026-01-15T00:00:00.000Z',
+      dataset_sha: DISC_SHA,
+      candidate_count: 1,
+      source_count: 1,
+      generator_version: '0.1.0',
+    });
+    const skillsMeta = serializeSkillsClassificationMeta({
+      schema_version: '1.0',
+      taxonomy_version: 'skills-1',
+      classification_sha256: SKILLS_SHA,
+      source_sha256: 'b'.repeat(64),
+      aliases_sha256: null,
+      prior_classification_sha256: null,
+      generated_against_stars_sha256: 'c'.repeat(64),
+      generated_at: '2026-08-14T00:00:00Z',
+      category_count: 1,
+      source_entry_count: 1,
+      resolved_entry_count: 1,
+      present_repo_count: 1,
+      absent_repo_count: 0,
+      unresolved_entry_count: 0,
+      canonical_repo_count: 700,
+      unclassified_repo_count: 699,
+    });
     const requested: string[] = [];
     const original = globalThis.fetch;
     globalThis.fetch = (async (input: RequestInfo | URL) => {
@@ -263,14 +307,24 @@ describe('App production default path', () => {
       requested.push(url);
       if (url.includes('dataset-meta.json')) return new Response(metaText, { status: 200 });
       if (url.includes('stars.json')) return new Response(starsText, { status: 200 });
-      // Optional layers are absent: they must fail soft without blocking the
-      // canonical render.
+      if (url.includes('ai-annotations-meta.json')) return new Response(aiMeta, { status: 200 });
+      if (url.includes('discovery-candidates-meta.json'))
+        return new Response(discMeta, { status: 200 });
+      if (url.includes('skills-classification-meta.json'))
+        return new Response(skillsMeta, { status: 200 });
+      // Optional ARTIFACT bodies 404: the layers fail soft (the digest never
+      // matches), the UI is unchanged — but the loader already REQUESTED the
+      // artifact URL, which is what this pin asserts.
       return new Response('not found', { status: 404 });
     }) as typeof fetch;
     try {
       render(<App />);
       await waitFor(() => expect(screen.getByText('default/path-one')).toBeTruthy());
       expect(screen.getByText('1 of 1 repositories')).toBeTruthy();
+      // The optional artifact requests fire AFTER the canonical render settles.
+      await waitFor(() =>
+        expect(requested.some((url) => url.includes('skills-classification.json?sha='))).toBe(true),
+      );
     } finally {
       globalThis.fetch = original;
       Object.defineProperty(globalThis, 'crypto', { value: originalCrypto, configurable: true });
@@ -280,10 +334,14 @@ describe('App production default path', () => {
     // '/' (round-9 lesson, hardened in round 10).
     expect(requested).toContain(`${BASE}dataset-meta.json`);
     expect(requested).toContain(`${BASE}stars.json?sha=${digest}`);
-    // The optional layers' DEFAULTS must carry the base too — a wrong base
-    // there silently kills each layer in production while every test passes.
+    // Every optional layer's META **and ARTIFACT** default must carry the base
+    // — a wrong base on the artifact fetch silently kills the layer in
+    // production while the layer's own meta request looks correct (round-12).
     expect(requested).toContain(`${BASE}ai-annotations-meta.json`);
+    expect(requested).toContain(`${BASE}ai-annotations.json?sha=${AI_SHA}`);
     expect(requested).toContain(`${BASE}discovery-candidates-meta.json`);
+    expect(requested).toContain(`${BASE}discovery-candidates.json?sha=${DISC_SHA}`);
     expect(requested).toContain(`${BASE}skills-classification-meta.json`);
+    expect(requested).toContain(`${BASE}skills-classification.json?sha=${SKILLS_SHA}`);
   });
 });

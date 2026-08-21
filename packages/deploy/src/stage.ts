@@ -544,6 +544,16 @@ export function stageSkillsArtifacts(
     let publishedResidue = false;
     /** Set when the lock survives cleanup — every later stage would then skip. */
     let lockStuck = false;
+    /**
+     * Set when a temporary or backup THIS invocation created could not be
+     * removed (round-12 finding). These sit at non-served `.staging-tmp`/
+     * `.staging-bak` names, so the runtime never fetches them — but they are
+     * this run's own data left in a public dist, exactly the "content it tried
+     * and FAILED to expunge" the residue contract covers. Swallowing the
+     * failure let a successful stage report `staged:true` with a stale backup
+     * still in the upload directory.
+     */
+    let cleanupResidue = false;
     let result: SkillsStageResult;
     /** Removal that REPORTS its outcome; the caller decides whether it matters. */
     const discardOk = (path: string): boolean => {
@@ -553,9 +563,6 @@ export function stageSkillsArtifacts(
       } catch {
         return false;
       }
-    };
-    const discard = (path: string): void => {
-      discardOk(path); // best-effort; used only where failure is truly inert
     };
     /**
      * True when a directory ENTRY exists at `path`, symlinks included.
@@ -704,10 +711,17 @@ export function stageSkillsArtifacts(
       // that merely happens to sit at one of them — the very ownership defect
       // the ledger exists to prevent, reintroduced on the success path.
 
-      for (const [backup] of movedAside) discard(backup);
-      result = { staged: true };
+      for (const [backup] of movedAside) if (!discardOk(backup)) cleanupResidue = true;
+      result = cleanupResidue
+        ? {
+            staged: true,
+            reason:
+              "staged, but this run's .staging-bak backup could NOT be removed — the dist holds a stale copy",
+            residue: true,
+          }
+        : { staged: true };
     } catch (stageError) {
-      for (const path of created) discard(path);
+      for (const path of created) if (!discardOk(path)) cleanupResidue = true;
       const detail = stageError instanceof Error ? stageError.message : 'staging failed';
       // Never claim a restore that did not happen (acceptance item D).
       // BOTH can be true at once, and each sends an operator somewhere
@@ -723,13 +737,18 @@ export function stageSkillsArtifacts(
           "this run's partly-published file could NOT be removed — the dist holds an unpaired artifact",
         );
       }
+      if (cleanupResidue) {
+        problems.push(
+          "this run's .staging-tmp temporary could NOT be removed — the dist holds a leftover",
+        );
+      }
       const trailer = problems.length
         ? ` AND ${problems.join('; AND ')}`
         : ', any pre-existing pair restored';
       result = {
         staged: false,
         reason: `skills-classification staging aborted${trailer} — ${detail}`,
-        ...(restoreFailed || publishedResidue ? { residue: true } : {}),
+        ...(restoreFailed || publishedResidue || cleanupResidue ? { residue: true } : {}),
       };
     } finally {
       try {
