@@ -144,13 +144,17 @@ CASES = [
         "LOCK-EEXIST-ONLY",
     ),
     (
+        # `committed = true` is hoisted BEFORE the guard section, so every
+        # guard (artifact digest AND meta read-back) detects but no longer
+        # rolls back — the R7 defect re-created on the current source shape.
+        # `-t GUARD` matches both GUARD and GUARD-META, so ran == base == 2.
         "skills post-publish guard moved OUTSIDE the rollback region",
         "packages/deploy/src/stage.ts",
         "        hooks.afterCommit?.();\n"
         "        const publishedSha = createHash('sha256').update(readFileSync(distArtifact)).digest('hex');\n"
         "        if (publishedSha !== meta.classification_sha256) {\n"
         "          throw new Error('published skills-classification does not match the verified digest');\n"
-        "        }\n\n        committed = true;",
+        "        }",
         "        committed = true;\n"
         "        hooks.afterCommit?.();\n"
         "        const publishedSha = createHash('sha256').update(readFileSync(distArtifact)).digest('hex');\n"
@@ -167,6 +171,110 @@ CASES = [
         "  writeFileSync(distStars, readFileSync(starsPath));",
         "packages/deploy/tests/stage.test.ts",
         "SNAPSHOT",
+    ),
+    # Round-9 (owner ruling A): every pair's post-publish guard must cover the
+    # META half too. One delete-mutant per pair, plus the R7 defect class for
+    # the skills pair — the guard moved OUTSIDE the protected region detects
+    # but no longer rolls back, so only the CONSEQUENCE assertions catch it.
+    (
+        "AI meta read-back guard removed",
+        "packages/deploy/src/stage.ts",
+        "    if (!readFileSync(distAnnMeta).equals(metaBytes)) {\n"
+        "      return {\n"
+        "        staged: false,\n"
+        "        reason:\n"
+        "          'AI meta published bytes do not match the validated snapshot — the dist retains the mismatched pair',\n"
+        "      };\n"
+        "    }\n"
+        "    return { staged: true };",
+        "    return { staged: true };",
+        "packages/deploy/tests/ai-stage.test.ts",
+        "GUARD-META",
+    ),
+    (
+        "discovery meta read-back guard removed",
+        "packages/deploy/src/stage.ts",
+        "    if (!readFileSync(distCandidatesMeta).equals(metaBytes)) {\n"
+        "      return {\n"
+        "        staged: false,\n"
+        "        reason:\n"
+        "          'discovery meta published bytes do not match the validated snapshot — the dist retains the mismatched pair',\n"
+        "      };\n"
+        "    }\n"
+        "    return { staged: true };",
+        "    return { staged: true };",
+        "packages/deploy/tests/discovery-stage.test.ts",
+        "GUARD-META",
+    ),
+    (
+        "skills meta read-back guard removed",
+        "packages/deploy/src/stage.ts",
+        "        if (!readFileSync(distMeta).equals(metaBytes)) {\n"
+        "          throw new Error(\n"
+        "            'published skills-classification meta does not match the validated snapshot',\n"
+        "          );\n"
+        "        }\n\n        committed = true;",
+        "        committed = true;",
+        "packages/deploy/tests/skills-stage.test.ts",
+        "GUARD-META",
+    ),
+    (
+        "skills meta read-back guard moved OUTSIDE the rollback region",
+        "packages/deploy/src/stage.ts",
+        "        if (!readFileSync(distMeta).equals(metaBytes)) {\n"
+        "          throw new Error(\n"
+        "            'published skills-classification meta does not match the validated snapshot',\n"
+        "          );\n"
+        "        }\n\n        committed = true;",
+        "        committed = true;\n"
+        "        if (!readFileSync(distMeta).equals(metaBytes)) {\n"
+        "          throw new Error(\n"
+        "            'published skills-classification meta does not match the validated snapshot',\n"
+        "          );\n"
+        "        }",
+        "packages/deploy/tests/skills-stage.test.ts",
+        "GUARD-META",
+    ),
+    (
+        "canonical meta read-back guard removed",
+        "packages/deploy/src/stage.ts",
+        "  if (!readFileSync(distMeta).equals(Buffer.from(metaText, 'utf8'))) {\n"
+        "    // Meta carries no self-digest, so this is a read-back rather than a digest\n"
+        "    // guard — weaker, and named as such: it catches a re-read regression on the\n"
+        "    // meta half, which the stars digest guard cannot see.\n"
+        "    throw new Error(`published ${DATASET_META_FILE} does not match the validated bytes`);\n"
+        "  }\n",
+        "",
+        "packages/deploy/tests/stage.test.ts",
+        "GUARD-META",
+    ),
+    # Round-9 (owner ruling C): the decoded-text digest class at its fifth and
+    # sixth surfaces. Each mutant IS the old implementation — hash the lossy
+    # decoding re-encoded — so a RED here is the two-arm proof that the pin
+    # discriminates old from new.
+    (
+        "classifier dataset acceptance hashes decoded text instead of bytes",
+        "packages/classifier/src/dataset.ts",
+        "  const datasetSha256 = sha256Bytes(starsBytes);",
+        "  const datasetSha256 = sha256Bytes(Buffer.from(starsText, 'utf8'));",
+        "packages/classifier/tests/dataset.test.ts",
+        "BYTES:",
+    ),
+    (
+        "classifier artifact verification hashes decoded text instead of bytes",
+        "packages/classifier/src/assemble.ts",
+        "  if (meta.annotations_sha256 !== sha256Bytes(annotationsBytes)) {",
+        "  if (meta.annotations_sha256 !== sha256Bytes(Buffer.from(annotationsText, 'utf8'))) {",
+        "packages/classifier/tests/assemble.test.ts",
+        "BYTES:",
+    ),
+    (
+        "discovery verify hashes decoded text instead of bytes",
+        "packages/discovery/src/cli.ts",
+        "    const sha = createHash('sha256').update(candidatesBytes).digest('hex');",
+        "    const sha = createHash('sha256').update(candidatesBytes.toString('utf8'), 'utf8').digest('hex');",
+        "packages/discovery/tests/cli-verify.test.ts",
+        "BYTES:",
     ),
 ]
 

@@ -178,8 +178,9 @@ export function stageAiArtifacts(opts: StageOptions, hooks: OptionalPairHooks = 
     // them would let a generator rewrite between validation and publication
     // land unvalidated.
     const distAnn = resolve(opts.distDir, AI_ANNOTATIONS_FILE);
+    const distAnnMeta = resolve(opts.distDir, AI_ANNOTATIONS_META_FILE);
     writeFileSync(distAnn, annBytes);
-    writeFileSync(resolve(opts.distDir, AI_ANNOTATIONS_META_FILE), metaBytes);
+    writeFileSync(distAnnMeta, metaBytes);
     hooks.afterPublish?.();
     // STRUCTURAL guard: what LANDED must match the digest recorded in meta.
     // This ENFORCES "published == validated" rather than asserting it, and no
@@ -190,6 +191,23 @@ export function stageAiArtifacts(opts: StageOptions, hooks: OptionalPairHooks = 
       return {
         staged: false,
         reason: 'AI artifact published bytes do not match the verified digest',
+      };
+    }
+    // META read-back (round-8 finding, owner ruling). The meta carries no
+    // self-digest — generated_at is legitimately different each run — so this
+    // is a read-back against THIS invocation's validated snapshot, weaker than
+    // a digest and named as such. It is also the ONLY check that can catch a
+    // post-validation meta rewrite: such a pair stays internally coherent, so
+    // runtime validation has no reason to reject it — which is exactly what
+    // disproved the previously recorded containment. Publication for the
+    // optional pairs is non-transactional (owner-accepted residual), so a
+    // detected mismatch cannot undo what landed; the reason reports the
+    // residue instead of implying a removal that never ran.
+    if (!readFileSync(distAnnMeta).equals(metaBytes)) {
+      return {
+        staged: false,
+        reason:
+          'AI meta published bytes do not match the validated snapshot — the dist retains the mismatched pair',
       };
     }
     return { staged: true };
@@ -530,6 +548,19 @@ export function stageSkillsArtifacts(
         if (publishedSha !== meta.classification_sha256) {
           throw new Error('published skills-classification does not match the verified digest');
         }
+        // META read-back, inside the protected region for the same reason as
+        // the digest guard above (a detection outside it leaves the bad pair
+        // live while the reason claims a restore). The meta carries no
+        // self-digest — generated_at differs per run — so this is a read-back
+        // against THIS invocation's validated snapshot, and it is the ONLY
+        // check that can catch a post-validation meta rewrite: such a pair
+        // stays internally coherent, so neither the digest guard above nor any
+        // runtime validation can reject it.
+        if (!readFileSync(distMeta).equals(metaBytes)) {
+          throw new Error(
+            'published skills-classification meta does not match the validated snapshot',
+          );
+        }
 
         committed = true;
       } finally {
@@ -646,8 +677,9 @@ export function stageDiscoveryArtifacts(
     }
     // Publish the VALIDATED buffers, not a re-read of the sources.
     const distCandidates = resolve(opts.distDir, DISCOVERY_CANDIDATES_FILE);
+    const distCandidatesMeta = resolve(opts.distDir, DISCOVERY_CANDIDATES_META_FILE);
     writeFileSync(distCandidates, candidatesBytes);
-    writeFileSync(resolve(opts.distDir, DISCOVERY_CANDIDATES_META_FILE), metaBytes);
+    writeFileSync(distCandidatesMeta, metaBytes);
     hooks.afterPublish?.();
     // STRUCTURAL guard, as for the AI pair above.
     if (
@@ -656,6 +688,18 @@ export function stageDiscoveryArtifacts(
       return {
         staged: false,
         reason: 'discovery artifact published bytes do not match the verified digest',
+      };
+    }
+    // META read-back — same contract and same reasoning as the AI pair above:
+    // no self-digest exists for the meta half, a post-validation rewrite keeps
+    // the pair internally coherent (invisible to runtime validation), and the
+    // non-transactional publication cannot undo, so the reason reports the
+    // residue truthfully.
+    if (!readFileSync(distCandidatesMeta).equals(metaBytes)) {
+      return {
+        staged: false,
+        reason:
+          'discovery meta published bytes do not match the validated snapshot — the dist retains the mismatched pair',
       };
     }
     return { staged: true };

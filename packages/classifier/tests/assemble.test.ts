@@ -1,5 +1,10 @@
 import { describe, expect, it } from 'vitest';
-import { serializeAnnotations, sha256 } from '@starred/ai-schema';
+import {
+  buildAiAnnotationsMeta,
+  serializeAiAnnotationsMeta,
+  serializeAnnotations,
+  sha256,
+} from '@starred/ai-schema';
 import { assembleAiArtifacts, verifyAiArtifacts } from '../src/assemble';
 import { candidateToAnnotation, validateCandidate } from '../src/validate-candidate';
 import { makeAnnotation, makeCandidate, makeJob } from '../../ai-schema/tests/helpers';
@@ -33,7 +38,7 @@ describe('deterministic AI artifact assembly', () => {
     expect(result.annotationsBytes).not.toContain(secretMarker);
     expect(result.meta?.annotations_sha256).toBe(sha256(result.annotationsBytes));
     expect(result.metaBytes).not.toBeNull();
-    verifyAiArtifacts(result.annotationsBytes, result.metaBytes ?? '');
+    verifyAiArtifacts(Buffer.from(result.annotationsBytes, 'utf8'), result.metaBytes ?? '');
   });
 
   it('ART-3: applying an identical candidate preserves generated_at and artifact bytes', () => {
@@ -66,7 +71,7 @@ describe('deterministic AI artifact assembly', () => {
       result.meta?.annotations_sha256 ?? '',
       sha256(nonCanonical),
     );
-    expect(() => verifyAiArtifacts(nonCanonical, meta ?? '')).toThrow(
+    expect(() => verifyAiArtifacts(Buffer.from(nonCanonical, 'utf8'), meta ?? '')).toThrow(
       'ai-annotations.json is not deterministically serialized',
     );
   });
@@ -90,7 +95,7 @@ describe('removed-star prune (issue #212)', () => {
     expect(result.annotations[0]?.generation.generated_at).toBe(keep.generation.generated_at);
     expect(result.meta?.annotation_count).toBe(1);
     expect(result.meta?.dataset_sha256).toBe(DATASET_SHA);
-    verifyAiArtifacts(result.annotationsBytes, result.metaBytes ?? '');
+    verifyAiArtifacts(Buffer.from(result.annotationsBytes, 'utf8'), result.metaBytes ?? '');
   });
 
   it('PRUNE-2: no orphans and zero candidates are a byte-identical no-op', () => {
@@ -136,5 +141,56 @@ describe('removed-star prune (issue #212)', () => {
         generatedAt: '2026-06-20T00:00:00Z',
       }),
     ).toThrow(/not in the canonical dataset/);
+  });
+});
+
+/**
+ * VERIFICATION IS A BYTE CONTRACT (round-9 owner ruling, closing the
+ * fifth/sixth surfaces of the decoded-text digest class). Same trap as the
+ * canonical dataset: a literal U+FFFD's three UTF-8 bytes swapped for a bare
+ * 0xFF decode back to identical text, so a decoded-text hash matches while
+ * the bytes differ — the old implementation ACCEPTED an artifact that the
+ * byte-strict deploy stager and runtime loader then reject.
+ */
+describe('verifyAiArtifacts is a BYTE contract', () => {
+  function pairWithReplacementChar(): { annotationsBytes: Buffer; meta: string } {
+    const annotationsText = serializeAnnotations([
+      makeAnnotation({
+        summary:
+          'A concise, factual description \uFFFD of what this repository does and why it is useful.',
+      }),
+    ]);
+    const meta = serializeAiAnnotationsMeta(
+      buildAiAnnotationsMeta({
+        annotationsBytes: annotationsText,
+        annotationCount: 1,
+        datasetSha256: DATASET_SHA,
+        generatedAt: '2026-06-21T00:00:00Z',
+      }),
+    );
+    return { annotationsBytes: Buffer.from(annotationsText, 'utf8'), meta };
+  }
+
+  it('CONTROL: the unmutated bytes verify', () => {
+    const { annotationsBytes, meta } = pairWithReplacementChar();
+    expect(() => verifyAiArtifacts(annotationsBytes, meta)).not.toThrow();
+  });
+
+  it('BYTES: a byte mutation that decodes to identical text is REJECTED', () => {
+    const { annotationsBytes, meta } = pairWithReplacementChar();
+    const at = annotationsBytes.indexOf(Buffer.from([0xef, 0xbf, 0xbd]));
+    expect(at).toBeGreaterThan(-1);
+    const mutated = Buffer.concat([
+      annotationsBytes.subarray(0, at),
+      Buffer.from([0xff]),
+      annotationsBytes.subarray(at + 3),
+    ]);
+    // Preconditions of the trap: bytes differ, decoded text does not.
+    expect(mutated.equals(annotationsBytes)).toBe(false);
+    expect(mutated.toString('utf8')).toBe(annotationsBytes.toString('utf8'));
+
+    expect(() => verifyAiArtifacts(mutated, meta)).toThrow(
+      /hash does not match ai-annotations\.json bytes/,
+    );
   });
 });

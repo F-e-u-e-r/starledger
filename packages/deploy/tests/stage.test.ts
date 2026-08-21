@@ -119,6 +119,27 @@ describe('stageDashboardData enforces the BYTE contract at its own call site', (
     ).toThrow(/does not match the verified digest/);
   });
 
+  it('GUARD-META: a canonical meta rewritten after publish is refused (read-back, both halves)', () => {
+    // The canonical meta carries no self-digest (its dataset_generated_at is
+    // legitimately different each run), so its guard is a read-back against
+    // THIS invocation's validated snapshot. A rewrite that keeps the correct
+    // stars_sha256 leaves the pair internally coherent — no digest can catch
+    // it, only the read-back. Every pair's guard must cover BOTH halves.
+    const { dataDir, distDir } = setup();
+    const { canonical, metaText } = fixtureWithReplacementChar(dataDir);
+    writeFileSync(join(dataDir, STARS_FILE), canonical);
+    const rewritten = metaText.replace('2026-06-19T00:00:00', '2027-01-01T00:00:00');
+    expect(rewritten).not.toBe(metaText);
+    expect(() =>
+      stageDashboardData(
+        { dataDir, distDir },
+        {
+          afterPublish: () => writeFileSync(join(distDir, DATASET_META_FILE), rewritten),
+        },
+      ),
+    ).toThrow(/does not match the validated bytes/);
+  });
+
   it('CONTROL: the unmutated bytes stage, and the PUBLISHED bytes are the validated ones', () => {
     const { dataDir, distDir } = setup();
     const { canonical } = fixtureWithReplacementChar(dataDir);

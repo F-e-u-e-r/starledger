@@ -26,8 +26,8 @@ const CONFIG = aiConfig();
 const REF = { path: 'README.md', oid: 'oid-1' };
 
 function load(repos: CanonicalRepo[]) {
-  const { starsText, metaText } = makeDataset(repos);
-  return loadCanonicalDataset(starsText, metaText);
+  const { starsBytes, metaText } = makeDataset(repos);
+  return loadCanonicalDataset(starsBytes, metaText);
 }
 
 function sourceFor(repos: CanonicalRepo[], ref = REF): FakeReadmeSource {

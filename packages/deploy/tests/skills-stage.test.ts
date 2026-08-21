@@ -754,6 +754,46 @@ describe('skills staging — round-6 closure pins', () => {
     ).toEqual([]);
   });
 
+  it('GUARD-META: a meta rewritten after commit is refused AND the old pair is restored', () => {
+    const { dataDir, distDir } = dirs();
+    const oldPair = validPair('OLD published entry.');
+    writeFileSync(join(distDir, SKILLS_CLASSIFICATION_FILE), oldPair.artifact);
+    writeFileSync(join(distDir, SKILLS_CLASSIFICATION_META_FILE), oldPair.meta);
+    const pair = validPair('NEW candidate entry.');
+    writeFileSync(join(dataDir, SKILLS_CLASSIFICATION_FILE), pair.artifact);
+    writeFileSync(join(dataDir, SKILLS_CLASSIFICATION_META_FILE), pair.meta);
+    // The round-8 reproduction: ONLY generated_at changes, so the rewritten
+    // meta stays internally coherent with the artifact — classification_sha256
+    // still matches — and neither the artifact digest guard nor any runtime
+    // validation can reject the pair. Only the meta read-back can, and it must
+    // fire INSIDE the protected region so the consequence is a true rollback.
+    const rewritten = pair.meta.replace('2026-08-14T00:00:00Z', '2027-01-01T00:00:00Z');
+    expect(rewritten).not.toBe(pair.meta);
+    const result = stageSkillsArtifacts(
+      { dataDir, distDir },
+      {
+        afterCommit: () => writeFileSync(join(distDir, SKILLS_CLASSIFICATION_META_FILE), rewritten),
+      },
+    );
+    expect(result.staged).toBe(false);
+    expect(result.reason).toContain(
+      'published skills-classification meta does not match the validated snapshot',
+    );
+    // CONSEQUENCE, not just detection: the pre-existing pair is BACK, no
+    // residue survives, and the reason's restore claim is true.
+    expect(readFileSync(join(distDir, SKILLS_CLASSIFICATION_FILE), 'utf8')).toBe(oldPair.artifact);
+    expect(readFileSync(join(distDir, SKILLS_CLASSIFICATION_META_FILE), 'utf8')).toBe(oldPair.meta);
+    expect(result.reason).toContain('any pre-existing pair restored');
+    expect(
+      readdirSync(distDir).filter(
+        (name) =>
+          name.includes('.staging-tmp') ||
+          name.includes('.staging-bak') ||
+          name.includes('.stage-lock'),
+      ),
+    ).toEqual([]);
+  });
+
   it('BUILD-BYTES CONTROL: the unmutated fixture stages', () => {
     const { dataDir, distDir } = dirs();
     const pair = validPair('Stage fixture \uFFFD entry.');

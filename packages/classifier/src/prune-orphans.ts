@@ -43,7 +43,7 @@ function writeText(path: string, text: string): void {
  */
 export function runPruneOrphans(input: PruneOrphansInput): PruneOrphansReceipt {
   const dataset = loadCanonicalDataset(
-    readFileSync(input.starsPath, 'utf8'),
+    readFileSync(input.starsPath),
     readFileSync(input.datasetMetaPath, 'utf8'),
   );
   const current = AiAnnotationsSchema.parse(

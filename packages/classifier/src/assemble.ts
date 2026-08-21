@@ -4,7 +4,7 @@ import {
   buildAiAnnotationsMeta,
   serializeAiAnnotationsMeta,
   serializeAnnotations,
-  sha256,
+  sha256Bytes,
   type Annotation,
   type AiAnnotationsMeta,
 } from '@starred/ai-schema';
@@ -127,17 +127,29 @@ export function assembleAiArtifacts(input: AssembleAiArtifactsInput): AssembledA
   };
 }
 
-/** Validate the two public files together, including the exact-byte hash. */
-export function verifyAiArtifacts(annotationsBytes: string, metaBytes: string): void {
-  const annotations = AiAnnotationsSchema.parse(JSON.parse(annotationsBytes));
-  const meta = zodMetaParse(metaBytes);
-  if (annotationsBytes !== serializeAnnotations(annotations.annotations)) {
+/**
+ * Validate the two public files together, including the exact-byte hash.
+ *
+ * `annotationsBytes` is BYTES, not text (round-9 closure of the decoded-text
+ * digest class): the recorded `annotations_sha256` is a byte digest, and
+ * hashing a lossy DECODING would accept a byte-different, decode-alike
+ * artifact that the byte-strict deploy stager and runtime loader then reject.
+ * The meta half stays TEXT deliberately — it carries no self-digest; its
+ * acceptance check is canonical-form equality (re-serialize and compare), a
+ * SEMANTIC check on which any decode loss surfaces as a mismatch and fails
+ * closed.
+ */
+export function verifyAiArtifacts(annotationsBytes: Uint8Array, metaText: string): void {
+  const annotationsText = Buffer.from(annotationsBytes).toString('utf8');
+  const annotations = AiAnnotationsSchema.parse(JSON.parse(annotationsText));
+  const meta = zodMetaParse(metaText);
+  if (annotationsText !== serializeAnnotations(annotations.annotations)) {
     throw new Error('ai-annotations.json is not deterministically serialized');
   }
-  if (metaBytes !== serializeAiAnnotationsMeta(meta)) {
+  if (metaText !== serializeAiAnnotationsMeta(meta)) {
     throw new Error('ai-annotations-meta.json is not deterministically serialized');
   }
-  if (meta.annotations_sha256 !== sha256(annotationsBytes)) {
+  if (meta.annotations_sha256 !== sha256Bytes(annotationsBytes)) {
     throw new Error('ai-annotations-meta.json hash does not match ai-annotations.json bytes');
   }
   if (meta.annotation_count !== annotations.annotations.length) {
@@ -148,8 +160,8 @@ export function verifyAiArtifacts(annotationsBytes: string, metaBytes: string): 
   }
 }
 
-function zodMetaParse(metaBytes: string): AiAnnotationsMeta {
+function zodMetaParse(metaText: string): AiAnnotationsMeta {
   // Keep JSON parsing and strict schema validation on the deterministic side of
   // the boundary; raw agent output is never written before this succeeds.
-  return AiAnnotationsMetaSchema.parse(JSON.parse(metaBytes));
+  return AiAnnotationsMetaSchema.parse(JSON.parse(metaText));
 }

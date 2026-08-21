@@ -1,5 +1,5 @@
 import { createHash } from 'node:crypto';
-import { existsSync, mkdtempSync, writeFileSync } from 'node:fs';
+import { existsSync, mkdtempSync, readFileSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { describe, expect, it } from 'vitest';
@@ -207,5 +207,31 @@ describe('stageDiscoveryArtifacts — the post-publish guard fires', () => {
     );
     expect(result.staged).toBe(false);
     expect(result.reason).toContain('discovery artifact published bytes');
+  });
+
+  it('GUARD-META: a meta rewritten after publish is refused even though the pair stays coherent', () => {
+    const { dataDir, distDir } = dirs();
+    const pair = validArtifactPair();
+    writeFileSync(join(dataDir, DISCOVERY_CANDIDATES_FILE), pair.candidates);
+    writeFileSync(join(dataDir, DISCOVERY_CANDIDATES_META_FILE), pair.meta);
+    // The round-8 reproduction: ONLY generated_at changes, so the published
+    // pair remains internally coherent — dataset_sha still matches the
+    // artifact — and NO later validation (runtime included) can reject it.
+    // Only a read-back against THIS invocation's validated snapshot can.
+    const rewritten = pair.meta.replace('2026-01-15T00:00:00.000Z', '2027-01-01T00:00:00.000Z');
+    expect(rewritten).not.toBe(pair.meta);
+    const result = stageDiscoveryArtifacts(
+      { dataDir, distDir },
+      {
+        afterPublish: () => writeFileSync(join(distDir, DISCOVERY_CANDIDATES_META_FILE), rewritten),
+      },
+    );
+    expect(result.staged).toBe(false);
+    expect(result.reason).toContain('discovery meta published bytes');
+    // Truthful disk state: optional-pair publication is non-transactional
+    // (owner-accepted residual), so the mismatched meta REMAINS in the dist —
+    // and the reason must say so rather than imply a removal that never ran.
+    expect(result.reason).toContain('dist retains');
+    expect(readFileSync(join(distDir, DISCOVERY_CANDIDATES_META_FILE), 'utf8')).toBe(rewritten);
   });
 });

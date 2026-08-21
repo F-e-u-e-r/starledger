@@ -18,9 +18,13 @@ export interface MetaRebaseInput {
   datasetSha256: string;
   /** Annotations at the current base (trusted prior state); empty if none. */
   baseAnnotations: readonly Annotation[];
-  /** EXACT ai-annotations.json bytes proposed by the in-flight head PR. */
-  headAnnotationsBytes: string;
-  /** EXACT ai-annotations-meta.json bytes of the in-flight head PR (only `dataset_sha256` will change). */
+  /** EXACT ai-annotations.json BYTES proposed by the in-flight head PR — the
+   * digest is a byte contract, so the hash is computed over these exact bytes,
+   * never a decoding (round 9). */
+  headAnnotationsBytes: Uint8Array;
+  /** ai-annotations-meta.json TEXT of the in-flight head PR (only
+   * `dataset_sha256` will change). Text deliberately: the meta half carries no
+   * self-digest — its acceptance check is canonical-form equality. */
   headMetaBytes: string;
   /** Live README discovery — the SAME seam the planner / provenance gate uses. */
   source: ReadmeSource;
@@ -32,9 +36,11 @@ export interface MetaRebaseInput {
 export interface MetaRebaseResult {
   ok: boolean;
   violations: ProvenanceViolation[];
-  /** Present only when ok: the byte-identical ai-annotations.json bytes. */
-  annotationsBytes?: string;
-  /** Present only when ok: the re-stamped ai-annotations-meta.json bytes. */
+  /** Present only when ok: the byte-identical ai-annotations.json bytes
+   * (a passthrough of the head input — never re-serialized). */
+  annotationsBytes?: Uint8Array;
+  /** Present only when ok: the re-stamped ai-annotations-meta.json text
+   * (freshly canonicalized; the caller writes it verbatim as UTF-8). */
   metaBytes?: string;
 }
 
@@ -79,7 +85,9 @@ export async function rebaseAiAnnotationsMeta(input: MetaRebaseInput): Promise<M
   let headMeta: AiAnnotationsMeta;
   try {
     verifyAiArtifacts(input.headAnnotationsBytes, input.headMetaBytes);
-    annotations = AiAnnotationsSchema.parse(JSON.parse(input.headAnnotationsBytes)).annotations;
+    annotations = AiAnnotationsSchema.parse(
+      JSON.parse(Buffer.from(input.headAnnotationsBytes).toString('utf8')),
+    ).annotations;
     headMeta = AiAnnotationsMetaSchema.parse(JSON.parse(input.headMetaBytes));
   } catch (err) {
     return reject(
