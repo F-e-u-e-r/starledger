@@ -1,4 +1,11 @@
-import { existsSync, mkdirSync, mkdtempSync, writeFileSync } from 'node:fs';
+import {
+  chmodSync,
+  existsSync,
+  mkdirSync,
+  mkdtempSync,
+  readFileSync,
+  writeFileSync,
+} from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import {
@@ -205,11 +212,11 @@ describe('stageAiArtifacts — the post-publish guard fires', () => {
     expect(existsSync(join(distDir, AI_ANNOTATIONS_META_FILE))).toBe(false);
   });
 
-  it('RESIDUE: a write failure between the two halves names the partial pair it left behind', () => {
-    // Round-9 finding (sol@max): with the destination meta path blocked, the
-    // artifact write has already landed when the meta write throws — the
-    // generic catch reported only the errno while a partial pair sat in the
-    // dist, and the deploy uploads it. The reason must name the residue.
+  it('RESIDUE: a write failure discards this run’s own write and leaves a pre-existing entry untouched', () => {
+    // Round-9 finding (sol), corrected round-13: with the meta destination
+    // blocked by a pre-existing DIRECTORY, the artifact write lands (ours) and
+    // the meta write throws. This run removes ONLY what it wrote — the
+    // artifact half — and leaves the pre-existing directory it never wrote.
     const { dataDir, distDir } = dirs();
     const pair = validArtifactPair();
     writeFileSync(join(dataDir, AI_ANNOTATIONS_FILE), pair.annotations);
@@ -217,14 +224,78 @@ describe('stageAiArtifacts — the post-publish guard fires', () => {
     mkdirSync(join(distDir, AI_ANNOTATIONS_META_FILE)); // meta write will throw EISDIR
     const result = stageAiArtifacts({ dataDir, distDir });
     expect(result.staged).toBe(false);
-    // The landed artifact half is discarded; the blocking DIRECTORY at the
-    // meta path cannot be removed by a non-recursive force-rm, and the reason
-    // says so instead of claiming a clean discard.
-    expect(result.reason).toContain('could NOT all be removed');
+    // Our artifact write is cleanly removed…
+    expect(result.reason).toContain('writes were removed');
     expect(existsSync(join(distDir, AI_ANNOTATIONS_FILE))).toBe(false);
-    // Round-11 finding (luna@ultra): a truthful reason was not a CONSEQUENCE —
-    // the CLI still exited 0 and Pages uploaded the residue. The structured
-    // flag is what the CLI escalates on.
+    // …and the pre-existing directory we never wrote is untouched, so there is
+    // no residue OF OURS.
+    expect(existsSync(join(distDir, AI_ANNOTATIONS_META_FILE))).toBe(true);
+    expect(result.residue).toBeUndefined();
+  });
+
+  it('ZERO-WRITE: a first-write failure onto a read-only pre-existing pair deletes NOTHING', () => {
+    // Round-13 finding (sol), High: `publishBegan` discarded BOTH dist paths on
+    // any post-flag failure, so a first write that failed at OPEN (EACCES on a
+    // read-only pre-existing artifact) DELETED the untouched valid pair and
+    // still reported success. This run must remove only what it changed.
+    const { dataDir, distDir } = dirs();
+    const oldPair = validArtifactPair();
+    const distAnn = join(distDir, AI_ANNOTATIONS_FILE);
+    const distMeta = join(distDir, AI_ANNOTATIONS_META_FILE);
+    writeFileSync(distAnn, oldPair.annotations);
+    writeFileSync(distMeta, oldPair.meta);
+    chmodSync(distAnn, 0o444); // the first write opens O_TRUNC and fails EACCES
+    const newPair = validArtifactPair();
+    writeFileSync(join(dataDir, AI_ANNOTATIONS_FILE), newPair.annotations);
+    writeFileSync(join(dataDir, AI_ANNOTATIONS_META_FILE), newPair.meta);
+    let result;
+    try {
+      result = stageAiArtifacts({ dataDir, distDir });
+    } finally {
+      // Tolerant: a buggy discard may have deleted the file (that is the
+      // failure this test asserts), so restoring perms must not itself throw.
+      if (existsSync(distAnn)) chmodSync(distAnn, 0o644);
+    }
+    expect(result.staged).toBe(false);
+    // The pre-existing valid pair — which this run never wrote — must survive.
+    // existsSync first, so a mutant that DELETES it fails by ASSERTION (not a
+    // readFileSync throw the harness would misclassify).
+    expect(existsSync(distAnn)).toBe(true);
+    expect(existsSync(distMeta)).toBe(true);
+    expect(readFileSync(distAnn, 'utf8')).toBe(oldPair.annotations);
+    expect(readFileSync(distMeta, 'utf8')).toBe(oldPair.meta);
+    expect(result.residue).toBeUndefined();
+  });
+
+  it('STUCK-RESIDUE: a discard of THIS run’s own write that fails is reported as residue', () => {
+    // The genuine residue case: we wrote the pair, the guard then detects a
+    // rewrite, and the discard of our OWN write cannot complete (the dist
+    // directory was made read-only), so the run leaves residue it must flag.
+    const { dataDir, distDir } = dirs();
+    const pair = validArtifactPair();
+    writeFileSync(join(dataDir, AI_ANNOTATIONS_FILE), pair.annotations);
+    writeFileSync(join(dataDir, AI_ANNOTATIONS_META_FILE), pair.meta);
+    let result;
+    try {
+      result = stageAiArtifacts(
+        { dataDir, distDir },
+        {
+          afterPublish: () => {
+            // Break the meta so the guard fails, then lock the dir so the
+            // discard of our own artifact cannot unlink.
+            writeFileSync(
+              join(distDir, AI_ANNOTATIONS_META_FILE),
+              pair.meta.replace('2026-06-21T00:00:00Z', '2027-01-01T00:00:00Z'),
+            );
+            chmodSync(distDir, 0o555);
+          },
+        },
+      );
+    } finally {
+      chmodSync(distDir, 0o755);
+    }
+    expect(result.staged).toBe(false);
+    expect(result.reason).toContain('could NOT all be removed');
     expect(result.residue).toBe(true);
   });
 

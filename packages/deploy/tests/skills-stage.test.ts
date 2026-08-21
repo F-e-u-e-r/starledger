@@ -758,6 +758,40 @@ describe('skills staging — round-6 closure pins', () => {
     ).toEqual([]);
   });
 
+  it('PARTIAL-TEMP: a temporary write that fails PARTWAY is still discarded (not left unreported)', () => {
+    // Round-13 finding (all three legs): the temp path was recorded only AFTER
+    // writeFileSync returned, so a mid-write ENOSPC/EFBIG left OUR partial
+    // temp on disk unrecorded — the abort path never discarded it, `residue`
+    // stayed unset, and the CLI (exit 0) uploaded the leftover. A real
+    // filesystem cannot fail a write partway on demand, so inject it: create a
+    // partial file at the exclusive path, then throw (the lstatImpl/openImpl
+    // seam precedent).
+    const { dataDir, distDir } = dirs();
+    const pair = validPair('Partial temp entry.');
+    writeFileSync(join(dataDir, SKILLS_CLASSIFICATION_FILE), pair.artifact);
+    writeFileSync(join(dataDir, SKILLS_CLASSIFICATION_META_FILE), pair.meta);
+    let firstWrite = true;
+    const result = stageSkillsArtifacts(
+      { dataDir, distDir },
+      {
+        writeTempImpl: ((path: string) => {
+          if (firstWrite) {
+            firstWrite = false;
+            // The exclusive create succeeded and the WRITE then failed partway:
+            // OUR partial temp exists on disk.
+            writeFileSync(path, 'PARTIAL');
+            throw Object.assign(new Error('ENOSPC: no space left on device'), { code: 'ENOSPC' });
+          }
+          throw new Error('unexpected second temp write');
+        }) as never,
+      },
+    );
+    expect(result.staged).toBe(false);
+    // The partial temp must be GONE — the abort path discarded it because the
+    // path was registered on the throw, not merely after a clean return.
+    expect(readdirSync(distDir).filter((n) => n.includes('.staging-tmp'))).toEqual([]);
+  });
+
   it('CLEANUP-RESIDUE-SUCCESS: an owned .staging-bak that cannot be removed after commit is reported as residue', () => {
     // Round-12 finding (sol + luna@max): on the SUCCESS path a failed backup
     // discard was swallowed — staged:true, no residue, a stale copy of the old

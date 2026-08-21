@@ -7,6 +7,7 @@ import { writeFixtureDataset } from './fixture';
 import {
   DATASET_META_FILE,
   STARS_FILE,
+  distHasUnshippableResidue,
   stageAiArtifacts,
   stageDashboardData,
   stageDiscoveryArtifacts,
@@ -69,7 +70,7 @@ async function main(): Promise<void> {
       // the runtime. That is a dist-integrity failure, not an optional-layer
       // problem, so it fails the deploy (exit 4 → `bash -e` in pages.yml →
       // nothing ships).
-      if ([ai, discovery, skills].some((result) => result.residue)) {
+      if (distHasUnshippableResidue([ai, discovery, skills])) {
         console.error(
           '[deploy] FATAL: rejected optional-pair bytes could not be removed from the dist — refusing to let this dist ship',
         );

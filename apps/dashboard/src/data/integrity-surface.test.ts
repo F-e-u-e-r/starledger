@@ -89,7 +89,7 @@ function optionNames(source: string, interfaceName: string): string[] {
   // so any such declaration lands in the comparison and fails.
   return [
     ...body.matchAll(
-      /^\s*(?:readonly\s+)?(?:\[\s*(['"])(.+?)\1\s*\]|(['"])(.+?)\3|([A-Za-z_$][\w$]*))\s*\??\s*:/gm,
+      /^\s*(?:readonly\s+)?(?:\[\s*(['"])(.+?)\1\s*\]|(['"])(.+?)\3|([A-Za-z_$][\w$]*))\s*\??\s*[:(]/gm,
     ),
   ].map((m) => (m[2] ?? m[4] ?? m[5])!);
 }
@@ -111,9 +111,21 @@ function code(source: string): string {
  * review). So the exported entry point must name the bare options type.
  */
 function parameterType(source: string, fn: string): string {
-  const m = new RegExp(`export async function ${fn}\\s*\\(\\s*opts\\s*:\\s*([^=)]+)`).exec(source);
-  if (!m?.[1]) throw new Error(`${fn}: could not read its options parameter type`);
-  return m[1].trim();
+  // Capture the WHOLE parameter list, not just the first type: a second
+  // positional parameter (`loadStars(opts: LoadOptions = {}, allowUnverified =
+  // false)`) is another surface a bypass can ride on, invisible if we stop at
+  // the first `=` or `,` (round-13 finding, sol). Assert single arity.
+  const m = new RegExp(`export async function ${fn}\\s*\\(([^)]*)\\)`).exec(source);
+  if (m?.[1] === undefined) throw new Error(`${fn}: could not read its parameter list`);
+  // A trailing comma after a single parameter is legal formatting; strip it
+  // before checking arity. The option types here are bare identifiers (no
+  // generics), so any REMAINING comma means a genuine second parameter.
+  const params = m[1].trim().replace(/,\s*$/, '');
+  if (params.includes(','))
+    throw new Error(`${fn} declares more than one parameter — a second is an un-vetted surface`);
+  const typed = /^\s*opts\s*:\s*([^=]+?)\s*(?:=|$)/.exec(params);
+  if (!typed?.[1]) throw new Error(`${fn}: could not read its options parameter type`);
+  return typed[1].trim();
 }
 
 const LOADER_ENTRIES = [
@@ -132,6 +144,12 @@ describe('INTEG-SURFACE: the entry points take the bare options type', () => {
   it('CONTROL: an intersection parameter is detected', () => {
     const sample = 'export async function loadStars(opts: LoadOptions & Unsafe = {}) {}';
     expect(parameterType(sample, 'loadStars')).not.toBe('LoadOptions');
+  });
+
+  it('CONTROL: a SECOND parameter is rejected (round 13, sol)', () => {
+    const sample =
+      'export async function loadStars(opts: LoadOptions = {}, allowUnverified = false) {}';
+    expect(() => parameterType(sample, 'loadStars')).toThrow(/more than one parameter/);
   });
 });
 
@@ -218,6 +236,19 @@ describe('INTEG-SURFACE: loader options are an allowlist, so no opt-out can appe
       '',
     ].join('\n');
     expect(() => optionNames(symbolKeyed, 'LoadOptions')).toThrow(/computed option name/);
+  });
+
+  it('CONTROL: a method-form option is extracted and fails the allowlist (round 13, luna@max)', () => {
+    const methodForm = [
+      'export interface LoadOptions {',
+      '  base?: string;',
+      '  allowUnverified?(): boolean;',
+      '}',
+      '',
+    ].join('\n');
+    // The method-form option is SEEN (extracted), so it lands in the allowlist
+    // comparison and fails — it is not silently invisible.
+    expect(optionNames(methodForm, 'LoadOptions')).toEqual(['base', 'allowUnverified']);
   });
 });
 

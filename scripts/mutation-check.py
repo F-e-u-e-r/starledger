@@ -180,11 +180,11 @@ CASES = [
         "AI meta read-back guard removed",
         "packages/deploy/src/stage.ts",
         "    if (!landedMeta.equals(metaBytes)) {\n"
-        "      const discard = discardOwnWrites();\n"
+        "      const discard = discardOutcome();\n"
         "      return {\n"
         "        staged: false,\n"
         "        reason: `AI meta published bytes do not match the validated snapshot${discard.suffix}`,\n"
-        "        ...(discard.stuck ? { residue: true } : {}),\n"
+        "        ...(discard.residue ? { residue: true } : {}),\n"
         "      };\n"
         "    }\n"
         "    if (createHash('sha256').update(landedAnn).digest('hex') !== meta.annotations_sha256) {",
@@ -196,11 +196,11 @@ CASES = [
         "discovery meta read-back guard removed",
         "packages/deploy/src/stage.ts",
         "    if (!landedMeta.equals(metaBytes)) {\n"
-        "      const discard = discardOwnWrites();\n"
+        "      const discard = discardOutcome();\n"
         "      return {\n"
         "        staged: false,\n"
         "        reason: `discovery meta published bytes do not match the validated snapshot${discard.suffix}`,\n"
-        "        ...(discard.stuck ? { residue: true } : {}),\n"
+        "        ...(discard.residue ? { residue: true } : {}),\n"
         "      };\n"
         "    }\n"
         "    if (createHash('sha256').update(landedCandidates).digest('hex') !== meta.dataset_sha) {",
@@ -351,40 +351,6 @@ CASES = [
     ),
     # Round-10 mutants — each the defeated or old behavior:
     (
-        # A reason that CLAIMS removal without performing it — the pins assert
-        # the disk, not the prose, so a lying reason reddens.
-        "AI mismatch discard claimed but not performed",
-        "packages/deploy/src/stage.ts",
-        "      const discard = discardOwnWrites();\n"
-        "      return {\n"
-        "        staged: false,\n"
-        "        reason: `AI meta published bytes do not match the validated snapshot${discard.suffix}`,\n"
-        "        ...(discard.stuck ? { residue: true } : {}),\n"
-        "      };",
-        "      return {\n"
-        "        staged: false,\n"
-        "        reason: \"AI meta published bytes do not match the validated snapshot — this run's dist writes were removed\",\n"
-        "      };",
-        "packages/deploy/tests/ai-stage.test.ts",
-        "GUARD-META",
-    ),
-    (
-        "discovery mismatch discard claimed but not performed",
-        "packages/deploy/src/stage.ts",
-        "      const discard = discardOwnWrites();\n"
-        "      return {\n"
-        "        staged: false,\n"
-        "        reason: `discovery artifact published bytes do not match the verified digest${discard.suffix}`,\n"
-        "        ...(discard.stuck ? { residue: true } : {}),\n"
-        "      };",
-        "      return {\n"
-        "        staged: false,\n"
-        "        reason: \"discovery artifact published bytes do not match the verified digest — this run's dist writes were removed\",\n"
-        "      };",
-        "packages/deploy/tests/discovery-stage.test.ts",
-        "GUARD:",
-    ),
-    (
         "AI source probe reads every errno as absence again",
         "packages/deploy/src/stage.ts",
         "      if ((error as NodeJS.ErrnoException)?.code === 'ENOENT') return false;\n"
@@ -428,39 +394,6 @@ CASES = [
     ),
     # Round-11 mutants:
     (
-        # The stager swallows its own failed discard — flag dropped, reason
-        # still truthful. The structured-flag pin reddens.
-        "AI residue flag dropped on a stuck discard",
-        "packages/deploy/src/stage.ts",
-        "    const detail = error instanceof Error ? error.message : 'AI staging skipped';\n"
-        "    if (!publishBegan) return { staged: false, reason: detail };\n"
-        "    const discard = discardOwnWrites();\n"
-        "    return {\n"
-        "      staged: false,\n"
-        "      reason: `${detail}${discard.suffix}`,\n"
-        "      ...(discard.stuck ? { residue: true } : {}),\n"
-        "    };",
-        "    const detail = error instanceof Error ? error.message : 'AI staging skipped';\n"
-        "    if (!publishBegan) return { staged: false, reason: detail };\n"
-        "    const discard = discardOwnWrites();\n"
-        "    return {\n"
-        "      staged: false,\n"
-        "      reason: `${detail}${discard.suffix}`,\n"
-        "    };",
-        "packages/deploy/tests/ai-stage.test.ts",
-        "RESIDUE",
-    ),
-    (
-        # The CLI prints everything and still exits 0 — the round-11 defect
-        # itself. The subprocess pin reddens on the exit code.
-        "CLI ships a dist carrying unremovable rejected residue",
-        "packages/deploy/src/cli.ts",
-        "      if ([ai, discovery, skills].some((result) => result.residue)) {",
-        "      if (false) {",
-        "packages/deploy/tests/cli-stage.test.ts",
-        "RESIDUE-EXIT",
-    ),
-    (
         # luna@max round-11 PoC: a bypass probed via the prototype walk, which
         # the get/has traps never see — the getPrototypeOf trap records it.
         "a loader probes a bypass through the options prototype",
@@ -485,23 +418,12 @@ CASES = [
     ),
     # Round-12 mutants:
     (
-        # sol: the CLI condition only checked AI residue in the original pin.
-        # Dropping discovery from the escalation array reddens the discovery
-        # end-to-end subprocess pin.
-        "CLI escalation drops the discovery residue check",
-        "packages/deploy/src/cli.ts",
-        "      if ([ai, discovery, skills].some((result) => result.residue)) {",
-        "      if ([ai, skills].some((result) => result.residue)) {",
-        "packages/deploy/tests/cli-stage.test.ts",
-        "RESIDUE-EXIT",
-    ),
-    (
         # sol + luna@max: a swallowed success-path backup discard. Reverting to
         # the void discard drops the residue flag on a stale .staging-bak.
         "skills success-path backup discard swallowed",
         "packages/deploy/src/stage.ts",
         "      for (const [backup] of movedAside) if (!discardOk(backup)) cleanupResidue = true;",
-        "      for (const [backup] of movedAside) discard(backup);",
+        "      for (const [backup] of movedAside) void discardOk(backup);",
         "packages/deploy/tests/skills-stage.test.ts",
         "CLEANUP-RESIDUE-SUCCESS",
     ),
@@ -509,7 +431,7 @@ CASES = [
         "skills abort-path temporary discard swallowed",
         "packages/deploy/src/stage.ts",
         "      for (const path of created) if (!discardOk(path)) cleanupResidue = true;",
-        "      for (const path of created) discard(path);",
+        "      for (const path of created) void discardOk(path);",
         "packages/deploy/tests/skills-stage.test.ts",
         "CLEANUP-RESIDUE-ABORT",
     ),
@@ -536,6 +458,78 @@ CASES = [
         "    const annRes = await doFetch(`/ai-annotations.json?sha=${meta.annotations_sha256}`);",
         "apps/dashboard/src/app/App.test.tsx",
         "DEFAULT-PATH",
+    ),
+    (
+        # Round-11 intent, re-expressed on the round-13 discardOutcome shape:
+        # dropping the residue spread on the meta-guard return makes a STUCK
+        # discard report no residue ⇒ STUCK-RESIDUE reddens.
+        "AI residue flag dropped on a stuck discard",
+        "packages/deploy/src/stage.ts",
+        "        reason: `AI meta published bytes do not match the validated snapshot${discard.suffix}`,\n"
+        "        ...(discard.residue ? { residue: true } : {}),",
+        "        reason: `AI meta published bytes do not match the validated snapshot${discard.suffix}`,",
+        "packages/deploy/tests/ai-stage.test.ts",
+        "STUCK-RESIDUE",
+    ),
+    # Round-13 mutants:
+    (
+        "skills temp recorded only after a clean write (partial leaks)",
+        "packages/deploy/src/stage.ts",
+        "      const writeTempExclusive = (path: string, bytes: Buffer): void => {\n"
+        "        try {\n"
+        "          writeTemp(path, bytes, { flag: 'wx' });\n"
+        "          created.push(path);\n"
+        "        } catch (error) {\n"
+        "          if ((error as NodeJS.ErrnoException)?.code !== 'EEXIST') created.push(path);\n"
+        "          throw error;\n"
+        "        }\n"
+        "      };",
+        "      const writeTempExclusive = (path: string, bytes: Buffer): void => {\n"
+        "        writeTemp(path, bytes, { flag: 'wx' });\n"
+        "        created.push(path);\n"
+        "      };",
+        "packages/deploy/tests/skills-stage.test.ts",
+        "PARTIAL-TEMP",
+    ),
+    (
+        "AI discard removes a fixed pair instead of only changed paths",
+        "packages/deploy/src/stage.ts",
+        "      const now = snapshot(path);\n"
+        "      if (now === null) continue; // nothing readable of ours there now\n"
+        "      if (pre !== null && now.equals(pre)) continue; // unchanged since snapshot \u21d2 not ours",
+        "      const now = snapshot(path);\n"
+        "      if (now === null) continue; // nothing readable of ours there now\n"
+        "      void pre;",
+        "packages/deploy/tests/ai-stage.test.ts",
+        "ZERO-WRITE",
+    ),
+    (
+        "surface extractor misses method-form options",
+        "apps/dashboard/src/data/integrity-surface.test.ts",
+        "([A-Za-z_$][\\w$]*))\\s*\\??\\s*[:(]/gm,",
+        "([A-Za-z_$][\\w$]*))\\s*\\??\\s*:/gm,",
+        "apps/dashboard/src/data/integrity-surface.test.ts",
+        "method-form option",
+    ),
+    (
+        "entry-point extractor ignores a second parameter",
+        "apps/dashboard/src/data/integrity-surface.test.ts",
+        "  if (params.includes(','))\n"
+        "    throw new Error(`${fn} declares more than one parameter \u2014 a second is an un-vetted surface`);",
+        "  void params;",
+        "apps/dashboard/src/data/integrity-surface.test.ts",
+        "SECOND parameter",
+    ),
+    (
+        # sol round-12/13: the escalation must read EVERY layer. A predicate
+        # that checks only the first reddens the position-1 and position-2
+        # decision cases.
+        "residue escalation predicate checks only the first result",
+        "packages/deploy/src/stage.ts",
+        "  return results.some((result) => result.residue === true);",
+        "  return results[0]?.residue === true;",
+        "packages/deploy/tests/residue-decision.test.ts",
+        "position",
     ),
 ]
 

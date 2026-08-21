@@ -1,5 +1,12 @@
 import { createHash } from 'node:crypto';
-import { existsSync, mkdirSync, mkdtempSync, writeFileSync } from 'node:fs';
+import {
+  chmodSync,
+  existsSync,
+  mkdirSync,
+  mkdtempSync,
+  readFileSync,
+  writeFileSync,
+} from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { describe, expect, it } from 'vitest';
@@ -235,8 +242,10 @@ describe('stageDiscoveryArtifacts — the post-publish guard fires', () => {
     expect(existsSync(join(distDir, DISCOVERY_CANDIDATES_META_FILE))).toBe(false);
   });
 
-  it('RESIDUE: a write failure between the two halves names the partial pair it left behind', () => {
-    // Round-9 finding (sol@max) — same contract as the AI pair.
+  it('RESIDUE: a write failure discards this run’s own write and leaves a pre-existing entry untouched', () => {
+    // Round-9 finding (sol), corrected round-13 — same ownership contract as
+    // the AI pair: remove only what THIS run wrote, leave the pre-existing
+    // directory it never wrote.
     const { dataDir, distDir } = dirs();
     const pair = validArtifactPair();
     writeFileSync(join(dataDir, DISCOVERY_CANDIDATES_FILE), pair.candidates);
@@ -244,11 +253,63 @@ describe('stageDiscoveryArtifacts — the post-publish guard fires', () => {
     mkdirSync(join(distDir, DISCOVERY_CANDIDATES_META_FILE)); // meta write will throw EISDIR
     const result = stageDiscoveryArtifacts({ dataDir, distDir });
     expect(result.staged).toBe(false);
-    // The landed artifact half is discarded; the blocking DIRECTORY cannot be,
-    // and the reason says so.
-    expect(result.reason).toContain('could NOT all be removed');
+    expect(result.reason).toContain('writes were removed');
     expect(existsSync(join(distDir, DISCOVERY_CANDIDATES_FILE))).toBe(false);
-    // Round-11: the structured flag the CLI escalates on.
+    expect(existsSync(join(distDir, DISCOVERY_CANDIDATES_META_FILE))).toBe(true);
+    expect(result.residue).toBeUndefined();
+  });
+
+  it('ZERO-WRITE: a first-write failure onto a read-only pre-existing pair deletes NOTHING', () => {
+    // Round-13 finding (sol), High — same as the AI pair.
+    const { dataDir, distDir } = dirs();
+    const oldPair = validArtifactPair();
+    const distCand = join(distDir, DISCOVERY_CANDIDATES_FILE);
+    const distMeta = join(distDir, DISCOVERY_CANDIDATES_META_FILE);
+    writeFileSync(distCand, oldPair.candidates);
+    writeFileSync(distMeta, oldPair.meta);
+    chmodSync(distCand, 0o444);
+    writeFileSync(join(dataDir, DISCOVERY_CANDIDATES_FILE), oldPair.candidates);
+    writeFileSync(join(dataDir, DISCOVERY_CANDIDATES_META_FILE), oldPair.meta);
+    let result;
+    try {
+      result = stageDiscoveryArtifacts({ dataDir, distDir });
+    } finally {
+      // Tolerant: a buggy discard may have deleted the file (that is the
+      // failure this test asserts), so restoring perms must not itself throw.
+      if (existsSync(distCand)) chmodSync(distCand, 0o644);
+    }
+    expect(result.staged).toBe(false);
+    expect(existsSync(distCand)).toBe(true);
+    expect(existsSync(distMeta)).toBe(true);
+    expect(readFileSync(distCand, 'utf8')).toBe(oldPair.candidates);
+    expect(readFileSync(distMeta, 'utf8')).toBe(oldPair.meta);
+    expect(result.residue).toBeUndefined();
+  });
+
+  it('STUCK-RESIDUE: a discard of THIS run’s own write that fails is reported as residue', () => {
+    const { dataDir, distDir } = dirs();
+    const pair = validArtifactPair();
+    writeFileSync(join(dataDir, DISCOVERY_CANDIDATES_FILE), pair.candidates);
+    writeFileSync(join(dataDir, DISCOVERY_CANDIDATES_META_FILE), pair.meta);
+    let result;
+    try {
+      result = stageDiscoveryArtifacts(
+        { dataDir, distDir },
+        {
+          afterPublish: () => {
+            writeFileSync(
+              join(distDir, DISCOVERY_CANDIDATES_META_FILE),
+              pair.meta.replace('2026-01-15T00:00:00.000Z', '2027-01-01T00:00:00.000Z'),
+            );
+            chmodSync(distDir, 0o555);
+          },
+        },
+      );
+    } finally {
+      chmodSync(distDir, 0o755);
+    }
+    expect(result.staged).toBe(false);
+    expect(result.reason).toContain('could NOT all be removed');
     expect(result.residue).toBe(true);
   });
 

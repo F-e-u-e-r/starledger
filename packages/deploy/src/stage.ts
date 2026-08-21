@@ -204,44 +204,70 @@ export function stageAiArtifacts(opts: StageOptions, hooks: OptionalPairHooks = 
   if (!hasAnn || !hasMeta) {
     return { staged: false, reason: 'incomplete AI artifact pair — skipped' };
   }
-  /** Set BEFORE the first dist write: a write that fails mid-way (ENOSPC,
-   * EIO) can leave truncated content, so "publication began" — not "the first
-   * write returned" — is what makes discard-on-failure necessary (round-10
-   * finding). */
-  let publishBegan = false;
   /**
-   * Best-effort discard of THIS invocation's dist writes, reporting the
-   * outcome for a truthful reason. Round-10 finding, all three legs: a
-   * DETECTED post-publish mismatch that merely reported `staged:false` still
-   * left the pair in the dist — the CLI logs "skipped" and exits 0, built-
-   * artifact verification checks only the canonical pair, so Pages UPLOADED
-   * the retained pair, and a meta-only rewrite stays internally coherent, so
-   * the runtime SERVED it. Detection without a consequence was no
-   * containment. Removing our own two derived paths is ownership-bounded
-   * cleanup (never a glob/sweep, never a pre-existing restore — that
-   * transactional machinery stays reserved to the skills pair by the
-   * standing ruling); absence then fails soft at runtime, which is the
-   * correct direction for an optional layer. Under an unserialized
-   * concurrent stager the removal (like the success report itself) can act
-   * on the OTHER invocation's bytes — the recorded interleaving residual,
-   * bounded for correctness by runtime pair validation but not closable
-   * without the serialization question the owner holds.
+   * SNAPSHOT the destinations BEFORE any write, so cleanup removes only what
+   * THIS run actually changed and never a pre-existing pair it failed to
+   * touch. Round-13 finding (sol): the previous `publishBegan` flag discarded
+   * BOTH dist paths on ANY post-`publishBegan` failure — so a first write that
+   * failed at OPEN (EACCES on a read-only pre-existing artifact) deleted the
+   * untouched valid pair and still reported success. Comparing against the
+   * snapshot is errno-free and correct for every case: unchanged ⇒ not ours ⇒
+   * left; changed or new ⇒ ours ⇒ removed.
    */
-  const discardOwnWrites = (): { suffix: string; stuck: boolean } => {
-    const stuck: string[] = [];
-    for (const path of [distAnn, distAnnMeta]) {
+  const snapshot = (path: string): Buffer | null => {
+    try {
+      return readFileSync(path);
+    } catch {
+      return null; // absent, or a directory/unreadable entry we did not write
+    }
+  };
+  const preAnn = snapshot(distAnn);
+  const preAnnMeta = snapshot(distAnnMeta);
+  /**
+   * Best-effort discard of ONLY the dist paths THIS run changed, reporting the
+   * outcome for a truthful reason (round-10 consequence; round-13 ownership).
+   * Round-10: a DETECTED post-publish mismatch that merely reported
+   * `staged:false` still left the pair in the dist — the CLI exits 0,
+   * canonical-only verification passes, Pages UPLOADED it, and a coherent meta
+   * rewrite was SERVED. Removing our own changes is ownership-bounded cleanup
+   * (never a glob/sweep, never a pre-existing restore — that transactional
+   * machinery stays reserved to the skills pair); absence then fails soft at
+   * runtime, the correct direction for an optional layer. Under an
+   * unserialized concurrent stager the snapshot can be raced — the recorded
+   * interleaving residual the owner holds.
+   */
+  const discardOwnWrites = (): { removedAny: boolean; stuck: boolean } => {
+    let removedAny = false;
+    let stuck = false;
+    for (const [path, pre] of [
+      [distAnn, preAnn],
+      [distAnnMeta, preAnnMeta],
+    ] as const) {
+      const now = snapshot(path);
+      if (now === null) continue; // nothing readable of ours there now
+      if (pre !== null && now.equals(pre)) continue; // unchanged since snapshot ⇒ not ours
       try {
         rmSync(path, { force: true });
+        removedAny = true;
       } catch {
-        stuck.push(path);
+        stuck = true;
       }
     }
-    return stuck.length === 0
-      ? { suffix: " — this run's dist writes were removed", stuck: false }
-      : {
-          suffix: " — this run's dist writes could NOT all be removed (residue remains)",
-          stuck: true,
-        };
+    return { removedAny, stuck };
+  };
+  /** Build the reason suffix + residue flag from a discard outcome. */
+  const discardOutcome = (): { suffix: string; residue: boolean } => {
+    const { removedAny, stuck } = discardOwnWrites();
+    if (stuck) {
+      return {
+        suffix: " — this run's dist writes could NOT all be removed (residue remains)",
+        residue: true,
+      };
+    }
+    return {
+      suffix: removedAny ? " — this run's dist writes were removed" : '',
+      residue: false,
+    };
   };
   try {
     // BYTES, read once. Build-side acceptance must agree with the runtime
@@ -264,7 +290,6 @@ export function stageAiArtifacts(opts: StageOptions, hooks: OptionalPairHooks = 
     // Publish the VALIDATED buffers, not a re-read of the sources: re-opening
     // them would let a generator rewrite between validation and publication
     // land unvalidated.
-    publishBegan = true;
     writeFileSync(distAnn, annBytes);
     writeFileSync(distAnnMeta, metaBytes);
     hooks.afterPublish?.();
@@ -292,30 +317,29 @@ export function stageAiArtifacts(opts: StageOptions, hooks: OptionalPairHooks = 
     const landedAnn = readFileSync(distAnn);
     const landedMeta = readFileSync(distAnnMeta);
     if (!landedMeta.equals(metaBytes)) {
-      const discard = discardOwnWrites();
+      const discard = discardOutcome();
       return {
         staged: false,
         reason: `AI meta published bytes do not match the validated snapshot${discard.suffix}`,
-        ...(discard.stuck ? { residue: true } : {}),
+        ...(discard.residue ? { residue: true } : {}),
       };
     }
     if (createHash('sha256').update(landedAnn).digest('hex') !== meta.annotations_sha256) {
-      const discard = discardOwnWrites();
+      const discard = discardOutcome();
       return {
         staged: false,
         reason: `AI artifact published bytes do not match the verified digest${discard.suffix}`,
-        ...(discard.stuck ? { residue: true } : {}),
+        ...(discard.residue ? { residue: true } : {}),
       };
     }
     return { staged: true };
   } catch (error) {
     const detail = error instanceof Error ? error.message : 'AI staging skipped';
-    if (!publishBegan) return { staged: false, reason: detail };
-    const discard = discardOwnWrites();
+    const discard = discardOutcome();
     return {
       staged: false,
       reason: `${detail}${discard.suffix}`,
-      ...(discard.stuck ? { residue: true } : {}),
+      ...(discard.residue ? { residue: true } : {}),
     };
   }
 }
@@ -410,6 +434,13 @@ export interface SkillsStageHooks {
    * "only EEXIST proves contention" is otherwise unpinnable.
    */
   openImpl?: typeof openSync;
+  /**
+   * Injectable `writeFileSync` for the TEMPORARY writes only, same precedent:
+   * a real filesystem cannot be made to fail a write PARTWAY (ENOSPC/EFBIG
+   * after the exclusive create) on demand, so "a partial temp is still
+   * cleaned/reported" is otherwise unpinnable (round-13 finding).
+   */
+  writeTempImpl?: typeof writeFileSync;
 }
 
 /**
@@ -610,11 +641,28 @@ export function stageSkillsArtifacts(
 
       // Write the VALIDATED bytes (not a re-read of the source), exclusively,
       // then read back to prove what landed is what was validated.
+      //
+      // A partial write (ENOSPC/EFBIG after the exclusive create succeeded)
+      // leaves OUR temp on disk and then throws — register it for cleanup
+      // BEFORE the write cannot see it (round-13 finding: recording only after
+      // the write returned meant a mid-write throw left an unreported temp the
+      // CLI then uploaded). `wx` makes ownership provable: an EEXIST throw
+      // created nothing (foreign file, never ours to remove); ANY other throw
+      // means the exclusive open succeeded and the WRITE failed, so the temp
+      // is ours to discard.
+      const writeTemp = hooks.writeTempImpl ?? writeFileSync;
+      const writeTempExclusive = (path: string, bytes: Buffer): void => {
+        try {
+          writeTemp(path, bytes, { flag: 'wx' });
+          created.push(path);
+        } catch (error) {
+          if ((error as NodeJS.ErrnoException)?.code !== 'EEXIST') created.push(path);
+          throw error;
+        }
+      };
       hooks.beforeStageWrite?.();
-      writeFileSync(tmpArtifact, artifactBytes, { flag: 'wx' });
-      created.push(tmpArtifact);
-      writeFileSync(tmpMeta, metaBytes, { flag: 'wx' });
-      created.push(tmpMeta);
+      writeTempExclusive(tmpArtifact, artifactBytes);
+      writeTempExclusive(tmpMeta, metaBytes);
       hooks.afterStageWrite?.();
       if (
         !readFileSync(tmpArtifact).equals(artifactBytes) ||
@@ -816,24 +864,49 @@ export function stageDiscoveryArtifacts(
     return { staged: false, reason: 'incomplete discovery artifact pair — skipped' };
   }
 
-  /** Same round-10 contract as the AI pair: set BEFORE the first write, and
-   * discard this run's writes on any failure after that point. */
-  let publishBegan = false;
-  const discardOwnWrites = (): { suffix: string; stuck: boolean } => {
-    const stuck: string[] = [];
-    for (const path of [distCandidates, distCandidatesMeta]) {
+  /** Same round-10 consequence and round-13 ownership contract as the AI pair:
+   * snapshot the destinations, then on failure remove ONLY the paths this run
+   * changed — never a pre-existing pair a failed write left untouched. */
+  const snapshot = (path: string): Buffer | null => {
+    try {
+      return readFileSync(path);
+    } catch {
+      return null;
+    }
+  };
+  const preCandidates = snapshot(distCandidates);
+  const preCandidatesMeta = snapshot(distCandidatesMeta);
+  const discardOwnWrites = (): { removedAny: boolean; stuck: boolean } => {
+    let removedAny = false;
+    let stuck = false;
+    for (const [path, pre] of [
+      [distCandidates, preCandidates],
+      [distCandidatesMeta, preCandidatesMeta],
+    ] as const) {
+      const now = snapshot(path);
+      if (now === null) continue;
+      if (pre !== null && now.equals(pre)) continue;
       try {
         rmSync(path, { force: true });
+        removedAny = true;
       } catch {
-        stuck.push(path);
+        stuck = true;
       }
     }
-    return stuck.length === 0
-      ? { suffix: " — this run's dist writes were removed", stuck: false }
-      : {
-          suffix: " — this run's dist writes could NOT all be removed (residue remains)",
-          stuck: true,
-        };
+    return { removedAny, stuck };
+  };
+  const discardOutcome = (): { suffix: string; residue: boolean } => {
+    const { removedAny, stuck } = discardOwnWrites();
+    if (stuck) {
+      return {
+        suffix: " — this run's dist writes could NOT all be removed (residue remains)",
+        residue: true,
+      };
+    }
+    return {
+      suffix: removedAny ? " — this run's dist writes were removed" : '',
+      residue: false,
+    };
   };
   try {
     // BYTES, read once — same reasoning as the AI pair above: build-side
@@ -851,7 +924,6 @@ export function stageDiscoveryArtifacts(
       return { staged: false, reason: 'discovery artifact count mismatch — skipped' };
     }
     // Publish the VALIDATED buffers, not a re-read of the sources.
-    publishBegan = true;
     writeFileSync(distCandidates, candidatesBytes);
     writeFileSync(distCandidatesMeta, metaBytes);
     hooks.afterPublish?.();
@@ -861,30 +933,45 @@ export function stageDiscoveryArtifacts(
     const landedCandidates = readFileSync(distCandidates);
     const landedMeta = readFileSync(distCandidatesMeta);
     if (!landedMeta.equals(metaBytes)) {
-      const discard = discardOwnWrites();
+      const discard = discardOutcome();
       return {
         staged: false,
         reason: `discovery meta published bytes do not match the validated snapshot${discard.suffix}`,
-        ...(discard.stuck ? { residue: true } : {}),
+        ...(discard.residue ? { residue: true } : {}),
       };
     }
     if (createHash('sha256').update(landedCandidates).digest('hex') !== meta.dataset_sha) {
-      const discard = discardOwnWrites();
+      const discard = discardOutcome();
       return {
         staged: false,
         reason: `discovery artifact published bytes do not match the verified digest${discard.suffix}`,
-        ...(discard.stuck ? { residue: true } : {}),
+        ...(discard.residue ? { residue: true } : {}),
       };
     }
     return { staged: true };
   } catch (error) {
     const detail = error instanceof Error ? error.message : 'discovery staging skipped';
-    if (!publishBegan) return { staged: false, reason: detail };
-    const discard = discardOwnWrites();
+    const discard = discardOutcome();
     return {
       staged: false,
       reason: `${detail}${discard.suffix}`,
-      ...(discard.stuck ? { residue: true } : {}),
+      ...(discard.residue ? { residue: true } : {}),
     };
   }
+}
+
+/**
+ * True when ANY staging result left REJECTED bytes it could not remove — the
+ * deploy must fail rather than upload them (round-11 consequence; round-13
+ * ownership). Extracted and exported so the escalation DECISION is unit-pinned
+ * over every layer, independent of the CLI subprocess: after the round-13
+ * ownership fix a stager only reports `residue` for its OWN un-removable
+ * write, which requires a read-only dist directory that would already have
+ * failed the canonical write — so an end-to-end residue can no longer be
+ * constructed from a black box, and the per-layer decision is pinned here
+ * instead (the stagers' residue-SETTING is pinned directly: STUCK-RESIDUE for
+ * the optional pairs, CLEANUP-RESIDUE / PARTIAL-TEMP for the skills pair).
+ */
+export function distHasUnshippableResidue(results: ReadonlyArray<{ residue?: boolean }>): boolean {
+  return results.some((result) => result.residue === true);
 }
