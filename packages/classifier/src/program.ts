@@ -90,7 +90,7 @@ export function buildProgram(): Command {
         try {
           const config = loadAiConfig(program.opts<{ config?: string }>().config);
           const dataset = loadCanonicalDataset(
-            readFileSync(opts.stars, 'utf8'),
+            readFileSync(opts.stars),
             readFileSync(opts.meta, 'utf8'),
           );
           if (!config.ai.enabled) {
@@ -219,7 +219,7 @@ export function buildProgram(): Command {
         try {
           const manifest = ClassificationManifestSchema.parse(readJson(opts.manifest));
           const dataset = loadCanonicalDataset(
-            readFileSync(opts.stars, 'utf8'),
+            readFileSync(opts.stars),
             readFileSync(opts.meta, 'utf8'),
           );
           if (dataset.datasetSha256 !== manifest.dataset_sha256) {
@@ -327,7 +327,9 @@ export function buildProgram(): Command {
     .requiredOption('--meta <path>', 'ai-annotations-meta.json')
     .action((opts: { annotations: string; meta: string }) => {
       try {
-        verifyAiArtifacts(readFileSync(opts.annotations, 'utf8'), readFileSync(opts.meta, 'utf8'));
+        // Annotations as BYTES (the digest is a byte contract); meta as text
+        // (its check is canonical-form equality) — see verifyAiArtifacts.
+        verifyAiArtifacts(readFileSync(opts.annotations), readFileSync(opts.meta, 'utf8'));
         process.stdout.write('AI artifacts verified.\n');
       } catch (error) {
         fatal(error);

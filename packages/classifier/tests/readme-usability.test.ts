@@ -8,8 +8,8 @@ import { EMPTY_CLASSIFIER_STATE } from '../src/state';
 import { aiConfig, makeAnnotationFor, makeDataset, repo } from './helpers';
 
 function load(repos: CanonicalRepo[]) {
-  const { starsText, metaText } = makeDataset(repos);
-  return loadCanonicalDataset(starsText, metaText);
+  const { starsBytes, metaText } = makeDataset(repos);
+  return loadCanonicalDataset(starsBytes, metaText);
 }
 
 /** A REAL OctokitReadmeSource over the MEASURED REST response for a preferred

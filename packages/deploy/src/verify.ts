@@ -152,10 +152,7 @@ export function verifyBuiltArtifact(opts: VerifyOptions): VerifyResult {
   if (!existsSync(starsPath) || !existsSync(metaPath)) {
     throw new Error('dist is missing staged data files (run staging first)');
   }
-  const verified = verifyDatasetIntegrity(
-    readFileSync(starsPath, 'utf8'),
-    readFileSync(metaPath, 'utf8'),
-  );
+  const verified = verifyDatasetIntegrity(readFileSync(starsPath), readFileSync(metaPath, 'utf8'));
 
   assertNoForbiddenFiles(distDir);
 
@@ -213,13 +210,20 @@ export async function staticSmoke(opts: VerifyOptions): Promise<VerifyResult> {
   try {
     const metaRes = await fetch(`${origin}${base}${DATASET_META_FILE}`);
     if (!metaRes.ok) throw new Error(`${DATASET_META_FILE} → HTTP ${metaRes.status}`);
-    const metaText = await metaRes.text();
+    // Decoded WITHOUT swallowing a BOM, matching both the build's
+    // `Buffer.toString('utf8')` and the runtime's decoder. `Response.text()`
+    // strips one, so a BOM-prefixed meta would pass this live smoke while the
+    // build and the browser both refuse it (review finding).
+    const metaText = new TextDecoder('utf-8', { ignoreBOM: true }).decode(
+      new Uint8Array(await metaRes.arrayBuffer()),
+    );
     const sha = (JSON.parse(metaText) as { stars_sha256: string }).stars_sha256;
 
     const starsRes = await fetch(`${origin}${base}${STARS_FILE}?sha=${sha}`);
     if (!starsRes.ok) throw new Error(`${STARS_FILE} → HTTP ${starsRes.status}`);
-    const starsText = await starsRes.text();
-    const verified = verifyDatasetIntegrity(starsText, metaText);
+    // The live smoke must hash what the CDN actually served, byte for byte.
+    const starsBytes = new Uint8Array(await starsRes.arrayBuffer());
+    const verified = verifyDatasetIntegrity(starsBytes, metaText);
 
     const indexRes = await fetch(`${origin}${base}`);
     if (!indexRes.ok) throw new Error(`index → HTTP ${indexRes.status}`);

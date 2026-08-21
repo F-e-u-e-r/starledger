@@ -42,7 +42,8 @@ describe('prune-orphans maintenance path (issue #212)', () => {
     });
     const annotationsBytes = readFileSync(receipt.annotationsPath ?? '', 'utf8');
     const metaBytes = readFileSync(receipt.metaPath ?? '', 'utf8');
-    verifyAiArtifacts(annotationsBytes, metaBytes);
+    // Verify over the file's RAW bytes (the digest is a byte contract).
+    verifyAiArtifacts(readFileSync(receipt.annotationsPath ?? ''), metaBytes);
     expect(annotationsBytes).not.toContain('R_zz');
     expect(JSON.parse(metaBytes).dataset_sha256).toBe(datasetSha256);
     expect(JSON.parse(metaBytes).annotation_count).toBe(1);

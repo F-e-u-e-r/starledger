@@ -19,8 +19,8 @@ import {
 const NOW = new Date('2026-06-19T00:00:00Z');
 
 function load(repos: CanonicalRepo[]) {
-  const { starsText, metaText } = makeDataset(repos);
-  return loadCanonicalDataset(starsText, metaText);
+  const { starsBytes, metaText } = makeDataset(repos);
+  return loadCanonicalDataset(starsBytes, metaText);
 }
 
 async function plan(opts: {

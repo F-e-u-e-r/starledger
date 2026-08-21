@@ -60,10 +60,12 @@ export async function runMetaRebaseCommand(
   opts: MetaRebaseCommandOptions,
 ): Promise<MetaRebaseCommandResult> {
   const dataset = loadCanonicalDataset(
-    readFileSync(opts.starsPath, 'utf8'),
+    readFileSync(opts.starsPath),
     readFileSync(opts.datasetMetaPath, 'utf8'),
   );
-  const headAnnotationsBytes = readFileSync(opts.headAnnotationsPath, 'utf8');
+  // Annotations as BYTES (their digest is a byte contract); meta as text (its
+  // acceptance check is canonical-form equality) — see verifyAiArtifacts.
+  const headAnnotationsBytes = readFileSync(opts.headAnnotationsPath);
   const headMetaBytes = readFileSync(opts.headMetaPath, 'utf8');
   // A SUPPLIED but missing base path is an operator typo — fail closed rather
   // than silently comparing against an empty base (which would defeat the
@@ -111,7 +113,9 @@ export async function runMetaRebaseCommand(
   const tmpAnnotations = `${annotationsPath}.rebase-tmp`;
   const tmpMeta = `${metaPath}.rebase-tmp`;
   try {
-    writeFileSync(tmpAnnotations, result.annotationsBytes ?? '', 'utf8');
+    // The annotations are a byte passthrough of the validated head — written as
+    // BYTES so what lands is exactly what was verified, never a re-encoding.
+    writeFileSync(tmpAnnotations, result.annotationsBytes ?? Buffer.alloc(0));
     writeFileSync(tmpMeta, result.metaBytes ?? '', 'utf8');
     renameSync(tmpAnnotations, annotationsPath);
     renameSync(tmpMeta, metaPath);

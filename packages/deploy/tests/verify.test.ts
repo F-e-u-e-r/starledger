@@ -1,9 +1,10 @@
-import { mkdirSync, mkdtempSync, writeFileSync } from 'node:fs';
+import { createHash } from 'node:crypto';
+import { mkdirSync, mkdtempSync, readFileSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { describe, expect, it } from 'vitest';
 import { writeFixtureDataset } from '../src/fixture';
-import { stageDashboardData } from '../src/stage';
+import { DATASET_META_FILE, STARS_FILE, stageDashboardData } from '../src/stage';
 import { staticSmoke, verifyBuiltArtifact } from '../src/verify';
 
 // Mirror the production index.html CSP meta so the fixture exercises SEC-B.
@@ -182,5 +183,60 @@ describe('verifyBuiltArtifact / staticSmoke (DEPLOY-1/2, PATH-2)', () => {
     expect(() => verifyBuiltArtifact({ distDir: distWithHead(dup), base: '/repo/' })).toThrow(
       /duplicate "script-src"/,
     );
+  });
+});
+
+/**
+ * BYTE CONTRACT AT THE VERIFICATION BOUNDARY (review finding).
+ *
+ * `verifyBuiltArtifact` is a third call site of the canonical byte contract,
+ * alongside staging and the shared helper. Its own tests used ordinary UTF-8
+ * fixtures only, so replacing its call with decoded-text hashing would have
+ * passed them all. The trap is the decode-invariant one: a literal U+FFFD's
+ * bytes replaced by a bare 0xFF decodes identically and only the bytes differ.
+ */
+describe('verifyBuiltArtifact enforces the byte contract at its own call site', () => {
+  function distWithReplacementChar(): { distDir: string; canonical: Buffer } {
+    const dir = mkdtempSync(join(tmpdir(), 'verify-bytes-'));
+    mkdirSync(join(dir, 'assets'), { recursive: true });
+    writeFileSync(join(dir, 'assets', 'index-abc123.js'), 'console.log(1);');
+    writeFileSync(
+      join(dir, 'index.html'),
+      `<html><head>${CSP_META}</head><body><script type="module" src="/assets/index-abc123.js"></script></body></html>`,
+    );
+    const src = mkdtempSync(join(tmpdir(), 'verify-bytes-src-'));
+    writeFixtureDataset(src, new Date('2026-06-19T00:00:00Z'));
+    const stars = JSON.parse(readFileSync(join(src, STARS_FILE), 'utf8')) as {
+      repos: { description: string | null }[];
+    };
+    stars.repos[0]!.description = 'contains \uFFFD replacement';
+    const canonical = Buffer.from(JSON.stringify(stars, null, 2) + '\n', 'utf8');
+    const meta = JSON.parse(readFileSync(join(src, DATASET_META_FILE), 'utf8')) as Record<
+      string,
+      unknown
+    >;
+    meta.stars_sha256 = createHash('sha256').update(canonical).digest('hex');
+    writeFileSync(join(dir, DATASET_META_FILE), JSON.stringify(meta, null, 2) + '\n');
+    return { distDir: dir, canonical };
+  }
+
+  it('CONTROL: a dist whose bytes match the digest verifies', () => {
+    const { distDir, canonical } = distWithReplacementChar();
+    writeFileSync(join(distDir, STARS_FILE), canonical);
+    expect(() => verifyBuiltArtifact({ distDir, base: '/' })).not.toThrow();
+  });
+
+  it('rejects a byte mutation that decodes to identical text', () => {
+    const { distDir, canonical } = distWithReplacementChar();
+    const at = canonical.indexOf(Buffer.from([0xef, 0xbf, 0xbd]));
+    expect(at).toBeGreaterThan(-1);
+    const mutated = Buffer.concat([
+      canonical.subarray(0, at),
+      Buffer.from([0xff]),
+      canonical.subarray(at + 3),
+    ]);
+    expect(mutated.toString('utf8')).toBe(canonical.toString('utf8'));
+    writeFileSync(join(distDir, STARS_FILE), mutated);
+    expect(() => verifyBuiltArtifact({ distDir, base: '/' })).toThrow();
   });
 });

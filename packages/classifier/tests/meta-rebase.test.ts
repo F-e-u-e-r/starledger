@@ -26,8 +26,8 @@ const HEAD_TS = '2026-07-01T00:00:00Z';
 const STALE_SHA = 'e'.repeat(64); // the in-flight head meta's (now stale) dataset_sha256
 
 function load(repos: CanonicalRepo[]) {
-  const { starsText, metaText } = makeDataset(repos);
-  return loadCanonicalDataset(starsText, metaText);
+  const { starsBytes, metaText } = makeDataset(repos);
+  return loadCanonicalDataset(starsBytes, metaText);
 }
 
 function sourceFor(repos: CanonicalRepo[], ref = REF): FakeReadmeSource {
@@ -58,8 +58,9 @@ describe('rebaseAiAnnotationsMeta (ROAD-A, model-free)', () => {
     const a = repo('a');
     const dataset = load([a]);
     const ann = makeAnnotationFor(a, expectedFingerprint(a, CONFIG, REF), REF);
-    const headAnnotationsBytes = serializeAnnotations([ann]);
-    const headMetaBytes = buildHeadMeta(headAnnotationsBytes, STALE_SHA);
+    const headAnnotationsText = serializeAnnotations([ann]);
+    const headAnnotationsBytes = Buffer.from(headAnnotationsText, 'utf8');
+    const headMetaBytes = buildHeadMeta(headAnnotationsText, STALE_SHA);
 
     const result = await rebaseAiAnnotationsMeta({
       repos: dataset.repos,
@@ -73,7 +74,7 @@ describe('rebaseAiAnnotationsMeta (ROAD-A, model-free)', () => {
     });
 
     expect(result.ok).toBe(true);
-    expect(result.annotationsBytes).toBe(headAnnotationsBytes); // bytes preserved exactly
+    expect(result.annotationsBytes).toBe(headAnnotationsBytes); // BYTES preserved exactly (same reference, never re-serialized)
     const meta = AiAnnotationsMetaSchema.parse(JSON.parse(result.metaBytes!));
     expect(meta.dataset_sha256).toBe(dataset.datasetSha256); // moved to current base
     expect(meta.generated_at).toBe(HEAD_TS); // preserved from head meta (no churn)
@@ -94,7 +95,7 @@ describe('rebaseAiAnnotationsMeta (ROAD-A, model-free)', () => {
       repos: dataset.repos,
       datasetSha256: dataset.datasetSha256,
       baseAnnotations: [],
-      headAnnotationsBytes,
+      headAnnotationsBytes: Buffer.from(headAnnotationsBytes, 'utf8'),
       headMetaBytes: buildHeadMeta(headAnnotationsBytes, STALE_SHA),
       source: sourceFor([a]),
       config: CONFIG,
@@ -126,7 +127,7 @@ describe('rebaseAiAnnotationsMeta (ROAD-A, model-free)', () => {
       repos: dataset.repos,
       datasetSha256: dataset.datasetSha256,
       baseAnnotations: [],
-      headAnnotationsBytes,
+      headAnnotationsBytes: Buffer.from(headAnnotationsBytes, 'utf8'),
       headMetaBytes: buildHeadMeta(headAnnotationsBytes, STALE_SHA),
       source: sourceFor([a], { path: 'README.md', oid: 'oid-new' }),
       config: CONFIG,
@@ -146,7 +147,7 @@ describe('rebaseAiAnnotationsMeta (ROAD-A, model-free)', () => {
       repos: dataset.repos,
       datasetSha256: dataset.datasetSha256,
       baseAnnotations: [],
-      headAnnotationsBytes,
+      headAnnotationsBytes: Buffer.from(headAnnotationsBytes, 'utf8'),
       headMetaBytes: buildHeadMeta(headAnnotationsBytes, STALE_SHA),
       source: sourceFor([a]),
       config: CONFIG,
@@ -169,7 +170,7 @@ describe('rebaseAiAnnotationsMeta (ROAD-A, model-free)', () => {
       repos: dataset.repos,
       datasetSha256: dataset.datasetSha256,
       baseAnnotations: [],
-      headAnnotationsBytes,
+      headAnnotationsBytes: Buffer.from(headAnnotationsBytes, 'utf8'),
       headMetaBytes: tampered,
       source: sourceFor([a]),
       config: CONFIG,
@@ -189,7 +190,7 @@ describe('rebaseAiAnnotationsMeta (ROAD-A, model-free)', () => {
       repos: dataset.repos,
       datasetSha256: dataset.datasetSha256,
       baseAnnotations: [],
-      headAnnotationsBytes,
+      headAnnotationsBytes: Buffer.from(headAnnotationsBytes, 'utf8'),
       headMetaBytes: nonCanonical,
       source: sourceFor([a]),
       config: CONFIG,
@@ -207,7 +208,7 @@ describe('rebaseAiAnnotationsMeta (ROAD-A, model-free)', () => {
       repos: dataset.repos,
       datasetSha256: dataset.datasetSha256,
       baseAnnotations: [],
-      headAnnotationsBytes: nonCanonical,
+      headAnnotationsBytes: Buffer.from(nonCanonical, 'utf8'),
       headMetaBytes: buildHeadMeta(nonCanonical, STALE_SHA),
       source: sourceFor([a]),
       config: CONFIG,
@@ -227,7 +228,7 @@ describe('rebaseAiAnnotationsMeta (ROAD-A, model-free)', () => {
       repos: dataset.repos,
       datasetSha256: dataset.datasetSha256,
       baseAnnotations: [],
-      headAnnotationsBytes,
+      headAnnotationsBytes: Buffer.from(headAnnotationsBytes, 'utf8'),
       headMetaBytes: buildHeadMeta(headAnnotationsBytes, STALE_SHA),
       source: sourceFor([a, b]),
       config: CONFIG,
@@ -245,7 +246,7 @@ describe('rebaseAiAnnotationsMeta (ROAD-A, model-free)', () => {
       repos: dataset.repos,
       datasetSha256: dataset.datasetSha256,
       baseAnnotations: [ann], // base already carries this annotation → head == base
-      headAnnotationsBytes,
+      headAnnotationsBytes: Buffer.from(headAnnotationsBytes, 'utf8'),
       headMetaBytes: buildHeadMeta(headAnnotationsBytes, STALE_SHA),
       source: sourceFor([a]),
       config: CONFIG,

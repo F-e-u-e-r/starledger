@@ -124,6 +124,13 @@ function loadPreviousArtifact(candidatesPath: string): PreviousArtifact | null {
     );
     const metaText = readFileSync(metaPath, 'utf8');
     const metaParsed = DiscoveryCandidatesMetaSchema.safeParse(JSON.parse(metaText));
+    // Change-detection FALLBACK, not an integrity check (and never presented
+    // as one): with the previous meta unreadable, hash the previous artifact's
+    // DECODED text purely to decide "rewrite or skip". Deliberately left on
+    // text semantics (round-9 classification): a decode-alike byte corruption
+    // can at worst suppress a rewrite, and the byte-strict stager/loader still
+    // refuse the corrupt file downstream — nothing is accepted through this
+    // value.
     const datasetSha = metaParsed.success ? metaParsed.data.dataset_sha : sha256Hex(candidatesText);
     const generatedAt = metaParsed.success ? metaParsed.data.generated_at : '';
     const candidates = new Map<string, DiscoveryCandidate>();

@@ -1,9 +1,11 @@
 // @vitest-environment jsdom
 import { cleanup, render, screen, waitFor } from '@testing-library/react';
-import { afterEach, beforeEach, describe, expect, it } from 'vitest';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import type { LoadedDiscovery } from '../data/load-discovery';
 import { DataLoadError } from '../data/load-stars';
-import { makeDataset, makeRepo } from '../test-utils';
+import { createHash, webcrypto } from 'node:crypto';
+import { serializeSkillsClassificationMeta } from '@starred/skills-schema/contracts';
+import { makeDataset, makeRepo, makeStarsFile } from '../test-utils';
 import { App } from './App';
 
 beforeEach(() => window.history.replaceState(null, '', '/'));
@@ -130,5 +132,216 @@ describe('App state machine', () => {
       expect(screen.getByRole('heading', { name: 'Discovery Inbox' })).toBeTruthy(),
     );
     await waitFor(() => expect(window.location.search).toBe('?view=discovery'));
+  });
+});
+
+describe('M2.3 skills-classification non-propagation (P7 §4.10)', () => {
+  const skillsReady = async () => ({
+    byNodeId: new Map([
+      [
+        'R_1',
+        { primaryCategoryId: 'verification-qa', secondaryCategoryIds: [], summary: 'Fixture.' },
+      ],
+    ]),
+    categories: [],
+    scope: { id: 'coding-agent-skills-ecosystem', label: 'x', description: 'y' },
+    taxonomyVersion: 'skills-1',
+    generatedAt: '2026-08-14T00:00:00Z',
+    generatedAgainstStarsSha256: 'c'.repeat(64),
+    coverage: { matched: 1, unclassified: 0, unresolved: 0 },
+  });
+
+  async function renderWithSkills(
+    skillsLoader: NonNullable<Parameters<typeof App>[0]>['skillsClassificationLoader'],
+  ): Promise<string> {
+    const view = render(
+      <App
+        loader={async () => makeDataset([makeRepo({ node_id: 'R_1', name_with_owner: 'a/one' })])}
+        annotationsLoader={async () => null}
+        discoveryLoader={async () => null}
+        skillsClassificationLoader={skillsLoader}
+      />,
+    );
+    await waitFor(() => expect(screen.getByText('a/one')).toBeTruthy());
+    // Let the optional layer settle so the captured DOM is the steady state.
+    await new Promise((resolve) => setTimeout(resolve, 0));
+    // React's useId counter is process-global, so auto-generated aria ids
+    // (:r1f: etc.) differ between renders; normalize them — everything ELSE
+    // must be byte-identical for the delta-0 invariant.
+    const html = view.container.innerHTML.replace(/:r[0-9a-z]+:/g, ':rID:');
+    view.unmount();
+    return html;
+  }
+
+  it('SKILLS-1: the loader IS invoked (wiring pin) and a rejection never affects the base browser', async () => {
+    let invoked = 0;
+    const rejecting = () => {
+      invoked += 1;
+      return Promise.reject(new Error('classification exploded'));
+    };
+    await renderWithSkills(rejecting);
+    // Deleting App's useSkillsClassification call makes this fail.
+    expect(invoked).toBeGreaterThan(0);
+  });
+
+  it('SKILLS-3 (matrix row 10): a READY layer whose map lacks the base repo renders it as a normal repo — no error, no synthetic classification', async () => {
+    const readyWithoutThisRepo = async () => ({
+      ...(await skillsReady()),
+      byNodeId: new Map([
+        [
+          'R_other',
+          { primaryCategoryId: 'verification-qa', secondaryCategoryIds: [], summary: 'Other.' },
+        ],
+      ]),
+    });
+    const baseline = await renderWithSkills(async () => null);
+    const unclassified = await renderWithSkills(readyWithoutThisRepo);
+    expect(unclassified).toBe(baseline);
+    expect(unclassified).toContain('a/one');
+  });
+
+  it('SKILLS-2: ready, unavailable, pending, and rejecting layers render IDENTICAL base DOM (delta = 0)', async () => {
+    const baseline = await renderWithSkills(async () => null);
+    const ready = await renderWithSkills(skillsReady);
+    // The pending promise must SETTLE after the capture, or it dangles on the
+    // event loop and stalls the worker's teardown.
+    let releasePending: (value: null) => void = () => {};
+    const pending = await renderWithSkills(
+      () =>
+        new Promise<Awaited<ReturnType<typeof skillsReady>> | null>((resolve) => {
+          releasePending = resolve;
+        }),
+    );
+    releasePending(null);
+    const rejecting = await renderWithSkills(() => Promise.reject(new Error('boom')));
+    expect(ready).toBe(baseline);
+    expect(pending).toBe(baseline);
+    expect(rejecting).toBe(baseline);
+    expect(baseline).toContain('a/one');
+  });
+});
+
+/**
+ * PRODUCTION DEFAULT PATH (Charter E; round-9 finding, luna@ultra). Every other
+ * App test injects `loader`, and the direct loader tests inject `fetchImpl`, so
+ * the wiring `loadStars({ base: import.meta.env.BASE_URL })` — the only path
+ * production ever takes for the CANONICAL dataset — was exercised by nothing: a
+ * broken default (wrong base, dropped result, a digest input the runtime
+ * rejects) would have passed the entire suite. Same contract as the skills
+ * DEFAULT-PATH pin: the real loader's RESULT must reach the rendered state.
+ */
+describe('App production default path', () => {
+  it('DEFAULT-PATH: with no loaders injected, the real canonical loader result renders', async () => {
+    // Round-10 finding (sol + luna@ultra, convergent): under vitest the real
+    // BASE_URL is '/', so asserting '/'-prefixed URLs cannot discriminate a
+    // default that DROPPED BASE_URL and hardcoded '/' — the faithful Pages
+    // regression, where production serves from '/<repo>/'. Stub a non-root
+    // base: only a default that genuinely reads import.meta.env.BASE_URL
+    // requests these exact URLs.
+    const BASE = '/r10-pages-base/';
+    vi.stubEnv('BASE_URL', BASE);
+    const starsText = JSON.stringify(
+      makeStarsFile([makeRepo({ node_id: 'R_dp1', name_with_owner: 'default/path-one' })]),
+    );
+    const digest = createHash('sha256').update(starsText, 'utf8').digest('hex');
+    const metaText = JSON.stringify({
+      schema_version: '1.0',
+      dataset_generated_at: '2026-01-01T00:00:00Z',
+      stars_sha256: digest,
+      repo_count: 1,
+    });
+
+    // jsdom's `crypto` has no `subtle`, so the real loader's digest step would
+    // fail-soft and this test would assert nothing about the default path.
+    const originalCrypto = globalThis.crypto;
+    if (!globalThis.crypto?.subtle) {
+      Object.defineProperty(globalThis, 'crypto', { value: webcrypto, configurable: true });
+    }
+    // Round-12 finding (sol + luna@max): serving 404 for the optional layers
+    // meant each loader fetched only its META and never its ARTIFACT, so a
+    // default that dropped BASE_URL on the artifact fetch (`${base}...` → `/...`)
+    // passed. Serve schema-valid optional METAs so each loader PROCEEDS to
+    // request its artifact (with `?sha=`); the artifact fetch may 404 and fail
+    // soft, but the request is recorded and its base is asserted.
+    const AI_SHA = 'a'.repeat(64);
+    const DISC_SHA = 'c'.repeat(64);
+    const SKILLS_SHA = 'e'.repeat(64);
+    const aiMeta = JSON.stringify({
+      schema_version: '1.0',
+      annotations_sha256: AI_SHA,
+      annotation_count: 0,
+      taxonomy_version: '1',
+      dataset_sha256: 'b'.repeat(64),
+      generated_at: '2026-06-20T00:00:00Z',
+    });
+    const discMeta = JSON.stringify({
+      schema_version: 1,
+      generated_at: '2026-01-15T00:00:00.000Z',
+      dataset_sha: DISC_SHA,
+      candidate_count: 1,
+      source_count: 1,
+      generator_version: '0.1.0',
+    });
+    const skillsMeta = serializeSkillsClassificationMeta({
+      schema_version: '1.0',
+      taxonomy_version: 'skills-1',
+      classification_sha256: SKILLS_SHA,
+      source_sha256: 'b'.repeat(64),
+      aliases_sha256: null,
+      prior_classification_sha256: null,
+      generated_against_stars_sha256: 'c'.repeat(64),
+      generated_at: '2026-08-14T00:00:00Z',
+      category_count: 1,
+      source_entry_count: 1,
+      resolved_entry_count: 1,
+      present_repo_count: 1,
+      absent_repo_count: 0,
+      unresolved_entry_count: 0,
+      canonical_repo_count: 700,
+      unclassified_repo_count: 699,
+    });
+    const requested: string[] = [];
+    const original = globalThis.fetch;
+    globalThis.fetch = (async (input: RequestInfo | URL) => {
+      const url = String(input);
+      requested.push(url);
+      if (url.includes('dataset-meta.json')) return new Response(metaText, { status: 200 });
+      if (url.includes('stars.json')) return new Response(starsText, { status: 200 });
+      if (url.includes('ai-annotations-meta.json')) return new Response(aiMeta, { status: 200 });
+      if (url.includes('discovery-candidates-meta.json'))
+        return new Response(discMeta, { status: 200 });
+      if (url.includes('skills-classification-meta.json'))
+        return new Response(skillsMeta, { status: 200 });
+      // Optional ARTIFACT bodies 404: the layers fail soft (the digest never
+      // matches), the UI is unchanged — but the loader already REQUESTED the
+      // artifact URL, which is what this pin asserts.
+      return new Response('not found', { status: 404 });
+    }) as typeof fetch;
+    try {
+      render(<App />);
+      await waitFor(() => expect(screen.getByText('default/path-one')).toBeTruthy());
+      expect(screen.getByText('1 of 1 repositories')).toBeTruthy();
+      // The optional artifact requests fire AFTER the canonical render settles.
+      await waitFor(() =>
+        expect(requested.some((url) => url.includes('skills-classification.json?sha='))).toBe(true),
+      );
+    } finally {
+      globalThis.fetch = original;
+      Object.defineProperty(globalThis, 'crypto', { value: originalCrypto, configurable: true });
+      vi.unstubAllEnvs();
+    }
+    // Exact equality against the STUBBED base — never substrings, and never
+    // '/' (round-9 lesson, hardened in round 10).
+    expect(requested).toContain(`${BASE}dataset-meta.json`);
+    expect(requested).toContain(`${BASE}stars.json?sha=${digest}`);
+    // Every optional layer's META **and ARTIFACT** default must carry the base
+    // — a wrong base on the artifact fetch silently kills the layer in
+    // production while the layer's own meta request looks correct (round-12).
+    expect(requested).toContain(`${BASE}ai-annotations-meta.json`);
+    expect(requested).toContain(`${BASE}ai-annotations.json?sha=${AI_SHA}`);
+    expect(requested).toContain(`${BASE}discovery-candidates-meta.json`);
+    expect(requested).toContain(`${BASE}discovery-candidates.json?sha=${DISC_SHA}`);
+    expect(requested).toContain(`${BASE}skills-classification-meta.json`);
+    expect(requested).toContain(`${BASE}skills-classification.json?sha=${SKILLS_SHA}`);
   });
 });

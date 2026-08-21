@@ -76,7 +76,14 @@ export async function checkFreshness(opts: CheckFreshnessOptions): Promise<Fresh
   if (!res.ok) {
     throw new Error(`live dataset-meta.json → HTTP ${res.status} (${opts.url})`);
   }
-  const liveSha = parseLiveStarsSha(await res.text());
+  // RAW BYTES, decoded the way the BUILD decodes (Node utf8 — BOM PRESERVED).
+  // `Response.text()` strips a leading BOM, so this monitor once reported a
+  // live meta `fresh` that the runtime's BOM-preserving decoder rejects with
+  // the base dashboard failing closed — a false-green monitor, the exact
+  // reading OPS-A forbids (round-9 finding, reproduced). All ends now agree a
+  // BOM is invalid: the build refuses to stage it, the runtime fails closed,
+  // and this guard alarms ("not valid JSON") instead of concluding fresh.
+  const liveSha = parseLiveStarsSha(Buffer.from(await res.arrayBuffer()).toString('utf8'));
   return compareFreshness(liveSha, opts.expectedSha);
 }
 
@@ -129,7 +136,7 @@ export async function evaluateDeployFreshness(
     );
   }
   const expectedSha = verifyDatasetIntegrity(
-    readFileSync(starsPath, 'utf8'),
+    readFileSync(starsPath),
     readFileSync(metaPath, 'utf8'),
   ).sha256;
   const url = opts.url ?? deriveLiveMetaUrl(opts.repoSlug);

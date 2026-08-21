@@ -12,7 +12,11 @@ import { fileURLToPath } from 'node:url';
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const { run } = await import(join(root, 'packages/exporter/dist/index.js'));
 
-const sha256 = (s) => createHash('sha256').update(s, 'utf8').digest('hex');
+// RAW bytes — HASH-2 is a byte contract: hashing a decoded string re-encodes
+// it, so a byte-corrupt committed stars.json kept this smoke green while the
+// byte-strict deploy/runtime validation rejects the same file (round-9
+// finding). The smoke must certify the committed BYTES.
+const sha256Bytes = (b) => createHash('sha256').update(b).digest('hex');
 const git = (cwd, ...args) => execFileSync('git', args, { cwd, stdio: 'pipe' }).toString();
 const assert = (cond, msg) => {
   if (!cond) throw new Error(`SMOKE FAILED: ${msg}`);
@@ -92,8 +96,8 @@ try {
   assert(outcome.published === true, 'expected published=true');
   assert(outcome.changed === true, 'expected changed=true');
 
-  const starsBytes = readFileSync(join(work, 'stars.json'), 'utf8');
-  const stars = JSON.parse(starsBytes);
+  const starsRaw = readFileSync(join(work, 'stars.json'));
+  const stars = JSON.parse(starsRaw.toString('utf8'));
   assert(
     stars.repos.length === 1 && stars.repos[0].node_id === 'R_pub',
     'private repo must be filtered',
@@ -102,7 +106,7 @@ try {
 
   const meta = JSON.parse(readFileSync(join(work, 'dataset-meta.json'), 'utf8'));
   assert(
-    meta.stars_sha256 === sha256(starsBytes),
+    meta.stars_sha256 === sha256Bytes(starsRaw),
     'HASH-2: dataset-meta sha must equal committed stars bytes',
   );
 

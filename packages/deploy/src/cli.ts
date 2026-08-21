@@ -7,9 +7,12 @@ import { writeFixtureDataset } from './fixture';
 import {
   DATASET_META_FILE,
   STARS_FILE,
+  distHasUnshippableResidue,
   stageAiArtifacts,
   stageDashboardData,
   stageDiscoveryArtifacts,
+  stageSkillsArtifacts,
+  formatSkillsStageReport,
 } from './stage';
 import { staticSmoke, verifyBuiltArtifact } from './verify';
 
@@ -56,6 +59,23 @@ async function main(): Promise<void> {
           discovery.staged ? 'staged' : `skipped (${discovery.reason})`
         }`,
       );
+      // ONE string from a pure formatter: there is no index for a later edit
+      // to drop, so a warning cannot be silently suppressed while tests pass.
+      const skills = stageSkillsArtifacts({ dataDir: data, distDir: dist });
+      console.log(formatSkillsStageReport(skills));
+      // RESIDUE ESCALATION (round 11): an ordinary optional-pair skip is
+      // fail-soft — the canonical deploy proceeds. Content this run REJECTED
+      // and then could not remove is different: exiting 0 here let Pages
+      // upload the residue, and a coherent meta rewrite was then SERVED by
+      // the runtime. That is a dist-integrity failure, not an optional-layer
+      // problem, so it fails the deploy (exit 4 → `bash -e` in pages.yml →
+      // nothing ships).
+      if (distHasUnshippableResidue([ai, discovery, skills])) {
+        console.error(
+          '[deploy] FATAL: rejected optional-pair bytes could not be removed from the dist — refusing to let this dist ship',
+        );
+        exit(4);
+      }
       break;
     }
     case 'verify': {
@@ -74,10 +94,7 @@ async function main(): Promise<void> {
       if (!existsSync(starsPath) || !existsSync(metaPath)) {
         throw new Error(`canonical data not found in ${data}`);
       }
-      const r = verifyDatasetIntegrity(
-        readFileSync(starsPath, 'utf8'),
-        readFileSync(metaPath, 'utf8'),
-      );
+      const r = verifyDatasetIntegrity(readFileSync(starsPath), readFileSync(metaPath, 'utf8'));
       console.log(`[deploy] data OK: ${r.meta.repo_count} repos (sha ${r.sha256.slice(0, 12)}…)`);
       break;
     }

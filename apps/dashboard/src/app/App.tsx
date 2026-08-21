@@ -6,6 +6,8 @@ import {
   loadAnnotations,
 } from '../data/load-annotations';
 import { type LoadedDiscovery, loadDiscovery } from '../data/load-discovery';
+import { type LoadedSkillsClassification } from '../data/load-skills-classification';
+import { useSkillsClassification } from '../data/use-skills-classification';
 import {
   type DataLoadKind,
   DataLoadError,
@@ -28,10 +30,21 @@ export interface AppProps {
   annotationsLoader?: () => Promise<LoadedAnnotations | null>;
   /** Injectable for tests; the optional, fail-soft discovery inbox loader. */
   discoveryLoader?: () => Promise<LoadedDiscovery | null>;
+  /** Injectable for tests; the optional, fail-soft skills-classification loader (M2.3). */
+  skillsClassificationLoader?: () => Promise<LoadedSkillsClassification | null>;
 }
 
-export function App({ loader, annotationsLoader, discoveryLoader }: AppProps = {}) {
+export function App({
+  loader,
+  annotationsLoader,
+  discoveryLoader,
+  skillsClassificationLoader,
+}: AppProps = {}) {
   const controls = useDashboardState();
+  // M2.3: the skills-classification layer LOADS (fail-soft, §4.10) but nothing
+  // consumes its state yet — production UI delta stays zero until M2.4
+  // projects it. The hook call keeps the lifecycle real and testable.
+  useSkillsClassification(skillsClassificationLoader);
   const [state, setState] = useState<State>({ status: 'loading' });
   const [annotations, setAnnotations] = useState<LoadedAnnotations | null>(null);
   const [annotationStatus, setAnnotationStatus] = useState<AnnotationStatus>('loading');

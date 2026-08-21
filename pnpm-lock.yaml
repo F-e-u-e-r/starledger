@@ -53,6 +53,9 @@ importers:
       '@starred/schema':
         specifier: workspace:*
         version: link:../../packages/schema
+      '@starred/skills-schema':
+        specifier: workspace:*
+        version: link:../../packages/skills-schema
       react:
         specifier: ^18.3.1
         version: 18.3.1
@@ -120,6 +123,9 @@ importers:
       '@starred/schema':
         specifier: workspace:*
         version: link:../schema
+      '@starred/skills-schema':
+        specifier: workspace:*
+        version: link:../skills-schema
 
   packages/discovery:
     dependencies:

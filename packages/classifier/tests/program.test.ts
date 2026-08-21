@@ -221,7 +221,8 @@ describe('apply prune wiring (issue #213 round 1)', () => {
     expect(stdout).toContain('pruned 1 orphan(s): R_zz');
     const annotationsBytes = readFileSync(join(out, 'ai-annotations.json'), 'utf8');
     const metaBytes = readFileSync(join(out, 'ai-annotations-meta.json'), 'utf8');
-    verifyAiArtifacts(annotationsBytes, metaBytes);
+    // Verify over the file's RAW bytes (the digest is a byte contract).
+    verifyAiArtifacts(readFileSync(join(out, 'ai-annotations.json')), metaBytes);
     expect(annotationsBytes).not.toContain('R_zz');
     expect(JSON.parse(metaBytes).dataset_sha256).toBe(datasetSha256);
   });

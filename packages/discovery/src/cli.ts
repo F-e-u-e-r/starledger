@@ -103,10 +103,15 @@ program
     const candidatesPath = resolve(opts.dir, 'discovery-candidates.json');
     const metaPath = resolve(opts.dir, 'discovery-candidates-meta.json');
 
-    let candidatesText: string;
+    // Candidates as BYTES: `dataset_sha` is a byte digest, and the deploy
+    // stager + runtime loader verify the exact bytes. Hashing decoded text
+    // here made two byte-different files that decode alike hash alike, so
+    // `verify` could call "Valid" an artifact the deploy then refuses
+    // (round-9 closure of the decoded-text digest class).
+    let candidatesBytes: Buffer;
     let metaText: string;
     try {
-      candidatesText = readFileSync(candidatesPath, 'utf8');
+      candidatesBytes = readFileSync(candidatesPath);
       metaText = readFileSync(metaPath, 'utf8');
     } catch (err) {
       process.stderr.write(`Cannot read artifacts: ${err instanceof Error ? err.message : err}\n`);
@@ -119,7 +124,9 @@ program
       process.exit(1);
     }
 
-    const candidatesParsed = DiscoveryCandidatesFileSchema.safeParse(JSON.parse(candidatesText));
+    const candidatesParsed = DiscoveryCandidatesFileSchema.safeParse(
+      JSON.parse(candidatesBytes.toString('utf8')),
+    );
     if (!candidatesParsed.success) {
       process.stderr.write(
         `Candidates schema validation failed:\n${candidatesParsed.error.message}\n`,
@@ -127,7 +134,7 @@ program
       process.exit(1);
     }
 
-    const sha = createHash('sha256').update(candidatesText, 'utf8').digest('hex');
+    const sha = createHash('sha256').update(candidatesBytes).digest('hex');
     if (sha !== metaParsed.data.dataset_sha) {
       process.stderr.write(
         `Integrity check failed: expected ${metaParsed.data.dataset_sha}, got ${sha}\n`,
