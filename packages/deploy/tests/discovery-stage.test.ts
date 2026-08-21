@@ -2,9 +2,12 @@ import { createHash } from 'node:crypto';
 import {
   chmodSync,
   existsSync,
+  lstatSync,
   mkdirSync,
   mkdtempSync,
+  readdirSync,
   readFileSync,
+  symlinkSync,
   writeFileSync,
 } from 'node:fs';
 import { tmpdir } from 'node:os';
@@ -221,107 +224,170 @@ describe('stageDiscoveryArtifacts — source probing (round 10)', () => {
   });
 });
 
-describe('stageDiscoveryArtifacts — the post-publish guard fires', () => {
-  it('GUARD: corrupted published bytes are refused, not reported as staged', () => {
+describe('stageDiscoveryArtifacts — ownership-safe temp+rename publication (round 14)', () => {
+  function distinctPair(): { candidates: string; meta: string } {
+    const base = validArtifactPair();
+    const doc = JSON.parse(base.candidates) as { candidates: { description: string }[] };
+    doc.candidates[0]!.description = 'A DISTINCT candidate for round-14 tests';
+    const candidates = JSON.stringify(doc, null, 2) + '\n';
+    const metaDoc = JSON.parse(base.meta) as Record<string, unknown>;
+    metaDoc.dataset_sha = createHash('sha256').update(candidates, 'utf8').digest('hex');
+    return { candidates, meta: JSON.stringify(metaDoc, null, 2) + '\n' };
+  }
+
+  it('PIN-1 write-failure never partially overwrites a pre-existing valid pair', () => {
+    const { dataDir, distDir } = dirs();
+    const oldPair = validArtifactPair();
+    const distC = join(distDir, DISCOVERY_CANDIDATES_FILE);
+    const distM = join(distDir, DISCOVERY_CANDIDATES_META_FILE);
+    writeFileSync(distC, oldPair.candidates);
+    writeFileSync(distM, oldPair.meta);
+    const newPair = distinctPair();
+    writeFileSync(join(dataDir, DISCOVERY_CANDIDATES_FILE), newPair.candidates);
+    writeFileSync(join(dataDir, DISCOVERY_CANDIDATES_META_FILE), newPair.meta);
+    const result = stageDiscoveryArtifacts(
+      { dataDir, distDir },
+      {
+        writeTempImpl: (() => {
+          throw Object.assign(new Error('ENOSPC: no space left on device'), { code: 'ENOSPC' });
+        }) as never,
+      },
+    );
+    expect(result.staged).toBe(false);
+    expect(readFileSync(distC, 'utf8')).toBe(oldPair.candidates);
+    expect(readFileSync(distM, 'utf8')).toBe(oldPair.meta);
+  });
+
+  it("PIN-2 a successful publication lands EXACTLY this invocation's validated bytes", () => {
     const { dataDir, distDir } = dirs();
     const pair = validArtifactPair();
-    const artifact = pair.candidates;
-    const meta = pair.meta;
-    writeFileSync(join(dataDir, DISCOVERY_CANDIDATES_FILE), artifact);
-    writeFileSync(join(dataDir, DISCOVERY_CANDIDATES_FILE.replace('.json', '-meta.json')), meta);
+    writeFileSync(join(dataDir, DISCOVERY_CANDIDATES_FILE), pair.candidates);
+    writeFileSync(join(dataDir, DISCOVERY_CANDIDATES_META_FILE), pair.meta);
+    const result = stageDiscoveryArtifacts({ dataDir, distDir });
+    expect(result.staged).toBe(true);
+    expect(readFileSync(join(distDir, DISCOVERY_CANDIDATES_FILE), 'utf8')).toBe(pair.candidates);
+    expect(readFileSync(join(distDir, DISCOVERY_CANDIDATES_META_FILE), 'utf8')).toBe(pair.meta);
+    expect(readdirSync(distDir).filter((n) => n.includes('.staging-tmp'))).toEqual([]);
+  });
+
+  it("PIN-3 cleanup removes only THIS run's temp; a foreign temp-suffixed file survives", () => {
+    const { dataDir, distDir } = dirs();
+    const pair = validArtifactPair();
+    writeFileSync(join(dataDir, DISCOVERY_CANDIDATES_FILE), pair.candidates);
+    writeFileSync(join(dataDir, DISCOVERY_CANDIDATES_META_FILE), pair.meta);
+    const foreign = join(distDir, `${DISCOVERY_CANDIDATES_FILE}.deadbeef.staging-tmp`);
+    writeFileSync(foreign, 'FOREIGN');
+    const result = stageDiscoveryArtifacts(
+      { dataDir, distDir },
+      {
+        writeTempImpl: (() => {
+          throw Object.assign(new Error('EIO: i/o error'), { code: 'EIO' });
+        }) as never,
+      },
+    );
+    expect(result.staged).toBe(false);
+    expect(existsSync(foreign)).toBe(true);
+    expect(readFileSync(foreign, 'utf8')).toBe('FOREIGN');
+  });
+
+  it('SYMLINK: a symlinked destination is replaced by rename; the external target is not corrupted', () => {
+    const { dataDir, distDir } = dirs();
+    const targetDir = mkdtempSync(join(tmpdir(), 'disc-target-'));
+    const cTarget = join(targetDir, 'external-candidates.json');
+    const mTarget = join(targetDir, 'external-meta.json');
+    writeFileSync(cTarget, 'EXTERNAL CANDIDATES CONTENT');
+    writeFileSync(mTarget, 'EXTERNAL META CONTENT');
+    symlinkSync(cTarget, join(distDir, DISCOVERY_CANDIDATES_FILE));
+    symlinkSync(mTarget, join(distDir, DISCOVERY_CANDIDATES_META_FILE));
+    const pair = validArtifactPair();
+    writeFileSync(join(dataDir, DISCOVERY_CANDIDATES_FILE), pair.candidates);
+    writeFileSync(join(dataDir, DISCOVERY_CANDIDATES_META_FILE), pair.meta);
+    const result = stageDiscoveryArtifacts({ dataDir, distDir });
+    expect(result.staged).toBe(true);
+    expect(readFileSync(cTarget, 'utf8')).toBe('EXTERNAL CANDIDATES CONTENT');
+    expect(readFileSync(mTarget, 'utf8')).toBe('EXTERNAL META CONTENT');
+    expect(lstatSync(join(distDir, DISCOVERY_CANDIDATES_FILE)).isSymbolicLink()).toBe(false);
+    expect(readFileSync(join(distDir, DISCOVERY_CANDIDATES_FILE), 'utf8')).toBe(pair.candidates);
+  });
+
+  it('READONLY-DEST: a read-only destination pair is replaced by rename (no EACCES, no data loss)', () => {
+    const { dataDir, distDir } = dirs();
+    const oldPair = validArtifactPair();
+    const distC = join(distDir, DISCOVERY_CANDIDATES_FILE);
+    const distM = join(distDir, DISCOVERY_CANDIDATES_META_FILE);
+    writeFileSync(distC, oldPair.candidates);
+    writeFileSync(distM, oldPair.meta);
+    chmodSync(distM, 0o444);
+    const newPair = distinctPair();
+    writeFileSync(join(dataDir, DISCOVERY_CANDIDATES_FILE), newPair.candidates);
+    writeFileSync(join(dataDir, DISCOVERY_CANDIDATES_META_FILE), newPair.meta);
+    let result;
+    try {
+      result = stageDiscoveryArtifacts({ dataDir, distDir });
+    } finally {
+      if (existsSync(distM)) chmodSync(distM, 0o644);
+    }
+    expect(result.staged).toBe(true);
+    expect(readFileSync(distC, 'utf8')).toBe(newPair.candidates);
+    expect(readFileSync(distM, 'utf8')).toBe(newPair.meta);
+  });
+
+  it('PARTIAL-TEMP: a temp write that fails PARTWAY leaves no leftover temp', () => {
+    const { dataDir, distDir } = dirs();
+    const pair = validArtifactPair();
+    writeFileSync(join(dataDir, DISCOVERY_CANDIDATES_FILE), pair.candidates);
+    writeFileSync(join(dataDir, DISCOVERY_CANDIDATES_META_FILE), pair.meta);
+    const result = stageDiscoveryArtifacts(
+      { dataDir, distDir },
+      {
+        writeTempImpl: ((path: string) => {
+          writeFileSync(path, 'PARTIAL');
+          throw Object.assign(new Error('ENOSPC: no space left on device'), { code: 'ENOSPC' });
+        }) as never,
+      },
+    );
+    expect(result.staged).toBe(false);
+    expect(readdirSync(distDir).filter((n) => n.includes('.staging-tmp'))).toEqual([]);
+  });
+
+  it('STUCK-TEMP-RESIDUE: an owned temp that cannot be removed is reported as residue', () => {
+    const { dataDir, distDir } = dirs();
+    const pair = validArtifactPair();
+    writeFileSync(join(dataDir, DISCOVERY_CANDIDATES_FILE), pair.candidates);
+    writeFileSync(join(dataDir, DISCOVERY_CANDIDATES_META_FILE), pair.meta);
+    const result = stageDiscoveryArtifacts(
+      { dataDir, distDir },
+      {
+        writeTempImpl: ((path: string) => {
+          mkdirSync(path);
+          writeFileSync(join(path, 'squatter'), 'x');
+          throw Object.assign(new Error('EIO: i/o error'), { code: 'EIO' });
+        }) as never,
+      },
+    );
+    expect(result.staged).toBe(false);
+    expect(result.reason).toContain('could NOT be removed');
+    expect(result.residue).toBe(true);
+  });
+
+  it('GUARD: a post-publish mismatch (a concurrent writer/tamper) is never reported staged', () => {
+    const { dataDir, distDir } = dirs();
+    const pair = validArtifactPair();
+    writeFileSync(join(dataDir, DISCOVERY_CANDIDATES_FILE), pair.candidates);
+    writeFileSync(join(dataDir, DISCOVERY_CANDIDATES_META_FILE), pair.meta);
     const result = stageDiscoveryArtifacts(
       { dataDir, distDir },
       { afterPublish: () => writeFileSync(join(distDir, DISCOVERY_CANDIDATES_FILE), 'CORRUPTED') },
     );
     expect(result.staged).toBe(false);
-    expect(result.reason).toContain('discovery artifact published bytes');
-    // CONSEQUENCE (round-10, all three legs): detection must discard this
-    // run's writes — a merely-reported mismatch was uploaded by Pages.
-    expect(result.reason).toContain('writes were removed');
-    expect(existsSync(join(distDir, DISCOVERY_CANDIDATES_FILE))).toBe(false);
-    expect(existsSync(join(distDir, DISCOVERY_CANDIDATES_META_FILE))).toBe(false);
+    expect(result.reason).toContain('do not match the validated snapshot');
   });
 
-  it('RESIDUE: a write failure discards this run’s own write and leaves a pre-existing entry untouched', () => {
-    // Round-9 finding (sol), corrected round-13 — same ownership contract as
-    // the AI pair: remove only what THIS run wrote, leave the pre-existing
-    // directory it never wrote.
+  it('GUARD-META: a post-publish meta rewrite is never reported staged', () => {
     const { dataDir, distDir } = dirs();
     const pair = validArtifactPair();
     writeFileSync(join(dataDir, DISCOVERY_CANDIDATES_FILE), pair.candidates);
     writeFileSync(join(dataDir, DISCOVERY_CANDIDATES_META_FILE), pair.meta);
-    mkdirSync(join(distDir, DISCOVERY_CANDIDATES_META_FILE)); // meta write will throw EISDIR
-    const result = stageDiscoveryArtifacts({ dataDir, distDir });
-    expect(result.staged).toBe(false);
-    expect(result.reason).toContain('writes were removed');
-    expect(existsSync(join(distDir, DISCOVERY_CANDIDATES_FILE))).toBe(false);
-    expect(existsSync(join(distDir, DISCOVERY_CANDIDATES_META_FILE))).toBe(true);
-    expect(result.residue).toBeUndefined();
-  });
-
-  it('ZERO-WRITE: a first-write failure onto a read-only pre-existing pair deletes NOTHING', () => {
-    // Round-13 finding (sol), High — same as the AI pair.
-    const { dataDir, distDir } = dirs();
-    const oldPair = validArtifactPair();
-    const distCand = join(distDir, DISCOVERY_CANDIDATES_FILE);
-    const distMeta = join(distDir, DISCOVERY_CANDIDATES_META_FILE);
-    writeFileSync(distCand, oldPair.candidates);
-    writeFileSync(distMeta, oldPair.meta);
-    chmodSync(distCand, 0o444);
-    writeFileSync(join(dataDir, DISCOVERY_CANDIDATES_FILE), oldPair.candidates);
-    writeFileSync(join(dataDir, DISCOVERY_CANDIDATES_META_FILE), oldPair.meta);
-    let result;
-    try {
-      result = stageDiscoveryArtifacts({ dataDir, distDir });
-    } finally {
-      // Tolerant: a buggy discard may have deleted the file (that is the
-      // failure this test asserts), so restoring perms must not itself throw.
-      if (existsSync(distCand)) chmodSync(distCand, 0o644);
-    }
-    expect(result.staged).toBe(false);
-    expect(existsSync(distCand)).toBe(true);
-    expect(existsSync(distMeta)).toBe(true);
-    expect(readFileSync(distCand, 'utf8')).toBe(oldPair.candidates);
-    expect(readFileSync(distMeta, 'utf8')).toBe(oldPair.meta);
-    expect(result.residue).toBeUndefined();
-  });
-
-  it('STUCK-RESIDUE: a discard of THIS run’s own write that fails is reported as residue', () => {
-    const { dataDir, distDir } = dirs();
-    const pair = validArtifactPair();
-    writeFileSync(join(dataDir, DISCOVERY_CANDIDATES_FILE), pair.candidates);
-    writeFileSync(join(dataDir, DISCOVERY_CANDIDATES_META_FILE), pair.meta);
-    let result;
-    try {
-      result = stageDiscoveryArtifacts(
-        { dataDir, distDir },
-        {
-          afterPublish: () => {
-            writeFileSync(
-              join(distDir, DISCOVERY_CANDIDATES_META_FILE),
-              pair.meta.replace('2026-01-15T00:00:00.000Z', '2027-01-01T00:00:00.000Z'),
-            );
-            chmodSync(distDir, 0o555);
-          },
-        },
-      );
-    } finally {
-      chmodSync(distDir, 0o755);
-    }
-    expect(result.staged).toBe(false);
-    expect(result.reason).toContain('could NOT all be removed');
-    expect(result.residue).toBe(true);
-  });
-
-  it('GUARD-META: a meta rewritten after publish is refused even though the pair stays coherent', () => {
-    const { dataDir, distDir } = dirs();
-    const pair = validArtifactPair();
-    writeFileSync(join(dataDir, DISCOVERY_CANDIDATES_FILE), pair.candidates);
-    writeFileSync(join(dataDir, DISCOVERY_CANDIDATES_META_FILE), pair.meta);
-    // The round-8 reproduction: ONLY generated_at changes, so the published
-    // pair remains internally coherent — dataset_sha still matches the
-    // artifact — and NO later validation (runtime included) can reject it.
-    // Only a read-back against THIS invocation's validated snapshot can.
     const rewritten = pair.meta.replace('2026-01-15T00:00:00.000Z', '2027-01-01T00:00:00.000Z');
     expect(rewritten).not.toBe(pair.meta);
     const result = stageDiscoveryArtifacts(
@@ -331,11 +397,6 @@ describe('stageDiscoveryArtifacts — the post-publish guard fires', () => {
       },
     );
     expect(result.staged).toBe(false);
-    expect(result.reason).toContain('discovery meta published bytes');
-    // CONSEQUENCE (round-10, all three legs): a coherent meta rewrite is the
-    // one corruption the runtime cannot refuse — discard, never serve.
-    expect(result.reason).toContain('writes were removed');
-    expect(existsSync(join(distDir, DISCOVERY_CANDIDATES_META_FILE))).toBe(false);
-    expect(existsSync(join(distDir, DISCOVERY_CANDIDATES_FILE))).toBe(false);
+    expect(result.reason).toContain('do not match the validated snapshot');
   });
 });

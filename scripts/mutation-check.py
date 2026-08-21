@@ -177,38 +177,6 @@ CASES = [
     # the skills pair — the guard moved OUTSIDE the protected region detects
     # but no longer rolls back, so only the CONSEQUENCE assertions catch it.
     (
-        "AI meta read-back guard removed",
-        "packages/deploy/src/stage.ts",
-        "    if (!landedMeta.equals(metaBytes)) {\n"
-        "      const discard = discardOutcome();\n"
-        "      return {\n"
-        "        staged: false,\n"
-        "        reason: `AI meta published bytes do not match the validated snapshot${discard.suffix}`,\n"
-        "        ...(discard.residue ? { residue: true } : {}),\n"
-        "      };\n"
-        "    }\n"
-        "    if (createHash('sha256').update(landedAnn).digest('hex') !== meta.annotations_sha256) {",
-        "    if (createHash('sha256').update(landedAnn).digest('hex') !== meta.annotations_sha256) {",
-        "packages/deploy/tests/ai-stage.test.ts",
-        "GUARD-META",
-    ),
-    (
-        "discovery meta read-back guard removed",
-        "packages/deploy/src/stage.ts",
-        "    if (!landedMeta.equals(metaBytes)) {\n"
-        "      const discard = discardOutcome();\n"
-        "      return {\n"
-        "        staged: false,\n"
-        "        reason: `discovery meta published bytes do not match the validated snapshot${discard.suffix}`,\n"
-        "        ...(discard.residue ? { residue: true } : {}),\n"
-        "      };\n"
-        "    }\n"
-        "    if (createHash('sha256').update(landedCandidates).digest('hex') !== meta.dataset_sha) {",
-        "    if (createHash('sha256').update(landedCandidates).digest('hex') !== meta.dataset_sha) {",
-        "packages/deploy/tests/discovery-stage.test.ts",
-        "GUARD-META",
-    ),
-    (
         "skills meta read-back guard removed",
         "packages/deploy/src/stage.ts",
         "        if (!readFileSync(distMeta).equals(metaBytes)) {\n"
@@ -459,18 +427,6 @@ CASES = [
         "apps/dashboard/src/app/App.test.tsx",
         "DEFAULT-PATH",
     ),
-    (
-        # Round-11 intent, re-expressed on the round-13 discardOutcome shape:
-        # dropping the residue spread on the meta-guard return makes a STUCK
-        # discard report no residue ⇒ STUCK-RESIDUE reddens.
-        "AI residue flag dropped on a stuck discard",
-        "packages/deploy/src/stage.ts",
-        "        reason: `AI meta published bytes do not match the validated snapshot${discard.suffix}`,\n"
-        "        ...(discard.residue ? { residue: true } : {}),",
-        "        reason: `AI meta published bytes do not match the validated snapshot${discard.suffix}`,",
-        "packages/deploy/tests/ai-stage.test.ts",
-        "STUCK-RESIDUE",
-    ),
     # Round-13 mutants:
     (
         "skills temp recorded only after a clean write (partial leaks)",
@@ -490,18 +446,6 @@ CASES = [
         "      };",
         "packages/deploy/tests/skills-stage.test.ts",
         "PARTIAL-TEMP",
-    ),
-    (
-        "AI discard removes a fixed pair instead of only changed paths",
-        "packages/deploy/src/stage.ts",
-        "      const now = snapshot(path);\n"
-        "      if (now === null) continue; // nothing readable of ours there now\n"
-        "      if (pre !== null && now.equals(pre)) continue; // unchanged since snapshot \u21d2 not ours",
-        "      const now = snapshot(path);\n"
-        "      if (now === null) continue; // nothing readable of ours there now\n"
-        "      void pre;",
-        "packages/deploy/tests/ai-stage.test.ts",
-        "ZERO-WRITE",
     ),
     (
         "surface extractor misses method-form options",
@@ -530,6 +474,67 @@ CASES = [
         "  return results[0]?.residue === true;",
         "packages/deploy/tests/residue-decision.test.ts",
         "position",
+    ),
+    # Round-14 (owner ruling A) — the ownership-safe temp+rename publish. These
+    # mutate the shared publishOptionalPairAtomically helper; one per behavior,
+    # exercised through the AI pair's suite.
+    (
+        # Publish in place (following a destination symlink) instead of by
+        # rename ⇒ the SYMLINK external target is corrupted.
+        "optional publish writes in place instead of by rename",
+        "packages/deploy/src/stage.ts",
+        "    renameSync(tmpArtifact, destArtifact);\n"
+        "    ownedTemps.splice(ownedTemps.indexOf(tmpArtifact), 1);",
+        "    writeFileSync(destArtifact, artifactBytes);\n"
+        "    ownedTemps.splice(ownedTemps.indexOf(tmpArtifact), 1);",
+        "packages/deploy/tests/ai-stage.test.ts",
+        "SYMLINK",
+    ),
+    (
+        # The temp is registered only after a CLEAN write ⇒ a mid-write partial
+        # leaks (PARTIAL-TEMP reddens).
+        "optional temp registered only after a clean write",
+        "packages/deploy/src/stage.ts",
+        "      if ((error as NodeJS.ErrnoException)?.code !== 'EEXIST') ownedTemps.push(path);\n"
+        "      throw error;",
+        "      throw error;",
+        "packages/deploy/tests/ai-stage.test.ts",
+        "PARTIAL-TEMP",
+    ),
+    (
+        # The stuck-temp residue flag is dropped ⇒ STUCK-TEMP-RESIDUE reddens.
+        "optional stuck-temp residue flag dropped",
+        "packages/deploy/src/stage.ts",
+        "      ? {\n"
+        "          staged: false,\n"
+        "          reason: `${base} — this run's temporary could NOT be removed (residue remains)`,\n"
+        "          residue: true,\n"
+        "        }",
+        "      ? {\n"
+        "          staged: false,\n"
+        "          reason: `${base} — this run's temporary could NOT be removed (residue remains)`,\n"
+        "        }",
+        "packages/deploy/tests/ai-stage.test.ts",
+        "STUCK-TEMP-RESIDUE",
+    ),
+    (
+        # The post-publish read-back is removed ⇒ a landed-byte mismatch
+        # (GUARD's seam) is not caught.
+        "optional post-publish read-back removed",
+        "packages/deploy/src/stage.ts",
+        "    if (\n"
+        "      !readFileSync(destArtifact).equals(artifactBytes) ||\n"
+        "      !readFileSync(destMeta).equals(metaBytes)\n"
+        "    ) {\n"
+        "      return {\n"
+        "        staged: false,\n"
+        "        reason: `${label} published bytes do not match the validated snapshot (a concurrent writer won)`,\n"
+        "      };\n"
+        "    }\n"
+        "    return { staged: true };",
+        "    return { staged: true };",
+        "packages/deploy/tests/ai-stage.test.ts",
+        "GUARD:",
     ),
 ]
 

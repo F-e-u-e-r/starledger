@@ -1,9 +1,12 @@
 import {
   chmodSync,
   existsSync,
+  lstatSync,
   mkdirSync,
   mkdtempSync,
+  readdirSync,
   readFileSync,
+  symlinkSync,
   writeFileSync,
 } from 'node:fs';
 import { tmpdir } from 'node:os';
@@ -188,63 +191,109 @@ describe('stageAiArtifacts — source probing (round 10)', () => {
   });
 });
 
-describe('stageAiArtifacts — the post-publish guard fires', () => {
-  it('GUARD: corrupted published bytes are refused, not reported as staged', () => {
-    const { dataDir, distDir } = dirs();
-    const pair = validArtifactPair();
-    const artifact = pair.annotations;
-    const meta = pair.meta;
-    writeFileSync(join(dataDir, AI_ANNOTATIONS_FILE), artifact);
-    writeFileSync(join(dataDir, AI_ANNOTATIONS_FILE.replace('.json', '-meta.json')), meta);
-    const result = stageAiArtifacts(
-      { dataDir, distDir },
-      { afterPublish: () => writeFileSync(join(distDir, AI_ANNOTATIONS_FILE), 'CORRUPTED') },
-    );
-    expect(result.staged).toBe(false);
-    expect(result.reason).toContain('AI artifact published bytes');
-    // CONSEQUENCE (round-10 finding, all three legs): merely reporting the
-    // mismatch left the pair in the dist, the CLI logged "skipped" and exited
-    // 0, verification checks only the canonical pair — so Pages UPLOADED the
-    // retained pair. Detection must discard this run's writes: the layer then
-    // fails soft to absent instead of serving unvalidated bytes.
-    expect(result.reason).toContain('writes were removed');
-    expect(existsSync(join(distDir, AI_ANNOTATIONS_FILE))).toBe(false);
-    expect(existsSync(join(distDir, AI_ANNOTATIONS_META_FILE))).toBe(false);
-  });
+describe('stageAiArtifacts — ownership-safe temp+rename publication (round 14)', () => {
+  // Owner ruling A: publish this invocation's validated bytes via unique temps
+  // + rename, never an in-place overwrite. These pin the three discriminating
+  // cases the owner required, plus the R14 root-defect variants.
 
-  it('RESIDUE: a write failure discards this run’s own write and leaves a pre-existing entry untouched', () => {
-    // Round-9 finding (sol), corrected round-13: with the meta destination
-    // blocked by a pre-existing DIRECTORY, the artifact write lands (ours) and
-    // the meta write throws. This run removes ONLY what it wrote — the
-    // artifact half — and leaves the pre-existing directory it never wrote.
-    const { dataDir, distDir } = dirs();
-    const pair = validArtifactPair();
-    writeFileSync(join(dataDir, AI_ANNOTATIONS_FILE), pair.annotations);
-    writeFileSync(join(dataDir, AI_ANNOTATIONS_META_FILE), pair.meta);
-    mkdirSync(join(distDir, AI_ANNOTATIONS_META_FILE)); // meta write will throw EISDIR
-    const result = stageAiArtifacts({ dataDir, distDir });
-    expect(result.staged).toBe(false);
-    // Our artifact write is cleanly removed…
-    expect(result.reason).toContain('writes were removed');
-    expect(existsSync(join(distDir, AI_ANNOTATIONS_FILE))).toBe(false);
-    // …and the pre-existing directory we never wrote is untouched, so there is
-    // no residue OF OURS.
-    expect(existsSync(join(distDir, AI_ANNOTATIONS_META_FILE))).toBe(true);
-    expect(result.residue).toBeUndefined();
-  });
-
-  it('ZERO-WRITE: a first-write failure onto a read-only pre-existing pair deletes NOTHING', () => {
-    // Round-13 finding (sol), High: `publishBegan` discarded BOTH dist paths on
-    // any post-flag failure, so a first write that failed at OPEN (EACCES on a
-    // read-only pre-existing artifact) DELETED the untouched valid pair and
-    // still reported success. This run must remove only what it changed.
+  it('PIN-1 write-failure never partially overwrites a pre-existing valid pair', () => {
+    // An existing valid destination + a write/copy FAILURE must leave the
+    // existing canonical files byte-identical (the write goes to a temp).
     const { dataDir, distDir } = dirs();
     const oldPair = validArtifactPair();
     const distAnn = join(distDir, AI_ANNOTATIONS_FILE);
     const distMeta = join(distDir, AI_ANNOTATIONS_META_FILE);
     writeFileSync(distAnn, oldPair.annotations);
     writeFileSync(distMeta, oldPair.meta);
-    chmodSync(distAnn, 0o444); // the first write opens O_TRUNC and fails EACCES
+    const newPair = validArtifactPair();
+    // make newPair distinct so a partial overwrite would be observable
+    writeFileSync(join(dataDir, AI_ANNOTATIONS_FILE), newPair.annotations);
+    writeFileSync(join(dataDir, AI_ANNOTATIONS_META_FILE), newPair.meta);
+    const result = stageAiArtifacts(
+      { dataDir, distDir },
+      {
+        // The temp write throws before anything is renamed into place.
+        writeTempImpl: (() => {
+          throw Object.assign(new Error('ENOSPC: no space left on device'), { code: 'ENOSPC' });
+        }) as never,
+      },
+    );
+    expect(result.staged).toBe(false);
+    // The pre-existing pair is untouched — no in-place overwrite happened.
+    expect(readFileSync(distAnn, 'utf8')).toBe(oldPair.annotations);
+    expect(readFileSync(distMeta, 'utf8')).toBe(oldPair.meta);
+  });
+
+  it("PIN-2 a successful publication lands EXACTLY this invocation's validated bytes", () => {
+    const { dataDir, distDir } = dirs();
+    const pair = validArtifactPair();
+    writeFileSync(join(dataDir, AI_ANNOTATIONS_FILE), pair.annotations);
+    writeFileSync(join(dataDir, AI_ANNOTATIONS_META_FILE), pair.meta);
+    const result = stageAiArtifacts({ dataDir, distDir });
+    expect(result.staged).toBe(true);
+    expect(readFileSync(join(distDir, AI_ANNOTATIONS_FILE), 'utf8')).toBe(pair.annotations);
+    expect(readFileSync(join(distDir, AI_ANNOTATIONS_META_FILE), 'utf8')).toBe(pair.meta);
+    // No temporaries survive a clean publication.
+    expect(readdirSync(distDir).filter((n) => n.includes('.staging-tmp'))).toEqual([]);
+  });
+
+  it("PIN-3 cleanup removes only THIS run's temp; a foreign temp-suffixed file survives", () => {
+    const { dataDir, distDir } = dirs();
+    const pair = validArtifactPair();
+    writeFileSync(join(dataDir, AI_ANNOTATIONS_FILE), pair.annotations);
+    writeFileSync(join(dataDir, AI_ANNOTATIONS_META_FILE), pair.meta);
+    // A FOREIGN file that merely shares the .staging-tmp suffix (a different
+    // token) must never be touched by this invocation's cleanup.
+    const foreign = join(distDir, `${AI_ANNOTATIONS_FILE}.deadbeef.staging-tmp`);
+    writeFileSync(foreign, 'FOREIGN');
+    const result = stageAiArtifacts(
+      { dataDir, distDir },
+      {
+        writeTempImpl: (() => {
+          throw Object.assign(new Error('EIO: i/o error'), { code: 'EIO' });
+        }) as never,
+      },
+    );
+    expect(result.staged).toBe(false);
+    expect(existsSync(foreign)).toBe(true);
+    expect(readFileSync(foreign, 'utf8')).toBe('FOREIGN');
+  });
+
+  it('SYMLINK: a symlinked destination is replaced by rename; the external target is not corrupted', () => {
+    // Round-14 (sol): the old in-place write FOLLOWED a destination symlink and
+    // corrupted its external target. A rename replaces the link ENTRY, leaving
+    // the target untouched.
+    const { dataDir, distDir } = dirs();
+    const targetDir = mkdtempSync(join(tmpdir(), 'ai-target-'));
+    const annTarget = join(targetDir, 'external-ann.json');
+    const metaTarget = join(targetDir, 'external-meta.json');
+    writeFileSync(annTarget, 'EXTERNAL ARTIFACT CONTENT');
+    writeFileSync(metaTarget, 'EXTERNAL META CONTENT');
+    symlinkSync(annTarget, join(distDir, AI_ANNOTATIONS_FILE));
+    symlinkSync(metaTarget, join(distDir, AI_ANNOTATIONS_META_FILE));
+    const pair = validArtifactPair();
+    writeFileSync(join(dataDir, AI_ANNOTATIONS_FILE), pair.annotations);
+    writeFileSync(join(dataDir, AI_ANNOTATIONS_META_FILE), pair.meta);
+    const result = stageAiArtifacts({ dataDir, distDir });
+    expect(result.staged).toBe(true);
+    // The EXTERNAL targets are UNTOUCHED — the write never followed the link.
+    expect(readFileSync(annTarget, 'utf8')).toBe('EXTERNAL ARTIFACT CONTENT');
+    expect(readFileSync(metaTarget, 'utf8')).toBe('EXTERNAL META CONTENT');
+    // The dist now holds regular files with this invocation's bytes.
+    expect(lstatSync(join(distDir, AI_ANNOTATIONS_FILE)).isSymbolicLink()).toBe(false);
+    expect(readFileSync(join(distDir, AI_ANNOTATIONS_FILE), 'utf8')).toBe(pair.annotations);
+  });
+
+  it('READONLY-DEST: a read-only destination pair is replaced by rename (no EACCES, no data loss)', () => {
+    // Round-14 (luna): the old in-place write hit EACCES truncating a read-only
+    // destination and left a torn pair. A rename swaps the entry and succeeds.
+    const { dataDir, distDir } = dirs();
+    const oldPair = validArtifactPair();
+    const distAnn = join(distDir, AI_ANNOTATIONS_FILE);
+    const distMeta = join(distDir, AI_ANNOTATIONS_META_FILE);
+    writeFileSync(distAnn, oldPair.annotations);
+    writeFileSync(distMeta, oldPair.meta);
+    chmodSync(distMeta, 0o444);
     const newPair = validArtifactPair();
     writeFileSync(join(dataDir, AI_ANNOTATIONS_FILE), newPair.annotations);
     writeFileSync(join(dataDir, AI_ANNOTATIONS_META_FILE), newPair.meta);
@@ -252,62 +301,76 @@ describe('stageAiArtifacts — the post-publish guard fires', () => {
     try {
       result = stageAiArtifacts({ dataDir, distDir });
     } finally {
-      // Tolerant: a buggy discard may have deleted the file (that is the
-      // failure this test asserts), so restoring perms must not itself throw.
-      if (existsSync(distAnn)) chmodSync(distAnn, 0o644);
+      if (existsSync(distMeta)) chmodSync(distMeta, 0o644);
     }
-    expect(result.staged).toBe(false);
-    // The pre-existing valid pair — which this run never wrote — must survive.
-    // existsSync first, so a mutant that DELETES it fails by ASSERTION (not a
-    // readFileSync throw the harness would misclassify).
-    expect(existsSync(distAnn)).toBe(true);
-    expect(existsSync(distMeta)).toBe(true);
-    expect(readFileSync(distAnn, 'utf8')).toBe(oldPair.annotations);
-    expect(readFileSync(distMeta, 'utf8')).toBe(oldPair.meta);
-    expect(result.residue).toBeUndefined();
+    expect(result.staged).toBe(true);
+    // A COMPLETE new pair is published — never a torn old-meta + new-artifact.
+    expect(readFileSync(distAnn, 'utf8')).toBe(newPair.annotations);
+    expect(readFileSync(distMeta, 'utf8')).toBe(newPair.meta);
   });
 
-  it('STUCK-RESIDUE: a discard of THIS run’s own write that fails is reported as residue', () => {
-    // The genuine residue case: we wrote the pair, the guard then detects a
-    // rewrite, and the discard of our OWN write cannot complete (the dist
-    // directory was made read-only), so the run leaves residue it must flag.
+  it('PARTIAL-TEMP: a temp write that fails PARTWAY leaves no leftover temp', () => {
     const { dataDir, distDir } = dirs();
     const pair = validArtifactPair();
     writeFileSync(join(dataDir, AI_ANNOTATIONS_FILE), pair.annotations);
     writeFileSync(join(dataDir, AI_ANNOTATIONS_META_FILE), pair.meta);
-    let result;
-    try {
-      result = stageAiArtifacts(
-        { dataDir, distDir },
-        {
-          afterPublish: () => {
-            // Break the meta so the guard fails, then lock the dir so the
-            // discard of our own artifact cannot unlink.
-            writeFileSync(
-              join(distDir, AI_ANNOTATIONS_META_FILE),
-              pair.meta.replace('2026-06-21T00:00:00Z', '2027-01-01T00:00:00Z'),
-            );
-            chmodSync(distDir, 0o555);
-          },
-        },
-      );
-    } finally {
-      chmodSync(distDir, 0o755);
-    }
+    const result = stageAiArtifacts(
+      { dataDir, distDir },
+      {
+        writeTempImpl: ((path: string) => {
+          writeFileSync(path, 'PARTIAL'); // exclusive create succeeded, write then fails
+          throw Object.assign(new Error('ENOSPC: no space left on device'), { code: 'ENOSPC' });
+        }) as never,
+      },
+    );
     expect(result.staged).toBe(false);
-    expect(result.reason).toContain('could NOT all be removed');
+    expect(readdirSync(distDir).filter((n) => n.includes('.staging-tmp'))).toEqual([]);
+  });
+
+  it('STUCK-TEMP-RESIDUE: an owned temp that cannot be removed is reported as residue', () => {
+    const { dataDir, distDir } = dirs();
+    const pair = validArtifactPair();
+    writeFileSync(join(dataDir, AI_ANNOTATIONS_FILE), pair.annotations);
+    writeFileSync(join(dataDir, AI_ANNOTATIONS_META_FILE), pair.meta);
+    const result = stageAiArtifacts(
+      { dataDir, distDir },
+      {
+        // Create a NON-EMPTY DIRECTORY at the temp path, then throw: the
+        // exclusive-open ownership rule registers it, and a non-recursive
+        // force-rm cannot remove it ⇒ residue.
+        writeTempImpl: ((path: string) => {
+          mkdirSync(path);
+          writeFileSync(join(path, 'squatter'), 'x');
+          throw Object.assign(new Error('EIO: i/o error'), { code: 'EIO' });
+        }) as never,
+      },
+    );
+    expect(result.staged).toBe(false);
+    expect(result.reason).toContain('could NOT be removed');
     expect(result.residue).toBe(true);
   });
 
-  it('GUARD-META: a meta rewritten after publish is refused even though the pair stays coherent', () => {
+  it('GUARD: a post-publish mismatch (a concurrent writer/tamper) is never reported staged', () => {
+    // The post-publish read-back (owner-required) fires on landed bytes that
+    // are not ours. We report staged:false and do NOT remove the destination
+    // (it is not a temp we own — it may be another valid stager's pair).
     const { dataDir, distDir } = dirs();
     const pair = validArtifactPair();
     writeFileSync(join(dataDir, AI_ANNOTATIONS_FILE), pair.annotations);
     writeFileSync(join(dataDir, AI_ANNOTATIONS_META_FILE), pair.meta);
-    // The round-8 reproduction: ONLY generated_at changes, so the published
-    // pair remains internally coherent — annotations_sha256 still matches the
-    // artifact — and NO later validation (runtime included) can reject it.
-    // Only a read-back against THIS invocation's validated snapshot can.
+    const result = stageAiArtifacts(
+      { dataDir, distDir },
+      { afterPublish: () => writeFileSync(join(distDir, AI_ANNOTATIONS_FILE), 'CORRUPTED') },
+    );
+    expect(result.staged).toBe(false);
+    expect(result.reason).toContain('do not match the validated snapshot');
+  });
+
+  it('GUARD-META: a post-publish meta rewrite is never reported staged', () => {
+    const { dataDir, distDir } = dirs();
+    const pair = validArtifactPair();
+    writeFileSync(join(dataDir, AI_ANNOTATIONS_FILE), pair.annotations);
+    writeFileSync(join(dataDir, AI_ANNOTATIONS_META_FILE), pair.meta);
     const rewritten = pair.meta.replace('2026-06-21T00:00:00Z', '2027-01-01T00:00:00Z');
     expect(rewritten).not.toBe(pair.meta);
     const result = stageAiArtifacts(
@@ -315,15 +378,6 @@ describe('stageAiArtifacts — the post-publish guard fires', () => {
       { afterPublish: () => writeFileSync(join(distDir, AI_ANNOTATIONS_META_FILE), rewritten) },
     );
     expect(result.staged).toBe(false);
-    expect(result.reason).toContain('AI meta published bytes');
-    // CONSEQUENCE (round-10, all three legs): a coherent meta rewrite is the
-    // one corruption the runtime CANNOT refuse, so leaving it in the dist
-    // meant Pages uploaded it and loadAnnotations served the rewritten
-    // timestamp. The pair must be discarded — absence fails soft.
-    expect(result.reason).toContain('writes were removed');
-    expect(existsSync(join(distDir, AI_ANNOTATIONS_META_FILE))).toBe(false);
-    expect(existsSync(join(distDir, AI_ANNOTATIONS_FILE))).toBe(false);
-    // A CLEAN discard is not residue — the deploy stays fail-soft.
-    expect(result.residue).toBeUndefined();
+    expect(result.reason).toContain('do not match the validated snapshot');
   });
 });
