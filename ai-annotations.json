@@ -2243,30 +2243,6 @@
       }
     },
     {
-      "node_id": "R_kgDOJg7yeg",
-      "category": "media-creative",
-      "tags": [
-        "desktop-app",
-        "self-hosted",
-        "workflow"
-      ],
-      "summary": "A free, self-hostable studio for generating AI images and videos from over 200 models, offering text-to-image, image-to-image, text-to-video, image-to-video, and lip-sync workflows, with browser, desktop-app, and local inference engine options and no built-in content filters.",
-      "source": {
-        "kind": "readme",
-        "readme_path": "README.md",
-        "readme_oid": "4016dd0215d4c8ddaa28d24937052efe2d7685f8",
-        "repo_metadata_sha256": "a8acb408cfa98af80cc78240253bec0698e27e064da018e9878e1b8c41edb596",
-        "fingerprint": "7ef1fe498f1042a78fb684cca0c1577e264fc78c7a18e1625ff1633cfeb7714a"
-      },
-      "generation": {
-        "executor_kind": "claude-routine",
-        "execution_profile_version": "agent-v1",
-        "model_label": "informational-only",
-        "prompt_version": "classify-v1",
-        "generated_at": "2026-07-16T02:22:58Z"
-      }
-    },
-    {
       "node_id": "R_kgDOJm2SAQ",
       "category": "ai-ml",
       "tags": [
@@ -9176,6 +9152,29 @@
         "model_label": null,
         "prompt_version": "classify-v1",
         "generated_at": "2026-07-18T21:22:24Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOQpkSKQ",
+      "category": "mobile",
+      "tags": [
+        "gui",
+        "visualization"
+      ],
+      "summary": "An Android app, iPhone web app, and desktop Python tool that turn exported Google Location History (Timeline) data into an animated travel video. Choose a date range and camera style, preview the journey on a map, then export an MP4 to watch or share. All processing stays on the device and the Timeline file is never uploaded.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "40fb91eb3eba747c1aaf0443e5c55700ff58c8fa",
+        "repo_metadata_sha256": "d8c9b77a1c8a40a0606f449c44ce354532b99b56f4134a50435962ffd895e700",
+        "fingerprint": "2c1ae770d1e999286acb013e8bc903cf294a37c4454beef1a4ea588a15e51d0b"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-08-21T06:26:44Z"
       }
     },
     {
