@@ -173,6 +173,14 @@ export interface OptionalPairHooks {
    * otherwise unpinnable (round-13/14). Same precedent as `lstatImpl`.
    */
   writeTempImpl?: typeof writeFileSync;
+  /**
+   * Injectable `renameSync` for the publish step: a real filesystem cannot be
+   * made to fail the SECOND rename (after the first succeeded, without the
+   * first also failing in the same directory) on demand, so the torn-pair
+   * safety net is otherwise unpinnable (round-15). Same precedent as
+   * `writeTempImpl`.
+   */
+  renameImpl?: typeof renameSync;
 }
 
 interface OptionalPublishResult {
@@ -265,10 +273,50 @@ function publishOptionalPairAtomically(
         cleanupOwnedTemps(),
       );
     }
+    // A DIRECTORY at a destination cannot be replaced by a rename
+    // (ENOTEMPTY/EISDIR). If it obstructs the SECOND rename after the FIRST has
+    // already swapped its half, it strands a torn pair (round-15 finding, all
+    // three legs) — so REFUSE before publishing anything. Nothing is renamed,
+    // the pre-existing pair (if any) is untouched, and the layer simply does
+    // not update this run. A symlink is fine (rename replaces the link entry),
+    // so only a directory is refused.
+    for (const dest of [destArtifact, destMeta]) {
+      let entry;
+      try {
+        entry = lstatSync(dest);
+      } catch {
+        continue; // absent ⇒ the rename will create it
+      }
+      if (entry.isDirectory()) {
+        return failed(
+          `${label} destination is a directory: ${dest} — skipped`,
+          cleanupOwnedTemps(),
+        );
+      }
+    }
     // PUBLISH by rename — the pre-existing pair is untouched until each swap.
-    renameSync(tmpArtifact, destArtifact);
+    const rename = hooks.renameImpl ?? renameSync;
+    rename(tmpArtifact, destArtifact);
     ownedTemps.splice(ownedTemps.indexOf(tmpArtifact), 1);
-    renameSync(tmpMeta, destMeta);
+    // The two renames are not one atomic step (POSIX has no two-file rename).
+    // If the SECOND fails after the FIRST swapped — a crash, a concurrent
+    // perm/obstruction change slipping past the pre-check — the artifact is
+    // published but the meta is not: a torn pair we cannot restore (no backup,
+    // per ruling A). FLAG it as residue so the CLI FAILS the deploy (exit 4)
+    // rather than shipping a torn half-pair. (My round-14 note that this could
+    // only follow a crash was wrong — a rename FAILURE reaches it too.)
+    try {
+      rename(tmpMeta, destMeta);
+    } catch (metaRenameError) {
+      cleanupOwnedTemps();
+      return {
+        staged: false,
+        reason: `${label} published its artifact but could NOT publish its meta — the dist holds a torn pair (residue remains): ${
+          metaRenameError instanceof Error ? metaRenameError.message : 'meta rename failed'
+        }`,
+        residue: true,
+      };
+    }
     ownedTemps.splice(ownedTemps.indexOf(tmpMeta), 1);
     hooks.afterPublish?.();
     // Preserve the post-publish exact-byte verification on what LANDED. In a

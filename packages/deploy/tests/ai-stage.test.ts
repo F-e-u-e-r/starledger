@@ -6,6 +6,7 @@ import {
   mkdtempSync,
   readdirSync,
   readFileSync,
+  renameSync,
   symlinkSync,
   writeFileSync,
 } from 'node:fs';
@@ -379,5 +380,48 @@ describe('stageAiArtifacts — ownership-safe temp+rename publication (round 14)
     );
     expect(result.staged).toBe(false);
     expect(result.reason).toContain('do not match the validated snapshot');
+  });
+
+  it('TORN-PRECHECK: a DIRECTORY at a destination is refused BEFORE any rename — no torn pair', () => {
+    // Round-15 (luna@max + luna@ultra): the two renames are not atomic, so a
+    // directory obstructing the meta destination let the artifact rename land
+    // and the meta rename fail, stranding a torn pair. Refuse up front: nothing
+    // is published, the artifact destination is never touched.
+    const { dataDir, distDir } = dirs();
+    const pair = validArtifactPair();
+    writeFileSync(join(dataDir, AI_ANNOTATIONS_FILE), pair.annotations);
+    writeFileSync(join(dataDir, AI_ANNOTATIONS_META_FILE), pair.meta);
+    mkdirSync(join(distDir, AI_ANNOTATIONS_META_FILE)); // directory obstructs the meta rename
+    const result = stageAiArtifacts({ dataDir, distDir });
+    expect(result.staged).toBe(false);
+    expect(result.reason).toContain('is a directory');
+    // The artifact was NOT published — no torn half-pair.
+    expect(existsSync(join(distDir, AI_ANNOTATIONS_FILE))).toBe(false);
+    expect(result.residue).toBeUndefined();
+  });
+
+  it('TORN-SAFETY-NET: a second-rename failure after the first leaves residue (CLI fails the deploy)', () => {
+    // The crash/race residual: the first rename swapped, the second throws. We
+    // cannot restore the old pair (no backup, ruling A), so flag residue so the
+    // deploy fails rather than shipping a torn pair. Injected because a real
+    // filesystem cannot fail only the second rename on demand.
+    const { dataDir, distDir } = dirs();
+    const pair = validArtifactPair();
+    writeFileSync(join(dataDir, AI_ANNOTATIONS_FILE), pair.annotations);
+    writeFileSync(join(dataDir, AI_ANNOTATIONS_META_FILE), pair.meta);
+    let n = 0;
+    const result = stageAiArtifacts(
+      { dataDir, distDir },
+      {
+        renameImpl: ((from: string, to: string) => {
+          n += 1;
+          if (n === 2) throw Object.assign(new Error('EIO: i/o error'), { code: 'EIO' });
+          renameSync(from, to);
+        }) as never,
+      },
+    );
+    expect(result.staged).toBe(false);
+    expect(result.reason).toContain('torn pair');
+    expect(result.residue).toBe(true);
   });
 });

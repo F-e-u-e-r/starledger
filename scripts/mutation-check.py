@@ -483,7 +483,7 @@ CASES = [
         # rename ⇒ the SYMLINK external target is corrupted.
         "optional publish writes in place instead of by rename",
         "packages/deploy/src/stage.ts",
-        "    renameSync(tmpArtifact, destArtifact);\n"
+        "    rename(tmpArtifact, destArtifact);\n"
         "    ownedTemps.splice(ownedTemps.indexOf(tmpArtifact), 1);",
         "    writeFileSync(destArtifact, artifactBytes);\n"
         "    ownedTemps.splice(ownedTemps.indexOf(tmpArtifact), 1);",
@@ -535,6 +535,55 @@ CASES = [
         "    return { staged: true };",
         "packages/deploy/tests/ai-stage.test.ts",
         "GUARD:",
+    ),
+    # Round-15 (2/3 legs): the two-rename torn window. Two guards, two mutants.
+    (
+        # Remove the directory pre-check ⇒ the meta directory obstructs the
+        # SECOND rename after the first published the artifact ⇒ a torn half is
+        # published (TORN-PRECHECK asserts the artifact is NOT published).
+        "optional publish drops the directory pre-check",
+        "packages/deploy/src/stage.ts",
+        "    for (const dest of [destArtifact, destMeta]) {\n"
+        "      let entry;\n"
+        "      try {\n"
+        "        entry = lstatSync(dest);\n"
+        "      } catch {\n"
+        "        continue; // absent \u21d2 the rename will create it\n"
+        "      }\n"
+        "      if (entry.isDirectory()) {\n"
+        "        return failed(\n"
+        "          `${label} destination is a directory: ${dest} — skipped`,\n"
+        "          cleanupOwnedTemps(),\n"
+        "        );\n"
+        "      }\n"
+        "    }\n",
+        "",
+        "packages/deploy/tests/ai-stage.test.ts",
+        "TORN-PRECHECK",
+    ),
+    (
+        # Remove the second-rename torn safety net ⇒ the failure propagates to
+        # the outer catch, which cleans temps but sets NO residue ⇒
+        # TORN-SAFETY-NET (expects residue) reddens.
+        "optional publish drops the torn-pair safety net",
+        "packages/deploy/src/stage.ts",
+        "    try {\n"
+        "      rename(tmpMeta, destMeta);\n"
+        "    } catch (metaRenameError) {\n"
+        "      cleanupOwnedTemps();\n"
+        "      return {\n"
+        "        staged: false,\n"
+        "        reason: `${label} published its artifact but could NOT publish its meta — the dist holds a torn pair (residue remains): ${\n"
+        "          metaRenameError instanceof Error ? metaRenameError.message : 'meta rename failed'\n"
+        "        }`,\n"
+        "        residue: true,\n"
+        "      };\n"
+        "    }\n"
+        "    ownedTemps.splice(ownedTemps.indexOf(tmpMeta), 1);",
+        "    rename(tmpMeta, destMeta);\n"
+        "    ownedTemps.splice(ownedTemps.indexOf(tmpMeta), 1);",
+        "packages/deploy/tests/ai-stage.test.ts",
+        "TORN-SAFETY-NET",
     ),
 ]
 
