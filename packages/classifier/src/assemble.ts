@@ -143,7 +143,16 @@ export function verifyAiArtifacts(annotationsBytes: Uint8Array, metaText: string
   const annotationsText = Buffer.from(annotationsBytes).toString('utf8');
   const annotations = AiAnnotationsSchema.parse(JSON.parse(annotationsText));
   const meta = zodMetaParse(metaText);
-  if (annotationsText !== serializeAnnotations(annotations.annotations)) {
+  // Canonical form is a BYTE contract too (round-9 finding): comparing the
+  // DECODED text accepted artifact bytes that are not the serializer's output
+  // — a decode-alike byte mutation whose meta was re-stamped with the mutated
+  // bytes' correct digest passed the hash check AND a text-level form check.
+  // The artifact's exact bytes must BE the canonical serialization's bytes.
+  if (
+    !Buffer.from(annotationsBytes).equals(
+      Buffer.from(serializeAnnotations(annotations.annotations), 'utf8'),
+    )
+  ) {
     throw new Error('ai-annotations.json is not deterministically serialized');
   }
   if (metaText !== serializeAiAnnotationsMeta(meta)) {

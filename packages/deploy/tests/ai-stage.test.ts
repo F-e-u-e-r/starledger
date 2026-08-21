@@ -1,4 +1,4 @@
-import { existsSync, mkdtempSync, readFileSync, writeFileSync } from 'node:fs';
+import { existsSync, mkdirSync, mkdtempSync, readFileSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import {
@@ -166,6 +166,29 @@ describe('stageAiArtifacts — the post-publish guard fires', () => {
     );
     expect(result.staged).toBe(false);
     expect(result.reason).toContain('AI artifact published bytes');
+    // Truthful disk state, SAME contract as the meta half below (round-9
+    // finding, both luna legs independently): the corrupt artifact REMAINS in
+    // the dist — the deploy continues and uploads it (the runtime's byte check
+    // is the containment) — so the reason must name the residue rather than
+    // read as if nothing landed.
+    expect(result.reason).toContain('dist retains');
+    expect(readFileSync(join(distDir, AI_ANNOTATIONS_FILE), 'utf8')).toBe('CORRUPTED');
+  });
+
+  it('RESIDUE: a write failure between the two halves names the partial pair it left behind', () => {
+    // Round-9 finding (sol@max): with the destination meta path blocked, the
+    // artifact write has already landed when the meta write throws — the
+    // generic catch reported only the errno while a partial pair sat in the
+    // dist, and the deploy uploads it. The reason must name the residue.
+    const { dataDir, distDir } = dirs();
+    const pair = validArtifactPair();
+    writeFileSync(join(dataDir, AI_ANNOTATIONS_FILE), pair.annotations);
+    writeFileSync(join(dataDir, AI_ANNOTATIONS_META_FILE), pair.meta);
+    mkdirSync(join(distDir, AI_ANNOTATIONS_META_FILE)); // meta write will throw EISDIR
+    const result = stageAiArtifacts({ dataDir, distDir });
+    expect(result.staged).toBe(false);
+    expect(result.reason).toContain('dist retains a partial pair');
+    expect(existsSync(join(distDir, AI_ANNOTATIONS_FILE))).toBe(true);
   });
 
   it('GUARD-META: a meta rewritten after publish is refused even though the pair stays coherent', () => {

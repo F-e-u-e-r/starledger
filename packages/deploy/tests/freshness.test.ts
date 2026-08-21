@@ -21,14 +21,36 @@ const validLiveMeta = JSON.stringify({
   repo_count: 550,
 });
 
-/** A fetch stub returning a fixed body/status; enough of Response for the guard. */
-function mockFetch(body: string, ok = true, status = 200): typeof fetch {
-  return (async () => ({ ok, status, text: async () => body })) as unknown as typeof fetch;
+/**
+ * A REAL Response, not a hand-rolled double: the guard reads the raw bytes
+ * (`arrayBuffer`) so its decode matches the build's BOM-preserving one, and a
+ * text-only double cannot express that distinction (`ok` derives from status).
+ */
+function mockFetch(body: string, _ok = true, status = 200): typeof fetch {
+  return (async () => new Response(body, { status })) as typeof fetch;
 }
 
 const URL = 'https://example.github.io/repo/dataset-meta.json';
 
 describe('deploy freshness guard (OPS-A)', () => {
+  it('BOM-PARITY: a BOM-prefixed live meta is never reported fresh', async () => {
+    // Round-9 finding (luna@ultra, author-reproduced): `Response.text()` strips
+    // a leading BOM, so the monitor called a BOM-prefixed live meta `fresh`
+    // while the runtime's BOM-preserving decoder REJECTS the same bytes and
+    // the base dashboard fails closed — a false-green production monitor, the
+    // exact reading OPS-A forbids ("never 'fresh' from unverifiable"). A real
+    // `Response` is required: a hand-rolled double exposing only `text()`
+    // cannot express the distinction under test.
+    const bomBody = Buffer.concat([
+      Buffer.from([0xef, 0xbb, 0xbf]),
+      Buffer.from(validLiveMeta, 'utf8'),
+    ]);
+    const fetchImpl = (async () => new Response(bomBody, { status: 200 })) as typeof fetch;
+    await expect(checkFreshness({ url: URL, expectedSha: SHA_A, fetchImpl })).rejects.toThrow(
+      /not valid JSON/,
+    );
+  });
+
   it('MATCH: live fingerprint equals main HEAD → fresh', async () => {
     const r = await checkFreshness({
       url: URL,

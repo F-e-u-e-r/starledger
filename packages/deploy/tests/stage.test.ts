@@ -140,6 +140,26 @@ describe('stageDashboardData enforces the BYTE contract at its own call site', (
     ).toThrow(/does not match the validated bytes/);
   });
 
+  it('BYTES-META: the published canonical meta is the source file EXACT bytes, never a re-encoding', () => {
+    // Round-9 finding (luna@ultra, author-reproduced): the canonical meta was
+    // decoded to text and re-encoded on publish, so a malformed byte inside an
+    // unconstrained string field (dataset_generated_at is z.string()) was
+    // silently NORMALIZED to U+FFFD — the landed file differed from the source
+    // while the read-back compared against the same normalized snapshot and
+    // reported success. Owner charter question I says BOTH halves must be the
+    // exact validated bytes of THIS invocation: publish the source bytes.
+    const { dataDir, distDir } = setup();
+    writeFixtureDataset(dataDir, new Date('2026-06-19T00:00:00Z'));
+    const metaPath = join(dataDir, DATASET_META_FILE);
+    const clean = readFileSync(metaPath);
+    const at = clean.indexOf(Buffer.from('"dataset_generated_at": "', 'utf8')) + 25;
+    expect(at).toBeGreaterThan(24);
+    const source = Buffer.concat([clean.subarray(0, at), Buffer.from([0xff]), clean.subarray(at)]);
+    writeFileSync(metaPath, source);
+    stageDashboardData({ dataDir, distDir });
+    expect(readFileSync(join(distDir, DATASET_META_FILE)).equals(source)).toBe(true);
+  });
+
   it('CONTROL: the unmutated bytes stage, and the PUBLISHED bytes are the validated ones', () => {
     const { dataDir, distDir } = setup();
     const { canonical } = fixtureWithReplacementChar(dataDir);

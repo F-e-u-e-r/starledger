@@ -94,11 +94,17 @@ export function stageDashboardData(
     );
   }
 
-  // BYTES, not decoded text: the digest is generated over the file's bytes,
-  // and the runtime loader now verifies it that way too.
+  // BYTES, not decoded text — for BOTH halves. The stars digest is generated
+  // over the file's bytes and the runtime loader verifies it that way; the
+  // meta is read as bytes too, because a decode→re-encode roundtrip silently
+  // NORMALIZES malformed sequences to U+FFFD inside unconstrained string
+  // fields — the landed file then differs from the source while a read-back
+  // against the re-encoded snapshot still reports success (round-9 finding,
+  // reproduced: 190-byte source, 192-byte publication, staged OK). Validation
+  // parses the decoded text; publication uses the exact source bytes.
   const starsBytes = readFileSync(starsPath);
-  const metaText = readFileSync(metaPath, 'utf8');
-  const verified = verifyDatasetIntegrity(starsBytes, metaText); // throws BEFORE any publish
+  const metaBytes = readFileSync(metaPath);
+  const verified = verifyDatasetIntegrity(starsBytes, metaBytes.toString('utf8')); // throws BEFORE any publish
   assertNoForbiddenFiles(distDir); // never ship secrets/telemetry, even if the build emitted them
 
   hooks.beforePublish?.();
@@ -108,7 +114,7 @@ export function stageDashboardData(
   // for the CANONICAL dataset that is the base dashboard's ground truth.
   const distStars = resolve(distDir, STARS_FILE);
   writeFileSync(distStars, starsBytes);
-  writeFileSync(resolve(distDir, DATASET_META_FILE), Buffer.from(metaText, 'utf8'));
+  writeFileSync(resolve(distDir, DATASET_META_FILE), metaBytes);
 
   // STRUCTURAL guard, not a test seam. Review showed that ANY injection point
   // the implementation itself invokes can be defeated by re-reading the source
@@ -118,10 +124,11 @@ export function stageDashboardData(
   // can influence. "Published == verified" is now enforced, not asserted.
   hooks.afterPublish?.();
   const distMeta = resolve(distDir, DATASET_META_FILE);
-  if (!readFileSync(distMeta).equals(Buffer.from(metaText, 'utf8'))) {
+  if (!readFileSync(distMeta).equals(metaBytes)) {
     // Meta carries no self-digest, so this is a read-back rather than a digest
     // guard — weaker, and named as such: it catches a re-read regression on the
-    // meta half, which the stars digest guard cannot see.
+    // meta half, which the stars digest guard cannot see. Compared against the
+    // SOURCE bytes, not a re-encoding, so a normalization can never hide here.
     throw new Error(`published ${DATASET_META_FILE} does not match the validated bytes`);
   }
   const publishedSha = createHash('sha256').update(readFileSync(distStars)).digest('hex');
@@ -156,6 +163,11 @@ export function stageAiArtifacts(opts: StageOptions, hooks: OptionalPairHooks = 
   if (!existsSync(annPath) || !existsSync(metaPath)) {
     return { staged: false, reason: 'no AI artifacts present' };
   }
+  /** Set once the FIRST dist write has landed: from that point a failure
+   * leaves a partial pair in the dist, and the reason must say so (round-9
+   * finding — an EISDIR on the meta path reported only the errno while the
+   * freshly-written artifact sat in the dist and got uploaded). */
+  let publishBegan = false;
   try {
     // BYTES, read once. Build-side acceptance must agree with the runtime
     // loader's, which verifies the exact received bytes: hashing decoded text
@@ -180,39 +192,48 @@ export function stageAiArtifacts(opts: StageOptions, hooks: OptionalPairHooks = 
     const distAnn = resolve(opts.distDir, AI_ANNOTATIONS_FILE);
     const distAnnMeta = resolve(opts.distDir, AI_ANNOTATIONS_META_FILE);
     writeFileSync(distAnn, annBytes);
+    publishBegan = true;
     writeFileSync(distAnnMeta, metaBytes);
     hooks.afterPublish?.();
-    // STRUCTURAL guard: what LANDED must match the digest recorded in meta.
-    // This ENFORCES "published == validated" rather than asserting it, and no
-    // source rewrite or buffer re-assignment can influence the comparison.
-    if (
-      createHash('sha256').update(readFileSync(distAnn)).digest('hex') !== meta.annotations_sha256
-    ) {
-      return {
-        staged: false,
-        reason: 'AI artifact published bytes do not match the verified digest',
-      };
-    }
-    // META read-back (round-8 finding, owner ruling). The meta carries no
-    // self-digest — generated_at is legitimately different each run — so this
-    // is a read-back against THIS invocation's validated snapshot, weaker than
-    // a digest and named as such. It is also the ONLY check that can catch a
-    // post-validation meta rewrite: such a pair stays internally coherent, so
-    // runtime validation has no reason to reject it — which is exactly what
-    // disproved the previously recorded containment. Publication for the
-    // optional pairs is non-transactional (owner-accepted residual), so a
-    // detected mismatch cannot undo what landed; the reason reports the
-    // residue instead of implying a removal that never ran.
-    if (!readFileSync(distAnnMeta).equals(metaBytes)) {
+    // ONE verification pass over what LANDED, cross-checked as a PAIR: the
+    // landed meta must be THIS invocation's validated snapshot (no self-digest
+    // exists for it — generated_at differs per run — so this is a read-back,
+    // weaker than a digest and named as such; it is also the only check that
+    // can catch a post-validation meta rewrite, which keeps the pair
+    // internally coherent and invisible to runtime validation), AND the landed
+    // artifact must hash to the digest that snapshot records. Two INDEPENDENT
+    // half-checks let a concurrent stager's interleaving pass both halves
+    // while the disk held a mixed pair (round-9 finding); reading both files
+    // in one pass narrows that to the gap between the two reads. Closing the
+    // gap needs the serialization the standing ruling reserves to the skills
+    // pair — a recorded residual, bounded because a mixed pair is internally
+    // INCOHERENT and the runtime's pair check refuses it fail-soft.
+    // Publication for the optional pairs is non-transactional (owner-accepted
+    // residual), so a detected mismatch cannot undo what landed; the reason
+    // reports the residue instead of implying a removal that never ran.
+    const landedAnn = readFileSync(distAnn);
+    const landedMeta = readFileSync(distAnnMeta);
+    if (!landedMeta.equals(metaBytes)) {
       return {
         staged: false,
         reason:
           'AI meta published bytes do not match the validated snapshot — the dist retains the mismatched pair',
       };
     }
+    if (createHash('sha256').update(landedAnn).digest('hex') !== meta.annotations_sha256) {
+      return {
+        staged: false,
+        reason:
+          'AI artifact published bytes do not match the verified digest — the dist retains the mismatched pair',
+      };
+    }
     return { staged: true };
   } catch (error) {
-    return { staged: false, reason: error instanceof Error ? error.message : 'AI staging skipped' };
+    const detail = error instanceof Error ? error.message : 'AI staging skipped';
+    return {
+      staged: false,
+      reason: publishBegan ? `${detail} — the dist retains a partial pair` : detail,
+    };
   }
 }
 
@@ -660,6 +681,9 @@ export function stageDiscoveryArtifacts(
     return { staged: false, reason: 'incomplete discovery artifact pair — skipped' };
   }
 
+  /** Same contract as the AI pair: once the first dist write lands, a failure
+   * leaves a partial pair and the reason must say so (round-9 finding). */
+  let publishBegan = false;
   try {
     // BYTES, read once — same reasoning as the AI pair above: build-side
     // acceptance must agree with the runtime loader's byte-exact check.
@@ -679,34 +703,34 @@ export function stageDiscoveryArtifacts(
     const distCandidates = resolve(opts.distDir, DISCOVERY_CANDIDATES_FILE);
     const distCandidatesMeta = resolve(opts.distDir, DISCOVERY_CANDIDATES_META_FILE);
     writeFileSync(distCandidates, candidatesBytes);
+    publishBegan = true;
     writeFileSync(distCandidatesMeta, metaBytes);
     hooks.afterPublish?.();
-    // STRUCTURAL guard, as for the AI pair above.
-    if (
-      createHash('sha256').update(readFileSync(distCandidates)).digest('hex') !== meta.dataset_sha
-    ) {
-      return {
-        staged: false,
-        reason: 'discovery artifact published bytes do not match the verified digest',
-      };
-    }
-    // META read-back — same contract and same reasoning as the AI pair above:
-    // no self-digest exists for the meta half, a post-validation rewrite keeps
-    // the pair internally coherent (invisible to runtime validation), and the
-    // non-transactional publication cannot undo, so the reason reports the
-    // residue truthfully.
-    if (!readFileSync(distCandidatesMeta).equals(metaBytes)) {
+    // ONE verification pass over what LANDED, cross-checked as a PAIR — same
+    // contract, same reasoning, and same recorded interleaving residual as the
+    // AI pair above.
+    const landedCandidates = readFileSync(distCandidates);
+    const landedMeta = readFileSync(distCandidatesMeta);
+    if (!landedMeta.equals(metaBytes)) {
       return {
         staged: false,
         reason:
           'discovery meta published bytes do not match the validated snapshot — the dist retains the mismatched pair',
       };
     }
+    if (createHash('sha256').update(landedCandidates).digest('hex') !== meta.dataset_sha) {
+      return {
+        staged: false,
+        reason:
+          'discovery artifact published bytes do not match the verified digest — the dist retains the mismatched pair',
+      };
+    }
     return { staged: true };
   } catch (error) {
+    const detail = error instanceof Error ? error.message : 'discovery staging skipped';
     return {
       staged: false,
-      reason: error instanceof Error ? error.message : 'discovery staging skipped',
+      reason: publishBegan ? `${detail} — the dist retains a partial pair` : detail,
     };
   }
 }

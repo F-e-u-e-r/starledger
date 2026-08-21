@@ -179,30 +179,30 @@ CASES = [
     (
         "AI meta read-back guard removed",
         "packages/deploy/src/stage.ts",
-        "    if (!readFileSync(distAnnMeta).equals(metaBytes)) {\n"
+        "    if (!landedMeta.equals(metaBytes)) {\n"
         "      return {\n"
         "        staged: false,\n"
         "        reason:\n"
         "          'AI meta published bytes do not match the validated snapshot — the dist retains the mismatched pair',\n"
         "      };\n"
         "    }\n"
-        "    return { staged: true };",
-        "    return { staged: true };",
+        "    if (createHash('sha256').update(landedAnn).digest('hex') !== meta.annotations_sha256) {",
+        "    if (createHash('sha256').update(landedAnn).digest('hex') !== meta.annotations_sha256) {",
         "packages/deploy/tests/ai-stage.test.ts",
         "GUARD-META",
     ),
     (
         "discovery meta read-back guard removed",
         "packages/deploy/src/stage.ts",
-        "    if (!readFileSync(distCandidatesMeta).equals(metaBytes)) {\n"
+        "    if (!landedMeta.equals(metaBytes)) {\n"
         "      return {\n"
         "        staged: false,\n"
         "        reason:\n"
         "          'discovery meta published bytes do not match the validated snapshot — the dist retains the mismatched pair',\n"
         "      };\n"
         "    }\n"
-        "    return { staged: true };",
-        "    return { staged: true };",
+        "    if (createHash('sha256').update(landedCandidates).digest('hex') !== meta.dataset_sha) {",
+        "    if (createHash('sha256').update(landedCandidates).digest('hex') !== meta.dataset_sha) {",
         "packages/deploy/tests/discovery-stage.test.ts",
         "GUARD-META",
     ),
@@ -238,15 +238,76 @@ CASES = [
     (
         "canonical meta read-back guard removed",
         "packages/deploy/src/stage.ts",
-        "  if (!readFileSync(distMeta).equals(Buffer.from(metaText, 'utf8'))) {\n"
+        "  if (!readFileSync(distMeta).equals(metaBytes)) {\n"
         "    // Meta carries no self-digest, so this is a read-back rather than a digest\n"
         "    // guard — weaker, and named as such: it catches a re-read regression on the\n"
-        "    // meta half, which the stars digest guard cannot see.\n"
+        "    // meta half, which the stars digest guard cannot see. Compared against the\n"
+        "    // SOURCE bytes, not a re-encoding, so a normalization can never hide here.\n"
         "    throw new Error(`published ${DATASET_META_FILE} does not match the validated bytes`);\n"
         "  }\n",
         "",
         "packages/deploy/tests/stage.test.ts",
         "GUARD-META",
+    ),
+    # Round-9 leg findings, each mutant being the OLD implementation:
+    (
+        # The faithful old arm needs BOTH halves of the roundtrip restored —
+        # publish the re-encoding AND read back against the re-encoding. A
+        # single-site mutant trips the read-back guard instead and dies for the
+        # wrong reason, which rule F forbids counting as evidence.
+        "canonical meta published as a re-encoding instead of source bytes",
+        "packages/deploy/src/stage.ts",
+        "  writeFileSync(resolve(distDir, DATASET_META_FILE), metaBytes);\n"
+        "\n"
+        "  // STRUCTURAL guard, not a test seam. Review showed that ANY injection point\n"
+        "  // the implementation itself invokes can be defeated by re-reading the source\n"
+        "  // just before it — including re-assigning the validated buffer, which also\n"
+        "  // defeats a read-back comparing against that buffer. So compare what actually\n"
+        "  // LANDED against the digest recorded in META, which no rewrite of the source\n"
+        "  // can influence. \"Published == verified\" is now enforced, not asserted.\n"
+        "  hooks.afterPublish?.();\n"
+        "  const distMeta = resolve(distDir, DATASET_META_FILE);\n"
+        "  if (!readFileSync(distMeta).equals(metaBytes)) {",
+        "  writeFileSync(resolve(distDir, DATASET_META_FILE), Buffer.from(metaBytes.toString('utf8'), 'utf8'));\n"
+        "\n"
+        "  // STRUCTURAL guard, not a test seam. Review showed that ANY injection point\n"
+        "  // the implementation itself invokes can be defeated by re-reading the source\n"
+        "  // just before it — including re-assigning the validated buffer, which also\n"
+        "  // defeats a read-back comparing against that buffer. So compare what actually\n"
+        "  // LANDED against the digest recorded in META, which no rewrite of the source\n"
+        "  // can influence. \"Published == verified\" is now enforced, not asserted.\n"
+        "  hooks.afterPublish?.();\n"
+        "  const distMeta = resolve(distDir, DATASET_META_FILE);\n"
+        "  if (!readFileSync(distMeta).equals(Buffer.from(metaBytes.toString('utf8'), 'utf8'))) {",
+        "packages/deploy/tests/stage.test.ts",
+        "BYTES-META",
+    ),
+    (
+        "freshness monitor decodes the live meta with BOM-stripping text()",
+        "packages/deploy/src/freshness.ts",
+        "  const liveSha = parseLiveStarsSha(Buffer.from(await res.arrayBuffer()).toString('utf8'));",
+        "  const liveSha = parseLiveStarsSha(await res.text());",
+        "packages/deploy/tests/freshness.test.ts",
+        "BOM-PARITY",
+    ),
+    (
+        "App default canonical loader wired to the wrong base",
+        "apps/dashboard/src/app/App.tsx",
+        "    const load = loader ?? (() => loadStars({ base: import.meta.env.BASE_URL }));",
+        "    const load = loader ?? (() => loadStars({ base: '/wrong-base/' }));",
+        "apps/dashboard/src/app/App.test.tsx",
+        "DEFAULT-PATH",
+    ),
+    (
+        # The proxy pin is green at birth; this mutant is its able-to-fail
+        # proof — a body-level bypass read the static allowlist can never see.
+        "a loader consults an undeclared option in its body",
+        "apps/dashboard/src/data/load-stars.ts",
+        "  const base = opts.base ?? '/';",
+        "  const base = opts.base ?? '/';\n"
+        "  void (opts as { skipIntegrity?: boolean }).skipIntegrity;",
+        "apps/dashboard/src/data/integrity-surface.test.ts",
+        "INTEG-NO-BYPASS",
     ),
     # Round-9 (owner ruling C): the decoded-text digest class at its fifth and
     # sixth surfaces. Each mutant IS the old implementation — hash the lossy
@@ -261,12 +322,22 @@ CASES = [
         "BYTES:",
     ),
     (
-        "classifier artifact verification hashes decoded text instead of bytes",
+        # With the canonical-form gate byte-strict, every input REACHING the
+        # hash gate has bytes identical to its decoded text's re-encoding, so a
+        # text-hashing mutant there is indistinguishable — the discriminating
+        # gate is the FORM check itself. This mutant is the round-9 defect:
+        # compare the decoded text instead of the bytes. `-t BYTES` runs both
+        # the original-meta and the re-stamped pins (ran == base == 2).
+        "classifier canonical-form check compares decoded text instead of bytes",
         "packages/classifier/src/assemble.ts",
-        "  if (meta.annotations_sha256 !== sha256Bytes(annotationsBytes)) {",
-        "  if (meta.annotations_sha256 !== sha256Bytes(Buffer.from(annotationsText, 'utf8'))) {",
+        "  if (\n"
+        "    !Buffer.from(annotationsBytes).equals(\n"
+        "      Buffer.from(serializeAnnotations(annotations.annotations), 'utf8'),\n"
+        "    )\n"
+        "  ) {",
+        "  if (annotationsText !== serializeAnnotations(annotations.annotations)) {",
         "packages/classifier/tests/assemble.test.ts",
-        "BYTES:",
+        "BYTES",
     ),
     (
         "discovery verify hashes decoded text instead of bytes",

@@ -3,7 +3,8 @@ import { cleanup, render, screen, waitFor } from '@testing-library/react';
 import { afterEach, beforeEach, describe, expect, it } from 'vitest';
 import type { LoadedDiscovery } from '../data/load-discovery';
 import { DataLoadError } from '../data/load-stars';
-import { makeDataset, makeRepo } from '../test-utils';
+import { createHash, webcrypto } from 'node:crypto';
+import { makeDataset, makeRepo, makeStarsFile } from '../test-utils';
 import { App } from './App';
 
 beforeEach(() => window.history.replaceState(null, '', '/'));
@@ -216,5 +217,61 @@ describe('M2.3 skills-classification non-propagation (P7 §4.10)', () => {
     expect(pending).toBe(baseline);
     expect(rejecting).toBe(baseline);
     expect(baseline).toContain('a/one');
+  });
+});
+
+/**
+ * PRODUCTION DEFAULT PATH (Charter E; round-9 finding, luna@ultra). Every other
+ * App test injects `loader`, and the direct loader tests inject `fetchImpl`, so
+ * the wiring `loadStars({ base: import.meta.env.BASE_URL })` — the only path
+ * production ever takes for the CANONICAL dataset — was exercised by nothing: a
+ * broken default (wrong base, dropped result, a digest input the runtime
+ * rejects) would have passed the entire suite. Same contract as the skills
+ * DEFAULT-PATH pin: the real loader's RESULT must reach the rendered state.
+ */
+describe('App production default path', () => {
+  it('DEFAULT-PATH: with no loaders injected, the real canonical loader result renders', async () => {
+    const starsText = JSON.stringify(
+      makeStarsFile([makeRepo({ node_id: 'R_dp1', name_with_owner: 'default/path-one' })]),
+    );
+    const digest = createHash('sha256').update(starsText, 'utf8').digest('hex');
+    const metaText = JSON.stringify({
+      schema_version: '1.0',
+      dataset_generated_at: '2026-01-01T00:00:00Z',
+      stars_sha256: digest,
+      repo_count: 1,
+    });
+
+    // jsdom's `crypto` has no `subtle`, so the real loader's digest step would
+    // fail-soft and this test would assert nothing about the default path.
+    const originalCrypto = globalThis.crypto;
+    if (!globalThis.crypto?.subtle) {
+      Object.defineProperty(globalThis, 'crypto', { value: webcrypto, configurable: true });
+    }
+    const requested: string[] = [];
+    const original = globalThis.fetch;
+    globalThis.fetch = (async (input: RequestInfo | URL) => {
+      const url = String(input);
+      requested.push(url);
+      if (url.includes('dataset-meta.json')) return new Response(metaText, { status: 200 });
+      if (url.includes('stars.json')) return new Response(starsText, { status: 200 });
+      // Optional layers are absent: they must fail soft without blocking the
+      // canonical render.
+      return new Response('not found', { status: 404 });
+    }) as typeof fetch;
+    try {
+      render(<App />);
+      await waitFor(() => expect(screen.getByText('default/path-one')).toBeTruthy());
+      expect(screen.getByText('1 of 1 repositories')).toBeTruthy();
+    } finally {
+      globalThis.fetch = original;
+      Object.defineProperty(globalThis, 'crypto', { value: originalCrypto, configurable: true });
+    }
+    // ...and it asked for the canonical pair at EXACTLY the app's base path
+    // ('/' under vitest) with the sha-busted stars URL. Exact equality, not a
+    // substring: a wrong-base default still contains these substrings, so a
+    // contains-check discriminates nothing about the wiring (round-9 lesson).
+    expect(requested).toContain('/dataset-meta.json');
+    expect(requested).toContain(`/stars.json?sha=${digest}`);
   });
 });

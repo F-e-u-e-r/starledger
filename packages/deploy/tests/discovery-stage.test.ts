@@ -1,5 +1,5 @@
 import { createHash } from 'node:crypto';
-import { existsSync, mkdtempSync, readFileSync, writeFileSync } from 'node:fs';
+import { existsSync, mkdirSync, mkdtempSync, readFileSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { describe, expect, it } from 'vitest';
@@ -207,6 +207,24 @@ describe('stageDiscoveryArtifacts — the post-publish guard fires', () => {
     );
     expect(result.staged).toBe(false);
     expect(result.reason).toContain('discovery artifact published bytes');
+    // Truthful disk state, SAME contract as the meta half below (round-9
+    // finding, both luna legs independently): the corrupt artifact REMAINS in
+    // the dist and the reason must say so.
+    expect(result.reason).toContain('dist retains');
+    expect(readFileSync(join(distDir, DISCOVERY_CANDIDATES_FILE), 'utf8')).toBe('CORRUPTED');
+  });
+
+  it('RESIDUE: a write failure between the two halves names the partial pair it left behind', () => {
+    // Round-9 finding (sol@max) — same contract as the AI pair.
+    const { dataDir, distDir } = dirs();
+    const pair = validArtifactPair();
+    writeFileSync(join(dataDir, DISCOVERY_CANDIDATES_FILE), pair.candidates);
+    writeFileSync(join(dataDir, DISCOVERY_CANDIDATES_META_FILE), pair.meta);
+    mkdirSync(join(distDir, DISCOVERY_CANDIDATES_META_FILE)); // meta write will throw EISDIR
+    const result = stageDiscoveryArtifacts({ dataDir, distDir });
+    expect(result.staged).toBe(false);
+    expect(result.reason).toContain('dist retains a partial pair');
+    expect(existsSync(join(distDir, DISCOVERY_CANDIDATES_FILE))).toBe(true);
   });
 
   it('GUARD-META: a meta rewritten after publish is refused even though the pair stays coherent', () => {

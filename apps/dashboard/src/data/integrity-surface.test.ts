@@ -1,7 +1,17 @@
+import { createHash } from 'node:crypto';
 import { readFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import {
+  serializeSkillsClassification,
+  serializeSkillsClassificationMeta,
+} from '@starred/skills-schema/contracts';
 import { describe, expect, it } from 'vitest';
+import { makeRepo, makeStarsFile } from '../test-utils';
+import { loadAnnotations } from './load-annotations';
+import { loadDiscovery } from './load-discovery';
+import { loadSkillsClassification } from './load-skills-classification';
+import { loadStars } from './load-stars';
 
 /**
  * INTEGRITY IS MANDATORY — A SURFACE CONTRACT, EXPRESSED AS AN ALLOWLIST.
@@ -55,7 +65,13 @@ function optionNames(source: string, interfaceName: string): string[] {
     .slice(open + 1, end)
     .replace(/\/\*[\s\S]*?\*\//g, '')
     .replace(/\/\/[^\n]*/g, '');
-  return [...body.matchAll(/^\s*([A-Za-z_$][\w$]*)\s*\??\s*:/gm)].map((m) => m[1]!);
+  // Quoted names are LEGAL TypeScript (`'allowUnverified'?: boolean`) and were
+  // invisible to a bare-identifier matcher (round-9 finding) — a quoted bypass
+  // extracted as nothing and the allowlist comparison never saw it. Extract
+  // BOTH forms, so any quoted declaration lands in the comparison and fails.
+  return [...body.matchAll(/^\s*(?:(['"])(.+?)\1|([A-Za-z_$][\w$]*))\s*\??\s*:/gm)].map(
+    (m) => (m[2] ?? m[3])!,
+  );
 }
 
 /**
@@ -132,5 +148,177 @@ describe('INTEG-SURFACE: loader options are an allowlist, so no opt-out can appe
     ].join('\n');
     expect(optionNames(sample, 'LoadOptions')).toEqual(['base', 'allowUnverified']);
     expect(ALLOWED_OPTIONS.has('allowUnverified')).toBe(false);
+  });
+});
+
+/**
+ * BEHAVIORAL half of the no-bypass contract (round-9 finding, luna@max). The
+ * allowlist above pins the DECLARED surface, but a body-level bypass —
+ * `(opts as any).skipIntegrity`, or a property pulled in by a merged
+ * declaration in ANOTHER file — never appears in the interface text this file
+ * parses, so every static pin stays green while the loader quietly consults
+ * it. Pin the other side behaviorally: each loader must complete a fully
+ * SUCCESSFUL load while its options object THROWS on any property read
+ * outside the same allowlist. An implementation consulting an undeclared
+ * option — under ANY name, through ANY cast — throws mid-load and cannot
+ * reach the success state required here. (No failure-path twin is needed: an
+ * opt-out consulted only on some other path still has to be READ before it
+ * can matter, and the read is what this pin forbids.)
+ */
+describe('INTEG-NO-BYPASS-BEHAVIORAL: no loader reads an undeclared option', () => {
+  function strictOptions<T extends object>(opts: T): T {
+    return new Proxy(opts, {
+      get(target, property, receiver) {
+        if (typeof property === 'symbol') return Reflect.get(target, property, receiver);
+        if (!ALLOWED_OPTIONS.has(property)) {
+          throw new Error(`undeclared loader option read: ${property}`);
+        }
+        return Reflect.get(target, property, receiver);
+      },
+    });
+  }
+
+  const utf8 = (text: string) => new TextEncoder().encode(text);
+  const sha256OfBytes = (bytes: Uint8Array) =>
+    createHash('sha256').update(Buffer.from(bytes)).digest('hex');
+  const serve = (metaName: string, metaText: string, body: string): typeof fetch =>
+    (async (url: string | URL) =>
+      String(url).includes(metaName)
+        ? new Response(metaText, { status: 200 })
+        : new Response(body, { status: 200 })) as typeof fetch;
+
+  it('stars', async () => {
+    const starsText = JSON.stringify(makeStarsFile([makeRepo({ node_id: 'R_1' })]));
+    const metaText = JSON.stringify({
+      schema_version: '1.0',
+      dataset_generated_at: '2026-06-18T00:00:00Z',
+      stars_sha256: sha256OfBytes(utf8(starsText)),
+      repo_count: 1,
+    });
+    await expect(
+      loadStars(strictOptions({ fetchImpl: serve('dataset-meta.json', metaText, starsText) })),
+    ).resolves.toBeTruthy();
+  });
+
+  it('annotations', async () => {
+    const annText = JSON.stringify({
+      schema_version: '1.0',
+      taxonomy_version: '1',
+      annotations: [],
+    });
+    const metaText = JSON.stringify({
+      schema_version: '1.0',
+      annotations_sha256: sha256OfBytes(utf8(annText)),
+      annotation_count: 0,
+      taxonomy_version: '1',
+      dataset_sha256: '0'.repeat(64),
+      generated_at: '2026-06-20T00:00:00Z',
+    });
+    await expect(
+      loadAnnotations(
+        strictOptions({ fetchImpl: serve('ai-annotations-meta.json', metaText, annText) }),
+      ),
+    ).resolves.not.toBeNull();
+  });
+
+  it('discovery', async () => {
+    const source = {
+      kind: 'manual',
+      source_id: 'owner/repo',
+      source_url: 'https://github.com/owner/repo',
+      observed_at: '2026-01-15T00:00:00.000Z',
+    };
+    const text = JSON.stringify({
+      schema_version: 1,
+      candidates: [
+        {
+          node_id: 'R_1',
+          owner: 'owner',
+          name: 'repo',
+          full_name: 'owner/repo',
+          html_url: 'https://github.com/owner/repo',
+          description: 'A test repo',
+          homepage_url: null,
+          primary_language: 'TypeScript',
+          stargazer_count: 100,
+          archived: false,
+          disabled: false,
+          fork: false,
+          pushed_at: '2026-01-01T00:00:00.000Z',
+          discovered_at: '2026-01-15T00:00:00.000Z',
+          first_seen_source: source,
+          sources: [source],
+          status: 'candidate',
+        },
+      ],
+    });
+    const metaText = JSON.stringify({
+      schema_version: 1,
+      generated_at: '2026-01-15T00:00:00.000Z',
+      dataset_sha: sha256OfBytes(utf8(text)),
+      candidate_count: 1,
+      source_count: 1,
+      generator_version: '0.1.0',
+    });
+    await expect(
+      loadDiscovery(
+        strictOptions({ fetchImpl: serve('discovery-candidates-meta.json', metaText, text) }),
+      ),
+    ).resolves.not.toBeNull();
+  });
+
+  it('skills classification', async () => {
+    const artifactText = serializeSkillsClassification({
+      scope: {
+        id: 'coding-agent-skills-ecosystem',
+        label: 'Coding-agent skills ecosystem',
+        description: 'A curated subset; absence is not a classification.',
+      },
+      categories: [
+        {
+          id: 'verification-qa',
+          label: 'Verification & QA',
+          kind: 'domain',
+          definition: 'Correctness-checking skills.',
+          order: 0,
+          target_pack: 'opus-pack',
+        },
+      ],
+      entries: [
+        {
+          source_name_with_owner: 'alpha/one',
+          node_id: 'R_kgDOproxy001',
+          resolution: 'resolved',
+          primary_category_id: 'verification-qa',
+          secondary_category_ids: [],
+          summary: 'Proxy fixture entry.',
+        },
+      ],
+    });
+    const metaText = serializeSkillsClassificationMeta({
+      schema_version: '1.0',
+      taxonomy_version: 'skills-1',
+      classification_sha256: sha256OfBytes(utf8(artifactText)),
+      source_sha256: 'b'.repeat(64),
+      aliases_sha256: null,
+      prior_classification_sha256: null,
+      generated_against_stars_sha256: 'c'.repeat(64),
+      generated_at: '2026-08-14T00:00:00Z',
+      category_count: 1,
+      source_entry_count: 1,
+      resolved_entry_count: 1,
+      present_repo_count: 1,
+      absent_repo_count: 0,
+      unresolved_entry_count: 0,
+      canonical_repo_count: 700,
+      unclassified_repo_count: 699,
+    });
+    await expect(
+      loadSkillsClassification(
+        strictOptions({
+          fetchImpl: serve('skills-classification-meta.json', metaText, artifactText),
+        }),
+      ),
+    ).resolves.not.toBeNull();
   });
 });
