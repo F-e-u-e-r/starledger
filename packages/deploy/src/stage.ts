@@ -152,22 +152,89 @@ export interface AiStageResult {
  * or hash-mismatched pair is skipped (never throws), so an AI problem can never
  * block the canonical Pages deployment. The dashboard validates again at runtime.
  */
-/** Minimal seam so the post-publish guard below can be shown to FIRE. */
+/** Minimal seams so the post-publish guard below can be shown to FIRE, and so
+ * "only ENOENT proves absence" is pinnable (a real filesystem cannot produce
+ * EIO/EACCES on demand — same precedent as SkillsStageHooks.lstatImpl). */
 export interface OptionalPairHooks {
   afterPublish?: () => void;
+  lstatImpl?: typeof lstatSync;
 }
 
 export function stageAiArtifacts(opts: StageOptions, hooks: OptionalPairHooks = {}): AiStageResult {
   const annPath = resolve(opts.dataDir, AI_ANNOTATIONS_FILE);
   const metaPath = resolve(opts.dataDir, AI_ANNOTATIONS_META_FILE);
-  if (!existsSync(annPath) || !existsSync(metaPath)) {
+  const distAnn = resolve(opts.distDir, AI_ANNOTATIONS_FILE);
+  const distAnnMeta = resolve(opts.distDir, AI_ANNOTATIONS_META_FILE);
+  // Only ENOENT proves a source is absent (round-10 finding — the same
+  // fail-open shape closed for the skills pair in round 6 had been left on
+  // both siblings): `existsSync` reports false for EACCES/EIO too, so a
+  // transient error read as "no artifacts present" and staging proceeded as
+  // if that were the truth.
+  const lstat = hooks.lstatImpl ?? lstatSync;
+  const present = (path: string): boolean => {
+    try {
+      lstat(path);
+      return true;
+    } catch (error) {
+      if ((error as NodeJS.ErrnoException)?.code === 'ENOENT') return false;
+      throw error;
+    }
+  };
+  let hasAnn: boolean;
+  let hasMeta: boolean;
+  try {
+    hasAnn = present(annPath);
+    hasMeta = present(metaPath);
+  } catch (error) {
+    return {
+      staged: false,
+      reason: `AI staging could not probe its sources — ${
+        error instanceof Error ? error.message : 'source probe failed'
+      }`,
+    };
+  }
+  if (!hasAnn && !hasMeta) {
     return { staged: false, reason: 'no AI artifacts present' };
   }
-  /** Set once the FIRST dist write has landed: from that point a failure
-   * leaves a partial pair in the dist, and the reason must say so (round-9
-   * finding — an EISDIR on the meta path reported only the errno while the
-   * freshly-written artifact sat in the dist and got uploaded). */
+  if (!hasAnn || !hasMeta) {
+    return { staged: false, reason: 'incomplete AI artifact pair — skipped' };
+  }
+  /** Set BEFORE the first dist write: a write that fails mid-way (ENOSPC,
+   * EIO) can leave truncated content, so "publication began" — not "the first
+   * write returned" — is what makes discard-on-failure necessary (round-10
+   * finding). */
   let publishBegan = false;
+  /**
+   * Best-effort discard of THIS invocation's dist writes, reporting the
+   * outcome for a truthful reason. Round-10 finding, all three legs: a
+   * DETECTED post-publish mismatch that merely reported `staged:false` still
+   * left the pair in the dist — the CLI logs "skipped" and exits 0, built-
+   * artifact verification checks only the canonical pair, so Pages UPLOADED
+   * the retained pair, and a meta-only rewrite stays internally coherent, so
+   * the runtime SERVED it. Detection without a consequence was no
+   * containment. Removing our own two derived paths is ownership-bounded
+   * cleanup (never a glob/sweep, never a pre-existing restore — that
+   * transactional machinery stays reserved to the skills pair by the
+   * standing ruling); absence then fails soft at runtime, which is the
+   * correct direction for an optional layer. Under an unserialized
+   * concurrent stager the removal (like the success report itself) can act
+   * on the OTHER invocation's bytes — the recorded interleaving residual,
+   * bounded for correctness by runtime pair validation but not closable
+   * without the serialization question the owner holds.
+   */
+  const discardOwnWrites = (): string => {
+    const stuck: string[] = [];
+    for (const path of [distAnn, distAnnMeta]) {
+      try {
+        rmSync(path, { force: true });
+      } catch {
+        stuck.push(path);
+      }
+    }
+    return stuck.length === 0
+      ? " — this run's dist writes were removed"
+      : " — this run's dist writes could NOT all be removed (residue remains)";
+  };
   try {
     // BYTES, read once. Build-side acceptance must agree with the runtime
     // loader's, which verifies the exact received bytes: hashing decoded text
@@ -189,10 +256,8 @@ export function stageAiArtifacts(opts: StageOptions, hooks: OptionalPairHooks = 
     // Publish the VALIDATED buffers, not a re-read of the sources: re-opening
     // them would let a generator rewrite between validation and publication
     // land unvalidated.
-    const distAnn = resolve(opts.distDir, AI_ANNOTATIONS_FILE);
-    const distAnnMeta = resolve(opts.distDir, AI_ANNOTATIONS_META_FILE);
-    writeFileSync(distAnn, annBytes);
     publishBegan = true;
+    writeFileSync(distAnn, annBytes);
     writeFileSync(distAnnMeta, metaBytes);
     hooks.afterPublish?.();
     // ONE verification pass over what LANDED, cross-checked as a PAIR: the
@@ -201,30 +266,33 @@ export function stageAiArtifacts(opts: StageOptions, hooks: OptionalPairHooks = 
     // weaker than a digest and named as such; it is also the only check that
     // can catch a post-validation meta rewrite, which keeps the pair
     // internally coherent and invisible to runtime validation), AND the landed
-    // artifact must hash to the digest that snapshot records. Two INDEPENDENT
-    // half-checks let a concurrent stager's interleaving pass both halves
-    // while the disk held a mixed pair (round-9 finding); reading both files
-    // in one pass narrows that to the gap between the two reads. Closing the
-    // gap needs the serialization the standing ruling reserves to the skills
-    // pair — a recorded residual, bounded because a mixed pair is internally
-    // INCOHERENT and the runtime's pair check refuses it fail-soft.
-    // Publication for the optional pairs is non-transactional (owner-accepted
-    // residual), so a detected mismatch cannot undo what landed; the reason
-    // reports the residue instead of implying a removal that never ran.
+    // artifact must hash to the digest that snapshot records. On a mismatch
+    // the pair is DISCARDED, not merely reported (see discardOwnWrites).
+    //
+    // RECORDED INTERLEAVING RESIDUAL (owner question pending): between these
+    // two adjacent reads — and equally between the checks and the return — an
+    // unserialized concurrent stager can interleave. The outcome is either a
+    // MIXED pair (internally incoherent ⇒ the runtime pair check refuses it
+    // fail-soft) or a FULL REPLACEMENT by the other invocation's own
+    // validated pair (internally coherent ⇒ accepted — correctly, it IS a
+    // validated pair, but THIS invocation's success report then
+    // misattributes whose bytes are live, and a discard can remove the other
+    // invocation's pair). Neither is closable without extending the
+    // pair-level serialization the standing R6 ruling reserves to the skills
+    // pair; in the real pipeline each Pages run is a single stager on a
+    // fresh dist.
     const landedAnn = readFileSync(distAnn);
     const landedMeta = readFileSync(distAnnMeta);
     if (!landedMeta.equals(metaBytes)) {
       return {
         staged: false,
-        reason:
-          'AI meta published bytes do not match the validated snapshot — the dist retains the mismatched pair',
+        reason: `AI meta published bytes do not match the validated snapshot${discardOwnWrites()}`,
       };
     }
     if (createHash('sha256').update(landedAnn).digest('hex') !== meta.annotations_sha256) {
       return {
         staged: false,
-        reason:
-          'AI artifact published bytes do not match the verified digest — the dist retains the mismatched pair',
+        reason: `AI artifact published bytes do not match the verified digest${discardOwnWrites()}`,
       };
     }
     return { staged: true };
@@ -232,7 +300,7 @@ export function stageAiArtifacts(opts: StageOptions, hooks: OptionalPairHooks = 
     const detail = error instanceof Error ? error.message : 'AI staging skipped';
     return {
       staged: false,
-      reason: publishBegan ? `${detail} — the dist retains a partial pair` : detail,
+      reason: publishBegan ? `${detail}${discardOwnWrites()}` : detail,
     };
   }
 }
@@ -674,16 +742,55 @@ export function stageDiscoveryArtifacts(
 ): DiscoveryStageResult {
   const candidatesPath = resolve(opts.dataDir, DISCOVERY_CANDIDATES_FILE);
   const metaPath = resolve(opts.dataDir, DISCOVERY_CANDIDATES_META_FILE);
-  if (!existsSync(candidatesPath) && !existsSync(metaPath)) {
+  const distCandidates = resolve(opts.distDir, DISCOVERY_CANDIDATES_FILE);
+  const distCandidatesMeta = resolve(opts.distDir, DISCOVERY_CANDIDATES_META_FILE);
+  // Only ENOENT proves absence — same round-10 closure as the AI pair above.
+  const lstat = hooks.lstatImpl ?? lstatSync;
+  const present = (path: string): boolean => {
+    try {
+      lstat(path);
+      return true;
+    } catch (error) {
+      if ((error as NodeJS.ErrnoException)?.code === 'ENOENT') return false;
+      throw error;
+    }
+  };
+  let hasCandidates: boolean;
+  let hasMeta: boolean;
+  try {
+    hasCandidates = present(candidatesPath);
+    hasMeta = present(metaPath);
+  } catch (error) {
+    return {
+      staged: false,
+      reason: `discovery staging could not probe its sources — ${
+        error instanceof Error ? error.message : 'source probe failed'
+      }`,
+    };
+  }
+  if (!hasCandidates && !hasMeta) {
     return { staged: false, reason: 'no discovery artifacts present' };
   }
-  if (!existsSync(candidatesPath) || !existsSync(metaPath)) {
+  if (!hasCandidates || !hasMeta) {
     return { staged: false, reason: 'incomplete discovery artifact pair — skipped' };
   }
 
-  /** Same contract as the AI pair: once the first dist write lands, a failure
-   * leaves a partial pair and the reason must say so (round-9 finding). */
+  /** Same round-10 contract as the AI pair: set BEFORE the first write, and
+   * discard this run's writes on any failure after that point. */
   let publishBegan = false;
+  const discardOwnWrites = (): string => {
+    const stuck: string[] = [];
+    for (const path of [distCandidates, distCandidatesMeta]) {
+      try {
+        rmSync(path, { force: true });
+      } catch {
+        stuck.push(path);
+      }
+    }
+    return stuck.length === 0
+      ? " — this run's dist writes were removed"
+      : " — this run's dist writes could NOT all be removed (residue remains)";
+  };
   try {
     // BYTES, read once — same reasoning as the AI pair above: build-side
     // acceptance must agree with the runtime loader's byte-exact check.
@@ -700,29 +807,25 @@ export function stageDiscoveryArtifacts(
       return { staged: false, reason: 'discovery artifact count mismatch — skipped' };
     }
     // Publish the VALIDATED buffers, not a re-read of the sources.
-    const distCandidates = resolve(opts.distDir, DISCOVERY_CANDIDATES_FILE);
-    const distCandidatesMeta = resolve(opts.distDir, DISCOVERY_CANDIDATES_META_FILE);
-    writeFileSync(distCandidates, candidatesBytes);
     publishBegan = true;
+    writeFileSync(distCandidates, candidatesBytes);
     writeFileSync(distCandidatesMeta, metaBytes);
     hooks.afterPublish?.();
     // ONE verification pass over what LANDED, cross-checked as a PAIR — same
-    // contract, same reasoning, and same recorded interleaving residual as the
-    // AI pair above.
+    // contract, same discard-on-mismatch consequence, and same recorded
+    // interleaving residual as the AI pair above.
     const landedCandidates = readFileSync(distCandidates);
     const landedMeta = readFileSync(distCandidatesMeta);
     if (!landedMeta.equals(metaBytes)) {
       return {
         staged: false,
-        reason:
-          'discovery meta published bytes do not match the validated snapshot — the dist retains the mismatched pair',
+        reason: `discovery meta published bytes do not match the validated snapshot${discardOwnWrites()}`,
       };
     }
     if (createHash('sha256').update(landedCandidates).digest('hex') !== meta.dataset_sha) {
       return {
         staged: false,
-        reason:
-          'discovery artifact published bytes do not match the verified digest — the dist retains the mismatched pair',
+        reason: `discovery artifact published bytes do not match the verified digest${discardOwnWrites()}`,
       };
     }
     return { staged: true };
@@ -730,7 +833,7 @@ export function stageDiscoveryArtifacts(
     const detail = error instanceof Error ? error.message : 'discovery staging skipped';
     return {
       staged: false,
-      reason: publishBegan ? `${detail} — the dist retains a partial pair` : detail,
+      reason: publishBegan ? `${detail}${discardOwnWrites()}` : detail,
     };
   }
 }

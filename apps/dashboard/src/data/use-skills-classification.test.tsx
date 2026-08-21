@@ -5,7 +5,7 @@ import {
   serializeSkillsClassificationMeta,
 } from '@starred/skills-schema/contracts';
 import { renderHook, waitFor } from '@testing-library/react';
-import { describe, expect, it } from 'vitest';
+import { describe, expect, it, vi } from 'vitest';
 import type { LoadedSkillsClassification } from './load-skills-classification';
 import { useSkillsClassification } from './use-skills-classification';
 
@@ -101,6 +101,10 @@ describe('useSkillsClassification — availability state machine (§4.10, locked
     // that called the real loader and DISCARDED its result, or that dropped the
     // base path, passed that weaker check (review finding). Serve a genuinely
     // valid pair and require the hook to reach `ready` with the data.
+    // Round-10 hardening (luna@ultra): under vitest BASE_URL is '/', so only a
+    // STUBBED non-root base can discriminate a default that hardcoded '/'.
+    const BASE = '/r10-pages-base/';
+    vi.stubEnv('BASE_URL', BASE);
     const artifactText = serializeSkillsClassification({
       scope: { id: 'coding-agent-skills-ecosystem', label: 'x', description: 'y' },
       categories: [
@@ -174,10 +178,12 @@ describe('useSkillsClassification — availability state machine (§4.10, locked
         value: originalCrypto,
         configurable: true,
       });
+      vi.unstubAllEnvs();
     }
-    // ...and it must have asked for the real artifact under the app's base path.
-    expect(requested.some((url) => url.includes('skills-classification-meta.json'))).toBe(true);
-    expect(requested.some((url) => url.includes(`sha=${digest}`))).toBe(true);
+    // EXACT URLs against the stubbed base — a substring accepted any base
+    // (round-10 finding).
+    expect(requested).toContain(`${BASE}skills-classification-meta.json`);
+    expect(requested).toContain(`${BASE}skills-classification.json?sha=${digest}`);
   });
 
   it('F3-LOOP: an unstable inline loader does not scale load count with rerender count', async () => {

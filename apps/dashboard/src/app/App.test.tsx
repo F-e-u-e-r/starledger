@@ -1,6 +1,6 @@
 // @vitest-environment jsdom
 import { cleanup, render, screen, waitFor } from '@testing-library/react';
-import { afterEach, beforeEach, describe, expect, it } from 'vitest';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import type { LoadedDiscovery } from '../data/load-discovery';
 import { DataLoadError } from '../data/load-stars';
 import { createHash, webcrypto } from 'node:crypto';
@@ -231,6 +231,14 @@ describe('M2.3 skills-classification non-propagation (P7 §4.10)', () => {
  */
 describe('App production default path', () => {
   it('DEFAULT-PATH: with no loaders injected, the real canonical loader result renders', async () => {
+    // Round-10 finding (sol + luna@ultra, convergent): under vitest the real
+    // BASE_URL is '/', so asserting '/'-prefixed URLs cannot discriminate a
+    // default that DROPPED BASE_URL and hardcoded '/' — the faithful Pages
+    // regression, where production serves from '/<repo>/'. Stub a non-root
+    // base: only a default that genuinely reads import.meta.env.BASE_URL
+    // requests these exact URLs.
+    const BASE = '/r10-pages-base/';
+    vi.stubEnv('BASE_URL', BASE);
     const starsText = JSON.stringify(
       makeStarsFile([makeRepo({ node_id: 'R_dp1', name_with_owner: 'default/path-one' })]),
     );
@@ -266,12 +274,16 @@ describe('App production default path', () => {
     } finally {
       globalThis.fetch = original;
       Object.defineProperty(globalThis, 'crypto', { value: originalCrypto, configurable: true });
+      vi.unstubAllEnvs();
     }
-    // ...and it asked for the canonical pair at EXACTLY the app's base path
-    // ('/' under vitest) with the sha-busted stars URL. Exact equality, not a
-    // substring: a wrong-base default still contains these substrings, so a
-    // contains-check discriminates nothing about the wiring (round-9 lesson).
-    expect(requested).toContain('/dataset-meta.json');
-    expect(requested).toContain(`/stars.json?sha=${digest}`);
+    // Exact equality against the STUBBED base — never substrings, and never
+    // '/' (round-9 lesson, hardened in round 10).
+    expect(requested).toContain(`${BASE}dataset-meta.json`);
+    expect(requested).toContain(`${BASE}stars.json?sha=${digest}`);
+    // The optional layers' DEFAULTS must carry the base too — a wrong base
+    // there silently kills each layer in production while every test passes.
+    expect(requested).toContain(`${BASE}ai-annotations-meta.json`);
+    expect(requested).toContain(`${BASE}discovery-candidates-meta.json`);
+    expect(requested).toContain(`${BASE}skills-classification-meta.json`);
   });
 });

@@ -1,5 +1,5 @@
 import { createHash } from 'node:crypto';
-import { existsSync, mkdirSync, mkdtempSync, readFileSync, writeFileSync } from 'node:fs';
+import { existsSync, mkdirSync, mkdtempSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { describe, expect, it } from 'vitest';
@@ -193,6 +193,27 @@ describe('discovery build-side integrity is a BYTE contract', () => {
   });
 });
 
+describe('stageDiscoveryArtifacts — source probing (round 10)', () => {
+  it('PROBE-ENOENT-ONLY: a non-ENOENT probe error is surfaced, never read as absence', () => {
+    const { dataDir, distDir } = dirs();
+    const pair = validArtifactPair();
+    writeFileSync(join(dataDir, DISCOVERY_CANDIDATES_FILE), pair.candidates);
+    writeFileSync(join(dataDir, DISCOVERY_CANDIDATES_META_FILE), pair.meta);
+    const eio = Object.assign(new Error('EIO: i/o error'), { code: 'EIO' });
+    const result = stageDiscoveryArtifacts(
+      { dataDir, distDir },
+      {
+        lstatImpl: (() => {
+          throw eio;
+        }) as never,
+      },
+    );
+    expect(result.staged).toBe(false);
+    expect(result.reason).toContain('could not probe its sources');
+    expect(result.reason).toContain('EIO');
+  });
+});
+
 describe('stageDiscoveryArtifacts — the post-publish guard fires', () => {
   it('GUARD: corrupted published bytes are refused, not reported as staged', () => {
     const { dataDir, distDir } = dirs();
@@ -207,11 +228,11 @@ describe('stageDiscoveryArtifacts — the post-publish guard fires', () => {
     );
     expect(result.staged).toBe(false);
     expect(result.reason).toContain('discovery artifact published bytes');
-    // Truthful disk state, SAME contract as the meta half below (round-9
-    // finding, both luna legs independently): the corrupt artifact REMAINS in
-    // the dist and the reason must say so.
-    expect(result.reason).toContain('dist retains');
-    expect(readFileSync(join(distDir, DISCOVERY_CANDIDATES_FILE), 'utf8')).toBe('CORRUPTED');
+    // CONSEQUENCE (round-10, all three legs): detection must discard this
+    // run's writes — a merely-reported mismatch was uploaded by Pages.
+    expect(result.reason).toContain('writes were removed');
+    expect(existsSync(join(distDir, DISCOVERY_CANDIDATES_FILE))).toBe(false);
+    expect(existsSync(join(distDir, DISCOVERY_CANDIDATES_META_FILE))).toBe(false);
   });
 
   it('RESIDUE: a write failure between the two halves names the partial pair it left behind', () => {
@@ -223,8 +244,10 @@ describe('stageDiscoveryArtifacts — the post-publish guard fires', () => {
     mkdirSync(join(distDir, DISCOVERY_CANDIDATES_META_FILE)); // meta write will throw EISDIR
     const result = stageDiscoveryArtifacts({ dataDir, distDir });
     expect(result.staged).toBe(false);
-    expect(result.reason).toContain('dist retains a partial pair');
-    expect(existsSync(join(distDir, DISCOVERY_CANDIDATES_FILE))).toBe(true);
+    // The landed artifact half is discarded; the blocking DIRECTORY cannot be,
+    // and the reason says so.
+    expect(result.reason).toContain('could NOT all be removed');
+    expect(existsSync(join(distDir, DISCOVERY_CANDIDATES_FILE))).toBe(false);
   });
 
   it('GUARD-META: a meta rewritten after publish is refused even though the pair stays coherent', () => {
@@ -246,10 +269,10 @@ describe('stageDiscoveryArtifacts — the post-publish guard fires', () => {
     );
     expect(result.staged).toBe(false);
     expect(result.reason).toContain('discovery meta published bytes');
-    // Truthful disk state: optional-pair publication is non-transactional
-    // (owner-accepted residual), so the mismatched meta REMAINS in the dist —
-    // and the reason must say so rather than imply a removal that never ran.
-    expect(result.reason).toContain('dist retains');
-    expect(readFileSync(join(distDir, DISCOVERY_CANDIDATES_META_FILE), 'utf8')).toBe(rewritten);
+    // CONSEQUENCE (round-10, all three legs): a coherent meta rewrite is the
+    // one corruption the runtime cannot refuse — discard, never serve.
+    expect(result.reason).toContain('writes were removed');
+    expect(existsSync(join(distDir, DISCOVERY_CANDIDATES_META_FILE))).toBe(false);
+    expect(existsSync(join(distDir, DISCOVERY_CANDIDATES_FILE))).toBe(false);
   });
 });

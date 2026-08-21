@@ -1,4 +1,4 @@
-import { existsSync, mkdirSync, mkdtempSync, readFileSync, writeFileSync } from 'node:fs';
+import { existsSync, mkdirSync, mkdtempSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import {
@@ -152,6 +152,35 @@ describe('AI build-side integrity is a BYTE contract', () => {
   });
 });
 
+describe('stageAiArtifacts — source probing (round 10)', () => {
+  it('INCOMPLETE: a half pair is named incomplete, not "no artifacts present"', () => {
+    const { dataDir, distDir } = dirs();
+    writeFileSync(join(dataDir, AI_ANNOTATIONS_FILE), validArtifactPair().annotations);
+    const result = stageAiArtifacts({ dataDir, distDir });
+    expect(result.staged).toBe(false);
+    expect(result.reason).toContain('incomplete AI artifact pair');
+  });
+
+  it('PROBE-ENOENT-ONLY: a non-ENOENT probe error is surfaced, never read as absence', () => {
+    const { dataDir, distDir } = dirs();
+    const pair = validArtifactPair();
+    writeFileSync(join(dataDir, AI_ANNOTATIONS_FILE), pair.annotations);
+    writeFileSync(join(dataDir, AI_ANNOTATIONS_META_FILE), pair.meta);
+    const eio = Object.assign(new Error('EIO: i/o error'), { code: 'EIO' });
+    const result = stageAiArtifacts(
+      { dataDir, distDir },
+      {
+        lstatImpl: (() => {
+          throw eio;
+        }) as never,
+      },
+    );
+    expect(result.staged).toBe(false);
+    expect(result.reason).toContain('could not probe its sources');
+    expect(result.reason).toContain('EIO');
+  });
+});
+
 describe('stageAiArtifacts — the post-publish guard fires', () => {
   it('GUARD: corrupted published bytes are refused, not reported as staged', () => {
     const { dataDir, distDir } = dirs();
@@ -166,13 +195,14 @@ describe('stageAiArtifacts — the post-publish guard fires', () => {
     );
     expect(result.staged).toBe(false);
     expect(result.reason).toContain('AI artifact published bytes');
-    // Truthful disk state, SAME contract as the meta half below (round-9
-    // finding, both luna legs independently): the corrupt artifact REMAINS in
-    // the dist — the deploy continues and uploads it (the runtime's byte check
-    // is the containment) — so the reason must name the residue rather than
-    // read as if nothing landed.
-    expect(result.reason).toContain('dist retains');
-    expect(readFileSync(join(distDir, AI_ANNOTATIONS_FILE), 'utf8')).toBe('CORRUPTED');
+    // CONSEQUENCE (round-10 finding, all three legs): merely reporting the
+    // mismatch left the pair in the dist, the CLI logged "skipped" and exited
+    // 0, verification checks only the canonical pair — so Pages UPLOADED the
+    // retained pair. Detection must discard this run's writes: the layer then
+    // fails soft to absent instead of serving unvalidated bytes.
+    expect(result.reason).toContain('writes were removed');
+    expect(existsSync(join(distDir, AI_ANNOTATIONS_FILE))).toBe(false);
+    expect(existsSync(join(distDir, AI_ANNOTATIONS_META_FILE))).toBe(false);
   });
 
   it('RESIDUE: a write failure between the two halves names the partial pair it left behind', () => {
@@ -187,8 +217,11 @@ describe('stageAiArtifacts — the post-publish guard fires', () => {
     mkdirSync(join(distDir, AI_ANNOTATIONS_META_FILE)); // meta write will throw EISDIR
     const result = stageAiArtifacts({ dataDir, distDir });
     expect(result.staged).toBe(false);
-    expect(result.reason).toContain('dist retains a partial pair');
-    expect(existsSync(join(distDir, AI_ANNOTATIONS_FILE))).toBe(true);
+    // The landed artifact half is discarded; the blocking DIRECTORY at the
+    // meta path cannot be removed by a non-recursive force-rm, and the reason
+    // says so instead of claiming a clean discard.
+    expect(result.reason).toContain('could NOT all be removed');
+    expect(existsSync(join(distDir, AI_ANNOTATIONS_FILE))).toBe(false);
   });
 
   it('GUARD-META: a meta rewritten after publish is refused even though the pair stays coherent', () => {
@@ -208,10 +241,12 @@ describe('stageAiArtifacts — the post-publish guard fires', () => {
     );
     expect(result.staged).toBe(false);
     expect(result.reason).toContain('AI meta published bytes');
-    // Truthful disk state: optional-pair publication is non-transactional
-    // (owner-accepted residual), so the mismatched meta REMAINS in the dist —
-    // and the reason must say so rather than imply a removal that never ran.
-    expect(result.reason).toContain('dist retains');
-    expect(readFileSync(join(distDir, AI_ANNOTATIONS_META_FILE), 'utf8')).toBe(rewritten);
+    // CONSEQUENCE (round-10, all three legs): a coherent meta rewrite is the
+    // one corruption the runtime CANNOT refuse, so leaving it in the dist
+    // meant Pages uploaded it and loadAnnotations served the rewritten
+    // timestamp. The pair must be discarded — absence fails soft.
+    expect(result.reason).toContain('writes were removed');
+    expect(existsSync(join(distDir, AI_ANNOTATIONS_META_FILE))).toBe(false);
+    expect(existsSync(join(distDir, AI_ANNOTATIONS_FILE))).toBe(false);
   });
 });

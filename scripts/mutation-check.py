@@ -182,8 +182,7 @@ CASES = [
         "    if (!landedMeta.equals(metaBytes)) {\n"
         "      return {\n"
         "        staged: false,\n"
-        "        reason:\n"
-        "          'AI meta published bytes do not match the validated snapshot — the dist retains the mismatched pair',\n"
+        "        reason: `AI meta published bytes do not match the validated snapshot${discardOwnWrites()}`,\n"
         "      };\n"
         "    }\n"
         "    if (createHash('sha256').update(landedAnn).digest('hex') !== meta.annotations_sha256) {",
@@ -197,8 +196,7 @@ CASES = [
         "    if (!landedMeta.equals(metaBytes)) {\n"
         "      return {\n"
         "        staged: false,\n"
-        "        reason:\n"
-        "          'discovery meta published bytes do not match the validated snapshot — the dist retains the mismatched pair',\n"
+        "        reason: `discovery meta published bytes do not match the validated snapshot${discardOwnWrites()}`,\n"
         "      };\n"
         "    }\n"
         "    if (createHash('sha256').update(landedCandidates).digest('hex') !== meta.dataset_sha) {",
@@ -346,6 +344,67 @@ CASES = [
         "    const sha = createHash('sha256').update(candidatesBytes.toString('utf8'), 'utf8').digest('hex');",
         "packages/discovery/tests/cli-verify.test.ts",
         "BYTES:",
+    ),
+    # Round-10 mutants — each the defeated or old behavior:
+    (
+        # A reason that CLAIMS removal without performing it — the pins assert
+        # the disk, not the prose, so a lying reason reddens.
+        "AI mismatch discard claimed but not performed",
+        "packages/deploy/src/stage.ts",
+        "        reason: `AI meta published bytes do not match the validated snapshot${discardOwnWrites()}`,",
+        "        reason: \"AI meta published bytes do not match the validated snapshot — this run's dist writes were removed\",",
+        "packages/deploy/tests/ai-stage.test.ts",
+        "GUARD-META",
+    ),
+    (
+        "discovery mismatch discard claimed but not performed",
+        "packages/deploy/src/stage.ts",
+        "        reason: `discovery artifact published bytes do not match the verified digest${discardOwnWrites()}`,",
+        "        reason: \"discovery artifact published bytes do not match the verified digest — this run's dist writes were removed\",",
+        "packages/deploy/tests/discovery-stage.test.ts",
+        "GUARD:",
+    ),
+    (
+        "AI source probe reads every errno as absence again",
+        "packages/deploy/src/stage.ts",
+        "      if ((error as NodeJS.ErrnoException)?.code === 'ENOENT') return false;\n"
+        "      throw error;\n    }\n  };\n  let hasAnn: boolean;",
+        "      return false;\n    }\n  };\n  let hasAnn: boolean;",
+        "packages/deploy/tests/ai-stage.test.ts",
+        "PROBE-ENOENT-ONLY",
+    ),
+    (
+        "discovery source probe reads every errno as absence again",
+        "packages/deploy/src/stage.ts",
+        "      if ((error as NodeJS.ErrnoException)?.code === 'ENOENT') return false;\n"
+        "      throw error;\n    }\n  };\n  let hasCandidates: boolean;",
+        "      return false;\n    }\n  };\n  let hasCandidates: boolean;",
+        "packages/deploy/tests/discovery-stage.test.ts",
+        "PROBE-ENOENT-ONLY",
+    ),
+    (
+        # sol's round-10 defeat of the success-only behavioral pin: a bypass
+        # consulted ONLY on the integrity-failure branch. The recording proxy
+        # now runs that branch too, so the probe lands in the record.
+        "a loader consults a bypass only on its integrity-failure branch",
+        "apps/dashboard/src/data/load-annotations.ts",
+        "    if (annText === null) {\n"
+        "      return null; // hash mismatch → fail-soft (no re-fetch; AI is optional)\n"
+        "    }",
+        "    if (annText === null) {\n"
+        "      void (opts as { allowUnverified?: boolean }).allowUnverified;\n"
+        "      return null; // hash mismatch → fail-soft (no re-fetch; AI is optional)\n"
+        "    }",
+        "apps/dashboard/src/data/integrity-surface.test.ts",
+        "integrity-FAILURE",
+    ),
+    (
+        "skills hook default loader wired to the wrong base",
+        "apps/dashboard/src/data/use-skills-classification.ts",
+        "      loaderRef.current ?? (() => loadSkillsClassification({ base: import.meta.env.BASE_URL }));",
+        "      loaderRef.current ?? (() => loadSkillsClassification({ base: '/wrong-base/' }));",
+        "apps/dashboard/src/data/use-skills-classification.test.tsx",
+        "DEFAULT-PATH",
     ),
 ]
 
