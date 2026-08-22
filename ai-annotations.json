@@ -2243,6 +2243,30 @@
       }
     },
     {
+      "node_id": "R_kgDOJg7yeg",
+      "category": "media-creative",
+      "tags": [
+        "api",
+        "machine-learning",
+        "self-hosted"
+      ],
+      "summary": "An open-source, self-hosted studio for generating AI images and videos across a large collection of models. It provides a web interface and API access for text-to-image, text-to-video, and image-to-video workflows, and is released under the MIT license.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "56a48ea4e151daed0595ebd459bafe4965ca8ee0",
+        "repo_metadata_sha256": "f6c5d2a13f294dc4f9a13f5cf19be1874fac70b4ec0172973d8a6ff82eb53990",
+        "fingerprint": "0efad6e6b4ec96afe085203925934f64b69b512577d13d91c9cb9b0dc933658c"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-08-22T06:25:29Z"
+      }
+    },
+    {
       "node_id": "R_kgDOJm2SAQ",
       "category": "ai-ml",
       "tags": [
@@ -4398,6 +4422,30 @@
         "model_label": "informational-only",
         "prompt_version": "classify-v1",
         "generated_at": "2026-07-16T17:23:44Z"
+      }
+    },
+    {
+      "node_id": "R_kgDONHdlww",
+      "category": "media-creative",
+      "tags": [
+        "cli",
+        "gui",
+        "machine-learning"
+      ],
+      "summary": "Lada is a Python application that restores pixelated or mosaic regions in videos using GPU-accelerated restoration models. It offers both a command-line interface and a graphical interface for watching or exporting restored footage and can be installed on Linux through Flatpak.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "73e085c0d8474afcb583aeaff03a93081d25c450",
+        "repo_metadata_sha256": "56c4d936c8652064513bc799a8feafdbcd045afec563dbeb286a36b35e91474d",
+        "fingerprint": "dd758af320384bdb2c845a9ff9be8bae7836570fc21aa36df0cae21e30b2af66"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-08-22T06:25:29Z"
       }
     },
     {
@@ -7943,6 +7991,30 @@
         "model_label": null,
         "prompt_version": "classify-v1",
         "generated_at": "2026-07-18T13:23:27Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOQ8ZDTg",
+      "category": "media-creative",
+      "tags": [
+        "cli",
+        "gui",
+        "machine-learning"
+      ],
+      "summary": "Jasna is a Python tool that restores mosaic regions in videos and still images using GPU-accelerated detection and restoration models. It provides a graphical interface and a command line, an NVIDIA TensorRT pipeline with experimental AMD ROCm support, segment editing, and streaming of restored output.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "641830f849c9e64b3387e0a482952aa2da5313e6",
+        "repo_metadata_sha256": "cfa8e6268edc9e07a87f539cd4c137022b25dbcfa1e1b7d1f48775605a7103ca",
+        "fingerprint": "189762a2a3eac27630762211e0d890307f4a11a57b5c46f20edcd979bdd99a67"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-08-22T06:25:29Z"
       }
     },
     {
@@ -12044,6 +12116,31 @@
         "model_label": null,
         "prompt_version": "classify-v1",
         "generated_at": "2026-07-19T18:22:36Z"
+      }
+    },
+    {
+      "node_id": "R_kgDORUIKDw",
+      "category": "ai-ml",
+      "tags": [
+        "api",
+        "desktop-app",
+        "gui",
+        "machine-learning"
+      ],
+      "summary": "A local, offline speech-recognition tool that turns audio, video, and microphone input into SRT subtitles using Qwen3-ASR and Whisper models. It runs on CPU through OpenVINO or on GPU through Vulkan, offers a WebView interface with multi-language recognition and speaker separation, and exposes an OpenAI-compatible transcription endpoint.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "1b781e0026ab04679991b8b2d1d1203518251c22",
+        "repo_metadata_sha256": "315a23bd69ae61bfa3e6e163f4b62023c5e8687291d04738bb9dabf4337012e7",
+        "fingerprint": "f9e6eb549eb25e049d1affcc4cef904a7d5de7a60b83b3ed7254fee2af409dae"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-08-22T06:25:29Z"
       }
     },
     {
@@ -16725,6 +16822,30 @@
         "model_label": "informational-only",
         "prompt_version": "classify-v1",
         "generated_at": "2026-07-21T21:22:29Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOSq4wFw",
+      "category": "media-creative",
+      "tags": [
+        "desktop-app",
+        "gui",
+        "machine-learning"
+      ],
+      "summary": "nvd is a cross-platform desktop video downloader for macOS and Windows that bundles yt-dlp and ffmpeg to save videos from many sites without manual setup. It includes a media library, a built-in player, and on-device AI subtitle generation using Whisper with optional translation.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "6b8b4f3c7ac44110598b617a05d86270044c14c0",
+        "repo_metadata_sha256": "aa6b2d688656107fe0ba36b7de0905cc9b4c7106e611ac06a02e266f710f615d",
+        "fingerprint": "53bfdeeb9713401228820cf40d953245fe54441f838133191ed6d53362d5886a"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-08-22T06:25:29Z"
       }
     },
     {
