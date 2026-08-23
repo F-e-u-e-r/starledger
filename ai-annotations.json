@@ -12690,31 +12690,6 @@
       }
     },
     {
-      "node_id": "R_kgDOR_ZEBA",
-      "category": "productivity-automation",
-      "tags": [
-        "api",
-        "authentication",
-        "automation",
-        "self-hosted"
-      ],
-      "summary": "A tool for ChatGPT Team accounts that automates seat rotation and credential sync: it registers accounts, obtains Codex authentication, rotates seats by remaining quota, and syncs credentials to CLIProxyAPI or Sub2API. It provides a web panel plus API, OAuth import, scheduled quota inspection, and Docker deployment for self-hosting.",
-      "source": {
-        "kind": "readme",
-        "readme_path": "README.md",
-        "readme_oid": "f11d3ad6915724f4506ea3410de8f0a8227a593f",
-        "repo_metadata_sha256": "b77c7d3c492a418cfaede760bcbcb17eb3dc92ebf5d608d08c8c91202fee7baf",
-        "fingerprint": "580e1ce7a9765117e49fca0cb5b3a7fd99650afff39f614e82c8692790b94905"
-      },
-      "generation": {
-        "executor_kind": "claude-routine",
-        "execution_profile_version": "agent-v1",
-        "model_label": null,
-        "prompt_version": "classify-v1",
-        "generated_at": "2026-07-19T22:23:44Z"
-      }
-    },
-    {
       "node_id": "R_kgDOR_rxKg",
       "category": "developer-tools",
       "tags": [
@@ -14878,6 +14853,31 @@
         "model_label": null,
         "prompt_version": "classify-v1",
         "generated_at": "2026-07-21T05:22:22Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOS0Cuhg",
+      "category": "ai-ml",
+      "tags": [
+        "cli",
+        "library",
+        "machine-learning",
+        "sdk"
+      ],
+      "summary": "Apple Core AI Models provides recipes to export open-source models from Hugging Face and other sources to Core AI format, Python primitives for authoring custom PyTorch models, and a Swift package plus CLI tools to run exported .aimodel files on macOS and iOS.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "c80727e5c3fb4945881b101e4a9ad4838db43d12",
+        "repo_metadata_sha256": "fa6c5f084c638059993737c0ae60997756edde6c163036de3b34a627d4ae354d",
+        "fingerprint": "96ecebeaa9e25271fca9317000dd17fd4b04e68668c49212ceeee45448b6fca2"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-08-23T06:22:42Z"
       }
     },
     {
@@ -18895,6 +18895,32 @@
         "model_label": "informational-only",
         "prompt_version": "classify-v1",
         "generated_at": "2026-08-03T09:24:56Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOTdj7sw",
+      "category": "developer-tools",
+      "tags": [
+        "api",
+        "authentication",
+        "cli",
+        "llm",
+        "proxy"
+      ],
+      "summary": "Codex Router is a local, credential-isolating router that lets developers use external models such as Anthropic, Kimi, DeepSeek, and xAI inside the Codex App and CLI, DeepSeek Harness, or Gemini CLI, merging routed models into each client's native model picker with guided setup and rollback.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "0c3541624f6676ff25b7b124e9e572cc82b01ec7",
+        "repo_metadata_sha256": "11aee9b32cd63d5be60c1f8ac4b90340cbdb1e55886904d48abd1c32f4f7b8bf",
+        "fingerprint": "3c8599fc1f576ca6fbbf67dbae9c8dbd93928badcdb28eecd537fa66c09264c6"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-08-23T06:22:42Z"
       }
     },
     {
