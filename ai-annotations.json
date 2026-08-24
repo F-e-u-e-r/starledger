@@ -2392,6 +2392,32 @@
       }
     },
     {
+      "node_id": "R_kgDOJxtHSw",
+      "category": "ai-ml",
+      "tags": [
+        "ai-agents",
+        "api",
+        "llm",
+        "sdk",
+        "vector-database"
+      ],
+      "summary": "Mem0 is a Python memory layer that gives AI assistants and agents persistent, personalized long-term memory. It extracts facts from interactions and retrieves them using semantic, keyword, and entity matching. It ships as an SDK with a self-hosted server option and a fully managed cloud platform.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "9a81e74effacbd7433e91b6c1fcc907f110d4773",
+        "repo_metadata_sha256": "aef1e03c75f9967c36aecdc12dfaea09bf34c52193a6deefbee087eab403f652",
+        "fingerprint": "715085f9d49a891ff798d3330375a7b7ca5aa2191d724d09c11d2d71d191ca6c"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-08-24T06:31:55Z"
+      }
+    },
+    {
       "node_id": "R_kgDOK1bNkg",
       "category": "productivity-automation",
       "tags": [
@@ -14176,6 +14202,30 @@
         "model_label": null,
         "prompt_version": "classify-v1",
         "generated_at": "2026-07-21T00:22:51Z"
+      }
+    },
+    {
+      "node_id": "R_kgDORqhZiQ",
+      "category": "developer-tools",
+      "tags": [
+        "ai-agents",
+        "code-generation",
+        "llm"
+      ],
+      "summary": "CatDesk is an open-source Rust tool that runs as a local MCP server so ChatGPT Web can act as a coding agent on your own machine. It exposes tools such as write and run_command, letting the model edit files and run commands locally using a ChatGPT Plus subscription instead of an API key or Codex.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "ff1d7fca38c0d3eed58c62ab8897e2a678f4a2d1",
+        "repo_metadata_sha256": "049afd9c3f04ef99144c49d833cdf4b5c34f2d3481d085205899ddc2d6402c28",
+        "fingerprint": "f3dc9bc58bbfa1a98e760a3e903c918712bbe445b0813418f0c480af06d15c7f"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-08-24T06:31:55Z"
       }
     },
     {
