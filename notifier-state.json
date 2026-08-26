@@ -8,7 +8,7 @@
     "paths": [
       "README.md"
     ],
-    "last_commit_sha": "21daecc2e7f50c48a4b4bbafeb04b21c5b2c7d9c"
+    "last_commit_sha": "aa6fdc3a144f42a0e9aa416a8dd12a764de4b50d"
   },
   "pending": [],
   "deliveries": [
@@ -412,6 +412,24 @@
       "notification_key": "awesome_stars:duolahypercho/codex-router:R_kgDOTdj7sw",
       "status": "sent",
       "completed_at": "2026-08-22T03:09:31.937Z",
+      "detail": null
+    },
+    {
+      "notification_key": "awesome_stars:jetbrains/go-modern-guidelines:R_kgDOQcAahA",
+      "status": "sent",
+      "completed_at": "2026-08-26T05:52:14.255Z",
+      "detail": null
+    },
+    {
+      "notification_key": "awesome_stars:rizriyz/luvus:R_kgDOTBelYA",
+      "status": "sent",
+      "completed_at": "2026-08-26T05:52:14.255Z",
+      "detail": null
+    },
+    {
+      "notification_key": "awesome_stars:tobi/walgit:R_kgDOUB_8yw",
+      "status": "sent",
+      "completed_at": "2026-08-26T05:52:14.255Z",
       "detail": null
     }
   ]
