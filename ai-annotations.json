@@ -8758,6 +8758,32 @@
       }
     },
     {
+      "node_id": "R_kgDOQcAahA",
+      "category": "developer-tools",
+      "tags": [
+        "ai-agents",
+        "cli",
+        "code-generation",
+        "documentation",
+        "plugin"
+      ],
+      "summary": "A collection of guidelines packaged as plugins and skills that help AI coding agents write modern, idiomatic Go, covering language and standard-library features from Go 1.0 through 1.27. It installs into Claude Code, Codex, Cursor, Junie, and other agents through a small CLI and steers them toward newer idioms.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "04d590be8b342bfd7756626ffe52e123c8907fee",
+        "repo_metadata_sha256": "987f36fe18ffd725d1ceaaa835a2f43b23f841ee9ff8f6a1ff3dd26e753e9350",
+        "fingerprint": "60441b819b90b7e652965bd4717b01879de3c1aa44e562b8b2b62c35f004a562"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-08-26T06:43:15Z"
+      }
+    },
+    {
       "node_id": "R_kgDOQchDtQ",
       "category": "developer-tools",
       "tags": [
@@ -15286,31 +15312,6 @@
       }
     },
     {
-      "node_id": "R_kgDOS5qzYw",
-      "category": "other",
-      "tags": [
-        "ai-agents",
-        "llm",
-        "plugin",
-        "visualization"
-      ],
-      "summary": "A SKILL.md-standard skill for AI agents such as Claude, Codex, and Cursor that computes Chinese BaZi and Zi Wei Dou Shu astrology charts using deterministic algorithms rather than the language model, offers three analysis modes, and renders an ink-style single-file HTML chart poster. Provided for cultural and entertainment reference.",
-      "source": {
-        "kind": "readme",
-        "readme_path": "README.md",
-        "readme_oid": "11cd3d1ca8e91c6c0540fd439753b3e844cc876a",
-        "repo_metadata_sha256": "eceb9f781950517c00c7100a8ef0cf49e545af78f1e603210b235112c22f721b",
-        "fingerprint": "586d2d2e6f23acf9767884b51da02e3836eefb5055baa83ffa789dba3eb332dd"
-      },
-      "generation": {
-        "executor_kind": "claude-routine",
-        "execution_profile_version": "agent-v1",
-        "model_label": null,
-        "prompt_version": "classify-v1",
-        "generated_at": "2026-07-21T11:22:43Z"
-      }
-    },
-    {
       "node_id": "R_kgDOS6hSLg",
       "category": "communication-collaboration",
       "tags": [
@@ -17302,6 +17303,33 @@
         "model_label": null,
         "prompt_version": "classify-v1",
         "generated_at": "2026-07-21T22:22:19Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOTBelYA",
+      "category": "developer-tools",
+      "tags": [
+        "ai-agents",
+        "cli",
+        "orchestration",
+        "terminal",
+        "tui",
+        "workflow"
+      ],
+      "summary": "A Rust terminal multiplexer and mission-control TUI for AI coding agents. It keeps persistent workspaces, panes, tabs, and sessions alive, detects supported agents and shows their live status, and coordinates worktrees, quality gates, and merges. It also browses a Git-aware file tree and GitHub state, and runs on macOS, Linux, and Windows.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "ce25298582d832725323222e457d256021c7dd46",
+        "repo_metadata_sha256": "407375c7fe4863953138ea15f1bf89c58759b34cf7ef5f95ae122e78216278f7",
+        "fingerprint": "f810ca4c34b5b6ca05efc56ba180018ad8400ab7c45c39520af1327e661bf00e"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-08-26T06:43:15Z"
       }
     },
     {
@@ -19439,6 +19467,60 @@
         "model_label": null,
         "prompt_version": "classify-v1",
         "generated_at": "2026-08-17T06:58:46Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOUARWTg",
+      "category": "ai-ml",
+      "tags": [
+        "ai-agents",
+        "benchmark",
+        "llm",
+        "orchestration",
+        "tui",
+        "workflow"
+      ],
+      "summary": "An open-source AI agent framework, terminal TUI, and evaluation suite for long-horizon research and file-based work. It provides a stateful ReAct workflow and an Agent Team mode where a coordinator delegates to parallel sub-agents in a sandboxed filesystem, and includes a benchmark runner for evaluating models against many public datasets.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "8fd74aa75e7a503cd36373305f6d82d790842d05",
+        "repo_metadata_sha256": "7eda0e3ccd1c87e9047f825940fe0f0b240607439937c2e9e0b3e98033d57f8f",
+        "fingerprint": "0676b52db99880b2eb114fd76354d5702fdee9f3fec873ae9ec28c11998eea86"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-08-26T06:43:15Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOUB_8yw",
+      "category": "developer-tools",
+      "tags": [
+        "authentication",
+        "backend",
+        "cli",
+        "rest-api",
+        "sdk",
+        "self-hosted"
+      ],
+      "summary": "A single-binary Git server written in Rust that stores repositories in an S3 or GCS bucket with no database or local state, treating each machine as a disposable cache. It serves smart HTTP fetch and push, bundle-uri clones, Git LFS, a browsing web UI, and a JSON API with an SDK, plus per-repository push policy, webhooks, and token or OIDC authentication.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "049bc601446dbf4cea183dbffd11cc15eb60ad7a",
+        "repo_metadata_sha256": "630179147c80c712d36baedbd324c0ca9c13df1980647ab2c4b98e8b3ae2b7f4",
+        "fingerprint": "ee9c57c1181dabca598d5c9608993f595d100d624c8e46a068fe540c5245edd0"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-08-26T06:43:15Z"
       }
     }
   ]
