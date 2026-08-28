@@ -16234,6 +16234,31 @@
       }
     },
     {
+      "node_id": "R_kgDOSXhV2g",
+      "category": "developer-tools",
+      "tags": [
+        "ai-agents",
+        "documentation",
+        "llm",
+        "workflow"
+      ],
+      "summary": "A Claude Code skill that encodes six Buddhist epistemic principles as practical work disciplines for LLM-driven workflows. Each principle targets a common failure mode such as stating unverified facts, patching symptoms instead of root causes, or capitulating under user pressure. It ships as a SKILL.md with reference files and is presented as a checklist, not a religious framework.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "982de2193262309fd603a163d5a194dab8a5bf2b",
+        "repo_metadata_sha256": "2c77174f83e21293e28e66fdf36595352782eb6514ad524d4498319dd98005f6",
+        "fingerprint": "5097abc9c7597e5a2897fb2dea455ab2971498c062751a067f112b37e1ab005e"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-08-28T18:23:11Z"
+      }
+    },
+    {
       "node_id": "R_kgDOSYKDUw",
       "category": "libraries-frameworks",
       "tags": [
@@ -19521,6 +19546,30 @@
         "model_label": "informational-only",
         "prompt_version": "classify-v1",
         "generated_at": "2026-08-26T06:43:15Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOUEeYnw",
+      "category": "media-creative",
+      "tags": [
+        "ai-agents",
+        "llm",
+        "workflow"
+      ],
+      "summary": "A standalone Codex skill for writing short and vertical-screen dramas in Traditional Chinese. It guides an eight-stage screenwriting workflow covering topic selection, structure, characters, scene breakdown, dialogue, conflict, reversals, standard formatting, and revision, and can also handle single tasks or review and revise an existing script while preserving user constraints.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "17bd486d95f31f425a6518281f0f8e1a43ff0475",
+        "repo_metadata_sha256": "ba2182084631d97de2d7d7afeee41562a66459fff2963ade9474a8cf6f59832d",
+        "fingerprint": "69271dfa737f6f043c8c426c41c84def00906fe7c443091492d8969256bcf20e"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-08-28T18:23:11Z"
       }
     }
   ]
