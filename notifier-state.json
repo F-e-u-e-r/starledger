@@ -8,7 +8,7 @@
     "paths": [
       "README.md"
     ],
-    "last_commit_sha": "bdeaf415128378f680b4e75764936753e32325a7"
+    "last_commit_sha": "6c26c230484ef7311fae0b0a4e19397cc9d51955"
   },
   "pending": [],
   "deliveries": [
@@ -430,6 +430,12 @@
       "notification_key": "awesome_stars:tobi/walgit:R_kgDOUB_8yw",
       "status": "sent",
       "completed_at": "2026-08-26T05:52:14.255Z",
+      "detail": null
+    },
+    {
+      "notification_key": "awesome_stars:jetbrains/thinkrail:R_kgDOTRU_yQ",
+      "status": "sent",
+      "completed_at": "2026-08-28T18:46:44.903Z",
       "detail": null
     }
   ]
