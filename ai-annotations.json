@@ -17797,6 +17797,33 @@
       }
     },
     {
+      "node_id": "R_kgDOTRU_yQ",
+      "category": "developer-tools",
+      "tags": [
+        "ai-agents",
+        "cli",
+        "code-generation",
+        "desktop-app",
+        "editor",
+        "llm"
+      ],
+      "summary": "ThinkRail is a desktop and mobile client that runs the pi coding agent in-process, providing a worktree-based IDE with a tabbed Monaco editor, a git Changes view, terminals, a read-only spec-graph viewer, and multiple concurrent chat sessions. It ships as a native desktop installer and a self-contained CLI that opens the same app in a browser.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "03e9270671c301e6b022d588508f4b0eef0bb967",
+        "repo_metadata_sha256": "433449885cd2ee39412cf51fd7c88f0cd9e297af9743ec3254313cf007144c5e",
+        "fingerprint": "cb9adf64fcc6d3e5352c97293372d2286397429bc440b449debaf5189af47eb3"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-08-29T12:23:24Z"
+      }
+    },
+    {
       "node_id": "R_kgDOTRdWXA",
       "category": "education-reference",
       "tags": [
