@@ -19576,6 +19576,32 @@
       }
     },
     {
+      "node_id": "R_kgDOUE8gkA",
+      "category": "media-creative",
+      "tags": [
+        "ai-agents",
+        "documentation",
+        "llm",
+        "machine-learning",
+        "plugin"
+      ],
+      "summary": "A Claude Code skill for turning scripts into MiniMax H3 video shot lists with facial performance that actually renders. It documents rules derived from real generation runs: splitting shots so expression beats appear, using reference images for shape and size, directing the camera, and verifying beats with PSNR.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "1bc3aa5f1e7d7a70e654cdcc0636784c85cd8940",
+        "repo_metadata_sha256": "d7117cbc8b9af45ba86301ba394c5c8f33781c15f9ccd9e85b50ff25fe313fa9",
+        "fingerprint": "6adb96405c83080c725d3abdc5840f936f2369d88de5dff28d6fbf6f3e195979"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-08-30T11:24:46Z"
+      }
+    },
+    {
       "node_id": "R_kgDOUEeYnw",
       "category": "media-creative",
       "tags": [
