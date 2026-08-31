@@ -19624,6 +19624,32 @@
         "prompt_version": "classify-v1",
         "generated_at": "2026-08-28T18:23:11Z"
       }
+    },
+    {
+      "node_id": "R_kgDOUGv6dg",
+      "category": "ai-ml",
+      "tags": [
+        "ai-agents",
+        "cli",
+        "llm",
+        "markdown",
+        "plugin"
+      ],
+      "summary": "An Agent Skill that de-AI-ifies writing: it repairs narrative architecture in fiction and applies venue-matched rules to professional prose such as release notes, PR replies, and postmortems. Distributed through the Skills CLI to 77+ agents, with native plugin packaging for Claude Code, Codex, Grok Build, and Antigravity.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "aefed6e1bf462b2015810c5f123ead114dc52ca2",
+        "repo_metadata_sha256": "4a35a07d61368b563f61ef16064104e40efc1f6ba42802fd5203c70ae59b1846",
+        "fingerprint": "0c88d5fafce921d35010ce2a4cb53cde211a4964ba49a042f18a79dcedf397e7"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-08-31T12:48:15Z"
+      }
     }
   ]
 }
