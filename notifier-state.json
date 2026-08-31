@@ -8,7 +8,7 @@
     "paths": [
       "README.md"
     ],
-    "last_commit_sha": "6c26c230484ef7311fae0b0a4e19397cc9d51955"
+    "last_commit_sha": "e8a0ea1d2fa4f297a325988a3c61433354b3800b"
   },
   "pending": [],
   "deliveries": [
@@ -436,6 +436,42 @@
       "notification_key": "awesome_stars:jetbrains/thinkrail:R_kgDOTRU_yQ",
       "status": "sent",
       "completed_at": "2026-08-28T18:46:44.903Z",
+      "detail": null
+    },
+    {
+      "notification_key": "awesome_stars:longbridge/gpui-component:R_kgDOMI8ZRg",
+      "status": "sent",
+      "completed_at": "2026-08-31T13:58:29.633Z",
+      "detail": null
+    },
+    {
+      "notification_key": "awesome_stars:omacom/omarchy:R_kgDOO0Cobg",
+      "status": "sent",
+      "completed_at": "2026-08-31T13:58:29.633Z",
+      "detail": null
+    },
+    {
+      "notification_key": "awesome_stars:pb33f/libopenapi:R_kgDOHrFZeg",
+      "status": "sent",
+      "completed_at": "2026-08-31T13:58:29.633Z",
+      "detail": null
+    },
+    {
+      "notification_key": "awesome_stars:picomq/picomq:R_kgDOT0xK9Q",
+      "status": "sent",
+      "completed_at": "2026-08-31T13:58:29.633Z",
+      "detail": null
+    },
+    {
+      "notification_key": "awesome_stars:tailscale/tailcat:R_kgDONHoN8A",
+      "status": "sent",
+      "completed_at": "2026-08-31T13:58:29.633Z",
+      "detail": null
+    },
+    {
+      "notification_key": "awesome_stars:themartiano/try-omarchy:R_kgDOUB-pxA",
+      "status": "sent",
+      "completed_at": "2026-08-31T13:58:29.633Z",
       "detail": null
     }
   ]
