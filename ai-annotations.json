@@ -1675,6 +1675,30 @@
       }
     },
     {
+      "node_id": "R_kgDOHrFZeg",
+      "category": "libraries-frameworks",
+      "tags": [
+        "api",
+        "library",
+        "rest-api"
+      ],
+      "summary": "libopenapi is a high-performance OpenAPI 3.0, 3.1, and 3.2 parser, validator, and toolkit for Go applications. It also supports Swagger, Overlays, and Arazzo, handles very large and complex specifications, and provides a data model, a diff engine, and code generation.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "649ea081a91a4639eb73f8dcaccafb95ae0fdaf1",
+        "repo_metadata_sha256": "6900ecf2e126f1bc8ac8405fdcca5885556ec537dfad659cf59971b92d0d6dc8",
+        "fingerprint": "52f1358ad1f9cca83796d665d0df4d6b705b8a4cec4280993d3e68acf936c2f3"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-09-01T11:40:41Z"
+      }
+    },
+    {
       "node_id": "R_kgDOHrwnHA",
       "category": "devops-infrastructure",
       "tags": [
@@ -3748,6 +3772,31 @@
       }
     },
     {
+      "node_id": "R_kgDOMI8ZRg",
+      "category": "libraries-frameworks",
+      "tags": [
+        "desktop-app",
+        "frontend",
+        "gui",
+        "library"
+      ],
+      "summary": "GPUI Component is a Rust framework for building cross-platform desktop applications, offering more than 60 UI components on top of GPUI. It adds virtualized data tables and lists, a Tree-sitter code editor, dock layouts, Markdown and HTML rendering, and GPU-accelerated rendering for macOS, Windows, and Linux.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "0e7dc7271e4f8e21e161c37d59cf81363ec11a66",
+        "repo_metadata_sha256": "fc8d28867568dae67d1089d93389c030f13ad6d92708ad7b1bf243b062a5e912",
+        "fingerprint": "96d2ca6b6d7b79061b4838f37048aeb21cf9e85ac2bac97d573fd55a8dac6ef6"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-09-01T11:40:41Z"
+      }
+    },
+    {
       "node_id": "R_kgDOMLfXnA",
       "category": "ai-ml",
       "tags": [
@@ -4475,6 +4524,31 @@
       }
     },
     {
+      "node_id": "R_kgDONHoN8A",
+      "category": "developer-tools",
+      "tags": [
+        "cli",
+        "encryption",
+        "library",
+        "networking"
+      ],
+      "summary": "Tailcat is a command-line tool and Go library that works like netcat but runs over Tailscale's data plane without its control plane. It establishes WireGuard-encrypted point-to-point tunnels, using DERP relays to bootstrap and NAT traversal to upgrade to direct peer-to-peer connections, with no Tailscale account or root access required.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "e7dd1a59ec547cc854a3f6e1105a7963fac6293c",
+        "repo_metadata_sha256": "ba2f10a25d694d9a5a1c1f90be90da01568c7876a7dd8553e1689409e7d6ac09",
+        "fingerprint": "e9c4b00908279148074839122c387d64b38e4f7c63e4a41af9c7904293a5d68a"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-09-01T11:40:41Z"
+      }
+    },
+    {
       "node_id": "R_kgDONI2BTQ",
       "category": "ai-ml",
       "tags": [
@@ -4977,6 +5051,29 @@
         "model_label": "informational-only",
         "prompt_version": "classify-v1",
         "generated_at": "2026-07-17T13:22:40Z"
+      }
+    },
+    {
+      "node_id": "R_kgDONlbsPQ",
+      "category": "ai-ml",
+      "tags": [
+        "library",
+        "machine-learning"
+      ],
+      "summary": "kokoro-onnx is a Python library for text-to-speech synthesis built on the Kokoro-TTS model and the ONNX runtime. It supports multiple languages and voices, runs near real-time on Apple Silicon, and ships as a lightweight package with quantized models around 80MB.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "f5541fafb7d1b42908850b160a44524f9544da9a",
+        "repo_metadata_sha256": "6d765d857a60c288da019bcdbb124b9f2cfc399b843be0fd7463409e9befe136",
+        "fingerprint": "4ca3c47a1719cb669a64ae72664770020e23960ed5b12a95cf9999a24d381e19"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-09-01T11:40:41Z"
       }
     },
     {
@@ -6223,6 +6320,31 @@
         "model_label": "informational-only",
         "prompt_version": "classify-v1",
         "generated_at": "2026-07-21T09:22:36Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOP24YBQ",
+      "category": "ai-ml",
+      "tags": [
+        "dashboard",
+        "machine-learning",
+        "real-time",
+        "serverless"
+      ],
+      "summary": "A real-time AI video generation system that reads Twitch chat messages, generates contextual clips with the LTX Video model on FAL serverless GPU infrastructure, and streams the output to RTMP endpoints. It includes a React dashboard for monitoring generation metrics, queue status, and performance.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "3f53fb86dd545ce150bc3ee3537fae1174d6bd58",
+        "repo_metadata_sha256": "635c03b64eb336a4b06794f033dd855dff34c50e23f2267e4d1fb0d048212ab1",
+        "fingerprint": "f29e9dd0f99164b101a9ded09b6ee121cbb2c8980a98f6d2ed0892de27ebf58f"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-09-01T11:40:41Z"
       }
     },
     {
