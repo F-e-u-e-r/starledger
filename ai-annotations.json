@@ -17226,6 +17226,32 @@
       }
     },
     {
+      "node_id": "R_kgDOT0xK9Q",
+      "category": "devops-infrastructure",
+      "tags": [
+        "backend",
+        "cli",
+        "message-queue",
+        "real-time",
+        "self-hosted"
+      ],
+      "summary": "PicoMQ is durable, real-time streams over HTTP built on S3-compatible object storage. It bundles a stream engine and a host providing a metadata plane, server, HTTP and Kafka protocol frontends, a client, and the pico CLI, and runs as a single SQLite-backed node or a Postgres-backed cluster via Docker.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "2d762d0f73c504abb1a0bd1e71438ffce3d1f8d6",
+        "repo_metadata_sha256": "ce99c2edb0a119f88d3d8b1d1ad76775410a87f6b6ceaa52f9aa661287b14757",
+        "fingerprint": "5b34b2d60773ccb8bc28e2cb7062c8171249c2cc550a165dbe0c6579b274c0db"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-09-01T13:04:21Z"
+      }
+    },
+    {
       "node_id": "R_kgDOT1eE0w",
       "category": "security-privacy",
       "tags": [
@@ -17398,6 +17424,29 @@
         "model_label": "informational-only",
         "prompt_version": "classify-v1",
         "generated_at": "2026-08-20T07:28:53Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOT9H85w",
+      "category": "media-creative",
+      "tags": [
+        "ai-agents",
+        "plugin"
+      ],
+      "summary": "A one-ink and controlled two-ink editorial image skill that turns a theme, phrase, object, or supplied photograph into original posters, zines, portraits, packaging, and covers. It offers adaptive neutral substrates, halftone and risograph treatments, structured negative space, and a machine-readable design-system catalog with evaluation scripts.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "bb2beab597bad3656029fba5f8cd5891885ecbbf",
+        "repo_metadata_sha256": "4f82b8fd6d7e5b0f7e24a3386cb2836ac2bf8e23b7763942788a6ab70a8debaf",
+        "fingerprint": "e969a82c5b3846f5caf0a80036c4735141f83a49a99ec5af9735450a52cfa88c"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-09-01T13:04:21Z"
       }
     },
     {
@@ -19668,6 +19717,29 @@
         "model_label": "informational-only",
         "prompt_version": "classify-v1",
         "generated_at": "2026-08-26T06:43:15Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOUB-pxA",
+      "category": "devops-infrastructure",
+      "tags": [
+        "desktop-app",
+        "gui"
+      ],
+      "summary": "Try Omarchy packages a project-built ARM64 Arch Linux image running the Omarchy desktop, a QEMU runtime using Apple's Hypervisor Framework, and a Swift/AppKit launcher into one macOS app. It adds hardware-accelerated virtualization, a resizable native window, and audio, camera, clipboard, folder sharing, and loopback port forwarding on Apple Silicon.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "71de9cb53172ce47bf1a4912395930b9a515a827",
+        "repo_metadata_sha256": "a0934119b4788c6ab57e3c0a6d8661b46360d3b82a8521c2696484235da3ae6f",
+        "fingerprint": "f8e91c5324ed85b71bdcb28115fc454c8752faaafa8e977f1bfe0d57cb12c3ac"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-09-01T13:04:21Z"
       }
     },
     {
