@@ -1602,6 +1602,29 @@
       }
     },
     {
+      "node_id": "R_kgDOHKVEVA",
+      "category": "developer-tools",
+      "tags": [
+        "desktop-app",
+        "gui"
+      ],
+      "summary": "VirtualBuddy is an open-source macOS app for Apple Silicon that virtualizes macOS 12 and later, aimed at developers who need to test their apps across multiple macOS versions including betas. It includes a guided installation wizard, can also boot some ARM-based Linux distributions, and supports clipboard and folder sharing between host and guest.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "a98f10bb71e8ce36628bbce71b2388704d85e3fe",
+        "repo_metadata_sha256": "6c7bc90a93ce152ebbee43d7769cbd570914ef72fce439c5a2aeae49e61bc13d",
+        "fingerprint": "5a4ae14b2c44da1c5a97a7679c2d085f8821896b2c0e7e22db25649f6c8b80f4"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-09-02T10:26:48Z"
+      }
+    },
+    {
       "node_id": "R_kgDOHfAAfQ",
       "category": "productivity-automation",
       "tags": [
@@ -3745,6 +3768,30 @@
         "model_label": null,
         "prompt_version": "classify-v1",
         "generated_at": "2026-07-16T12:22:12Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOMGEu0Q",
+      "category": "security-privacy",
+      "tags": [
+        "automation",
+        "cli",
+        "configuration"
+      ],
+      "summary": "RemoveWindowsAI is a PowerShell script for Windows 11 that force-removes and disables built-in AI features such as Copilot and Recall, along with related components, to improve privacy, security, and user experience. It offers interactive and non-interactive modes, selectable options, a backup and revert mode, and can restore classic versions of apps like Notepad and Paint.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "e9d5d7ba541e29f0ac86c722ebd7f9b7a0f78685",
+        "repo_metadata_sha256": "689b4fe726ab9517ca08773c9067ad98593104b1e7f173e67d603e39c2685557",
+        "fingerprint": "542ea9a8f88a9c82eac88ea6d56bc675da87aa97b09135b755c6cb9e554de84a"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-09-02T10:26:48Z"
       }
     },
     {
