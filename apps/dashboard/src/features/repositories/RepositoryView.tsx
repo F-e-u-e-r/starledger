@@ -67,8 +67,10 @@ function resultSummary(count: number, total: number, query: string, filtered: bo
  * active-filter chips, a responsive card list and accessible result states.
  *
  * Performance: per-dataset work (`prepareRepositories` = derive + searchable
- * text, and `deriveFacetOptions`) is memoized by [repos, sessionNow]; only the
- * cheap search/filter/sort pass re-runs as the dashboard state changes.
+ * text, and `deriveFacetOptions`) is memoized by [repos, sessionNow] plus the
+ * optional-layer join maps, so it re-runs when the AI or skills layer settles
+ * (a bounded, per-load count); only the cheap search/filter/sort pass re-runs
+ * as the dashboard state changes.
  */
 export function RepositoryView({
   repos,

@@ -320,6 +320,16 @@ describe('M2.4 facet UI + provenance note (§4.11/§2.1)', () => {
     expect(screen.queryByText('Skills ecosystem')).toBeNull();
   });
 
+  it('M24-DRW-1: the mobile filter drawer carries the Skills facet too — sidebar/drawer parity (PR #263 review F6)', () => {
+    renderView(skillsRepos(), readyProps());
+    fireEvent.click(screen.getByRole('button', { name: 'Filters' }));
+    const drawer = screen.getByRole('dialog', { name: 'Filters' });
+    expect(within(drawer).getByText('Skills ecosystem')).toBeTruthy();
+    expect(
+      within(drawer).getByRole('checkbox', { name: 'Skills-ecosystem repos only' }),
+    ).toBeTruthy();
+  });
+
   it('FACET-UI-2: the scope checkbox and a category checkbox drive the canonical state', () => {
     renderView(skillsRepos(), readyProps());
     fireEvent.click(screen.getByRole('checkbox', { name: 'Skills-ecosystem repos only' }));

@@ -20,8 +20,11 @@ export interface SearchableRepo extends DerivedRepo {
 
 /**
  * Per-dataset preparation (the expensive, clock-dependent half): derive fields
- * and precompute searchable text ONCE. Memoize by [repos, now]; everything after
- * this is independent of the dataset metadata and the clock.
+ * and precompute searchable text ONCE per input set. Memoize by
+ * [repos, now, annotations, skills] — the pass re-runs when an optional layer
+ * settles (annotations and, since M2.4, skills), mirroring the AI layer's
+ * existing behavior; everything after this is independent of the dataset
+ * metadata and the clock.
  */
 export function prepareRepositories(
   repos: readonly CanonicalRepo[],

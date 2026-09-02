@@ -44,12 +44,14 @@ describe('dashboard-state codec', () => {
 
   it('URL-1: a full non-default state round-trips and serializes in canonical order', () => {
     const full = state({
+      scope: 'skills',
       query: 'telegram bot',
       sort: 'stargazer_count',
       direction: 'asc',
       languages: ['TypeScript', 'Go'],
       topics: ['cli', 'automation'],
       licenses: ['MIT', 'Apache-2.0'],
+      skillCategories: ['verification-qa', 'design-ui'],
       archived: false,
       fork: true,
       stale: false,
@@ -57,8 +59,11 @@ describe('dashboard-state codec', () => {
       anyRelease: ['has'],
       hydrationStatuses: ['partial', 'ok'],
     });
+    // "Full" means EVERY canonical field non-default (PR #263 review F12: the
+    // M2.4 fields joined so this golden keeps its every-field claim honest).
     expect(serializeDashboardState(full)).toBe(
-      'q=telegram+bot&sort=stargazer_count&direction=asc' +
+      'scope=skills&skill=design-ui&skill=verification-qa' +
+        '&q=telegram+bot&sort=stargazer_count&direction=asc' +
         '&language=Go&language=TypeScript&topic=automation&topic=cli' +
         '&license=Apache-2.0&license=MIT' +
         '&archived=false&fork=true&stale=false' +
@@ -208,9 +213,11 @@ describe('dashboard-state codec — M1.1 fields (view/density/page + R1)', () =>
     expect(serializeDashboardState(s)).toBe('sort=name_with_owner'); // redundancy dropped
   });
 
-  it('ORDER: canonical emit order = view, q, sort, direction, facets, density, page', () => {
+  it('ORDER: canonical emit order = view, scope, skill, q, sort, direction, facets, density, page (§4.11 amendment)', () => {
     const full = state({
       view: 'discovery',
+      scope: 'skills',
+      skillCategories: ['verification-qa'],
       query: 'x',
       sort: 'stargazer_count',
       direction: 'asc',
@@ -219,7 +226,8 @@ describe('dashboard-state codec — M1.1 fields (view/density/page + R1)', () =>
       page: 3,
     });
     expect(serializeDashboardState(full)).toBe(
-      'view=discovery&q=x&sort=stargazer_count&direction=asc&language=Go&density=comfortable&page=3',
+      'view=discovery&scope=skills&skill=verification-qa' +
+        '&q=x&sort=stargazer_count&direction=asc&language=Go&density=comfortable&page=3',
     );
     expect(parse(serializeDashboardState(full))).toEqual(normalizeDashboardState(full));
   });
