@@ -2,6 +2,10 @@ import { useCallback, useEffect, useId, useMemo, useRef, useState } from 'react'
 import type { CanonicalRepo } from '@starred/schema';
 import { NoResults } from '../../components/states';
 import type { AnnotationStatus, LoadedAnnotations } from '../../data/load-annotations';
+import type {
+  LoadedSkillsClassification,
+  SkillsClassificationStatus,
+} from '../../data/load-skills-classification';
 import type { Density } from '../../state/dashboard-state';
 import type { DashboardStateControls } from '../../state/use-dashboard-state';
 import { activeFilterCount, FilterChips } from '../filters/FilterChips';
@@ -73,6 +77,9 @@ export function RepositoryView({
   initialNow,
   annotations,
   annotationStatus,
+  skillsClassification,
+  skillsStatus,
+  starsSha256,
 }: {
   repos: CanonicalRepo[];
   /** Canonical state controls, owned by App (single source of truth, §6.4). */
@@ -82,6 +89,14 @@ export function RepositoryView({
   annotations?: LoadedAnnotations | null;
   /** Lifecycle of the optional AI layer (P7 §2.2). Defaults from `annotations`. */
   annotationStatus?: AnnotationStatus;
+  /** The optional skills-classification layer (P7 §4.11). */
+  skillsClassification?: LoadedSkillsClassification | null;
+  /** Lifecycle of the skills layer. Activation requires `'ready'` — data
+   *  presence alone never activates (charter #2); omitted ⇒ not ready. */
+  skillsStatus?: SkillsClassificationStatus;
+  /** Live dataset `stars_sha256` — drives ONLY the §2.1 soft provenance note
+   *  (never a gate; the mismatch is the steady state under daily sync). */
+  starsSha256?: string;
 }) {
   const { state, update, reset } = controls;
   const [sessionNow] = useState(() => initialNow ?? new Date());
@@ -93,18 +108,51 @@ export function RepositoryView({
   // The optional AI layer is usable only when `ready`; a missing status falls
   // back to "ready iff annotations are present" so existing callers/tests behave.
   const aiReady = annotationStatus ? annotationStatus === 'ready' : annotations != null;
+  // Skills layer readiness (P7 §4.11, charter #2): activation requires a
+  // COHERENT ready layer — status `ready` AND data. Neither half alone
+  // activates: data without status never projects (pre-commit R1 F-A,
+  // M24-STS-1), and a `ready` status without data would otherwise turn the
+  // scope/facet into a match-nothing filter and zero the results with no
+  // degraded surface (pre-commit R2 sol, M24-STS-4). Deliberately STRICTER
+  // than the AI layer's data-presence fallback (an M0 decision preserving
+  // then-existing callers; this surface is new and has none). The join map is
+  // passed only when ready, so a not-ready layer STRUCTURALLY cannot influence
+  // badges or filtering — `repo.skills` is then null everywhere (M24-BDG-1).
+  const skillsReady = skillsStatus === 'ready' && skillsClassification != null;
+  const skillsByNodeId = skillsReady ? skillsClassification?.byNodeId : undefined;
   const prepared = useMemo(
-    () => prepareRepositories(repos, sessionNow, annotationsByNodeId),
-    [repos, sessionNow, annotationsByNodeId],
+    () => prepareRepositories(repos, sessionNow, annotationsByNodeId, skillsByNodeId),
+    [repos, sessionNow, annotationsByNodeId, skillsByNodeId],
   );
   const facets = useMemo(() => deriveFacetOptions(prepared), [prepared]);
   const aiCount = useMemo(() => prepared.reduce((n, r) => (r.ai ? n + 1 : n), 0), [prepared]);
   const hasDegraded = useMemo(() => repos.some((repo) => repo.hydration_status !== 'ok'), [repos]);
-  // AI-dependent filters are applied only when the layer is ready (P7 §2.2): when
-  // it is not, they are neutralized so base repos are never suppressed.
+  // Taxonomy labels for badges and chips (§4.11) — canonical-order artifact data.
+  const skillCategories = skillsReady ? skillsClassification?.categories : undefined;
+  const skillCategoryLabels = useMemo(
+    () =>
+      skillCategories ? new Map(skillCategories.map((c) => [c.id, c.label] as const)) : undefined,
+    [skillCategories],
+  );
+  // §2.1 soft provenance note: ready + hash differs from the live dataset.
+  const skillsGeneratedAgainstOlderSnapshot =
+    skillsReady &&
+    skillsClassification != null &&
+    starsSha256 != null &&
+    skillsClassification.generatedAgainstStarsSha256 !== starsSha256;
+  const skillsFacetData =
+    skillsReady && skillCategories
+      ? {
+          categories: skillCategories,
+          generatedAgainstOlderSnapshot: skillsGeneratedAgainstOlderSnapshot,
+        }
+      : null;
+  // AI- and skills-dependent filters are applied only when their layer is ready
+  // (P7 §2.2/§4.11): when not, they are neutralized so base repos are never
+  // suppressed — results are never zeroed by an optional layer's absence.
   const results = useMemo(
-    () => selectFromPrepared(prepared, dashboardToView(state, aiReady)),
-    [prepared, state, aiReady],
+    () => selectFromPrepared(prepared, dashboardToView(state, aiReady, skillsReady)),
+    [prepared, state, aiReady, skillsReady],
   );
 
   // Pagination (§6.2): `state.page` is the REQUESTED page; the EFFECTIVE page is
@@ -155,7 +203,12 @@ export function RepositoryView({
   // counted as effective filters in the result summary (P7 §2.2).
   const suppressedAiFilterCount = aiReady ? 0 : state.categories.length + state.aiTags.length;
   const aiFilterSuppressed = suppressedAiFilterCount > 0;
-  const effectiveFilterCount = filterCount - suppressedAiFilterCount;
+  // Same exclusion for requested-but-inert skills values (§4.11, M24-CNT-1).
+  const suppressedSkillsFilterCount = skillsReady
+    ? 0
+    : (state.scope !== 'all' ? 1 : 0) + state.skillCategories.length;
+  const skillsFilterSuppressed = suppressedSkillsFilterCount > 0;
+  const effectiveFilterCount = filterCount - suppressedAiFilterCount - suppressedSkillsFilterCount;
 
   return (
     <main ref={mainRef} className={`dashboard density-${state.density}`}>
@@ -246,7 +299,13 @@ export function RepositoryView({
 
       <div className="layout">
         <aside className="sidebar" aria-label="Filters">
-          <FilterControls state={state} facets={facets} update={update} hasDegraded={hasDegraded} />
+          <FilterControls
+            state={state}
+            facets={facets}
+            update={update}
+            hasDegraded={hasDegraded}
+            skills={skillsFacetData}
+          />
         </aside>
 
         <section className="results" aria-labelledby="results-heading">
@@ -264,6 +323,7 @@ export function RepositoryView({
             update={update}
             onClearAll={() => reset()}
             onAfterRemove={focusResults}
+            skillCategoryLabels={skillCategoryLabels}
           />
 
           <p className="result-count" role="status">
@@ -275,6 +335,14 @@ export function RepositoryView({
               {annotationStatus === 'loading'
                 ? 'AI classification is still loading — its category and tag filters will apply once it’s ready.'
                 : 'AI classification is unavailable, so its category and tag filters aren’t being applied. They stay in your link and re-apply once enrichment loads.'}
+            </p>
+          ) : null}
+
+          {skillsFilterSuppressed ? (
+            <p className="degraded-notice" role="status">
+              {skillsStatus === 'loading'
+                ? 'Skills classification is still loading — the Skills-ecosystem scope and skill-category filters will apply once it’s ready.'
+                : 'Skills classification is unavailable, so the Skills-ecosystem scope and skill-category filters aren’t being applied. They stay in your link and re-apply once the layer loads.'}
             </p>
           ) : null}
 
@@ -294,6 +362,7 @@ export function RepositoryView({
                     repo={repo}
                     now={sessionNow}
                     selectedTopics={state.topics}
+                    skillCategoryLabels={skillCategoryLabels}
                   />
                 ))}
               </ul>
@@ -334,7 +403,13 @@ export function RepositoryView({
       </div>
 
       <FilterDrawer open={filtersOpen} onClose={closeFilters} returnFocusRef={filtersToggleRef}>
-        <FilterControls state={state} facets={facets} update={update} hasDegraded={hasDegraded} />
+        <FilterControls
+          state={state}
+          facets={facets}
+          update={update}
+          hasDegraded={hasDegraded}
+          skills={skillsFacetData}
+        />
       </FilterDrawer>
     </main>
   );
