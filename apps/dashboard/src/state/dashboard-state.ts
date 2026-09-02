@@ -15,6 +15,15 @@ export type BooleanFilter = boolean | null;
 /** Active top-level tab. `discovery` is fail-soft: honored only when available (§6.4). */
 export type DashboardView = 'stars' | 'discovery';
 
+/**
+ * Skills-ecosystem scope (P7 §4.11): `all` = no constraint; `skills` = only
+ * repos carrying a classification record. The URL token is UI-canonical —
+ * deliberately NOT the artifact `scope.id`, because the codec is static and
+ * data-free at decode time; a second scope value would be a vocabulary
+ * expansion event (D2 rollout pattern), not data drift.
+ */
+export type SkillsScopeValue = 'all' | 'skills';
+
 /** Row density. `compact` is the default (P7 §3, M1). Visual treatment lands in M1.2. */
 export type Density = 'comfortable' | 'compact';
 
@@ -25,6 +34,7 @@ export type Density = 'comfortable' | 'compact';
  */
 export interface DashboardState {
   view: DashboardView;
+  scope: SkillsScopeValue;
 
   query: string;
   sort: SortField;
@@ -35,6 +45,10 @@ export interface DashboardState {
   licenses: string[];
   categories: string[];
   aiTags: string[];
+  /** Skill-category ids (§4.11). Unknown/stale ids are preserved like every
+   * other data-dependent array facet — valid bookmarks until the taxonomy
+   * changes — never validated against loaded data at decode time. */
+  skillCategories: string[];
 
   archived: BooleanFilter;
   fork: BooleanFilter;
@@ -52,6 +66,7 @@ export interface DashboardState {
 
 export const DEFAULT_DASHBOARD_STATE: DashboardState = {
   view: 'stars',
+  scope: 'all',
   query: '',
   sort: 'starred_at',
   direction: 'desc',
@@ -60,6 +75,7 @@ export const DEFAULT_DASHBOARD_STATE: DashboardState = {
   licenses: [],
   categories: [],
   aiTags: [],
+  skillCategories: [],
   archived: null,
   fork: null,
   stale: null,
@@ -74,6 +90,7 @@ export const DEFAULT_DASHBOARD_STATE: DashboardState = {
 // unions so a renamed/added variant fails the build here, not silently at runtime.
 const DIRECTIONS = ['asc', 'desc'] as const satisfies readonly SortDirection[];
 const VIEW_VALUES = ['stars', 'discovery'] as const satisfies readonly DashboardView[];
+const SCOPE_VALUES = ['all', 'skills'] as const satisfies readonly SkillsScopeValue[];
 const DENSITY_VALUES = ['comfortable', 'compact'] as const satisfies readonly Density[];
 const RELEASE_VALUES = [
   'has',
@@ -86,6 +103,8 @@ const HYDRATION_VALUES = ['ok', 'partial', 'failed'] as const satisfies readonly
 // encode and decode can never disagree, and to lock the canonical emit order.
 const PARAM = {
   view: 'view',
+  scope: 'scope',
+  skillCategories: 'skill',
   query: 'q',
   sort: 'sort',
   direction: 'direction',
@@ -158,6 +177,7 @@ export function normalizeDashboardState(state: DashboardState): DashboardState {
   const sort = SORT_FIELDS.includes(state.sort) ? state.sort : DEFAULT_DASHBOARD_STATE.sort;
   return {
     view: VIEW_VALUES.includes(state.view) ? state.view : DEFAULT_DASHBOARD_STATE.view,
+    scope: SCOPE_VALUES.includes(state.scope) ? state.scope : DEFAULT_DASHBOARD_STATE.scope,
     query: state.query,
     sort,
     direction: (DIRECTIONS as readonly string[]).includes(state.direction)
@@ -168,6 +188,7 @@ export function normalizeDashboardState(state: DashboardState): DashboardState {
     licenses: canonicalStrings(state.licenses),
     categories: canonicalStrings(state.categories),
     aiTags: canonicalStrings(state.aiTags),
+    skillCategories: canonicalStrings(state.skillCategories),
     archived: state.archived,
     fork: state.fork,
     stale: state.stale,
@@ -187,6 +208,8 @@ const asDirection = (v: string): SortDirection | undefined =>
   (DIRECTIONS as readonly string[]).includes(v) ? (v as SortDirection) : undefined;
 const asView = (v: string): DashboardView | undefined =>
   (VIEW_VALUES as readonly string[]).includes(v) ? (v as DashboardView) : undefined;
+const asScope = (v: string): SkillsScopeValue | undefined =>
+  (SCOPE_VALUES as readonly string[]).includes(v) ? (v as SkillsScopeValue) : undefined;
 const asDensity = (v: string): Density | undefined =>
   (DENSITY_VALUES as readonly string[]).includes(v) ? (v as Density) : undefined;
 /** A positive-integer page token; rejects `0`, negatives, decimals and junk. */
@@ -206,6 +229,7 @@ export function parseDashboardState(params: URLSearchParams): DashboardState {
   const sort = lastValid(params.getAll(PARAM.sort), asSortField) ?? DEFAULT_DASHBOARD_STATE.sort;
   return normalizeDashboardState({
     view: lastValid(params.getAll(PARAM.view), asView) ?? DEFAULT_DASHBOARD_STATE.view,
+    scope: lastValid(params.getAll(PARAM.scope), asScope) ?? DEFAULT_DASHBOARD_STATE.scope,
     query: lastValid(params.getAll(PARAM.query), (v) => (v === '' ? undefined : v)) ?? '',
     sort,
     direction: lastValid(params.getAll(PARAM.direction), asDirection) ?? defaultDirection(sort),
@@ -214,6 +238,7 @@ export function parseDashboardState(params: URLSearchParams): DashboardState {
     licenses: params.getAll(PARAM.licenses),
     categories: params.getAll(PARAM.categories),
     aiTags: params.getAll(PARAM.aiTags),
+    skillCategories: params.getAll(PARAM.skillCategories),
     archived: parseBooleanFilter(params.getAll(PARAM.archived)),
     fork: parseBooleanFilter(params.getAll(PARAM.fork)),
     stale: parseBooleanFilter(params.getAll(PARAM.stale)),
@@ -232,9 +257,10 @@ function appendBoolean(params: URLSearchParams, key: string, value: BooleanFilte
 /**
  * Encode a DashboardState into a canonical query string (no leading `?`).
  * Defaults are omitted, array facets are deduplicated + sorted, and parameters
- * are emitted in a fixed order (§6: view, q, sort, direction, facets, booleans,
- * release/hydration, density, page), so equivalent states always produce a
- * byte-identical string. The default state serializes to `''`.
+ * are emitted in a fixed order (§6/§4.11: view, scope, skill, q, sort,
+ * direction, facets, booleans, release/hydration, density, page), so equivalent
+ * states always produce a byte-identical string. The default state serializes
+ * to `''`.
  *
  * `sort` and `direction` are INDEPENDENT (R1, §6.1): `sort` is emitted when it is
  * non-default; `direction` is emitted only when it differs from
@@ -246,6 +272,10 @@ export function serializeDashboardState(state: DashboardState): string {
   const params = new URLSearchParams();
 
   if (s.view !== DEFAULT_DASHBOARD_STATE.view) params.set(PARAM.view, s.view);
+
+  // §4.11 emit-order amendment: `scope`, then `skill`, directly after `view`.
+  if (s.scope !== DEFAULT_DASHBOARD_STATE.scope) params.set(PARAM.scope, s.scope);
+  for (const v of s.skillCategories) params.append(PARAM.skillCategories, v);
 
   if (s.query !== DEFAULT_DASHBOARD_STATE.query) params.set(PARAM.query, s.query);
 

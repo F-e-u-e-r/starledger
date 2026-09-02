@@ -512,6 +512,25 @@ a {
   font-weight: 600;
 }
 
+/* Skill-category badges (P7 §4.11/§8): the primary category carries the accent,
+   the secondary stays muted — color reinforces, the label is the signal.
+   Taxonomy labels run long (44 chars live; §4.2 allows 120), so unlike the
+   short status badges these must WRAP inside the card instead of escaping it
+   (PR #263 review F1) — containment only, the card layout is untouched. */
+.badge-skill {
+  color: var(--accent);
+  border-color: var(--accent);
+  font-weight: 600;
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
+
+.badge-skill--secondary {
+  color: var(--muted);
+  border-color: var(--border);
+  font-weight: 500;
+}
+
 .repo-highlights {
   display: flex;
   flex-wrap: wrap;

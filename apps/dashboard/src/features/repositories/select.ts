@@ -1,6 +1,7 @@
 import type { CanonicalRepo } from '@starred/schema';
 import { type DerivedRepo, deriveRepo } from '../../data/derive-fields';
 import type { RepoAnnotation } from '../../data/load-annotations';
+import type { RepoSkillsClassification } from '../../data/load-skills-classification';
 import type { DashboardState } from '../../state/dashboard-state';
 import { applyFilters, type FilterState } from '../filters/filters';
 import { buildSearchText, matchesSearchText } from '../search/search';
@@ -19,16 +20,28 @@ export interface SearchableRepo extends DerivedRepo {
 
 /**
  * Per-dataset preparation (the expensive, clock-dependent half): derive fields
- * and precompute searchable text ONCE. Memoize by [repos, now]; everything after
- * this is independent of the dataset metadata and the clock.
+ * and precompute searchable text ONCE per input set. Memoize by
+ * [repos, now, annotations, skills] — the pass re-runs when an optional layer
+ * settles (annotations and, since M2.4, skills), mirroring the AI layer's
+ * existing behavior; everything after this is independent of the dataset
+ * metadata and the clock.
  */
 export function prepareRepositories(
   repos: readonly CanonicalRepo[],
   now: Date,
   annotations?: ReadonlyMap<string, RepoAnnotation>,
+  skills?: ReadonlyMap<string, RepoSkillsClassification>,
 ): SearchableRepo[] {
   return repos.map((repo) => {
-    const derived = deriveRepo(repo, now, annotations?.get(repo.node_id) ?? null);
+    const derived = deriveRepo(
+      repo,
+      now,
+      annotations?.get(repo.node_id) ?? null,
+      skills?.get(repo.node_id) ?? null,
+    );
+    // `searchText` deliberately does NOT include skills-classification fields in
+    // this sub-slice: search enrichment is the sequenced-next M2.4 code path
+    // (P7 §4.11/§7), distinct from filtering by design.
     return { ...derived, searchText: buildSearchText(derived) };
   });
 }
@@ -66,8 +79,16 @@ export function selectRepositories(
  * dashboard). The URL value is untouched (it lives in `DashboardState`), so it is
  * retained for recoverability and re-applies once the layer loads. Defaults to
  * `true` so non-AI callers (tests, `selectRepositories`) are unaffected.
+ *
+ * `skillsReady` gates the skills-classification facets the same way (P7 §4.11,
+ * M24-FS-1): when the layer is not `ready`, `scope`/`skillCategories` are
+ * neutralized here — requested values stay in the URL, results are never zeroed
+ * by the optional layer's absence. Unlike `aiReady`, it defaults to `false`
+ * (fail-closed): the skills surface is new with no legacy callers to preserve,
+ * so activation always requires an explicit `true` from a status-owning caller
+ * (charter #2; pre-commit R1 F-A, pinned by M24-STS-3).
  */
-export function dashboardToView(s: DashboardState, aiReady = true): ViewState {
+export function dashboardToView(s: DashboardState, aiReady = true, skillsReady = false): ViewState {
   return {
     query: s.query,
     sort: { field: s.sort, direction: s.direction },
@@ -77,6 +98,8 @@ export function dashboardToView(s: DashboardState, aiReady = true): ViewState {
       licenses: s.licenses,
       categories: aiReady ? s.categories : [],
       aiTags: aiReady ? s.aiTags : [],
+      skillsScope: skillsReady && s.scope === 'skills',
+      skillCategories: skillsReady ? s.skillCategories : [],
       archived: s.archived,
       fork: s.fork,
       stale: s.stale,

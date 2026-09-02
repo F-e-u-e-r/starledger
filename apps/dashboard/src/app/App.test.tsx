@@ -135,7 +135,14 @@ describe('App state machine', () => {
   });
 });
 
-describe('M2.3 skills-classification non-propagation (P7 §4.10)', () => {
+/**
+ * M2.4 (P7 §4.11) SUPERSEDES the M2.3 delta-0 pins: `ready` now PROJECTS into
+ * the Starred view (scope + facet + badges), so ready-vs-baseline DOM equality
+ * is no longer the contract — while a NOT-ready layer must still render
+ * byte-identically to a layer-absent baseline (the base browser is never
+ * affected by loading/unavailable/rejecting states).
+ */
+describe('M2.4 skills-classification projection (P7 §4.11)', () => {
   const skillsReady = async () => ({
     byNodeId: new Map([
       [
@@ -143,7 +150,16 @@ describe('M2.3 skills-classification non-propagation (P7 §4.10)', () => {
         { primaryCategoryId: 'verification-qa', secondaryCategoryIds: [], summary: 'Fixture.' },
       ],
     ]),
-    categories: [],
+    categories: [
+      {
+        id: 'verification-qa',
+        label: 'Verification & QA',
+        kind: 'domain' as const,
+        definition: 'Fixture definition.',
+        order: 0,
+        target_pack: null,
+      },
+    ],
     scope: { id: 'coding-agent-skills-ecosystem', label: 'x', description: 'y' },
     taxonomyVersion: 'skills-1',
     generatedAt: '2026-08-14T00:00:00Z',
@@ -153,7 +169,7 @@ describe('M2.3 skills-classification non-propagation (P7 §4.10)', () => {
 
   async function renderWithSkills(
     skillsLoader: NonNullable<Parameters<typeof App>[0]>['skillsClassificationLoader'],
-  ): Promise<string> {
+  ): Promise<{ html: string; cardList: string }> {
     const view = render(
       <App
         loader={async () => makeDataset([makeRepo({ node_id: 'R_1', name_with_owner: 'a/one' })])}
@@ -167,10 +183,14 @@ describe('M2.3 skills-classification non-propagation (P7 §4.10)', () => {
     await new Promise((resolve) => setTimeout(resolve, 0));
     // React's useId counter is process-global, so auto-generated aria ids
     // (:r1f: etc.) differ between renders; normalize them — everything ELSE
-    // must be byte-identical for the delta-0 invariant.
-    const html = view.container.innerHTML.replace(/:r[0-9a-z]+:/g, ':rID:');
+    // must be byte-identical for the equality pins.
+    const normalize = (s: string) => s.replace(/:r[0-9a-z]+:/g, ':rID:');
+    const html = normalize(view.container.innerHTML);
+    // The card subtree alone, for pins that must hold while the sidebar
+    // legitimately differs (a ready layer projects its facet section).
+    const cardList = normalize(view.container.querySelector('.card-list')?.outerHTML ?? '');
     view.unmount();
-    return html;
+    return { html, cardList };
   }
 
   it('SKILLS-1: the loader IS invoked (wiring pin) and a rejection never affects the base browser', async () => {
@@ -184,7 +204,7 @@ describe('M2.3 skills-classification non-propagation (P7 §4.10)', () => {
     expect(invoked).toBeGreaterThan(0);
   });
 
-  it('SKILLS-3 (matrix row 10): a READY layer whose map lacks the base repo renders it as a normal repo — no error, no synthetic classification', async () => {
+  it('SKILLS-3 (matrix row 10): a READY layer whose map lacks the base repo renders that repo CARD byte-identically to a layer-absent render — no badge, no synthetic classification treatment', async () => {
     const readyWithoutThisRepo = async () => ({
       ...(await skillsReady()),
       byNodeId: new Map([
@@ -196,13 +216,20 @@ describe('M2.3 skills-classification non-propagation (P7 §4.10)', () => {
     });
     const baseline = await renderWithSkills(async () => null);
     const unclassified = await renderWithSkills(readyWithoutThisRepo);
-    expect(unclassified).toBe(baseline);
-    expect(unclassified).toContain('a/one');
+    // "Absence is not a classification" pinned at DOM level again (max-review
+    // round-2 finding 1 restored the superseded M2.3 oracle's discriminating
+    // power at CARD scope): ANY readiness-keyed synthetic treatment of an
+    // unclassified repo — an "Unclassified" pill, an empty enrichment block —
+    // breaks this equality, whatever class name it uses.
+    expect(unclassified.cardList).toBe(baseline.cardList);
+    expect(unclassified.cardList).toContain('a/one');
+    // Scoped to the card subtree deliberately: the ready layer legitimately
+    // projects its facet section into the sidebar.
+    expect(unclassified.html).toContain('Skills ecosystem');
   });
 
-  it('SKILLS-2: ready, unavailable, pending, and rejecting layers render IDENTICAL base DOM (delta = 0)', async () => {
+  it('SKILLS-2 (M2.4): NOT-ready layers render byte-identical base DOM to a layer-absent baseline; a READY layer projects (badge + facet section)', async () => {
     const baseline = await renderWithSkills(async () => null);
-    const ready = await renderWithSkills(skillsReady);
     // The pending promise must SETTLE after the capture, or it dangles on the
     // event loop and stalls the worker's teardown.
     let releasePending: (value: null) => void = () => {};
@@ -214,10 +241,19 @@ describe('M2.3 skills-classification non-propagation (P7 §4.10)', () => {
     );
     releasePending(null);
     const rejecting = await renderWithSkills(() => Promise.reject(new Error('boom')));
-    expect(ready).toBe(baseline);
-    expect(pending).toBe(baseline);
-    expect(rejecting).toBe(baseline);
-    expect(baseline).toContain('a/one');
+    expect(pending.html).toBe(baseline.html);
+    expect(rejecting.html).toBe(baseline.html);
+    expect(baseline.html).toContain('a/one');
+    // A not-ready layer leaves no trace of the projection in the base DOM.
+    expect(baseline.html).not.toContain('badge-skill');
+    expect(baseline.html).not.toContain('Skills ecosystem');
+    // Ready now DIFFERS by design (§4.11 supersession): the classified repo's
+    // card carries its taxonomy-labeled badge and the facet section exists.
+    const ready = await renderWithSkills(skillsReady);
+    expect(ready.html).not.toBe(baseline.html);
+    expect(ready.html).toContain('badge-skill');
+    expect(ready.html).toContain('Verification &amp; QA');
+    expect(ready.html).toContain('Skills ecosystem');
   });
 });
 

@@ -76,6 +76,7 @@ export function RepositoryCard({
   repo,
   now = new Date(),
   selectedTopics = [],
+  skillCategoryLabels,
 }: {
   repo: DerivedRepo;
   now?: Date;
@@ -83,6 +84,10 @@ export function RepositoryCard({
    *  the collapsed topics state. Presentation input only — the card never
    *  writes canonical state. */
   selectedTopics?: readonly string[];
+  /** Taxonomy labels by category id (P7 §4.11 badges). Absent while the skills
+   *  layer is not ready — `repo.skills` is then also absent, so no badge can
+   *  render with a missing label; the id slug is the defensive fallback only. */
+  skillCategoryLabels?: ReadonlyMap<string, string>;
 }) {
   const [topicsExpanded, setTopicsExpanded] = useState(false);
   const starred = fmtMonthYear(repo.starred_at);
@@ -136,6 +141,23 @@ export function RepositoryCard({
               <span className="badge badge-degraded">
                 {repo.hydration_status === 'failed' ? 'Data unavailable' : 'Partial data'}
               </span>
+            ) : null}
+            {/* Skill-category badges (P7 §4.11/§8): one card, primary then ≤1
+                secondary (v1), full taxonomy labels. `repo.skills` is null
+                whenever the layer is not ready or the repo is unclassified, so
+                absence of the layer renders this card byte-identically. */}
+            {repo.skills ? (
+              <>
+                <span className="badge badge-skill">
+                  {skillCategoryLabels?.get(repo.skills.primaryCategoryId) ??
+                    repo.skills.primaryCategoryId}
+                </span>
+                {repo.skills.secondaryCategoryIds.map((id) => (
+                  <span key={id} className="badge badge-skill badge-skill--secondary">
+                    {skillCategoryLabels?.get(id) ?? id}
+                  </span>
+                ))}
+              </>
             ) : null}
           </span>
         </div>
