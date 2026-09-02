@@ -138,6 +138,15 @@ describe('M2.4 neutralization + filter mapping (§4.11)', () => {
     ).toEqual(['R_sec']);
   });
 
+  it('SEQ-2: the joined classification `summary` is NOT rendered in this sub-slice — carried payload for the next (§4.11/F13; premature rendering must fail here)', () => {
+    renderView(skillsRepos(), readyProps());
+    // Both fixture records carry makeSkillsRecord's summary text; no shipped
+    // surface may render it yet (max-review round-2 finding 2 — SEQ-1 pins
+    // the search half of the same deferred pair, this pins the display half).
+    expect(screen.queryByText('Curated one-liner.')).toBeNull();
+    expect(document.body.textContent).not.toContain('Curated one-liner.');
+  });
+
   it('SEQ-1: classification labels are NOT searchable in this sub-slice (search enrichment is sequenced next — §4.11/§7)', () => {
     const prepared = prepareRepositories(skillsRepos(), NOW, undefined, classification().byNodeId);
     const classified = prepared.find((r) => r.node_id === 'R_cls')!;

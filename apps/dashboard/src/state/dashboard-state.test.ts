@@ -44,6 +44,7 @@ describe('dashboard-state codec', () => {
 
   it('URL-1: a full non-default state round-trips and serializes in canonical order', () => {
     const full = state({
+      view: 'discovery',
       scope: 'skills',
       query: 'telegram bot',
       sort: 'stargazer_count',
@@ -51,6 +52,8 @@ describe('dashboard-state codec', () => {
       languages: ['TypeScript', 'Go'],
       topics: ['cli', 'automation'],
       licenses: ['MIT', 'Apache-2.0'],
+      categories: ['security', 'ai-ml'],
+      aiTags: ['llm', 'cli'],
       skillCategories: ['verification-qa', 'design-ui'],
       archived: false,
       fork: true,
@@ -58,16 +61,22 @@ describe('dashboard-state codec', () => {
       stableRelease: ['none', 'has'],
       anyRelease: ['has'],
       hydrationStatuses: ['partial', 'ok'],
+      density: 'comfortable',
+      page: 7,
     });
-    // "Full" means EVERY canonical field non-default (PR #263 review F12: the
-    // M2.4 fields joined so this golden keeps its every-field claim honest).
+    // "Full" means LITERALLY every canonical DashboardState field non-default
+    // (max-review round-2 finding 3: the F12 comment overclaimed while
+    // categories/aiTags — and view/density/page — sat at defaults; the fixture
+    // now backs the claim, so dropping ANY field's emission reddens this pin).
     expect(serializeDashboardState(full)).toBe(
-      'scope=skills&skill=design-ui&skill=verification-qa' +
+      'view=discovery&scope=skills&skill=design-ui&skill=verification-qa' +
         '&q=telegram+bot&sort=stargazer_count&direction=asc' +
         '&language=Go&language=TypeScript&topic=automation&topic=cli' +
         '&license=Apache-2.0&license=MIT' +
+        '&category=ai-ml&category=security&aiTag=cli&aiTag=llm' +
         '&archived=false&fork=true&stale=false' +
-        '&stableRelease=has&stableRelease=none&anyRelease=has&hydration=ok&hydration=partial',
+        '&stableRelease=has&stableRelease=none&anyRelease=has&hydration=ok&hydration=partial' +
+        '&density=comfortable&page=7',
     );
     // round-trip: decode(encode(x)) === normalize(x)
     expect(parse(serializeDashboardState(full))).toEqual(normalizeDashboardState(full));

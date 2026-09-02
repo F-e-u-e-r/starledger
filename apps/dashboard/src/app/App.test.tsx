@@ -169,7 +169,7 @@ describe('M2.4 skills-classification projection (P7 §4.11)', () => {
 
   async function renderWithSkills(
     skillsLoader: NonNullable<Parameters<typeof App>[0]>['skillsClassificationLoader'],
-  ): Promise<string> {
+  ): Promise<{ html: string; cardList: string }> {
     const view = render(
       <App
         loader={async () => makeDataset([makeRepo({ node_id: 'R_1', name_with_owner: 'a/one' })])}
@@ -183,10 +183,14 @@ describe('M2.4 skills-classification projection (P7 §4.11)', () => {
     await new Promise((resolve) => setTimeout(resolve, 0));
     // React's useId counter is process-global, so auto-generated aria ids
     // (:r1f: etc.) differ between renders; normalize them — everything ELSE
-    // must be byte-identical for the delta-0 invariant.
-    const html = view.container.innerHTML.replace(/:r[0-9a-z]+:/g, ':rID:');
+    // must be byte-identical for the equality pins.
+    const normalize = (s: string) => s.replace(/:r[0-9a-z]+:/g, ':rID:');
+    const html = normalize(view.container.innerHTML);
+    // The card subtree alone, for pins that must hold while the sidebar
+    // legitimately differs (a ready layer projects its facet section).
+    const cardList = normalize(view.container.querySelector('.card-list')?.outerHTML ?? '');
     view.unmount();
-    return html;
+    return { html, cardList };
   }
 
   it('SKILLS-1: the loader IS invoked (wiring pin) and a rejection never affects the base browser', async () => {
@@ -200,7 +204,7 @@ describe('M2.4 skills-classification projection (P7 §4.11)', () => {
     expect(invoked).toBeGreaterThan(0);
   });
 
-  it('SKILLS-3 (matrix row 10): a READY layer whose map lacks the base repo renders it as a normal repo — no skill badge, no error, no synthetic classification', async () => {
+  it('SKILLS-3 (matrix row 10): a READY layer whose map lacks the base repo renders that repo CARD byte-identically to a layer-absent render — no badge, no synthetic classification treatment', async () => {
     const readyWithoutThisRepo = async () => ({
       ...(await skillsReady()),
       byNodeId: new Map([
@@ -210,12 +214,18 @@ describe('M2.4 skills-classification projection (P7 §4.11)', () => {
         ],
       ]),
     });
+    const baseline = await renderWithSkills(async () => null);
     const unclassified = await renderWithSkills(readyWithoutThisRepo);
-    expect(unclassified).toContain('a/one');
-    // The layer projects (sidebar section present) but the unclassified repo's
-    // card carries NO badge — "absence is not a classification".
-    expect(unclassified).toContain('Skills ecosystem');
-    expect(unclassified).not.toContain('badge-skill');
+    // "Absence is not a classification" pinned at DOM level again (max-review
+    // round-2 finding 1 restored the superseded M2.3 oracle's discriminating
+    // power at CARD scope): ANY readiness-keyed synthetic treatment of an
+    // unclassified repo — an "Unclassified" pill, an empty enrichment block —
+    // breaks this equality, whatever class name it uses.
+    expect(unclassified.cardList).toBe(baseline.cardList);
+    expect(unclassified.cardList).toContain('a/one');
+    // Scoped to the card subtree deliberately: the ready layer legitimately
+    // projects its facet section into the sidebar.
+    expect(unclassified.html).toContain('Skills ecosystem');
   });
 
   it('SKILLS-2 (M2.4): NOT-ready layers render byte-identical base DOM to a layer-absent baseline; a READY layer projects (badge + facet section)', async () => {
@@ -231,19 +241,19 @@ describe('M2.4 skills-classification projection (P7 §4.11)', () => {
     );
     releasePending(null);
     const rejecting = await renderWithSkills(() => Promise.reject(new Error('boom')));
-    expect(pending).toBe(baseline);
-    expect(rejecting).toBe(baseline);
-    expect(baseline).toContain('a/one');
+    expect(pending.html).toBe(baseline.html);
+    expect(rejecting.html).toBe(baseline.html);
+    expect(baseline.html).toContain('a/one');
     // A not-ready layer leaves no trace of the projection in the base DOM.
-    expect(baseline).not.toContain('badge-skill');
-    expect(baseline).not.toContain('Skills ecosystem');
+    expect(baseline.html).not.toContain('badge-skill');
+    expect(baseline.html).not.toContain('Skills ecosystem');
     // Ready now DIFFERS by design (§4.11 supersession): the classified repo's
     // card carries its taxonomy-labeled badge and the facet section exists.
     const ready = await renderWithSkills(skillsReady);
-    expect(ready).not.toBe(baseline);
-    expect(ready).toContain('badge-skill');
-    expect(ready).toContain('Verification &amp; QA');
-    expect(ready).toContain('Skills ecosystem');
+    expect(ready.html).not.toBe(baseline.html);
+    expect(ready.html).toContain('badge-skill');
+    expect(ready.html).toContain('Verification &amp; QA');
+    expect(ready.html).toContain('Skills ecosystem');
   });
 });
 
