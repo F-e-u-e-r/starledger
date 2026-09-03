@@ -8,7 +8,7 @@
     "paths": [
       "README.md"
     ],
-    "last_commit_sha": "cac68682f3da51f997f480a4b62aa2b79c1ca8f9"
+    "last_commit_sha": "39b12d3b7329999e435d7653c0c1182232c3fcd7"
   },
   "pending": [],
   "deliveries": [
@@ -472,6 +472,24 @@
       "notification_key": "awesome_stars:themartiano/try-omarchy:R_kgDOUB-pxA",
       "status": "sent",
       "completed_at": "2026-08-31T13:58:29.633Z",
+      "detail": null
+    },
+    {
+      "notification_key": "awesome_stars:anthropics/sandbox-runtime:R_kgDOQFjJqA",
+      "status": "sent",
+      "completed_at": "2026-09-03T05:52:06.986Z",
+      "detail": null
+    },
+    {
+      "notification_key": "awesome_stars:longbridge/gpui-kit:R_kgDOMI8ZRg",
+      "status": "sent",
+      "completed_at": "2026-09-03T05:52:06.986Z",
+      "detail": null
+    },
+    {
+      "notification_key": "awesome_stars:zvec-ai/zvec-grep:R_kgDOTT80Mw",
+      "status": "sent",
+      "completed_at": "2026-09-03T05:52:06.986Z",
       "detail": null
     }
   ]
