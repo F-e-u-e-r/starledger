@@ -803,6 +803,30 @@
       }
     },
     {
+      "node_id": "MDEwOlJlcG9zaXRvcnkyNDQ0NDM2Njg=",
+      "category": "data-analytics",
+      "tags": [
+        "api",
+        "awesome-list",
+        "sdk"
+      ],
+      "summary": "A curated awesome-list of financial and economic data sources, covering open data tools, official data SDKs such as Wind, JQData, and RQData, and public and commercial market data providers for stocks, futures, options, and funds.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "f079daba4c6413a76374da40e408551d1d3ffcea",
+        "repo_metadata_sha256": "ebb100cdb6cce5e971440f101451367989b8f4d673d9710880010f397d4a73ba",
+        "fingerprint": "d41aed423f32467de19003be1f869e7402c6427599aa72111e6ef0a53da27598"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-09-03T10:26:19Z"
+      }
+    },
+    {
       "node_id": "MDEwOlJlcG9zaXRvcnkyNTQ4MzI3OTk=",
       "category": "security-privacy",
       "tags": [
@@ -8523,6 +8547,31 @@
       }
     },
     {
+      "node_id": "R_kgDOQFjJqA",
+      "category": "security-privacy",
+      "tags": [
+        "ai-agents",
+        "cli",
+        "library",
+        "networking"
+      ],
+      "summary": "A lightweight sandboxing tool and library that enforces filesystem and network restrictions on arbitrary processes using native OS primitives like sandbox-exec and bubblewrap plus proxy-based network filtering, to run agents, MCP servers, and commands more safely without a container.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "14d896861519f07e0faff3b5321c54ec017bf15a",
+        "repo_metadata_sha256": "39fe0f7323e04b13bba7571a0dcdabdb366adb35cd6865fd5ece55961d438d71",
+        "fingerprint": "ebb171d7f5c28500c779f924500bbed6aa6a8fdb1330e9c20d6011045215d9c4"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-09-03T10:26:19Z"
+      }
+    },
+    {
       "node_id": "R_kgDOQHJC2g",
       "category": "media-creative",
       "tags": [
@@ -15557,6 +15606,32 @@
       }
     },
     {
+      "node_id": "R_kgDOS9bk4g",
+      "category": "productivity-automation",
+      "tags": [
+        "desktop-app",
+        "gui",
+        "llm",
+        "machine-learning",
+        "productivity"
+      ],
+      "summary": "A free, open-source desktop app for offline voice dictation and an AI assistant on Windows, macOS, and Linux. Speech-to-text runs locally via whisper.cpp or Parakeet, typing into any app; it can rewrite dictation into finished text, answer questions about the screen, and read replies aloud.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "fed02b2a43e1f8694dca59a383abc287c5e68583",
+        "repo_metadata_sha256": "bdb99811741201dd3f8a66f6936517df694c14fe2e7786e4f84fcb86d0b0e847",
+        "fingerprint": "bc4b80990d949e5b42fd81247ac7c61eaf5ca05c6aac8ad13a62e2794ad6822d"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-09-03T10:26:19Z"
+      }
+    },
+    {
       "node_id": "R_kgDOS9nssw",
       "category": "developer-tools",
       "tags": [
@@ -18169,6 +18244,31 @@
       }
     },
     {
+      "node_id": "R_kgDOTT80Mw",
+      "category": "developer-tools",
+      "tags": [
+        "ai-agents",
+        "cli",
+        "search",
+        "vector-database"
+      ],
+      "summary": "A local-first command-line search tool that unifies ripgrep, BM25 full-text, and vector semantic search behind one interface for humans and AI agents. It indexes code, documents, and structured data on your machine and returns ranked, source-linked results, with optional agent integration.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "dbd52c4a59c0bc75a92660c089da8bc03a8b97a1",
+        "repo_metadata_sha256": "75f901129e6387b2314a3f720cc79aa56ba49d110623851dc98223bf8a03326a",
+        "fingerprint": "f7f88316e9dd4992e3d5a2edacd3ccca04c7aa5f434938aee7894639a58b223d"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-09-03T10:26:19Z"
+      }
+    },
+    {
       "node_id": "R_kgDOTTg89g",
       "category": "media-creative",
       "tags": [
@@ -19890,6 +19990,30 @@
         "model_label": "informational-only",
         "prompt_version": "classify-v1",
         "generated_at": "2026-08-31T12:48:15Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOUGvNMw",
+      "category": "productivity-automation",
+      "tags": [
+        "ai-agents",
+        "automation",
+        "workflow"
+      ],
+      "summary": "An open-source AI presentation system providing project skills for coding agents such as Codex and Claude Code. It builds image-based slides, editable HTML decks, image-backed HTML, and native editable PPTX files, with additional skills for outlining, visual direction, and layout planning.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "cd7092303597afadf4c8bb03be87b56042facda9",
+        "repo_metadata_sha256": "3677d760c008b49e7ede71bb8806018921e6994d4bccc480d8017746e30eb462",
+        "fingerprint": "f3c55e25dd1861358fb8ba6deb1f7eb1d88ba57bf92863eddae33db9ccb9111f"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-09-03T10:26:19Z"
       }
     }
   ]
