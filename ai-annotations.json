@@ -2045,6 +2045,31 @@
       }
     },
     {
+      "node_id": "R_kgDOIlDXFw",
+      "category": "libraries-frameworks",
+      "tags": [
+        "build-tool",
+        "frontend",
+        "library",
+        "plugin"
+      ],
+      "summary": "StyleX is a JavaScript library for defining styles for optimized user interfaces. Styles are authored with its create and props API. It is developed as a monorepo that ships companion Babel, PostCSS, Rollup, and ESLint plugins along with a command-line interface.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "6762c7a4ba0b905a78396d141f863e3e053dbc40",
+        "repo_metadata_sha256": "409a3d92cd712d11fb62cb58725f9b66c79ea207fd77c76ce94d70be096f06ac",
+        "fingerprint": "c6cbe066f6a942316cf54b687783678d73fe0dbb50c114dc8f9bf711c480162a"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-09-04T10:23:02Z"
+      }
+    },
+    {
       "node_id": "R_kgDOIlMBmA",
       "category": "ai-ml",
       "tags": [
