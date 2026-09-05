@@ -19992,6 +19992,32 @@
       }
     },
     {
+      "node_id": "R_kgDOUGkXvg",
+      "category": "devops-infrastructure",
+      "tags": [
+        "cli",
+        "deployment",
+        "markdown",
+        "serverless",
+        "static-site-generator"
+      ],
+      "summary": "cfdrop is a self-contained Rust command-line tool that deploys a local directory to a temporary Cloudflare Workers account and returns a live public URL, with no signup, wrangler, or Node required. It can optionally password-protect the deployed site and convert Markdown files into a mobile-friendly static site.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "0bdc52a2914395c5a658d1b21f0fd490f3011a61",
+        "repo_metadata_sha256": "db541761826d13a4ba87e005aa07e7abceca64078a36d25b2311351f9c9d8f9c",
+        "fingerprint": "125f6d0f522c843dfcdb8cb97e83a205b355effa576ff6891b3579fd378ef270"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-09-05T09:23:01Z"
+      }
+    },
+    {
       "node_id": "R_kgDOUGv6dg",
       "category": "ai-ml",
       "tags": [
