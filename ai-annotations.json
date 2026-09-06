@@ -615,6 +615,29 @@
       }
     },
     {
+      "node_id": "MDEwOlJlcG9zaXRvcnkxODA2ODA2MTY=",
+      "category": "developer-tools",
+      "tags": [
+        "build-tool",
+        "sdk"
+      ],
+      "summary": "Distribution repository for the SwiftWasm toolchain and SDK, which compiles Swift code to WebAssembly. It packages the prebuilt toolchain for installation, while the actual toolchain patches are maintained in a separate build repository.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "8eba6d3749519118b293796d461d8d46b462ba63",
+        "repo_metadata_sha256": "c4b5ef085d7014d0a5fb39841eff00d3f2b1f21812bc92e4740689cbd9f45640",
+        "fingerprint": "81049335fca34f7a42a865bc61710aca1c30ebd608f266648ecb106ec9409ebf"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-09-06T10:24:06Z"
+      }
+    },
+    {
       "node_id": "MDEwOlJlcG9zaXRvcnkxODg3MDAyNzQ=",
       "category": "self-hosted-homelab",
       "tags": [
@@ -14449,6 +14472,31 @@
       }
     },
     {
+      "node_id": "R_kgDORqAo7A",
+      "category": "developer-tools",
+      "tags": [
+        "ai-agents",
+        "automation",
+        "code-generation",
+        "plugin"
+      ],
+      "summary": "A collection of installable skills for the Claude Code coding agent, added through the skills command-line installer. Included skills rewrite CLAUDE.md files, narrow React prop types, build iterated agentic coding-loop workflows, design agentic control loops, and explain topics with concise diagrams and code sketches.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "09de722cc34687354845241da1f702409ae6e1a3",
+        "repo_metadata_sha256": "1d31171c163868144cb32be4bae4395afcfa94efadce2080bf4293b82a786f0f",
+        "fingerprint": "b22fd9f24f0edd8cf44d88fb2ac8ee3286570f2f4489e220a42b1d3eb3a9192b"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-09-06T10:24:06Z"
+      }
+    },
+    {
       "node_id": "R_kgDORqec6w",
       "category": "productivity-automation",
       "tags": [
@@ -15349,6 +15397,33 @@
         "model_label": "informational-only",
         "prompt_version": "classify-v1",
         "generated_at": "2026-07-21T06:22:20Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOS20tYg",
+      "category": "productivity-automation",
+      "tags": [
+        "ai-agents",
+        "automation",
+        "orchestration",
+        "rest-api",
+        "self-hosted",
+        "workflow"
+      ],
+      "summary": "A cross-platform Rust daemon that schedules routines which run an AI agent on a cron schedule. It exposes the same routines over a browser dashboard, a REST API, and a Model Context Protocol endpoint on a single port, relying on a built-in scheduler rather than an operating-system cron service.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "601ff8d32cab95371986e6a0b7dda9f0664628a3",
+        "repo_metadata_sha256": "3179d18db05ad9fe34b5b54f8f52aa8abeca0b776aec081e61b40a54be39980f",
+        "fingerprint": "dbe45e8d0c913652244da884f926f8ec9a293b2227e5c47f2378b5b03cc6e2c7"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-09-06T10:24:06Z"
       }
     },
     {
@@ -17370,6 +17445,30 @@
         "model_label": null,
         "prompt_version": "classify-v1",
         "generated_at": "2026-08-05T08:23:04Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOSz24VQ",
+      "category": "libraries-frameworks",
+      "tags": [
+        "library",
+        "terminal",
+        "tui"
+      ],
+      "summary": "A Swift framework for building terminal user interfaces on macOS, Linux, and Windows using SwiftUI-style declarative views with state, stacks, controls, focus, gestures, and animation. The framework owns layout, input, and redraw, producing a single fast native binary.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "64c69a9b4b6304352a68f4e4dcba11b1166b2ccd",
+        "repo_metadata_sha256": "3ca67e3fee738994db7ef3668e6c8c2b5fc93322030f4626993a296c10ef07ae",
+        "fingerprint": "3b8627539c0ebdf625b846718fe8cb28900fb151174eaf6989b790171745e189"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-09-06T10:24:06Z"
       }
     },
     {
