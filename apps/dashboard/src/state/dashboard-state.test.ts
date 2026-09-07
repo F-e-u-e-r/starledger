@@ -44,25 +44,39 @@ describe('dashboard-state codec', () => {
 
   it('URL-1: a full non-default state round-trips and serializes in canonical order', () => {
     const full = state({
+      view: 'discovery',
+      scope: 'skills',
       query: 'telegram bot',
       sort: 'stargazer_count',
       direction: 'asc',
       languages: ['TypeScript', 'Go'],
       topics: ['cli', 'automation'],
       licenses: ['MIT', 'Apache-2.0'],
+      categories: ['security', 'ai-ml'],
+      aiTags: ['llm', 'cli'],
+      skillCategories: ['verification-qa', 'design-ui'],
       archived: false,
       fork: true,
       stale: false,
       stableRelease: ['none', 'has'],
       anyRelease: ['has'],
       hydrationStatuses: ['partial', 'ok'],
+      density: 'comfortable',
+      page: 7,
     });
+    // "Full" means LITERALLY every canonical DashboardState field non-default
+    // (max-review round-2 finding 3: the F12 comment overclaimed while
+    // categories/aiTags — and view/density/page — sat at defaults; the fixture
+    // now backs the claim, so dropping ANY field's emission reddens this pin).
     expect(serializeDashboardState(full)).toBe(
-      'q=telegram+bot&sort=stargazer_count&direction=asc' +
+      'view=discovery&scope=skills&skill=design-ui&skill=verification-qa' +
+        '&q=telegram+bot&sort=stargazer_count&direction=asc' +
         '&language=Go&language=TypeScript&topic=automation&topic=cli' +
         '&license=Apache-2.0&license=MIT' +
+        '&category=ai-ml&category=security&aiTag=cli&aiTag=llm' +
         '&archived=false&fork=true&stale=false' +
-        '&stableRelease=has&stableRelease=none&anyRelease=has&hydration=ok&hydration=partial',
+        '&stableRelease=has&stableRelease=none&anyRelease=has&hydration=ok&hydration=partial' +
+        '&density=comfortable&page=7',
     );
     // round-trip: decode(encode(x)) === normalize(x)
     expect(parse(serializeDashboardState(full))).toEqual(normalizeDashboardState(full));
@@ -208,9 +222,11 @@ describe('dashboard-state codec — M1.1 fields (view/density/page + R1)', () =>
     expect(serializeDashboardState(s)).toBe('sort=name_with_owner'); // redundancy dropped
   });
 
-  it('ORDER: canonical emit order = view, q, sort, direction, facets, density, page', () => {
+  it('ORDER: canonical emit order = view, scope, skill, q, sort, direction, facets, density, page (§4.11 amendment)', () => {
     const full = state({
       view: 'discovery',
+      scope: 'skills',
+      skillCategories: ['verification-qa'],
       query: 'x',
       sort: 'stargazer_count',
       direction: 'asc',
@@ -219,7 +235,8 @@ describe('dashboard-state codec — M1.1 fields (view/density/page + R1)', () =>
       page: 3,
     });
     expect(serializeDashboardState(full)).toBe(
-      'view=discovery&q=x&sort=stargazer_count&direction=asc&language=Go&density=comfortable&page=3',
+      'view=discovery&scope=skills&skill=verification-qa' +
+        '&q=x&sort=stargazer_count&direction=asc&language=Go&density=comfortable&page=3',
     );
     expect(parse(serializeDashboardState(full))).toEqual(normalizeDashboardState(full));
   });

@@ -41,10 +41,11 @@ export function App({
   skillsClassificationLoader,
 }: AppProps = {}) {
   const controls = useDashboardState();
-  // M2.3: the skills-classification layer LOADS (fail-soft, §4.10) but nothing
-  // consumes its state yet — production UI delta stays zero until M2.4
-  // projects it. The hook call keeps the lifecycle real and testable.
-  useSkillsClassification(skillsClassificationLoader);
+  // The optional skills-classification layer (fail-soft, §4.10). M2.4 projects
+  // it into the Starred view: scope + facet + badges (§4.11). Any failure or
+  // in-flight state only neutralizes the skills-dependent controls — the base
+  // browser is never affected.
+  const skills = useSkillsClassification(skillsClassificationLoader);
   const [state, setState] = useState<State>({ status: 'loading' });
   const [annotations, setAnnotations] = useState<LoadedAnnotations | null>(null);
   const [annotationStatus, setAnnotationStatus] = useState<AnnotationStatus>('loading');
@@ -165,6 +166,9 @@ export function App({
           datasetGeneratedAt={state.data.meta.dataset_generated_at}
           annotations={annotations}
           annotationStatus={annotationStatus}
+          skillsClassification={skills.data}
+          skillsStatus={skills.status}
+          starsSha256={state.data.meta.stars_sha256}
         />
       )}
     </>

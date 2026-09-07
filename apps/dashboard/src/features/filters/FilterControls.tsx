@@ -252,11 +252,23 @@ export function FilterControls({
   facets,
   update,
   hasDegraded,
+  skills,
 }: {
   state: DashboardState;
   facets: FacetOptions;
   update: (partial: Partial<DashboardState>, mode?: HistoryMode) => void;
   hasDegraded: boolean;
+  /**
+   * Skills-classification facet data (P7 §4.11) — passed ONLY while the layer is
+   * `ready` (the M0 AI-facet precedent: the section is hidden while degraded;
+   * requested values stay removable via chips). `categories` is the FULL
+   * taxonomy in canonical order (§4.2 I-5), never data-mined from repos;
+   * `generatedAgainstOlderSnapshot` drives the §2.1 soft provenance note.
+   */
+  skills?: {
+    categories: readonly { id: string; label: string }[];
+    generatedAgainstOlderSnapshot: boolean;
+  } | null;
 }) {
   const repoTypeSelected =
     (state.archived !== null ? 1 : 0) +
@@ -307,6 +319,41 @@ export function FilterControls({
           hideLegend
         />
       </FilterSection>
+      {skills ? (
+        <FilterSection
+          title="Skills ecosystem"
+          count={skills.categories.length}
+          selectedCount={(state.scope === 'skills' ? 1 : 0) + state.skillCategories.length}
+          defaultOpen
+        >
+          <fieldset className="facet">
+            <legend className="visually-hidden">Scope</legend>
+            <div className="facet-options">
+              <label className="facet-option">
+                <input
+                  type="checkbox"
+                  checked={state.scope === 'skills'}
+                  onChange={(e) => update({ scope: e.target.checked ? 'skills' : 'all' })}
+                />
+                Skills-ecosystem repos only
+              </label>
+            </div>
+            {skills.generatedAgainstOlderSnapshot ? (
+              <p className="facet-help">
+                Classification was generated against an older snapshot of the starred dataset.
+              </p>
+            ) : null}
+          </fieldset>
+          <CheckboxFacet
+            legend="Skill category"
+            options={skills.categories.map((c) => ({ value: c.id, label: c.label }))}
+            selected={state.skillCategories}
+            onChange={(skillCategories) => update({ skillCategories })}
+            initialLimit={10}
+            help="Curated classification of the coding-agent skills-ecosystem subset. Matches a repo's primary or secondary category."
+          />
+        </FilterSection>
+      ) : null}
       {facets.categories.length > 0 ? (
         <FilterSection
           title="AI category"

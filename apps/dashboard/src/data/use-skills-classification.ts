@@ -16,9 +16,13 @@ export interface SkillsClassificationState {
  * settles — NEVER mislabeled `unavailable` while in flight; `unavailable`
  * only after a definitive failure (loader resolved `null` or rejected).
  *
- * M2.3 keeps the production UI delta at zero: App invokes this hook so the
- * layer exists at runtime and its lifecycle is tested, but nothing consumes
- * the state yet — M2.4 projects it into scope/facets/badges.
+ * Since M2.4 (§4.11) the state IS consumed: RepositoryView projects it into
+ * the Skills-ecosystem scope, the skill-category facet and card badges.
+ * INVARIANT this hook upholds and consumers may rely on: `status === 'ready'`
+ * ⟺ `data !== null` (ready always carries data; loading/unavailable never
+ * do). RepositoryView still re-checks the conjunction defensively — its
+ * activation contract is status `ready` AND data, never either half alone
+ * (M24-STS-1/STS-4).
  */
 export function useSkillsClassification(
   loader?: () => Promise<LoadedSkillsClassification | null>,

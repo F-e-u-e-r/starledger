@@ -13,10 +13,11 @@ export type HistoryMode = 'push' | 'replace';
 /**
  * Fields whose semantic change resets `page → 1` (§6.3). `density` and `page`
  * itself are intentionally absent: density never resets, and an explicit page is
- * handled separately. `scope` joins this set in M2.
+ * handled separately. `scope`/`skillCategories` joined with M2.4 (§4.11).
  */
 const PAGE_RESET_FIELDS: readonly (keyof DashboardState)[] = [
   'view',
+  'scope',
   'query',
   'sort',
   'direction',
@@ -25,6 +26,7 @@ const PAGE_RESET_FIELDS: readonly (keyof DashboardState)[] = [
   'licenses',
   'categories',
   'aiTags',
+  'skillCategories',
   'archived',
   'fork',
   'stale',
