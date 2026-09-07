@@ -8086,6 +8086,33 @@
       }
     },
     {
+      "node_id": "R_kgDOQ63fjA",
+      "category": "developer-tools",
+      "tags": [
+        "cli",
+        "editor",
+        "plugin",
+        "terminal",
+        "theme",
+        "tui"
+      ],
+      "summary": "TTT (Terminal Text Tool) is a zero-config text editor and IDE written in Go that runs entirely in the terminal as a single binary. It provides LSP-powered autocompletion, syntax highlighting, multi-cursor editing, multi-folder workspaces, integrated Git and GitHub pull-request review, a built-in terminal emulator, customizable themes, and a sandboxed Lua plugin system.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "85f9172752b35e9762d55108919cd4b6110b2175",
+        "repo_metadata_sha256": "dd61910ce2f3ecd89415d818842e915cef9d3956b775d5efe78268a1ed80aeca",
+        "fingerprint": "184b0493336cdade8d53c2e5025cf78e7a22f5144a1a448c5def4240f7f95fc6"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-09-07T11:27:33Z"
+      }
+    },
+    {
       "node_id": "R_kgDOQ68taw",
       "category": "education-reference",
       "tags": [
