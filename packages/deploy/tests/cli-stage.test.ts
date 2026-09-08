@@ -7,6 +7,7 @@ import { describe, expect, it } from 'vitest';
 import {
   SKILLS_CLASSIFICATION_FILE,
   SKILLS_CLASSIFICATION_META_FILE,
+  SKILLS_SOURCE_FILE,
   STARS_FILE,
 } from '../src/stage';
 
@@ -40,11 +41,50 @@ describe.skipIf(!existsSync(join(root, SKILLS_CLASSIFICATION_FILE)))(
           { cwd: root, encoding: 'utf8' },
         );
         expect(stdout).toContain('Skills-classification artifacts: staged');
+        // §4.12 download wiring: the vendored source ships beside the pair it
+        // produced (the committed repo state IS the hash-coherent steady state).
+        expect(stdout).toContain('Skills source document: staged');
         expect(existsSync(join(dist, STARS_FILE))).toBe(true);
         expect(existsSync(join(dist, SKILLS_CLASSIFICATION_FILE))).toBe(true);
         expect(existsSync(join(dist, SKILLS_CLASSIFICATION_META_FILE))).toBe(true);
+        expect(existsSync(join(dist, SKILLS_SOURCE_FILE))).toBe(true);
       } finally {
         rmSync(dist, { recursive: true, force: true });
+      }
+    });
+
+    it('K7b: a skills-less dataDir stays FAIL-SOFT through the real CLI — exit 0, named skip lines, canonical deploy proceeds (pre-commit R1 sol: a mutant escalating a mere skip must fail here)', () => {
+      const dist = mkdtempSync(join(tmpdir(), 'deploy-cli-dist-'));
+      const data = mkdtempSync(join(tmpdir(), 'deploy-cli-data-'));
+      try {
+        // A valid canonical dataset with NO optional artifacts at all.
+        execFileSync(
+          process.execPath,
+          ['--import', 'tsx', 'packages/deploy/src/cli.ts', 'fixture', '--out', data],
+          { cwd: root, encoding: 'utf8' },
+        );
+        // exit != 0 would throw here — the skip must never block the deploy
+        const stdout = execFileSync(
+          process.execPath,
+          [
+            '--import',
+            'tsx',
+            'packages/deploy/src/cli.ts',
+            'stage',
+            '--dist',
+            dist,
+            '--data',
+            data,
+          ],
+          { cwd: root, encoding: 'utf8' },
+        );
+        expect(stdout).toContain('Skills-classification artifacts: skipped');
+        expect(stdout).toContain('Skills source document: skipped');
+        expect(existsSync(join(dist, STARS_FILE))).toBe(true); // canonical deploy proceeded
+        expect(existsSync(join(dist, SKILLS_SOURCE_FILE))).toBe(false);
+      } finally {
+        rmSync(dist, { recursive: true, force: true });
+        rmSync(data, { recursive: true, force: true });
       }
     });
   },

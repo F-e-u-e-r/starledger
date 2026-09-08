@@ -178,6 +178,13 @@ export function RepositoryCard({
         </p>
       ) : null}
 
+      {/* Curated classification summary (P7 §4.12, SEQ-2 flipped): rendered
+          above the AI section — curated metadata reads above the AI layer in
+          the trust order. `repo.skills` is null whenever the layer is not
+          coherent-ready or the repo is unclassified, so absence renders this
+          card byte-identically (SKILLS-3 untouched by construction). */}
+      {repo.skills ? <p className="card-skill-summary">{repo.skills.summary}</p> : null}
+
       {repo.ai ? (
         <section className="card-ai" aria-label="AI enrichment">
           <p className="ai-head">

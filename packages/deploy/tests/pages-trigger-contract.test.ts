@@ -10,6 +10,7 @@ import {
   DISCOVERY_CANDIDATES_META_FILE,
   SKILLS_CLASSIFICATION_FILE,
   SKILLS_CLASSIFICATION_META_FILE,
+  SKILLS_SOURCE_FILE,
   STARS_FILE,
 } from '../src/stage';
 
@@ -42,6 +43,10 @@ const DEPLOY_TRIGGERING_ARTIFACTS = [
   DISCOVERY_CANDIDATES_META_FILE,
   SKILLS_CLASSIFICATION_FILE,
   SKILLS_CLASSIFICATION_META_FILE,
+  // §4.12: a source-only change (edit, drift, removal) must also deploy — the
+  // stage that CONVERGES the served download only runs on a deploy (R2b sol #5,
+  // the F5 omission class this contract test exists to prevent).
+  SKILLS_SOURCE_FILE,
 ] as const;
 
 /** Extract the `paths:` list that sits under the workflow's `push:` trigger. */

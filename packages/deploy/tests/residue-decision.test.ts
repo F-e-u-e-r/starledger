@@ -14,18 +14,19 @@ import { distHasUnshippableResidue } from '../src/stage';
  * longer be constructed from a black-box subprocess. The DECISION is therefore
  * pinned here directly, over every layer position, and the stagers'
  * residue-SETTING is pinned in their own suites (optional STUCK-RESIDUE;
- * skills CLEANUP-RESIDUE / PARTIAL-TEMP). The CLI call site passes exactly
- * `[ai, discovery, skills]`; that it names all three is inspection-covered
- * (K7 proves the command calls each stager), the analogue of the
- * skills-residue-not-subprocess-constructible disposition.
+ * skills CLEANUP-RESIDUE / PARTIAL-TEMP; skills-source own-temp and
+ * adjudicated-stale-destination, MD-9). The CLI call site passes exactly
+ * `[ai, discovery, skills, skillsSource]`; that it names all four is
+ * inspection-covered (K7 proves the command calls each stager), the
+ * analogue of the skills-residue-not-subprocess-constructible disposition.
  */
 describe('distHasUnshippableResidue', () => {
   it('is false when nothing carries residue', () => {
-    expect(distHasUnshippableResidue([{}, {}, {}])).toBe(false);
+    expect(distHasUnshippableResidue([{}, {}, {}, {}])).toBe(false);
   });
 
-  it.each([0, 1, 2])('is true when the layer at position %i carries residue', (position) => {
-    const results: Array<{ residue?: boolean }> = [{}, {}, {}];
+  it.each([0, 1, 2, 3])('is true when the layer at position %i carries residue', (position) => {
+    const results: Array<{ residue?: boolean }> = [{}, {}, {}, {}];
     results[position]!.residue = true;
     expect(distHasUnshippableResidue(results)).toBe(true);
   });

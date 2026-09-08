@@ -12,6 +12,8 @@ import {
   stageDashboardData,
   stageDiscoveryArtifacts,
   stageSkillsArtifacts,
+  stageSkillsSourceDocument,
+  formatSkillsSourceStageReport,
   formatSkillsStageReport,
 } from './stage';
 import { staticSmoke, verifyBuiltArtifact } from './verify';
@@ -63,6 +65,11 @@ async function main(): Promise<void> {
       // to drop, so a warning cannot be silently suppressed while tests pass.
       const skills = stageSkillsArtifacts({ dataDir: data, distDir: dist });
       console.log(formatSkillsStageReport(skills));
+      // §4.12 `.md` download: staged AFTER the pair so its coherence check runs
+      // against the meta actually present in dist. Fail-soft like every
+      // optional layer — a named skip never blocks the canonical deploy.
+      const skillsSource = stageSkillsSourceDocument({ dataDir: data, distDir: dist });
+      console.log(formatSkillsSourceStageReport(skillsSource));
       // RESIDUE ESCALATION (round 11): an ordinary optional-pair skip is
       // fail-soft — the canonical deploy proceeds. Content this run REJECTED
       // and then could not remove is different: exiting 0 here let Pages
@@ -70,7 +77,7 @@ async function main(): Promise<void> {
       // the runtime. That is a dist-integrity failure, not an optional-layer
       // problem, so it fails the deploy (exit 4 → `bash -e` in pages.yml →
       // nothing ships).
-      if (distHasUnshippableResidue([ai, discovery, skills])) {
+      if (distHasUnshippableResidue([ai, discovery, skills, skillsSource])) {
         console.error(
           '[deploy] FATAL: rejected optional-pair bytes could not be removed from the dist — refusing to let this dist ship',
         );

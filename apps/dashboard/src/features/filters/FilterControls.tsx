@@ -259,15 +259,19 @@ export function FilterControls({
   update: (partial: Partial<DashboardState>, mode?: HistoryMode) => void;
   hasDegraded: boolean;
   /**
-   * Skills-classification facet data (P7 §4.11) — passed ONLY while the layer is
-   * `ready` (the M0 AI-facet precedent: the section is hidden while degraded;
-   * requested values stay removable via chips). `categories` is the FULL
-   * taxonomy in canonical order (§4.2 I-5), never data-mined from repos;
-   * `generatedAgainstOlderSnapshot` drives the §2.1 soft provenance note.
+   * Skills-classification facet data (P7 §4.11/§4.12) — passed ONLY while the
+   * layer is `ready` (the M0 AI-facet precedent: the section is hidden while
+   * degraded; requested values stay removable via chips). `categories` is the
+   * FULL taxonomy in canonical order (§4.2 I-5), never data-mined from repos;
+   * `generatedAgainstOlderSnapshot` drives the §2.1 soft provenance note;
+   * `coverage` is the loader's generation-time statistics for the §4.12
+   * three-number line — presentation only, never a readiness or filter input
+   * (the F2 re-entry pin: `matched === 0` changes wording, nothing else).
    */
   skills?: {
     categories: readonly { id: string; label: string }[];
     generatedAgainstOlderSnapshot: boolean;
+    coverage: { matched: number; unclassified: number; unresolved: number };
   } | null;
 }) {
   const repoTypeSelected =
@@ -344,6 +348,27 @@ export function FilterControls({
               </p>
             ) : null}
           </fieldset>
+          {/* §4.12 coverage line: the three §5 numbers, separately labeled,
+              straight from the loader's generation-time statistics — never
+              summed, never live-recomputed (§4.4), never a readiness signal. */}
+          <p className="facet-help skills-coverage">
+            {`Coverage at generation: ${skills.coverage.matched} matched · ${skills.coverage.unclassified} unclassified · ${skills.coverage.unresolved} unresolved source entries`}
+          </p>
+          {skills.coverage.matched === 0 ? (
+            <p className="facet-help skills-coverage-zero">
+              The classification matched none of the starred repositories at generation time — scope
+              and category filters stay available.
+            </p>
+          ) : null}
+          <p className="facet-help">
+            <a
+              className="skills-download"
+              href={`${import.meta.env.BASE_URL}skills-classified.md`}
+              download
+            >
+              Download the classification source (.md)
+            </a>
+          </p>
           <CheckboxFacet
             legend="Skill category"
             options={skills.categories.map((c) => ({ value: c.id, label: c.label }))}

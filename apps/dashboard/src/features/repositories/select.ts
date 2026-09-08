@@ -21,16 +21,17 @@ export interface SearchableRepo extends DerivedRepo {
 /**
  * Per-dataset preparation (the expensive, clock-dependent half): derive fields
  * and precompute searchable text ONCE per input set. Memoize by
- * [repos, now, annotations, skills] — the pass re-runs when an optional layer
- * settles (annotations and, since M2.4, skills), mirroring the AI layer's
- * existing behavior; everything after this is independent of the dataset
- * metadata and the clock.
+ * [repos, now, annotations, skills, skillCategoryLabels] — the pass re-runs
+ * when an optional layer settles (annotations and, since M2.4, skills),
+ * mirroring the AI layer's existing behavior; everything after this is
+ * independent of the dataset metadata and the clock.
  */
 export function prepareRepositories(
   repos: readonly CanonicalRepo[],
   now: Date,
   annotations?: ReadonlyMap<string, RepoAnnotation>,
   skills?: ReadonlyMap<string, RepoSkillsClassification>,
+  skillCategoryLabels?: ReadonlyMap<string, string>,
 ): SearchableRepo[] {
   return repos.map((repo) => {
     const derived = deriveRepo(
@@ -39,10 +40,11 @@ export function prepareRepositories(
       annotations?.get(repo.node_id) ?? null,
       skills?.get(repo.node_id) ?? null,
     );
-    // `searchText` deliberately does NOT include skills-classification fields in
-    // this sub-slice: search enrichment is the sequenced-next M2.4 code path
-    // (P7 §4.11/§7), distinct from filtering by design.
-    return { ...derived, searchText: buildSearchText(derived) };
+    // Search enrichment (P7 §4.12/§7): `searchText` gains the classification
+    // taxonomy labels + curated summary through `derived.skills`, which is
+    // non-null only when the caller passed a coherent-ready join map — the
+    // readiness gate lives at the caller (RepositoryView), never here.
+    return { ...derived, searchText: buildSearchText(derived, skillCategoryLabels) };
   });
 }
 
