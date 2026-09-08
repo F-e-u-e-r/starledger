@@ -11390,31 +11390,6 @@
       }
     },
     {
-      "node_id": "R_kgDORFsgFA",
-      "category": "data-analytics",
-      "tags": [
-        "dashboard",
-        "real-time",
-        "tui",
-        "visualization"
-      ],
-      "summary": "A Python terminal dashboard for Polymarket BTC 15-minute UP/DOWN prediction markets that aggregates Chainlink oracle, Binance, and Polymarket orderbook feeds, computes real-time indicators, logs each market to CSV, and includes backtesting tools for trading strategy research.",
-      "source": {
-        "kind": "readme",
-        "readme_path": "README.md",
-        "readme_oid": "510196bbe6aaf358c79e4207aca0ee504fcb82ef",
-        "repo_metadata_sha256": "87654a0da4549566072707002f5884c9c53bc9031aae0e9ef8b055a467087a6a",
-        "fingerprint": "c3739814b206f8456783d02fe0914fc7fde271db0e03860c834a9b61fead06fb"
-      },
-      "generation": {
-        "executor_kind": "claude-routine",
-        "execution_profile_version": "agent-v1",
-        "model_label": null,
-        "prompt_version": "classify-v1",
-        "generated_at": "2026-07-19T12:24:17Z"
-      }
-    },
-    {
       "node_id": "R_kgDORG3jag",
       "category": "developer-tools",
       "tags": [
