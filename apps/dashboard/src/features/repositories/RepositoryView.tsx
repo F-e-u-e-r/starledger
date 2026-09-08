@@ -122,20 +122,29 @@ export function RepositoryView({
   // badges or filtering — `repo.skills` is then null everywhere (M24-BDG-1).
   const skillsReady = skillsStatus === 'ready' && skillsClassification != null;
   const skillsByNodeId = skillsReady ? skillsClassification?.byNodeId : undefined;
-  const prepared = useMemo(
-    () => prepareRepositories(repos, sessionNow, annotationsByNodeId, skillsByNodeId),
-    [repos, sessionNow, annotationsByNodeId, skillsByNodeId],
-  );
-  const facets = useMemo(() => deriveFacetOptions(prepared), [prepared]);
-  const aiCount = useMemo(() => prepared.reduce((n, r) => (r.ai ? n + 1 : n), 0), [prepared]);
-  const hasDegraded = useMemo(() => repos.some((repo) => repo.hydration_status !== 'ok'), [repos]);
-  // Taxonomy labels for badges and chips (§4.11) — canonical-order artifact data.
+  // Taxonomy labels for badges, chips and the search corpus (§4.11/§4.12) —
+  // canonical-order artifact data, present only under the same coherent-ready
+  // gate as the join map, so a not-ready layer cannot reach the corpus either.
   const skillCategories = skillsReady ? skillsClassification?.categories : undefined;
   const skillCategoryLabels = useMemo(
     () =>
       skillCategories ? new Map(skillCategories.map((c) => [c.id, c.label] as const)) : undefined,
     [skillCategories],
   );
+  const prepared = useMemo(
+    () =>
+      prepareRepositories(
+        repos,
+        sessionNow,
+        annotationsByNodeId,
+        skillsByNodeId,
+        skillCategoryLabels,
+      ),
+    [repos, sessionNow, annotationsByNodeId, skillsByNodeId, skillCategoryLabels],
+  );
+  const facets = useMemo(() => deriveFacetOptions(prepared), [prepared]);
+  const aiCount = useMemo(() => prepared.reduce((n, r) => (r.ai ? n + 1 : n), 0), [prepared]);
+  const hasDegraded = useMemo(() => repos.some((repo) => repo.hydration_status !== 'ok'), [repos]);
   // §2.1 soft provenance note: ready + hash differs from the live dataset.
   const skillsGeneratedAgainstOlderSnapshot =
     skillsReady &&
@@ -143,10 +152,14 @@ export function RepositoryView({
     starsSha256 != null &&
     skillsClassification.generatedAgainstStarsSha256 !== starsSha256;
   const skillsFacetData =
-    skillsReady && skillCategories
+    skillsReady && skillsClassification != null && skillCategories
       ? {
           categories: skillCategories,
           generatedAgainstOlderSnapshot: skillsGeneratedAgainstOlderSnapshot,
+          // §4.12 coverage line: generation-time statistics, presentation only —
+          // never a readiness input (the F2 re-entry pin: matched=0 must not
+          // suppress the section or any filter semantics).
+          coverage: skillsClassification.coverage,
         }
       : null;
   // AI- and skills-dependent filters are applied only when their layer is ready

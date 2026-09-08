@@ -485,6 +485,17 @@ a {
   overflow: hidden;
 }
 
+/* Curated classification summary (P7 §4.12): visually set off from the GitHub
+   description by the accent rule — curated provenance, not repo metadata. */
+.card-skill-summary {
+  margin: 0;
+  padding-left: 0.5rem;
+  border-left: 2px solid var(--accent);
+  color: var(--muted);
+  font-size: 0.86rem;
+  overflow-wrap: anywhere;
+}
+
 .badges {
   display: flex;
   gap: 0.3rem;
@@ -985,5 +996,9 @@ a {
 }
 
 .density-compact .ai-summary {
+  font-size: 0.82rem;
+}
+
+.density-compact .card-skill-summary {
   font-size: 0.82rem;
 }

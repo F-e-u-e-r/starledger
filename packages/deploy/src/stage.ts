@@ -965,6 +965,297 @@ export function stageDiscoveryArtifacts(
   );
 }
 
+export const SKILLS_SOURCE_FILE = 'skills-classified.md';
+
+export interface SkillsSourceStageResult {
+  staged: boolean;
+  reason?: string;
+  /** Round-11 contract: set when bytes this run ADJUDICATED for the dist —
+   * its own temp after a failed publish, or a pre-existing destination it
+   * classified as stale — could not be removed, so the dist would ship
+   * content the run tried and failed to expunge. The CLI exits 4 on it. */
+  residue?: boolean;
+  /** Non-fatal condition a later run must know about (the pair protocol's
+   * `warning` semantics) — currently only a stage lock this run created and
+   * could not remove, which would make every subsequent stage skip. */
+  warning?: string;
+}
+
+/** Injectable seams, mirroring the pair protocol's precedent (the M2.2 R4
+ * `readOptional` io-seam rationale): a real filesystem cannot deterministically
+ * fail removal of THIS run's own unique-named temp (`rmImpl`), a mid-write
+ * (`writeImpl`) or a descriptor close (`closeImpl`), and each of those paths
+ * carries a pinned contract (residue-SETTING, the publish-failure funnel). */
+export interface SkillsSourceStageHooks {
+  rmImpl?: typeof rmSync;
+  writeImpl?: typeof writeFileSync;
+  closeImpl?: typeof closeSync;
+  /** Temp-file open only — the LOCK always uses the real `openSync`, so the
+   * seam can drive the inner hard-failure path without being able to fake
+   * the serialization primitive itself. */
+  openImpl?: typeof openSync;
+}
+
+/**
+ * The operator-facing line(s) for a source-document staging result — ONE
+ * string from a pure formatter for the same reason as
+ * {@link formatSkillsStageReport}: a list would give the CLI an index to
+ * drop, silently suppressing the warning while the formatter's tests pass.
+ */
+export function formatSkillsSourceStageReport(result: SkillsSourceStageResult): string {
+  const head = `[deploy] Skills source document: ${
+    result.staged ? 'staged' : `skipped (${result.reason})`
+  }`;
+  return result.warning
+    ? `${head}\n[deploy] WARNING skills source document: ${result.warning}`
+    : head;
+}
+
+/**
+ * Stage the vendored classification source document for the §4.12 same-origin
+ * `.md` download — SEPARATE from {@link stageSkillsArtifacts} by design: the
+ * pair protocol's backup/rollback machinery exists for a two-file commit;
+ * this is a single file whose `rename` is atomic on its own. What it DOES
+ * share with the pair protocol is the LOCK: meta-coherence is a relationship
+ * with the pair, so this stage serializes under the same
+ * `skills-classification.json.stage-lock` (pre-commit R1, luna@ultra + sol
+ * convergent) — a concurrent pair re-stage can no longer replace the meta
+ * between this function's verification and its publish.
+ *
+ * Coherence target = the meta actually PRESENT IN DIST (whatever staged it,
+ * this run or a pre-existing pair): the download is advertised as the source
+ * of the SERVED artifact, so a root `.md` edited without regeneration must
+ * never ship as the provenance of an artifact it did not produce. Every skip
+ * is named and fail-soft — the canonical deploy proceeds; the download
+ * degrades to 404, a deploy-log-visible condition, not a runtime state.
+ *
+ * EVERY under-lock outcome that is not a successful publish CONVERGES the
+ * destination (pre-commit R1 3/3 + R2b sol: the publish-FAILURE arm and
+ * inner hard failures owe the same duty as the named skips — an ENOSPC
+ * mid-write beside a stale pre-existing copy must not leave those bytes to
+ * ship next to a fresh meta): a pre-existing regular-file destination is
+ * retained only when its bytes hash-match the served meta (a still-coherent
+ * earlier stage) and removed otherwise; a DIRECTORY at the destination is an
+ * obstruction — refused and left untouched with no residue, the pair
+ * protocol's own R15 obstruction precedent (removal of directories was never
+ * in contract, and the deploy stays fail-soft). Overwriting a regular-file
+ * DESTINATION on publish is the intended convergence (the pair protocol does
+ * the same at its canonical names); the never-overwrite-foreign-files
+ * discipline applies to the unique TEMP name, which is exclusive-created.
+ * Rejected bytes are never written: verification precedes the first write,
+ * and every post-open publish failure funnels through one cleanup path. The
+ * stuck-lock warning survives every path — including inner hard failures —
+ * because the generic catch lives INSIDE the lock scope (R2b sol).
+ */
+export function stageSkillsSourceDocument(
+  opts: StageOptions,
+  hooks: SkillsSourceStageHooks = {},
+): SkillsSourceStageResult {
+  const rm = hooks.rmImpl ?? rmSync;
+  const writeTemp = hooks.writeImpl ?? writeFileSync;
+  const closeTemp = hooks.closeImpl ?? closeSync;
+  const openTemp = hooks.openImpl ?? openSync;
+  const destPath = resolve(opts.distDir, SKILLS_SOURCE_FILE);
+
+  /** Converge a pre-existing destination this run cannot certify; returns a
+   * reason suffix and flags `staleResidue` when adjudicated-stale bytes could
+   * not be removed. Directories are obstructions, not adjudicable content. */
+  let staleResidue = false;
+  const convergeDestination = (servedSha256: string | null): string => {
+    let entry;
+    try {
+      entry = lstatSync(destPath);
+    } catch (error) {
+      if ((error as NodeJS.ErrnoException)?.code === 'ENOENT') return ''; // nothing to converge
+      entry = null; // unreadable entry ⇒ fall through to the uncertifiable arm
+    }
+    if (entry?.isDirectory()) {
+      return '; destination obstructed by a directory — left untouched (fail-soft, the pair protocol’s obstruction precedent)';
+    }
+    let destBytes: Buffer | null = null;
+    try {
+      destBytes = readFileSync(destPath);
+    } catch {
+      destBytes = null; // unreadable ⇒ uncertifiable ⇒ must remove
+    }
+    if (
+      destBytes !== null &&
+      servedSha256 !== null &&
+      createHash('sha256').update(destBytes).digest('hex') === servedSha256
+    ) {
+      // Still coherent with the served meta (an earlier stage's work) — keep it.
+      return '; existing dist copy retained — it matches the served meta';
+    }
+    try {
+      rm(destPath, { force: true });
+      return '; stale dist copy removed — download degrades to 404';
+    } catch {
+      staleResidue = true;
+      return `; stale dist copy could NOT be removed (${destPath}) — dist would serve bytes that are not the served artifact's source`;
+    }
+  };
+  const skip = (reason: string, servedSha256: string | null): SkillsSourceStageResult => {
+    const converged = convergeDestination(servedSha256);
+    return {
+      staged: false,
+      reason: `${reason}${converged}`,
+      ...(staleResidue ? { residue: true } : {}),
+    };
+  };
+
+  // Only ENOENT proves a source is absent (the same rule as the pair stage:
+  // an unreadable parent must surface as a failure, not "nothing to stage").
+  let sourceBytes: Buffer | null;
+  try {
+    sourceBytes = readFileSync(resolve(opts.dataDir, SKILLS_SOURCE_FILE));
+  } catch (error) {
+    if ((error as NodeJS.ErrnoException)?.code !== 'ENOENT') {
+      return {
+        staged: false,
+        reason: `skills-classified.md staging failed — ${
+          error instanceof Error ? error.message : 'source unreadable'
+        }`,
+      };
+    }
+    sourceBytes = null; // absent source still owes destination convergence below
+  }
+
+  // SERIALIZE with pair staging: exclusive-create of the SAME lock the pair
+  // protocol uses. While this run holds it, a concurrent pair stage is
+  // turned away with its own named reason, so the meta read below cannot be
+  // replaced before the rename — the platform primitive that CLOSES the
+  // race a re-read could only narrow.
+  const lockPath = resolve(opts.distDir, `${SKILLS_CLASSIFICATION_FILE}.stage-lock`);
+  let lockFd: number;
+  try {
+    lockFd = openSync(lockPath, 'wx');
+  } catch (lockError) {
+    // Only EEXIST proves contention (the pair protocol's own distinction):
+    // anything else is an actionable failure, not "someone is publishing".
+    if ((lockError as NodeJS.ErrnoException)?.code !== 'EEXIST') {
+      return {
+        staged: false,
+        reason: `skills-classified.md staging could not acquire the stage lock — ${
+          lockError instanceof Error ? lockError.message : 'lock creation failed'
+        }`,
+      };
+    }
+    return {
+      staged: false,
+      reason: `skills-classification pair is locked by another stage — skipped (if no stage is running, ${lockPath} is stale and can be removed)`,
+    };
+  }
+
+  let lockWarning: string | undefined;
+  let result: SkillsSourceStageResult;
+  // Hoisted to the lock scope so the generic catch below can still converge
+  // with the sha it DID read — a hard failure after a successful meta read
+  // must not demote a coherent pre-existing copy to "uncertifiable".
+  let servedSourceSha256: string | null = null;
+  try {
+    // Read the SERVED meta under the lock. Absent / unreadable / invalid ⇒
+    // there is no certifiable served pair, so no download may stand.
+    let metaProblem: string | null = null;
+    try {
+      const metaBytes = readFileSync(resolve(opts.distDir, SKILLS_CLASSIFICATION_META_FILE));
+      servedSourceSha256 = SkillsClassificationMetaSchema.parse(
+        JSON.parse(metaBytes.toString('utf8')),
+      ).source_sha256;
+    } catch (error) {
+      metaProblem =
+        (error as NodeJS.ErrnoException)?.code === 'ENOENT'
+          ? 'no served skills-classification meta in dist — download not staged'
+          : 'served skills-classification meta unreadable/invalid — download not staged';
+    }
+
+    if (servedSourceSha256 === null) {
+      result = skip(metaProblem ?? 'served skills-classification meta unavailable', null);
+    } else if (sourceBytes === null) {
+      result = skip('no skills-classified.md source present', servedSourceSha256);
+    } else {
+      const actualSha256 = createHash('sha256').update(sourceBytes).digest('hex');
+      if (actualSha256 !== servedSourceSha256) {
+        result = skip(
+          `skills-classified.md does not match the served meta source_sha256 — skipped (source ${actualSha256.slice(0, 12)}…, served ${servedSourceSha256.slice(0, 12)}…)`,
+          servedSourceSha256,
+        );
+      } else {
+        // PUBLISH: unique temp + exclusive create, then atomic rename onto
+        // the destination. EVERY post-open failure — write, close, rename —
+        // funnels through one cleanup path (pre-commit R1: a closeSync
+        // throw previously escaped to the generic catch with the temp left
+        // unflagged; R2b pinned via the writeImpl/closeImpl seams).
+        const tempPath = resolve(opts.distDir, `${SKILLS_SOURCE_FILE}.staging-tmp-${randomUUID()}`);
+        const fd = openTemp(tempPath, 'wx');
+        let publishFailure: string | null = null;
+        try {
+          writeTemp(fd, sourceBytes);
+        } catch (error) {
+          publishFailure = error instanceof Error ? error.message : 'temp write failed';
+        }
+        // Exactly ONE close attempt on every path — a second close of a
+        // possibly-already-closed descriptor could hit a reused fd.
+        try {
+          closeTemp(fd);
+        } catch (error) {
+          publishFailure ??= error instanceof Error ? error.message : 'temp close failed';
+        }
+        if (publishFailure === null) {
+          try {
+            renameSync(tempPath, destPath);
+          } catch (error) {
+            publishFailure = error instanceof Error ? error.message : 'rename failed';
+          }
+        }
+        if (publishFailure !== null) {
+          let tempResidue = false;
+          try {
+            rm(tempPath, { force: true });
+          } catch {
+            tempResidue = true;
+          }
+          // The failure arm owes the SAME convergence duty as a named skip
+          // (R2b sol): a stale pre-existing copy must not outlive a failed
+          // publish and ship beside the (possibly fresh) served meta.
+          const converged = convergeDestination(servedSourceSha256);
+          result = {
+            staged: false,
+            reason: `skills-classified.md publish failed — ${publishFailure}${
+              tempResidue ? ` (own temp could not be removed: ${tempPath})` : ''
+            }${converged}`,
+            ...(tempResidue || staleResidue ? { residue: true } : {}),
+          };
+        } else {
+          result = { staged: true };
+        }
+      }
+    }
+  } catch (error) {
+    // Generic hard failure INSIDE the lock scope (e.g. the temp could not be
+    // exclusive-created): still owes convergence — the destination is exactly
+    // as uncertified as on a named skip — and still flows through the
+    // warning-merge below, so a stuck lock is never silently dropped (R2b sol).
+    result = skip(
+      `skills-classified.md staging failed — ${
+        error instanceof Error ? error.message : 'unexpected failure'
+      }`,
+      servedSourceSha256,
+    );
+  } finally {
+    try {
+      closeSync(lockFd);
+    } catch {
+      /* the lock file itself is what matters; removal is attempted next */
+    }
+    try {
+      rm(lockPath, { force: true });
+    } catch {
+      lockWarning = `stage lock could not be removed (${lockPath}) — every later skills stage will skip until it is cleared`;
+    }
+  }
+  return lockWarning ? { ...result, warning: lockWarning } : result;
+}
+
 /**
  * True when ANY staging result left REJECTED bytes it could not remove — the
  * deploy must fail rather than upload them (round-11 consequence; round-13
