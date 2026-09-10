@@ -10787,6 +10787,29 @@
       }
     },
     {
+      "node_id": "R_kgDOR79zxQ",
+      "category": "ai-ml",
+      "tags": [
+        "library",
+        "machine-learning"
+      ],
+      "summary": "A small Python package that removes common Whisper speech-to-text hallucinations, such as repeated phrases, phantom subtitles on silence, and short looped character patterns, using a metric and pattern driven four-layer guard before subtitles or transcripts are shipped downstream. It pairs with upstream voice-activity detection and works with faster-whisper, openai-whisper, and mlx-whisper.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "fe484c2974dc809f3493dee32f0db26e7005515c",
+        "repo_metadata_sha256": "9a39f3e9a66e5c2fe515f9f510e437d79efb5901679a5573cb2500a80f188cfa",
+        "fingerprint": "35c0d259c9d5c783e7b18e5aa6bc215773ea7b2e2a162f17b5f093458c3ec5c9"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-09-10T10:23:06Z"
+      }
+    },
+    {
       "node_id": "R_kgDOR7t49Q",
       "category": "media-creative",
       "tags": [
@@ -17799,29 +17822,6 @@
         "model_label": null,
         "prompt_version": "classify-v1",
         "generated_at": "2026-08-07T08:24:40Z"
-      }
-    },
-    {
-      "node_id": "R_kgDOTDloIA",
-      "category": "security-privacy",
-      "tags": [
-        "networking",
-        "proxy"
-      ],
-      "summary": "wloc is a set of proxy modules and iOS Shortcuts for Surge, Quantumult X, Loon, and Stash that intercept Apple's network-location (gs-loc) responses and patch the returned WiFi and cell-tower coordinates, letting users spoof iOS network-based location by choosing a point on a map instead of entering coordinates manually.",
-      "source": {
-        "kind": "readme",
-        "readme_path": "README.md",
-        "readme_oid": "1cd3ddba26efef526b7dbb6c2c86456cce808fda",
-        "repo_metadata_sha256": "3ae51c2f50364bd728920804ec323d027352646db53022eb4290cc025a666db1",
-        "fingerprint": "036055939dc847bd07ef38cd6f20e3afdb1cff21e1f85ffce9deb2bfcab416e6"
-      },
-      "generation": {
-        "executor_kind": "claude-routine",
-        "execution_profile_version": "agent-v1",
-        "model_label": null,
-        "prompt_version": "classify-v1",
-        "generated_at": "2026-08-06T08:27:27Z"
       }
     },
     {
