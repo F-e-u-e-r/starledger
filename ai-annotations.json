@@ -20292,6 +20292,81 @@
         "prompt_version": "classify-v1",
         "generated_at": "2026-09-03T10:26:19Z"
       }
+    },
+    {
+      "node_id": "R_kgDOUJjnOw",
+      "category": "developer-tools",
+      "tags": [
+        "cli",
+        "desktop-app",
+        "gui",
+        "real-time",
+        "terminal"
+      ],
+      "summary": "A GPU-rendered native terminal multiplexer for Windows, Linux and macOS. A Rust daemon owns live PTY sessions and streams snapshot and delta updates to a Bun and React client that renders them in a native window with a tab sidebar, command palette, reconnect, and an accompanying command-line control tool.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "b6ae28a43c1066482fe275e0caeba64cc887a08b",
+        "repo_metadata_sha256": "a6a08b54538ef2d4238c22da04a9346e0c6ab23d98f00a1d9e8940a5621e4ed6",
+        "fingerprint": "19cdd0203d12e9fd1955de99d2c1436b9939e93f2c0ac0548a2b9c7b91d6881f"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-09-11T11:25:03Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOUPsbfA",
+      "category": "productivity-automation",
+      "tags": [
+        "cli",
+        "desktop-app",
+        "gui"
+      ],
+      "summary": "A macOS menu bar app that reveals what is actually stored in the system's System Data bucket, such as simulator runtimes, Xcode caches, package stores, virtual machine disks and logs, and lets you inspect and delete those items one by one. It only removes what you click and ships with a command-line binary.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "193de270ca4371b92e320fdf1808bbe3771bbeac",
+        "repo_metadata_sha256": "63d2fb4a4a787520e482388ef52f7ba34d05aa7418a535697ce6352068111eaa",
+        "fingerprint": "e82a815d663d7a91984b61c0d2290c68a7d00c2ff4343c2d9274879c39f47368"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-09-11T11:25:03Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOUTNCvw",
+      "category": "media-creative",
+      "tags": [
+        "ai-agents",
+        "desktop-app",
+        "llm",
+        "workflow"
+      ],
+      "summary": "A local desktop AI workbench for writing Chinese novels. It brings story planning, chapter-by-chapter drafting, evidence-based review, targeted revision and a searchable story memory into one workspace, driving a plan, draft, review, revise and adopt loop. It runs on macOS Apple Silicon and calls configured GLM or MiniMax cloud models.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "58758edb5cc6b1dfef16b8b526b34886d22a11ce",
+        "repo_metadata_sha256": "a5ca1c530625153888700756a59362f8486db7ddb3808bfa7ccb4d24cbdef814",
+        "fingerprint": "694f9d7978a63bb98a1e03b5f84de62d65b36fb3c3956606c67483f0e2611df7"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-09-11T11:25:03Z"
+      }
     }
   ]
 }
