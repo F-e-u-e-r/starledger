@@ -11184,6 +11184,31 @@
       }
     },
     {
+      "node_id": "R_kgDOREJiEQ",
+      "category": "libraries-frameworks",
+      "tags": [
+        "desktop-app",
+        "frontend",
+        "gui",
+        "library"
+      ],
+      "summary": "React and TypeScript bindings for Zed's GPU-accelerated GPUI framework that let developers build native desktop apps whose components render directly to the GPU via Metal, DirectX, or Vulkan, without Electron or web views.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "6306439acdcc2a752ae85e28da077516b8d0a52c",
+        "repo_metadata_sha256": "77ae92c0d93a2a2b35a15bad2b9400c2a317ed35492980c87840af18580c647e",
+        "fingerprint": "a5bfd6d011e9ad4ce3eb373c75841135e7e2c516978a9c58b45586495ce19ef3"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-09-11T10:24:44Z"
+      }
+    },
+    {
       "node_id": "R_kgDOREUIYg",
       "category": "productivity-automation",
       "tags": [
@@ -12928,6 +12953,31 @@
         "model_label": null,
         "prompt_version": "classify-v1",
         "generated_at": "2026-07-19T22:23:44Z"
+      }
+    },
+    {
+      "node_id": "R_kgDORZ-cIA",
+      "category": "education-reference",
+      "tags": [
+        "ai-agents",
+        "automation",
+        "llm",
+        "productivity"
+      ],
+      "summary": "A free, open-source interactive workshop that teaches educators with no coding background to use Claude Code as a hands-on assistant for everyday teaching tasks such as compiling grades, drafting personalized parent letters, and organizing messy course-material folders.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "7a1c1dcd6cfa113f8ca82edb3756bcfc7089c9da",
+        "repo_metadata_sha256": "301dd287084b00323572875459a812bd0033561b0ec5829359c9c8f061391ed4",
+        "fingerprint": "61e2346319a77315911a9c4ddd43771e313c90e43c0595a76af6e20751051e94"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-09-11T10:24:44Z"
       }
     },
     {
@@ -17497,6 +17547,30 @@
       }
     },
     {
+      "node_id": "R_kgDOT-pl4g",
+      "category": "productivity-automation",
+      "tags": [
+        "desktop-app",
+        "gui",
+        "productivity"
+      ],
+      "summary": "A native macOS menu bar manager for macOS 27 that hides the status icons you don't need until a hover, click, or shortcut brings them back, with a drag-and-drop layout editor, per-display rules, and configurable reveal animations. Free and open source, with no account or analytics.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "6cdfaca66af998aff50c0087bef4d322f85452db",
+        "repo_metadata_sha256": "59f0dd37e20112076e9ec8a557a6b7716358f2636c177431c5ca3f4674460d1c",
+        "fingerprint": "7130ab6db2393fa26f027f4bb843f85b0879a3003fd812f5c3b062989713b6d8"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-09-11T10:24:44Z"
+      }
+    },
+    {
       "node_id": "R_kgDOT0xK9Q",
       "category": "devops-infrastructure",
       "tags": [
@@ -19943,6 +20017,30 @@
       }
     },
     {
+      "node_id": "R_kgDOTxfsvg",
+      "category": "ai-ml",
+      "tags": [
+        "code-generation",
+        "llm",
+        "machine-learning"
+      ],
+      "summary": "A toolchain that exports PyTorch models to bare-metal C++ and runs them on ASIC RTL through Verilator, using the standard Clang/LLVM toolchain and per-accelerator C++ intrinsic headers instead of a custom compiler; it demonstrates single Llama 3 and Qwen 3.6 transformer layers on a small reference NPU.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "baefda3c4e42dc6c8193b9c53f29964379b44080",
+        "repo_metadata_sha256": "385c5fc7ac28d8122b1d2903553f279cb34c741036354455b7d7c015920c3197",
+        "fingerprint": "af0281b09743a5c9d7e54c0d958f358f4aa2b19caa5713ef1eedd4492010c17c"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-09-11T10:24:44Z"
+      }
+    },
+    {
       "node_id": "R_kgDOTzFARw",
       "category": "ai-ml",
       "tags": [
@@ -19990,6 +20088,33 @@
         "model_label": "informational-only",
         "prompt_version": "classify-v1",
         "generated_at": "2026-08-26T06:43:15Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOUASl4w",
+      "category": "developer-tools",
+      "tags": [
+        "ai-agents",
+        "dashboard",
+        "llm",
+        "monitoring",
+        "observability",
+        "plugin"
+      ],
+      "summary": "An Omarchy and Hyprland desktop plugin that turns the wallpaper into a live dashboard of every AI coding agent running on the machine, including Claude Code, Codex, Grok, and Ollama, with usage and rate-limit meters, a 7-day activity heatmap, recent prompts, GitHub activity, and per-agent CPU, RAM, and GPU stats.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "a7f38302f451c5754aa90a5a1231c6d78a4018cc",
+        "repo_metadata_sha256": "f4272ea7782c92564bb69ac7eabe4a98a52d3aada6c077373a99c594a54733e4",
+        "fingerprint": "1472cde27a1cb7be4493b636965736fbc5b405bb46eaaff4040a7059df868aa3"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-09-11T10:24:44Z"
       }
     },
     {
