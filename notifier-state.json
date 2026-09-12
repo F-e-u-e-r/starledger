@@ -8,7 +8,7 @@
     "paths": [
       "README.md"
     ],
-    "last_commit_sha": "5aa1c0736380d5b2c02b04efab21740c39c6d94a"
+    "last_commit_sha": "9da688cee70dcc7511d6690b10225a54dc390426"
   },
   "pending": [],
   "deliveries": [
@@ -562,6 +562,18 @@
       "notification_key": "awesome_stars:fif7y/pelmet:R_kgDOT-pl4g",
       "status": "sent",
       "completed_at": "2026-09-09T06:01:56.587Z",
+      "detail": null
+    },
+    {
+      "notification_key": "awesome_stars:anthropics/claude-plugins-community:R_kgDORr03Lg",
+      "status": "sent",
+      "completed_at": "2026-09-12T05:52:44.207Z",
+      "detail": null
+    },
+    {
+      "notification_key": "awesome_stars:itsbalamurali/gpui-mobile:R_kgDORdYd3A",
+      "status": "sent",
+      "completed_at": "2026-09-12T05:52:44.207Z",
       "detail": null
     }
   ]
