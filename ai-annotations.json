@@ -17899,6 +17899,31 @@
       }
     },
     {
+      "node_id": "R_kgDOTFiEFw",
+      "category": "data-analytics",
+      "tags": [
+        "automation",
+        "bot",
+        "cli",
+        "visualization"
+      ],
+      "summary": "An open-source Python CLI that analyzes trading records with expectancy, significance tests, and out-of-sample validation to judge whether profits reflect a repeatable edge or luck. It also scans chat logs for scam language, runs fake-performance forensics, and scaffolds paper-trading automation projects.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "e2f100799a4f91a591a299bc43ebdd43e7f3f478",
+        "repo_metadata_sha256": "d1c3f60d57ffaf5678fd7aa4b34d3dd96664e1226f8fc32ab513b14fac1c6533",
+        "fingerprint": "e0156dc65ebc22ac7fe155fc92af90037c812e6f767fb9b1f421c9cd4c05f5f4"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-09-12T10:23:59Z"
+      }
+    },
+    {
       "node_id": "R_kgDOTGqE9Q",
       "category": "developer-tools",
       "tags": [
@@ -20366,6 +20391,56 @@
         "model_label": null,
         "prompt_version": "classify-v1",
         "generated_at": "2026-09-11T11:25:03Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOUUtT_A",
+      "category": "web-applications",
+      "tags": [
+        "backend",
+        "bot",
+        "dashboard",
+        "frontend",
+        "llm",
+        "real-time"
+      ],
+      "summary": "A self-hosted Go, Gin, and PostgreSQL backend with a React and Vite dashboard that automates Binance USDS-M perpetual-futures trading. A rule-based ICT Silver Bullet strategy detects setups, Claude confirms each signal before real market orders are placed, and protective stop-loss and take-profit orders are set on entry.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "f77a9222b28a2aac1a6902ff73e32c77e27501e8",
+        "repo_metadata_sha256": "3c041f3394dd70a8450284f868b2474938703ebd6fe686a9c6fcee629be4faf2",
+        "fingerprint": "321bc97b70f5256d77539f409e8194ac5c15a0bcceec0039a5cc90bdfdd889b4"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-09-12T10:23:59Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOUVIIFg",
+      "category": "developer-tools",
+      "tags": [
+        "ai-agents",
+        "automation"
+      ],
+      "summary": "A Windows community-edition Model Context Protocol server that lets AI agents read local LINE Desktop chat text and cached images for a chosen room and date range, then prepare replies that are sent only after confirmation. It exposes up to 29 optional tools over a local stdio connection and checks the LINE build before reading.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "2922106a9ab7b597c8144f31e4017804342400bd",
+        "repo_metadata_sha256": "754dc17d6e98482809703fc991da4847abd79d3dd68c87931823d607b19823f4",
+        "fingerprint": "05503f886422011f2ab70d0338d5ffd42eb8dda2907c426a409edabf5a28205f"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-09-12T10:23:59Z"
       }
     }
   ]
