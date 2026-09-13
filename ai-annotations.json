@@ -13388,6 +13388,30 @@
       }
     },
     {
+      "node_id": "R_kgDORdYd3A",
+      "category": "mobile",
+      "tags": [
+        "frontend",
+        "gui",
+        "library"
+      ],
+      "summary": "Mobile platform layer for GPUI, the Rust UI framework from Zed, implementing the gpui::Platform trait for iOS and Android. It provides GPU-accelerated rendering through wgpu (Metal on iOS, Vulkan or GL on Android), touch input with momentum scrolling, keyboard support, safe area insets, dark mode, and emoji rendering.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "5974338f1514e45daf7c26b604d19e11ab56c09d",
+        "repo_metadata_sha256": "3f100d115c9c502ae4b53e59928adf00939352fe737a798b33f2ac89fd7190b6",
+        "fingerprint": "b7c7e793418a711ca5b8a5bc5a605822ae3c2c0139ea7ac151d92aec6b03aaa6"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-09-13T11:23:19Z"
+      }
+    },
+    {
       "node_id": "R_kgDORe9Fcg",
       "category": "developer-tools",
       "tags": [
@@ -14618,6 +14642,29 @@
         "model_label": "informational-only",
         "prompt_version": "classify-v1",
         "generated_at": "2026-08-24T06:31:55Z"
+      }
+    },
+    {
+      "node_id": "R_kgDORr03Lg",
+      "category": "developer-tools",
+      "tags": [
+        "llm",
+        "plugin"
+      ],
+      "summary": "A read-only mirror of the community plugin marketplace for Claude Cowork and Claude Code. Its marketplace manifest lists community-submitted plugins available to install, synced nightly from Anthropic's internal review pipeline after automated security scanning and approval; plugins are submitted through a directory form rather than direct pull requests.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "abe78e5fbe9b97f3d32aed7fe526b3aabf82fe9a",
+        "repo_metadata_sha256": "c529651aa20ceba68477ac99c8e00451ba0ea33e139de1b5068bb73ff5309157",
+        "fingerprint": "f550ac87dfa3b47bab4e3d730cc62e420adadb41d7359bf20bffa2e835c81727"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-09-13T11:23:19Z"
       }
     },
     {
@@ -19292,6 +19339,31 @@
         "model_label": "informational-only",
         "prompt_version": "classify-v1",
         "generated_at": "2026-07-22T07:23:24Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOTcErYA",
+      "category": "ai-ml",
+      "tags": [
+        "library",
+        "machine-learning",
+        "plugin",
+        "real-time"
+      ],
+      "summary": "A collection of native TouchDesigner custom operators that expose Apple's on-device macOS and Apple Silicon ML and media frameworks such as Vision, Core ML, Core Image, VideoToolbox, MetalFX and SpeechAnalyzer inside TouchDesigner. Everything runs on-device on the Neural Engine and GPU with no cloud API, and inference runs asynchronously so the render loop is never blocked.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "6220024c231e2ddf472e85ef77bfa18abb299c76",
+        "repo_metadata_sha256": "827e46d5df1f57718cad74e1a3ce534ac50a6b3fb4323765e79fdbd94c118e82",
+        "fingerprint": "ffd356ab551b49e229b422de28dbaf9323f0736e3b2f54a61556212fb84aefd6"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-09-13T11:23:19Z"
       }
     },
     {
