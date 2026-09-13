@@ -8,7 +8,7 @@
     "paths": [
       "README.md"
     ],
-    "last_commit_sha": "9da688cee70dcc7511d6690b10225a54dc390426"
+    "last_commit_sha": "1585af657293e2be1c3895da25564ae8f23838b9"
   },
   "pending": [],
   "deliveries": [
@@ -574,6 +574,12 @@
       "notification_key": "awesome_stars:itsbalamurali/gpui-mobile:R_kgDORdYd3A",
       "status": "sent",
       "completed_at": "2026-09-12T05:52:44.207Z",
+      "detail": null
+    },
+    {
+      "notification_key": "awesome_stars:homebrew/brewui:R_kgDORcT-5w",
+      "status": "sent",
+      "completed_at": "2026-09-13T06:15:10.019Z",
       "detail": null
     }
   ]
