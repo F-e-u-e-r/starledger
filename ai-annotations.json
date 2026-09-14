@@ -2270,6 +2270,30 @@
       }
     },
     {
+      "node_id": "R_kgDOJHBKtw",
+      "category": "self-hosted-homelab",
+      "tags": [
+        "game",
+        "gui",
+        "self-hosted"
+      ],
+      "summary": "Self-hosted ROM manager and player that scans, enriches, browses, and plays a retro game collection from one web app. It pulls metadata from providers like IGDB and ScreenScraper, syncs saves and states across devices, supports 400+ platforms, and offers in-browser emulation via EmulatorJS.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "a3718343eb80d8b0c6356885239ee2e3c34e5b0c",
+        "repo_metadata_sha256": "80d48b4c0f04fb7e7fc6b1785872432eb944ab56da2f955b10732c71cbb9b2cf",
+        "fingerprint": "5ba9c21eac6c15aa6a9ef8a15bbf860d86b60a066c07fe50ba6b562e1ec837bd"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-09-14T11:23:25Z"
+      }
+    },
+    {
       "node_id": "R_kgDOJJsuyw",
       "category": "media-creative",
       "tags": [
