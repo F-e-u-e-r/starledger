@@ -15624,6 +15624,29 @@
       }
     },
     {
+      "node_id": "R_kgDOS2IjYg",
+      "category": "self-hosted-homelab",
+      "tags": [
+        "automation",
+        "self-hosted"
+      ],
+      "summary": "OOMWOO is an open-source DIY home robot vacuum you build yourself using a Raspberry Pi, 3D-printed chassis, Arduino, ESP32 and ROS2. It uses a 2D LiDAR to map and autonomously navigate, integrates natively with Home Assistant, and runs locally with no cloud required.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "579b050f350b9c875bc517d56e8891a9518ffb68",
+        "repo_metadata_sha256": "fa7695e7dfa4ba94d150f0575def343c82e93cda3fc62de96975b00bef222f0a",
+        "fingerprint": "7be41d1069dd056a7174d95b7671d9ab67e9df946f7c248036e308a43e0a882c"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-09-15T10:23:03Z"
+      }
+    },
+    {
       "node_id": "R_kgDOS2SYLQ",
       "category": "productivity-automation",
       "tags": [
