@@ -500,6 +500,29 @@
       }
     },
     {
+      "node_id": "MDEwOlJlcG9zaXRvcnkxNTYzNDk4MQ==",
+      "category": "libraries-frameworks",
+      "tags": [
+        "game",
+        "gui"
+      ],
+      "summary": "Godot Engine is a feature-packed, cross-platform 2D and 3D game engine with a unified interface and an integrated visual editor. Written in C++, it lets developers build and export games from a single codebase to desktop, mobile, web, and consoles.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "aa4bc5f484dbf486a2bd7f1773fdc7ec97f210e1",
+        "repo_metadata_sha256": "138eb7ad43b0c3c3514b64158909f16036aa63270b5192ac6c7ed1417b403837",
+        "fingerprint": "b2cb5f867c63bb7fa2262a206d03494238b440354bd0e00279a06a33aaae0d94"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-09-16T10:24:16Z"
+      }
+    },
+    {
       "node_id": "MDEwOlJlcG9zaXRvcnkxNTk1ODY3Ng==",
       "category": "security-privacy",
       "tags": [],
@@ -635,6 +658,30 @@
         "model_label": null,
         "prompt_version": "classify-v1",
         "generated_at": "2026-09-06T10:24:06Z"
+      }
+    },
+    {
+      "node_id": "MDEwOlJlcG9zaXRvcnkxODc0Mjg3MDE=",
+      "category": "productivity-automation",
+      "tags": [
+        "desktop-app",
+        "gui",
+        "productivity"
+      ],
+      "summary": "Yahoo! KeyKey 2 is an independent, open-source Swift rebuild of the classic Yahoo! KeyKey Traditional-Chinese input method for macOS. It brings Cangjie and Simplex typing, plus a toneless Pinyin phrase mode, to Apple Silicon Macs as a native, notarized input source.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "03e262cb04c1ec406390fca723f434ebf4e68da8",
+        "repo_metadata_sha256": "fd4047d9f50b53ef5fee8b4c619bb46c3a205df73bbc81afc68855d26f39827d",
+        "fingerprint": "527a422eda3281eca6879fcdec4408b2f1c67df035756e89708a8e714f8700d4"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-09-16T10:24:16Z"
       }
     },
     {
@@ -775,6 +822,30 @@
         "model_label": null,
         "prompt_version": "classify-v1",
         "generated_at": "2026-07-15T12:29:34Z"
+      }
+    },
+    {
+      "node_id": "MDEwOlJlcG9zaXRvcnkyMzEyODM0NTI=",
+      "category": "media-creative",
+      "tags": [
+        "frontend",
+        "real-time",
+        "visualization"
+      ],
+      "summary": "Excalidraw is an open-source virtual whiteboard for sketching hand-drawn-like diagrams. It provides an infinite canvas, shapes, freehand drawing, and image support, along with end-to-end encrypted real-time collaboration, and ships as both a web app and an embeddable component.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "48b9d1de9fbb1c74406407e89e2471a01b1f28de",
+        "repo_metadata_sha256": "943012825ffdbe1d305ad72aabe84c84aa46088bbf79b91f3c285531424358d5",
+        "fingerprint": "ac634bebd76ff8c127b9bbcc923141913ca080e67a57265c3620c4ab30e1d6a3"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-09-16T10:24:16Z"
       }
     },
     {
@@ -1108,6 +1179,31 @@
         "model_label": "informational-only",
         "prompt_version": "classify-v1",
         "generated_at": "2026-07-15T18:23:03Z"
+      }
+    },
+    {
+      "node_id": "MDEwOlJlcG9zaXRvcnkyOTkzNTQyMDc=",
+      "category": "self-hosted-homelab",
+      "tags": [
+        "desktop-app",
+        "networking",
+        "real-time",
+        "self-hosted"
+      ],
+      "summary": "RustDesk is an open-source remote desktop application written in Rust that works out of the box and gives you full control of your data. It runs on Windows, macOS, Linux, Android, and iOS, and lets you use its public relay servers or self-host your own as a TeamViewer alternative.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "7508ce31093ec0f411ef8a7bb673699b591308b9",
+        "repo_metadata_sha256": "f76c1f8caf667a159f7e08bacf082b48b2eba676ba6e19cb4b1b588877c14e1b",
+        "fingerprint": "39ca5a6ab5e70a8ef8ca52f575fb541236b467c3c7ecf8f1e4524dd7a15d2ab9"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-09-16T10:24:16Z"
       }
     },
     {
@@ -19962,6 +20058,31 @@
         "model_label": "informational-only",
         "prompt_version": "classify-v1",
         "generated_at": "2026-08-03T09:24:56Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOTne_vw",
+      "category": "media-creative",
+      "tags": [
+        "ai-agents",
+        "automation",
+        "llm",
+        "workflow"
+      ],
+      "summary": "Hypit gives AI coding agents a domain-specific language and system for creating video. Pointing it at a reference clip reproduces that clip as a word-anchored workflow of footage, captions, B-roll, and effects, and can compile finished videos with or without a generative model.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "22839f23d0b2d96495ccf58f5646bb3605b4024b",
+        "repo_metadata_sha256": "e8e3a94d563a014dced4b0412cdddf6d1f76bb0037062087b8c646ba98d0c4be",
+        "fingerprint": "740743feb1c2dc7e3f052683192673deb4eb2d139f38f86272ff7f9528fad4f9"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-09-16T10:24:16Z"
       }
     },
     {
