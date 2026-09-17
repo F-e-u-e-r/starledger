@@ -17962,6 +17962,30 @@
       }
     },
     {
+      "node_id": "R_kgDOT8dw6w",
+      "category": "media-creative",
+      "tags": [
+        "ai-agents",
+        "automation",
+        "plugin"
+      ],
+      "summary": "An Agent Skill in the open Agent Skills format that guides compatible AI agents to generate extremely simplified, cute, rounded, subtly neo-skeuomorphic IP mascot logos. It proposes three design directions, then produces six independent candidate images built from a few bold shapes on a solid named background color.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "5c90d60233172ad9deff581d28059be36f00442e",
+        "repo_metadata_sha256": "d4ffb7449b24024bde837e540b534438357ddef8e10cdb38adb0dcdf2e510423",
+        "fingerprint": "8de8b0a06d79a97d41e894a79980e5690d55cc32d269049eed594dce3d44ab89"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-09-17T10:23:15Z"
+      }
+    },
+    {
       "node_id": "R_kgDOT9H85w",
       "category": "media-creative",
       "tags": [
