@@ -11928,6 +11928,33 @@
       }
     },
     {
+      "node_id": "R_kgDORNmh8A",
+      "category": "productivity-automation",
+      "tags": [
+        "ai-agents",
+        "automation",
+        "cli",
+        "markdown",
+        "productivity",
+        "workflow"
+      ],
+      "summary": "A collection of Agent Skills for Claude Code and Codex that automate content-creator workflows, including uploading Markdown articles to X drafts, capturing WeChat chats and favorites, archiving Douyin and Xiaohongshu posts, transcribing videos, batch-exporting official-account articles, and routing web research.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "a465d70860a9f56645ef0ef1ee4bd252ad41c289",
+        "repo_metadata_sha256": "619a1cf77e891a39c92abe83012c238184a761b14a702ce62d7964cce38d6af1",
+        "fingerprint": "f969f0bceebfd137127cfa40b94c12ae23570a24d06824f84eda870b2c04f9b3"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-09-18T10:24:58Z"
+      }
+    },
+    {
       "node_id": "R_kgDORNt0Vw",
       "category": "ai-ml",
       "tags": [
@@ -20705,6 +20732,80 @@
         "model_label": null,
         "prompt_version": "classify-v1",
         "generated_at": "2026-09-12T10:23:59Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOUb2T3g",
+      "category": "media-creative",
+      "tags": [
+        "ai-agents",
+        "automation",
+        "cli"
+      ],
+      "summary": "A macOS local automation tool and Agent Skill for Jianying Pro that generates continuable native draft projects from an editing plan, edits existing multi-track drafts in isolated copies, and exports MP4 through the app's native engine only on explicit request. It is a private source preview, not the official SDK.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "0bb1f278eb5c4b96a547af2a1c62310d7cafca07",
+        "repo_metadata_sha256": "f0ec3399fce819c31155aac474308b65c3202412a0efef6df9a357d6f376fcbc",
+        "fingerprint": "bdb57ad1db3c62ebd7bd4c94015bf0b5c3119532cae644735ccfda37e57c045e"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-09-18T10:24:58Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOUeBQeg",
+      "category": "ai-ml",
+      "tags": [
+        "ai-agents",
+        "automation",
+        "library",
+        "llm"
+      ],
+      "summary": "A fast LLM-driven browser agent that turns each page into an indexed element table and selects an operation and target in a single request, generating text only for typing actions. It ships as a Python library with a demo inspector and aims to complete natural-language web tasks in seconds.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "0a4639dc13b8a1eef4d9beb8de839a7b0c28ffa3",
+        "repo_metadata_sha256": "75167d8a619c2fa774debb8d6add731fa341cb84cb617800e2ff396b2d01fb23",
+        "fingerprint": "16ce73bd73cf9aabc210df4d9dfc5bec3602577687d005bb165d86befaa50067"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-09-18T10:24:58Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOUeWnDQ",
+      "category": "developer-tools",
+      "tags": [
+        "ai-agents",
+        "library",
+        "llm",
+        "plugin"
+      ],
+      "summary": "A Claude Code plugin and npm library that replaces context compaction's lossy summary with per-decision scoring: it shows a small LLM the whole conversation, then drops or truncates stale tool calls and results while keeping user and assistant text verbatim. Thresholds and token budgets control what is retained.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "8f4f65b5567600cd8257c54fc3beb7c8f3c861d9",
+        "repo_metadata_sha256": "5c6b60347691646c07bc7a7d33e0233209bbd3664bb953b38ae987302fe79a52",
+        "fingerprint": "79f756c2381ddf3fa44a4e05ac602dba109603bdf1bcd4f2fed75dab3e11d459"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-09-18T10:24:58Z"
       }
     }
   ]
