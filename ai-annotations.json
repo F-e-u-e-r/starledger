@@ -4864,6 +4864,29 @@
       }
     },
     {
+      "node_id": "R_kgDONOEp0g",
+      "category": "education-reference",
+      "tags": [
+        "awesome-list",
+        "documentation"
+      ],
+      "summary": "A community-contributed collection of articles, tools, and platforms about earning extra income through AI-assisted side projects. It aggregates money-making methods, curated resource lists, and early-stage startup guidance, with content in both Chinese and English.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "b3aed9ee3bc211951430e292e9d91c00a2b7e4de",
+        "repo_metadata_sha256": "b0c635f0fbad11560a1bccb008ff5acb712bc51ef20ac397329ea374a9970a23",
+        "fingerprint": "e40b49653b6a96606356f0b7e9dc2bbcddd6e2d638d7bd834f8cd6a8948caedd"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-09-19T10:24:28Z"
+      }
+    },
+    {
       "node_id": "R_kgDONPHflw",
       "category": "education-reference",
       "tags": [
@@ -18115,6 +18138,31 @@
       }
     },
     {
+      "node_id": "R_kgDOTCSrMw",
+      "category": "web-applications",
+      "tags": [
+        "ai-agents",
+        "frontend",
+        "real-time",
+        "visualization"
+      ],
+      "summary": "A browser-based, photorealistic 3D globe that visualizes live open-source spatial intelligence, including aircraft, ships, satellites, earthquakes, traffic, and public cameras. It offers hands-free voice control powered by a realtime AI agent and can run locally or via Pinokio without requiring API keys.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "4224bacc054ee886a5eca4ee1b3087eb32b4a9af",
+        "repo_metadata_sha256": "2d179c75516c456dda9862dffddf3b47dcb86a183aa15c25a27a56e012947004",
+        "fingerprint": "d12537838a14b02b35c3b3e13aae84a8e867ab788ed052040f76febfcffa9fc8"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-09-19T10:24:28Z"
+      }
+    },
+    {
       "node_id": "R_kgDOTChkaw",
       "category": "education-reference",
       "tags": [
@@ -20607,6 +20655,32 @@
         "model_label": null,
         "prompt_version": "classify-v1",
         "generated_at": "2026-09-03T10:26:19Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOUH7FcQ",
+      "category": "ai-ml",
+      "tags": [
+        "ai-agents",
+        "api",
+        "llm",
+        "plugin",
+        "search"
+      ],
+      "summary": "A plugin for the Hermes Agent that adds point-in-time web search and fetch tools backed by a frozen news archive, where each request carries an as_of date so identical queries return identical results. It targets forecasting backtests, quant research, reinforcement-learning environments, and reproducible benchmarks that must avoid post-cutoff data leakage.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "6a73286fc441e803a1735dc1de2661739e23aa69",
+        "repo_metadata_sha256": "9057c7dbc47d4591cd3aff630b1913d319e071e749713778a0d02dc7b6b03814",
+        "fingerprint": "80f4dc649bf31fdfc202997385905cfc7e44cbd9b70268ff4f7f2fb566099341"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-09-19T10:24:28Z"
       }
     },
     {
