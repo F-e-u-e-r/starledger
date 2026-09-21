@@ -8,7 +8,7 @@
     "paths": [
       "README.md"
     ],
-    "last_commit_sha": "84b96d32d6ef31ff11c550e74899debc96e9c04f"
+    "last_commit_sha": "9643ddb624af3bfc4117e7a98a1221307bdba1e1"
   },
   "pending": [],
   "deliveries": [
@@ -622,6 +622,12 @@
       "notification_key": "awesome_stars:tencentcloud/octop:R_kgDOTRrGxQ",
       "status": "sent",
       "completed_at": "2026-09-20T06:23:02.522Z",
+      "detail": null
+    },
+    {
+      "notification_key": "awesome_stars:zai-org/zcode:R_kgDOUicD1g",
+      "status": "sent",
+      "completed_at": "2026-09-21T06:25:48.806Z",
       "detail": null
     }
   ]
