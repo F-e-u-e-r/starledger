@@ -20881,6 +20881,53 @@
         "prompt_version": "classify-v1",
         "generated_at": "2026-09-18T10:24:58Z"
       }
+    },
+    {
+      "node_id": "R_kgDOUfqq7Q",
+      "category": "ai-ml",
+      "tags": [
+        "library",
+        "machine-learning"
+      ],
+      "summary": "Laya is a Python library for typed decision-making that evaluates choice, score, and boolean questions over text, email, ticket, or JSON inputs in a single non-autoregressive forward pass. It provides three BERT-based checkpoints and a router that automatically selects the right model per request across more than 100 languages.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "da95bc050a0bcf01a218ef9205f1f7a7badd949b",
+        "repo_metadata_sha256": "ea8cc794e460f002ba184eb62b391ddea7155a5782b28cd661d634de40f896e7",
+        "fingerprint": "e7eaec616c721a997893f91520c0a1fdb1a67642fc8f065974d18202291f3354"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-09-21T11:24:49Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOUg77yg",
+      "category": "education-reference",
+      "tags": [
+        "documentation",
+        "llm",
+        "machine-learning"
+      ],
+      "summary": "A curated reference collection of real AI engineering interview questions and answers, organized company by company across dozens of top AI companies. It covers LLM internals, inference and GPU performance, retrieval-augmented generation, agents and tool use, fine-tuning, evaluation, safety, and AI system design for interview preparation.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "2b6252789900d0935a66ccd6b001709503213399",
+        "repo_metadata_sha256": "c702d58c1f4322703909e6f12173e7930edbb5b0fd6f4ea5dd9341c6e675e1e1",
+        "fingerprint": "960e92be47c6c2230f113d7e4b5b90035f9da483230337b4c77e5bd163c35295"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-09-21T11:24:49Z"
+      }
     }
   ]
 }
