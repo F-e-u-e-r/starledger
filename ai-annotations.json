@@ -12206,33 +12206,6 @@
       }
     },
     {
-      "node_id": "R_kgDORPkI2g",
-      "category": "ai-ml",
-      "tags": [
-        "api",
-        "caching",
-        "desktop-app",
-        "llm",
-        "machine-learning",
-        "self-hosted"
-      ],
-      "summary": "A local LLM inference server for Apple Silicon that serves LLMs, vision-language models, embeddings, and rerankers with continuous batching and a tiered hot RAM and cold SSD KV cache. It exposes OpenAI- and Anthropic-compatible APIs and is managed from a native macOS menu bar app and web admin dashboard.",
-      "source": {
-        "kind": "readme",
-        "readme_path": "README.md",
-        "readme_oid": "cf6aabfbe0b04db5480d962677e615889d649bc5",
-        "repo_metadata_sha256": "885b44a637cb0903c34b6a3db7af7438811912a58dec07c55d5c57dfbaced4fd",
-        "fingerprint": "60184456ae6237a62bf31177664d84a8571c1dcbe938bd259fe6e62ce2015920"
-      },
-      "generation": {
-        "executor_kind": "claude-routine",
-        "execution_profile_version": "agent-v1",
-        "model_label": "informational-only",
-        "prompt_version": "classify-v1",
-        "generated_at": "2026-07-19T16:21:45Z"
-      }
-    },
-    {
       "node_id": "R_kgDORPvt5w",
       "category": "developer-tools",
       "tags": [
