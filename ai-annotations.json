@@ -3647,6 +3647,32 @@
       }
     },
     {
+      "node_id": "R_kgDOLk6wNA",
+      "category": "libraries-frameworks",
+      "tags": [
+        "ai-agents",
+        "automation",
+        "llm",
+        "scraping",
+        "sdk"
+      ],
+      "summary": "Stagehand is a TypeScript, Python, and Go SDK for building AI-driven browser agents. It offers Playwright-style APIs plus act, observe, and extract methods that use LLMs to navigate pages, self-heal when sites change, and return schema-validated structured data.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "50619f23e759350f5cf9fbe23517aff6fb89675c",
+        "repo_metadata_sha256": "05fd56cfac38ba539ddd14aa1a3da0826434fba7838d774c5c9068528059d9b1",
+        "fingerprint": "91e72f263cbcb22ced3b9e2ebec0844ed86dcb791cd4f6b7304ce59c9cbe317b"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-09-23T10:24:54Z"
+      }
+    },
+    {
       "node_id": "R_kgDOLk7NSQ",
       "category": "self-hosted-homelab",
       "tags": [
@@ -12203,6 +12229,33 @@
         "model_label": null,
         "prompt_version": "classify-v1",
         "generated_at": "2026-07-21T10:23:22Z"
+      }
+    },
+    {
+      "node_id": "R_kgDORPkI2g",
+      "category": "ai-ml",
+      "tags": [
+        "api",
+        "caching",
+        "desktop-app",
+        "llm",
+        "machine-learning",
+        "self-hosted"
+      ],
+      "summary": "oMLX is an LLM inference server for Apple Silicon built on MLX. It serves OpenAI- and Anthropic-compatible APIs with continuous batching and a tiered KV cache spanning hot RAM and cold SSD tiers. A native macOS menu-bar app and web admin dashboard manage models, downloads, and monitoring.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "134a7bc2417419bbd76bfbd21b9946f3404f6b6a",
+        "repo_metadata_sha256": "885b44a637cb0903c34b6a3db7af7438811912a58dec07c55d5c57dfbaced4fd",
+        "fingerprint": "526f54a6d6d00f97ac7f5efac1293ffb303ad7482e582e72b4d507923eb573dd"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-09-23T10:24:54Z"
       }
     },
     {
