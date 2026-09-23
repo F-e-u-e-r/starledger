@@ -39,6 +39,7 @@ jobs:
       - name: build
         run: pnpm build
 
+      # template-builder: omit
       # Secret-free notifier smokes — safe on fork PRs. Both import the built
       # artifact, so they run after build. The state smoke drives real Git
       # plumbing against a temp bare remote; the replay smoke proves the
@@ -48,6 +49,7 @@ jobs:
           node scripts/smoke-notifier-state.mjs
           node scripts/smoke-notifier-replay.mjs
 
+      # template-builder: omit
       # Hermetic: stub gh/curl fixtures on PATH — no network, no secrets, so it
       # is safe on fork PRs and deterministic (no dependency on live PR state).
       - name: AI stall-watch smoke (no secrets)

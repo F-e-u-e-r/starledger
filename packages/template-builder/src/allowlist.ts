@@ -68,6 +68,20 @@ export const NEUTRALIZE_SCHEDULE_WORKFLOWS = new Set([
   'ai-state.yml',
 ]);
 
+/**
+ * Workflows that exist for the parent repository only and must never ship in the
+ * template: the template self-test (it needs README.template.md) and the parent's
+ * operational jobs that run scripts under `scripts/`, a directory this allowlist
+ * deliberately excludes. Shipping them would hand every template user a workflow
+ * that can only fail.
+ */
+export const EXCLUDE_WORKFLOWS = new Set([
+  'template-smoke.yml',
+  'ai-stall-watch.yml',
+  'p3-completion-check.yml',
+  'public-pat-smoke.yml',
+]);
+
 /** The personal README is replaced by this file, renamed to README.md. */
 export const README_TEMPLATE = 'README.template.md';
 export const README_OUTPUT = 'README.md';
