@@ -8,7 +8,7 @@
     "paths": [
       "README.md"
     ],
-    "last_commit_sha": "7f50092e15dbc175a4a40b58ea066298473ccd97"
+    "last_commit_sha": "9904c503b15637292a25c4bb534c01a1dc55049b"
   },
   "pending": [],
   "deliveries": [
@@ -640,6 +640,12 @@
       "notification_key": "awesome_stars:mrnugget/jev-shell-history:R_kgDOUf2Wpw",
       "status": "sent",
       "completed_at": "2026-09-22T10:02:28.481Z",
+      "detail": null
+    },
+    {
+      "notification_key": "awesome_stars:anthropics/code-migration-kit-with-claude-code:R_kgDOTRxvVg",
+      "status": "sent",
+      "completed_at": "2026-09-23T06:02:06.328Z",
       "detail": null
     }
   ]
