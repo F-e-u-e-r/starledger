@@ -1,5 +1,7 @@
 # StarLedger
 
+![status](https://img.shields.io/badge/status-ACTIVE-7aa2ff)
+
 StarLedger is an alpha-stage, self-owned GitHub stars dashboard and discovery workflow.
 
 Built in phases:
