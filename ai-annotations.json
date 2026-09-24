@@ -18929,6 +18929,32 @@
       }
     },
     {
+      "node_id": "R_kgDOTRxvVg",
+      "category": "developer-tools",
+      "tags": [
+        "ai-agents",
+        "automation",
+        "code-generation",
+        "documentation",
+        "llm"
+      ],
+      "summary": "A starter kit of prompts, templates, and scripts for running large-scale, structure-preserving code migrations with Claude Code. It ships an operating manual, per-step prompts, and an optional skill, and is published as unmaintained reference code accompanying a blog post on the migration process.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "53cfef52bf6586b6ce299a95c0595879db1621ec",
+        "repo_metadata_sha256": "7046de72e1ddbb4fb64f396687eed7ebf0e7511057f5a4c4503b14985dab6c39",
+        "fingerprint": "2ff2290da8078417ba68ed61d464b2874ef9558462e94c284f8115712b3558c7"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-09-24T13:25:19Z"
+      }
+    },
+    {
       "node_id": "R_kgDOTRyQUw",
       "category": "developer-tools",
       "tags": [
@@ -20857,6 +20883,33 @@
       }
     },
     {
+      "node_id": "R_kgDOUFoipg",
+      "category": "productivity-automation",
+      "tags": [
+        "api",
+        "automation",
+        "bot",
+        "dashboard",
+        "real-time",
+        "self-hosted"
+      ],
+      "summary": "An open-source, self-hosted application for operating a farm of physical iPhones from a Mac. It provides guided device registration, WDA/Appium supervision, live video and remote input, a PostgreSQL-backed scheduler for recurring jobs, a dashboard and API server, and a built-in TikTok automation plugin.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "c53ae24b39c4e9830db2b3eb98553554c01c7a29",
+        "repo_metadata_sha256": "615db1317ada5d777c2e86f9c160d0572bf1701365cdfaa2805325c38b9f6e1d",
+        "fingerprint": "936e3551baeee4f55163c60f4ff5c5bc8f8d49e46ff482db066db3d6dc442b72"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-09-24T13:25:19Z"
+      }
+    },
+    {
       "node_id": "R_kgDOUGkXvg",
       "category": "devops-infrastructure",
       "tags": [
@@ -21108,6 +21161,29 @@
       }
     },
     {
+      "node_id": "R_kgDOUd-wKA",
+      "category": "media-creative",
+      "tags": [
+        "desktop-app",
+        "gui"
+      ],
+      "summary": "A free, open-source image editor for macOS built as a familiar Photoshop alternative for compositing and post-processing. It offers layers and folders with blend modes, layer and clipping masks, adjustment layers, GPU-rendered layer effects, and non-destructive move, scale, rotate and flip transforms.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "fbd6fe9b338def8247d42a3fedd82fb50816210d",
+        "repo_metadata_sha256": "b7f7f6e1fb04a2843a95f3f3acd5b0e1b61f9cf532d493d20a825dfe356256a4",
+        "fingerprint": "040c1138588155f1277222e4ee06f1fe551e10e5cb319dbeba866d4d44b2d401"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-09-24T13:25:19Z"
+      }
+    },
+    {
       "node_id": "R_kgDOUeBQeg",
       "category": "ai-ml",
       "tags": [
@@ -21158,6 +21234,32 @@
       }
     },
     {
+      "node_id": "R_kgDOUf2Wpw",
+      "category": "developer-tools",
+      "tags": [
+        "cli",
+        "llm",
+        "plugin",
+        "productivity",
+        "terminal"
+      ],
+      "summary": "A zsh plugin providing Fish-style history autosuggestions ranked by an external AI model. As you type, it scores your recent distinct history entries and shows the most likely completion in grey after the cursor, accepted with the right arrow, End, or a dedicated widget in both emacs and vi keymaps.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "aad90b578ad3d6a30868eef475adc0f5df1bc59c",
+        "repo_metadata_sha256": "ca21bf8b07e765b02c54142eed45ab6d81e7f847c8fa65618dfeded9773b68c7",
+        "fingerprint": "c060a0995a061f922e14157eec60e114287750e9108f71e3dd7c836f705d677f"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-09-24T13:25:19Z"
+      }
+    },
+    {
       "node_id": "R_kgDOUfqq7Q",
       "category": "ai-ml",
       "tags": [
@@ -21202,6 +21304,32 @@
         "model_label": null,
         "prompt_version": "classify-v1",
         "generated_at": "2026-09-21T11:24:49Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOUicD1g",
+      "category": "developer-tools",
+      "tags": [
+        "ai-agents",
+        "cli",
+        "code-generation",
+        "desktop-app",
+        "llm"
+      ],
+      "summary": "Z.ai’s open-source AI coding agent workbench, offering a desktop application, a browser interface, and a terminal agent. The monorepo bundles the client, backend services, shared UI, and the agent CLI and runtime together, built with a pnpm workspace and a pinned Node.js toolchain.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "bd6247f26035e27ffb5f6c908d736c1c4c82fca7",
+        "repo_metadata_sha256": "76ff634f8fa30f37cf0650a1744a49d6e2a455d016359a61820bd5fa397aad5f",
+        "fingerprint": "7f932e78dcb1a1b1e30822c3f3e27216399904166ad1950861c6ae7a307a1e63"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-09-24T13:25:19Z"
       }
     }
   ]
