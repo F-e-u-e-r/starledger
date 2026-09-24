@@ -1,21 +1,18 @@
 # StarLedger
 
-![status](https://img.shields.io/badge/status-ACTIVE-7aa2ff)
+**Self-owned GitHub-stars dashboard and fail-closed export pipeline — static, no backend, no key custody.**
 
-StarLedger is an alpha-stage, self-owned GitHub stars dashboard and discovery workflow.
+![status](https://img.shields.io/badge/status-ACTIVE-7aa2ff) [![version](https://img.shields.io/badge/version-v1.3.0--alpha.1-orange)](https://github.com/F-e-u-e-r/starledger/releases/tag/v1.3.0-alpha.1) [![license](https://img.shields.io/badge/license-Apache--2.0-blue)](LICENSE) · [Live dashboard →](https://f-e-u-e-r.github.io/starledger/)
 
-Built in phases:
+StarLedger is an alpha-stage, self-owned GitHub stars dashboard and discovery workflow. It exports your stars into one canonical dataset, publishes a static dashboard on GitHub Pages, and optionally adds a Telegram notifier, AI classification and a discovery inbox — all on infrastructure you own, using only your own tokens.
 
-| Phase  | What                                                                                    | Status                                                                                                                                                                |
-| ------ | --------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **P0** | Deterministic **exporter**: stars → canonical `stars.json`                              | ✅ complete                                                                                                                                                           |
-| P1     | Static **dashboard** on GitHub Pages (client-side filter/sort/search)                   | ✅ complete                                                                                                                                                           |
-| P2     | **Notifier**: YouTube / awesome-stars → one-shot Telegram delivery                      | ✅ complete — hosted Telegram delivery + no-duplicate replay validated via a controlled fixture source                                                                |
-| P3     | **AI classification**: categories, tags, summaries, semantic search                     | P3.0–P3.5 complete (2026-07-29): backlog drained (697 of 697), removed-star prune lifecycle live, credentialed full-corpus zero-job replay recorded (run 30500689860) |
-| P4     | Reusable **template** (fork model, no key custody): setup doctor + deterministic export | ✅ complete — template published; hosted clean-room validation passed, v1.2.0-alpha.1 tagged; notifier/AI stay explicit opt-ins                                       |
-| P5     | **Discovery Inbox**: candidate repo intake, dedupe, dashboard review, manual workflow   | ✅ alpha complete — manual candidate intake, artifact PR flow, and dashboard Discovery Inbox validated on hosted Actions                                              |
+## Highlights
 
-Contracts: **[`docs/P0-exporter-spec.md`](docs/P0-exporter-spec.md)** (exporter) · **[`docs/P1-dashboard-spec.md`](docs/P1-dashboard-spec.md)** (dashboard) · **[`docs/P2-notifier-spec.md`](docs/P2-notifier-spec.md)** (notifier) · **[`docs/P3-ai-spec.md`](docs/P3-ai-spec.md)** (optional AI enrichment) · **[`docs/P4-template-spec.md`](docs/P4-template-spec.md)** (reusable template) · **[`docs/P5-discovery-inbox-spec.md`](docs/P5-discovery-inbox-spec.md)** (discovery inbox).
+- **Fail-closed publishing.** The exporter validates in a staging area and publishes in a single commit; on incomplete data, rate limits or a failed publish it defers and leaves the last good dataset untouched.
+- **Static dashboard, no backend.** A GitHub Pages site with client-side filter, sort and search that trusts only the canonical dataset; AI and discovery artifacts are loaded fail-soft when present.
+- **Optional layers stay opt-in.** Telegram notifications with no-duplicate replay, AI categories / tags / summaries / semantic search produced by an executor that runs outside this repo, and a Discovery Inbox for candidate repositories.
+- **No key custody.** Only user-owned tokens — no StarLedger service key, central OAuth or shared backend, and no model call in CI.
+- **Reusable template.** A sanitized starter is generated deterministically from this repo, with a setup doctor and a clean-room validation runbook.
 
 ## Quick start
 
@@ -31,6 +28,21 @@ pnpm p3-gate        # P3 quality checks + generated AI-schema drift
 
 pnpm --filter @starred/dashboard dev    # run the dashboard locally (reads ./stars.json)
 ```
+
+## Phases and contracts
+
+Built in phases:
+
+| Phase  | What                                                                                    | Status                                                                                                                                                                |
+| ------ | --------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **P0** | Deterministic **exporter**: stars → canonical `stars.json`                              | ✅ complete                                                                                                                                                           |
+| P1     | Static **dashboard** on GitHub Pages (client-side filter/sort/search)                   | ✅ complete                                                                                                                                                           |
+| P2     | **Notifier**: YouTube / awesome-stars → one-shot Telegram delivery                      | ✅ complete — hosted Telegram delivery + no-duplicate replay validated via a controlled fixture source                                                                |
+| P3     | **AI classification**: categories, tags, summaries, semantic search                     | P3.0–P3.5 complete (2026-07-29): backlog drained (697 of 697), removed-star prune lifecycle live, credentialed full-corpus zero-job replay recorded (run 30500689860) |
+| P4     | Reusable **template** (fork model, no key custody): setup doctor + deterministic export | ✅ complete — template published; hosted clean-room validation passed, v1.2.0-alpha.1 tagged; notifier/AI stay explicit opt-ins                                       |
+| P5     | **Discovery Inbox**: candidate repo intake, dedupe, dashboard review, manual workflow   | ✅ alpha complete — manual candidate intake, artifact PR flow, and dashboard Discovery Inbox validated on hosted Actions                                              |
+
+Contracts: **[`docs/P0-exporter-spec.md`](docs/P0-exporter-spec.md)** (exporter) · **[`docs/P1-dashboard-spec.md`](docs/P1-dashboard-spec.md)** (dashboard) · **[`docs/P2-notifier-spec.md`](docs/P2-notifier-spec.md)** (notifier) · **[`docs/P3-ai-spec.md`](docs/P3-ai-spec.md)** (optional AI enrichment) · **[`docs/P4-template-spec.md`](docs/P4-template-spec.md)** (reusable template) · **[`docs/P5-discovery-inbox-spec.md`](docs/P5-discovery-inbox-spec.md)** (discovery inbox).
 
 ## Running the exporter
 
