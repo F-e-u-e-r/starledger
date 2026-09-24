@@ -543,6 +543,29 @@
       }
     },
     {
+      "node_id": "MDEwOlJlcG9zaXRvcnkxNjE5NzkzMjM=",
+      "category": "media-creative",
+      "tags": [
+        "frontend",
+        "library"
+      ],
+      "summary": "Remix Icon is an open-source, neutral-style system icon set of more than 3200 icons, each crafted in Outlined and Filled styles on a 24x24 grid. Icons are available as SVG, PNG, and a webfont, and are free for both personal and commercial use.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "ad62944880a9610fa6e3ec25064864989401af9e",
+        "repo_metadata_sha256": "b61071d79b1d8602ea2ce7902dacdd4e70a2c7c63ef05eb9a0f1ba1967f016b9",
+        "fingerprint": "dc97283b6bd195afbca72391136f592c58db42bdbc76a612e8e94411e86d4be5"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-09-24T11:25:01Z"
+      }
+    },
+    {
       "node_id": "MDEwOlJlcG9zaXRvcnkxNjEwMTIwMTk=",
       "category": "self-hosted-homelab",
       "tags": [
@@ -1227,6 +1250,30 @@
         "model_label": "informational-only",
         "prompt_version": "classify-v1",
         "generated_at": "2026-07-15T18:23:03Z"
+      }
+    },
+    {
+      "node_id": "MDEwOlJlcG9zaXRvcnkzMDc0ODkyODQ=",
+      "category": "libraries-frameworks",
+      "tags": [
+        "backend",
+        "frontend",
+        "web-framework"
+      ],
+      "summary": "This repository hosts Remix 3, a full-stack web framework built on Web APIs and JavaScript and written in TypeScript. It is under active development and follows a runtime-first design that avoids reliance on bundlers or static analysis, with abstractions intended for both developers and language models.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "a9fd653c080dc382b5b5355d55decee1d265816a",
+        "repo_metadata_sha256": "cd6d6da275a49d1b017f0828c61b42be3f74024e639733e495d689f034eed412",
+        "fingerprint": "b424c0f85cd1bece2e898e2bff4aecc1c991a3b4abba20dfe22502efd20d1064"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-09-24T11:25:01Z"
       }
     },
     {
@@ -2212,6 +2259,32 @@
         "model_label": null,
         "prompt_version": "classify-v1",
         "generated_at": "2026-07-16T00:22:06Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOIvux3g",
+      "category": "developer-tools",
+      "tags": [
+        "build-tool",
+        "cli",
+        "configuration",
+        "package-manager",
+        "workflow"
+      ],
+      "summary": "mise (mise-en-place) is a Rust command-line tool that manages development tools, environment variables, and project tasks from a single mise.toml file. It installs multiple language and tool versions per project and provides a consistent setup across shells, editors, and CI.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "a0a68585b59cb951748dd7ed26603d1b7bd8cbbd",
+        "repo_metadata_sha256": "5e9fbace626c75df30733fed6b46de7852d5c9cafc4e1ddb607554c4c1f2dfc6",
+        "fingerprint": "0da130b7c4fec951e2fce5fcfe21a7e5fbcff54bf935fc2883ec9cbe42921246"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-09-24T11:25:01Z"
       }
     },
     {
@@ -7009,6 +7082,32 @@
       }
     },
     {
+      "node_id": "R_kgDOPQrONg",
+      "category": "ai-ml",
+      "tags": [
+        "ai-agents",
+        "llm",
+        "search",
+        "self-hosted",
+        "vector-database"
+      ],
+      "summary": "WeKnora is an open-source, LLM-powered knowledge platform that turns documents into a queryable retrieval-augmented generation system, an autonomous reasoning agent, and a self-maintaining wiki. Written in Go, it supports embeddings, semantic and vector search, reranking, and multi-tenant self-hosted deployment.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "90c7cf47c3a2762b889bc08e9170c4c889f9b50b",
+        "repo_metadata_sha256": "8eb96d91d72944a6963ea21933059a481e38e699ae20b359c21ade840a4cc024",
+        "fingerprint": "a356dbeae2ebb83d3c1a165a4fac0902eb10bf390c22a63cdf6df3b98453a37f"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-09-24T11:25:01Z"
+      }
+    },
+    {
       "node_id": "R_kgDOPRF1Gw",
       "category": "ai-ml",
       "tags": [
@@ -8123,6 +8222,31 @@
         "model_label": null,
         "prompt_version": "classify-v1",
         "generated_at": "2026-07-18T11:22:38Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOQ4MU5w",
+      "category": "ai-ml",
+      "tags": [
+        "ai-agents",
+        "automation",
+        "llm",
+        "self-hosted"
+      ],
+      "summary": "Memoh is an open-source multi-agent platform where each AI agent runs on its own cloud computer with a filesystem, desktop, browser, network, and long-term memory. Agents stay online continuously, use bring-your-own API keys or host coding agents such as Claude Code and Codex, and are reachable through several chat platforms.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "df463bf149d14483ce388ae89cfcb3b5dde9be90",
+        "repo_metadata_sha256": "47f4738c83d56fa500429809ddbe76fa837ced41912a0929327659c158d7d9f3",
+        "fingerprint": "60b9325b36cc8142da09fd8b29d5f25c71197eb5cc3a7be4923aac7856910654"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-09-24T11:25:01Z"
       }
     },
     {
