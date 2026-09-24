@@ -9564,6 +9564,31 @@
       }
     },
     {
+      "node_id": "R_kgDOQhi72Q",
+      "category": "devops-infrastructure",
+      "tags": [
+        "dashboard",
+        "desktop-app",
+        "monitoring",
+        "visualization"
+      ],
+      "summary": "CloudBridge is an open-source, cross-platform desktop application for multi-cloud and AI API cost management. It connects billing accounts or imports provider exports to compare spending across AWS, Alibaba Cloud, OpenAI, Anthropic and others, tracing costs to services, models and business lines. Data stays in a local ledger with no cloud sync or telemetry.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "b5d21b61fe668f204ffd49b66bc831563f2a3d9a",
+        "repo_metadata_sha256": "b53555a422d69aa427e9570731d0ed9a004e024498fe7af0dbe03f65a0112fd0",
+        "fingerprint": "9c2f5910189b18bfc207e58f9d77b94b136c1b76bf263831d5799519d7530746"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-09-24T12:28:24Z"
+      }
+    },
+    {
       "node_id": "R_kgDOQjAFnQ",
       "category": "libraries-frameworks",
       "tags": [
@@ -10657,6 +10682,33 @@
         "model_label": "informational-only",
         "prompt_version": "classify-v1",
         "generated_at": "2026-07-19T01:23:10Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOR1BXBQ",
+      "category": "devops-infrastructure",
+      "tags": [
+        "ai-agents",
+        "cli",
+        "containers",
+        "kubernetes",
+        "llm",
+        "orchestration"
+      ],
+      "summary": "AX is Google's open-source, declarative orchestration runtime for running autonomous AI agent workloads at scale in a cluster. Modeled after Kubernetes, it uses Task, Workspace, Gateway and Model manifests to sandbox agent execution, pre-wire repositories and tools, fence network traffic, and suspend or resume tasks through a kubectl-shaped CLI.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "e96c95302d12029ba8908543354f2ba123c2ef09",
+        "repo_metadata_sha256": "b81ddd71a1de658363a72ebfd8db534df3ba808b5cf9a2e1254ba70b138d3946",
+        "fingerprint": "e73af9d8b7cb3da6633130a3ff1f9a47ecd9f0e9dfbb437d6d3e26baf6fde85e"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-09-24T12:28:24Z"
       }
     },
     {
@@ -13601,6 +13653,30 @@
         "model_label": null,
         "prompt_version": "classify-v1",
         "generated_at": "2026-07-20T00:28:24Z"
+      }
+    },
+    {
+      "node_id": "R_kgDORcT-5w",
+      "category": "developer-tools",
+      "tags": [
+        "desktop-app",
+        "gui",
+        "package-manager"
+      ],
+      "summary": "BrewUI is Homebrew's official macOS graphical interface for package management, built with SwiftUI. It lets users who prefer a GUI over the terminal discover, install, update and manage Homebrew packages while remaining transparent about the underlying brew operations, drawing data from the brew CLI and the Homebrew JSON API.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "3305d232d5907129faa4369a25aa02a3ae44382e",
+        "repo_metadata_sha256": "904a56b95220b212184b8177eb53ed25b458eadb4d82bffef3815dda2102b9c4",
+        "fingerprint": "76337de13bdd90d087f82cb557f923c1f449eb1029d029cbf3e563ad966a32ee"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-09-24T12:28:24Z"
       }
     },
     {
@@ -17809,6 +17885,28 @@
       }
     },
     {
+      "node_id": "R_kgDOSt3pCQ",
+      "category": "mobile",
+      "tags": [
+        "llm"
+      ],
+      "summary": "Holt is a local-first, multi-provider AI companion app built with Flutter for Android. It offers per-character conversations, memories, voice calls, text-to-speech and speech recognition, using remote OpenAI-compatible API providers or offline local models via llama.cpp and LiteRT-LM. Conversations and data stay on the device with no telemetry.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "593b16160dda222c62f171affcd8150c0173ea12",
+        "repo_metadata_sha256": "592b78fe773d49dd247f57d5193d98ec0ed53671b6641ca3c3779f0231e21764",
+        "fingerprint": "43e8843a80f5d6c2fe9df09b5c855d00f37e0611d6728ed2512cfef44ca7213a"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-09-24T12:28:24Z"
+      }
+    },
+    {
       "node_id": "R_kgDOStCJPg",
       "category": "ai-ml",
       "tags": [
@@ -18801,6 +18899,33 @@
         "model_label": "informational-only",
         "prompt_version": "classify-v1",
         "generated_at": "2026-07-22T01:24:58Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOTRrGxQ",
+      "category": "ai-ml",
+      "tags": [
+        "ai-agents",
+        "automation",
+        "dashboard",
+        "llm",
+        "plugin",
+        "self-hosted"
+      ],
+      "summary": "Octop is an open-source, self-hosted, multi-user and multi-agent AI assistant written in Python. Running as a single process, it serves a web dashboard, a CLI and instant-messaging integrations such as Feishu, DingTalk, Telegram and WeCom, with cron automation, RAG knowledge bases, plugins and MCP connectors. All conversations and credentials stay on the user's own machine.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "8e3a646f78a82e742d4e1571e4e56d9fed9e3f2a",
+        "repo_metadata_sha256": "f26acce836fbe667011c3690475683b2015f594807ea255298a26617d0c3920a",
+        "fingerprint": "8c97cd48b38a4dddf2897f0132a26a856f2cad4762d3ac268cd1c1ba7907c20b"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-09-24T12:28:24Z"
       }
     },
     {
