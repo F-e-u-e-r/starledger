@@ -3,6 +3,32 @@
   "taxonomy_version": "1",
   "annotations": [
     {
+      "node_id": "MDEwOlJlcG9zaXRvcnk0MTY1Njc1",
+      "category": "security-privacy",
+      "tags": [
+        "automation",
+        "cli",
+        "dashboard",
+        "networking",
+        "security-scanner"
+      ],
+      "summary": "SpiderFoot is an open-source OSINT automation tool for threat intelligence and attack-surface mapping. Written in Python, it offers a web interface and command-line usage, more than 200 data-collection modules that feed each other, a YAML-configurable correlation engine, multiple export formats, and a SQLite backend for custom querying.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "1f140137f77ce9efce1c910b05ab374115e4d63f",
+        "repo_metadata_sha256": "cdfc6d33c01e8e18bd4cec36018c6e19dfcf86540bb05c5d9524bdc2d3d71359",
+        "fingerprint": "a4099f1eed0e354de3dc9618d7d0884d3e9020dd4b1b2b14d0f7152ab7e0c035"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-09-26T10:23:41Z"
+      }
+    },
+    {
       "node_id": "MDEwOlJlcG9zaXRvcnk0MzQyNTQ4MA==",
       "category": "education-reference",
       "tags": [
@@ -314,6 +340,32 @@
       }
     },
     {
+      "node_id": "MDEwOlJlcG9zaXRvcnk4OTI4MTU=",
+      "category": "libraries-frameworks",
+      "tags": [
+        "api",
+        "cli",
+        "networking",
+        "sdk",
+        "search"
+      ],
+      "summary": "The official Python library and command-line interface for Shodan, the search engine for Internet-connected devices. It gives developers programmatic access to Shodan data for searching, fast and bulk IP lookups, real-time streaming, network alerts, exploit search, DNS lookups, and bulk data downloads.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.rst",
+        "readme_oid": "14f67174646ccf5bbf68ea0eec5313d7805dcc83",
+        "repo_metadata_sha256": "a9ea9198469efc0e2b7357fc081876122f8a330ccdba18b02baa1c64a1e7ce9c",
+        "fingerprint": "e88a85e48ec69c2d681c5b7c05239c55412b8ccd9ac1a23319e65fbb3d32c109"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-09-26T10:23:41Z"
+      }
+    },
+    {
       "node_id": "MDEwOlJlcG9zaXRvcnk5MTk0ODU0MA==",
       "category": "data-analytics",
       "tags": [
@@ -401,6 +453,32 @@
         "model_label": null,
         "prompt_version": "classify-v1",
         "generated_at": "2026-07-15T09:22:55Z"
+      }
+    },
+    {
+      "node_id": "MDEwOlJlcG9zaXRvcnkxMjEyOTIy",
+      "category": "security-privacy",
+      "tags": [
+        "cli",
+        "networking",
+        "rest-api",
+        "scraping",
+        "security-scanner"
+      ],
+      "summary": "theHarvester gathers open-source intelligence about a domain or organization from search engines, certificate transparency logs, DNS datasets, code repositories, and threat-intelligence platforms. It normalizes hostnames, emails, IP addresses, URLs, and ASNs for early-stage reconnaissance, offering a CLI, a local REST API, and the HarvestView browser interface.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "90bc15669b79c1b17f395848afc4d819ea1e2ef6",
+        "repo_metadata_sha256": "6a915f6eebdad6005b171d443b3728c72a5d6d77a4852420edc51be722ccd9f0",
+        "fingerprint": "cbfdd2896e5d1d597c15c73672cea417c871f9776cb508643e6273f3849dbf0d"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-09-26T10:23:41Z"
       }
     },
     {
@@ -1599,6 +1677,32 @@
       }
     },
     {
+      "node_id": "R_kgDOGGH08g",
+      "category": "security-privacy",
+      "tags": [
+        "automation",
+        "cli",
+        "machine-learning",
+        "security-scanner",
+        "tui"
+      ],
+      "summary": "Aliens Eye is a Python OSINT username scanner that checks 840+ platforms asynchronously, blending a trained machine-learning model with structural heuristics rather than naive status-code checks. It extracts profiles, correlates accounts across sites, supports recursive expansion and proxy/Tor routing, and provides a terminal UI, resumable scans, and multi-format reports.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "ef57f7cda0063fa5e941697880b3a3df6d7dfecd",
+        "repo_metadata_sha256": "27d4dbc1b7b0095f276e7d5239ddd1f1f31f43a13a178a3b17183e9e3a22b7ad",
+        "fingerprint": "1a22503f0d809d55943c7d3ba0d6d35d67f257fc5eef480d3b23bb76cee09b49"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-09-26T10:23:41Z"
+      }
+    },
+    {
       "node_id": "R_kgDOGRBhiw",
       "category": "communication-collaboration",
       "tags": [
@@ -1812,6 +1916,31 @@
         "model_label": "informational-only",
         "prompt_version": "classify-v1",
         "generated_at": "2026-09-02T10:26:48Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOHStpNg",
+      "category": "security-privacy",
+      "tags": [
+        "automation",
+        "cli",
+        "machine-learning",
+        "security-scanner"
+      ],
+      "summary": "Blackbird is a Python OSINT tool that searches for accounts by username and email across more than 600 platforms, with AI-powered profiling. It draws on community projects like WhatsMyName to reduce false positives and provides smart filters, automated analysis, and polished PDF and CSV exports from a single command-line interface.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "74c6300bfd0562d30b92d9cc7c3fa766cfba9519",
+        "repo_metadata_sha256": "52b32e7c2ca546603e028dc1ef9a70604054287493e117f071340fb1da45fa8d",
+        "fingerprint": "093878423f859145f3452b12c35de2339b884cf4dfe560f5e9bd6933c8972aa8"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-09-26T10:23:41Z"
       }
     },
     {
