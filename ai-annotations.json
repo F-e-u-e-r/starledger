@@ -6144,6 +6144,32 @@
       }
     },
     {
+      "node_id": "R_kgDOORH-ow",
+      "category": "media-creative",
+      "tags": [
+        "ai-agents",
+        "automation",
+        "llm",
+        "tui",
+        "workflow"
+      ],
+      "summary": "ViMax is an agentic video creation framework that turns a concept, screenplay, or novel into a finished video by orchestrating narrative planning, storyboarding, character consistency, image generation, video generation, and final assembly. It provides Idea2Video, Script2Video, and Novel2Video workflows plus an interactive agent TUI and a browser Web UI.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "readme.md",
+        "readme_oid": "0605e734a4fa2a8b9a723b551c918db818c51c40",
+        "repo_metadata_sha256": "646bbadd8e5e534ca78fec198b45fc999a1438c52ecffb7d213710ac7fc4ec99",
+        "fingerprint": "16efa1f8794884ff3b08b152b796ad838fcf237e951a374fdece80a7fbbec208"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-09-26T11:23:24Z"
+      }
+    },
+    {
       "node_id": "R_kgDOORzPeg",
       "category": "education-reference",
       "tags": [
@@ -21459,6 +21485,31 @@
         "model_label": "informational-only",
         "prompt_version": "classify-v1",
         "generated_at": "2026-09-24T13:25:19Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOUjRpVQ",
+      "category": "ai-ml",
+      "tags": [
+        "benchmark",
+        "library",
+        "llm",
+        "machine-learning"
+      ],
+      "summary": "AnyJev turns any open large language model into a calibrated decision model that answers typed questions such as choices, yes/no, or scores with probabilities you can threshold, read from a single prefill without generating text or fine-tuning. It offers levels from zero-label to a closed-form head and serves through vLLM or transformers.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "131365aafef79dda21d40c3bc6f2923aa52311fa",
+        "repo_metadata_sha256": "d503c3c2738d9a089fa5e99c0fc714188ece607d91c3a49d406ac12b2fc3014f",
+        "fingerprint": "6c0955a70c978cd3828cc4168e494c9b62e4059ef572689d7813cccbb2e2a4b5"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-09-26T11:23:24Z"
       }
     }
   ]
