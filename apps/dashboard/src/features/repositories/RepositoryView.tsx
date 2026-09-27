@@ -229,9 +229,64 @@ export function RepositoryView({
     <main ref={mainRef} className={`dashboard density-${state.density}`}>
       <header className="dashboard-head">
         <div className="brand-row">
-          <div>
-            <h1>StarLedger</h1>
-            <p>Search, sort, and filter your GitHub stars.</p>
+          <div className="brand-identity">
+            <svg
+              className="brand-mark"
+              viewBox="0 0 24 24"
+              width="30"
+              height="30"
+              aria-hidden="true"
+              focusable="false"
+            >
+              {/* Concept B: a ledger page whose first ruled entry is a star. Decorative
+                  (aria-hidden) — the adjacent <h1> supplies the accessible name (M3-ID-3);
+                  currentColor lets `.brand-mark { color: var(--accent) }` drive the accent. */}
+              <rect
+                x="4"
+                y="2.75"
+                width="16"
+                height="18.5"
+                rx="2.5"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="1.7"
+              />
+              <path
+                d="M8.7 5.8 L9.35 7.51 L11.17 7.6 L9.75 8.74 L10.23 10.5 L8.7 9.5 L7.17 10.5 L7.65 8.74 L6.23 7.6 L8.05 7.51 Z"
+                fill="currentColor"
+              />
+              <line
+                x1="12.2"
+                y1="8.4"
+                x2="16.4"
+                y2="8.4"
+                stroke="currentColor"
+                strokeWidth="1.6"
+                strokeLinecap="round"
+              />
+              <line
+                x1="7.6"
+                y1="13"
+                x2="16.4"
+                y2="13"
+                stroke="currentColor"
+                strokeWidth="1.6"
+                strokeLinecap="round"
+              />
+              <line
+                x1="7.6"
+                y1="17.2"
+                x2="16.4"
+                y2="17.2"
+                stroke="currentColor"
+                strokeWidth="1.6"
+                strokeLinecap="round"
+              />
+            </svg>
+            <div>
+              <h1>StarLedger</h1>
+              <p>Search, sort, and filter your GitHub stars.</p>
+            </div>
           </div>
           <p className="dataset-status">
             {repos.length} starred repositories · {formatLastSynced(datasetGeneratedAt, sessionNow)}

@@ -98,6 +98,21 @@ a {
   color: var(--muted);
 }
 
+.brand-identity {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+/* Concept B mark: `currentColor` + this rule is the ONLY accent binding (M3-ID-2);
+   the wordmark is left to inherit body --fg. */
+.brand-mark {
+  flex: 0 0 auto;
+  width: 1.9rem;
+  height: 1.9rem;
+  color: var(--accent);
+}
+
 .dataset-status {
   flex: 0 0 auto;
   text-align: right;

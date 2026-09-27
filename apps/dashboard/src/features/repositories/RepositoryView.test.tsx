@@ -1,4 +1,6 @@
 // @vitest-environment jsdom
+import { readFileSync } from 'node:fs';
+import { resolve } from 'node:path';
 import { cleanup, fireEvent, render, screen, within } from '@testing-library/react';
 import type { ComponentProps } from 'react';
 import { afterEach, beforeEach, describe, expect, it } from 'vitest';
@@ -60,6 +62,141 @@ describe('RepositoryView', () => {
     expect(screen.getByText('2 of 2 repositories')).toBeTruthy();
     const link = screen.getByRole('link', { name: 'acme/ts-tool' });
     expect(link.getAttribute('href')).toBe('https://github.com/acme/ts-tool');
+  });
+
+  it('M3-ID-1: the header renders exactly one brand mark and one StarLedger wordmark', () => {
+    const { container } = renderView();
+    expect(container.querySelectorAll('svg.brand-mark')).toHaveLength(1);
+    expect(screen.getAllByRole('heading', { name: 'StarLedger' })).toHaveLength(1);
+  });
+
+  it('M3-ID-2: the inline mark is EXACTLY the canonical Concept-B grammar (svg → rect + path + 3×line, currentColor/none only) — no extra element or paint channel (F-C)', () => {
+    const { container } = renderView();
+    const mark = container.querySelector('svg.brand-mark');
+    expect(mark).toBeTruthy();
+    // The mark is a KNOWN, fixed shape, so pin its EXACT structural vocabulary rather
+    // than trying to validate arbitrary SVG. Any extra element (g/style/filter/image/
+    // foreignObject/…) or paint channel is a deviation the owner amends the contract
+    // for. The RENDERED accent (computed fill/stroke == --accent, light+dark) is the
+    // browser gate (§14.8) — jsdom cannot compute the cascade.
+    const children = Array.from(mark!.querySelectorAll('*'));
+    const tags = children.map((el) => el.tagName.toLowerCase());
+    // Exact multiset: one rect, one path, three lines — and NOTHING else.
+    expect(tags.filter((t) => t === 'rect')).toHaveLength(1);
+    expect(tags.filter((t) => t === 'path')).toHaveLength(1);
+    expect(tags.filter((t) => t === 'line')).toHaveLength(3);
+    expect(children).toHaveLength(5);
+    // Parentage: the shapes are DIRECT CHILDREN of the mark <svg>, each a LEAF — path or
+    // lines reparented inside the <rect> (a non-container) keep the descendant count but
+    // are not painted (iii).
+    expect([...mark!.children].map((el) => el.tagName.toLowerCase())).toEqual([
+      'rect',
+      'path',
+      'line',
+      'line',
+      'line',
+    ]);
+    children.forEach((el) => expect(el.children.length).toBe(0));
+    // No paint channel other than currentColor/none via fill/stroke — on the ROOT
+    // svg or ANY child: no `style`, no `color` presentation attribute, no literal hue.
+    const PAINT_OK = new Set(['currentColor', 'none']);
+    [mark!, ...children].forEach((el) => {
+      expect(el.getAttribute('style')).toBeNull();
+      expect(el.getAttribute('color')).toBeNull();
+      const fill = el.getAttribute('fill');
+      const stroke = el.getAttribute('stroke');
+      if (fill !== null) expect(PAINT_OK.has(fill)).toBe(true);
+      if (stroke !== null) expect(PAINT_OK.has(stroke)).toBe(true);
+    });
+    // The closed shapes declare their fill explicitly (never the black default), and
+    // the star uses currentColor so the accent mechanism is actually in play.
+    expect(mark!.querySelector('rect')?.getAttribute('fill')).toBe('none');
+    expect(mark!.querySelector('path')?.getAttribute('fill')).toBe('currentColor');
+    // Canonical Concept-B GEOMETRY (parsed attrs — quote style / ordering irrelevant):
+    // a `path d`, line endpoint, or stroke-width drift (a different or blanked shape)
+    // turns this red. This is the identity geometry, not a source-spelling pin.
+    expect(mark!.getAttribute('viewBox')).toBe('0 0 24 24');
+    const rectEl = mark!.querySelector('rect')!;
+    expect([
+      rectEl.getAttribute('x'),
+      rectEl.getAttribute('y'),
+      rectEl.getAttribute('width'),
+      rectEl.getAttribute('height'),
+      rectEl.getAttribute('rx'),
+      rectEl.getAttribute('stroke-width'),
+    ]).toEqual(['4', '2.75', '16', '18.5', '2.5', '1.7']);
+    // Canonical rect has NO `ry` (SVG defaults ry→rx); a `ry` attribute override
+    // changes the corner geometry (iii). (A CSS `ry` override is the browser gate's
+    // computed-ry check.)
+    expect(rectEl.getAttribute('ry')).toBeNull();
+    expect(mark!.querySelector('path')?.getAttribute('d')).toBe(
+      'M8.7 5.8 L9.35 7.51 L11.17 7.6 L9.75 8.74 L10.23 10.5 L8.7 9.5 L7.17 10.5 L7.65 8.74 L6.23 7.6 L8.05 7.51 Z',
+    );
+    // `stroke-linecap: round` is part of the canonical Concept-B line descriptor: it is
+    // authored identically here and in the favicon (F-D pins it there) and materially
+    // defines the rounded-line appearance, so the two shipped representations must agree
+    // on it (owner ruling R14→R15). This SOURCE pin catches round→butt, a dropped
+    // attribute, or an endpoint drift; the CSS cascade channel (`.brand-mark line
+    // { stroke-linecap: butt }` — a presentation property jsdom cannot resolve) is the
+    // browser used-style gate's job (computed strokeLinecap == round, §14.22). It does NOT
+    // widen M3 to arbitrary stroke styling — dasharray/joins/filters/masks/transforms stay
+    // OUT (§14.12).
+    expect(
+      [...mark!.querySelectorAll('line')].map((l) => [
+        l.getAttribute('x1'),
+        l.getAttribute('y1'),
+        l.getAttribute('x2'),
+        l.getAttribute('y2'),
+        l.getAttribute('stroke-width'),
+        l.getAttribute('stroke-linecap'),
+      ]),
+    ).toEqual([
+      ['12.2', '8.4', '16.4', '8.4', '1.6', 'round'],
+      ['7.6', '13', '16.4', '13', '1.6', 'round'],
+      ['7.6', '17.2', '16.4', '17.2', '1.6', 'round'],
+    ]);
+    // Belt: no literal colour token in the mark's full markup (root attrs included).
+    expect(mark!.outerHTML).not.toMatch(/#[0-9a-fA-F]{3,8}\b/);
+    expect(mark!.outerHTML).not.toMatch(/\b(?:rgb|hsl)a?\(/i);
+    // Decorative: no title/desc leaks a name — accessible-name uniqueness is the
+    // browser accessibility-tree gate (§14.8); the wordmark carries no inline colour.
+    expect(mark!.querySelector('title, desc')).toBeNull();
+    expect(screen.getByRole('heading', { name: 'StarLedger' }).getAttribute('style')).toBeNull();
+  });
+
+  it('M3-ID-2 (CSS): `.brand-mark` declares `color: var(--accent)` — cheap source regression; the WINNING rendered accent is the browser gate (F-E)', () => {
+    // Deliberately a LIGHT structural check, NOT a cascade proof: jsdom cannot compute
+    // the cascade and a regex is not a CSS parser (a later `color:`, `!important`, a
+    // 2nd rule, or a different selector all evade source matching). The load-bearing
+    // gate is the browser computed-paint smoke — computed(.brand-mark).color == --accent
+    // and every painted shape's computed fill/stroke == accent, light + dark (§14.8).
+    const css = readFileSync(resolve(import.meta.dirname, '../../styles.css'), 'utf8');
+    expect(css).toMatch(/\.brand-mark\s*\{[^}]*\bcolor:\s*var\(--accent\)/);
+  });
+
+  it('M3-ID-3: the mark is decorative and the wordmark is the ONLY accessible "StarLedger" — no duplicate accessible name leaks into the header (F-A)', () => {
+    const { container } = renderView();
+    const header = container.querySelector<HTMLElement>('header');
+    expect(header).toBeTruthy();
+    const mark = container.querySelector('svg.brand-mark')!;
+    // The mark is purely decorative — it contributes no accessible name.
+    expect(mark.getAttribute('aria-hidden')).toBe('true');
+    expect(mark.getAttribute('role')).toBeNull();
+    expect(mark.getAttribute('aria-label')).toBeNull();
+    expect(mark.querySelector('title')).toBeNull();
+    expect(screen.queryByRole('img')).toBeNull();
+    // Exactly one heading AND exactly one "StarLedger" text node in the header — a
+    // role-less `<span class="visually-hidden">StarLedger</span>` beside the h1
+    // reads as a second accessible name to AT and must turn this red (the
+    // `getByRole('heading')`-only oracle missed it).
+    expect(within(header!).getAllByRole('heading', { name: 'StarLedger' })).toHaveLength(1);
+    expect(within(header!).getAllByText('StarLedger')).toHaveLength(1);
+    // No second accessible name supplied by attribute or image alt, either.
+    expect(
+      header!.querySelectorAll(
+        '[aria-label="StarLedger"], [title="StarLedger"], img[alt="StarLedger"]',
+      ),
+    ).toHaveLength(0);
   });
 
   it('SEARCH: narrows results and reflects the query in the URL (replaceState)', () => {
