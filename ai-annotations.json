@@ -9375,6 +9375,32 @@
       }
     },
     {
+      "node_id": "R_kgDOQWgufQ",
+      "category": "developer-tools",
+      "tags": [
+        "ai-agents",
+        "cli",
+        "frontend",
+        "linter",
+        "plugin"
+      ],
+      "summary": "Impeccable is a design toolkit for AI coding agents, installed as a skill with 24 commands for tasks like auditing, polishing, and critiquing frontend design. It also ships a standalone CLI and browser extension that run 61 deterministic detector rules to catch AI-generated design anti-patterns without an LLM or API key.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "2c52ab4374c914513fc1e3ad4857f63e8c56e468",
+        "repo_metadata_sha256": "893913058591b634a08b33edd9b7d19df13d2a6bc81a1b92fd43a90003897298",
+        "fingerprint": "1eb0b92b979d232e6ef49b4d2e621a2ee91e4c3eb7bb1d8e3dd1d6c9a9f26496"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-09-27T11:23:43Z"
+      }
+    },
+    {
       "node_id": "R_kgDOQZtKLw",
       "category": "developer-tools",
       "tags": [
@@ -13351,6 +13377,32 @@
         "model_label": "informational-only",
         "prompt_version": "classify-v1",
         "generated_at": "2026-07-19T21:22:04Z"
+      }
+    },
+    {
+      "node_id": "R_kgDORY4xBA",
+      "category": "ai-ml",
+      "tags": [
+        "library",
+        "llm",
+        "machine-learning",
+        "real-time",
+        "sdk"
+      ],
+      "summary": "Python bindings for Apple's Foundation Models framework that give Python code access to the on-device foundation model behind Apple Intelligence on macOS. It supports on-device inference, real-time streaming text generation, and guided generation with structured, type-safe output schemas, plus processing transcripts exported from Swift apps for quality analysis.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "2f7c6f65d1d8b944d711de9f3eaa01df50076ecb",
+        "repo_metadata_sha256": "56cb26833edcc4f2e7be16cea17e5084d38c33d9a333b573a04884d1ff13ff0a",
+        "fingerprint": "ab24b14c98fdd5b408ced4d0e28f1355cdaf0a6075011900818a014fc8b0dec7"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-09-27T11:23:43Z"
       }
     },
     {
