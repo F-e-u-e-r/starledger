@@ -1,17 +1,18 @@
 import { useCallback, useEffect, useId, useMemo, useRef, useState } from 'react';
 import type { CanonicalRepo } from '@starred/schema';
-import { NoResults } from '../../components/states';
+import { NoClassifiedResults, NoResults } from '../../components/states';
 import type { AnnotationStatus, LoadedAnnotations } from '../../data/load-annotations';
 import type {
   LoadedSkillsClassification,
   SkillsClassificationStatus,
 } from '../../data/load-skills-classification';
-import type { Density } from '../../state/dashboard-state';
+import type { Density, GroupBy } from '../../state/dashboard-state';
 import type { DashboardStateControls } from '../../state/use-dashboard-state';
 import { activeFilterCount, FilterChips } from '../filters/FilterChips';
 import { FilterControls } from '../filters/FilterControls';
 import { FilterDrawer } from '../filters/FilterDrawer';
 import { defaultDirection, SORT_FIELDS, type SortField } from '../sorting/sorting';
+import { groupByPrimaryCategory } from './group';
 import { RepositoryCard } from './RepositoryCard';
 import {
   dashboardToView,
@@ -60,6 +61,33 @@ function resultSummary(count: number, total: number, query: string, filtered: bo
   }
   if (filtered) return `${count} of ${total} · filtered`;
   return `${count} of ${total} repositories`;
+}
+
+/**
+ * The grouped-mode result line (P7 §15.7, owner-pinned composition): the
+ * classified count and group count, then the query / filtered qualifiers, then
+ * the U1 disclosure of matching repos omitted for lack of a classification.
+ * `groupedCount` is never presented as the full result count.
+ */
+function groupedResultSummary(
+  groupedCount: number,
+  groupCount: number,
+  excludedCount: number,
+  query: string,
+  filtered: boolean,
+): string {
+  const q = query.trim();
+  let text =
+    `${groupedCount} classified ${groupedCount === 1 ? 'repository' : 'repositories'}` +
+    ` in ${groupCount} ${groupCount === 1 ? 'category' : 'categories'}`;
+  if (q) text += ` for "${q}"`;
+  if (filtered) text += ' · filtered';
+  if (excludedCount > 0) {
+    text +=
+      ` · ${excludedCount} matching ${excludedCount === 1 ? 'repository' : 'repositories'}` +
+      ` without Skills classification ${excludedCount === 1 ? 'is' : 'are'} not shown`;
+  }
+  return text;
 }
 
 /**
@@ -170,11 +198,33 @@ export function RepositoryView({
     [prepared, state, aiReady, skillsReady],
   );
 
+  // Grouped presentation (P7 §15.3–15.5, M4.1): `state.group` is the REQUESTED
+  // value — retained in the URL and shown by the control — and is EFFECTIVE
+  // only under the same coherent-ready conjunction as the join map (§6.5
+  // fail-soft; never reconciled, it becomes valid when the layer loads). It is
+  // presentation-only: `results` above is the SAME effective set the flat list
+  // shows (`group` never enters `dashboardToView`), and grouping is a pure
+  // projection of it, computed only in grouped mode (`repo.skills` is non-null
+  // only under a ready join, so the projection is well-defined exactly then).
+  const effectiveGroup: GroupBy = state.group === 'skill' && skillsReady ? 'skill' : 'none';
+  const grouped = useMemo(
+    () =>
+      effectiveGroup === 'skill' && skillCategories
+        ? groupByPrimaryCategory(results, skillCategories)
+        : null,
+    [results, skillCategories, effectiveGroup],
+  );
+
   // Pagination (§6.2): `state.page` is the REQUESTED page; the EFFECTIVE page is
   // clamped against the current result count. When they differ (e.g. a stale
   // bookmark `?page=999`), reconcile by rewriting the URL with the effective page
   // — `replace`, so no history entry is added — converging in a single step.
-  const lastPage = Math.max(1, Math.ceil(results.length / PAGE_SIZE));
+  // Grouped mode renders the complete classified set on ONE page (§15.5, D1):
+  // no slicing and no pager, so a requested `page > 1` converges to 1 by the
+  // same rewrite. The >400 threshold is an owner re-entry trigger, never a
+  // runtime mode switch (D10).
+  const lastPage =
+    effectiveGroup === 'skill' ? 1 : Math.max(1, Math.ceil(results.length / PAGE_SIZE));
   const effectivePage = Math.min(Math.max(1, state.page), lastPage);
   useEffect(() => {
     if (state.page !== effectivePage) update({ page: effectivePage }, 'replace');
@@ -224,6 +274,17 @@ export function RepositoryView({
     : (state.scope !== 'all' ? 1 : 0) + state.skillCategories.length;
   const skillsFilterSuppressed = suppressedSkillsFilterCount > 0;
   const effectiveFilterCount = filterCount - suppressedAiFilterCount - suppressedSkillsFilterCount;
+  // Requested grouped mode while the layer is not ready (§15.6): the list stays
+  // flat and a separate notice explains why — independent of the skills FILTER
+  // notice above, so both can coexist. `group` is not a filter: it never enters
+  // `activeFilterCount`, the `Filters N` badge or "· filtered" (M41-CNT-1).
+  const groupRequestedButInert = state.group === 'skill' && effectiveGroup === 'none';
+  const clearFilters = () => {
+    reset();
+    focusResults();
+  };
+  // E-G offers "Clear filters" only while there is something to clear (§15.7).
+  const canClearFilters = effectiveFilterCount > 0 || state.query.trim() !== '';
 
   return (
     <main ref={mainRef} className={`dashboard density-${state.density}`}>
@@ -365,6 +426,19 @@ export function RepositoryView({
             <option value="comfortable">Comfortable</option>
           </select>
         </label>
+        {/* Always reflects the REQUESTED group and is never disabled: while
+            the skills layer is not ready the choice stays in the link and
+            applies once it loads (§15.6/§15.8). */}
+        <label className="group">
+          <span>Group</span>
+          <select
+            value={state.group}
+            onChange={(e) => update({ group: e.target.value as GroupBy })}
+          >
+            <option value="none">None</option>
+            <option value="skill">Skill category</option>
+          </select>
+        </label>
       </div>
 
       <div className="layout">
@@ -396,9 +470,34 @@ export function RepositoryView({
             skillCategoryLabels={skillCategoryLabels}
           />
 
+          {/* The grouped composition is pinned for "grouped, ready, ≥1 group"
+              (§15.7); the zero-result and grouped-empty states keep the flat
+              summary of the actual result set — their explanation lives in
+              `NoResults` / E-G, so nothing is said twice. */}
           <p className="result-count" role="status">
-            {resultSummary(results.length, repos.length, state.query, effectiveFilterCount > 0)}
+            {grouped && grouped.groups.length > 0
+              ? groupedResultSummary(
+                  grouped.groupedCount,
+                  grouped.groups.length,
+                  grouped.excludedCount,
+                  state.query,
+                  effectiveFilterCount > 0,
+                )
+              : resultSummary(results.length, repos.length, state.query, effectiveFilterCount > 0)}
           </p>
+          {/* U1 recovery (§15.7): the immediate sibling AFTER the summary and
+              OUTSIDE its live region, so the announced text stays the summary
+              alone. Only with ≥1 group — the grouped-empty state carries its
+              own button. */}
+          {grouped && grouped.groups.length > 0 && grouped.excludedCount > 0 ? (
+            <button
+              type="button"
+              className="show-as-list"
+              onClick={() => update({ group: 'none' })}
+            >
+              Show as list
+            </button>
+          ) : null}
 
           {aiFilterSuppressed ? (
             <p className="degraded-notice" role="status">
@@ -416,13 +515,56 @@ export function RepositoryView({
             </p>
           ) : null}
 
+          {groupRequestedButInert ? (
+            <p className="degraded-notice" role="status">
+              {skillsStatus === 'loading'
+                ? 'Skills classification is still loading — grouped view will apply once it’s ready. Showing the list view meanwhile.'
+                : 'Skills classification is unavailable, so grouped view isn’t applied and results are shown as a list. Group stays in your link and applies once the layer loads.'}
+            </p>
+          ) : null}
+
           {results.length === 0 ? (
-            <NoResults
-              onClearFilters={() => {
-                reset();
-                focusResults();
-              }}
-            />
+            // Unchanged regardless of `group` (§15.7): nothing matched at all.
+            <NoResults onClearFilters={clearFilters} />
+          ) : grouped ? (
+            grouped.groups.length === 0 ? (
+              // E-G: matches exist, none classified — nothing to group (§15.7).
+              <NoClassifiedResults
+                excludedCount={grouped.excludedCount}
+                onShowAsList={() => update({ group: 'none' })}
+                onClearFilters={canClearFilters ? clearFilters : undefined}
+              />
+            ) : (
+              // Grouped DOM (§15.8): h2 results → h3 group → h4 card. Every
+              // group renders its WHOLE membership (single page, §15.5); `{id}`
+              // is the taxonomy slug — unique per artifact, a valid DOM id.
+              <div className="result-groups">
+                {grouped.groups.map((group) => (
+                  <section
+                    key={group.id}
+                    className="result-group"
+                    aria-labelledby={`group-${group.id}`}
+                  >
+                    <h3 id={`group-${group.id}`} className="result-group-heading">
+                      {group.label}{' '}
+                      <span className="result-group-count">· {group.repos.length}</span>
+                    </h3>
+                    <ul className="card-list">
+                      {group.repos.map((repo) => (
+                        <RepositoryCard
+                          key={repo.node_id}
+                          repo={repo}
+                          now={sessionNow}
+                          selectedTopics={state.topics}
+                          skillCategoryLabels={skillCategoryLabels}
+                          headingLevel={4}
+                        />
+                      ))}
+                    </ul>
+                  </section>
+                ))}
+              </div>
+            )
           ) : (
             <>
               <ul className="card-list">

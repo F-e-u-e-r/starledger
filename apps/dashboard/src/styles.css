@@ -201,7 +201,8 @@ a {
 }
 
 .toolbar .sort,
-.toolbar .density {
+.toolbar .density,
+.toolbar .group {
   display: flex;
   align-items: center;
   gap: 0.35rem;
@@ -209,6 +210,7 @@ a {
 
 .toolbar button,
 .no-results button,
+.show-as-list,
 .chip,
 .chip-clear,
 .facet-more,
@@ -380,6 +382,31 @@ a {
 .result-count {
   color: var(--muted);
   margin: 0.5rem 0;
+}
+
+/* Grouped presentation (P7 §15.8, M4.1): the U1 recovery button sits right
+   after the summary line; group sections stack with a taxonomy heading and a
+   whole-group count. Headings are NOT sticky and there is no jump index (D9). */
+.show-as-list {
+  margin: 0 0 0.6rem;
+}
+
+.result-groups {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.result-group-heading {
+  font-size: 1rem;
+  margin: 0 0 0.6rem;
+  padding-bottom: 0.3rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.result-group-count {
+  color: var(--muted);
+  font-weight: 400;
 }
 
 /* Degraded-state notice: an optional layer is unavailable, so a dependent filter
@@ -635,6 +662,11 @@ a {
   margin: 0 0 0.5rem;
 }
 
+/* The grouped-empty state (E-G) renders two actions side by side. */
+.no-results button + button {
+  margin-left: 0.5rem;
+}
+
 .drawer-backdrop {
   position: fixed;
   inset: 0;
@@ -725,12 +757,14 @@ a {
   }
 
   .toolbar .sort,
-  .toolbar .density {
+  .toolbar .density,
+  .toolbar .group {
     width: 100%;
   }
 
   .toolbar .sort select,
   .toolbar .density select,
+  .toolbar .group select,
   .toolbar button {
     width: 100%;
   }
