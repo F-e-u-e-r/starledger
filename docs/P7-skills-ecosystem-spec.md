@@ -1826,3 +1826,127 @@ No empty output, timeout or provider error on any leg; no `FIX:` line in any ver
 **Owner merge ruling → merged (2026-09-28 05:14:19 CST).** Fail-closed pre-merge re-check held (PR `OPEN`; `headRefOid` == remote branch == `5507b65`; 4 / 4 check-runs still success on the exact head; `MERGEABLE` / `CLEAN`; `origin/main` still `d1619d0` ⇒ drift 0). `gh pr merge 299 --merge --match-head-commit 5507b65…` (rc 0) — a **normal** merge with the head pinned server-side; `--admin` **unused** (no policy-only failure occurred). Merge commit **`8709be6bd56b24d466d196f27cafec72af7214c9`** ("Merge pull request #299 from F-e-u-e-r/feat/m4.1-group-by-category"), parents `d1619d0` + `5507b65`, tree `dbf59e58…` == the `5507b65` tree; `5507b65 ∈ origin/main`. Post-merge composition verified on `origin/main`: `d1619d0..8709be6` = exactly the 12 M4.1 paths, patch byte-identical to `d1619d0..5507b65`; the 11 production / test files `shasum -c` 11 / 11 OK against the reviewed manifest; the 12-line manifest byte-identical to the committed post-delta manifest ⇒ fingerprint on `main` = `9ae011ac…8068d`. `main` CI on `8709be6`: CI run 36350969118 `verify` success (05:14–05:16 CST); Pages run 36350969155 triggered by its path filter (`apps/dashboard/**`) — `guard` / `build` / `deploy` success, github-pages deployment 6697993177 at `8709be6` success; Template smoke is `pull_request`-only and correctly did not run. Head branch auto-deleted by the repo's `delete_branch_on_merge` (PR timeline `head_ref_deleted` 21:14:20Z) — recorded, not recreated.
 
 **Owner ruling (2026-09-28): M4.1 CLOSED.** Post-merge housekeeping touched no tracked content (local checkout fast-forwarded `d1619d0..8709be6`; `feat/m4.1-group-by-category` deleted with `git branch -d` only after ancestor proof; `skills-staging/` fingerprint `69830a75…9338696` unchanged). **Freeze anchors for the record:** `M41_REVIEWED_HEAD = 5507b65`, `M41_CLOSURE_SHA = 8709be6` (merge commit, PR #299), reviewed fingerprint `01cf9a45…6532`, committed fingerprint `9ae011ac…8068d`, pre-commit packet `107808e2…`, final-gate packet `b5cd6c4a…`. Still **independent open debt, NOT closed by M4.1:** F4, F15, R8-B, R12-5 and the three accepted staging residuals (`skills-staging/` untouched) — that inventory is M4.2's subject (§3, §15.1) and is neither amended nor pre-adjudicated by this closure. **M2 CLOSED (`d6b1921`) · M3 CLOSED (`0bb7db7`) · M4.1 CLOSED (`8709be6`) → NEXT: M4.2 bounded debt closure.**
+
+## 16. M4.2 — Bounded debt closure: adjudication, F4 implementation & acceptance boundary (ADJUDICATION FROZEN 2026-09-28 · F4 IMPLEMENTED + LOCAL GATES + TWO FALSIFICATION ARMS 2026-09-28 · PRE-COMMIT REVIEW CLOSED 2026-09-28 at §16.7 — 3/3 literal PROCEED, zero surviving · AWAITING OWNER COMMIT GATE)
+
+Kickoff 2026-09-28 (owner direction, §3: M4.1 → M4.2 → M4.3 as separate milestones with separate review identities). M4.2 is the bounded-debt-closure milestone for the inventory M4.1 explicitly carried forward (§15.0, §15.17): F4, F15, R8-B, R12-5 and the three accepted staging residuals. Round 1 was orientation-only (owner boundary: "executable adjudication, no debt fix"; recorded outside the repo in `m42-orientation/`, every probe temporary and deleted from the tree). This §16 records the owner's round-1 ruling (frozen in §16.1) and the single bounded implementation slot it authorized. Written on `feat/m4.2-bounded-debt`.
+
+### 16.0 Freeze anchors (immutable — do not re-litigate)
+
+- `M4_1_CLOSURE_SHA = 8709be6` (PR #299, §15.17) · `M4_1_DOC_CLOSURE_SHA = 497fcbb` (PR #300, M4.1 terminal doc closure).
+- **`M4_2_BASE_SHA = 497fcbb1c1b86ecfb99accaf4f3d09656cb00a90`** — fresh `origin/main` at kickoff (`main == origin/main == HEAD`; `git fetch` confirmed `origin/main` did not move; drift since the M4.1 doc closure = 0). `feat/m4.2-bounded-debt` cut from `origin/main@497fcbb`, NOT from any milestone branch.
+- **Baseline gate:** full `vitest run` on `497fcbb` = **1303/1303** (116 files), terminal marker observed; dashboard-scoped = 318 (25 files).
+- **`skills-staging/`** (14 untracked files, fp `69830a75…9338696`) stays byte-for-byte untouched. M2 (`d6b1921`), M3 (`0bb7db7`), M4.1 (`8709be6`) are CLOSED and not reopened.
+- **Programme guardrails (owner):** preserve M0 fail-soft (§2.2); preserve the M2 contracts (§4, §4.11, §4.12); one implementation slot only (F4) — do not fill a second slot merely because the programme allowed up to two; no unrelated deferred debt in this PR; tests/gates count only with terminal markers; reviewer findings reproduced before action, convergence is evidence not voting; commit / push / PR / merge remain owner-gated.
+
+### 16.1 Owner adjudication — round-1 ruling (FROZEN; the immutable M4.2 contract)
+
+Seven dispositions, owner-ruled 2026-09-28 on the orientation record (`m42-orientation/ORIENTATION-R1.md`; executable evidence = 19 temporary probes [8 + 3 + 8], 210/210 AI-pair history sweep through `verifyAiArtifacts`, 90/90 residual pins). Priors were NOT carried forward as conclusions; each item was re-answered by executable evidence.
+
+1. **F4 — AI readiness-coherence parity (§4.11) = CLOSE NOW / IMPLEMENT (slot 1).** Fix the whole coherent-readiness defect family as ONE coherent fix (not two debt items): (a) in `RepositoryView`, AI is effective-ready only when `annotationStatus === 'ready'` AND annotations data is non-null; (b) `dashboardToView`'s omitted `aiReady` default flips from fail-open `true` to fail-closed `false`, symmetric with `skillsReady`. Requested AI URL/filter state is preserved under degraded conditions; ONLY effective filtering is neutralized. Real App coherent-ready behavior is unchanged. Orientation P1/P2/P3 evidence becomes narrow permanent regression coverage (coherent ready · ready-without-data · omitted-readiness/data-only · real App wiring + M0 fail-soft preservation). **Do not broaden AI semantics.**
+2. **F15 — classification mount-fetch sequencing (§4.11/§4.12) = CLOSED BY RATIFICATION, record-only.** Behavior still reproduces (NOT labelled obsolete). Executable evidence (F15-P1–P3) establishes no correctness consequence and confirms the previously owner-accepted mount-anchored lifecycle. Do not change fetch sequencing; add no permanent lifecycle pins. Consumes no implementation slot.
+3. **R8-B — discovery `node_id` uniqueness / `source_count` parity (§4.10) = KEEP DEFERRED WITH TRIGGER.** No implementation in M4.2. Reopen and close it before either (a) the first discovery artifact pair is merged to `main`, or (b) any MCP/API surface exposes discovery artifacts. Do NOT freeze a normative `source_count` formula now.
+4. **R12-5 — AI canonical-form parity (§4.10 Ruling 2) = KEEP DEFERRED WITH TRIGGER.** Current guarantees remain exact-byte integrity + pair consistency, with canonical serialized form enforced through the current publication verification path rather than browser runtime. Reopen if that publication path is bypassed or a consumer requires canonical serialized form.
+   5–7. **Three accepted residuals (§4.10 Ruling-1 last-write-wins pair concurrency · §4.10 R15 crash-between-renames torn pair · §4.12 S2 pair-local stuck lock) = KEEP, unchanged.** No new executable evidence invalidated their dispositions; not reopened.
+
+Net ledger after M4.2: F4 CLOSED (implemented) · F15 CLOSED (ratified, no code) · R8-B + R12-5 deferred-with-trigger · 3 residuals accepted. **Still independent open debt after M4.2:** R8-B, R12-5 and the three residuals — a smaller, more accurate ledger (4 deferred debts → 2), not a zero-debt one.
+
+### 16.2 F4 scope & implementation (the ONLY slot)
+
+Production delta = **two lines, one coherent fix** (`apps/dashboard/src/features/repositories/`):
+
+- `RepositoryView.tsx`: `const aiReady = annotationStatus === 'ready' && annotations != null;` (was `annotationStatus ? annotationStatus === 'ready' : annotations != null`) — now identical in shape to the skills gate (`skillsStatus === 'ready' && skillsClassification != null`). Closes both fail-open mirrors: ready + null (F4-P1, the silent match-nothing zeroing) and omitted-status + data (F4-P2, the former M0 data-presence fallback).
+- `select.ts`: `dashboardToView(s, aiReady = false, skillsReady = false)` (was `aiReady = true`) — fail-closed default, symmetric with `skillsReady`.
+
+**Scope boundary (owner "do not broaden AI semantics").** The AI data JOIN (`annotationsByNodeId = annotations?.byNodeId`, feeding badges / the enriched count / facet options) is deliberately NOT gated by `aiReady` — it stays driven by data presence, exactly as before. In production the two are equivalent (App sets `annotations` non-null iff status `ready`); they diverge only in the App-unreachable incoherent shapes the fix now neutralizes AT THE FILTER, per the ruling ("only effective filtering is neutralized"). The sole production caller (`RepositoryView`) passes `aiReady` explicitly, so the default flip changes NO production path.
+
+**Comment coherence (traces to the fix, not creep).** The now-false narratives the change created were corrected in place: `RepositoryView.tsx` "deliberately STRICTER than the AI layer's data-presence fallback" → "symmetric … F4 closed the AI layer's former M0 fallback", and its `annotationStatus` prop JSDoc "Defaults from `annotations`" → "Activation requires `'ready'` AND data … omitted ⇒ not ready" (this last one was missed in the initial sweep and caught by the pre-commit review — the 3/3-converged round-1 finding, §16.7); `select.ts` JSDoc "Defaults to `true`" → "`false` (fail-closed) since F4", and skills' "Unlike `aiReady`" → "Like `aiReady` (since F4)".
+
+### 16.3 Narrow permanent regression coverage (P1/P2/P3 → pins)
+
+New file `apps/dashboard/src/features/ai-readiness-coherence.test.tsx` (5 pins) + 1 pin in `select.test.ts` — the four owner-named cases plus the default:
+
+- **M42-F4-COHERENT** — ready + data ⇒ the requested AI filter activates and is counted ("1 of 2 · filtered", "Filters 1", no notice).
+- **M42-F4-READY-NO-DATA** (F4-P1) — ready + null ⇒ NOT ready: results never zeroed ("2 of 2 repositories"), filter not counted, degraded notice shown, `?category=security` retained in the URL.
+- **M42-F4-DATA-ONLY** (F4-P2) — omitted status + data ⇒ NOT ready: data presence alone never activates; base set preserved, URL retained.
+- **M42-F4-APP-NULL / M42-F4-APP-DATA** (F4-P3) — real App wiring: `annotationsLoader → null` ⇒ App sets (unavailable, null), base browser intact + notice, never zeroed; `→ data` ⇒ (ready, data), filter active, notice cleared.
+- **M42-F4-DEFAULT** (`select.test.ts`) — `dashboardToView(state)` with `aiReady` omitted is fail-closed (categories/aiTags `[]`); symmetric with skills M24-STS-3.
+
+**Test churn** (existing tests written to the OLD fail-open contract, moved to EXPLICIT readiness — intent-preserving, authorized by the ruling as a contract change): `RepositoryView.test.tsx` R3-ready + INT-2 (add explicit `annotationStatus: 'ready'` alongside the annotations App would set together); `select.test.ts` M0-FS-1 (explicit `dashboardToView(state, true)` for the ready arm). No other test relied on the fallback — verified by enumerating every annotations render site; UI-7's enriched-count path is data-driven, ungated, and stays green unchanged.
+
+### 16.4 Two falsification arms (designated-oracle mutation rule; predictions written BEFORE execution)
+
+Each arm confirmed the pins DISCRIMINATE (can go RED), then was reverted byte-clean (backup sha256 re-matched):
+
+- **Arm 1 — remove the DATA half** (`aiReady = annotationStatus === 'ready'`): designated oracle **M42-F4-READY-NO-DATA** RED for the predicted reason (fail-open reopened ⇒ ready + null reactivates the filter ⇒ DOM shows "0 of 2 · filtered" where "2 of 2 repositories" was asserted); the other 4 pins in the file stayed GREEN ⇒ discriminates the DATA half specifically.
+- **Arm 2 — restore the fail-open DEFAULT** (`aiReady = true`): designated oracle **M42-F4-DEFAULT** RED for the predicted reason (`dashboardToView(state)` returns `['security']` where `[]` was asserted); the other 8 pins in the file stayed GREEN (M0-FS-1 uses explicit `true`) ⇒ discriminates the DEFAULT half specifically.
+
+### 16.5 Local gates (on the restored candidate)
+
+- Full `vitest run` = **1309/1309** (117 files); +6 vs baseline = 5 new F4 pins + 1 default pin; dashboard-scoped = 324 (26 files). Terminal markers observed.
+- `pnpm -r typecheck` = pass (exit 0).
+- Lint / prettier on the 5 candidate code files = clean (`eslint` exit 0; `prettier --check` all-clean). Pre-existing, out-of-scope, NOT this change: 16 `eslint` errors in gitignored `.playwright-mcp/*.mjs` (M3 browser-gate scratch, absent from a clean CI checkout) and `prettier` warnings under `skills-staging/` (owner-untouched) — confirmed by linting/formatting the candidate files in isolation.
+
+### 16.6 Execution order & the stop
+
+`fetch` → anchors (§16.0) → drift check (0) → branch cut ✅ → adjudication frozen (§16.1) ✅ → F4 implementation (§16.2, slot 1 only) ✅ → narrow regression coverage (§16.3) ✅ → local gates + exactly two falsification arms (§16.4/§16.5) ✅ → one fresh isolated 3-leg pre-commit review (Grok + Sol + Luna) ✅ (§16.7: round 1 = 3/3 FIX converged on one stale-comment finding → fixed comment-only; round 2 = 3/3 literal PROCEED + zero surviving ⇒ **M4.2 PRE-COMMIT REVIEW CLOSED 2026-09-28**) → **NEXT: owner commit gate** → owner push / PR → exact-head CI → owner merge ruling → M4.2 closure record. **No commit / push / PR** until the owner commit gate; `skills-staging/` untouched. **Review object = 6 paths** (5 code + this spec): `RepositoryView.tsx` · `select.ts` · `select.test.ts` · `RepositoryView.test.tsx` · `ai-readiness-coherence.test.tsx` (new) + this spec (§16).
+
+### 16.7 Pre-commit review — round 1 (fresh isolated 3-leg) → one converged in-boundary finding fixed → round 2
+
+**Round 1** (2026-09-28): one fresh isolated read-only 3-leg over the frozen candidate, each leg a
+byte-identical packet; Sol/Luna additionally got a detached worktree at `497fcbb` with the 6 files
+overlaid (git-independent fingerprint reproduced 3/3), Grok packet-only; legs under non-enumerable
+parents; verdicts written outside every leg (no leg saw another's). Dry-run pings confirmed served
+identity first (Grok `modelUsage.grok-4.7-build`; codex headers `gpt-5.6-sol` / `gpt-5.6-luna`, both
+`read-only`, `effort max`).
+
+| Leg                | Served identity                                             | Round-1 verdict                                                                                |
+| ------------------ | ----------------------------------------------------------- | ---------------------------------------------------------------------------------------------- |
+| Grok-4.7 @ high    | `grok --output-format json` → `modelUsage.grok-4.7-build`   | **FIX** (1) — the converged finding below; trace explicitly re-confirmed everything else holds |
+| gpt-5.6-sol @ max  | codex header `model: gpt-5.6-sol · read-only · effort max`  | **FIX** (1) — same finding                                                                     |
+| gpt-5.6-luna @ max | codex header `model: gpt-5.6-luna · read-only · effort max` | **FIX** (1) — same finding                                                                     |
+
+**The single converged in-boundary finding (3/3):** `RepositoryView.tsx` line 120 — the
+`annotationStatus` prop JSDoc still read "Defaults from `annotations`", the short form of the M0
+data-presence fallback F4 removed. After F4 an omitted status is fail-closed (`aiReady` false even with
+data), and the skills prop JSDoc four lines below already read "omitted ⇒ not ready". Reproduced
+first-hand (the comment contradicts the fixed gate and the M42-F4-DATA-ONLY pin). It is a
+comment-coherence miss of the very class §16.2 addressed — the initial sweep left one instance. NOT a
+behavior / test / contract defect; each leg returned exactly one distinct `FIX` and no other finding.
+Grok's trace independently re-confirmed the gate shape, the sole-caller + default-flip, "only effective
+filtering neutralized", the ungated data join, the App producer's three coherent shapes, the five pins,
+both falsification arms (traced), the intent-preserving churn, and the §16 "PENDING" banner.
+
+**Fix (authored, minimal, comment-only):** line 120 → "Activation requires `'ready'` AND data — data
+presence alone never activates (F4); omitted ⇒ not ready" (parallel to the skills prop JSDoc); §16.2's
+sweep list amended to include it. The readiness gate, the pins, and the two falsification arms are
+untouched — no production-logic, test, or contract change. The amended candidate's whole-candidate
+fingerprint is recorded in the round-2 review record (not inline here — a file cannot contain its own
+hash).
+
+**Round 2** (2026-09-28): the amended candidate — the whole-candidate fingerprint the three legs
+verified was `7a78a3a8…4332` — re-frozen and re-reviewed by the same fresh isolated read-only 3-leg (new
+non-enumerable parents, fresh detached worktrees at `497fcbb` with the six files overlaid, git-independent
+fingerprint reproduced 3/3, packet byte-identical across legs; verdicts written outside every leg;
+dry-run pings re-confirmed served identity).
+
+| Leg                | Served identity                                             | Round-2 verdict                                                                                                                                                                                                                                                             |
+| ------------------ | ----------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Grok-4.7 @ high    | `grok --output-format json` → `modelUsage.grok-4.7-build`   | **PROCEED** — full re-trace: round-1 fix resolved + comment-only, parity, fail-closed default (sole caller `RepositoryView.tsx:207`), filtering-only, ungated join, App wiring, both falsification arms traced, churn intent-preserving, comments match, §16 banner PENDING |
+| gpt-5.6-sol @ max  | codex header `model: gpt-5.6-sol · read-only · effort max`  | **PROCEED** — "no surviving in-boundary findings"                                                                                                                                                                                                                           |
+| gpt-5.6-luna @ max | codex header `model: gpt-5.6-luna · read-only · effort max` | **PROCEED** — "no surviving in-boundary finding"                                                                                                                                                                                                                            |
+
+**3/3 literal PROCEED + zero surviving in-boundary finding ⇒ M4.2 PRE-COMMIT REVIEW CLOSED** (owner
+criterion met; no reassurance round). Each leg returned exactly one distinct `PROCEED`, no `FIX`;
+identity is the served flagship (grok `modelUsage`, codex header), not self-report. Post-round: the
+candidate fingerprint on the tree is unchanged (`7a78a3a8…4332`) and no leg was written to after
+dispatch. Verdict sha256 — Grok `69547c1b…`, Sol `28f716c0…`, Luna `048363b0…` (review dir
+`m42-review/verdicts-r2/`, with the dispatch log and both rounds' packets/manifests retained).
+
+This round-2 result is the post-verdict evidence-only doc delta (§15.16 convention): it advances ONLY
+this spec's own review record + the §16 status banner and changes NO production/test byte, so it needs no
+re-review. The reviewed candidate's spec bytes hashed `8dc8e62c…`; this delta moves the spec's manifest
+line and thus the whole-candidate fingerprint — the post-delta fingerprint is recorded in `m42-review/`
+and carried in the eventual commit message (a file cannot contain its own hash). **NEXT gate: the owner
+commit gate** — stage the exact 6 paths (never `git add -A`); no push / PR until the owner rules;
+`skills-staging/` untouched.

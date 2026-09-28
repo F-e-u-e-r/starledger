@@ -117,7 +117,8 @@ export function RepositoryView({
   datasetGeneratedAt?: string;
   initialNow?: Date;
   annotations?: LoadedAnnotations | null;
-  /** Lifecycle of the optional AI layer (P7 §2.2). Defaults from `annotations`. */
+  /** Lifecycle of the optional AI layer (P7 §2.2). Activation requires `'ready'`
+   *  AND data — data presence alone never activates (F4); omitted ⇒ not ready. */
   annotationStatus?: AnnotationStatus;
   /** The optional skills-classification layer (P7 §4.11). */
   skillsClassification?: LoadedSkillsClassification | null;
@@ -135,17 +136,26 @@ export function RepositoryView({
   const searchId = useId();
 
   const annotationsByNodeId = annotations?.byNodeId;
-  // The optional AI layer is usable only when `ready`; a missing status falls
-  // back to "ready iff annotations are present" so existing callers/tests behave.
-  const aiReady = annotationStatus ? annotationStatus === 'ready' : annotations != null;
+  // The optional AI layer is EFFECTIVE-READY only under a COHERENT ready shape —
+  // status `ready` AND data present (F4, P7 §4.11) — symmetric with `skillsReady`
+  // below; neither half alone activates. This closes the two fail-open mirrors the
+  // former M0 data-presence fallback left: a `ready` status without data would turn
+  // a requested AI filter into a match-nothing filter and silently zero results
+  // (F4-P1), and data under an omitted status would activate the layer from presence
+  // alone (F4-P2). App — the only producer — sets the (status, data) pair atomically,
+  // so real coherent-ready behavior is unchanged; only App-unreachable incoherent
+  // shapes change, and there only effective filtering is neutralized (the requested
+  // AI URL/filter state is retained for recoverability, exactly as when not ready).
+  const aiReady = annotationStatus === 'ready' && annotations != null;
   // Skills layer readiness (P7 §4.11, charter #2): activation requires a
   // COHERENT ready layer — status `ready` AND data. Neither half alone
   // activates: data without status never projects (pre-commit R1 F-A,
   // M24-STS-1), and a `ready` status without data would otherwise turn the
   // scope/facet into a match-nothing filter and zero the results with no
-  // degraded surface (pre-commit R2 sol, M24-STS-4). Deliberately STRICTER
-  // than the AI layer's data-presence fallback (an M0 decision preserving
-  // then-existing callers; this surface is new and has none). The join map is
+  // degraded surface (pre-commit R2 sol, M24-STS-4). Symmetric with the AI
+  // layer's coherent-ready gate above — F4 closed the AI layer's former M0
+  // data-presence fallback, so both gates are now identical in shape (this
+  // skills surface itself never had legacy callers). The join map is
   // passed only when ready, so a not-ready layer STRUCTURALLY cannot influence
   // badges or filtering — `repo.skills` is then null everywhere (M24-BDG-1).
   const skillsReady = skillsStatus === 'ready' && skillsClassification != null;

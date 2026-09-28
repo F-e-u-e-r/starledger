@@ -487,8 +487,11 @@ describe('RepositoryView — R3 effective-filter badge (§13, M1.2a)', () => {
 
   it('R3-ready: once the AI layer is ready, the activated AI filter is counted', () => {
     window.history.replaceState(null, '', '/?category=security');
+    // Coherent-ready requires an explicit `ready` status AND data (F4); data
+    // presence alone no longer activates the layer (see ai-readiness-coherence).
     renderView(sampleRepos(), {
       annotations: makeAnnotations({ R_ts: makeAnnotation({ category: 'security' }) }),
+      annotationStatus: 'ready',
     });
     // AI ready → the category filter activates → counted
     expect(screen.getByRole('button', { name: 'Filters 1' })).toBeTruthy();
@@ -731,11 +734,14 @@ describe('RepositoryView — M1.2f integrated closure (§13)', () => {
     );
 
     rerender(
+      // Coherent-ready = explicit `ready` status AND data (F4); the status is
+      // what App sets atomically alongside the annotations in production.
       <Harness
         repos={repos}
         datasetGeneratedAt="2026-06-18T00:00:00Z"
         initialNow={NOW}
         annotations={makeAnnotations({ R_int0: makeAnnotation({ category: 'security' }) })}
+        annotationStatus="ready"
       />,
     );
     // ready: the category filter activates → exactly the annotated Go repo
