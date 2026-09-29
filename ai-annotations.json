@@ -2290,6 +2290,33 @@
       }
     },
     {
+      "node_id": "R_kgDOIicM-w",
+      "category": "web-applications",
+      "tags": [
+        "api",
+        "backend",
+        "database",
+        "frontend",
+        "graphql",
+        "self-hosted"
+      ],
+      "summary": "Twenty is an open-source CRM that technical teams can customize and extend as code, offering objects, views, workflows and agents. It is built with TypeScript, NestJS, React, PostgreSQL, GraphQL and Redis, and can run in the cloud or be self-hosted via Docker Compose.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "e6137b5c569cc4a71163f3499f7e90a912540dd8",
+        "repo_metadata_sha256": "e0e4296bc166a265da503f7a773e3d864ed66b6ac26f768a43d3887b3b6119d4",
+        "fingerprint": "01efdedef5cd2f94765d4444074de27ad2e4804e58348c088ea4189fa8691044"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-09-29T12:32:25Z"
+      }
+    },
+    {
       "node_id": "R_kgDOIj6G7A",
       "category": "ai-ml",
       "tags": [
@@ -21341,6 +21368,33 @@
         "model_label": null,
         "prompt_version": "classify-v1",
         "generated_at": "2026-09-12T10:23:59Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOUYd3Fw",
+      "category": "media-creative",
+      "tags": [
+        "ai-agents",
+        "api",
+        "automation",
+        "cli",
+        "machine-learning",
+        "self-hosted"
+      ],
+      "summary": "asset-studio is a fully local text-to-3D pipeline that turns a text prompt into a game-ready 3D asset. It paints a reference image, generates a high-detail model, then reduces it to a triangle budget with baked textures, LODs and a collision hull. Written in Python, it runs on one machine via Docker and exposes a web portal, CLI, FastAPI service and MCP interface.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "3c15609fc8f51adc85308ab83941e449a784e1f2",
+        "repo_metadata_sha256": "c1a3c602d19fe19319b9cc2f35a372e2a953eecb9787e33deb518f776d5b0257",
+        "fingerprint": "2fb4e51cfa77aea11b34cccfc2a0be8d6ec58c51c08e5c506fb029bb9cf1f7a9"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-09-29T12:32:25Z"
       }
     },
     {
