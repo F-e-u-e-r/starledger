@@ -13,18 +13,6 @@
   "pending": [],
   "deliveries": [
     {
-      "notification_key": "awesome_stars:dimillian/codexskillmanager:R_kgDOQ1Ugwg",
-      "status": "sent",
-      "completed_at": "2026-07-01T01:33:59.147Z",
-      "detail": null
-    },
-    {
-      "notification_key": "awesome_stars:mapletechlabs/maple:R_kgDORQ8P6g",
-      "status": "sent",
-      "completed_at": "2026-07-01T01:33:59.147Z",
-      "detail": null
-    },
-    {
       "notification_key": "awesome_stars:facebook/astryx:R_kgDOQ2zHeg",
       "status": "sent",
       "completed_at": "2026-07-02T01:26:43.073Z",
