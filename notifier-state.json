@@ -8,22 +8,10 @@
     "paths": [
       "README.md"
     ],
-    "last_commit_sha": "f453fb95c3ba4379948a9bf0d10c43df6f86f1f8"
+    "last_commit_sha": "fa09643403cbfdeef01fbbec055a6e3605ff3386"
   },
   "pending": [],
   "deliveries": [
-    {
-      "notification_key": "awesome_stars:facebook/astryx:R_kgDOQ2zHeg",
-      "status": "sent",
-      "completed_at": "2026-07-02T01:26:43.073Z",
-      "detail": null
-    },
-    {
-      "notification_key": "awesome_stars:tt-a1i/archify:R_kgDOSDCHbQ",
-      "status": "sent",
-      "completed_at": "2026-07-02T01:26:43.073Z",
-      "detail": null
-    },
     {
       "notification_key": "awesome_stars:mattpocock/skills:R_kgDORHkddg",
       "status": "sent",
@@ -652,6 +640,30 @@
       "notification_key": "awesome_stars:yetone/magpie:R_kgDOUns_9A",
       "status": "sent",
       "completed_at": "2026-09-28T07:00:52.050Z",
+      "detail": null
+    },
+    {
+      "notification_key": "awesome_stars:anthropics/financial-services:R_kgDORXFZgQ",
+      "status": "sent",
+      "completed_at": "2026-09-30T06:47:31.201Z",
+      "detail": null
+    },
+    {
+      "notification_key": "awesome_stars:cloudflare/forge:R_kgDOUkEwGg",
+      "status": "sent",
+      "completed_at": "2026-09-30T06:47:31.201Z",
+      "detail": null
+    },
+    {
+      "notification_key": "awesome_stars:reviu-dev/reviu:R_kgDOQtPVOQ",
+      "status": "sent",
+      "completed_at": "2026-09-30T06:47:31.201Z",
+      "detail": null
+    },
+    {
+      "notification_key": "awesome_stars:shadcn-labs/pdfcn:R_kgDOT1NsbQ",
+      "status": "sent",
+      "completed_at": "2026-09-30T06:47:31.201Z",
       "detail": null
     }
   ]
