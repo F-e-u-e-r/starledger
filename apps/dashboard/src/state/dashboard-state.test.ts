@@ -150,6 +150,15 @@ describe('dashboard-state codec — M1.1 fields (view/density/page + R1)', () =>
     expect(serializeDashboardState(state({ view: 'stars' }))).toBe('');
   });
 
+  it('M43-VIEW-INSIGHTS: view=insights round-trips (§17); still defaults to stars', () => {
+    expect(parse('view=insights').view).toBe('insights');
+    expect(serializeDashboardState(state({ view: 'insights' }))).toBe('view=insights');
+    // decode(encode(x)) === x for the new canonical value
+    expect(parse(serializeDashboardState(state({ view: 'insights' }))).view).toBe('insights');
+    // unchanged: an unknown view still falls back to the default
+    expect(parse('view=bogus').view).toBe('stars');
+  });
+
   it('M1-DENSITY: density round-trips; invalid → default compact; default omitted', () => {
     expect(parse('density=comfortable').density).toBe('comfortable');
     expect(parse('density=bogus').density).toBe('compact');

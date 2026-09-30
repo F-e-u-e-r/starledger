@@ -12,8 +12,15 @@ export type HydrationStatus = CanonicalRepo['hydration_status'];
 /** Tri-state facet: `null` = "all" (no constraint); `true`/`false` = yes/no. */
 export type BooleanFilter = boolean | null;
 
-/** Active top-level tab. `discovery` is fail-soft: honored only when available (§6.4). */
-export type DashboardView = 'stars' | 'discovery';
+/**
+ * Active top-level tab. `discovery` is fail-soft: honored only when available
+ * (§6.4). `insights` (P7 §17, M4.3a) is a deterministic read-only view of the
+ * SAME loaded stars dataset — always available once stars load (it derives from
+ * them), so unlike `discovery` it never falls back. While it is active the repo
+ * browse state (query / filters / sort / group / scope) is PRESERVED in the URL
+ * but INACTIVE (RepositoryView is not mounted), re-applying on return to `stars`.
+ */
+export type DashboardView = 'stars' | 'discovery' | 'insights';
 
 /**
  * Skills-ecosystem scope (P7 §4.11): `all` = no constraint; `skills` = only
@@ -102,7 +109,7 @@ export const DEFAULT_DASHBOARD_STATE: DashboardState = {
 // Canonical value sets for enum facets. `satisfies` ties them to the source
 // unions so a renamed/added variant fails the build here, not silently at runtime.
 const DIRECTIONS = ['asc', 'desc'] as const satisfies readonly SortDirection[];
-const VIEW_VALUES = ['stars', 'discovery'] as const satisfies readonly DashboardView[];
+const VIEW_VALUES = ['stars', 'discovery', 'insights'] as const satisfies readonly DashboardView[];
 const SCOPE_VALUES = ['all', 'skills'] as const satisfies readonly SkillsScopeValue[];
 const DENSITY_VALUES = ['comfortable', 'compact'] as const satisfies readonly Density[];
 const GROUP_VALUES = ['none', 'skill'] as const satisfies readonly GroupBy[];

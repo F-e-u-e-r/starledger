@@ -142,8 +142,9 @@ a {
   box-shadow: 0 2px 6px rgb(31 35 40 / 0.12);
 }
 
-/* When the view tabs render (discovery available), they stick above the
-   toolbar; the toolbar offsets below them by the tabs' fixed height. */
+/* When the view tabs render (always present once stars load — §6.4/§17.2, the
+   `Starred` + `Insights` tabs, plus `Discovery Inbox` when available), they stick
+   above the toolbar; the toolbar offsets below them by the tabs' fixed height. */
 :root:has(.view-tabs) .toolbar {
   top: var(--view-tabs-h);
 }
@@ -778,7 +779,8 @@ a {
   }
 }
 
-/* --- View tabs (P5): switch between Starred and Discovery Inbox. --- */
+/* --- View tabs (P5; Insights added M4.3a §17): switch between Starred, Insights,
+   and (when available) Discovery Inbox. --- */
 /* Sticky above the toolbar (M1.2c): the explicit --view-tabs-h height makes
    the toolbar's top offset below the tabs correct by construction. */
 .view-tabs {
@@ -1050,4 +1052,129 @@ a {
 
 .density-compact .card-skill-summary {
   font-size: 0.82rem;
+}
+
+/* Insights view (P7 §17, M4.3a) — deterministic read-only insight cards. */
+.insights {
+  max-width: 72rem;
+  margin: 0 auto;
+  padding: 1.5rem 1rem 3rem;
+}
+
+.insights-head h1 {
+  margin: 0 0 0.25rem;
+}
+
+.insights-head p {
+  margin: 0 0 1.5rem;
+  color: var(--muted);
+  max-width: 56rem;
+}
+
+.insight-cards {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fill, minmax(min(24rem, 100%), 1fr));
+}
+
+.insight-card {
+  border: 1px solid var(--border);
+  border-radius: 0.5rem;
+  background: var(--surface);
+  padding: 1rem 1.1rem 0.85rem;
+  block-size: 100%;
+}
+
+.insight-card-title {
+  font-size: 1rem;
+  margin: 0 0 0.6rem;
+}
+
+.insight-note,
+.insight-empty {
+  color: var(--muted);
+  font-size: 0.85rem;
+  margin: 0.5rem 0 0;
+}
+
+.insight-stat {
+  margin: 0.25rem 0 0;
+}
+
+.insight-stat strong {
+  font-size: 1.35rem;
+}
+
+.insight-degraded {
+  color: var(--caution);
+  font-size: 0.9rem;
+  margin: 0.5rem 0;
+}
+
+.insight-provenance {
+  margin: 0.85rem 0 0;
+  padding-top: 0.6rem;
+  border-top: 1px solid var(--border);
+  color: var(--muted);
+  font-size: 0.75rem;
+}
+
+.insight-table {
+  inline-size: 100%;
+  border-collapse: collapse;
+  margin-top: 0.6rem;
+  font-size: 0.85rem;
+}
+
+.insight-table th[scope='col'] {
+  text-align: start;
+  font-weight: 600;
+  color: var(--muted);
+  font-size: 0.75rem;
+  padding: 0 0.5rem 0.3rem 0;
+}
+
+.insight-table th[scope='col']:last-child {
+  text-align: end;
+}
+
+.insight-table th[scope='row'] {
+  text-align: start;
+  font-weight: 400;
+  padding: 0.15rem 0.5rem 0.15rem 0;
+  white-space: nowrap;
+}
+
+.insight-table td {
+  padding: 0.15rem 0 0.15rem 0.5rem;
+  text-align: end;
+  white-space: nowrap;
+  /* Bar grows from the end so the count stays right-aligned and readable. */
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 0.5rem;
+}
+
+.insight-bar {
+  display: inline-block;
+  block-size: 0.6rem;
+  min-inline-size: 1px;
+  background: var(--accent);
+  border-radius: 2px;
+  opacity: 0.55;
+}
+
+.insight-count {
+  min-inline-size: 2.5ch;
+  font-variant-numeric: tabular-nums;
+}
+
+@media (max-width: 520px) {
+  .insights {
+    padding: 1rem 0.75rem 2.5rem;
+  }
 }
