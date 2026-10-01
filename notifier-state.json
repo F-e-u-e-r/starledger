@@ -8,28 +8,10 @@
     "paths": [
       "README.md"
     ],
-    "last_commit_sha": "fa09643403cbfdeef01fbbec055a6e3605ff3386"
+    "last_commit_sha": "93b82bf237336a039d9ff71087e7478da4e63841"
   },
   "pending": [],
   "deliveries": [
-    {
-      "notification_key": "awesome_stars:mattpocock/skills:R_kgDORHkddg",
-      "status": "sent",
-      "completed_at": "2026-07-03T07:41:15.818Z",
-      "detail": null
-    },
-    {
-      "notification_key": "awesome_stars:stablyai/orca:R_kgDORpCz1g",
-      "status": "sent",
-      "completed_at": "2026-07-03T07:41:15.818Z",
-      "detail": null
-    },
-    {
-      "notification_key": "awesome_stars:vercel-labs/openwiki:R_kgDOTHT3ug",
-      "status": "sent",
-      "completed_at": "2026-07-03T07:41:15.818Z",
-      "detail": null
-    },
     {
       "notification_key": "awesome_stars:cloudflare/kumo:R_kgDOQMK3dA",
       "status": "sent",
