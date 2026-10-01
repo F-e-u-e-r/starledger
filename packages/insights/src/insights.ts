@@ -1,100 +1,29 @@
-import type { LoadedSkillsClassification } from '../../data/load-skills-classification';
-import { STALE_MONTHS, type DerivedRepo } from '../../data/derive-fields';
+import { STALE_MONTHS } from './staleness';
+import type {
+  CategoryDistribution,
+  ClassificationCoverage,
+  Coverage,
+  InsightRepo,
+  InsightSkillsSummary,
+  MonthBucket,
+  Provenance,
+  StaleStars,
+  StarringActivity,
+} from './types';
 
 /**
- * M4.3a — Deterministic Insights (P7 §17). Pure aggregations over the SAME
- * `DerivedRepo[]` the dashboard already builds (`deriveAll`). Every insight is a
- * deterministic function of the CURRENT loaded snapshot — there is no longitudinal
- * store, so nothing here may claim a trend, growth, or shift over time; a
- * per-period count is "of the repos currently held, when they were starred", not a
- * historical add-rate (unstarred repos are absent from the dataset entirely).
- *
- * Each insight carries a provenance record (what was computed, from which fields,
- * by what formula) and a coverage record (how much of the dataset it reflects, on
- * which optional layer, with generation provenance for a generated layer), so the
- * UI can always explain a number and never shows an opaque score.
+ * The four deterministic Insights aggregations (M4.3a), over the narrow
+ * `InsightRepo` contract. Each carries a provenance record (what was computed, from
+ * which fields, by what formula) and a coverage record (how much of the dataset it
+ * reflects, on which optional layer, with generation provenance for a generated
+ * layer), so a consumer can always explain a number and never shows an opaque score.
  */
-
-/** What was computed and how — rendered beside every insight. */
-export interface Provenance {
-  method: string;
-  sourceFields: string[];
-  formula: string;
-}
-
-/** How much of the dataset an insight reflects. `layer` names the data source; a
- *  generated layer (`ai`/`skills`) carries its generation provenance so a viewer
- *  sees coverage and staleness, never a bare percentage. */
-export interface Coverage {
-  n: number;
-  of: number;
-  layer: 'canonical' | 'ai' | 'skills';
-  generatedAt?: string;
-  /** For the skills layer: the stars snapshot the classification was generated
-   *  against. When it differs from the live snapshot the coverage is provenance-
-   *  stale (an older, curated subset), which the UI must disclose. */
-  generatedAgainstStarsSha256?: string;
-  stale?: boolean;
-}
-
-export interface CategoryRow {
-  category: string;
-  count: number;
-}
-
-/** PC — primary-category distribution over the AI-enrichment layer. */
-export interface CategoryDistribution {
-  provenance: Provenance;
-  coverage: Coverage;
-  rows: CategoryRow[];
-}
-
-export interface MonthBucket {
-  /** UTC calendar month, `YYYY-MM`. */
-  month: string;
-  count: number;
-}
-
-/** SA — starring activity by UTC month over currently-held stars. */
-export interface StarringActivity {
-  provenance: Provenance;
-  coverage: Coverage;
-  /** Null only when no repo carries a usable `starred_at`. */
-  window: { field: 'starred_at'; from: string; to: string } | null;
-  /** Contiguous, zero-filled from the first to the last month with a star. */
-  buckets: MonthBucket[];
-}
-
-/** ST — stale ("forgotten") stars: upstream not pushed within the threshold. */
-export interface StaleStars {
-  provenance: Provenance;
-  coverage: Coverage;
-  staleCount: number;
-  /** Repos whose push date is unknown/absent — NEVER counted as stale. */
-  unknownPushCount: number;
-  thresholdMonths: number;
-}
-
-/** CC — how many currently-held stars fall in the curated skills classification. */
-export interface ClassificationCoverage {
-  provenance: Provenance;
-  coverage: Coverage;
-  /** Live join: current stars carrying a classification record. */
-  matched: number;
-  /** Source entries the generator could not resolve to a live repo (meta). */
-  unresolved: number;
-  /** The classification is a curated ECOSYSTEM SUBSET — "unmatched" is outside
-   *  that subset, not a coverage failure. Always true; the UI wording depends on it. */
-  curatedSubset: true;
-  /** The classification was generated against an older stars snapshot. */
-  stale: boolean;
-}
 
 /** PC: group annotated repos by AI category; sort by count desc, then name asc.
  *  `generatedAt` is the AI layer's generation timestamp (a generated layer carries
  *  its generation provenance in `coverage`, like the skills layer). */
 export function computeCategoryDistribution(
-  repos: readonly DerivedRepo[],
+  repos: readonly InsightRepo[],
   generatedAt?: string,
 ): CategoryDistribution {
   const counts = new Map<string, number>();
@@ -137,7 +66,7 @@ function nextMonth(ym: string): string {
  * no local-time skew. Repos without a usable `starred_at` are excluded and the
  * window is null when none remain.
  */
-export function computeStarringActivity(repos: readonly DerivedRepo[]): StarringActivity {
+export function computeStarringActivity(repos: readonly InsightRepo[]): StarringActivity {
   const counts = new Map<string, number>();
   let counted = 0;
   for (const repo of repos) {
@@ -190,12 +119,12 @@ export function computeStarringActivity(repos: readonly DerivedRepo[]): Starring
 }
 
 /**
- * ST: stale ("forgotten") stars — reuses the dashboard's existing staleness
- * semantics EXACTLY (`DerivedRepo.isStale`: push date KNOWN and older than
- * `STALE_MONTHS`). An unknown/absent push date is never stale (unknown ≠ absent)
+ * ST: stale ("forgotten") stars — reuses the shared staleness semantics EXACTLY
+ * (`isStale`: push date KNOWN and older than `STALE_MONTHS`, pre-derived by
+ * `deriveStaleness`). An unknown/absent push date is never stale (unknown ≠ absent)
  * and is reported separately so the count is not silently understated.
  */
-export function computeStaleStars(repos: readonly DerivedRepo[]): StaleStars {
+export function computeStaleStars(repos: readonly InsightRepo[]): StaleStars {
   let staleCount = 0;
   let unknownPushCount = 0;
   for (const repo of repos) {
@@ -221,12 +150,12 @@ export function computeStaleStars(repos: readonly DerivedRepo[]): StaleStars {
  * carry a classification), not the generation-time count — so it reflects the
  * dataset as loaded. The classification is a curated SUBSET generated once against
  * a (possibly older) stars snapshot; when that snapshot differs from the live one
- * the coverage is provenance-stale, which the UI discloses. `null` skills ⇒ the
- * layer is unavailable (the caller renders a degraded card).
+ * the coverage is provenance-stale, which the consumer discloses. `null` skills ⇒ the
+ * layer is unavailable (the caller renders/returns a degraded result).
  */
 export function computeClassificationCoverage(
-  repos: readonly DerivedRepo[],
-  skills: LoadedSkillsClassification | null,
+  repos: readonly InsightRepo[],
+  skills: InsightSkillsSummary | null,
   currentStarsSha256: string | undefined,
 ): ClassificationCoverage {
   const matched = repos.reduce((n, repo) => (repo.skills !== null ? n + 1 : n), 0);

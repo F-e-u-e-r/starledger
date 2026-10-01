@@ -13,7 +13,7 @@ import {
   computeClassificationCoverage,
   computeStaleStars,
   computeStarringActivity,
-} from './insights';
+} from '@starred/insights';
 
 /**
  * M4.3a Insights view (P7 §17): four deterministic read-only insight cards

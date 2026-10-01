@@ -12,7 +12,7 @@ import {
   computeClassificationCoverage,
   computeStaleStars,
   computeStarringActivity,
-} from './insights';
+} from '@starred/insights';
 
 const NOW = new Date('2026-06-19T00:00:00Z');
 
