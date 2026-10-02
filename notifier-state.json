@@ -8,16 +8,10 @@
     "paths": [
       "README.md"
     ],
-    "last_commit_sha": "93b82bf237336a039d9ff71087e7478da4e63841"
+    "last_commit_sha": "5bef3a2e9014655cde4b28b1ff8e6ae35e0fd7fe"
   },
   "pending": [],
   "deliveries": [
-    {
-      "notification_key": "awesome_stars:cloudflare/kumo:R_kgDOQMK3dA",
-      "status": "sent",
-      "completed_at": "2026-07-04T07:17:01.517Z",
-      "detail": null
-    },
     {
       "notification_key": "awesome_stars:athledev-labs/opennook:R_kgDOSjCshg",
       "status": "sent",
