@@ -15275,6 +15275,30 @@
       }
     },
     {
+      "node_id": "R_kgDORqqs2A",
+      "category": "education-reference",
+      "tags": [
+        "ai-agents",
+        "llm",
+        "machine-learning"
+      ],
+      "summary": "An open-source curriculum for learning AI engineering from scratch, spanning 20 phases and 523 lessons across Python, TypeScript, Rust, and Julia. It covers math foundations, deep learning, transformers, large language models, agents, and production systems, pairing from-scratch implementations with production libraries in each lesson.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "c2bfc91d8b5ff7dfa9e78e823353f7f8706b60a1",
+        "repo_metadata_sha256": "78129e02029eb4789a7ec1ffd7421754de2de1a1d577d9df29179dafa550fb42",
+        "fingerprint": "b4eafcc6fc7b90d304fe2c2cd1d8acabe7f51835b6547bd3f4206a76c1a18a84"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-10-02T11:23:49Z"
+      }
+    },
+    {
       "node_id": "R_kgDORr03Lg",
       "category": "developer-tools",
       "tags": [
