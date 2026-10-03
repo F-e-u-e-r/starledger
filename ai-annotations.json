@@ -2668,6 +2668,31 @@
       }
     },
     {
+      "node_id": "R_kgDOJXFz5Q",
+      "category": "security-privacy",
+      "tags": [
+        "cli",
+        "networking",
+        "scraping",
+        "security-scanner"
+      ],
+      "summary": "GhostTrack is a Python command-line OSINT tool for information gathering. Through an interactive menu it tracks IP addresses with geolocation, looks up phone numbers, and searches for a target username across social media. It installs on Linux and Termux using pip.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "a5f4df0ff59621fbedce9ca2162058251643c6c2",
+        "repo_metadata_sha256": "938035e27683f4c0537c20c9468942e4991d20de07aa8c31f5c87b1b93ba415c",
+        "fingerprint": "b08e2fac0d70176d6e9e700b1b08538a0ee5097b27383265b45ce2fedbaa6c48"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-10-03T11:23:41Z"
+      }
+    },
+    {
       "node_id": "R_kgDOJckNQg",
       "category": "education-reference",
       "tags": [
