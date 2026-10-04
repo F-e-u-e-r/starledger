@@ -13,18 +13,6 @@
   "pending": [],
   "deliveries": [
     {
-      "notification_key": "awesome_stars:athledev-labs/opennook:R_kgDOSjCshg",
-      "status": "sent",
-      "completed_at": "2026-07-06T09:12:02.147Z",
-      "detail": null
-    },
-    {
-      "notification_key": "awesome_stars:microsoft/pg_durable:R_kgDORPvt5w",
-      "status": "sent",
-      "completed_at": "2026-07-06T09:12:02.147Z",
-      "detail": null
-    },
-    {
       "notification_key": "awesome_stars:alibaba/zvec:R_kgDOQjAFnQ",
       "status": "sent",
       "completed_at": "2026-07-07T05:09:58.810Z",
