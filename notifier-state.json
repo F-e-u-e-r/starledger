@@ -8,16 +8,10 @@
     "paths": [
       "README.md"
     ],
-    "last_commit_sha": "e7e5e208daad8d89f90417350e823ceb890fe105"
+    "last_commit_sha": "b2a31fa1d90da01db95919810547c78af13f9b50"
   },
   "pending": [],
   "deliveries": [
-    {
-      "notification_key": "awesome_stars:alibaba/zvec:R_kgDOQjAFnQ",
-      "status": "sent",
-      "completed_at": "2026-07-07T05:09:58.810Z",
-      "detail": null
-    },
     {
       "notification_key": "awesome_stars:dietrichgebert/ponytail:R_kgDOS4HNrw",
       "status": "sent",
