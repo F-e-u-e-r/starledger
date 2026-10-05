@@ -786,6 +786,29 @@
       }
     },
     {
+      "node_id": "MDEwOlJlcG9zaXRvcnkxODg0MzAzMDM=",
+      "category": "education-reference",
+      "tags": [
+        "documentation",
+        "markdown"
+      ],
+      "summary": "A Chinese-language beginner's guide to personal finance and investing, organized as a series of Markdown articles. It covers money mindset and inflation, an introduction to fund types (money-market, bond, mixed, stock, and index funds), and entry-level topics such as index valuation, dollar-cost-averaging strategies, and asset allocation.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "06ba20493caf3a1fd8d2b45e1f1581013af92833",
+        "repo_metadata_sha256": "63e0f1c44391dc6c60ae7f9f2fba6a4d94507cf7ae087d519751001983eadc20",
+        "fingerprint": "bb11f4d49ebb389a51c5c698ff59af8721f7d7721ccf2a24a7e714980bb9bfc6"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-10-05T13:33:46Z"
+      }
+    },
+    {
       "node_id": "MDEwOlJlcG9zaXRvcnkxODg3MDAyNzQ=",
       "category": "self-hosted-homelab",
       "tags": [
@@ -1916,6 +1939,29 @@
         "model_label": "informational-only",
         "prompt_version": "classify-v1",
         "generated_at": "2026-09-02T10:26:48Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOHL0RdA",
+      "category": "education-reference",
+      "tags": [
+        "documentation",
+        "markdown"
+      ],
+      "summary": "A Chinese-language, evidence-referenced guide to reducing all-cause mortality, written for programmers. It summarizes academic findings on diet (white meat, vegetables, nuts, coffee, tea), avoiding smoking and sugary drinks, exercise such as racket sports and walking, sleep duration, and other lifestyle factors, citing effect sizes and noting contested evidence.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "20a32e79fb871beec3f156dae73b47568cdc11e3",
+        "repo_metadata_sha256": "32ee07086258e523b5251c2cc584a2504e32880546d4e3df55837e1edb6d33a1",
+        "fingerprint": "9f3a9b718e89b2bf45e56ed10a15f147dfaabf73b2ea507ce695c3597a4679c2"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-10-05T13:33:46Z"
       }
     },
     {
@@ -3161,6 +3207,29 @@
         "model_label": "informational-only",
         "prompt_version": "classify-v1",
         "generated_at": "2026-07-16T04:22:54Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOKY5U2A",
+      "category": "education-reference",
+      "tags": [
+        "awesome-list",
+        "documentation"
+      ],
+      "summary": "A curated, Chinese-language reading guide to personal finance and investing. It recommends sixteen books grouped into beginner, intermediate, and advanced levels, including works by Kiyosaki, Graham, and Munger, and compiles wealth-management methods and long-term value-investing principles for building financial literacy.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "6be1bf9463a5e7a4c65fcee87bb18a0afbf84d30",
+        "repo_metadata_sha256": "f41666f4085e15059e6ebf077cfae877bc306deaf5ee4f8bcccd6d75d439ac43",
+        "fingerprint": "a759eb4a3af1403004f37df8899230631f09f7e8e3f2eb345618d4a462742719"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-10-05T13:33:46Z"
       }
     },
     {
@@ -21012,6 +21081,30 @@
       }
     },
     {
+      "node_id": "R_kgDOU60rXw",
+      "category": "productivity-automation",
+      "tags": [
+        "automation",
+        "desktop-app",
+        "gui"
+      ],
+      "summary": "Jevboard is a proof-of-concept Windows system-tray tool that improves Microsoft Bopomofo input by re-selecting homophone characters in an uncommitted sentence. Built on .NET Framework, it reads the IME candidates through UI Automation, asks an external decision API which characters are likely wrong, and shows ranked suggestions in a non-focus overlay applied with Tab.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "f65dd8d15d0fca8118f1a0ecff8f469362fb4602",
+        "repo_metadata_sha256": "aefe35a7892850f90aff6ca8aad6959c094d72b8597a64cfbe45a336fef31111",
+        "fingerprint": "38fbe3e270cab3fa4e733a5eb14a8167d7eba9dcb8808ccece25e915cbf95ff8"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-10-05T13:33:46Z"
+      }
+    },
+    {
       "node_id": "R_kgDOUARWTg",
       "category": "ai-ml",
       "tags": [
@@ -21342,6 +21435,29 @@
         "model_label": null,
         "prompt_version": "classify-v1",
         "generated_at": "2026-09-11T11:25:03Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOUQqY2Q",
+      "category": "education-reference",
+      "tags": [
+        "documentation",
+        "markdown"
+      ],
+      "summary": "A Chinese-language, high-value-for-cost life guide offering 665 pieces of advice across longevity and disease prevention, first aid, saving money, legal pitfalls, unemployment and insurance, marriage and child-rearing, business compliance, and going abroad. Each item states its cost, benefit, and evidence level, citing only peer-reviewed journal papers and official documents.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "b3f451fe73700b917fc8b8fd11fbfe19d777a7d2",
+        "repo_metadata_sha256": "7d488c39e680a415c748e85bb396a69478590abbbe4d95bbc8a4a0b4352bcc0b",
+        "fingerprint": "c5799071a98df54ffcfc55b1ab4b4c4ef064e8dc2f79d63b149c274ba301b247"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-10-05T13:33:46Z"
       }
     },
     {
