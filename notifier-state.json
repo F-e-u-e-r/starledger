@@ -8,16 +8,10 @@
     "paths": [
       "README.md"
     ],
-    "last_commit_sha": "b2a31fa1d90da01db95919810547c78af13f9b50"
+    "last_commit_sha": "a862028e6fb450add500dfbd5e5d1c198622dd0d"
   },
   "pending": [],
   "deliveries": [
-    {
-      "notification_key": "awesome_stars:dietrichgebert/ponytail:R_kgDOS4HNrw",
-      "status": "sent",
-      "completed_at": "2026-07-08T06:40:16.316Z",
-      "detail": null
-    },
     {
       "notification_key": "awesome_stars:vercel-labs/native:R_kgDOSYKDUw",
       "status": "sent",
