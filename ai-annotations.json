@@ -8682,29 +8682,6 @@
       }
     },
     {
-      "node_id": "R_kgDOQ68taw",
-      "category": "education-reference",
-      "tags": [
-        "documentation",
-        "markdown"
-      ],
-      "summary": "A community archive of Chinese-language deep-dive analyses and bilingual English-Chinese transcripts for 297 episodes of Lenny's Podcast, organized by guest with per-episode analysis reports, transcripts, PDF exports, and topic indexes covering product management, growth, leadership, and AI.",
-      "source": {
-        "kind": "readme",
-        "readme_path": "README.md",
-        "readme_oid": "3cfe20e28f60cf55afaab9a7a8434d87b897810e",
-        "repo_metadata_sha256": "e333aa3ab24baaeed9e6f0377cdec7e84f40ba6e216aea82be46a318fb00bc64",
-        "fingerprint": "6ed61f939f08ecf343e8da82378f7f252c47817f2750525fa9124ae47249987e"
-      },
-      "generation": {
-        "executor_kind": "claude-routine",
-        "execution_profile_version": "agent-v1",
-        "model_label": null,
-        "prompt_version": "classify-v1",
-        "generated_at": "2026-07-18T12:22:51Z"
-      }
-    },
-    {
       "node_id": "R_kgDOQ6n2Jw",
       "category": "ai-ml",
       "tags": [
