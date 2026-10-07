@@ -8,16 +8,10 @@
     "paths": [
       "README.md"
     ],
-    "last_commit_sha": "a862028e6fb450add500dfbd5e5d1c198622dd0d"
+    "last_commit_sha": "0146143834e24f3d2ea5e464c67b36ae2bbcf65a"
   },
   "pending": [],
   "deliveries": [
-    {
-      "notification_key": "awesome_stars:vercel-labs/native:R_kgDOSYKDUw",
-      "status": "sent",
-      "completed_at": "2026-07-09T05:09:19.485Z",
-      "detail": null
-    },
     {
       "notification_key": "awesome_stars:jcranokc/app-monitor:R_kgDOTSj-4A",
       "status": "sent",
@@ -622,6 +616,30 @@
       "notification_key": "awesome_stars:thinkwatchproject/thinkwatch-lite:R_kgDOUX_v6g",
       "status": "sent",
       "completed_at": "2026-10-04T06:59:33.432Z",
+      "detail": null
+    },
+    {
+      "notification_key": "awesome_stars:daveshanley/vacuum:R_kgDOGMaT0Q",
+      "status": "sent",
+      "completed_at": "2026-10-07T08:45:31.667Z",
+      "detail": null
+    },
+    {
+      "notification_key": "awesome_stars:egoist/mygo:R_kgDOUtDQyg",
+      "status": "sent",
+      "completed_at": "2026-10-07T08:45:31.667Z",
+      "detail": null
+    },
+    {
+      "notification_key": "awesome_stars:microsoft/cuawright:R_kgDOR8ntig",
+      "status": "sent",
+      "completed_at": "2026-10-07T08:45:31.667Z",
+      "detail": null
+    },
+    {
+      "notification_key": "awesome_stars:storytold/artcraft:R_kgDOHGbvPA",
+      "status": "sent",
+      "completed_at": "2026-10-07T08:45:31.667Z",
       "detail": null
     }
   ]
