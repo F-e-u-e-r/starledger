@@ -21082,6 +21082,33 @@
       }
     },
     {
+      "node_id": "R_kgDOU9pY7g",
+      "category": "developer-tools",
+      "tags": [
+        "ai-agents",
+        "api",
+        "llm",
+        "proxy",
+        "rest-api",
+        "self-hosted"
+      ],
+      "summary": "Self-hosted gateway that exposes a single OpenAI Dot through OpenAI Chat Completions and Anthropic Messages compatible REST endpoints. Requests are queued and the Dot is woken over MCP to claim and answer them, letting existing OpenAI or Anthropic SDKs call it without reverse-engineering a web UI or handling model credentials.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "d216b756b93ee530d7ea574143e9a09958fc58cd",
+        "repo_metadata_sha256": "98d44fc4a81383a28667711b31615bbfa65d97d5088a9fdecc3f5f13b404f837",
+        "fingerprint": "d17f9b4044185c1c5049731eb2308b1ba41f4cad324c54b0b880c718e2be85ca"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-10-08T12:29:56Z"
+      }
+    },
+    {
       "node_id": "R_kgDOUARWTg",
       "category": "ai-ml",
       "tags": [
