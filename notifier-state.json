@@ -13,18 +13,6 @@
   "pending": [],
   "deliveries": [
     {
-      "notification_key": "awesome_stars:jcranokc/app-monitor:R_kgDOTSj-4A",
-      "status": "sent",
-      "completed_at": "2026-07-11T06:28:16.286Z",
-      "detail": null
-    },
-    {
-      "notification_key": "awesome_stars:malisper/pgrust:R_kgDOSHQfjw",
-      "status": "sent",
-      "completed_at": "2026-07-11T06:28:16.286Z",
-      "detail": null
-    },
-    {
       "notification_key": "awesome_stars:charmbracelet/bubbletea:MDEwOlJlcG9zaXRvcnkyMzMxMzAwODk=",
       "status": "sent",
       "completed_at": "2026-07-12T06:48:03.289Z",
