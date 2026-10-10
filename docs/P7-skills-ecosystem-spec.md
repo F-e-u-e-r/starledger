@@ -1,6 +1,6 @@
 # P7 — Skills Ecosystem Spec (classification as an optional layer of the Starred view)
 
-> Status: **M0 merged (#234); M1.1 merged (#237); M1.2 merged (#239); M2.1 merged (#240, `713b1f1`); M2.2 merged (#241, `fd9c6b5`); M2.3 merged (#245, `56ed5d1` — sixteen-round arc closed at R16 3/3 PROCEED, four-loader integrity closure absorbed; §4.10 record); M2.4 first sub-slice merged (#263, `45c5c71` — scope + facet + badges + requested/effective semantics; §4.11 record); M2.4 second sub-slice merged (#271, `675bb3f` — search enrichment + summary display + `.md` download + coverage line; §4.12 record). M2.4 CLOSED. M2.5 CLOSED — merged #289 as merge commit `d6b1921` (reviewed head `338f8c9`; verification-first integrated closure, production delta 0; §4.13). M2 CLOSED (M2.1–M2.5 all merged). M3 CLOSED — identity: merged #297 as merge commit `0bb7db7` (reviewed head `5f108f27`; Concept-B header mark + wordmark + favicon, production delta = exactly the 7 M3 paths; charter + orientation §14, terminal closure §14.28). M4 programme started 2026-09-28 (owner direction). **M4.1 CLOSED** — group-by-primary-category view: merged #299 as merge commit `8709be6` (reviewed head `5507b65`; presentation-only grouping after selection / sort, production delta = exactly the 12 M4.1 paths; committed whole-candidate fingerprint `9ae011ac…8068d`; charter §15, implementation-freeze checkpoint §15.15, pre-commit review §15.16, terminal closure §15.17). **M4.2 CLOSED** — bounded debt closure (F4 only): merged #301 as merge commit `54bd5174` (reviewed head `dec39104`; coherent AI readiness — `annotationStatus === 'ready' && annotations != null` + fail-closed `dashboardToView` defaults, production delta = exactly the 6 M4.2 paths; committed whole-candidate fingerprint `a924e480…`; charter + adjudication §16, pre-commit review §16.7, terminal closure §16.8; F15 CLOSED BY RATIFICATION, R8-B / R12-5 deferred with reopen triggers, 3 accepted residuals unchanged). **M4.3a CLOSED** — deterministic Insights view: merged #304 as merge commit `a49adb03` (reviewed/committed head `241b284`; exactly PC / SA / ST / CC deterministic cards over the current snapshot, no trend claim, `view=insights` canonical top-level view; production delta = exactly the 10 M4.3a paths; committed whole-candidate fingerprint `a58bf205…`; charter §17, pre-commit review §17.6, terminal closure §17.7). **M4.3b.1 CLOSED** — shared deterministic Insights core (`@starred/insights`): merged #306 as merge commit `810ff0a` (committed head `005d3214`; charter + frozen D1–D8 §18, pre-commit review §18.8, terminal closure §18.9). **NEXT: M4.3b.2 read-only MCP server** → BYOK ruled only after (b).**
+> Status: **M0 merged (#234); M1.1 merged (#237); M1.2 merged (#239); M2.1 merged (#240, `713b1f1`); M2.2 merged (#241, `fd9c6b5`); M2.3 merged (#245, `56ed5d1` — sixteen-round arc closed at R16 3/3 PROCEED, four-loader integrity closure absorbed; §4.10 record); M2.4 first sub-slice merged (#263, `45c5c71` — scope + facet + badges + requested/effective semantics; §4.11 record); M2.4 second sub-slice merged (#271, `675bb3f` — search enrichment + summary display + `.md` download + coverage line; §4.12 record). M2.4 CLOSED. M2.5 CLOSED — merged #289 as merge commit `d6b1921` (reviewed head `338f8c9`; verification-first integrated closure, production delta 0; §4.13). M2 CLOSED (M2.1–M2.5 all merged). M3 CLOSED — identity: merged #297 as merge commit `0bb7db7` (reviewed head `5f108f27`; Concept-B header mark + wordmark + favicon, production delta = exactly the 7 M3 paths; charter + orientation §14, terminal closure §14.28). M4 programme started 2026-09-28 (owner direction). **M4.1 CLOSED** — group-by-primary-category view: merged #299 as merge commit `8709be6` (reviewed head `5507b65`; presentation-only grouping after selection / sort, production delta = exactly the 12 M4.1 paths; committed whole-candidate fingerprint `9ae011ac…8068d`; charter §15, implementation-freeze checkpoint §15.15, pre-commit review §15.16, terminal closure §15.17). **M4.2 CLOSED** — bounded debt closure (F4 only): merged #301 as merge commit `54bd5174` (reviewed head `dec39104`; coherent AI readiness — `annotationStatus === 'ready' && annotations != null` + fail-closed `dashboardToView` defaults, production delta = exactly the 6 M4.2 paths; committed whole-candidate fingerprint `a924e480…`; charter + adjudication §16, pre-commit review §16.7, terminal closure §16.8; F15 CLOSED BY RATIFICATION, R8-B / R12-5 deferred with reopen triggers, 3 accepted residuals unchanged). **M4.3a CLOSED** — deterministic Insights view: merged #304 as merge commit `a49adb03` (reviewed/committed head `241b284`; exactly PC / SA / ST / CC deterministic cards over the current snapshot, no trend claim, `view=insights` canonical top-level view; production delta = exactly the 10 M4.3a paths; committed whole-candidate fingerprint `a58bf205…`; charter §17, pre-commit review §17.6, terminal closure §17.7). **M4.3b.1 CLOSED** — shared deterministic Insights core (`@starred/insights`): merged #306 as merge commit `810ff0a` (committed head `005d3214`; charter + frozen D1–D8 §18, pre-commit review §18.8, terminal closure §18.9). **M4.3b.2 read-only MCP server DEFERRED by owner product decision — trigger-based, not cancelled (§18.10).** NEXT: M4.4 Context Builder / Portable Export (§19).**
 > Stack: same as P1 (Vite · React · TypeScript · GitHub Pages, no backend). Adds one optional, fail-soft data layer and reuses the P1 dashboard surface.
 
 Surfaces the curated task-oriented classification of the coding-agent / skills-ecosystem subset of the starred repos (source: `skills-classified.md`, 171 entries, 24 categories) **inside the existing Starred view** as optional metadata — not as a second browser and not as rendered Markdown.
@@ -2143,3 +2143,273 @@ The contract carries NO write capability: no write / edit / delete tools, no git
 **Closure:** M4.3b.1 CLOSED.
 
 **NEXT:** M4.3b.2 — read-only MCP server.
+
+### 18.10 Owner direction change — M4.3b.2 DEFERRED (accretive; 2026-10-10)
+
+**Accretive record. The dated §18.0–§18.9 history above (including §18.9's
+"NEXT: M4.3b.2") is retained verbatim as the point-in-time record at M4.3b.1
+closure. This section records a later owner product decision; it reverses no
+review/closure gate and renames no historical contract.**
+
+- **M4.3b.2 (read-only MCP server) is DEFERRED by owner product decision** —
+  trigger-based, **not cancelled**. Its frozen D1–D8 contract (§18.1–§18.7)
+  stands historically as "originally planned read-only MCP server"; MCP was not
+  delivered and is not claimed as delivered.
+- **Reason:** the validated near-term user job-to-be-done is human-directed
+  portable context export (browse/filter → preview → copy Markdown/JSON → paste
+  into any agent), not autonomous agent discovery through a protocol server. The
+  export workflow has lower setup cost, works across agents, and delivers visible
+  product value in the webpage. M4.3b.1 remains valid and CLOSED; `@starred/insights`
+  is not removed and its review/closure is not reopened. This is not sunk-cost
+  continuation of MCP.
+- **Deferred ≠ rejected/cancelled.** M4.3b.2 may be reconsidered when real usage
+  demonstrates one or more **reopening triggers**:
+  1. users repeatedly perform filter → copy → ask agent → return → change filter
+     → copy again;
+  2. users need an agent to autonomously explore/query StarLedger without human
+     selection;
+  3. external MCP-capable clients need structured live access to StarLedger;
+  4. the portable-export contract becomes a proven second-consumer candidate that
+     materially benefits from a protocol surface.
+- Until a trigger is observed: NO `packages/mcp-server`, NO MCP SDK, NO stdio
+  server, NO MCP resources/tools, NO BYOK/model integration.
+- **NEXT: M4.4 Context Builder / Portable Export (§19)** — a separate
+  user-facing product capability, deliberately NOT named "M4.3b.2".
+
+---
+
+## 19. M4.4 — Context Builder / Portable Export: charter, contract, acceptance & evidence (CONTRACT FROZEN by owner 2026-10-10 · IMPLEMENTED + LOCAL GATES + REAL-DATA BROWSER SMOKE 2026-10-10 · PRE-COMMIT REVIEW §19.7)
+
+### 19.0 Owner product decision & job-to-be-done
+
+Let a user use StarLedger's existing repository discovery/filtering experience to
+produce a compact, structured, portable context package copied directly into an
+AI agent. Core workflow: **Filter → Preview filtered repository context → Copy as
+Markdown OR Copy as JSON.** A HUMAN-DIRECTED HANDOFF — not autonomous agent
+exploration, not an MCP server, not an LLM feature, not a prompt-generation
+system, not a second repository search engine.
+
+### 19.1 Frozen MVP product contract
+
+- **A — Web surface (owner-revised 2026-10-10, §19.8):** a **"Copy context"
+  control in the Starred results header** opening a **modal export panel** — NOT a
+  separate tab/route (the original `view=context` tab was dropped after the owner
+  found the filter-in-Starred → switch-tab-to-copy round-trip clunky). Filtering
+  and exporting now live on one surface. **ABSOLUTE RULE: one filter-semantics
+  source** — the panel consumes RepositoryView's OWN already-computed `results`
+  (no independent filter engine, no recomputation). Opening/closing the panel is
+  local state and never touches the canonical browse/filter state.
+- **B — Export set:** the ENTIRE CURRENT FILTERED RESULT SET (not the pagination
+  page, not visible DOM rows, not a re-filtered approximation). `count === 27` ⇒
+  `export === 27`. Manual per-repo selection is OUT of MVP. No saved collections.
+- **C — Exported repository data (existing deterministic metadata only):**
+  `nameWithOwner` ← `name_with_owner`; `url` ← `url` (https-validated at load);
+  `description` ← `description` (null when absent); `category`/`tags` ← the AI
+  annotation layer (`ai.category` / `ai.tags`), coherent-ready–gated. No metadata
+  generated at export time; no model call; absent metadata is never fabricated. A
+  repo whose AI layer is not coherent-ready still exports, with
+  `category`/`tags` degraded to null/`[]`.
+- **D — Markdown export:** compact, agent-friendly, deterministic; preserves
+  result order; descriptions normalized to a single line; Markdown-sensitive
+  repository metadata escaped; repository-controlled text framed as DATA, not
+  instructions (explicit untrusted-data header); optional fields omitted cleanly;
+  no speculative summaries.
+- **E — JSON export:** a VERSIONED structured envelope (`schemaVersion: 1`), not a
+  bare array (§19.3). Mapped to actual current-main field names + real provenance;
+  no fabricated hashes/provenance; no runtime `copiedAt` (deterministic).
+- **F — Preview + copy:** current filtered count; Markdown/JSON format choice;
+  preview of EXACTLY what will be copied; payload size shown as
+  "N repositories · N characters"; copy failure surfaced — success reported ONLY
+  when the clipboard write resolves. (Approximate token count OUT.)
+- **G — No new data pipeline:** consumes the same already-loaded dataset/view
+  state. NO network / GitHub API / backend / filesystem / server state / MCP /
+  model / API keys.
+
+### 19.2 Architecture (dashboard-local; no premature package)
+
+`apps/dashboard/src/features/context/` — `export.ts` (pure logic) +
+`ContextExportPanel.tsx` (the modal panel). No shared package (no proven second
+consumer; MCP is deferred, not a sunk-cost justification). The panel is opened
+from `RepositoryView` and receives that view's OWN `results` and effective
+`view` as props — the identical values Browse renders BEFORE it slices them into
+48-row pages:
+
+```
+const view = useMemo(() => dashboardToView(state, aiReady, skillsReady), [...]);
+const results = useMemo(() => selectFromPrepared(prepared, view), [prepared, view]);
+// → RepositoryView renders results.slice(page) AND passes results+view to the panel
+```
+
+So the exported set is the Browse set **by construction** — the same array
+instance, not a re-run of the pipeline — the strongest form of "one
+filter-semantics source". There is NO recomputation in the panel and therefore
+NO second clock (the panel inherits RepositoryView's `sessionNow` through
+`results`), so the `stale` filter can never diverge. The effective `ViewState`
+drives the exported selection summary too, so set and summary cannot drift.
+
+Because the export is a panel inside Starred (not a view), `App.tsx` and
+`dashboard-state.ts` are UNCHANGED from origin/main — no `view=context`, no route,
+no canonical-state field; the panel's open flag is local `useState`, and the
+browse/filter state is inherently preserved (no view switch). The panel's modal
+a11y (focus-in, Tab trap, Escape, backdrop click, return-focus) replicates the
+proven `FilterDrawer` pattern; it uses its OWN `.context-backdrop` (visible at
+every width) rather than the mobile-only `.drawer-backdrop`. The body-scroll lock
+is a SHARED reference-counted hook (`useBodyScrollLock`) used by BOTH the filter
+drawer and this panel, so two modals open at once lock the body once and restore
+it only when the last closes — a per-modal save/restore leaked the lock when both
+closed together (r3). The clipboard WRITES are serialized through a MODULE-LEVEL promise chain
+(`enqueueClipboardWrite`) so the clipboard's final content always matches the
+reported status — the queue spans panel unmount/remount, so a pending write from
+a closed panel can never land after a reopened panel's newer write (r3/r4).
+
+### 19.3 Export schema (frozen)
+
+**JSON envelope:**
+
+```
+{ "schemaVersion": 1,
+  "source": { "starsSha256": <hex|null>, "datasetGeneratedAt": <iso|null> },
+  "selection": { "query", "categories", "tags", "languages", "topics", "licenses",
+                 "scope": "all"|"skills", "skillCategories", "archived", "fork",
+                 "stale", "stableRelease", "anyRelease", "hydrationStatuses",
+                 "sort", "direction", "count" },
+  "repositories": [ { "nameWithOwner", "url", "description", "category", "tags" } ] }
+```
+
+`source` ← dataset `meta.stars_sha256` / `meta.dataset_generated_at`. `selection`
+reflects the EFFECTIVE view (a not-ready AI/skills facet reads empty — honest
+about the set actually produced). JSON carries raw repository text (JSON encoding
+is injection-safe).
+
+**Markdown:** `# StarLedger repository context` + untrusted-data notice + `Filters:`
+(active filters, else `- None`) + `Sort:` + `Repositories: N` + one `- [name](url)`
+entry per repo with optional indented `Description:` / `Category:` / `Tags:` lines.
+Repository TEXT (name, description, category, tags, filter values) is single-lined
+then escaped (``\ ` * _ [ ] ( ) < > | ~``), making injected newlines/list-items/
+headings inert. The link URL is separately percent-encoded for its destination
+(ASCII controls + whitespace, `(` `)` `<` `>`, and backslash) so a crafted URL that
+passed the loader's https check cannot close the link early or inject a second
+link/autolink — percent-encoding, not backslash-escaping, so a backslash cannot
+defeat it (pre-commit review r2/r3).
+
+### 19.4 Acceptance criteria (IDs = test names; `CEP-*` = panel unit, `CTX-STARRED-*` = App integration, `EXP-*` = pure export)
+
+1. FILTER PARITY — `CTX-STARRED-2` (exported IDs == an independently-computed
+   Browse filtered+ordered oracle) + by construction (panel takes RepositoryView's
+   own `results`) (+ smoke).
+2. PAGINATION INDEPENDENCE — `CTX-STARRED-1` (50 matching repos > 48-row page ⇒
+   export 50) (+ smoke: whole set, not a page).
+3. ORDERING — `CTX-STARRED-2` (name asc) + `EXP-ORDER-1`.
+4. SEARCH — `CTX-STARRED-1` (`q=cli` ⇒ 50, excludes non-matching).
+5. OPTIONAL AI METADATA — `EXP-AI-1`, `EXP-AI-2`, `CEP-AI-1`.
+6. DESCRIPTION null/missing — `EXP-MD-2`, `EXP-MD-3`.
+7. MARKDOWN ESCAPING — `EXP-MD-ESC-1` (field injection inert), `EXP-MD-ESC-2`
+   (name brackets), `EXP-MD-ESC-3` (URL cannot inject a link/autolink/emphasis/
+   newline — bare `)`, backslash-before-`)`, `<…>`, raw newline all neutralised).
+8. JSON VALIDITY — `EXP-JSON-1` (+ smoke: parses, schemaVersion 1).
+9. DETERMINISM — `EXP-JSON-2` (no copiedAt), `EXP-DET-1`.
+10. COUNT — `EXP-COUNT-1`, `CTX-STARRED-1`.
+11. SOURCE PROVENANCE — `EXP-SOURCE-1`, `EXP-SOURCE-2` (+ smoke: 64-hex sha, not fabricated).
+12. CLIPBOARD SUCCESS/FAILURE — `CEP-COPY-1` (success only on resolve), `CEP-COPY-2`
+    (reject), `CEP-COPY-3` (unavailable API), `CEP-COPY-4` (overlapping copies are
+    SERIALIZED so the clipboard ends with the latest payload, matching the status),
+    `CEP-COPY-5` (feedback bound to the previewed payload), `CEP-COPY-6`
+    (serialization spans panel unmount/remount via the module-level queue — r4).
+13. VIEW STATE — `CTX-STARRED-1` (opening/closing the panel leaves `q=cli` and all
+    filter state untouched — no view switch to reset it).
+14. NO NETWORK / MODEL / MCP — `CEP-NET-1`.
+15. MODAL A11Y — `CEP-ESC-1` (Escape closes), `CEP-2` (closed ⇒ renders nothing);
+    focus-trap/return-focus via the shared FilterDrawer pattern; reference-counted
+    body-scroll lock `LOCK-1`..`LOCK-4` (nested modals lock once, restore only when
+    the last closes — r3 leak closed).
+
+### 19.5 Implementation (file delta — Plan-2 surface)
+
+- NEW `apps/dashboard/src/features/context/export.ts` — pure
+  `buildContextExport` / `toMarkdown` / `toJson` / `markdownLinkDestination`
+  (+ `CONTEXT_SCHEMA_VERSION`). Unchanged by the surface pivot.
+- NEW `apps/dashboard/src/features/context/ContextExportPanel.tsx` — the modal
+  export panel (consumes `results`/`view`/`aiReady`/provenance; format toggle,
+  preview, size, payload-bound copy, modal a11y).
+- NEW `apps/dashboard/src/features/context/{export.test.ts, ContextExportPanel.test.tsx}`.
+- MOD `apps/dashboard/src/features/repositories/RepositoryView.tsx` — names the
+  effective `view`, adds the "Copy context" trigger in the results header and the
+  `<ContextExportPanel/>`; filter/sort/pagination logic is otherwise unchanged.
+- NEW `apps/dashboard/src/components/use-body-scroll-lock.ts` — reference-counted
+  body-scroll lock (+ `use-body-scroll-lock.test.ts`).
+- MOD `apps/dashboard/src/features/filters/FilterDrawer.tsx` — adopts the shared
+  `useBodyScrollLock` in place of its own non-reentrant save/restore (r3 fix);
+  focus-trap/Escape/return-focus unchanged.
+- MOD `apps/dashboard/src/styles.css` — `.results-head`, `.copy-context-button`,
+  `.context-backdrop` (all-width modal), `.context-panel`, and the export controls.
+- `apps/dashboard/src/app/App.tsx` and `state/dashboard-state.ts` are UNCHANGED
+  from origin/main (the dropped tab needed neither).
+
+### 19.6 Evidence boundary (each satisfied)
+
+- Full workspace vitest suite green (the M4.4 feature's own tests are the
+  acceptance IDs in §19.4, in `apps/dashboard/src/features/context/export.test.ts`
+  and `ContextExportPanel.test.tsx`; exact per-file counts are left to the files
+  to avoid hand-typed drift). No Browse regression — `App`, `RepositoryView` (50),
+  `InsightsView`, `FilterDrawer` and `use-dashboard-state` suites stay green with
+  the "Copy context" trigger + panel added to RepositoryView.
+- `typecheck` (all packages) · `eslint` (changed files) · `prettier` (changed
+  files) · `vite build` — all clean. (`eslint .` / `prettier --check .` also flag
+  pre-existing untracked local scratch `.playwright-mcp/` + `skills-staging/`,
+  absent on a clean CI checkout; the committed change set is gate-clean.)
+- No new dependency; `pnpm-lock.yaml` untouched.
+- **Real-data browser smoke (876 repos, all AI-enriched; `vite preview` over the
+  built bundle + real data):** in Starred with `q=cli` (50-row-plus set), the
+  "Copy context" button opens the modal panel; the panel exports the WHOLE
+  filtered set (not the 48-row page) — `Repositories: <n>` and JSON `count`/array
+  agree with the Browse result count; Markdown shows a real repo + description +
+  AI tags; JSON parses (`schemaVersion` 1, 64-hex `starsSha256`); Copy reports
+  "Copied to clipboard." on a resolved write; Escape/backdrop close and return
+  focus to the trigger; mobile 390px has zero horizontal page overflow with the
+  panel usable; the filter state is untouched after closing. Zero console errors.
+
+### 19.7 Pre-commit review
+
+Per the established discipline: freeze the candidate, build one self-contained
+packet, dispatch fresh isolated lenses (Grok + gpt-5.6-sol + gpt-5.6-luna) on the
+SAME candidate, reproduce every finding before accepting it (reviewer vote count
+is not evidence; an objective reproducible finding overrides majority). Closure:
+one complete 3/3 literal PROCEED round + zero surviving in-scope correctness
+finding = M4.4 PRE-COMMIT REVIEW CLOSED. The CLOSED record is appended here as the
+only post-review doc-only delta (the M4.1/M4.2/M4.3a/M4.3b pattern). STOP after
+closure — no commit/push/PR/merge without the explicit owner commit gate.
+
+**M4.4 PRE-COMMIT REVIEW CLOSED — 2026-10-10.** Five fresh isolated cross-family
+rounds (Grok-4.7@high · gpt-5.6-sol@max · gpt-5.6-luna@max) on the frozen
+candidate; every finding reproduced before acting; round 5 = 3/3 literal PROCEED,
+zero surviving in-scope correctness finding. Finding arc (all fixed): R1 URL
+unescaped + clipboard status race; R2 URL backslash/`<>` bypass + clipboard
+effect-ordering; R3 clipboard side-effect serialization + nested-modal scroll-lock
+leak; R4 clipboard serialization cross-instance (module-level queue); R5 3/3.
+Closed by mechanism replacement: module-level serialized clipboard write queue +
+shared reference-counted body-scroll lock. Reviewed candidate fp `b0ddd7ca…`;
+this CLOSED record is the only post-review doc-only delta. STOPPED at owner commit
+gate — no commit/push/PR performed.
+
+### 19.8 Owner surface decision — in-Browse export panel, dedicated tab dropped (2026-10-10)
+
+Accretive record of an owner product decision taken DURING the pre-commit review,
+after the owner used the first implementation (a dedicated `view=context` tab).
+
+- **Observed friction:** the tab forced a round-trip — filter in Starred, switch
+  to the Context tab to preview/copy, switch back to adjust filters — because the
+  Context tab had no filter controls of its own.
+- **Decision (owner chose "Plan 2"):** replace the dedicated tab with a
+  **"Copy context" control in the Starred results header** that opens a **modal
+  export panel** (preview + Markdown/JSON copy). Filtering and exporting now share
+  one surface; the pre-copy preview + payload-size + truthful-copy requirements
+  (contract F) are preserved. A considered "Plan 1" (two bare copy buttons, no
+  preview) was rejected: it would drop the contract-F preview and blind-copy a
+  potentially large payload.
+- **Consequence:** `view=context` is removed entirely — `App.tsx` and
+  `dashboard-state.ts` revert to origin/main; the export is a local panel inside
+  RepositoryView consuming its own `results`/`view` (§19.2). Contract item A
+  (§19.1) is revised accordingly; B–G are unchanged. The export engine
+  (`export.ts`) and its tests carried over unchanged. This supersedes the
+  "first-class tab" wording wherever it appears earlier in §19; the dated
+  pre-commit-review history (§19.7 and the records appended there) stays verbatim.

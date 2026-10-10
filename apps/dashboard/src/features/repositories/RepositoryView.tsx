@@ -20,6 +20,7 @@ import {
   prepareRepositories,
   selectFromPrepared,
 } from './select';
+import { ContextExportPanel } from '../context/ContextExportPanel';
 
 const SORT_LABELS: Record<SortField, string> = {
   starred_at: 'Recently starred',
@@ -133,6 +134,11 @@ export function RepositoryView({
   const [sessionNow] = useState(() => initialNow ?? new Date());
   const [filtersOpen, setFiltersOpen] = useState(false);
   const closeFilters = useCallback(() => setFiltersOpen(false), []);
+  // Context Builder export panel (P7 §19): local open state, opened from the
+  // results header; focus returns to its trigger on close.
+  const [contextOpen, setContextOpen] = useState(false);
+  const closeContext = useCallback(() => setContextOpen(false), []);
+  const copyContextRef = useRef<HTMLButtonElement>(null);
   const searchId = useId();
 
   const annotationsByNodeId = annotations?.byNodeId;
@@ -203,10 +209,15 @@ export function RepositoryView({
   // AI- and skills-dependent filters are applied only when their layer is ready
   // (P7 §2.2/§4.11): when not, they are neutralized so base repos are never
   // suppressed — results are never zeroed by an optional layer's absence.
-  const results = useMemo(
-    () => selectFromPrepared(prepared, dashboardToView(state, aiReady, skillsReady)),
-    [prepared, state, aiReady, skillsReady],
+  // The effective ViewState (fail-soft AI/skills gating) and the full filtered +
+  // ordered result set it produces — BEFORE pagination. The Context Builder panel
+  // exports this SAME `results`/`view`, so its exported set is the Browse set by
+  // construction (one filter-semantics source; no recomputation, no second clock).
+  const view = useMemo(
+    () => dashboardToView(state, aiReady, skillsReady),
+    [state, aiReady, skillsReady],
   );
+  const results = useMemo(() => selectFromPrepared(prepared, view), [prepared, view]);
 
   // Grouped presentation (P7 §15.3–15.5, M4.1): `state.group` is the REQUESTED
   // value — retained in the URL and shown by the control — and is EFFECTIVE
@@ -463,14 +474,26 @@ export function RepositoryView({
         </aside>
 
         <section className="results" aria-labelledby="results-heading">
-          <h2
-            id="results-heading"
-            tabIndex={-1}
-            ref={resultsHeadingRef}
-            className="results-heading"
-          >
-            Starred repositories
-          </h2>
+          <div className="results-head">
+            <h2
+              id="results-heading"
+              tabIndex={-1}
+              ref={resultsHeadingRef}
+              className="results-heading"
+            >
+              Starred repositories
+            </h2>
+            {/* Context Builder (§19): export the current filtered set as portable
+                Markdown/JSON without leaving the Starred view. */}
+            <button
+              type="button"
+              className="copy-context-button"
+              ref={copyContextRef}
+              onClick={() => setContextOpen(true)}
+            >
+              Copy context
+            </button>
+          </div>
 
           <FilterChips
             state={state}
@@ -633,6 +656,17 @@ export function RepositoryView({
           skills={skillsFacetData}
         />
       </FilterDrawer>
+
+      <ContextExportPanel
+        open={contextOpen}
+        onClose={closeContext}
+        returnFocusRef={copyContextRef}
+        results={results}
+        view={view}
+        aiReady={aiReady}
+        starsSha256={starsSha256}
+        datasetGeneratedAt={datasetGeneratedAt}
+      />
     </main>
   );
 }
