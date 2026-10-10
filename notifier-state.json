@@ -8,58 +8,10 @@
     "paths": [
       "README.md"
     ],
-    "last_commit_sha": "0146143834e24f3d2ea5e464c67b36ae2bbcf65a"
+    "last_commit_sha": "914f87e78f1fada48d98f11e69263bd5e1ede78f"
   },
   "pending": [],
   "deliveries": [
-    {
-      "notification_key": "awesome_stars:charmbracelet/bubbletea:MDEwOlJlcG9zaXRvcnkyMzMxMzAwODk=",
-      "status": "sent",
-      "completed_at": "2026-07-12T06:48:03.289Z",
-      "detail": null
-    },
-    {
-      "notification_key": "awesome_stars:emilkowalski/skills:R_kgDORogeyA",
-      "status": "sent",
-      "completed_at": "2026-07-12T06:48:03.289Z",
-      "detail": null
-    },
-    {
-      "notification_key": "awesome_stars:lakehq/sail:R_kgDOK8KcKA",
-      "status": "sent",
-      "completed_at": "2026-07-12T06:48:03.289Z",
-      "detail": null
-    },
-    {
-      "notification_key": "awesome_stars:mattpocock/dictionary-of-ai-coding:R_kgDOSRkPEA",
-      "status": "sent",
-      "completed_at": "2026-07-12T06:48:03.289Z",
-      "detail": null
-    },
-    {
-      "notification_key": "awesome_stars:nguyenphutrong/quotio:R_kgDOQuWrCw",
-      "status": "sent",
-      "completed_at": "2026-07-12T06:48:03.289Z",
-      "detail": null
-    },
-    {
-      "notification_key": "awesome_stars:ogulcancelik/herdr:R_kgDORymbOg",
-      "status": "sent",
-      "completed_at": "2026-07-12T06:48:03.289Z",
-      "detail": null
-    },
-    {
-      "notification_key": "awesome_stars:pamburus/hl:MDEwOlJlcG9zaXRvcnkyODQ5MDY4NzY=",
-      "status": "sent",
-      "completed_at": "2026-07-12T06:48:03.289Z",
-      "detail": null
-    },
-    {
-      "notification_key": "awesome_stars:unslothai/unsloth:R_kgDOKznBOA",
-      "status": "sent",
-      "completed_at": "2026-07-12T06:48:03.289Z",
-      "detail": null
-    },
     {
       "notification_key": "awesome_stars:apple/foundation-models-utilities:R_kgDOS0DBDg",
       "status": "sent",
@@ -628,6 +580,48 @@
       "notification_key": "awesome_stars:storytold/artcraft:R_kgDOHGbvPA",
       "status": "sent",
       "completed_at": "2026-10-07T08:45:31.667Z",
+      "detail": null
+    },
+    {
+      "notification_key": "awesome_stars:caarlos0/env:MDEwOlJlcG9zaXRvcnkzOTgwODIwOA==",
+      "status": "sent",
+      "completed_at": "2026-10-10T08:34:11.783Z",
+      "detail": null
+    },
+    {
+      "notification_key": "awesome_stars:go-chi/chi:MDEwOlJlcG9zaXRvcnk0NDM0NDYwNg==",
+      "status": "sent",
+      "completed_at": "2026-10-10T08:34:11.783Z",
+      "detail": null
+    },
+    {
+      "notification_key": "awesome_stars:microsoft/mxc:R_kgDORKXRjw",
+      "status": "sent",
+      "completed_at": "2026-10-10T08:34:11.783Z",
+      "detail": null
+    },
+    {
+      "notification_key": "awesome_stars:morluto/rea:R_kgDOSB6hVQ",
+      "status": "sent",
+      "completed_at": "2026-10-10T08:34:11.783Z",
+      "detail": null
+    },
+    {
+      "notification_key": "awesome_stars:shader-effects-inc/shaders:R_kgDOUzUwHQ",
+      "status": "sent",
+      "completed_at": "2026-10-10T08:34:11.783Z",
+      "detail": null
+    },
+    {
+      "notification_key": "awesome_stars:storytold/cadcraft:R_kgDOU_DMSg",
+      "status": "sent",
+      "completed_at": "2026-10-10T08:34:11.783Z",
+      "detail": null
+    },
+    {
+      "notification_key": "awesome_stars:twostraws/swiftui-agent-skill:R_kgDORfd2LQ",
+      "status": "sent",
+      "completed_at": "2026-10-10T08:34:11.783Z",
       "detail": null
     }
   ]
