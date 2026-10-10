@@ -1,6 +1,6 @@
 # P7 — Skills Ecosystem Spec (classification as an optional layer of the Starred view)
 
-> Status: **M0 merged (#234); M1.1 merged (#237); M1.2 merged (#239); M2.1 merged (#240, `713b1f1`); M2.2 merged (#241, `fd9c6b5`); M2.3 merged (#245, `56ed5d1` — sixteen-round arc closed at R16 3/3 PROCEED, four-loader integrity closure absorbed; §4.10 record); M2.4 first sub-slice merged (#263, `45c5c71` — scope + facet + badges + requested/effective semantics; §4.11 record); M2.4 second sub-slice merged (#271, `675bb3f` — search enrichment + summary display + `.md` download + coverage line; §4.12 record). M2.4 CLOSED. M2.5 CLOSED — merged #289 as merge commit `d6b1921` (reviewed head `338f8c9`; verification-first integrated closure, production delta 0; §4.13). M2 CLOSED (M2.1–M2.5 all merged). M3 CLOSED — identity: merged #297 as merge commit `0bb7db7` (reviewed head `5f108f27`; Concept-B header mark + wordmark + favicon, production delta = exactly the 7 M3 paths; charter + orientation §14, terminal closure §14.28). M4 programme started 2026-09-28 (owner direction). **M4.1 CLOSED** — group-by-primary-category view: merged #299 as merge commit `8709be6` (reviewed head `5507b65`; presentation-only grouping after selection / sort, production delta = exactly the 12 M4.1 paths; committed whole-candidate fingerprint `9ae011ac…8068d`; charter §15, implementation-freeze checkpoint §15.15, pre-commit review §15.16, terminal closure §15.17). **M4.2 CLOSED** — bounded debt closure (F4 only): merged #301 as merge commit `54bd5174` (reviewed head `dec39104`; coherent AI readiness — `annotationStatus === 'ready' && annotations != null` + fail-closed `dashboardToView` defaults, production delta = exactly the 6 M4.2 paths; committed whole-candidate fingerprint `a924e480…`; charter + adjudication §16, pre-commit review §16.7, terminal closure §16.8; F15 CLOSED BY RATIFICATION, R8-B / R12-5 deferred with reopen triggers, 3 accepted residuals unchanged). **M4.3a CLOSED** — deterministic Insights view: merged #304 as merge commit `a49adb03` (reviewed/committed head `241b284`; exactly PC / SA / ST / CC deterministic cards over the current snapshot, no trend claim, `view=insights` canonical top-level view; production delta = exactly the 10 M4.3a paths; committed whole-candidate fingerprint `a58bf205…`; charter §17, pre-commit review §17.6, terminal closure §17.7). **M4.3b.1 CLOSED** — shared deterministic Insights core (`@starred/insights`): merged #306 as merge commit `810ff0a` (committed head `005d3214`; charter + frozen D1–D8 §18, pre-commit review §18.8, terminal closure §18.9). **M4.3b.2 read-only MCP server DEFERRED by owner product decision — trigger-based, not cancelled (§18.10).** NEXT: M4.4 Context Builder / Portable Export (§19).**
+> Status: **M0 merged (#234); M1.1 merged (#237); M1.2 merged (#239); M2.1 merged (#240, `713b1f1`); M2.2 merged (#241, `fd9c6b5`); M2.3 merged (#245, `56ed5d1` — sixteen-round arc closed at R16 3/3 PROCEED, four-loader integrity closure absorbed; §4.10 record); M2.4 first sub-slice merged (#263, `45c5c71` — scope + facet + badges + requested/effective semantics; §4.11 record); M2.4 second sub-slice merged (#271, `675bb3f` — search enrichment + summary display + `.md` download + coverage line; §4.12 record). M2.4 CLOSED. M2.5 CLOSED — merged #289 as merge commit `d6b1921` (reviewed head `338f8c9`; verification-first integrated closure, production delta 0; §4.13). M2 CLOSED (M2.1–M2.5 all merged). M3 CLOSED — identity: merged #297 as merge commit `0bb7db7` (reviewed head `5f108f27`; Concept-B header mark + wordmark + favicon, production delta = exactly the 7 M3 paths; charter + orientation §14, terminal closure §14.28). M4 programme started 2026-09-28 (owner direction). **M4.1 CLOSED** — group-by-primary-category view: merged #299 as merge commit `8709be6` (reviewed head `5507b65`; presentation-only grouping after selection / sort, production delta = exactly the 12 M4.1 paths; committed whole-candidate fingerprint `9ae011ac…8068d`; charter §15, implementation-freeze checkpoint §15.15, pre-commit review §15.16, terminal closure §15.17). **M4.2 CLOSED** — bounded debt closure (F4 only): merged #301 as merge commit `54bd5174` (reviewed head `dec39104`; coherent AI readiness — `annotationStatus === 'ready' && annotations != null` + fail-closed `dashboardToView` defaults, production delta = exactly the 6 M4.2 paths; committed whole-candidate fingerprint `a924e480…`; charter + adjudication §16, pre-commit review §16.7, terminal closure §16.8; F15 CLOSED BY RATIFICATION, R8-B / R12-5 deferred with reopen triggers, 3 accepted residuals unchanged). **M4.3a CLOSED** — deterministic Insights view: merged #304 as merge commit `a49adb03` (reviewed/committed head `241b284`; exactly PC / SA / ST / CC deterministic cards over the current snapshot, no trend claim, `view=insights` canonical top-level view; production delta = exactly the 10 M4.3a paths; committed whole-candidate fingerprint `a58bf205…`; charter §17, pre-commit review §17.6, terminal closure §17.7). **M4.3b.1 CLOSED** — shared deterministic Insights core (`@starred/insights`): merged #306 as merge commit `810ff0a` (committed head `005d3214`; charter + frozen D1–D8 §18, pre-commit review §18.8, terminal closure §18.9). **M4.3b.2 read-only MCP server DEFERRED by owner product decision — trigger-based, not cancelled (§18.10).** M4.4 CLOSED — Context Builder / Portable Export: merged #314 as merge commit `b1672d9` (reviewed/committed head `31376509`; in-Browse "Copy context" modal panel exporting the whole filtered Starred set as Markdown / versioned JSON, human-directed, no network / model / MCP; production delta = exactly the 10 M4.4 paths; reviewed fingerprint `b0ddd7ca…`, committed fingerprint `ffa9efd0…`; charter §19, pre-commit review §19.7, owner Plan-2 surface decision §19.8, terminal closure §19.9). NEXT: beta-readiness + clean-slate release / tag hygiene for proposed `v1.0.0-beta.1` (M4.3b.2 MCP remains DEFERRED / trigger-based, NOT required for the beta-readiness decision).**
 > Stack: same as P1 (Vite · React · TypeScript · GitHub Pages, no backend). Adds one optional, fail-soft data layer and reuses the P1 dashboard surface.
 
 Surfaces the curated task-oriented classification of the coding-agent / skills-ecosystem subset of the starred repos (source: `skills-classified.md`, 171 entries, 24 categories) **inside the existing Starred view** as optional metadata — not as a second browser and not as rendered Markdown.
@@ -2178,7 +2178,7 @@ review/closure gate and renames no historical contract.**
 
 ---
 
-## 19. M4.4 — Context Builder / Portable Export: charter, contract, acceptance & evidence (CONTRACT FROZEN by owner 2026-10-10 · IMPLEMENTED + LOCAL GATES + REAL-DATA BROWSER SMOKE 2026-10-10 · PRE-COMMIT REVIEW §19.7)
+## 19. M4.4 — Context Builder / Portable Export: charter, contract, acceptance & evidence (CONTRACT FROZEN by owner 2026-10-10 · IMPLEMENTED + LOCAL GATES + REAL-DATA BROWSER SMOKE 2026-10-10 · PRE-COMMIT REVIEW 5 ROUNDS → ROUND 5 = 3/3 literal PROCEED, CLOSED 2026-10-10 at §19.7 · owner Plan-2 surface decision §19.8 · M4.4 CLOSED 2026-10-10 — merged #314 as merge commit `b1672d9`, terminal closure §19.9 · NEXT: beta-readiness / release-hygiene gate)
 
 ### 19.0 Owner product decision & job-to-be-done
 
@@ -2413,3 +2413,108 @@ after the owner used the first implementation (a dedicated `view=context` tab).
   (`export.ts`) and its tests carried over unchanged. This supersedes the
   "first-class tab" wording wherever it appears earlier in §19; the dated
   pre-commit-review history (§19.7 and the records appended there) stays verbatim.
+
+### 19.9 M4.4 TERMINAL CLOSURE — evidence-only accretive record (PR #314 · reviewed fingerprint `b0ddd7ca…` · committed head `31376509` · merge commit `b1672d9`; owner-ruled 2026-10-10)
+
+**Scope.** Evidence-only backfill of what happened after §19.7's pre-commit
+closure, in the §16.8 / §17.7 / §18.9 convention. The dated point-in-time records
+above are retained **verbatim** and are superseded only by this terminal closure:
+§18's M4.3b history (including §18.10's "NEXT: M4.4"), §19.7's five-round
+pre-commit review arc (including its "STOPPED at owner commit gate"), and §19.8's
+owner Plan-2 surface decision are each accurate as written on their date. Only the
+live status surfaces were advanced (the line-3 status header and this §19 heading
+parenthetical). This backfill **reopens nothing** — no re-run of the M4.4 tests,
+the real-data browser smoke, or the 3-leg review; it closes M4.4 and only M4.4.
+
+**Delivered — M4.4 Context Builder is the delivered human-directed
+portable-context surface.** An in-Browse **"Copy context"** control in the Starred
+results header opens a **modal export panel** (Plan 2, §19.8) that exports the
+**entire filtered Starred set** — not the paginated page — as **Markdown** or
+**versioned JSON** (`schemaVersion` 1), with a pre-copy preview, payload-size
+display, and a truthful copy confirmation. The panel reuses `RepositoryView`'s own
+pre-pagination `results`/`view`, so the export is at parity with the Browse result
+**by construction**. It is human-directed and **local**: no network, no model, no
+MCP, no BYOK, no new dependency (`pnpm-lock.yaml` untouched). The dedicated
+`view=context` tab from the first implementation was dropped mid-review (§19.8);
+`App.tsx` and `dashboard-state.ts` reverted to `origin/main`.
+
+**Evidence** (merge / CI / delta / housekeeping items observed this run; the
+review / fingerprints / gates / browser-smoke items are the committed candidate's
+own §19.6–§19.7 evidence, cited not re-run, per the no-reopen scope above):
+
+- M4.4 feature commit / head: `31376509e89696a3483f888096b4ee85d05e1362`
+- reviewed fingerprint: `b0ddd7ca…`
+- committed fingerprint: `ffa9efd0…`
+- pre-commit review (§19.7): five fresh isolated cross-family rounds
+  (Grok-4.7@high · gpt-5.6-sol@max · gpt-5.6-luna@max), every finding reproduced
+  before acting; **Round 5 = Grok + Sol + Luna = 3/3 literal PROCEED, zero
+  surviving**; the two deep edge areas (async clipboard, modal a11y) closed by
+  mechanism replacement (module-level serialized clipboard write queue + shared
+  reference-counted body-scroll lock)
+- final gates: full workspace vitest **1384/1384** + `typecheck` / `eslint` /
+  `prettier` / `vite build` all clean
+- real-data browser smoke (876 repos, all AI-enriched; `vite preview` over the
+  built bundle + real data): in Starred with `q=cli` (50-row-plus set) the "Copy
+  context" button opens the modal panel; the panel exports the WHOLE filtered set
+  (not the page) — `Repositories: <n>` and JSON `count`/array agree with the Browse
+  result count; Markdown shows a real repo + description + AI tags; JSON parses
+  (`schemaVersion` 1, 64-hex `starsSha256`); Copy reports "Copied to clipboard." on
+  a resolved write; Escape / backdrop close and return focus to the trigger; mobile
+  390px has zero horizontal page overflow with the panel usable; filter state
+  untouched after closing; zero console errors
+- PR #314 exact-head CI on `31376509`: **4/4 success** (`verify` ·
+  `build-and-check` · `verify-agent-artifacts` · `verify-ai-provenance`)
+- feature merge: `gh pr merge 314 --merge --match-head-commit 31376509…` (rc 0) —
+  a **normal** merge with the head pinned server-side; **`--admin` unused** (no
+  policy-only failure occurred); merged 2026-10-10T10:27:49Z by the owner account
+  `F-e-u-e-r`
+- feature merge commit: `b1672d9e7a1812f98b39cdda254b87a7263a9432`
+- merge parents: `a58bb67` (first parent = pre-merge `origin/main`) + `31376509`
+  (second parent = candidate); `31376509 ∈ origin/main`
+- post-merge main CI on `b1672d9`: **success** (`verify` · `build` · `guard` ·
+  `deploy`)
+- Pages: **success** — Pages WAS triggered (M4.4 changes `apps/dashboard`, which the
+  repository's Pages path rules admit), github-pages `deploy` success on `b1672d9`
+- merge delta `a58bb67..b1672d9`: **exactly the 10 M4.4 paths** (6 new + 4
+  modified); all nine non-P7 blobs byte-identical to the committed candidate; the P7
+  blob equals the committed candidate's P7 (the reviewed bytes + the §19.7 CLOSED
+  record only); **no** `App.tsx` / `dashboard-state.ts` / MCP / package / lockfile /
+  release-tag change
+- `skills-staging/` fingerprint `69830a75…` unchanged
+- housekeeping: remote head branch auto-deleted by `delete_branch_on_merge`
+  (recorded, not recreated); local `main` fast-forwarded to `b1672d9`;
+  `feat/m4.4-context-builder` deleted with `branch -d` after ancestor proof; stale
+  remote ref pruned; only `main` remains
+
+**The 10 paths.** New (6):
+`apps/dashboard/src/features/context/export.ts`,
+`apps/dashboard/src/features/context/export.test.ts`,
+`apps/dashboard/src/features/context/ContextExportPanel.tsx`,
+`apps/dashboard/src/features/context/ContextExportPanel.test.tsx`,
+`apps/dashboard/src/components/use-body-scroll-lock.ts`,
+`apps/dashboard/src/components/use-body-scroll-lock.test.ts`. Modified (4):
+`apps/dashboard/src/features/filters/FilterDrawer.tsx`,
+`apps/dashboard/src/features/repositories/RepositoryView.tsx`,
+`apps/dashboard/src/styles.css`, `docs/P7-skills-ecosystem-spec.md`.
+
+**M4.3b.2 MCP remains DEFERRED / trigger-based (§18.10) and is NOT required for the
+beta-readiness decision.** M4.4 Context Builder delivers the validated near-term
+job-to-be-done (human-directed portable context export); the read-only MCP server
+stays deferred with its reopening triggers intact — deferred, not cancelled, and
+not claimed as delivered.
+
+**Closure anchors for the record:** `M44_REVIEWED_FP = b0ddd7ca…`,
+`M44_COMMITTED_FP = ffa9efd0…`, `M44_FEATURE_HEAD = 31376509`,
+`M44_CLOSURE_SHA = b1672d9` (feature merge commit, PR #314); Round 5 = 3/3 literal
+PROCEED zero surviving; exact-head CI 4/4; post-merge main CI 4/4 + Pages success;
+merge delta exactly the 10 M4.4 paths; `skills-staging/` `69830a75…` untouched.
+**M2 CLOSED (`d6b1921`) · M3 CLOSED (`0bb7db7`) · M4.1 CLOSED (`8709be6`) · M4.2
+CLOSED (`54bd5174`) · M4.3a CLOSED (`a49adb03`) · M4.3b.1 CLOSED (`810ff0a`) ·
+M4.3b.2 DEFERRED (§18.10) · M4.4 CLOSED (`b1672d9`).**
+
+**Closure:** M4.4 CLOSED.
+
+**NEXT:** beta-readiness + clean-slate release / tag hygiene for proposed
+`v1.0.0-beta.1`. No destructive release/tag operation is authorized until this
+terminal closure has merged and the owner explicitly opens the beta-readiness
+gate.
