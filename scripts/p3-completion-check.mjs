@@ -3,75 +3,69 @@
 // Fails unless ALL hold (see docs/P3-completion-runbook.md):
 //   - canonical node_id set equality: missing = extra = duplicates = 0
 //   - live `classifier plan --current ai-annotations.json` plans 0 jobs
-//   - 0 omitted-unfetchable (a "0 jobs" that masks un-drained work)
+//   - the manifest's machine-readable plan_summary proves no refresh/retry work
+//     was masked by a 0 budget and 0 omitted-unfetchable (issue #207):
+//     empty_reason = 'drained-at-base', eligible_new/retry/refresh all 0, omitted 0
 //
 // It never writes/commits/pushes/opens a PR, and never uploads the manifest
 // (only counts + SHAs are reported). STAR_SYNC_TOKEN is used solely for the
-// planner's live README reads.
+// planner's live README reads. The pass/fail decision lives in the pure,
+// unit-tested p3-completion-gate.mjs (incl. a budget-masked-work falsification
+// case); this file is only its IO wrapper.
 import { readFileSync, mkdirSync, appendFileSync } from 'node:fs';
 import { spawnSync } from 'node:child_process';
+import { evaluateP3Completion } from './p3-completion-gate.mjs';
 
-const problems = [];
-
-// 1. Canonical identity (node_id) set equality — the planner's join key.
+// Canonical identity inputs (the planner's join key is node_id).
 const stars = JSON.parse(readFileSync('stars.json', 'utf8')).repos;
-const anns = JSON.parse(readFileSync('ai-annotations.json', 'utf8')).annotations;
-const starIds = new Set(stars.map((r) => r.node_id));
-const seen = new Map();
-for (const a of anns) seen.set(a.node_id, (seen.get(a.node_id) ?? 0) + 1);
-const annIds = new Set(seen.keys());
-const missing = [...starIds].filter((id) => !annIds.has(id)).length; // starred but unannotated
-const extra = [...annIds].filter((id) => !starIds.has(id)).length; // annotated but not a current star
-const duplicates = [...seen.values()].reduce((n, c) => n + (c - 1), 0);
-if (missing !== 0 || extra !== 0 || duplicates !== 0) {
-  problems.push('backlog not drained (node_id set inequality)');
-}
+const annotations = JSON.parse(readFileSync('ai-annotations.json', 'utf8')).annotations;
 
-// 2. Live credentialed plan (README discovery needs STAR_SYNC_TOKEN).
+// Live credentialed plan (README discovery needs STAR_SYNC_TOKEN).
 mkdirSync('.ai-runs', { recursive: true });
 const OUT = '.ai-runs/manifest.json';
 const plan = spawnSync(
   'pnpm',
   ['classifier', 'plan', '--current', 'ai-annotations.json', '--out', OUT],
-  { encoding: 'utf8' },
+  {
+    encoding: 'utf8',
+  },
 );
 const stdout = plan.stdout ?? '';
 process.stdout.write(stdout);
 if (plan.stderr) process.stderr.write(plan.stderr);
-if (plan.status !== 0) problems.push(`classifier plan exited ${plan.status}`);
-if (/AI classification disabled/.test(stdout)) {
-  problems.push('AI classification disabled — no live discovery ran');
-}
 
-// 3. Jobs + dataset SHA from the manifest (never print its content).
-let jobs = Number.NaN;
-let datasetSha = 'unknown';
+// The manifest is the authoritative result. plan_summary (issue #207) replaces
+// the former stdout prose parsing ("AI classification disabled", "omitted N
+// probe-ok") with machine-readable fields.
+let manifest = null;
 try {
-  const manifest = JSON.parse(readFileSync(OUT, 'utf8'));
-  jobs = Array.isArray(manifest.jobs) ? manifest.jobs.length : Number.NaN;
-  datasetSha = manifest.dataset_sha256 ?? 'unknown';
+  manifest = JSON.parse(readFileSync(OUT, 'utf8'));
 } catch (error) {
-  problems.push(`unreadable manifest: ${error.message}`);
+  process.stderr.write(`unreadable manifest: ${error.message}\n`);
 }
-if (jobs !== 0) problems.push(`planned jobs = ${jobs} (want 0)`);
 
-// 4. Omitted-unfetchable (README probe ok, bytes not fetchable → re-plans later).
-const omittedMatch = stdout.match(/omitted (\d+) probe-ok/);
-const omitted = omittedMatch ? Number(omittedMatch[1]) : 0;
-if (omitted !== 0) problems.push(`omitted-unfetchable = ${omitted} (want 0)`);
+const { pass, problems, metrics } = evaluateP3Completion({
+  stars,
+  annotations,
+  manifest,
+  planExitStatus: plan.status ?? 1,
+});
 
-// 5. Base commit SHA (pins the "0 jobs" to a corpus version).
+// Base commit SHA pins the "0 jobs" to a corpus version.
 const baseSha = (spawnSync('git', ['rev-parse', 'HEAD'], { encoding: 'utf8' }).stdout ?? '').trim();
+const show = (v) => (v === null || v === undefined ? '—' : v);
 
-const pass = problems.length === 0;
 const summary = [
   '# P3 completion check',
   '',
   `- base commit: \`${baseSha}\``,
-  `- dataset SHA: \`${datasetSha}\``,
-  `- backlog (node_id sets): stars=${starIds.size}, annotations=${anns.length} → missing=${missing}, extra=${extra}, duplicates=${duplicates}`,
-  `- planned jobs: ${jobs}`,
-  `- omitted-unfetchable: ${omitted}`,
+  `- dataset SHA: \`${metrics.datasetSha}\``,
+  `- backlog (node_id sets): stars=${metrics.starCount}, annotations=${metrics.annCount} → missing=${metrics.missing}, extra=${metrics.extra}, duplicates=${metrics.duplicates}`,
+  `- planned jobs: ${metrics.jobs}`,
+  `- eligible (pre-budget): new=${show(metrics.eligibleNew)}, retry=${show(metrics.eligibleRetry)}, refresh=${show(metrics.eligibleRefresh)}`,
+  `- omitted-unfetchable: ${show(metrics.omitted)}`,
+  `- deferred-retry (backoff): ${show(metrics.deferredRetry)}`,
+  `- empty_reason: ${show(metrics.emptyReason)}`,
   '',
   pass ? '**PASS — P3 completion gate satisfied.**' : `**FAIL** — ${problems.join('; ')}`,
   '',
