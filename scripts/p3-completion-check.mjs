@@ -5,7 +5,10 @@
 //   - live `classifier plan --current ai-annotations.json` plans 0 jobs
 //   - the manifest's machine-readable plan_summary proves no refresh/retry work
 //     was masked by a 0 budget and 0 omitted-unfetchable (issue #207):
-//     empty_reason = 'drained-at-base', eligible_new/retry/refresh all 0, omitted 0
+//     empty_reason = 'drained-at-base', eligible_new/retry/refresh all 0, omitted 0,
+//     deferred_retry 0, and deferred_terminal 0 (the dormant terminal-residual
+//     contract, #207 5b — not auto-originated today; fail-closed if seeded or a
+//     future writer sets it)
 //
 // It never writes/commits/pushes/opens a PR, and never uploads the manifest
 // (only counts + SHAs are reported). STAR_SYNC_TOKEN is used solely for the
@@ -65,6 +68,7 @@ const summary = [
   `- eligible (pre-budget): new=${show(metrics.eligibleNew)}, retry=${show(metrics.eligibleRetry)}, refresh=${show(metrics.eligibleRefresh)}`,
   `- omitted-unfetchable: ${show(metrics.omitted)}`,
   `- deferred-retry (backoff): ${show(metrics.deferredRetry)}`,
+  `- deferred-terminal (unavailable): ${show(metrics.deferredTerminal)}`,
   `- empty_reason: ${show(metrics.emptyReason)}`,
   '',
   pass ? '**PASS — P3 completion gate satisfied.**' : `**FAIL** — ${problems.join('; ')}`,

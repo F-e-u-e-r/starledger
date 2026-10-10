@@ -17,6 +17,7 @@ const DRAINED = {
   eligible_refresh: 0,
   omitted_unfetchable: 0,
   deferred_retry: 0,
+  deferred_terminal: 0,
   empty_reason: 'drained-at-base',
 };
 
@@ -102,6 +103,48 @@ describe('P3 completion gate — pure decision', () => {
     expect(r.pass).toBe(false);
     expect(r.problems.join(' ')).toMatch(/deferred_retry = 1/);
     expect(r.problems.join(' ')).toMatch(/drained-at-base/);
+  });
+
+  it('FALSIFY #207 5b: terminal residual (deferred, deferred_retry=0) FAILS on the count AND empty_reason', () => {
+    // The dormant terminal shape a future circuit-breaker / quarantine writer would
+    // produce: a terminally-unavailable repo is skip-terminal — absent from
+    // eligible_* AND from deferred_retry — so deferred_terminal + the 'deferred'
+    // reason are what distinguish it from a drained backlog. The gate must reject it.
+    const r = evalWith({
+      manifest: manifest({ ...DRAINED, deferred_terminal: 1, empty_reason: 'deferred' }),
+    });
+    expect(r.pass).toBe(false);
+    expect(r.problems.join(' ')).toMatch(/deferred_terminal = 1/);
+    expect(r.problems.join(' ')).toMatch(/drained-at-base/);
+  });
+
+  it('FALSIFY #207 5b: deferred_terminal>0 FAILS even if empty_reason is mislabeled drained-at-base (independent 2nd layer)', () => {
+    // Defense-in-depth: were a future writer to set terminal state yet (wrongly)
+    // emit empty_reason='drained-at-base', the deferred_terminal assertion ALONE
+    // still fails the gate — the count is an independent fail-closed layer, not a
+    // restatement of the empty_reason precedence.
+    const r = evalWith({ manifest: manifest({ ...DRAINED, deferred_terminal: 2 }) });
+    expect(r.pass).toBe(false);
+    expect(r.problems.join(' ')).toMatch(/deferred_terminal = 2/);
+    // The empty_reason check did NOT fire here (it was the mislabel) — proving the
+    // count caught what the precedence layer missed.
+    expect(r.problems.join(' ')).not.toMatch(/want "drained-at-base"/);
+  });
+
+  it('FALSIFY #207 5b: a plan_summary predating deferred_terminal fails closed (undefined !== 0)', () => {
+    // An old classifier's manifest has a plan_summary without deferred_terminal; the
+    // gate must fail closed rather than treat the missing count as 0.
+    const legacy = {
+      eligible_new: 0,
+      eligible_retry: 0,
+      eligible_refresh: 0,
+      omitted_unfetchable: 0,
+      deferred_retry: 0,
+      empty_reason: 'drained-at-base',
+    };
+    const r = evalWith({ manifest: manifest(legacy) });
+    expect(r.pass).toBe(false);
+    expect(r.problems.join(' ')).toMatch(/deferred_terminal = undefined/);
   });
 
   it('FALSIFY: absent plan_summary fails closed (old classifier)', () => {

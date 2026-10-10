@@ -80,6 +80,19 @@ export function evaluateP3Completion({ stars, annotations, manifest, planExitSta
     // a jobs==0 + node_id-set-equal check alone would falsely pass (issue #207).
     if (ps.deferred_retry !== 0)
       problems.push(`deferred_retry = ${ps.deferred_retry} (want 0; retry backoff pending)`);
+    // Terminally-unavailable repos are also a skip bucket excluded from eligible_*.
+    // Asserted as a SECOND fail-closed layer, symmetric with deferred_retry and
+    // independent of the empty_reason precedence below. No runtime code originates
+    // terminal_unavailable today (planner.ts/state.ts), so this is 0 unless such
+    // state is seeded externally — a dormant contract guard that trips the day a
+    // terminal-quarantine / circuit-breaker writer lands, even if that writer
+    // mis-set the empty_reason precedence (issue #207 item 5b). `!== 0` also fails
+    // closed on a manifest predating this field (deferred_terminal === undefined),
+    // like the absent-plan_summary branch.
+    if (ps.deferred_terminal !== 0)
+      problems.push(
+        `deferred_terminal = ${ps.deferred_terminal} (want 0; terminally-unavailable residual)`,
+      );
     // 'drained-at-base' is the ONLY empty_reason that means completion; it rejects
     // 'disabled' (no live discovery) and 'deferred' (retry-backoff/terminal
     // residual), replacing the old stdout "AI classification disabled" /
@@ -107,6 +120,7 @@ export function evaluateP3Completion({ stars, annotations, manifest, planExitSta
       eligibleRefresh: ps ? ps.eligible_refresh : null,
       omitted: ps ? ps.omitted_unfetchable : null,
       deferredRetry: ps ? ps.deferred_retry : null,
+      deferredTerminal: ps ? ps.deferred_terminal : null,
       emptyReason: ps ? (ps.empty_reason ?? null) : null,
     },
   };
