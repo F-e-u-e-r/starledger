@@ -52,6 +52,32 @@
       }
     },
     {
+      "node_id": "MDEwOlJlcG9zaXRvcnk0NDM0NDYwNg==",
+      "category": "libraries-frameworks",
+      "tags": [
+        "api",
+        "backend",
+        "library",
+        "rest-api",
+        "web-framework"
+      ],
+      "summary": "A lightweight, idiomatic and composable router for building Go HTTP services, built on the standard net/http and context packages. It supports route groups, sub-router mounting, and optional middlewares for maintainable REST API servers.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "5f9f4435677654c16a2f147fd3178214231ca7ff",
+        "repo_metadata_sha256": "22a7cbaab1f45d2ea11df96db90541bd60cade6ac90ff252ae2576da493be0ac",
+        "fingerprint": "99d84e8692e540a9ee5d3dad8aabb99a8042e39fab72bb54336c494374ce829c"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-10-11T12:24:24Z"
+      }
+    },
+    {
       "node_id": "MDEwOlJlcG9zaXRvcnk0ODc2OTI0MQ==",
       "category": "media-creative",
       "tags": [
@@ -1676,6 +1702,30 @@
       }
     },
     {
+      "node_id": "MDEwOlJlcG9zaXRvcnkzOTgwODIwOA==",
+      "category": "libraries-frameworks",
+      "tags": [
+        "backend",
+        "configuration",
+        "library"
+      ],
+      "summary": "A simple, zero-dependencies Go library that parses environment variables into typed structs using struct tags. It supports built-in types, pointers, slices, maps, custom parsers, default values, required fields, and prefixed nested configuration.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "888946fe504452603364c093c21b4874ba9675e3",
+        "repo_metadata_sha256": "26e718809b697bde8650eed2b08465a723fda10d65782d19c74e882fc83f86f6",
+        "fingerprint": "5d5cde81691f53807772a443185c4a744625278bbb1f60121c6c7649cf5771dd"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-10-11T12:24:24Z"
+      }
+    },
+    {
       "node_id": "R_kgDOG3LkHA",
       "category": "developer-tools",
       "tags": [
@@ -1723,6 +1773,31 @@
         "model_label": null,
         "prompt_version": "classify-v1",
         "generated_at": "2026-09-26T10:23:41Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOGMaT0Q",
+      "category": "developer-tools",
+      "tags": [
+        "api",
+        "cli",
+        "documentation",
+        "linter"
+      ],
+      "summary": "A fast OpenAPI, AsyncAPI, Arazzo and JSON Schema linter and quality-checking tool, compatible with Spectral rulesets. It lints API specifications, generates documentation, and runs as a CLI, a Docker image, or a Go library.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "d2f4dea388cf6c0dc443a9d07bb721eddb618329",
+        "repo_metadata_sha256": "816563d883b4e55017b46c06d2076ec394725cf3f9e2059fd739d6fb5fcf96e4",
+        "fingerprint": "8b8dbca819fbabe40f7620b158e6613464135be9765d51ac4ccb88de05582aba"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-10-11T12:24:24Z"
       }
     },
     {
@@ -1891,6 +1966,29 @@
         "model_label": null,
         "prompt_version": "classify-v1",
         "generated_at": "2026-07-15T21:22:13Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOHGbvPA",
+      "category": "media-creative",
+      "tags": [
+        "desktop-app",
+        "gui"
+      ],
+      "summary": "A desktop application for interactive AI image and video creation that lets artists compose in 2D, stage scenes in 3D, and choose among many generative models. It provides visual tools for composition, character posing, and camera control.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "26fe9590761d4bf763efd25b9daf3918c8dd12dc",
+        "repo_metadata_sha256": "42e71c6a03dc9c964ade3b22d811d1616300319538321bf26ce9f9ed28b227b9",
+        "fingerprint": "7ff19bb52ddcb3843968ef20966c3a1dc8a41259320e2a7caf6ec48429d7002a"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-10-11T12:24:24Z"
       }
     },
     {
@@ -10344,6 +10442,30 @@
         "model_label": null,
         "prompt_version": "classify-v1",
         "generated_at": "2026-07-18T22:22:40Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOQtPVOQ",
+      "category": "developer-tools",
+      "tags": [
+        "ai-agents",
+        "desktop-app",
+        "gui"
+      ],
+      "summary": "A native Rust desktop application for reviewing code written by coding agents, with real Git workflows. It launches ACP-compatible agents, shows local diffs, collects inline comments, and supports staging, committing, rebasing, and opening pull requests.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "75342c4f9370bb51d48a78b9f425b4cf293de17d",
+        "repo_metadata_sha256": "c9b650319599515c07fba4eca08738b50edd1073ad404aab91d66f5c190b19af",
+        "fingerprint": "30f856cb5ff3424e44278c7d1a6eda1a57728e7460798850d3e32cca80b3adc9"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-10-11T12:24:24Z"
       }
     },
     {
