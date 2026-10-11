@@ -12383,6 +12383,30 @@
       }
     },
     {
+      "node_id": "R_kgDORKXRjw",
+      "category": "security-privacy",
+      "tags": [
+        "cli",
+        "containers",
+        "sdk"
+      ],
+      "summary": "A sandboxed code-execution system for running untrusted code on Windows, Linux, and macOS. It exposes multiple containment backends behind a unified model with policy-driven filesystem, network, and UI controls, and ships Rust, .NET, and Node SDKs plus standalone executor binaries that accept JSON container requests.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "1e5a99e60829128e18210a96396efd9de9b4eb42",
+        "repo_metadata_sha256": "c18a3d29c5cdc204e0b372fdde8452baea2ec232f9935eb9a290d96ba9c79eed",
+        "fingerprint": "2fb3036112868b79ab29a92ab6f69a15b2dd980200b199aa52a5cf50559fefe0"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-10-11T13:24:02Z"
+      }
+    },
+    {
       "node_id": "R_kgDORKpYLw",
       "category": "media-creative",
       "tags": [
@@ -14481,6 +14505,57 @@
         "model_label": "informational-only",
         "prompt_version": "classify-v1",
         "generated_at": "2026-07-20T04:22:35Z"
+      }
+    },
+    {
+      "node_id": "R_kgDORfd2LQ",
+      "category": "developer-tools",
+      "tags": [
+        "ai-agents",
+        "code-generation",
+        "plugin"
+      ],
+      "summary": "An agent skill that helps AI coding assistants write simpler, more modern SwiftUI code, with guidance on API usage, design, performance, and accessibility aimed at common mistakes. It uses the Agent Skills format and installs into tools such as Claude Code, Codex, Gemini, and Cursor.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "12e282c9336a10d31c23d53a586d2049e2b77525",
+        "repo_metadata_sha256": "6c73456df80f517b08361a1d2099cafd76956c031bd00b5b140e3aa644e13698",
+        "fingerprint": "b75b8774c8fe5debe9e19b0533f751884756f610ad315e574d7b8e12db986aa9"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-10-11T13:24:02Z"
+      }
+    },
+    {
+      "node_id": "R_kgDORfd_4g",
+      "category": "devops-infrastructure",
+      "tags": [
+        "automation",
+        "cli",
+        "containers",
+        "dashboard",
+        "deployment",
+        "self-hosted"
+      ],
+      "summary": "An open-source, self-hostable deployment platform with built-in CI/CD. Pointed at a repository, it builds, ships, routes, and TLS-terminates the application, supporting push-to-deploy, managed databases, domains, and backups. It can be driven from a desktop app, web dashboard, or CLI.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "88e231b5188f7cc166aa50b8b84401d16d245059",
+        "repo_metadata_sha256": "29d8db5630fdd07e5d564d2071f928d3eb470a81f5b03fe24c5fbcfd01dfbb6b",
+        "fingerprint": "65bbf29ed9599b0801d7dc49fc841b188b6fb4b49ad041a07a4465265a72d1f6"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-10-11T13:24:02Z"
       }
     },
     {
@@ -16824,6 +16899,30 @@
       }
     },
     {
+      "node_id": "R_kgDOSB6hVQ",
+      "category": "security-privacy",
+      "tags": [
+        "ai-agents",
+        "cli",
+        "llm"
+      ],
+      "summary": "An MCP server and CLI for AI-assisted reverse engineering of native binaries, JavaScript and Electron apps, .NET assemblies, websites, and more. Agents inspect targets locally and return findings with supporting evidence, integrating with assistants such as Claude Code, Codex, and Cursor.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "ac85e75487f18c82637494d930a06b3f25780e1c",
+        "repo_metadata_sha256": "716b65905a1622f798de4e9ffd07f0c7d49a7167a3a340e81b45cb68893f9994",
+        "fingerprint": "fbac4c2d41179b6f91aa49f4514360d2de7cae779b721deb9e51bb2c522e5414"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-10-11T13:24:02Z"
+      }
+    },
+    {
       "node_id": "R_kgDOSBMRrA",
       "category": "web-applications",
       "tags": [
@@ -18533,6 +18632,30 @@
         "model_label": "informational-only",
         "prompt_version": "classify-v1",
         "generated_at": "2026-09-01T13:04:21Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOT1NsbQ",
+      "category": "libraries-frameworks",
+      "tags": [
+        "cli",
+        "frontend",
+        "library"
+      ],
+      "summary": "Free, open-source, customizable PDF components for React that you copy, paste, and ship. Built on the Takumi and Forme renderers and compatible with the shadcn/ui registry and CLI workflow, it provides composable components and blocks such as tables, forms, charts, invoices, and reports.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "7ecb47f50fc909ee210f669a2c49bd78ca565439",
+        "repo_metadata_sha256": "2e6d5165af90d8b46e4f4e9bb750e91b9dda9ed5235f0695e1482a9f597d7c37",
+        "fingerprint": "862846a249021963d4b6fa098fa9ddebf028d58b50d0507780fcb0ca2695b621"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-10-11T13:24:02Z"
       }
     },
     {
