@@ -18782,6 +18782,32 @@
       }
     },
     {
+      "node_id": "R_kgDOT3oQWg",
+      "category": "ai-ml",
+      "tags": [
+        "ai-agents",
+        "automation",
+        "cli",
+        "sdk",
+        "testing"
+      ],
+      "summary": "ARTEMIS turns natural-language instructions into Android device automation. An AI agent observes the live screen and acts, driving real devices or emulators for end-to-end testing. It integrates with AI IDEs over MCP, offers Flash and Pro execution profiles, a Python SDK and a developer CLI, and reports a 99%+ completion rate on the AndroidWorld benchmark.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "8683bcce336c1cc53889ea49cbbc453f4a988076",
+        "repo_metadata_sha256": "11d129de353d1ac7eb33a5ebb99bf414c429d936c5945a3406ed0fff21a653b4",
+        "fingerprint": "9522787379a733ec2a64cb5dc5b15e4c139c79db558712913a400724ef8eb62b"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-10-11T14:24:13Z"
+      }
+    },
+    {
       "node_id": "R_kgDOT6_72Q",
       "category": "communication-collaboration",
       "tags": [
@@ -21663,6 +21689,31 @@
       }
     },
     {
+      "node_id": "R_kgDOUPhxzQ",
+      "category": "data-analytics",
+      "tags": [
+        "benchmark",
+        "cli",
+        "llm",
+        "visualization"
+      ],
+      "summary": "Works out the real cost of AI coding subscriptions by dividing each plan's monthly fee by the tokens it actually allows, then plots that price against public leaderboard scores as Pareto charts. It includes an interactive site, English and Chinese charts, downloadable CSV and JSON datasets, and a TypeScript CLI for querying prices and allowances.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "c014b94ec9c1566f126baed4b2023fb58bf86458",
+        "repo_metadata_sha256": "fed72bef57bd0068fd6228220a468d457f7b4f7b2935d6898db7807ecac45452",
+        "fingerprint": "7d0174918e1e606e12d975566dbed89357a9a27817b5191cf880018782906d2c"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-10-11T14:24:13Z"
+      }
+    },
+    {
       "node_id": "R_kgDOUPsbfA",
       "category": "productivity-automation",
       "tags": [
@@ -21785,6 +21836,32 @@
       }
     },
     {
+      "node_id": "R_kgDOUX_v6g",
+      "category": "developer-tools",
+      "tags": [
+        "desktop-app",
+        "llm",
+        "monitoring",
+        "observability",
+        "proxy"
+      ],
+      "summary": "A local gateway for Claude Code, Codex and other AI clients on macOS, Windows and Linux. Clients connect once, then upstreams and models switch without touching their configuration. It records each request's cost and route, redacts API keys before requests leave, cuts off dangerous tool calls in answers, and supports routing, failover and API-format conversion.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "acfa8dd31c9094bd2fd7004b5fd989c710742ef5",
+        "repo_metadata_sha256": "32a4dcee2c9d4ba86979f9234a87fb55d5dfdf2a68d0cd4a34916335eb9e90e3",
+        "fingerprint": "697e8ba9adf2e70760910a0a908d3e7104fba42aa62724bb3ee7166ded4cf64a"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-10-11T14:24:13Z"
+      }
+    },
+    {
       "node_id": "R_kgDOUYd3Fw",
       "category": "media-creative",
       "tags": [
@@ -21809,6 +21886,31 @@
         "model_label": null,
         "prompt_version": "classify-v1",
         "generated_at": "2026-09-29T12:32:25Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOU_DMSg",
+      "category": "media-creative",
+      "tags": [
+        "cli",
+        "desktop-app",
+        "gui",
+        "visualization"
+      ],
+      "summary": "CADCraft is an open-source, clean-room reimplementation of AutoCAD written in pure Rust. It offers the familiar drafting workflow — command line, object snaps, layers, dimensions, hatches, blocks and DXF/DWG files — runs natively on macOS, Windows, Linux and FreeBSD plus a WebAssembly browser build, and can be driven by agents over MCP, a JSON control channel or a CLI.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "c37a800751f26f2ff2b73c59703b4f3768a465a6",
+        "repo_metadata_sha256": "b0e2a29f76a1493b69bc0bd74855a6481e72329301e1806aa68f478ca28cd5aa",
+        "fingerprint": "aa29ce7ae381afcb3914f7563016b98a5aac49d5355325da100d7c48e7f0897b"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-10-11T14:24:13Z"
       }
     },
     {
@@ -22030,6 +22132,33 @@
         "model_label": null,
         "prompt_version": "classify-v1",
         "generated_at": "2026-09-26T11:23:24Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOUkEwGg",
+      "category": "developer-tools",
+      "tags": [
+        "api",
+        "cli",
+        "code-generation",
+        "plugin",
+        "rest-api",
+        "sdk"
+      ],
+      "summary": "Forge is a schema-first OpenAPI code generation and surface tooling framework. It uses a plugin-based architecture to resolve OpenAPI 3.x specifications, apply JSONPath-based overlays, and generate typed SDKs, CLI interfaces, runtime helpers and documentation. Its first output is Cloudflare's cf CLI, with more language targets planned.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "69ee890e699c56116243297ed208bd84c234e480",
+        "repo_metadata_sha256": "fa97ed953ca6d07db67cb9b954753196e6a7f8d4bfbaa69343763f7af45a83d3",
+        "fingerprint": "d4c85f2b0392dad0442c44f98883b00985345e5f68258bead36170e07df7bb7c"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-10-11T14:24:13Z"
       }
     },
     {
