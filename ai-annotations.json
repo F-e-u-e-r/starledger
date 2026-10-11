@@ -22162,6 +22162,33 @@
       }
     },
     {
+      "node_id": "R_kgDOUns_9A",
+      "category": "developer-tools",
+      "tags": [
+        "ai-agents",
+        "cli",
+        "desktop-app",
+        "gui",
+        "llm",
+        "proxy"
+      ],
+      "summary": "A macOS, Windows and Linux menu-bar app and local gateway that lets coding agents such as Claude Code, Codex and Gemini CLI use any model from any provider or subscription. Routing groups spread requests across accounts and fail over to the next one when a quota runs out.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "99c07849a13231c1959e9ff8c883638030d9aaf2",
+        "repo_metadata_sha256": "1084a13f14ac8c63fe3980e1d702707b3dd258b0a34ad537526b4a9fe660583c",
+        "fingerprint": "eec6cad0d521edfa8632dc07cb150964f344ee393f810837cca922fcf42453da"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-10-11T15:23:23Z"
+      }
+    },
+    {
       "node_id": "R_kgDOUpvcvQ",
       "category": "ai-ml",
       "tags": [
@@ -22184,6 +22211,57 @@
         "model_label": null,
         "prompt_version": "classify-v1",
         "generated_at": "2026-10-05T14:25:26Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOUtDQyg",
+      "category": "libraries-frameworks",
+      "tags": [
+        "cli",
+        "desktop-app",
+        "frontend",
+        "gui",
+        "library"
+      ],
+      "summary": "A Go framework for building cross-platform desktop apps, using either a web frontend in the OS webview that calls Go through a generated typed TypeScript client, or a native GPU-drawn UI toolkit written in pure Go. Apps compile to a single small binary, with packaging, code signing and auto-updates.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "816cd4f654ea4fb10df769fff053c5dfb72790f2",
+        "repo_metadata_sha256": "0b9d66cb8c350a6f08bbbb8595631d281ad90ea720904a975147ea0d92b1ca4e",
+        "fingerprint": "22756eeb6bb9c2c64db3e21ba36392eef6efa7e4decf6ffdb8d8dc9ab5283738"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-10-11T15:23:23Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOUzUwHQ",
+      "category": "libraries-frameworks",
+      "tags": [
+        "cli",
+        "frontend",
+        "library",
+        "visualization"
+      ],
+      "summary": "A TypeScript library of over 200 WebGPU visual effects, such as gradients, noise, glass, distortions and cursor effects, exposed as declarative components with first-class React, Vue, Svelte, Solid and JavaScript bindings. A visual design editor exports component code and a CLI syncs effects into a project.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "ff7c236c8825ee7d2c96b9e85a501dec38caf454",
+        "repo_metadata_sha256": "809a2d78e51c0015196ff7f60c837c188c42bb52fb79e8f6a794d4b3085800c3",
+        "fingerprint": "901dd2bdd17edc45f44a8a57d4d199bedd10d5f3ac18d2bb6dfea04d5a883233"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-10-11T15:23:23Z"
       }
     }
   ]
