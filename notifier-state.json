@@ -8,7 +8,7 @@
     "paths": [
       "README.md"
     ],
-    "last_commit_sha": "a4314c20bfd2b8db130df50533acb3af3c79cc86"
+    "last_commit_sha": "c5e8e84218fbe995d8c6faf3a843d0c0a12c71a6"
   },
   "pending": [],
   "deliveries": [
@@ -622,6 +622,18 @@
       "notification_key": "awesome_stars:twostraws/swiftui-agent-skill:R_kgDORfd2LQ",
       "status": "sent",
       "completed_at": "2026-10-10T08:34:11.783Z",
+      "detail": null
+    },
+    {
+      "notification_key": "awesome_stars:fei2411/real-api-pricing:R_kgDOUPhxzQ",
+      "status": "sent",
+      "completed_at": "2026-10-12T09:18:50.460Z",
+      "detail": null
+    },
+    {
+      "notification_key": "awesome_stars:zhongerxin/iphone-use:R_kgDOU-TOoA",
+      "status": "sent",
+      "completed_at": "2026-10-12T09:18:50.460Z",
       "detail": null
     }
   ]
