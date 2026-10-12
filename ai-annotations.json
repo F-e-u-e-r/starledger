@@ -21353,6 +21353,32 @@
       }
     },
     {
+      "node_id": "R_kgDOU8PObA",
+      "category": "developer-tools",
+      "tags": [
+        "ai-agents",
+        "cli",
+        "desktop-app",
+        "gui",
+        "terminal"
+      ],
+      "summary": "A Windows desktop launcher for the official Codex and Claude Code CLIs, run on the local PC or on Linux hosts over SSH. Each account gets an isolated profile, projects open in a built-in terminal workspace, and SSH work keeps running in tmux after the window closes so it can be re-attached later.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "adfb605ce189b719d99179f1246b41adf80fb7bd",
+        "repo_metadata_sha256": "d87525776896252f7b4c094ddc33f03ac88a4d183a002891c662d60c3df61f3f",
+        "fingerprint": "c04a14612e99025a385f10d7836a1a39ccf4c156f1a42f6991abc423ed61c21e"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-10-12T13:43:38Z"
+      }
+    },
+    {
       "node_id": "R_kgDOU9pY7g",
       "category": "developer-tools",
       "tags": [
