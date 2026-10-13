@@ -5786,6 +5786,33 @@
       }
     },
     {
+      "node_id": "R_kgDONmu-ag",
+      "category": "security-privacy",
+      "tags": [
+        "ai-agents",
+        "automation",
+        "containers",
+        "llm",
+        "security-scanner",
+        "self-hosted"
+      ],
+      "summary": "PentAGI is an open-source, self-hosted multi-agent system for autonomous penetration testing. A team of AI agents plans the work and runs 20+ security tools such as nmap, Metasploit and sqlmap inside an isolated Docker sandbox, stores results in PostgreSQL with pgvector, and exposes REST and GraphQL APIs. It supports 10+ LLM providers and local models.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "731dfe269aabcfbdd01a2dd7c8c0b5b1b07542ae",
+        "repo_metadata_sha256": "9ed09dde9d9f33507f3a2486a6994a672094b6c4e6f5d8f08c10929baa83b094",
+        "fingerprint": "3866a7a5e52db3a817d736f2eae1918ad20d0cec853498cad9bd634b4e3e0c0b"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-10-13T13:33:59Z"
+      }
+    },
+    {
       "node_id": "R_kgDONqMoZQ",
       "category": "media-creative",
       "tags": [
@@ -21329,6 +21356,32 @@
       }
     },
     {
+      "node_id": "R_kgDOU-TOoA",
+      "category": "mobile",
+      "tags": [
+        "ai-agents",
+        "automation",
+        "gui",
+        "plugin",
+        "real-time"
+      ],
+      "summary": "iPhone Use is a local MCP service and plugin that lets AI coding agents such as Codex operate a real iPhone over USB through WebDriverAgent. From natural-language tasks it opens apps, reads the control tree, taps, scrolls, types Unicode text and collects lists, showing a live phone screen in a sidebar with screenshot-based fallback when element location fails.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "60db930b0c032a2be3b61b616ae6a4ddef7075ce",
+        "repo_metadata_sha256": "de312e9a1f38e7220b902f877c70d2767028a68decb396b213a54ea77babbc87",
+        "fingerprint": "b7e1458e8024e4298758587bcad1072cfc05fd59eeab1ba0dfe7acc530aeeb8b"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-10-13T13:33:59Z"
+      }
+    },
+    {
       "node_id": "R_kgDOU60rXw",
       "category": "productivity-automation",
       "tags": [
@@ -22288,6 +22341,58 @@
         "model_label": null,
         "prompt_version": "classify-v1",
         "generated_at": "2026-10-11T15:23:23Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOVBqpgQ",
+      "category": "ai-ml",
+      "tags": [
+        "ai-agents",
+        "benchmark",
+        "cli",
+        "llm",
+        "machine-learning"
+      ],
+      "summary": "RSI-Anything is a domain-general research framework that turns world-model predictions and interaction feedback into recursive self-improvement. Built on JEPA-Anything, it applies a propose, predict, select, evaluate, learn and retain cycle to code repair, GUI interaction, laboratory planning, reaction optimization and immune science through a shared rsi command-line workflow.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "96a5451fd0649a8e87487f43245d810f1ec5b510",
+        "repo_metadata_sha256": "b768a3b0bcfb0b8560e2d16b839c044a7baef66f79b943c6549f7e50599b9538",
+        "fingerprint": "9e4b5cbdf2608fe1fcfc1f4d58b2823e1bbf0acb2a723d570e42cc82ba896c0f"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-10-13T13:33:59Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOVEZgvw",
+      "category": "developer-tools",
+      "tags": [
+        "configuration",
+        "desktop-app",
+        "gui",
+        "networking",
+        "proxy"
+      ],
+      "summary": "CCBaga is a native macOS, Linux and Windows desktop toolkit, built with Rust, Tauri and React, for workspace maintenance and environment setup. It archives and switches local Claude Code and Claude Desktop identities, rotates a companion browsers fingerprint, aligns region, language and timezone settings, and verifies the real browser and network exit, with a separate AI-guided network skill.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "4be8ec3d5d2c32537fbfc0b4e436140f16e7c597",
+        "repo_metadata_sha256": "03dcd1bb15644c11f727e91d2a68eb8076482d951ee871f0b0bc30e889862406",
+        "fingerprint": "31884a6ed56c8cc71276d8cc06e2622162003e29bfb3ceb75f9609900c571d93"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-10-13T13:33:59Z"
       }
     }
   ]
