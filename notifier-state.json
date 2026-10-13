@@ -8,28 +8,10 @@
     "paths": [
       "README.md"
     ],
-    "last_commit_sha": "c5e8e84218fbe995d8c6faf3a843d0c0a12c71a6"
+    "last_commit_sha": "9182fc3f0f0d91942b2541da7c311b20d7c566d0"
   },
   "pending": [],
   "deliveries": [
-    {
-      "notification_key": "awesome_stars:apple/foundation-models-utilities:R_kgDOS0DBDg",
-      "status": "sent",
-      "completed_at": "2026-07-15T06:30:15.531Z",
-      "detail": null
-    },
-    {
-      "notification_key": "awesome_stars:opencut-app/opencut:R_kgDOO_yqIA",
-      "status": "sent",
-      "completed_at": "2026-07-15T06:30:15.531Z",
-      "detail": null
-    },
-    {
-      "notification_key": "awesome_stars:team-reflect/reflect-open:R_kgDOS09mLA",
-      "status": "sent",
-      "completed_at": "2026-07-15T06:30:15.531Z",
-      "detail": null
-    },
     {
       "notification_key": "awesome_stars:xai-org/grok-build:R_kgDOTYoztg",
       "status": "sent",
@@ -634,6 +616,18 @@
       "notification_key": "awesome_stars:zhongerxin/iphone-use:R_kgDOU-TOoA",
       "status": "sent",
       "completed_at": "2026-10-12T09:18:50.460Z",
+      "detail": null
+    },
+    {
+      "notification_key": "awesome_stars:abue-ammar/tinycast:R_kgDOTIqiAg",
+      "status": "sent",
+      "completed_at": "2026-10-13T09:29:23.284Z",
+      "detail": null
+    },
+    {
+      "notification_key": "awesome_stars:bendlang/bend:R_kgDOKNDdxA",
+      "status": "sent",
+      "completed_at": "2026-10-13T09:29:23.284Z",
       "detail": null
     }
   ]
