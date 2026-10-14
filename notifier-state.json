@@ -8,16 +8,10 @@
     "paths": [
       "README.md"
     ],
-    "last_commit_sha": "9182fc3f0f0d91942b2541da7c311b20d7c566d0"
+    "last_commit_sha": "5672dc5513ee922ec0a98815869cbf4a97994c98"
   },
   "pending": [],
   "deliveries": [
-    {
-      "notification_key": "awesome_stars:xai-org/grok-build:R_kgDOTYoztg",
-      "status": "sent",
-      "completed_at": "2026-07-16T06:33:39.423Z",
-      "detail": null
-    },
     {
       "notification_key": "awesome_stars:ratatui/ratatui:R_kgDOI9DLBw",
       "status": "sent",
