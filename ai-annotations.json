@@ -17169,6 +17169,31 @@
       }
     },
     {
+      "node_id": "R_kgDOSJHpkw",
+      "category": "ai-ml",
+      "tags": [
+        "ai-agents",
+        "automation",
+        "cli",
+        "plugin"
+      ],
+      "summary": "A plugin and skills library that gives AI coding agents local CAD workflows: generating 3D models as STEP, STL, 3MF and GLB files, running design-for-manufacturing checks, producing engineering drawings, and connecting to 3D printing, sheet metal and CNC fabrication services. Works with agents such as Claude Code, Codex, Cursor, Gemini and Grok.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "2cd09ec3c928459c1072a001bd3d62cfec25b27c",
+        "repo_metadata_sha256": "0551fb9ca0083b08e3c7c35a1af0546b4b43b97e25e62062a5dc588844cc1027",
+        "fingerprint": "87a52bf2c444e7c73644e6b727334c1655a9b923dbe66ea400c7f76a796e7754"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-10-14T11:24:48Z"
+      }
+    },
+    {
       "node_id": "R_kgDOSJuUpg",
       "category": "ai-ml",
       "tags": [
@@ -20009,6 +20034,31 @@
       }
     },
     {
+      "node_id": "R_kgDOTWeYng",
+      "category": "ai-ml",
+      "tags": [
+        "ai-agents",
+        "documentation",
+        "frontend",
+        "llm"
+      ],
+      "summary": "A Claude Code and AI-agent skill that turns 74 real-world brand design systems into a pick-and-build reference library. It gives coding agents a categorized index of brands with primary colors and style descriptors, then points them at a matching DESIGN.md containing color roles, type scales, component rules and elevation. The design content comes from the awesome-design-md project.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "ab8c481a3970e6c6b8c0ab67cb187aa8f27aa589",
+        "repo_metadata_sha256": "23041aee68a3427619162fafa8d7ebd8cecc9f23def0d6a329c5dc412cbaffaf",
+        "fingerprint": "b04aab5e165258fcbd11bbb0893e2a0f7de86eec1c3a18269da22affa2f081b1"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-10-14T11:24:48Z"
+      }
+    },
+    {
       "node_id": "R_kgDOTWt_NQ",
       "category": "developer-tools",
       "tags": [
@@ -21379,6 +21429,32 @@
         "model_label": null,
         "prompt_version": "classify-v1",
         "generated_at": "2026-10-13T13:33:59Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOU-xXog",
+      "category": "ai-ml",
+      "tags": [
+        "api",
+        "dashboard",
+        "llm",
+        "machine-learning",
+        "self-hosted"
+      ],
+      "summary": "A C++ inference engine, server and dashboard for running the 321-billion-parameter GLM-5.3-Flash mixture-of-experts model privately on one to sixteen consumer GPUs (NVIDIA, with experimental AMD and Windows support). It tiers experts across VRAM, RAM and NVMe SSD, serves OpenAI- and Anthropic-compatible APIs with tool calls, and ships its own quantization tools.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "9c14e07bcb2e8d1634b50da7027e3f732194b83e",
+        "repo_metadata_sha256": "74dcf3bfe951318352859ef56ee23b141b9e25d4a1e6c9946691ccfa5a87f1c0",
+        "fingerprint": "17bcddbef16132fe8bac4f88dfd3a656d704067da1092b09b893bbec739b413d"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-10-14T11:24:48Z"
       }
     },
     {
