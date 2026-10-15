@@ -844,6 +844,8 @@ One repo → one card, never duplicated. Model: `primary_category` + `categories
 
 ## 9. Logo (M3)
 
+> **Superseded by ADR-005 (WS4-SL, 2026-10-16):** the Concept-B ledger mark and the static `#0969da` favicon below are replaced by the `>_` emerald identity and the Portfolio-family palette. This section is historical — see `docs/brand-tokens.md` and `docs/adr/ADR-005-portfolio-visual-alignment.md`.
+
 Concept **B (accepted)**: a ledger page whose first ruled entry is a star (encodes ledger + starred repo + list/record — not a generic GitHub star). Inline SVG, `currentColor` + `.brand-mark { color: var(--accent) }`, wordmark `--fg`. Favicon: a `/favicon.svg` asset (owner preference over a `data:` URI; both are CSP-legal under `img-src 'self' data:`).
 
 ---
