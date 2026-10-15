@@ -41,25 +41,21 @@ describe('M3 identity — favicon wiring parsed from index.html (M3-ID-4, F-B)',
   });
 });
 
-describe('M3 identity — favicon.svg parsed as SVG: exact grammar + F-1 static accent (F-D)', () => {
+describe('M3 identity — favicon.svg parsed as SVG: the `>_` prompt glyph in emerald (supersedes Concept-B + the F-1 blue accent; see ADR-005)', () => {
   const doc = new DOMParser().parseFromString(faviconSrc, 'image/svg+xml');
   const els = [...doc.querySelectorAll('*')];
+  const attrsOf = (el: Element) =>
+    Object.fromEntries([...el.attributes].map((a) => [a.name, a.value]));
 
   it('parses as valid SVG in the SVG namespace (no parser error; root <svg>; every element SVG-namespaced)', () => {
     const SVG_NS = 'http://www.w3.org/2000/svg';
     expect(doc.querySelector('parsererror')).toBeNull();
     expect(doc.documentElement.tagName.toLowerCase()).toBe('svg');
-    // A wrong `xmlns` (e.g. urn:not-svg) keeps the tag names/attrs but the descendants
-    // are NOT SVG shapes — the favicon would not render as the Concept-B shape (iii).
     expect(doc.documentElement.namespaceURI).toBe(SVG_NS);
     for (const el of els) expect(el.namespaceURI).toBe(SVG_NS);
   });
 
-  it('ships VISIBLE — no element suppresses the favicon via opacity/visibility/display, in ANY equivalent spelling (v)', () => {
-    // Standalone asset (no CSS cascade; <style> banned) ⇒ presentation attributes are
-    // the only channel. Compare SEMANTICALLY, not by exact string: opacity as a NUMBER
-    // (0, 0.0, negative all suppress), visibility hidden|collapse, display none — all
-    // trimmed + case-insensitive.
+  it('ships VISIBLE — no element suppresses the favicon via opacity/visibility/display, any spelling (v)', () => {
     for (const el of [doc.documentElement, ...els]) {
       for (const attr of ['opacity', 'fill-opacity', 'stroke-opacity']) {
         const v = el.getAttribute(attr);
@@ -68,23 +64,18 @@ describe('M3 identity — favicon.svg parsed as SVG: exact grammar + F-1 static 
       const vis = el.getAttribute('visibility');
       if (vis !== null) expect(['hidden', 'collapse']).not.toContain(vis.trim().toLowerCase());
       const disp = el.getAttribute('display');
-      // `none` and `contents` both leave an SVG leaf shape unpainted (contents = the
-      // element generates no box); reject both, case-insensitive.
       if (disp !== null) expect(['none', 'contents']).not.toContain(disp.trim().toLowerCase());
     }
   });
 
-  it('every favicon shape has EXACTLY its canonical parsed attribute map — no extra/degenerate/suppressing attr, any spelling (iii/iv/v)', () => {
-    // The favicon is a FIXED asset: pin each shape's full parsed name→value map. This
-    // closes ANY degenerate or suppressing attribute (display=contents, stroke="none"
-    // on a stroke-only shape, an extra opacity, a drifted value, …) in ONE shot — no
-    // denylist. Quote style and attribute order are parser-normalised; only the parsed
-    // map is compared, so a source-spelling change still passes.
-    const attrsOf = (el: Element) =>
-      Object.fromEntries([...el.attributes].map((a) => [a.name, a.value]));
-    // Cover the ROOT <svg> (and forbid a wrapping nested <svg>): a suppression attr on
-    // the root — even a CSS-escape-encoded one like visibility="\68idden" — is an EXTRA
-    // attribute here and fails regardless of escape decoding; and exactly one <svg>.
+  it('uses ONLY the fixed element vocabulary — svg/title/rect/text; no <style>/<filter>/<image>/<g>/<path>/<line>/etc.', () => {
+    const ALLOWED = new Set(['svg', 'title', 'rect', 'text']);
+    expect(els.length).toBeGreaterThan(0);
+    for (const el of els) expect(ALLOWED.has(el.tagName.toLowerCase())).toBe(true);
+  });
+
+  it('is the canonical `>_` favicon — a dark rounded tile + the emerald `>_` glyph, exact parsed attribute maps (iii/iv)', () => {
+    // Fixed asset: pin the root attrs, the child order, and each shape's full parsed map.
     expect(doc.querySelectorAll('svg')).toHaveLength(1);
     expect(
       Object.fromEntries(
@@ -92,119 +83,43 @@ describe('M3 identity — favicon.svg parsed as SVG: exact grammar + F-1 static 
           .filter((a) => a.name !== 'xmlns')
           .map((a) => [a.name, a.value]),
       ),
-    ).toEqual({ viewBox: '0 0 24 24', width: '32', height: '32' });
-    // Parentage: the root's DIRECT children are exactly title + the shapes, and each of
-    // those is a LEAF — a shape reparented into <title> (UA `display:none`) or nested in
-    // <rect> (non-container) keeps the descendant counts + attr maps but is not painted.
+    ).toEqual({ viewBox: '0 0 32 32', width: '32', height: '32' });
     expect([...doc.documentElement.children].map((el) => el.tagName.toLowerCase())).toEqual([
       'title',
       'rect',
-      'path',
-      'line',
-      'line',
-      'line',
+      'text',
     ]);
-    doc
-      .querySelectorAll('title, rect, path, line')
-      .forEach((el) => expect(el.children.length).toBe(0));
+    doc.querySelectorAll('title, rect, text').forEach((el) => expect(el.children.length).toBe(0));
+    // The tile: a full-bleed dark rounded rect.
     expect(attrsOf(doc.querySelector('rect')!)).toEqual({
-      x: '4',
-      y: '2.75',
-      width: '16',
-      height: '18.5',
-      rx: '2.5',
-      fill: 'none',
-      stroke: '#0969da',
-      'stroke-width': '1.7',
+      width: '32',
+      height: '32',
+      rx: '7',
+      fill: '#080b0a',
     });
-    expect(attrsOf(doc.querySelector('path')!)).toEqual({
-      d: 'M8.7 5.8 L9.35 7.51 L11.17 7.6 L9.75 8.74 L10.23 10.5 L8.7 9.5 L7.17 10.5 L7.65 8.74 L6.23 7.6 L8.05 7.51 Z',
-      fill: '#0969da',
-    });
-    expect([...doc.querySelectorAll('line')].map(attrsOf)).toEqual([
-      {
-        x1: '12.2',
-        y1: '8.4',
-        x2: '16.4',
-        y2: '8.4',
-        stroke: '#0969da',
-        'stroke-width': '1.6',
-        'stroke-linecap': 'round',
-      },
-      {
-        x1: '7.6',
-        y1: '13',
-        x2: '16.4',
-        y2: '13',
-        stroke: '#0969da',
-        'stroke-width': '1.6',
-        'stroke-linecap': 'round',
-      },
-      {
-        x1: '7.6',
-        y1: '17.2',
-        x2: '16.4',
-        y2: '17.2',
-        stroke: '#0969da',
-        'stroke-width': '1.6',
-        'stroke-linecap': 'round',
-      },
-    ]);
+    // The glyph: the emerald `>_`, bold, monospace, centred.
+    const text = doc.querySelector('text')!;
+    expect(text.textContent?.trim()).toBe('>_');
+    expect(text.getAttribute('fill')).toBe('#35e0a1');
+    expect(text.getAttribute('font-weight')).toBe('700');
+    expect(text.getAttribute('text-anchor')).toBe('middle');
+    expect((text.getAttribute('font-family') ?? '').toLowerCase()).toMatch(/mono/);
+    expect(text.getAttribute('x')).toBe('16');
+    expect(text.getAttribute('y')).toBe('22');
   });
 
-  it('uses ONLY the fixed element vocabulary — no <style>/<filter>/<image>/<foreignObject>/<g>/etc.', () => {
-    const ALLOWED = new Set(['svg', 'title', 'rect', 'path', 'line']);
-    expect(els.length).toBeGreaterThan(0);
-    for (const el of els) expect(ALLOWED.has(el.tagName.toLowerCase())).toBe(true);
-  });
-
-  it('every parsed fill/stroke is the single static `#0969da` or `none` — no inline style, any quote style', () => {
+  it('paints ONLY the two static brand colours — tile #080b0a + emerald #35e0a1; no inline style, no other hue', () => {
     const paints: string[] = [];
     for (const el of els) {
-      expect(el.getAttribute('style')).toBeNull(); // no inline-style paint channel
+      expect(el.getAttribute('style')).toBeNull();
       for (const attr of ['fill', 'stroke']) {
         const v = el.getAttribute(attr);
         if (v !== null) paints.push(v.trim().toLowerCase());
       }
     }
     expect(paints.length).toBeGreaterThan(0);
-    for (const p of paints) expect(['#0969da', 'none']).toContain(p);
-    expect(paints).toContain('#0969da'); // the F-1 static accent is actually used
-  });
-
-  it('is the canonical Concept-B geometry — parsed descriptor (quote/order irrelevant); a `d`/endpoint/stroke-width drift goes red', () => {
-    expect(doc.documentElement.getAttribute('viewBox')).toBe('0 0 24 24');
-    // Exact Concept-B shape multiset — a SECOND rect/path (even with a legal #0969da
-    // paint) would leave the favicon no longer the single canonical shape (iii).
-    expect(doc.querySelectorAll('rect')).toHaveLength(1);
-    expect(doc.querySelectorAll('path')).toHaveLength(1);
-    expect(doc.querySelectorAll('line')).toHaveLength(3);
-    expect(doc.querySelectorAll('title')).toHaveLength(1);
-    const rect = doc.querySelector('rect')!;
-    expect([
-      rect.getAttribute('x'),
-      rect.getAttribute('y'),
-      rect.getAttribute('width'),
-      rect.getAttribute('height'),
-      rect.getAttribute('rx'),
-      rect.getAttribute('stroke-width'),
-    ]).toEqual(['4', '2.75', '16', '18.5', '2.5', '1.7']);
-    expect(rect.getAttribute('ry')).toBeNull(); // canonical: no ry (defaults to rx)
-    expect(doc.querySelector('path')?.getAttribute('d')).toBe(
-      'M8.7 5.8 L9.35 7.51 L11.17 7.6 L9.75 8.74 L10.23 10.5 L8.7 9.5 L7.17 10.5 L7.65 8.74 L6.23 7.6 L8.05 7.51 Z',
-    );
-    expect(
-      [...doc.querySelectorAll('line')].map((l) => [
-        l.getAttribute('x1'),
-        l.getAttribute('y1'),
-        l.getAttribute('x2'),
-        l.getAttribute('y2'),
-        l.getAttribute('stroke-width'),
-      ]),
-    ).toEqual([
-      ['12.2', '8.4', '16.4', '8.4', '1.6'],
-      ['7.6', '13', '16.4', '13', '1.6'],
-      ['7.6', '17.2', '16.4', '17.2', '1.6'],
-    ]);
+    for (const p of paints) expect(['#080b0a', '#35e0a1', 'none']).toContain(p);
+    // The emerald accent is actually used (the identity colour, not just the tile).
+    expect(paints).toContain('#35e0a1');
   });
 });
