@@ -137,4 +137,29 @@ describe('buildTemplate', () => {
     write(src, 'LICENSE', 'x\n');
     expect(() => buildTemplate({ srcRoot: src, outDir: tmp() })).toThrow(/README\.template\.md/);
   });
+
+  it('excludes skills classification artifacts dropped under an allowed directory', () => {
+    const src = fixtureRepo();
+    // Defense-in-depth: a future layout change drops the owner/generated
+    // classification artifacts under an allowed directory. The basename deny must
+    // keep them out, while a legitimate sibling in the same directory still ships.
+    write(src, join('docs', 'skills-classification.json'), '{"skills":[]}');
+    write(src, join('docs', 'skills-classification-meta.json'), '{"count":0}');
+    write(src, join('docs', 'skills-classified.md'), '# classified\n');
+    write(src, join('docs', 'skills-guide.md'), '# a real guide\n');
+    const out = tmp();
+    const m = buildTemplate({ srcRoot: src, outDir: out });
+    for (const base of [
+      'skills-classification.json',
+      'skills-classification-meta.json',
+      'skills-classified.md',
+    ]) {
+      expect(existsSync(join(out, 'docs', base))).toBe(false);
+      expect(m.skipped).toContain(join('docs', base));
+      expect(m.copied).not.toContain(join('docs', base));
+    }
+    // The legitimate sibling in the same allowed directory still ships.
+    expect(existsSync(join(out, 'docs', 'skills-guide.md'))).toBe(true);
+    expect(m.copied).toContain(join('docs', 'skills-guide.md'));
+  });
 });

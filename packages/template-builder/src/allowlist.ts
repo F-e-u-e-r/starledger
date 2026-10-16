@@ -55,6 +55,11 @@ export const EXCLUDE_BASENAMES = new Set([
   'classifier-state.json',
   'discovery-candidates.json',
   'discovery-candidates-meta.json',
+  // Skills classifier output (`pnpm skills-classify`): owner/generated
+  // classification artifacts, same class as the generated data files above.
+  'skills-classification.json',
+  'skills-classification-meta.json',
+  'skills-classified.md',
   '.DS_Store',
   'config.yaml',
   'ai.yaml',
