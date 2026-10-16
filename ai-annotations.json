@@ -1071,30 +1071,6 @@
       }
     },
     {
-      "node_id": "MDEwOlJlcG9zaXRvcnkyNTQ4MzI3OTk=",
-      "category": "security-privacy",
-      "tags": [
-        "automation",
-        "cli",
-        "security-scanner"
-      ],
-      "summary": "A Python command-line launcher that organizes and installs a large collection of third-party penetration testing tools across categories such as information gathering, wireless attacks, SQL injection, phishing, forensics, and reverse engineering, with keyword search and tag filtering.",
-      "source": {
-        "kind": "readme",
-        "readme_path": "README.md",
-        "readme_oid": "8156b5db091c3825e046e4fab11c492d7a416cb9",
-        "repo_metadata_sha256": "e51d01abbf612e02156c24c1f93a29cf46d32f9d7a5c7c7b23d19b559702ab4b",
-        "fingerprint": "e420cb789323e6903574c098e2f2abc69c0ad767825205b342176522b49db6d6"
-      },
-      "generation": {
-        "executor_kind": "claude-routine",
-        "execution_profile_version": "agent-v1",
-        "model_label": "informational-only",
-        "prompt_version": "classify-v1",
-        "generated_at": "2026-07-15T13:25:21Z"
-      }
-    },
-    {
       "node_id": "MDEwOlJlcG9zaXRvcnkyNjIyOTYxMjI=",
       "category": "ai-ml",
       "tags": [
@@ -3202,6 +3178,29 @@
         "model_label": "informational-only",
         "prompt_version": "classify-v1",
         "generated_at": "2026-07-16T04:22:54Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOKNDdxA",
+      "category": "developer-tools",
+      "tags": [
+        "build-tool",
+        "cli"
+      ],
+      "summary": "Bend is a programming language and compiler with dependent types and machine-checked proofs. It compiles to fast CPU and GPU code, targeting C, Metal, CUDA and JavaScript, and lets developers declare correctness laws that the compiler must mathematically prove hold before edited code is accepted.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "02737ec3e7451805b7f6df2e4fb2f82179ec416f",
+        "repo_metadata_sha256": "b6999b83f5fc6311b97c3f4a31dbeeb9055db1671de65445aa3d1e4e20546551",
+        "fingerprint": "7dd0ad0f0c76c0aa9ad65777a813165493678c21a0a92d01fae7e829efdb6086"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-10-16T10:24:14Z"
       }
     },
     {
@@ -8246,6 +8245,33 @@
         "model_label": null,
         "prompt_version": "classify-v1",
         "generated_at": "2026-07-18T08:22:03Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOQ-7cQw",
+      "category": "devops-infrastructure",
+      "tags": [
+        "api",
+        "logging",
+        "monitoring",
+        "observability",
+        "sdk",
+        "self-hosted"
+      ],
+      "summary": "Rustrak is a self-hosted error tracking server that speaks the Sentry protocol, so existing Sentry SDKs can point at it by changing one DSN string. Built in Rust, it runs as a single process with SQLite and also handles logs, performance transactions, release health, alerting, and AI-agent traces.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "be59e908c9726a9dd7ad71bc4ce1e764144bee10",
+        "repo_metadata_sha256": "ab54aede9f9ebcd410dc76cdc995c779decdee584f150a57603f580cc25865f2",
+        "fingerprint": "f780de57c255216ac33c56e18270b3de7a337621b0d820c1550d9e391fb04bc2"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-10-16T10:24:14Z"
       }
     },
     {
@@ -13516,6 +13542,33 @@
         "model_label": null,
         "prompt_version": "classify-v1",
         "generated_at": "2026-07-19T20:22:27Z"
+      }
+    },
+    {
+      "node_id": "R_kgDORWfmWA",
+      "category": "libraries-frameworks",
+      "tags": [
+        "cli",
+        "deployment",
+        "frontend",
+        "sdk",
+        "serverless",
+        "web-framework"
+      ],
+      "summary": "Void is an open-source toolchain for building and deploying full-stack apps with Vite on Cloudflare Workers. It combines an SDK for file-based API routes, server-rendered pages and typed database, storage and AI access; a CLI that provisions resources, runs migrations and deploys; and a self-hostable deployment platform.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "ee6e6c54ab948368ee9a7a2333ed2e635c7eb3bb",
+        "repo_metadata_sha256": "0d6629afb79e5c57b30cb8d5390a70cc07d5bca5b06a5569401dc20aee9f1160",
+        "fingerprint": "0e134b4e921fc0fffe638ae547c396b884433b02eda8384250fe10ecf0f7d93e"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-10-16T10:24:14Z"
       }
     },
     {
@@ -19205,6 +19258,32 @@
         "model_label": "informational-only",
         "prompt_version": "classify-v1",
         "generated_at": "2026-07-21T23:22:46Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOTIqiAg",
+      "category": "productivity-automation",
+      "tags": [
+        "automation",
+        "desktop-app",
+        "gui",
+        "productivity",
+        "search"
+      ],
+      "summary": "Tinycast is a tiny, fully native macOS launcher built with SwiftUI and AppKit, with no third-party dependencies or telemetry. Its global-hotkey command palette offers app launching, clipboard history, snippets, a calculator, window management, system actions, and can run Raycast extensions rendered natively.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "e221559102c3befe5f351a0e0e38b021177ca012",
+        "repo_metadata_sha256": "db1be1f17570aeee502f2d0db8d014383777c25c0bef3a665d13e8721a0e212c",
+        "fingerprint": "1123f75893f4b6ad7d4a7211077721346baa40829883ca7e4cdd14445f9a67fe"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-10-16T10:24:14Z"
       }
     },
     {
