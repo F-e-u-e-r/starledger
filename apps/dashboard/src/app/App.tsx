@@ -137,6 +137,13 @@ export function App({
         ? 'discovery'
         : 'stars';
   const starsEmpty = state.data.stars.repos.length === 0;
+  // `← Portfolio` return link (WS4-SL-B): opt-in via a build-time variable so the
+  // maintainer's portfolio URL NEVER ships into the generated starledger-template
+  // (the builder copies apps/** verbatim). The owner's Pages build passes
+  // VITE_PORTFOLIO_URL from an Actions repo variable; template-derived repos build
+  // without it and render no link. Absent/empty -> nothing renders.
+  const portfolioUrl =
+    (import.meta.env.VITE_PORTFOLIO_URL as string | undefined)?.trim() || undefined;
 
   // The view-tabs nav is ALWAYS present once stars load (§6.4/§17.2 — Insights is a
   // deterministic view that never falls back), so there is NO full-screen empty
@@ -176,6 +183,16 @@ export function App({
             Discovery Inbox
             <span className="view-tab-count">{discovery.candidateCount}</span>
           </button>
+        ) : null}
+        {portfolioUrl ? (
+          <a
+            className="portfolio-link"
+            href={portfolioUrl}
+            rel="noopener noreferrer"
+            aria-label="Return to Portfolio"
+          >
+            ← Portfolio
+          </a>
         ) : null}
       </nav>
 
