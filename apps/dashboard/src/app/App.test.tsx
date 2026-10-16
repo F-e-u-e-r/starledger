@@ -502,24 +502,30 @@ describe('App ← Portfolio return link (WS4-SL-B)', () => {
   const loader = async () => makeDataset([makeRepo({ node_id: 'R_pf', name_with_owner: 'a/one' })]);
 
   it('renders a neutral ← Portfolio link ONLY when VITE_PORTFOLIO_URL is set (opt-in, template-safe)', async () => {
-    vi.stubEnv('VITE_PORTFOLIO_URL', 'https://portfolio.secc.dev/');
+    vi.stubEnv('VITE_PORTFOLIO_URL', 'https://portfolio.example/');
     render(<App loader={loader} />);
     await waitFor(() => expect(screen.getByText('a/one')).toBeTruthy());
-    const link = screen.getByRole('link', { name: 'Return to Portfolio' });
-    expect(link.getAttribute('href')).toBe('https://portfolio.secc.dev/');
-    expect(link.getAttribute('rel')).toContain('noopener');
-    // A neutral utility link, not a dashboard view tab.
-    expect(link.className).toContain('portfolio-link');
-    expect(link.className).not.toContain('view-tab');
-    vi.unstubAllEnvs();
+    try {
+      const link = screen.getByRole('link', { name: 'Return to Portfolio' });
+      expect(link.getAttribute('href')).toBe('https://portfolio.example/');
+      expect(link.getAttribute('rel')).toContain('noopener');
+      // A neutral utility link, not a dashboard view tab.
+      expect(link.className).toContain('portfolio-link');
+      expect(link.className).not.toContain('view-tab');
+    } finally {
+      vi.unstubAllEnvs();
+    }
   });
 
   it('renders NO portfolio link when VITE_PORTFOLIO_URL is unset/empty — the maintainer URL never ships to template users', async () => {
     vi.stubEnv('VITE_PORTFOLIO_URL', '');
     render(<App loader={loader} />);
     await waitFor(() => expect(screen.getByText('a/one')).toBeTruthy());
-    expect(screen.queryByRole('link', { name: 'Return to Portfolio' })).toBeNull();
-    expect(document.querySelector('.portfolio-link')).toBeNull();
-    vi.unstubAllEnvs();
+    try {
+      expect(screen.queryByRole('link', { name: 'Return to Portfolio' })).toBeNull();
+      expect(document.querySelector('.portfolio-link')).toBeNull();
+    } finally {
+      vi.unstubAllEnvs();
+    }
   });
 });
