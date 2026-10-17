@@ -79,6 +79,20 @@ describe('runDoctor — template-clean', () => {
       expect(exitCodeFor(results)).toBe(EXIT_INVALID);
     }
   });
+
+  it('any stray discovery candidate artifact → invalid', async () => {
+    for (const f of ['discovery-candidates.json', 'discovery-candidates-meta.json']) {
+      const d = cleanTemplateDir();
+      write(d, f, 'x');
+      const results = await runDoctor({
+        root: d,
+        modes: ['template-clean'],
+        offline: true,
+        env: {},
+      });
+      expect(exitCodeFor(results)).toBe(EXIT_INVALID);
+    }
+  });
 });
 
 describe('runDoctor — github-actions', () => {
@@ -170,5 +184,16 @@ describe('cli exit codes (real process)', () => {
     const d = cleanTemplateDir();
     write(d, 'skills-classification.json', '{"skills":[]}');
     expect(runCli(['--template-clean', '--offline', '--root', d])).toBe(EXIT_INVALID);
+  });
+
+  it('dir with discovery candidate artifact → exit 10 (each of the two)', () => {
+    for (const [f, content] of [
+      ['discovery-candidates.json', '{"candidates":[]}'],
+      ['discovery-candidates-meta.json', '{"schema_version":"1.0"}'],
+    ] as const) {
+      const d = cleanTemplateDir();
+      write(d, f, content);
+      expect(runCli(['--template-clean', '--offline', '--root', d])).toBe(EXIT_INVALID);
+    }
   });
 });
