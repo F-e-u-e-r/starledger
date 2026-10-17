@@ -61,6 +61,24 @@ describe('runDoctor — template-clean', () => {
     const results = await runDoctor({ root: d, modes: ['template-clean'], offline: true, env: {} });
     expect(exitCodeFor(results)).toBe(EXIT_INVALID);
   });
+
+  it('any stray skills classification artifact → invalid', async () => {
+    for (const f of [
+      'skills-classification.json',
+      'skills-classification-meta.json',
+      'skills-classified.md',
+    ]) {
+      const d = cleanTemplateDir();
+      write(d, f, 'x');
+      const results = await runDoctor({
+        root: d,
+        modes: ['template-clean'],
+        offline: true,
+        env: {},
+      });
+      expect(exitCodeFor(results)).toBe(EXIT_INVALID);
+    }
+  });
 });
 
 describe('runDoctor — github-actions', () => {
@@ -145,6 +163,12 @@ describe('cli exit codes (real process)', () => {
   it('dir with personal artifact → exit 10', () => {
     const d = cleanTemplateDir();
     write(d, 'stars.json', '{"repos":[]}');
+    expect(runCli(['--template-clean', '--offline', '--root', d])).toBe(EXIT_INVALID);
+  });
+
+  it('dir with skills classification artifact → exit 10', () => {
+    const d = cleanTemplateDir();
+    write(d, 'skills-classification.json', '{"skills":[]}');
     expect(runCli(['--template-clean', '--offline', '--root', d])).toBe(EXIT_INVALID);
   });
 });
