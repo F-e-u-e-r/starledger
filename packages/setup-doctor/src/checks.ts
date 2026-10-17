@@ -354,6 +354,13 @@ const PERSONAL_ARTIFACTS = [
   '.ai-runs',
   'notifier-state.json',
   'classifier-state.json',
+  // Skills classifier output (`pnpm skills-classify`): owner/generated
+  // classification artifacts that must never ship in a clean template. The
+  // template-builder excludes these too (an independent defense layer); doctor
+  // detects them if they appear in a supposedly clean tree.
+  'skills-classification.json',
+  'skills-classification-meta.json',
+  'skills-classified.md',
 ];
 
 const LIVE_CONFIGS = ['config/ai.yaml', 'config/notifier.yaml', 'config.yaml'];
