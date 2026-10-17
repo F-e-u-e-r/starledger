@@ -75,4 +75,20 @@ describe('isExcluded', () => {
       expect(isExcluded(f)).toBe(false);
     }
   });
+
+  it('excludes local review drafts under docs/reviews/ (anchored, not a bare segment)', () => {
+    // docs/reviews/ is gitignored local code-review scratch; the builder walks the
+    // filesystem, so it needs an explicit veto. The rule is anchored to docs/reviews
+    // so a legitimate `reviews/` directory elsewhere in the tree still ships.
+    expect(isExcluded(join('docs', 'reviews', 'local-review.md'))).toBe(true);
+    expect(isExcluded(join('docs', 'reviews', 'nested', 'deep.md'))).toBe(true);
+    // Sibling docs and the inventory specs continue to ship.
+    expect(isExcluded(join('docs', 'public-guide.md'))).toBe(false);
+    expect(isExcluded(join('docs', 'P4-template-spec.md'))).toBe(false);
+    // Narrowness: a `reviews` segment outside docs/ is NOT excluded (no overbreadth).
+    expect(isExcluded(join('packages', 'x', 'reviews', 'data.json'))).toBe(false);
+    expect(isExcluded(join('apps', 'dashboard', 'src', 'reviews', 'Panel.tsx'))).toBe(false);
+    // A file literally named reviews.md under docs/ is not the reviews directory.
+    expect(isExcluded(join('docs', 'reviews.md'))).toBe(false);
+  });
 });

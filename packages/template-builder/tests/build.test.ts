@@ -162,4 +162,35 @@ describe('buildTemplate', () => {
     expect(existsSync(join(out, 'docs', 'skills-guide.md'))).toBe(true);
     expect(m.copied).toContain(join('docs', 'skills-guide.md'));
   });
+
+  it('excludes local review drafts under docs/reviews/ but ships sibling docs', () => {
+    const src = fixtureRepo();
+    // docs/reviews/ is gitignored local code-review scratch (see .gitignore). The
+    // builder walks the filesystem, not `git ls-files`, so a copy left in a working
+    // tree would otherwise ship. A legitimate sibling doc in the same allowed
+    // directory must still ship; the veto is anchored to docs/reviews only.
+    write(src, join('docs', 'public-guide.md'), '# a real guide\n');
+    write(src, join('docs', 'reviews', 'local-review.md'), 'local scratch review\n');
+    write(src, join('docs', 'reviews', 'nested', 'deep-review.md'), 'nested scratch\n');
+    // A `reviews` directory OUTSIDE docs/ is not anchored and must still ship.
+    write(src, join('packages', 'foo', 'reviews', 'keep.ts'), 'export const keep = 1;\n');
+    const out = tmp();
+    const m = buildTemplate({ srcRoot: src, outDir: out });
+
+    // Local review drafts never ship, at any depth under docs/reviews/.
+    for (const gone of [
+      join('docs', 'reviews', 'local-review.md'),
+      join('docs', 'reviews', 'nested', 'deep-review.md'),
+    ]) {
+      expect(existsSync(join(out, gone))).toBe(false);
+      expect(m.skipped).toContain(gone);
+      expect(m.copied).not.toContain(gone);
+    }
+    // The legitimate sibling doc in the same allowed directory still ships.
+    expect(existsSync(join(out, 'docs', 'public-guide.md'))).toBe(true);
+    expect(m.copied).toContain(join('docs', 'public-guide.md'));
+    // Narrowness through the real build path: reviews/ outside docs/ ships.
+    expect(existsSync(join(out, 'packages', 'foo', 'reviews', 'keep.ts'))).toBe(true);
+    expect(m.copied).toContain(join('packages', 'foo', 'reviews', 'keep.ts'));
+  });
 });
