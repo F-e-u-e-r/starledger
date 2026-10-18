@@ -11632,6 +11632,33 @@
       }
     },
     {
+      "node_id": "R_kgDOR7zWtw",
+      "category": "ai-ml",
+      "tags": [
+        "ai-agents",
+        "database",
+        "llm",
+        "search",
+        "self-hosted",
+        "vector-database"
+      ],
+      "summary": "A self-hosted team memory hub for AI agents that turns conversations, documents, and code into reusable memory assets such as chat memory, skills, a wiki, and a code graph. Assets are governed with access controls and shared across agents and frameworks, using layered keyword and vector retrieval.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "fec468679c9112479637dc1da0dc2551a4fff514",
+        "repo_metadata_sha256": "17d522c0dd3506a9ffc08ee8e196397063ad9bca3b2bf837f353896756063b92",
+        "fingerprint": "ec7046ac9d40fa0889874180ecca2e333d89bb24a7b7713534d70ca228485ebc"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-10-18T10:23:43Z"
+      }
+    },
+    {
       "node_id": "R_kgDOR887hg",
       "category": "education-reference",
       "tags": [
@@ -21533,6 +21560,31 @@
         "model_label": null,
         "prompt_version": "classify-v1",
         "generated_at": "2026-10-14T11:24:48Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOU0Ob-A",
+      "category": "developer-tools",
+      "tags": [
+        "ai-agents",
+        "code-generation",
+        "frontend",
+        "plugin"
+      ],
+      "summary": "An interface design skill for AI coding agents such as Claude Code and Codex. It explores several genuinely different design directions, places previews side by side on a comparison page to choose from, then refines the selected design against real desktop and mobile screenshots for websites, apps, dashboards, and components.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "856058f909182efad75c0d31c7260e6b4bdd0473",
+        "repo_metadata_sha256": "154aaa75547179acb1d6b9d0006576d6eeed0dceeed5def10ab2cd8710922642",
+        "fingerprint": "9351aa1bb7bf32dd182e78e2a7051c767cdfe7ed48d50a7eb01d3545f8875c53"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-10-18T10:23:43Z"
       }
     },
     {
