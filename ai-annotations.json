@@ -1071,6 +1071,33 @@
       }
     },
     {
+      "node_id": "MDEwOlJlcG9zaXRvcnkyNTQ4MzI3OTk=",
+      "category": "security-privacy",
+      "tags": [
+        "automation",
+        "cli",
+        "llm",
+        "security-scanner",
+        "terminal",
+        "tui"
+      ],
+      "summary": "Interactive terminal console that curates 219 security-testing tools across 21 categories and installs or runs them, with an optional bring-your-own-key AI layer mapping plain-English goals to the right tool and exact command. Also provides a headless engagement orchestrator that normalizes tool output into one findings report, for authorized testing only.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "dea7e850bca267a04e3039f617068d6f7b9365c2",
+        "repo_metadata_sha256": "e51d01abbf612e02156c24c1f93a29cf46d32f9d7a5c7c7b23d19b559702ab4b",
+        "fingerprint": "0fba7a6762bdc79efd086714074574317c4132309fd54b440359b318f02f58d2"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-10-19T11:29:00Z"
+      }
+    },
+    {
       "node_id": "MDEwOlJlcG9zaXRvcnkyNjIyOTYxMjI=",
       "category": "ai-ml",
       "tags": [
@@ -12512,6 +12539,33 @@
       }
     },
     {
+      "node_id": "R_kgDORLED8w",
+      "category": "ai-ml",
+      "tags": [
+        "ai-agents",
+        "containers",
+        "library",
+        "llm",
+        "observability",
+        "sdk"
+      ],
+      "summary": "A programmable TypeScript harness for building autonomous AI agents, giving any model sessions, tools, skills, subagents, filesystem access, and a secure sandbox to run in. Supports MCP servers, durable recovery, and OpenTelemetry observability, and deploys to Node, Cloudflare Workers, and other runtimes.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "e2c8ced6b29e09de8f4d72d115ffdfaf6d86cb48",
+        "repo_metadata_sha256": "07b52f5d6aab0be8b30ddeb1c64daa0c7c7ef3d9754ac6aad230b3a06d3f1d17",
+        "fingerprint": "64d64670dcc3105b068ba70536736d1c318a19a51e28a7f7401a958176fefe32"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-10-19T11:29:00Z"
+      }
+    },
+    {
       "node_id": "R_kgDORLrQJg",
       "category": "education-reference",
       "tags": [
@@ -21015,6 +21069,33 @@
         "model_label": null,
         "prompt_version": "classify-v1",
         "generated_at": "2026-07-23T10:23:41Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOTgAgwg",
+      "category": "developer-tools",
+      "tags": [
+        "ai-agents",
+        "automation",
+        "cli",
+        "llm",
+        "sdk",
+        "testing"
+      ],
+      "summary": "An end-to-end testing framework for web and mobile apps where you describe a goal in natural language and an agent drives the app, then verify the result with locators and assertions in the same test. Agent steps are recorded and replayed with no model calls until the app changes; bring your own model provider.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "cae0136126fb991521ab9db28269ad5565cf9646",
+        "repo_metadata_sha256": "c94d9e6f772a838e5779811242c6cd4e764875fbb2b3c27f7171f02a67ca2a97",
+        "fingerprint": "2e99560535e80e3395549bce2e6afcce1afc1aac22fe599efa9f1175b306c45d"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-10-19T11:29:00Z"
       }
     },
     {
