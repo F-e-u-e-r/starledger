@@ -21618,6 +21618,32 @@
       }
     },
     {
+      "node_id": "R_kgDOU-uhKw",
+      "category": "ai-ml",
+      "tags": [
+        "ai-agents",
+        "benchmark",
+        "cli",
+        "llm",
+        "machine-learning"
+      ],
+      "summary": "Harness² is a Google Research framework for recursive agent harnessing: optimizing the system around a fixed-weight language model (prompts, tools, memory, skills, and orchestration) so it acts as a better agent on tasks unseen during design. It supports parallel and sequential recursion, OpenCode and Codex executors, and the JobBench, LAB, and WorkBuddy-Bench benchmarks.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "a5e91206948cd3d5bbed30c2a951923020e780d2",
+        "repo_metadata_sha256": "341551dd6a1300e4b7ca0a74f9430dea1cd9ce3d0712117be195198c6f3de98d",
+        "fingerprint": "b074fbfdac679478d97ab71836a1144a67b2ea46f68790e7986667aeb67cae8f"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-10-20T10:23:08Z"
+      }
+    },
+    {
       "node_id": "R_kgDOU-xXog",
       "category": "ai-ml",
       "tags": [
