@@ -8,7 +8,7 @@
     "paths": [
       "README.md"
     ],
-    "last_commit_sha": "88fdb02049f23ced50f16eb69ee66258a9b0f8dc"
+    "last_commit_sha": "6985f64dd9b231d58143d09ec8e2dcf8322caf26"
   },
   "pending": [],
   "deliveries": [
@@ -652,6 +652,12 @@
       "notification_key": "awesome_stars:tester-army/e2e:R_kgDOTgAgwg",
       "status": "sent",
       "completed_at": "2026-10-18T05:59:00.033Z",
+      "detail": null
+    },
+    {
+      "notification_key": "awesome_stars:google-research/harness2:R_kgDOU-uhKw",
+      "status": "sent",
+      "completed_at": "2026-10-20T07:39:36.526Z",
       "detail": null
     }
   ]
