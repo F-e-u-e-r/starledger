@@ -16528,6 +16528,32 @@
       }
     },
     {
+      "node_id": "R_kgDOS0wqzw",
+      "category": "developer-tools",
+      "tags": [
+        "ai-agents",
+        "automation",
+        "game",
+        "llm",
+        "plugin"
+      ],
+      "summary": "A Claude Code plugin that drives the Unreal Editor through MCP, exposing hundreds of tools across more than 30 toolsets for actors, blueprints, materials, Niagara, Sequencer, UMG widgets, and C++ automation testing. It ships an unreal-mcp skill and a SessionStart hook, plus an optional proxy that keeps the client session open while the editor restarts.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "44c8dd3ef9ac15d11de88973ab558b4c2ff57044",
+        "repo_metadata_sha256": "df0ca6d4b9c433ec1ecab048687414b8f7f14965f3e2021eb37c5d7b287a08e1",
+        "fingerprint": "4641efdb600192a9a6fcc2126fcb8218280dda4087b9ed97543e95d54e9d00c2"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-10-21T11:25:50Z"
+      }
+    },
+    {
       "node_id": "R_kgDOS1O5tg",
       "category": "developer-tools",
       "tags": [
