@@ -13,18 +13,6 @@
   "pending": [],
   "deliveries": [
     {
-      "notification_key": "awesome_stars:astaxie/tokenhub:R_kgDOS2nzLQ",
-      "status": "sent",
-      "completed_at": "2026-07-24T06:41:01.918Z",
-      "detail": null
-    },
-    {
-      "notification_key": "awesome_stars:yetone/kill-ai-slop:R_kgDOTUP9AQ",
-      "status": "sent",
-      "completed_at": "2026-07-24T06:41:01.918Z",
-      "detail": null
-    },
-    {
       "notification_key": "awesome_stars:cloudflare/nimbus:R_kgDOTS-Vqw",
       "status": "sent",
       "completed_at": "2026-07-26T07:05:48.815Z",
