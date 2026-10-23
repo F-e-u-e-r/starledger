@@ -22332,30 +22332,6 @@
       }
     },
     {
-      "node_id": "R_kgDOUb2T3g",
-      "category": "media-creative",
-      "tags": [
-        "ai-agents",
-        "automation",
-        "cli"
-      ],
-      "summary": "A macOS local automation tool and Agent Skill for Jianying Pro that generates continuable native draft projects from an editing plan, edits existing multi-track drafts in isolated copies, and exports MP4 through the app's native engine only on explicit request. It is a private source preview, not the official SDK.",
-      "source": {
-        "kind": "readme",
-        "readme_path": "README.md",
-        "readme_oid": "0bb1f278eb5c4b96a547af2a1c62310d7cafca07",
-        "repo_metadata_sha256": "f0ec3399fce819c31155aac474308b65c3202412a0efef6df9a357d6f376fcbc",
-        "fingerprint": "bdb57ad1db3c62ebd7bd4c94015bf0b5c3119532cae644735ccfda37e57c045e"
-      },
-      "generation": {
-        "executor_kind": "claude-routine",
-        "execution_profile_version": "agent-v1",
-        "model_label": "informational-only",
-        "prompt_version": "classify-v1",
-        "generated_at": "2026-09-18T10:24:58Z"
-      }
-    },
-    {
       "node_id": "R_kgDOUd-wKA",
       "category": "media-creative",
       "tags": [
