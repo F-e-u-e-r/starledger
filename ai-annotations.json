@@ -8987,6 +8987,29 @@
       }
     },
     {
+      "node_id": "R_kgDOQ8UBFg",
+      "category": "ai-ml",
+      "tags": [
+        "cli",
+        "machine-learning"
+      ],
+      "summary": "Iris is an inference pipeline, written entirely in C with no external dependencies, that generates images from text prompts using open-weights diffusion transformer models such as FLUX and Z-Image. It supports text-to-image, image editing, and multi-reference generation, with optional Metal, CUDA, ROCm, and BLAS acceleration.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "4abe5c1ec1d2346356c670e9097d663ed6b9d178",
+        "repo_metadata_sha256": "ebc832a412b4a42339a4afe8fc24e2961b40172a0d90b47f1b91c83bb410f71f",
+        "fingerprint": "c96f0ef3099a40254003f17eed41825f59b2739dcd7bb910fcc23e0634742283"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-10-25T10:23:48Z"
+      }
+    },
+    {
       "node_id": "R_kgDOQ8UsPA",
       "category": "developer-tools",
       "tags": [
@@ -9342,6 +9365,30 @@
         "model_label": null,
         "prompt_version": "classify-v1",
         "generated_at": "2026-07-18T15:23:13Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOQFcxuA",
+      "category": "ai-ml",
+      "tags": [
+        "ai-agents",
+        "library",
+        "llm"
+      ],
+      "summary": "A library of ready-to-use agent skills that turn AI coding agents into scientific assistants, providing 177 validated skills and access to over 100 scientific databases across biology, chemistry, medicine, and drug discovery. It is compatible with agents such as Claude Code, Cursor, and Codex via the open Agent Skills standard.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "3fcebf5c0e49e39dc87e5b577d0368d313124862",
+        "repo_metadata_sha256": "b4466d733e0dafd468cf8ad45270b7f9d6ec8a646f19c5b4737b149c15329a19",
+        "fingerprint": "9129a8b40f88a862280451b2627d4d3369e2a1032a27d00bfc2fab2d4fdbb532"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-10-25T10:23:48Z"
       }
     },
     {
@@ -15504,6 +15551,30 @@
       }
     },
     {
+      "node_id": "R_kgDORocqWA",
+      "category": "developer-tools",
+      "tags": [
+        "ai-agents",
+        "documentation",
+        "plugin"
+      ],
+      "summary": "A repository of AI-optimized, modular skills, written as SKILL.md instruction files following the open agent skills standard, that ground coding agents in Android development best practices. Skills can be installed through the Android CLI or as agent plugins for tools such as Claude Code and Codex, focusing on areas where LLMs tend to underperform.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "6636206616de644079b8b1d3334f4da22c8b379a",
+        "repo_metadata_sha256": "f883d84ec3df3216a9ea57ef7ef6921e44dc772b03defff49798d57bac92ee1f",
+        "fingerprint": "3fc6c30f9071591f6305a874a098b49aa3748efdb308d5c725cab8fe0fd2c6c4"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-10-25T10:23:48Z"
+      }
+    },
+    {
       "node_id": "R_kgDORogeyA",
       "category": "developer-tools",
       "tags": [
@@ -19666,6 +19737,32 @@
       }
     },
     {
+      "node_id": "R_kgDOTR1WDg",
+      "category": "ai-ml",
+      "tags": [
+        "ai-agents",
+        "llm",
+        "search",
+        "self-hosted",
+        "vector-database"
+      ],
+      "summary": "Yuxi is a multi-tenant agent platform and enterprise knowledge base that combines RAG retrieval, a Milvus-backed knowledge graph, and LangGraph multi-agent orchestration. Administrators configure knowledge bases, models, and permissions, while users chat with agents that can mount skills, MCP tools, and sandboxes. It is built with Vue and FastAPI and deployed via Docker.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "ce70574b7597394fdbf13d8a22e76b8f1f05f3fc",
+        "repo_metadata_sha256": "3454e051dc1586fa3192d7933f2708d929985bb7d6bd056b0ab6664230b5a0f0",
+        "fingerprint": "1ba04333e84906b38fe143f4e44ce46264f47cbaddf85fd76dafb2dfc6f1fad7"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-10-25T10:23:48Z"
+      }
+    },
+    {
       "node_id": "R_kgDOTRN5lg",
       "category": "media-creative",
       "tags": [
@@ -22708,6 +22805,30 @@
         "model_label": null,
         "prompt_version": "classify-v1",
         "generated_at": "2026-10-13T13:33:59Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOVJGtqw",
+      "category": "ai-ml",
+      "tags": [
+        "ai-agents",
+        "benchmark",
+        "cli"
+      ],
+      "summary": "BlenderWorld is a benchmark for evaluating visual agents on realistic 3D creation tasks in Blender. It contains 223 tasks with 2,651 binary criteria spanning products, architecture, environments, characters, and animation. The bw command-line tool downloads the dataset, prepares task inputs, packages submissions, and scores them with a rubric and visual-quality ratings.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "65313aa904b66036efd40fed4d16258d1159103d",
+        "repo_metadata_sha256": "4e2c4f9df019872847470e09bd5bfc70e96cce3783bb4cf7ec272aeadec0e9e7",
+        "fingerprint": "972ddfead894b7a8568859492dcf754cf921ec047f68d2364bdc6c89708257e0"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-10-25T10:23:48Z"
       }
     }
   ]
