@@ -13,12 +13,6 @@
   "pending": [],
   "deliveries": [
     {
-      "notification_key": "awesome_stars:ytwsy/opensurge-for-mac:R_kgDOTIr0gw",
-      "status": "sent",
-      "completed_at": "2026-07-28T06:42:55.342Z",
-      "detail": null
-    },
-    {
       "notification_key": "awesome_stars:openai/codex-security:R_kgDOTXjnhA",
       "status": "sent",
       "completed_at": "2026-07-29T06:46:52.504Z",
