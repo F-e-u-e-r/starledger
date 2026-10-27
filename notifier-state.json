@@ -13,12 +13,6 @@
   "pending": [],
   "deliveries": [
     {
-      "notification_key": "awesome_stars:openai/codex-security:R_kgDOTXjnhA",
-      "status": "sent",
-      "completed_at": "2026-07-29T06:46:52.504Z",
-      "detail": null
-    },
-    {
       "notification_key": "awesome_stars:herdrdev/herdr:R_kgDORymbOg",
       "status": "sent",
       "completed_at": "2026-07-30T06:43:53.979Z",
