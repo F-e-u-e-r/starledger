@@ -77,7 +77,15 @@ function serveViolations(config: ResolvedConfig): string[] {
       out.push(`${label}: allowedHosts must be the empty default, got ${JSON.stringify(hosts)}`);
     }
   }
-  if (config.server.proxy !== undefined) out.push('server.proxy must stay unset');
+  // Vite resolves the preview proxy independently (`preview.proxy ?? server.proxy`),
+  // so a preview-only proxy would slip past a server-only check: guard both surfaces,
+  // matching the host/cors/allowedHosts checks above. Do not collapse back to server-only.
+  for (const [label, proxy] of [
+    ['server', config.server.proxy],
+    ['preview', config.preview.proxy],
+  ] as const) {
+    if (proxy !== undefined) out.push(`${label}.proxy must stay unset`);
+  }
   return out;
 }
 
@@ -107,6 +115,47 @@ describe('dashboard Vite dev-server security defaults', () => {
         expect.stringContaining('server: allowedHosts must be the empty default'),
       ]),
     );
+  });
+
+  it('flags a preview-only proxy (DEV-GUARD-001: Vite resolves preview.proxy independently)', async () => {
+    const config = await resolved('serve', {
+      preview: { proxy: { '/api': 'http://127.0.0.1:4100' } },
+    });
+    // The discriminating precondition: server.proxy stays unset, so a server-only
+    // check sees nothing; only reading preview.proxy catches this.
+    expect(config.server.proxy).toBeUndefined();
+    expect(config.preview.proxy).toBeDefined();
+    const violations = serveViolations(config);
+    expect(violations).toContain('preview.proxy must stay unset');
+    expect(violations).not.toContain('server.proxy must stay unset');
+  });
+
+  it('flags a server-only proxy', async () => {
+    const config = await resolved('serve', {
+      server: { proxy: { '/api': 'http://127.0.0.1:4100' } },
+    });
+    expect(serveViolations(config)).toContain('server.proxy must stay unset');
+  });
+
+  it('flags a proxy configured on both surfaces with both named violations', async () => {
+    const config = await resolved('serve', {
+      server: { proxy: { '/api': 'http://127.0.0.1:4100' } },
+      preview: { proxy: { '/api': 'http://127.0.0.1:4100' } },
+    });
+    expect(serveViolations(config)).toEqual(
+      expect.arrayContaining(['server.proxy must stay unset', 'preview.proxy must stay unset']),
+    );
+  });
+
+  it('safe unrelated server/preview settings keep the proxy guard green', async () => {
+    const config = await resolved('serve', {
+      server: { port: 5174 },
+      preview: { port: 4174 },
+    });
+    const violations = serveViolations(config);
+    expect(violations).not.toContain('server.proxy must stay unset');
+    expect(violations).not.toContain('preview.proxy must stay unset');
+    expect(violations).toEqual([]);
   });
 
   it('path containment is segment-aware: a sibling directory sharing the root prefix is outside', () => {
