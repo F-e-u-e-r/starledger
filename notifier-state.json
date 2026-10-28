@@ -13,12 +13,6 @@
   "pending": [],
   "deliveries": [
     {
-      "notification_key": "awesome_stars:herdrdev/herdr:R_kgDORymbOg",
-      "status": "sent",
-      "completed_at": "2026-07-30T06:43:53.979Z",
-      "detail": null
-    },
-    {
       "notification_key": "awesome_stars:demiaochen/caffeinate-disablesleep:R_kgDOTgP3KA",
       "status": "sent",
       "completed_at": "2026-07-31T07:15:58.062Z",
