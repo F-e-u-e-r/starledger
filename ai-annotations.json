@@ -22705,6 +22705,31 @@
       }
     },
     {
+      "node_id": "R_kgDOUqIZ0Q",
+      "category": "developer-tools",
+      "tags": [
+        "cli",
+        "desktop-app",
+        "gui",
+        "visualization"
+      ],
+      "summary": "A desktop treemap application built in Rust and GPUI for finding and removing what fills a disk. It sizes every directory by its real disk usage, lets you mark files and review them before deleting, keeps free space in view, and can scan local volumes or remote servers read-only over SSH.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "bf9bc21fc7150e19e9d8da8dab0660c384ba5354",
+        "repo_metadata_sha256": "aeacd863d36830d4eb903e16f08b19a1daef11962de939f79e8831ea99283127",
+        "fingerprint": "721697473cfccc34b490a34aec0ae3df7018a7451f435a959bc1be45a43db6d7"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-10-30T12:56:08Z"
+      }
+    },
+    {
       "node_id": "R_kgDOUtDQyg",
       "category": "libraries-frameworks",
       "tags": [
@@ -22829,6 +22854,55 @@
         "model_label": "informational-only",
         "prompt_version": "classify-v1",
         "generated_at": "2026-10-25T10:23:48Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOVJdymw",
+      "category": "libraries-frameworks",
+      "tags": [
+        "frontend",
+        "gui",
+        "library",
+        "sdk"
+      ],
+      "summary": "Native Shell (NSH) is a Rust framework for building native user interfaces across iOS, Android, macOS, Windows, Linux and the web from a single codebase. Apps are written in Rust, TSX, or both, sharing one reactive engine and layout while rendering with each platform's own native views and controls.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "cb303ed366d92114aaab3be2c7d7749dd4ec4542",
+        "repo_metadata_sha256": "4b1248ec301f34f651c956c364d2aa63ccaba430933af4438bbcf0975df9bc07",
+        "fingerprint": "bec17d3bf69b85ee4648b5189caba8757be47759e819b0f11b0a06c88ce098ab"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-10-30T12:56:08Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOVL9UxQ",
+      "category": "ai-ml",
+      "tags": [
+        "library",
+        "llm",
+        "machine-learning"
+      ],
+      "summary": "DeepInfer is a high-performance Python inference framework for serving DeepSeek large language models at scale. It offers offline inference with optimized kernels, attention and expert parallelism, speculative decoding, batch-invariant and deterministic sampling, and structured outputs on NVIDIA GPUs and Huawei Ascend NPUs.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "7143caadd1258f56295e2c7766889478556836b3",
+        "repo_metadata_sha256": "ea7588ff49fd1c5e06dc15dc12117b0fa4382d29bea8c3820724cd230e5c61c2",
+        "fingerprint": "72406cf936eb6b9584769a9ecbd3b3f04a40b7b963883921efba15f5619f79e4"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-10-30T12:56:08Z"
       }
     }
   ]
