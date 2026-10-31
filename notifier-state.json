@@ -8,16 +8,10 @@
     "paths": [
       "README.md"
     ],
-    "last_commit_sha": "47ea475317ba3b38544c7bfb5ef4f97c71e82d23"
+    "last_commit_sha": "bc4a453966d109e1de2afaf12cd19ae98a5e8629"
   },
   "pending": [],
   "deliveries": [
-    {
-      "notification_key": "awesome_stars:maguowei/code-manager:R_kgDORDTOog",
-      "status": "sent",
-      "completed_at": "2026-08-02T06:47:14.610Z",
-      "detail": null
-    },
     {
       "notification_key": "awesome_stars:microsoft/skill-recorder:R_kgDOTndUqw",
       "status": "sent",
@@ -598,6 +592,84 @@
       "notification_key": "awesome_stars:tobi/disktree:R_kgDOUqIZ0Q",
       "status": "sent",
       "completed_at": "2026-10-25T09:51:50.500Z",
+      "detail": null
+    },
+    {
+      "notification_key": "awesome_stars:dwmkerr/hacker-laws:MDEwOlJlcG9zaXRvcnkxMTg4NTg3Mzk=",
+      "status": "sent",
+      "completed_at": "2026-10-31T12:41:12.213Z",
+      "detail": null
+    },
+    {
+      "notification_key": "awesome_stars:herdrdev/herdr-app:R_kgDOVMvknA",
+      "status": "sent",
+      "completed_at": "2026-10-31T12:41:12.213Z",
+      "detail": null
+    },
+    {
+      "notification_key": "awesome_stars:indexable-inc/blaze:R_kgDOVQNsMQ",
+      "status": "sent",
+      "completed_at": "2026-10-31T12:41:12.213Z",
+      "detail": null
+    },
+    {
+      "notification_key": "awesome_stars:infisical/infisical:R_kgDOHxfVZA",
+      "status": "sent",
+      "completed_at": "2026-10-31T12:41:12.213Z",
+      "detail": null
+    },
+    {
+      "notification_key": "awesome_stars:manishrjain/egres:R_kgDORKZoDg",
+      "status": "sent",
+      "completed_at": "2026-10-31T12:41:12.213Z",
+      "detail": null
+    },
+    {
+      "notification_key": "awesome_stars:meta/astryx:R_kgDOQ2zHeg",
+      "status": "sent",
+      "completed_at": "2026-10-31T12:41:12.213Z",
+      "detail": null
+    },
+    {
+      "notification_key": "awesome_stars:meta/stylex:R_kgDOIlDXFw",
+      "status": "sent",
+      "completed_at": "2026-10-31T12:41:12.213Z",
+      "detail": null
+    },
+    {
+      "notification_key": "awesome_stars:riverqueue/river:R_kgDOKrDIpA",
+      "status": "sent",
+      "completed_at": "2026-10-31T12:41:12.213Z",
+      "detail": null
+    },
+    {
+      "notification_key": "awesome_stars:storybookjs/storybook:MDEwOlJlcG9zaXRvcnk1NDE3MzU5Mw==",
+      "status": "sent",
+      "completed_at": "2026-10-31T12:41:12.213Z",
+      "detail": null
+    },
+    {
+      "notification_key": "awesome_stars:tanstack/ai:R_kgDOP-v7JQ",
+      "status": "sent",
+      "completed_at": "2026-10-31T12:41:12.213Z",
+      "detail": null
+    },
+    {
+      "notification_key": "awesome_stars:twmb/franz-go:MDEwOlJlcG9zaXRvcnkxNzc2NTk2Mjk=",
+      "status": "sent",
+      "completed_at": "2026-10-31T12:41:12.213Z",
+      "detail": null
+    },
+    {
+      "notification_key": "awesome_stars:unclebob/ub-mode:R_kgDOVW-ZhA",
+      "status": "sent",
+      "completed_at": "2026-10-31T12:41:12.213Z",
+      "detail": null
+    },
+    {
+      "notification_key": "awesome_stars:vorssaint/vorssaint-utils:R_kgDOS4xLOw",
+      "status": "sent",
+      "completed_at": "2026-10-31T12:41:12.213Z",
       "detail": null
     }
   ]
