@@ -22904,6 +22904,31 @@
         "prompt_version": "classify-v1",
         "generated_at": "2026-10-30T12:56:08Z"
       }
+    },
+    {
+      "node_id": "R_kgDOVb5hFQ",
+      "category": "mobile",
+      "tags": [
+        "ai-agents",
+        "automation",
+        "llm",
+        "productivity"
+      ],
+      "summary": "Mika is an on-device AI agent for Android that carries out one-sentence requests by operating installed apps on a private background screen, browsing the web in a built-in browser, and running scripts in a local Linux sandbox. Users supply their own model API key, several providers are supported, and there is no Mika server. Built with Kotlin and Jetpack Compose.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "6a4abe964088dad4a2e39c9c7dd6f03b329ffce1",
+        "repo_metadata_sha256": "9ef994f9012c908a9c5f649e896cbc73e3b5eeb9d1cd51e45285fe5943c8ee46",
+        "fingerprint": "56f50861fa909980f4378066e51dd9435db7c16af0c0a19e1dc19948f1a30d7c"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-10-31T11:23:05Z"
+      }
     }
   ]
 }
