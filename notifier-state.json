@@ -13,24 +13,6 @@
   "pending": [],
   "deliveries": [
     {
-      "notification_key": "awesome_stars:microsoft/skill-recorder:R_kgDOTndUqw",
-      "status": "sent",
-      "completed_at": "2026-08-03T07:50:32.378Z",
-      "detail": null
-    },
-    {
-      "notification_key": "awesome_stars:smallnest/pigo:R_kgDOTS_2kw",
-      "status": "sent",
-      "completed_at": "2026-08-03T07:50:32.378Z",
-      "detail": null
-    },
-    {
-      "notification_key": "awesome_stars:zengeeklabs/djonehub:R_kgDOTdCUPA",
-      "status": "sent",
-      "completed_at": "2026-08-03T07:50:32.378Z",
-      "detail": null
-    },
-    {
       "notification_key": "awesome_stars:firecrawl/anydoc:R_kgDOTsxOiw",
       "status": "sent",
       "completed_at": "2026-08-05T06:44:08.440Z",
