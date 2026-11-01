@@ -3606,6 +3606,30 @@
       }
     },
     {
+      "node_id": "R_kgDOL-W9ww",
+      "category": "ai-ml",
+      "tags": [
+        "library",
+        "llm",
+        "machine-learning"
+      ],
+      "summary": "A barebones Python library for ablating features in large language models supported by TransformerLens. It streamlines caching activations over harmful and harmless samples, computing and testing refusal directions, applying them to model weights, blacklisting layers, and benchmarking the modified model.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "cb859bb9ea883b6e14423062660f2ea29daff1e0",
+        "repo_metadata_sha256": "8c4559f497e864ffab2cd28cd5bb8da693739b309ff20c40644e5b2f4383815c",
+        "fingerprint": "4afce9871ee1b2b166f8c6d7341e1027f4f070715d0874fe1450946f2cde716d"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-11-01T12:24:24Z"
+      }
+    },
+    {
       "node_id": "R_kgDOL-k9-Q",
       "category": "education-reference",
       "tags": [
@@ -18689,6 +18713,32 @@
         "model_label": "informational-only",
         "prompt_version": "classify-v1",
         "generated_at": "2026-07-21T21:22:29Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOSrn8vA",
+      "category": "developer-tools",
+      "tags": [
+        "ai-agents",
+        "cli",
+        "database",
+        "desktop-app",
+        "search"
+      ],
+      "summary": "Obelisk indexes local coding-agent session history from providers such as Claude Code, Codex, and Copilot into a single SQLite database. A CLI and agent skill let agents search their own past sessions via JavaScript or SQL queries, while an Electron desktop app lets people browse sessions, memories, usage statistics, and recap cards.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "548618be53f45ccc1143431dfada54b3e8f775ab",
+        "repo_metadata_sha256": "11d4f6bb1f671c178bd19eb5660289676f860eb609309eb5d0cf9df005e19ef4",
+        "fingerprint": "de0f93b1f9a2569746878eaf8cae560334d375f80019d909fc091308c0a086f4"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-11-01T12:24:24Z"
       }
     },
     {
