@@ -8,7 +8,7 @@
     "paths": [
       "README.md"
     ],
-    "last_commit_sha": "bc4a453966d109e1de2afaf12cd19ae98a5e8629"
+    "last_commit_sha": "58e8b2cdf09407135d111d337ab0cb457f46933d"
   },
   "pending": [],
   "deliveries": [
@@ -646,6 +646,60 @@
       "notification_key": "awesome_stars:vorssaint/vorssaint-utils:R_kgDOS4xLOw",
       "status": "sent",
       "completed_at": "2026-10-31T12:41:12.213Z",
+      "detail": null
+    },
+    {
+      "notification_key": "awesome_stars:agent-substrate/substrate:R_kgDOScsbIw",
+      "status": "sent",
+      "completed_at": "2026-11-03T15:15:46.774Z",
+      "detail": null
+    },
+    {
+      "notification_key": "awesome_stars:anomalyco/hex:R_kgDOTcCg9w",
+      "status": "sent",
+      "completed_at": "2026-11-03T15:15:46.774Z",
+      "detail": null
+    },
+    {
+      "notification_key": "awesome_stars:deanchensj/jiangshan-map:R_kgDOThuJPg",
+      "status": "sent",
+      "completed_at": "2026-11-03T15:15:46.774Z",
+      "detail": null
+    },
+    {
+      "notification_key": "awesome_stars:deepseek-ai/dsh-superagent-prototype:R_kgDOVd9sjw",
+      "status": "sent",
+      "completed_at": "2026-11-03T15:15:46.774Z",
+      "detail": null
+    },
+    {
+      "notification_key": "awesome_stars:jimliu/baoyu-design:R_kgDOSzNAtQ",
+      "status": "sent",
+      "completed_at": "2026-11-03T15:15:46.774Z",
+      "detail": null
+    },
+    {
+      "notification_key": "awesome_stars:tanstack/query:MDEwOlJlcG9zaXRvcnkyMDc2NDUwODM=",
+      "status": "sent",
+      "completed_at": "2026-11-03T15:15:46.774Z",
+      "detail": null
+    },
+    {
+      "notification_key": "awesome_stars:tanstack/router:MDEwOlJlcG9zaXRvcnkxNjU2NzAzMDk=",
+      "status": "sent",
+      "completed_at": "2026-11-03T15:15:46.774Z",
+      "detail": null
+    },
+    {
+      "notification_key": "awesome_stars:threedotslabs/watermill:MDEwOlJlcG9zaXRvcnkxNTY3NjgzMjY=",
+      "status": "sent",
+      "completed_at": "2026-11-03T15:15:46.774Z",
+      "detail": null
+    },
+    {
+      "notification_key": "awesome_stars:vercel-labs/agent-desktop:R_kgDORUIU8w",
+      "status": "sent",
+      "completed_at": "2026-11-03T15:15:46.774Z",
       "detail": null
     }
   ]
