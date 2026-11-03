@@ -1,11 +1,7 @@
 import type { CanonicalRepo } from '@starred/schema';
 
 export type SortField =
-  | 'starred_at'
-  | 'stargazer_count'
-  | 'pushed_at'
-  | 'latest_stable_release'
-  | 'name_with_owner';
+  'starred_at' | 'stargazer_count' | 'pushed_at' | 'latest_stable_release' | 'name_with_owner';
 
 export type SortDirection = 'asc' | 'desc';
 

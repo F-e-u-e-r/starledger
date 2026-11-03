@@ -51,8 +51,7 @@ export interface ParsedSource {
 }
 
 export type ParseSourceResult =
-  | { ok: true; source: ParsedSource }
-  | { ok: false; issues: string[] };
+  { ok: true; source: ParsedSource } | { ok: false; issues: string[] };
 
 interface SchemeRow {
   label: string;

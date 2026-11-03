@@ -113,7 +113,7 @@ export function changedPathEntriesBetween(
     .split('\0')
     .filter((path) => path.length > 0);
   const entries: GitDiffEntry[] = [];
-  for (let index = 0; index < tokens.length; ) {
+  for (let index = 0; index < tokens.length;) {
     const status = tokens[index++];
     if (status === undefined) break;
     if (status.startsWith('R')) {

@@ -158,12 +158,8 @@ payload + attempts + last_error), and `DeliveryRecord` (terminal status only).
     "paths": ["README.md"],
     "last_commit_sha": "<sha>",
   },
-  "pending": [
-    /* PendingNotification[] — never pruned */
-  ],
-  "deliveries": [
-    /* DeliveryRecord[] — pruned by age then count */
-  ],
+  "pending": [/* PendingNotification[] — never pruned */],
+  "deliveries": [/* DeliveryRecord[] — pruned by age then count */],
 }
 ```
 

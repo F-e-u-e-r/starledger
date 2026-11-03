@@ -174,15 +174,13 @@ type GroupRow = [id: string | undefined, heading: string | undefined, titles: (s
 
 /** The grouped DOM as data, in DOM order. */
 const groups = (): GroupRow[] =>
-  Array.from(document.querySelectorAll<HTMLElement>('.result-group')).map(
-    (section): GroupRow => [
-      section.getAttribute('aria-labelledby')?.replace(/^group-/, ''),
-      section.querySelector('.result-group-heading')?.textContent ?? undefined,
-      within(section)
-        .getAllByRole('link')
-        .map((a) => a.textContent),
-    ],
-  );
+  Array.from(document.querySelectorAll<HTMLElement>('.result-group')).map((section): GroupRow => [
+    section.getAttribute('aria-labelledby')?.replace(/^group-/, ''),
+    section.querySelector('.result-group-heading')?.textContent ?? undefined,
+    within(section)
+      .getAllByRole('link')
+      .map((a) => a.textContent),
+  ]);
 
 /** Every card-title link on the page (flat list or all groups), DOM order. */
 const allTitles = () =>
