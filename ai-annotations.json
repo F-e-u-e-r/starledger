@@ -19368,6 +19368,31 @@
       }
     },
     {
+      "node_id": "R_kgDOTDloIA",
+      "category": "mobile",
+      "tags": [
+        "automation",
+        "networking",
+        "proxy",
+        "serverless"
+      ],
+      "summary": "Proxy modules for Surge, Quantumult X, Loon, Stash, and Shadowrocket that intercept Apple's network location (gs-loc) responses on iOS and rewrite the returned coordinates to spoof WiFi and cell-based positioning. Ships a Cloudflare Worker that parses map links and converts GCJ-02 coordinates to WGS84, plus iOS Shortcuts for one-tap setting and restoring of location.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "3b25c7e5ba28b193724075c8e95243e6bc9bcdcb",
+        "repo_metadata_sha256": "3ae51c2f50364bd728920804ec323d027352646db53022eb4290cc025a666db1",
+        "fingerprint": "bf30447c4b9123327bc62fd6fd7bc0539c004b1e1c604ddba60ae859b12d6174"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-11-04T13:25:05Z"
+      }
+    },
+    {
       "node_id": "R_kgDOTFiEFw",
       "category": "data-analytics",
       "tags": [
