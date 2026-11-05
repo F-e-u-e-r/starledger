@@ -13,12 +13,6 @@
   "pending": [],
   "deliveries": [
     {
-      "notification_key": "awesome_stars:agentplugins/agent-plugins-spec:R_kgDOR4eh-A",
-      "status": "sent",
-      "completed_at": "2026-08-07T05:52:27.836Z",
-      "detail": null
-    },
-    {
       "notification_key": "awesome_stars:yusing/godoxy:R_kgDOLZipwA",
       "status": "sent",
       "completed_at": "2026-08-08T04:30:49.218Z",
