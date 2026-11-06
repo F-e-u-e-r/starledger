@@ -8,16 +8,10 @@
     "paths": [
       "README.md"
     ],
-    "last_commit_sha": "bf75af16b4899312f4b88c4e56393d87c638feda"
+    "last_commit_sha": "7890eec9da00b6f4949b69e7648fba92f696a8f1"
   },
   "pending": [],
   "deliveries": [
-    {
-      "notification_key": "awesome_stars:yusing/godoxy:R_kgDOLZipwA",
-      "status": "sent",
-      "completed_at": "2026-08-08T04:30:49.218Z",
-      "detail": null
-    },
     {
       "notification_key": "awesome_stars:getpaseo/paseo:R_kgDOQBkEfw",
       "status": "sent",
@@ -688,6 +682,18 @@
       "notification_key": "awesome_stars:vercel-labs/agent-desktop:R_kgDORUIU8w",
       "status": "sent",
       "completed_at": "2026-11-03T15:15:46.774Z",
+      "detail": null
+    },
+    {
+      "notification_key": "awesome_stars:huacnlee/noop:R_kgDOVfyi8w",
+      "status": "sent",
+      "completed_at": "2026-11-06T11:00:15.347Z",
+      "detail": null
+    },
+    {
+      "notification_key": "awesome_stars:s1dashu/quiet-md:R_kgDOVfGaKA",
+      "status": "sent",
+      "completed_at": "2026-11-06T11:00:15.347Z",
       "detail": null
     }
   ]
