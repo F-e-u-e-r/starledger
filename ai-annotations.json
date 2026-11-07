@@ -21997,33 +21997,6 @@
       }
     },
     {
-      "node_id": "R_kgDOUASl4w",
-      "category": "developer-tools",
-      "tags": [
-        "ai-agents",
-        "dashboard",
-        "llm",
-        "monitoring",
-        "observability",
-        "plugin"
-      ],
-      "summary": "An Omarchy and Hyprland desktop plugin that turns the wallpaper into a live dashboard of every AI coding agent running on the machine, including Claude Code, Codex, Grok, and Ollama, with usage and rate-limit meters, a 7-day activity heatmap, recent prompts, GitHub activity, and per-agent CPU, RAM, and GPU stats.",
-      "source": {
-        "kind": "readme",
-        "readme_path": "README.md",
-        "readme_oid": "a7f38302f451c5754aa90a5a1231c6d78a4018cc",
-        "repo_metadata_sha256": "f4272ea7782c92564bb69ac7eabe4a98a52d3aada6c077373a99c594a54733e4",
-        "fingerprint": "1472cde27a1cb7be4493b636965736fbc5b405bb46eaaff4040a7059df868aa3"
-      },
-      "generation": {
-        "executor_kind": "claude-routine",
-        "execution_profile_version": "agent-v1",
-        "model_label": null,
-        "prompt_version": "classify-v1",
-        "generated_at": "2026-09-11T10:24:44Z"
-      }
-    },
-    {
       "node_id": "R_kgDOUB-pxA",
       "category": "devops-infrastructure",
       "tags": [
@@ -22600,6 +22573,31 @@
         "model_label": "informational-only",
         "prompt_version": "classify-v1",
         "generated_at": "2026-09-24T13:25:19Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOUf44tQ",
+      "category": "ai-ml",
+      "tags": [
+        "ai-agents",
+        "cli",
+        "machine-learning",
+        "search"
+      ],
+      "summary": "An agent skill that locates where a photo was taken without GPS data, combining OpenStreetMap geometry, elevation skylines, satellite imagery, and street view. Python scripts search and rank candidates while the AI agent judges the top few. It installs into Claude Code, Codex, Cursor, Gemini CLI, OpenCode, and GitHub Copilot.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "87db37090ee704ba0f27c38848e520e4875d67f0",
+        "repo_metadata_sha256": "40b572f5dbac6811d1c3fb1d0d214a0395722ddba9c8284a17b42e13e7ea2b79",
+        "fingerprint": "eaee79d1c3ae5e7300d6e9ee6a7b723dc9548967368921724e26c661e081ceb1"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-11-07T12:23:06Z"
       }
     },
     {
