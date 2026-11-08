@@ -8,16 +8,10 @@
     "paths": [
       "README.md"
     ],
-    "last_commit_sha": "b9b992ea3dda81dcad1e5e84abf331b83c782f4d"
+    "last_commit_sha": "dfcca254e538216a715143add3cfddb32f671eda"
   },
   "pending": [],
   "deliveries": [
-    {
-      "notification_key": "awesome_stars:getpaseo/paseo:R_kgDOQBkEfw",
-      "status": "sent",
-      "completed_at": "2026-08-10T04:56:56.629Z",
-      "detail": null
-    },
     {
       "notification_key": "awesome_stars:cloudflare/computer:R_kgDOSx57rA",
       "status": "sent",
@@ -706,6 +700,24 @@
       "notification_key": "awesome_stars:pengchujin/aerial-tv:R_kgDOVQrvmA",
       "status": "sent",
       "completed_at": "2026-11-07T10:20:28.588Z",
+      "detail": null
+    },
+    {
+      "notification_key": "awesome_stars:insanearts/scene:R_kgDOUwkpPg",
+      "status": "sent",
+      "completed_at": "2026-11-08T07:26:49.753Z",
+      "detail": null
+    },
+    {
+      "notification_key": "awesome_stars:pingdotgg/t3code:R_kgDORLtfbQ",
+      "status": "sent",
+      "completed_at": "2026-11-08T07:26:49.753Z",
+      "detail": null
+    },
+    {
+      "notification_key": "awesome_stars:storytold/craft-anything:R_kgDOVeM_1A",
+      "status": "sent",
+      "completed_at": "2026-11-08T07:26:49.753Z",
       "detail": null
     }
   ]
