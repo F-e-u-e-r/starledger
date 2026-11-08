@@ -4460,30 +4460,6 @@
       }
     },
     {
-      "node_id": "R_kgDOMGEu0Q",
-      "category": "security-privacy",
-      "tags": [
-        "automation",
-        "cli",
-        "configuration"
-      ],
-      "summary": "RemoveWindowsAI is a PowerShell script for Windows 11 that force-removes and disables built-in AI features such as Copilot and Recall, along with related components, to improve privacy, security, and user experience. It offers interactive and non-interactive modes, selectable options, a backup and revert mode, and can restore classic versions of apps like Notepad and Paint.",
-      "source": {
-        "kind": "readme",
-        "readme_path": "README.md",
-        "readme_oid": "e9d5d7ba541e29f0ac86c722ebd7f9b7a0f78685",
-        "repo_metadata_sha256": "689b4fe726ab9517ca08773c9067ad98593104b1e7f173e67d603e39c2685557",
-        "fingerprint": "542ea9a8f88a9c82eac88ea6d56bc675da87aa97b09135b755c6cb9e554de84a"
-      },
-      "generation": {
-        "executor_kind": "claude-routine",
-        "execution_profile_version": "agent-v1",
-        "model_label": "informational-only",
-        "prompt_version": "classify-v1",
-        "generated_at": "2026-09-02T10:26:48Z"
-      }
-    },
-    {
       "node_id": "R_kgDOMGbPlg",
       "category": "developer-tools",
       "tags": [
@@ -21994,6 +21970,33 @@
         "model_label": "informational-only",
         "prompt_version": "classify-v1",
         "generated_at": "2026-08-26T06:43:15Z"
+      }
+    },
+    {
+      "node_id": "R_kgDOUASl4w",
+      "category": "developer-tools",
+      "tags": [
+        "ai-agents",
+        "dashboard",
+        "desktop-app",
+        "monitoring",
+        "plugin",
+        "visualization"
+      ],
+      "summary": "An Omarchy desktop plugin written in TypeScript that turns the Hyprland wallpaper into a live information dashboard. It detects running AI agents such as Claude Code, Codex, Cursor and Ollama from process data and shows session activity, usage and rate limits, a 7-day prompt heatmap, GitHub and Gitea activity, and machine stats, rendered in the current theme.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "40b7d70d82e16496bedd47ff18bca9ded8d49494",
+        "repo_metadata_sha256": "f931daa5a164c52598afcc74e447b988b7aee830257555b31409dcb1640df331",
+        "fingerprint": "8cb8b32bab288242cf9c70363185cab924140ba9df00dfc3aba7d0b5574cfc4a"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-11-08T12:22:18Z"
       }
     },
     {
