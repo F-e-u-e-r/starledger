@@ -8,16 +8,10 @@
     "paths": [
       "README.md"
     ],
-    "last_commit_sha": "dfcca254e538216a715143add3cfddb32f671eda"
+    "last_commit_sha": "f0be9ba99e91b01a68c9b4dbc82db1e973255f9f"
   },
   "pending": [],
   "deliveries": [
-    {
-      "notification_key": "awesome_stars:cloudflare/computer:R_kgDOSx57rA",
-      "status": "sent",
-      "completed_at": "2026-08-11T04:42:11.672Z",
-      "detail": null
-    },
     {
       "notification_key": "awesome_stars:qwenlm/qwen-mm-plugins:R_kgDOTm9-Lw",
       "status": "sent",
@@ -718,6 +712,24 @@
       "notification_key": "awesome_stars:storytold/craft-anything:R_kgDOVeM_1A",
       "status": "sent",
       "completed_at": "2026-11-08T07:26:49.753Z",
+      "detail": null
+    },
+    {
+      "notification_key": "awesome_stars:emdash-cms/emdash:R_kgDOR2vLLA",
+      "status": "sent",
+      "completed_at": "2026-11-09T08:01:41.100Z",
+      "detail": null
+    },
+    {
+      "notification_key": "awesome_stars:storytold/photocraft:R_kgDOU1UDDw",
+      "status": "sent",
+      "completed_at": "2026-11-09T08:01:41.100Z",
+      "detail": null
+    },
+    {
+      "notification_key": "awesome_stars:tangency-labs/solidcraft:R_kgDOU_9jPg",
+      "status": "sent",
+      "completed_at": "2026-11-09T08:01:41.100Z",
       "detail": null
     }
   ]
