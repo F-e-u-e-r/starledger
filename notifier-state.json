@@ -8,16 +8,10 @@
     "paths": [
       "README.md"
     ],
-    "last_commit_sha": "f0be9ba99e91b01a68c9b4dbc82db1e973255f9f"
+    "last_commit_sha": "958ee8c0582336b9eb2a235719fcd7161657f494"
   },
   "pending": [],
   "deliveries": [
-    {
-      "notification_key": "awesome_stars:qwenlm/qwen-mm-plugins:R_kgDOTm9-Lw",
-      "status": "sent",
-      "completed_at": "2026-08-12T05:06:29.882Z",
-      "detail": null
-    },
     {
       "notification_key": "awesome_stars:cloudflare/ci:R_kgDOTodt0g",
       "status": "sent",
