@@ -8,7 +8,7 @@
     "paths": [
       "README.md"
     ],
-    "last_commit_sha": "958ee8c0582336b9eb2a235719fcd7161657f494"
+    "last_commit_sha": "06234868713aa6de90e2495b18a5553ec5ed3be6"
   },
   "pending": [],
   "deliveries": [
@@ -724,6 +724,30 @@
       "notification_key": "awesome_stars:tangency-labs/solidcraft:R_kgDOU_9jPg",
       "status": "sent",
       "completed_at": "2026-11-09T08:01:41.100Z",
+      "detail": null
+    },
+    {
+      "notification_key": "awesome_stars:e2e-inc/e2e:R_kgDOTgAgwg",
+      "status": "sent",
+      "completed_at": "2026-11-11T15:18:43.005Z",
+      "detail": null
+    },
+    {
+      "notification_key": "awesome_stars:egoist/tinytraffic:R_kgDOVpLZEQ",
+      "status": "sent",
+      "completed_at": "2026-11-11T15:18:43.005Z",
+      "detail": null
+    },
+    {
+      "notification_key": "awesome_stars:grafana/docker-otel-lgtm:R_kgDOKYf7eQ",
+      "status": "sent",
+      "completed_at": "2026-11-11T15:18:43.005Z",
+      "detail": null
+    },
+    {
+      "notification_key": "awesome_stars:pgrundev/pgx:R_kgDOVBjhVg",
+      "status": "sent",
+      "completed_at": "2026-11-11T15:18:43.005Z",
       "detail": null
     }
   ]
