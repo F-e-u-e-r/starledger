@@ -8,28 +8,10 @@
     "paths": [
       "README.md"
     ],
-    "last_commit_sha": "06234868713aa6de90e2495b18a5553ec5ed3be6"
+    "last_commit_sha": "4f79617c56cb5b01694bc0cc25a17fd164c75c34"
   },
   "pending": [],
   "deliveries": [
-    {
-      "notification_key": "awesome_stars:cloudflare/ci:R_kgDOTodt0g",
-      "status": "sent",
-      "completed_at": "2026-08-14T05:06:11.075Z",
-      "detail": null
-    },
-    {
-      "notification_key": "awesome_stars:deepseek-ai/deepseek-harness:R_kgDOT3T1gw",
-      "status": "sent",
-      "completed_at": "2026-08-14T05:06:11.075Z",
-      "detail": null
-    },
-    {
-      "notification_key": "awesome_stars:rockxyapp/rockxy:R_kgDORxf66w",
-      "status": "sent",
-      "completed_at": "2026-08-14T05:06:11.075Z",
-      "detail": null
-    },
     {
       "notification_key": "awesome_stars:basecamp/omarchy:R_kgDOO0Cobg",
       "status": "sent",
@@ -748,6 +730,42 @@
       "notification_key": "awesome_stars:pgrundev/pgx:R_kgDOVBjhVg",
       "status": "sent",
       "completed_at": "2026-11-11T15:18:43.005Z",
+      "detail": null
+    },
+    {
+      "notification_key": "awesome_stars:aws/aws-emulator:R_kgDOUXSO7w",
+      "status": "sent",
+      "completed_at": "2026-11-12T12:49:20.928Z",
+      "detail": null
+    },
+    {
+      "notification_key": "awesome_stars:bytesbay/pi-gpui:R_kgDOVjQW5g",
+      "status": "sent",
+      "completed_at": "2026-11-12T12:49:20.928Z",
+      "detail": null
+    },
+    {
+      "notification_key": "awesome_stars:googlechrome/modern-web-guidance:R_kgDORutKXA",
+      "status": "sent",
+      "completed_at": "2026-11-12T12:49:20.928Z",
+      "detail": null
+    },
+    {
+      "notification_key": "awesome_stars:libracoder/kiri:R_kgDOVgVHyQ",
+      "status": "sent",
+      "completed_at": "2026-11-12T12:49:20.928Z",
+      "detail": null
+    },
+    {
+      "notification_key": "awesome_stars:neondatabase/electric-pglite:R_kgDOLUsMbg",
+      "status": "sent",
+      "completed_at": "2026-11-12T12:49:20.928Z",
+      "detail": null
+    },
+    {
+      "notification_key": "awesome_stars:tokio-rs/topcoat:R_kgDOR460eg",
+      "status": "sent",
+      "completed_at": "2026-11-12T12:49:20.928Z",
       "detail": null
     }
   ]
