@@ -13,18 +13,6 @@
   "pending": [],
   "deliveries": [
     {
-      "notification_key": "awesome_stars:basecamp/omarchy:R_kgDOO0Cobg",
-      "status": "sent",
-      "completed_at": "2026-08-16T03:14:41.224Z",
-      "detail": null
-    },
-    {
-      "notification_key": "awesome_stars:t8y2/dbx:R_kgDOSPdiBQ",
-      "status": "sent",
-      "completed_at": "2026-08-16T03:14:41.224Z",
-      "detail": null
-    },
-    {
       "notification_key": "awesome_stars:aozorae/edgechat:R_kgDOR6K8Sg",
       "status": "sent",
       "completed_at": "2026-08-17T03:14:27.721Z",
