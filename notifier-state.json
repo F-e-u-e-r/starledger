@@ -8,7 +8,7 @@
     "paths": [
       "README.md"
     ],
-    "last_commit_sha": "ebff03ac9e4148f99554f78406427ed4343a720c"
+    "last_commit_sha": "4a2cc7fbb69132cdaca12c197be3ee513e8c6a37"
   },
   "pending": [],
   "deliveries": [
@@ -772,6 +772,42 @@
       "notification_key": "awesome_stars:shadcn/improve:R_kgDOS2YqAg",
       "status": "sent",
       "completed_at": "2026-11-13T09:38:15.028Z",
+      "detail": null
+    },
+    {
+      "notification_key": "awesome_stars:cloudflare/kitesurf:R_kgDOU0soUg",
+      "status": "sent",
+      "completed_at": "2026-11-14T14:13:14.800Z",
+      "detail": null
+    },
+    {
+      "notification_key": "awesome_stars:electric-sql/electric-pglite:R_kgDOLUsMbg",
+      "status": "sent",
+      "completed_at": "2026-11-14T14:13:14.800Z",
+      "detail": null
+    },
+    {
+      "notification_key": "awesome_stars:jimliu/open-artifacts:R_kgDOSzNAtQ",
+      "status": "sent",
+      "completed_at": "2026-11-14T14:13:14.800Z",
+      "detail": null
+    },
+    {
+      "notification_key": "awesome_stars:makepad/relax:R_kgDOVrBE8w",
+      "status": "sent",
+      "completed_at": "2026-11-14T14:13:14.800Z",
+      "detail": null
+    },
+    {
+      "notification_key": "awesome_stars:nightly-labs/openbot:R_kgDOT2u-XQ",
+      "status": "sent",
+      "completed_at": "2026-11-14T14:13:14.800Z",
+      "detail": null
+    },
+    {
+      "notification_key": "awesome_stars:vercel-labs/ui:R_kgDOVYQpxw",
+      "status": "sent",
+      "completed_at": "2026-11-14T14:13:14.800Z",
       "detail": null
     }
   ]
