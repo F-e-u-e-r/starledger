@@ -8,16 +8,10 @@
     "paths": [
       "README.md"
     ],
-    "last_commit_sha": "4a2cc7fbb69132cdaca12c197be3ee513e8c6a37"
+    "last_commit_sha": "7c8eda9394907065bf698b66e97d930f6ee918c4"
   },
   "pending": [],
   "deliveries": [
-    {
-      "notification_key": "awesome_stars:aozorae/edgechat:R_kgDOR6K8Sg",
-      "status": "sent",
-      "completed_at": "2026-08-17T03:14:27.721Z",
-      "detail": null
-    },
     {
       "notification_key": "awesome_stars:antirez/h3.c:R_kgDOTzFARw",
       "status": "sent",
@@ -808,6 +802,18 @@
       "notification_key": "awesome_stars:vercel-labs/ui:R_kgDOVYQpxw",
       "status": "sent",
       "completed_at": "2026-11-14T14:13:14.800Z",
+      "detail": null
+    },
+    {
+      "notification_key": "awesome_stars:bojieli/ai-agent-book:R_kgDOPsVO8g",
+      "status": "sent",
+      "completed_at": "2026-11-15T11:03:25.596Z",
+      "detail": null
+    },
+    {
+      "notification_key": "awesome_stars:egoist/asuka:R_kgDOVcFqUA",
+      "status": "sent",
+      "completed_at": "2026-11-15T11:03:25.596Z",
       "detail": null
     }
   ]
