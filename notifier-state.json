@@ -13,42 +13,6 @@
   "pending": [],
   "deliveries": [
     {
-      "notification_key": "awesome_stars:antirez/h3.c:R_kgDOTzFARw",
-      "status": "sent",
-      "completed_at": "2026-08-19T03:12:30.334Z",
-      "detail": null
-    },
-    {
-      "notification_key": "awesome_stars:denoland/celld:R_kgDOOfluAw",
-      "status": "sent",
-      "completed_at": "2026-08-19T03:12:30.334Z",
-      "detail": null
-    },
-    {
-      "notification_key": "awesome_stars:termio-sh/termio:R_kgDOSmEq8w",
-      "status": "sent",
-      "completed_at": "2026-08-19T03:12:30.334Z",
-      "detail": null
-    },
-    {
-      "notification_key": "awesome_stars:yetone/cumora:R_kgDOT6_72Q",
-      "status": "sent",
-      "completed_at": "2026-08-19T03:12:30.334Z",
-      "detail": null
-    },
-    {
-      "notification_key": "awesome_stars:yizhiyanhua-ai/fireworks-tech-graph:R_kgDOR_K_2g",
-      "status": "sent",
-      "completed_at": "2026-08-19T03:12:30.334Z",
-      "detail": null
-    },
-    {
-      "notification_key": "awesome_stars:zingerlittlebee/heeler:R_kgDOTcFgRg",
-      "status": "sent",
-      "completed_at": "2026-08-19T03:12:30.334Z",
-      "detail": null
-    },
-    {
       "notification_key": "awesome_stars:duolahypercho/codex-router:R_kgDOTdj7sw",
       "status": "sent",
       "completed_at": "2026-08-22T03:09:31.937Z",
