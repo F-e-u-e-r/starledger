@@ -22982,6 +22982,31 @@
       }
     },
     {
+      "node_id": "R_kgDOVViYuw",
+      "category": "web-applications",
+      "tags": [
+        "dashboard",
+        "real-time",
+        "self-hosted",
+        "visualization"
+      ],
+      "summary": "An open-source, self-hostable crypto trading terminal that runs in the browser with a Rust, WebAssembly and WebGL2 chart engine. It streams live order flow, depth, TPO market profile, footprints and liquidations from fifteen exchanges, supports custom indicators and backtests in its Frost Script language, and includes a trade journal, analytics dashboard and paper trading.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "e67a3847ae01559bbad2f1688d839853c1623d98",
+        "repo_metadata_sha256": "6f4bd5adde44979441c3474174b22f5327718365729e1ca0d90ceb61bf103691",
+        "fingerprint": "dfda3a6d6607bd133c5876e1900686a42a3994d18fd4ec6dc17f074827e7eacb"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-11-19T15:24:47Z"
+      }
+    },
+    {
       "node_id": "R_kgDOVb5hFQ",
       "category": "mobile",
       "tags": [
