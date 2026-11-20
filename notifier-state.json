@@ -13,12 +13,6 @@
   "pending": [],
   "deliveries": [
     {
-      "notification_key": "awesome_stars:duolahypercho/codex-router:R_kgDOTdj7sw",
-      "status": "sent",
-      "completed_at": "2026-08-22T03:09:31.937Z",
-      "detail": null
-    },
-    {
       "notification_key": "awesome_stars:jetbrains/go-modern-guidelines:R_kgDOQcAahA",
       "status": "sent",
       "completed_at": "2026-08-26T05:52:14.255Z",
