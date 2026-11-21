@@ -8,7 +8,7 @@
     "paths": [
       "README.md"
     ],
-    "last_commit_sha": "8448f4a3498e548939ffe8e5c873aa2d5cdc12c9"
+    "last_commit_sha": "95ec8c6b26669a89caaee9b0ca63bba8889c83ce"
   },
   "pending": [],
   "deliveries": [
@@ -772,6 +772,36 @@
       "notification_key": "awesome_stars:egoist/asuka:R_kgDOVcFqUA",
       "status": "sent",
       "completed_at": "2026-11-15T11:03:25.596Z",
+      "detail": null
+    },
+    {
+      "notification_key": "awesome_stars:electric-sql/pglite:R_kgDOLUsMbg",
+      "status": "sent",
+      "completed_at": "2026-11-21T11:14:41.194Z",
+      "detail": null
+    },
+    {
+      "notification_key": "awesome_stars:gvisor/gvisor:MDEwOlJlcG9zaXRvcnkxMzEyMTI2Mzg=",
+      "status": "sent",
+      "completed_at": "2026-11-21T11:14:41.194Z",
+      "detail": null
+    },
+    {
+      "notification_key": "awesome_stars:nsgo-dev/nsgo:R_kgDOVSSQ6A",
+      "status": "sent",
+      "completed_at": "2026-11-21T11:14:41.194Z",
+      "detail": null
+    },
+    {
+      "notification_key": "awesome_stars:pgrundev/pgboxdb:R_kgDOVBjhVg",
+      "status": "sent",
+      "completed_at": "2026-11-21T11:14:41.194Z",
+      "detail": null
+    },
+    {
+      "notification_key": "awesome_stars:vercel-labs/deepsec:R_kgDOSQ_WYA",
+      "status": "sent",
+      "completed_at": "2026-11-21T11:14:41.194Z",
       "detail": null
     }
   ]
