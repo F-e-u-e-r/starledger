@@ -19042,6 +19042,30 @@
       }
     },
     {
+      "node_id": "R_kgDOT3FF1w",
+      "category": "developer-tools",
+      "tags": [
+        "ai-agents",
+        "code-generation",
+        "llm"
+      ],
+      "summary": "A pair of agent skills for AI coding assistants such as Claude Code, Cursor, and Codex that help build native-quality mobile app screens in Expo and React Native. One skill researches top-grossing app designs through the Appllama MCP; the other enforces a native build and simulator-verified quality bar.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "36cc976d09c80d5d02cc8b18933386135ed9cdcc",
+        "repo_metadata_sha256": "22fd700015dab50a47c49cd28599f4148a2a7ab4d98fe60599383b4ad32c7b79",
+        "fingerprint": "3fc21a44a1fa7811ae440caf6875ab27af678f5bae02c6d47cad988de3d255c8"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": "informational-only",
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-11-21T14:23:03Z"
+      }
+    },
+    {
       "node_id": "R_kgDOT3T1gw",
       "category": "developer-tools",
       "tags": [
