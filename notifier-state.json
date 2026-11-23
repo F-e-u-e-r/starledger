@@ -8,7 +8,7 @@
     "paths": [
       "README.md"
     ],
-    "last_commit_sha": "95ec8c6b26669a89caaee9b0ca63bba8889c83ce"
+    "last_commit_sha": "b125b7fda6d7eef225a7eb756d2d0fffe53ac53b"
   },
   "pending": [],
   "deliveries": [
@@ -802,6 +802,12 @@
       "notification_key": "awesome_stars:vercel-labs/deepsec:R_kgDOSQ_WYA",
       "status": "sent",
       "completed_at": "2026-11-21T11:14:41.194Z",
+      "detail": null
+    },
+    {
+      "notification_key": "awesome_stars:yingang/aposd2e-zh:R_kgDOLgEVQQ",
+      "status": "sent",
+      "completed_at": "2026-11-23T12:58:42.426Z",
       "detail": null
     }
   ]
