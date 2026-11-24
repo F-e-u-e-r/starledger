@@ -13,24 +13,6 @@
   "pending": [],
   "deliveries": [
     {
-      "notification_key": "awesome_stars:jetbrains/go-modern-guidelines:R_kgDOQcAahA",
-      "status": "sent",
-      "completed_at": "2026-08-26T05:52:14.255Z",
-      "detail": null
-    },
-    {
-      "notification_key": "awesome_stars:rizriyz/luvus:R_kgDOTBelYA",
-      "status": "sent",
-      "completed_at": "2026-08-26T05:52:14.255Z",
-      "detail": null
-    },
-    {
-      "notification_key": "awesome_stars:tobi/walgit:R_kgDOUB_8yw",
-      "status": "sent",
-      "completed_at": "2026-08-26T05:52:14.255Z",
-      "detail": null
-    },
-    {
       "notification_key": "awesome_stars:jetbrains/thinkrail:R_kgDOTRU_yQ",
       "status": "sent",
       "completed_at": "2026-08-28T18:46:44.903Z",
