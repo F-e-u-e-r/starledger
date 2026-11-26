@@ -22881,6 +22881,32 @@
       }
     },
     {
+      "node_id": "R_kgDOV9Du0g",
+      "category": "mobile",
+      "tags": [
+        "automation",
+        "dashboard",
+        "monitoring",
+        "productivity",
+        "visualization"
+      ],
+      "summary": "A Scriptable widget that displays Claude Code token usage, plan quotas, and session status on the iPhone home screen. A Mac background service reads local usage records every few minutes and syncs a JSON file over iCloud Drive with no third-party server. It offers multiple widget pages and sizes, lock-screen widgets, and a Siri voice summary.",
+      "source": {
+        "kind": "readme",
+        "readme_path": "README.md",
+        "readme_oid": "fdd2d30ac12343765b1863ba9a28b591d53b9f52",
+        "repo_metadata_sha256": "54c09c5a536040fdbd884ff92e841f74ffe6ac765217d4b972ff9be26a1312f1",
+        "fingerprint": "5f8866a196e918241027c664f9d8cc7aead44d452914cd898789faaa65c8d114"
+      },
+      "generation": {
+        "executor_kind": "claude-routine",
+        "execution_profile_version": "agent-v1",
+        "model_label": null,
+        "prompt_version": "classify-v1",
+        "generated_at": "2026-11-26T16:23:40Z"
+      }
+    },
+    {
       "node_id": "R_kgDOVBqpgQ",
       "category": "ai-ml",
       "tags": [
