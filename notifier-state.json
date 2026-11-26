@@ -13,12 +13,6 @@
   "pending": [],
   "deliveries": [
     {
-      "notification_key": "awesome_stars:jetbrains/thinkrail:R_kgDOTRU_yQ",
-      "status": "sent",
-      "completed_at": "2026-08-28T18:46:44.903Z",
-      "detail": null
-    },
-    {
       "notification_key": "awesome_stars:longbridge/gpui-component:R_kgDOMI8ZRg",
       "status": "sent",
       "completed_at": "2026-08-31T13:58:29.633Z",
