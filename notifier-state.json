@@ -8,7 +8,7 @@
     "paths": [
       "README.md"
     ],
-    "last_commit_sha": "8703f54df6ba3c7f301d7d22668186915b049d0f"
+    "last_commit_sha": "3a2ca08d5e7f7a41ad76b7f8a6875b82b83357ba"
   },
   "pending": [],
   "deliveries": [
@@ -796,6 +796,30 @@
       "notification_key": "awesome_stars:zed-industries/gpui:R_kgDOHiJ8Yg",
       "status": "sent",
       "completed_at": "2026-11-25T15:41:47.870Z",
+      "detail": null
+    },
+    {
+      "notification_key": "awesome_stars:apache/iggy:R_kgDOJLUvbw",
+      "status": "sent",
+      "completed_at": "2026-11-27T12:34:42.051Z",
+      "detail": null
+    },
+    {
+      "notification_key": "awesome_stars:cursor/plugins:R_kgDOQ_aGvg",
+      "status": "sent",
+      "completed_at": "2026-11-27T12:34:42.051Z",
+      "detail": null
+    },
+    {
+      "notification_key": "awesome_stars:jetsquirrel/nsh-o11y:R_kgDOV5nVxg",
+      "status": "sent",
+      "completed_at": "2026-11-27T12:34:42.051Z",
+      "detail": null
+    },
+    {
+      "notification_key": "awesome_stars:zenbu-labs/terminal-browser:R_kgDOTPb-HQ",
+      "status": "sent",
+      "completed_at": "2026-11-27T12:34:42.051Z",
       "detail": null
     }
   ]
